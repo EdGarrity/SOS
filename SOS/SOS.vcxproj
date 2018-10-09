@@ -30,27 +30,27 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -84,7 +84,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
@@ -99,7 +99,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
@@ -114,7 +114,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -133,7 +133,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -152,6 +152,25 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="PushP\BoolOps.h" />
+    <ClInclude Include="PushP\Code.h" />
+    <ClInclude Include="PushP\CodeBasePtr.h" />
+    <ClInclude Include="PushP\CodeOps.h" />
+    <ClInclude Include="PushP\CodeUtils.h" />
+    <ClInclude Include="PushP\Env.h" />
+    <ClInclude Include="PushP\Instruction.h" />
+    <ClInclude Include="PushP\Literal.h" />
+    <ClInclude Include="PushP\NumOps.h" />
+    <ClInclude Include="PushP\RandOps.h" />
+    <ClInclude Include="PushP\RNG.h" />
+    <ClInclude Include="PushP\StaticInit.h" />
+    <ClInclude Include="PushP\StaticLibMacros.h" />
+    <ClInclude Include="PushP\Type.h" />
+    <ClInclude Include="PushP\TypedAtom.h" />
+    <ClInclude Include="PushP\TypeDef.h" />
+    <ClInclude Include="Test.h" />
+    <ClInclude Include="Utilities\MyException.h" />
+    <ClInclude Include="Utilities\Singleton.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -160,7 +179,25 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="SOS.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="PushP\BooleanInstructions.cpp" />
+    <ClCompile Include="PushP\Code.cpp" />
+    <ClCompile Include="PushP\CodeInstructions.cpp" />
+    <ClCompile Include="PushP\CodeOps.cpp" />
+    <ClCompile Include="PushP\CodeUtils.cpp" />
+    <ClCompile Include="PushP\Env.cpp" />
+    <ClCompile Include="PushP\ExecInstructions.cpp" />
+    <ClCompile Include="PushP\FloatInstructions.cpp" />
+    <ClCompile Include="PushP\Instruction.cpp" />
+    <ClCompile Include="PushP\IntegerInstructions.cpp" />
+    <ClCompile Include="PushP\Literal.cpp" />
+    <ClCompile Include="PushP\StaticInit.cpp" />
+    <ClCompile Include="PushP\Type.cpp" />
+    <ClCompile Include="Test.cpp" />
+    <ClCompile Include="Utilities\MyException.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="test.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

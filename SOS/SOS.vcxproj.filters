@@ -13,18 +13,137 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\PushP">
+      <UniqueIdentifier>{572e1097-987b-413a-9fe0-f9332f736c25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PushP">
+      <UniqueIdentifier>{4b73c0ff-4909-4fcb-b2e1-0eb7238993a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities">
+      <UniqueIdentifier>{c491ad6e-16a0-4889-839f-33d8e390d938}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities">
+      <UniqueIdentifier>{db5f11b0-6489-4ae1-a443-bf5f69946d3d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\MyException.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Singleton.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="PushP\Code.h">
+      <Filter>Header Files\PushP</Filter>
+    </ClInclude>
+    <ClInclude Include="PushP\CodeUtils.h">
+      <Filter>Header Files\PushP</Filter>
+    </ClInclude>
+    <ClInclude Include="PushP\Env.h">
+      <Filter>Header Files\PushP</Filter>
+    </ClInclude>
+    <ClInclude Include="PushP\Literal.h">
+      <Filter>Header Files\PushP</Filter>
+    </ClInclude>
+    <ClInclude Include="PushP\TypedAtom.h">
+      <Filter>Header Files\PushP</Filter>
+    </ClInclude>
+    <ClInclude Include="PushP\Type.h">
+      <Filter>Header Files\PushP</Filter>
+    </ClInclude>
+    <ClInclude Include="PushP\StaticInit.h">
+      <Filter>Header Files\PushP</Filter>
+    </ClInclude>
+    <ClInclude Include="PushP\TypeDef.h">
+      <Filter>Header Files\PushP</Filter>
+    </ClInclude>
+    <ClInclude Include="PushP\Instruction.h">
+      <Filter>Header Files\PushP</Filter>
+    </ClInclude>
+    <ClInclude Include="PushP\RNG.h">
+      <Filter>Header Files\PushP</Filter>
+    </ClInclude>
+    <ClInclude Include="Test.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PushP\CodeOps.h">
+      <Filter>Header Files\PushP</Filter>
+    </ClInclude>
+    <ClInclude Include="PushP\RandOps.h">
+      <Filter>Header Files\PushP</Filter>
+    </ClInclude>
+    <ClInclude Include="PushP\NumOps.h">
+      <Filter>Header Files\PushP</Filter>
+    </ClInclude>
+    <ClInclude Include="PushP\StaticLibMacros.h">
+      <Filter>Header Files\PushP</Filter>
+    </ClInclude>
+    <ClInclude Include="PushP\BoolOps.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PushP\CodeBasePtr.h">
+      <Filter>Header Files\PushP</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SOS.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Utilities\MyException.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="PushP\Code.cpp">
+      <Filter>Source Files\PushP</Filter>
+    </ClCompile>
+    <ClCompile Include="PushP\CodeUtils.cpp">
+      <Filter>Source Files\PushP</Filter>
+    </ClCompile>
+    <ClCompile Include="PushP\Env.cpp">
+      <Filter>Source Files\PushP</Filter>
+    </ClCompile>
+    <ClCompile Include="PushP\Type.cpp">
+      <Filter>Source Files\PushP</Filter>
+    </ClCompile>
+    <ClCompile Include="PushP\Literal.cpp">
+      <Filter>Source Files\PushP</Filter>
+    </ClCompile>
+    <ClCompile Include="PushP\StaticInit.cpp">
+      <Filter>Source Files\PushP</Filter>
+    </ClCompile>
+    <ClCompile Include="PushP\Instruction.cpp">
+      <Filter>Source Files\PushP</Filter>
+    </ClCompile>
+    <ClCompile Include="Test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PushP\CodeInstructions.cpp">
+      <Filter>Source Files\PushP</Filter>
+    </ClCompile>
+    <ClCompile Include="PushP\CodeOps.cpp">
+      <Filter>Source Files\PushP</Filter>
+    </ClCompile>
+    <ClCompile Include="PushP\IntegerInstructions.cpp">
+      <Filter>Source Files\PushP</Filter>
+    </ClCompile>
+    <ClCompile Include="PushP\FloatInstructions.cpp">
+      <Filter>Source Files\PushP</Filter>
+    </ClCompile>
+    <ClCompile Include="PushP\BooleanInstructions.cpp">
+      <Filter>Source Files\PushP</Filter>
+    </ClCompile>
+    <ClCompile Include="PushP\ExecInstructions.cpp">
+      <Filter>Source Files\PushP</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="test.config">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
