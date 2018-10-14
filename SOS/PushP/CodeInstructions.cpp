@@ -29,10 +29,10 @@ namespace push
 			vec[2] = quote;
 			vec[3] = Code(new Literal<int>(n));
 			vec[4] = Code(new Literal<int>(i));
-			env.push_guarded(CodeList::adopt(vec)); //env.exec_stack.push_back(*new CodeList(vec));  //env.push_guarded(CodeList::adopt(vec)); //Code(new CodeList(vec)));
+			env.push_code_to_exec_stack(CodeList::adopt(vec)); //env.exec_stack.push_back(*new CodeList(vec));  //env.push_guarded(CodeList::adopt(vec)); //Code(new CodeList(vec)));
 		}
 
-		env.push_guarded(code);
+		env.push_code_to_exec_stack(code);
 		return 1;
 	}
 
@@ -55,7 +55,7 @@ namespace push
 		vec[2] = code;
 		vec[3] = Code(new Literal<int>(n - 1));
 		vec[4] = zero;
-		env.push_guarded(CodeList::adopt(vec)); //Code(new CodeList(vec)));
+		env.push_code_to_exec_stack(CodeList::adopt(vec)); //Code(new CodeList(vec)));
 		return 1;
 	}
 
@@ -77,7 +77,7 @@ namespace push
 		vec[2] = cons(int_pop, code);
 		vec[3] = Code(new Literal<int>(n - 1));
 		vec[4] = zero;
-		env.push_guarded(CodeList::adopt(vec)); //Code(new CodeList(vec)));
+		env.push_code_to_exec_stack(CodeList::adopt(vec)); //Code(new CodeList(vec)));
 		return 1;
 	}
 
@@ -94,7 +94,7 @@ namespace push
 		make_instruction((Operator)_list, "CODE.LIST", binaryCode, codeType);
 		make_instruction((Operator)_do, "CODE.DO", codeType, execType);
 		make_instruction((Operator)_do_star, "CODE.DO*", codeType, execType);
-		make_instruction((Operator)_quote, "CODE.QUOTE", execType, codeType);
+		make_instruction((Operator)_quote, "CODE.QUOTE", execType, codeType, 1);
 		make_instruction((Operator)_if, "CODE.IF", boolType + binaryCode, execType);
 		make_instruction((Operator)_length, "CODE.LENGTH", codeType, integerType);
 		make_instruction((Operator)_size, "CODE.SIZE", codeType, integerType);
@@ -118,8 +118,8 @@ namespace push
 		make_instruction((Operator)_position, "CODE.POSITION", binaryCode, integerType);
 		make_instruction((Operator)rand_code, "CODE.RAND", nullType, codeType);
 		make_instruction((Operator)rand_code, "CODE.ERC", nullType, codeType);
-		make_instruction((Operator)code_do_range, "CODE.DO*RANGE", integerType + integerType + codeType, execType + execType, false);
-		make_instruction((Operator)do_count, "CODE.DO*COUNT", integerType + codeType, execType, false);
-		make_instruction((Operator)do_times, "CODE.DO*TIMES", integerType + codeType, execType, false);
+		make_instruction((Operator)code_do_range, "CODE.DO*RANGE", integerType + integerType + codeType, execType + execType);
+		make_instruction((Operator)do_count, "CODE.DO*COUNT", integerType + codeType, execType);
+		make_instruction((Operator)do_times, "CODE.DO*TIMES", integerType + codeType, execType);
 	}
 }

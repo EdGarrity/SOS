@@ -30,6 +30,6 @@ namespace push
 		make_instruction((Operator)rand_float, "FLOAT.RAND", nullType, floatType);
 		make_instruction((Operator)rand_float, "FLOAT.ERC", nullType, floatType);
 
-//		make_instruction(data2float, "FLOAT.FROMDATA", integerType, floatType);
+//		make_instruction((Operator)data2float, "FLOAT.FROMDATA", integerType, floatType);
 	}
 }

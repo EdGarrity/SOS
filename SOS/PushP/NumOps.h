@@ -140,7 +140,7 @@ namespace push
 	//{
 	//	double value = 0.0;
 
-	//	int column_index = pop<int>();
+	//	int column_index = pop<int>(env);
 
 	//	value = env.parameters.pBroker->GetStockData(env.data_record_index, column_index);
 	//	push<double>(value);

@@ -11,6 +11,7 @@ namespace push
 		extern Code* nil_ptr;
 		extern Code* instructions_ptr;
 		extern String2CodeMap* str2code_map_ptr;
+		extern String2ParenthesesMap* str2parentheses_map_ptr;
 		extern CodeSet* erc_set_ptr;
 		extern CodeSet* exec_set_ptr;
 //		extern std::vector<ParseHook>* parse_extension_hooks_ptr;
@@ -32,6 +33,7 @@ namespace push
 					nil_ptr = new Code(new CodeList(CodeArray()));
 					instructions_ptr = new Code(*nil_ptr);
 					str2code_map_ptr = new String2CodeMap();
+					str2parentheses_map_ptr = new String2ParenthesesMap();
 					erc_set_ptr = new CodeSet();
 					exec_set_ptr = new CodeSet;
 //					parse_extension_hooks_ptr = new std::vector<ParseHook>;

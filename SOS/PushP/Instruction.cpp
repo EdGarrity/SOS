@@ -4,18 +4,16 @@
 #include "CodeUtils.h"
 #include "Literal.h"
 
-
-
-#define FULLGENERIC(name, func, static_)\
+#define FULLGENERIC(name, func, parentheses)\
 	cons(\
-		make_instruction((Operator)func<Exec>, "EXEC", #name, func##_in<Exec>(), func##_out<Exec>(), static_),\
+		make_instruction((Operator)func<Exec>, "EXEC", #name, func##_in<Exec>(), func##_out<Exec>(), parentheses),\
 	cons(\
-		make_instruction((Operator)func<int>, "INTEGER", #name, func##_in<int>(), func##_out<int>(), static_),\
+		make_instruction((Operator)func<int>, "INTEGER", #name, func##_in<int>(), func##_out<int>(), parentheses),\
 	cons(\
-		make_instruction((Operator)func<double>, "FLOAT", #name, func##_in<double>(), func##_out<double>(), static_),\
+		make_instruction((Operator)func<double>, "FLOAT", #name, func##_in<double>(), func##_out<double>(), parentheses),\
 	cons(\
-		make_instruction((Operator)func<bool>, "BOOLEAN", #name, func##_in<bool>(), func##_out<bool>(), static_),\
-		make_instruction((Operator)func<Code>, "CODE", #name, func##_in<Code>(), func##_out<Code>(), static_)\
+		make_instruction((Operator)func<bool>, "BOOLEAN", #name, func##_in<bool>(), func##_out<bool>(), parentheses),\
+		make_instruction((Operator)func<Code>, "CODE", #name, func##_in<Code>(), func##_out<Code>(), parentheses)\
 	))))
 
 
@@ -26,7 +24,7 @@
 	)
 */
 
-#define GENERIC(name,func) FULLGENERIC(name,func,true);
+#define GENERIC(name,func) FULLGENERIC(name,func,0);
 
 // Initialization of global Random Number Generator
 RNG rng(push::global_parameters.random_seed);
@@ -183,4 +181,23 @@ namespace push
 		GENERIC(ROT, rot);
 		GENERIC(FLUSH, flush);
 	}
+
+	unsigned int lookup_instruction_paren_groups(std::string name)
+	{
+		if (name == "NOOP_OPEN_PAREN")
+			return 1;
+
+		else
+			return (*detail::str2parentheses_map_ptr)[name];
+	}
+
+	void set_parentheses(std::string name, unsigned int _parentheses)
+	{
+		(*detail::str2parentheses_map_ptr)[name] = _parentheses;
+
+		Code code = (*detail::str2code_map_ptr)[name];
+
+		code->set_parentheses(_parentheses);
+	}
+
 }

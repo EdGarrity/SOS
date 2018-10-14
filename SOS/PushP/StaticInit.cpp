@@ -8,6 +8,7 @@ namespace push
 		Code* nil_ptr;
 		Code* instructions_ptr;
 		String2CodeMap* str2code_map_ptr;
+		String2ParenthesesMap* str2parentheses_map_ptr;
 		CodeSet* erc_set_ptr;
 		CodeSet* exec_set_ptr;
 		int init_count;
@@ -25,6 +26,7 @@ namespace push
 	const Code						&nil = *detail::nil_ptr;
 	const Code						&instructions = *detail::instructions_ptr;
 	const String2CodeMap			&str2code_map = *detail::str2code_map_ptr;
+	const String2ParenthesesMap		&str2parentheses_map = *detail::str2parentheses_map_ptr;
 	const CodeSet					&erc_set = *detail::erc_set_ptr;
 	const CodeSet					&exec_set = *detail::exec_set_ptr;
 
@@ -87,6 +89,7 @@ namespace push
 
 			//std::cout << "Registered: " << name << std::endl;
 			(*str2code_map_ptr)[name] = code;
+			(*str2parentheses_map_ptr)[name] = code->instruction_paren_groups();
 
 			// if 'ends in ERC' it's part of the erc set
 			size_t i = name.size() - 3;

@@ -30,10 +30,14 @@ namespace push
 	typedef unsigned(*Operator)(Env &);
 
 	typedef std::map<std::string, push::Code> String2CodeMap;
+
+	typedef std::map<std::string, unsigned int> String2ParenthesesMap;
+
 	typedef std::set<push::Code> CodeSet;
 
 	/* Globals (Check StaticInit) */
 	extern const String2CodeMap &str2code_map;
+//	extern const String2ParenthesesMap &str2parentheses_map;
 	extern const Code &instructions;
 	extern const CodeSet &erc_set;
 	extern const CodeSet &exec_set;  // DO, DO*, IF
@@ -124,6 +128,15 @@ namespace push
 			return NULL;
 		}
 
+		virtual unsigned int instruction_paren_groups() const
+		{
+			return 0;
+		}
+
+		virtual void set_parentheses(unsigned int _parentheses)
+		{
+			return;
+		}
 
 	//protected:
 		virtual bool equal_to(const CodeBase &other) const

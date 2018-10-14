@@ -3,14 +3,16 @@
 #include "Code.h"
 #include "Type.h"
 #include "TypeDef.h"
-//#include "Literal.h"
-//#include "Instruction.h"
 #include "CodeUtils.h" // for cdr
+//#include "..\Finance\Broker.h"
 
 namespace push
 {
 	// This needs to be initialize in Push Initialze and stored in Thread Local Storage
 	extern thread_local Env env;
+
+//	typedef std::map<std::string, unsigned int> String2parenthesesMap;
+//	extern const String2parenthesesMap &str2parentheses_map;
 
 	struct Parameters
 	{
@@ -53,7 +55,7 @@ namespace push
 		Code function_set;
 		Parameters parameters;
 
-		void push_guarded(const Code &code)
+		void push_code_to_exec_stack(const Code &code)
 		{
 //			guard.push_back(code);
 			exec_stack.push_back(Exec(code));
@@ -174,6 +176,11 @@ namespace push
 		return env.code_stack;
 	}
 
+	template <typename T> inline bool is_empty()
+	{
+		return (get_stack<T>().empty());
+	}
+
 	/* pushing and popping */
 	template <typename T> inline void push(T value)
 	{
@@ -202,7 +209,7 @@ namespace push
 	/* Push calling convention */
 	inline void push_call(Code code)
 	{
-		env.push_guarded(code);
+		env.push_code_to_exec_stack(code);
 		push(code);
 	}
 

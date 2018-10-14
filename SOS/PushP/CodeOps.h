@@ -44,13 +44,13 @@ namespace push
 
 	inline unsigned _do() {
 		static Code code_pop = parse("CODE.POP");
-		env.push_guarded(code_pop);
-		env.push_guarded(top<Code>());
+		env.push_code_to_exec_stack(code_pop);
+		env.push_code_to_exec_stack(top<Code>());
 		return 1;
 	}
 
 	inline unsigned _do_star() {
-		env.push_guarded(pop<Code>(env));
+		env.push_code_to_exec_stack(pop<Code>(env));
 		return 1;
 	}
 
@@ -64,9 +64,9 @@ namespace push
 		Code second = pop<Code>(env);
 
 		if (pop<bool>(env))
-			env.push_guarded(second);
+			env.push_code_to_exec_stack(second);
 		else
-			env.push_guarded(first);
+			env.push_code_to_exec_stack(first);
 
 		return 1;
 	}

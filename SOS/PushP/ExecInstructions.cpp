@@ -20,7 +20,7 @@ namespace push
 			return 1;
 		}
 
-		env.push_guarded(list(y.lock(), z.lock()));
+		env.push_code_to_exec_stack(list(y.lock(), z.lock()));
 		push(z);
 		push(x);
 		return 1;
@@ -45,7 +45,7 @@ namespace push
 			return 1;
 		}
 
-		env.push_guarded(list(ycode, x.lock()));
+		env.push_code_to_exec_stack(list(ycode, x.lock()));
 		push(x);
 
 		return 1;
@@ -90,7 +90,7 @@ namespace push
 			{
 				vec[3] = Code(new Literal<int>(i + direction));
 				Code ranger = CodeList::adopt(vec);
-				env.push_guarded(ranger);
+				env.push_code_to_exec_stack(ranger);
 			}
 
 			push(code);
@@ -110,7 +110,7 @@ namespace push
 		vec[2] = Code(new Literal<int>(n));
 		vec[3] = Code(new Literal<int>(i));
 		Code result = Code(new DoRangeClass(vec));
-		env.push_guarded(result);
+		env.push_code_to_exec_stack(result);
 		return 1;
 	}
 
@@ -130,7 +130,7 @@ namespace push
 		vec[2] = Code(new Literal<int>(n - 1));
 		vec[3] = zero;
 		Code result = Code(new DoRangeClass(vec));
-		env.push_guarded(result);
+		env.push_code_to_exec_stack(result);
 
 		return 1;
 	}
@@ -152,32 +152,56 @@ namespace push
 		vec[2] = Code(new Literal<int>(n - 1));
 		vec[3] = zero;
 		Code result = Code(new DoRangeClass(vec));
-		env.push_guarded(result);
+		env.push_code_to_exec_stack(result);
 
 		return 1;
 	}
 
-	//unsigned set_instructions()
-	//{
-	//	env.function_set = pop<Code>();
-	//	return 1;
-	//}
+	unsigned exec_while()
+	{
+		if (is_empty<bool>())
+			pop<Exec>(env);
 
-	//template <class T>
-	//void set_param(T & value)
-	//{
-	//	value = pop<T>();
-	//}
+		//if (top<bool>() == false)
+		if (get_stack<bool>().back() == false)
+		{
+			pop<bool>(env);
+			pop<Exec>(env);
+		}
 
-	//void initEnv()
-	//{
-	//	static bool initialized = false;
+		else
+		{
+			Exec block = pop<Exec>(env);
 
-	//	if (initialized) return;
+			env.push_code_to_exec_stack(parse("EXEC.WHILE"));
+			push(block);
+			pop<bool>(env);
+		}
 
-	//	initialized = true;
-	//	make_instruction((Operator)set_instructions, "ENV.INSTRUCTIONS", codeType, nullType);
-	//}
+		return 1;
+	}
+
+	unsigned do_while()
+	{
+		Exec block = pop<Exec>(env);
+
+		env.push_code_to_exec_stack(parse("EXEC.WHILE"));
+		push(block);
+
+		return 1;
+	}
+
+	unsigned exec_when()
+	{
+		//bool cond = first<bool>();
+		bool cond = get_stack<bool>().back();
+		pop<bool>(env);
+
+		if (!cond)
+			pop<Exec>(env);
+
+		return 1;
+	}
 
 	void initExec()
 	{
@@ -186,16 +210,22 @@ namespace push
 		if (initialized) return;
 
 		initialized = true;
-		make_instruction((Operator)k, "EXEC.K", execType + execType, execType);
-		make_instruction((Operator)s, "EXEC.S", execType + execType + execType, execType + execType + execType);
-		// EXEC.DEFINE is defined in Instructions.cpp (name_set)
-		//make_instruction(edefine,"EXEC.DEFINE", execType+nameType, nullType);
-//		make_instruction((Operator)edefine2, ":", execType + nameType, nullType);
-		make_instruction((Operator)y, "EXEC.Y", execType, execType + execType);
-		make_instruction((Operator)exec_if, "EXEC.IF", execType + execType + boolType, execType);
-		make_instruction((Operator)do_range, "EXEC.DO*RANGE", integerType + integerType + execType, execType, false);
-		make_instruction((Operator)do_count, "EXEC.DO*COUNT", integerType + execType, execType, false);
-		make_instruction((Operator)do_times, "EXEC.DO*TIMES", integerType + execType, execType, false);
-		//static Code exec_lambda = make_instruction(lambda, "EXEC.LAMBDA", execType+execType, execType, false);
+		make_instruction((Operator)k, "EXEC.K", execType + execType, execType, 2);
+		make_instruction((Operator)s, "EXEC.S", execType + execType + execType, execType + execType + execType, 3);
+		make_instruction((Operator)y, "EXEC.Y", execType, execType + execType, 1);
+		make_instruction((Operator)exec_if, "EXEC.IF", execType + execType + boolType, execType, 2);
+		make_instruction((Operator)do_range, "EXEC.DO*RANGE", integerType + integerType + execType, execType, 1);
+		make_instruction((Operator)do_count, "EXEC.DO*COUNT", integerType + execType, execType, 1);
+		make_instruction((Operator)do_times, "EXEC.DO*TIMES", integerType + execType, execType, 1);
+		make_instruction((Operator)exec_while, "EXEC.WHILE", execType, execType, 1);
+		make_instruction((Operator)do_while, "EXEC.DO*WHILE", execType, execType, 1);
+		make_instruction((Operator)exec_when, "EXEC.WHEN", boolType + execType, execType, 1);
+
+		set_parentheses("EXEC.ROT", 3);
+		set_parentheses("EXEC.POP", 1);
+		set_parentheses("EXEC.DUP", 1);
+		set_parentheses("EXEC.SWAP", 2);
+		set_parentheses("EXEC.ROT", 3);
+		set_parentheses("EXEC.SHOVE", 1);
 	}
 }

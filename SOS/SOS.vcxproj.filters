@@ -25,6 +25,12 @@
     <Filter Include="Source Files\Utilities">
       <UniqueIdentifier>{db5f11b0-6489-4ae1-a443-bf5f69946d3d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\PushGP">
+      <UniqueIdentifier>{1c0f8765-bdb0-4bc5-9b88-77133f6a8d0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PushGP">
+      <UniqueIdentifier>{0e981989-40c9-4cc0-b795-234e64b2e861}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -87,6 +93,9 @@
     <ClInclude Include="PushP\CodeBasePtr.h">
       <Filter>Header Files\PushP</Filter>
     </ClInclude>
+    <ClInclude Include="PushGP\Individual.h">
+      <Filter>Header Files\PushGP</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -139,6 +148,9 @@
     </ClCompile>
     <ClCompile Include="PushP\ExecInstructions.cpp">
       <Filter>Source Files\PushP</Filter>
+    </ClCompile>
+    <ClCompile Include="PushGP\Individual.cpp">
+      <Filter>Source Files\PushGP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
