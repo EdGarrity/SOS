@@ -116,7 +116,7 @@ namespace push
 		make_instruction((Operator)_nthcdr, "CODE.NTHCDR", integerType + codeType, codeType);
 		make_instruction((Operator)_null, "CODE.NULL", codeType, boolType);
 		make_instruction((Operator)_position, "CODE.POSITION", binaryCode, integerType);
-		make_instruction((Operator)rand_code, "CODE.RAND", nullType, codeType);
+//		make_instruction((Operator)rand_code, "CODE.RAND", nullType, codeType);
 		make_instruction((Operator)rand_code, "CODE.ERC", nullType, codeType);
 		make_instruction((Operator)code_do_range, "CODE.DO*RANGE", integerType + integerType + codeType, execType + execType);
 		make_instruction((Operator)do_count, "CODE.DO*COUNT", integerType + codeType, execType);

@@ -4,13 +4,20 @@
 #include <vector>
 #include <stack> 
 
+#include "..\PushP\Code.h"
+
 namespace pushGP
 {
 	struct Atom
 	{
 		enum AtomType
 		{
-			ins = 0,
+			empty = 0,
+			
+			ins,
+			integer,
+			floating_point,
+			boolean,
 
 			// This instruction will be replaced by exec_noop, but will still have effects like :close count
 			no_op,
@@ -27,7 +34,7 @@ namespace pushGP
 		{ 
 			instruction = ""; 
 			parentheses = 0;
-			type = AtomType::ins;
+			type = AtomType::empty;
 		};
 	};
 
@@ -39,8 +46,27 @@ namespace pushGP
 		// Plush genome
 		std::vector<struct Atom> genome_;
 
+		//Vector of errors
+		std::vector<double> errors_;
+
 	public:
-		std::string translate_plush_genome_to_push_program();
-		void parse(std::string genome);
+		Individual();
+		Individual(std::vector<struct Atom> _genome);
+		Individual(std::string _genome);
+		Individual(const Individual & other);
+		Individual& operator = (const Individual &other);
+		
+		void translate_plush_genome_to_push_program();
+		void parse_string_to_plush_genome(std::string genome);
+
+		const std::vector<struct Atom> genome()
+		{
+			return genome_;
+		}
+
+		const std::vector<double> errors()
+		{
+			return errors_;
+		}
 	};
 }

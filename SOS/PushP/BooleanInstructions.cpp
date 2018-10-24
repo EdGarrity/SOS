@@ -20,7 +20,7 @@ namespace push
 		make_instruction((Operator)_nand, "BOOLEAN.NAND", binaryBool, boolType);
 		make_instruction((Operator)float2bool, "BOOLEAN.FROMFLOAT", floatType, boolType);
 		make_instruction((Operator)int2bool, "BOOLEAN.FROMINTEGER", integerType, boolType);
-		make_instruction((Operator)rand_bool, "BOOLEAN.RAND", nullType, boolType);
+//		make_instruction((Operator)rand_bool, "BOOLEAN.RAND", nullType, boolType);
 		make_instruction((Operator)rand_bool, "BOOLEAN.ERC", nullType, boolType);
 	}
 }

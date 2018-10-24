@@ -136,17 +136,17 @@ namespace push
 	// is taken modulo the number of data items in the current data record.  A 
 	// positive index refers to the data value.  A negative index refers to the 
 	// first derivative of the data item.
-	//inline unsigned data2float()
-	//{
-	//	double value = 0.0;
+	inline unsigned data2float()
+	{
+		double value = 0.0;
 
-	//	int column_index = pop<int>(env);
+		int column_index = pop<int>(env);
 
-	//	value = env.parameters.pBroker->GetStockData(env.data_record_index, column_index);
-	//	push<double>(value);
+		value = env.parameters.pBroker->get_value_from_datatable(env.data_record_index, column_index);
+		push<double>(value);
 
-	//	return 1;
-	//}
+		return 1;
+	}
 
 
 	inline unsigned _fmod()

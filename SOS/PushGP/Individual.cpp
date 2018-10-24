@@ -3,11 +3,56 @@
 #include "Individual.h"
 #include "..\PushP\Instruction.h"
 #include "..\PushP\Env.h"
+#include "..\PushP\Literal.h"
 
 // Returns the number of points in tree, where each atom and each pair of parentheses 
 // counts as a point.
 namespace pushGP
 {
+	using namespace push;
+
+	Individual::Individual()
+	{
+		program_.clear();
+		genome_.clear();
+		errors_.clear();
+	}
+
+	Individual::Individual(std::vector<struct Atom> _genome)
+	{
+		program_.clear();
+		genome_ = _genome;
+		errors_.clear();
+
+		translate_plush_genome_to_push_program();
+	}
+
+	Individual::Individual(std::string _genome)
+	{
+		program_.clear();
+		genome_.clear();
+		errors_.clear();
+
+		parse_string_to_plush_genome(_genome);
+		translate_plush_genome_to_push_program();
+	}
+
+	Individual::Individual(const Individual & other)
+	{
+		program_ = other.program_;
+		genome_ = other.genome_;
+		errors_ = other.errors_;
+	}
+
+	Individual & Individual::operator=(const Individual & other)
+	{
+		program_ = other.program_;
+		genome_ = other.genome_;
+		errors_ = other.errors_;
+
+		return *this;
+	}
+
 	unsigned int count_points(const std::string & program)
 	{
 		if (program.length() == 0)
@@ -79,12 +124,8 @@ namespace pushGP
 	// the paren - stack), parens are added until the paren - stack is empty.
 	// Instruction maps that have : silence set to true will be ignored entirely.
 
-	std::string pushGP::Individual::translate_plush_genome_to_push_program()
+	void pushGP::Individual::translate_plush_genome_to_push_program()
 	{
-		// If already translated, just return the previously translated Push program.
-		if (program_.length() > 0)
-			return program_;
-
 		program_ = "(";
 
 		std::vector<struct Atom> genome;
@@ -188,12 +229,10 @@ namespace pushGP
 
 		if (count_points(program_) > push::global_parameters.max_points_in_program)
 			program_ = "";
-
-		return program_;
 	}
 
 	// genome ::= { :instruction atom :close n :slient true }
-	void pushGP::Individual::parse(std::string _genome)
+	void pushGP::Individual::parse_string_to_plush_genome(std::string _genome)
 	{
 		genome_.clear();
 

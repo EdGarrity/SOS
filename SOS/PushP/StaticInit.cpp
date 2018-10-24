@@ -10,7 +10,7 @@ namespace push
 		String2CodeMap* str2code_map_ptr;
 		String2ParenthesesMap* str2parentheses_map_ptr;
 		CodeSet* erc_set_ptr;
-		CodeSet* exec_set_ptr;
+//		CodeSet* exec_set_ptr;
 		int init_count;
 	}
 
@@ -28,7 +28,7 @@ namespace push
 	const String2CodeMap			&str2code_map = *detail::str2code_map_ptr;
 	const String2ParenthesesMap		&str2parentheses_map = *detail::str2parentheses_map_ptr;
 	const CodeSet					&erc_set = *detail::erc_set_ptr;
-	const CodeSet					&exec_set = *detail::exec_set_ptr;
+//	const CodeSet					&exec_set = *detail::exec_set_ptr;
 
 	thread_local CodeBaseRegister codeBaseRegister;
 
@@ -97,8 +97,8 @@ namespace push
 			if (name.size() >= 3 && i >= 0 && name.substr(i, 3) == "ERC" || name == "NAME.RANDBOUNDNAME")
 				(*erc_set_ptr).insert(code);
 
-			if (name == "CODE.DO" || name == "CODE.IF" || name == "CODE.DO*")
-				(*exec_set_ptr).insert(code);
+//			if (name == "CODE.DO" || name == "CODE.IF" || name == "CODE.DO*")
+//				(*exec_set_ptr).insert(code);
 
 			return code;
 		}

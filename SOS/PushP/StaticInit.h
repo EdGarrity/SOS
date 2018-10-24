@@ -35,7 +35,7 @@ namespace push
 					str2code_map_ptr = new String2CodeMap();
 					str2parentheses_map_ptr = new String2ParenthesesMap();
 					erc_set_ptr = new CodeSet();
-					exec_set_ptr = new CodeSet;
+//					exec_set_ptr = new CodeSet;
 //					parse_extension_hooks_ptr = new std::vector<ParseHook>;
 					//                    default_root_env_ptr = 0;
 					init_types();
@@ -50,7 +50,7 @@ namespace push
 					delete instructions_ptr;
 					delete str2code_map_ptr;
 					delete erc_set_ptr;
-					delete exec_set_ptr;
+//					delete exec_set_ptr;
 //					delete parse_extension_hooks_ptr;
 				}
 			}

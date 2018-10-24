@@ -31,6 +31,12 @@
     <Filter Include="Source Files\PushGP">
       <UniqueIdentifier>{0e981989-40c9-4cc0-b795-234e64b2e861}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Finance">
+      <UniqueIdentifier>{454eeece-9f93-434a-a82b-aace958775ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Finance">
+      <UniqueIdentifier>{5394fb34-2435-4635-bba8-263625ba54b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -96,6 +102,30 @@
     <ClInclude Include="PushGP\Individual.h">
       <Filter>Header Files\PushGP</Filter>
     </ClInclude>
+    <ClInclude Include="Finance\Broker.h">
+      <Filter>Header Files\Finance</Filter>
+    </ClInclude>
+    <ClInclude Include="PushGP\Random.h">
+      <Filter>Header Files\PushGP</Filter>
+    </ClInclude>
+    <ClInclude Include="PushGP\PushGP.h">
+      <Filter>Header Files\PushGP</Filter>
+    </ClInclude>
+    <ClInclude Include="PushGP\Selection.h">
+      <Filter>Header Files\PushGP</Filter>
+    </ClInclude>
+    <ClInclude Include="PushGP\Arguments.h">
+      <Filter>Header Files\PushGP</Filter>
+    </ClInclude>
+    <ClInclude Include="PushGP\GeneticOperators.h">
+      <Filter>Header Files\PushGP</Filter>
+    </ClInclude>
+    <ClInclude Include="PushGP\Breed.h">
+      <Filter>Header Files\PushGP</Filter>
+    </ClInclude>
+    <ClInclude Include="PushGP\Globals.h">
+      <Filter>Header Files\PushGP</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -150,6 +180,27 @@
       <Filter>Source Files\PushP</Filter>
     </ClCompile>
     <ClCompile Include="PushGP\Individual.cpp">
+      <Filter>Source Files\PushGP</Filter>
+    </ClCompile>
+    <ClCompile Include="Finance\Broker.cpp">
+      <Filter>Source Files\Finance</Filter>
+    </ClCompile>
+    <ClCompile Include="PushGP\Random.cpp">
+      <Filter>Source Files\PushGP</Filter>
+    </ClCompile>
+    <ClCompile Include="PushGP\Selection.cpp">
+      <Filter>Source Files\PushGP</Filter>
+    </ClCompile>
+    <ClCompile Include="PushGP\GeneticOperators.cpp">
+      <Filter>Source Files\PushGP</Filter>
+    </ClCompile>
+    <ClCompile Include="PushGP\PushGP.cpp">
+      <Filter>Source Files\PushGP</Filter>
+    </ClCompile>
+    <ClCompile Include="PushGP\Breed.cpp">
+      <Filter>Source Files\PushGP</Filter>
+    </ClCompile>
+    <ClCompile Include="PushGP\Globals.cpp">
       <Filter>Source Files\PushGP</Filter>
     </ClCompile>
   </ItemGroup>

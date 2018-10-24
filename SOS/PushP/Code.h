@@ -40,7 +40,7 @@ namespace push
 //	extern const String2ParenthesesMap &str2parentheses_map;
 	extern const Code &instructions;
 	extern const CodeSet &erc_set;
-	extern const CodeSet &exec_set;  // DO, DO*, IF
+//	extern const CodeSet &exec_set;  // DO, DO*, IF
 	extern const Code &nil;
 
 	class CodeBaseRegisterNode

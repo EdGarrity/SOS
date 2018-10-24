@@ -4,7 +4,7 @@
 #include "Type.h"
 #include "TypeDef.h"
 #include "CodeUtils.h" // for cdr
-//#include "..\Finance\Broker.h"
+#include "..\Finance\Broker.h"
 
 namespace push
 {
@@ -26,7 +26,7 @@ namespace push
 		int max_points_in_random_expression;	// = 50
 		int max_points_in_program;				// = 100
 		int random_seed;						// = time.time()
-//		finance::Broker* pBroker;				// Give Push access to the Broker object.
+		finance::Broker* pBroker;				// Give Push access to the Broker object.
 	};
 
 	extern const Parameters global_parameters;
@@ -55,6 +55,9 @@ namespace push
 		Code function_set;
 		Parameters parameters;
 
+		// data record pointer
+		int data_record_index;
+
 		void push_code_to_exec_stack(const Code &code)
 		{
 //			guard.push_back(code);
@@ -76,6 +79,7 @@ namespace push
 
 			reserve(_reserve);
 			clear_stacks();
+			data_record_index = 0;
 		}
 
 		virtual ~Env() 
