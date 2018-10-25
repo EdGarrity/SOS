@@ -7,12 +7,24 @@ namespace pushGP
 {
 	namespace globals
 	{
+		//*******************************************************
+		// Domain specific globals
+
 		// Number of training cases for elite lexicase selection
 		extern unsigned int number_of_training_cases;
 
-		// Used in epsilon lexicase. Only calculated once per population
-		extern std::vector<double> epsilons;
+		// Brokeage account opening balance
+		extern double opening_balance;
+
+		//*******************************************************
+		// General GP storage variables
 		extern Individual population_agents[argmap::population_size];
 		extern Individual child_agents[argmap::population_size];
+
+		//*******************************************************
+		// Globals for Elite Lexicase Selection
+
+		// Used in epsilon lexicase. Only calculated once per population
+		extern std::vector<double> epsilons;
 	}
 }

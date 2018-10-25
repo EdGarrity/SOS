@@ -40,7 +40,7 @@ namespace pushGP
 			//		;; The instructions that pushgp will use in random code.
 
 		// Number of individuals in the population.
-		const unsigned int population_size = 1000;
+		const unsigned int population_size = 10000;
 
 			//		:max - generations 1001
 			//		;; The maximum number of generations to run GP.

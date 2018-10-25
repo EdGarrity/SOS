@@ -8,7 +8,7 @@
 #include "Env.h"
 #include "Literal.h"
 
-namespace push
+namespace Push
 {
 	Code find_container(Code tree, Code subtree)
 	{
@@ -128,7 +128,10 @@ namespace push
 	{
 		static Code rnd = parse("CODE.RAND"); // special case
 		const CodeArray &instruction_list = env.function_set->get_stack();
-		Code ins = instruction_list[rng.random(instruction_list.size())];
+//		Code ins = instruction_list[rng.random(instruction_list.size())];  Debugging this line
+
+		int n = rng.random(instruction_list.size());
+		Code ins = instruction_list[n];
 
 		if (ins != rnd && erc_set.find(ins) != erc_set.end())
 		{

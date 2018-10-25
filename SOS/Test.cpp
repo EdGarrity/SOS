@@ -8,7 +8,7 @@
 #include "Test.h"
 
 using namespace std;
-using namespace push;
+using namespace Push;
 using namespace pushGP;
 
 int test(char *testCase)

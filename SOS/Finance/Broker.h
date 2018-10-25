@@ -21,9 +21,11 @@ namespace finance
 		unsigned int stock_ = 0;
 
 	public:
-		Broker();
+		Broker(double opening_balance);
 
 		static std::vector<std::vector<double>> load_datatable(std::string inputFileName);
+		static unsigned int get_number_of_datatable_rows();
+		static unsigned int get_number_of_datatable_columns();
 		static double get_value_from_datatable(unsigned _row, int _column);
 		void update_brokeage_account(bool action, unsigned int row);
 		double close_brokeage_account(unsigned int row);

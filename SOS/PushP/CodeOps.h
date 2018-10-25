@@ -5,7 +5,7 @@
 #include "CodeUtils.h"
 #include "Literal.h"
 
-namespace push 
+namespace Push 
 {
 	inline
 		unsigned _cons() {

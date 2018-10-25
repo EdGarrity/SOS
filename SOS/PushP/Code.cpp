@@ -5,7 +5,7 @@
 
 using namespace std;
 
-namespace push
+namespace Push
 {
 //	void * CodeBase::operator new(size_t size)
 //	{

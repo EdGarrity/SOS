@@ -12,7 +12,7 @@
 
 namespace pushGP
 {
-	using namespace push;
+	using namespace Push;
 
 	double random_double()
 	{
@@ -44,13 +44,15 @@ namespace pushGP
 
 		gene.instruction = code->to_string();
 
-		if (typeid(code) == typeid(Literal<double>))
+		CodeBase::TYPE_ID code_type = code->get_type2();
+
+		if (code_type == CodeBase::TYPE_ID::floating_point)
 			gene.type = Atom::AtomType::floating_point;
 
-		else if (typeid(code) == typeid(Literal<int>))
+		else if (code_type == CodeBase::TYPE_ID::integer)
 			gene.type = Atom::AtomType::integer;
 
-		else if (typeid(code) == typeid(Literal<bool>))
+		else if (code_type == CodeBase::TYPE_ID::boolean)
 			gene.type = Atom::AtomType::boolean;
 
 		else

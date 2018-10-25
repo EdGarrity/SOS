@@ -2,7 +2,7 @@
 #include "NumOps.h"
 #include "RandOps.h"
 
-namespace push
+namespace Push
 {
 	void initInt()
 	{

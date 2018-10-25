@@ -27,10 +27,10 @@
 #define GENERIC(name,func) FULLGENERIC(name,func,0);
 
 // Initialization of global Random Number Generator
-RNG rng(push::global_parameters.random_seed);
+RNG rng(Push::global_parameters.random_seed);
 
 // definition of the full push language
-namespace push
+namespace Push
 {
 	//Instruction* InstructionFactory::newInstruction(Operator op, std::string name)
 	//{

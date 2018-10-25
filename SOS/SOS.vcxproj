@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Domain\ErrorFunction.h" />
     <ClInclude Include="Finance\Broker.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PushGP\Arguments.h" />
@@ -182,6 +183,7 @@
     <ClInclude Include="Utilities\Singleton.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Domain\ErrorFunction.cpp" />
     <ClCompile Include="Finance\Broker.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

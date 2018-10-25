@@ -3,7 +3,7 @@
 #include "Code.h"
 #include "Type.h"
 
-namespace push
+namespace Push
 {
 	class TypedAtom : public CodeAtom 
 	{

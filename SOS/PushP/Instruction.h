@@ -3,7 +3,7 @@
 #include "StaticInit.h"
 #include "TypedAtom.h"
 
-namespace push
+namespace Push
 {
 	class Env;
 
@@ -70,6 +70,11 @@ namespace push
 		virtual void set_parentheses(unsigned int _parentheses)
 		{
 			parentheses_ = _parentheses;
+		}
+
+		TYPE_ID get_type2()
+		{
+			return TYPE_ID::ins;
 		}
 
 	protected:

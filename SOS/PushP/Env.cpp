@@ -11,7 +11,7 @@
 #include <Windows.h>
 
 
-namespace push
+namespace Push
 {
 	const Parameters global_parameters =
 	{

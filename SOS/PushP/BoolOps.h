@@ -2,7 +2,7 @@
 
 #include "Env.h"
 
-namespace push
+namespace Push
 {
 
 	inline unsigned _and()

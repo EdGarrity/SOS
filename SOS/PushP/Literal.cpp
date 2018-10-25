@@ -1,6 +1,6 @@
 #include "Literal.h"
 
-namespace push
+namespace Push
 {
 
 }

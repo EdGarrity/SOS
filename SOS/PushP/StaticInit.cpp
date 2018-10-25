@@ -1,7 +1,7 @@
 #include "StaticInit.h"
 #include "Env.h"
 
-namespace push
+namespace Push
 {
 	namespace detail
 	{

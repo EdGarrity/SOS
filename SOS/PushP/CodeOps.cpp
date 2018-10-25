@@ -2,7 +2,7 @@
 
 using namespace std;
 
-namespace push
+namespace Push
 {
 	unsigned _nth()
 	{

@@ -7,11 +7,15 @@ namespace pushGP
 		//*******************************************************
 		// Domain specific globals
 
-		// Number of training cases for elite lexicase selection
+		// Set number of training cases to number of trading days in a year
 		unsigned int number_of_training_cases = 252;
+
+		// Brokeage account opening balance
+		double opening_balance = 10000;
 
 		//*******************************************************
 		// General GP storage variables
+
 		Individual population_agents[argmap::population_size];
 		Individual child_agents[argmap::population_size];
 

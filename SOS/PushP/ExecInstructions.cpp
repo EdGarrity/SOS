@@ -4,7 +4,7 @@
 
 using namespace std;
 
-namespace push
+namespace Push
 {
 	unsigned s()
 	{
@@ -217,7 +217,7 @@ namespace push
 		make_instruction((Operator)do_range, "EXEC.DO*RANGE", integerType + integerType + execType, execType, 1);
 		make_instruction((Operator)do_count, "EXEC.DO*COUNT", integerType + execType, execType, 1);
 		make_instruction((Operator)do_times, "EXEC.DO*TIMES", integerType + execType, execType, 1);
-		make_instruction((Operator)exec_while, "EXEC.WHILE", execType, execType, 1);
+		make_instruction((Operator)exec_while, "EXEC.WHILE", boolType + execType, execType, 1);
 		make_instruction((Operator)do_while, "EXEC.DO*WHILE", execType, execType, 1);
 		make_instruction((Operator)exec_when, "EXEC.WHEN", boolType + execType, execType, 1);
 

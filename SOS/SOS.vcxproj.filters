@@ -37,6 +37,12 @@
     <Filter Include="Source Files\Finance">
       <UniqueIdentifier>{5394fb34-2435-4635-bba8-263625ba54b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Domain">
+      <UniqueIdentifier>{48b827ef-e4f3-4798-805d-a6eb923b2590}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Domain">
+      <UniqueIdentifier>{9303fbb5-400f-4c99-b592-ee8539eac7d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -93,9 +99,6 @@
     <ClInclude Include="PushP\StaticLibMacros.h">
       <Filter>Header Files\PushP</Filter>
     </ClInclude>
-    <ClInclude Include="PushP\BoolOps.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PushP\CodeBasePtr.h">
       <Filter>Header Files\PushP</Filter>
     </ClInclude>
@@ -125,6 +128,12 @@
     </ClInclude>
     <ClInclude Include="PushGP\Globals.h">
       <Filter>Header Files\PushGP</Filter>
+    </ClInclude>
+    <ClInclude Include="PushP\BoolOps.h">
+      <Filter>Header Files\PushP</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\ErrorFunction.h">
+      <Filter>Header Files\Domain</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -202,6 +211,9 @@
     </ClCompile>
     <ClCompile Include="PushGP\Globals.cpp">
       <Filter>Source Files\PushGP</Filter>
+    </ClCompile>
+    <ClCompile Include="Domain\ErrorFunction.cpp">
+      <Filter>Source Files\Domain</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

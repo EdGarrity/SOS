@@ -2,7 +2,7 @@
 
 #include "Code.h"
 
-namespace push
+namespace Push
 {
 	int init_push();
 	
@@ -72,4 +72,4 @@ namespace push
 } // namespace detail / push
 
 // the object that does the initialization
-static push::detail::StaticInit static_initializer;
+static Push::detail::StaticInit static_initializer;

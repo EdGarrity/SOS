@@ -2,7 +2,7 @@
 #include "Type.h"
 #include "Env.h"
 
-namespace push
+namespace Push
 {
 	// This needs to be initialize in Push Initialze and stored in Thread Local Storage
 	class Env;

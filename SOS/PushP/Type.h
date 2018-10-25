@@ -3,7 +3,7 @@
 #include <vector>
 #include <algorithm>
 
-namespace push
+namespace Push
 {
 	class Type;
 	class Env;
@@ -12,16 +12,18 @@ namespace push
 	class Type
 	{
 		std::vector<int> type;
-		unsigned _start;
+		unsigned _start;		//EJG needs to be initialized.
 
 	public:
 
 		Type(size_t len = 0) : type(len)
 		{
+			postc();
 		}
 		Type(size_t len, size_t which, int value = 1) : type(len)
 		{
 			type[which] = value;
+			postc();
 		}
 
 		typedef std::vector<int> TypeVec;
@@ -104,15 +106,16 @@ namespace push
 		{
 			while (type.size() && type.back() == 0) type.pop_back();
 
-//			postc();
+			postc();
 		}
-		//void postc()
-		//{
-		//	for (_start = 0; _start < type.size(); ++_start)
-		//	{
-		//		if (type[_start] > 0) break;
-		//	}
-		//}
+
+		void postc()
+		{
+			for (_start = 0; _start < type.size(); ++_start)
+			{
+				if (type[_start] > 0) break;
+			}
+		}
 	};
 
 	inline Type operator+(const Type &a, const Type &b)

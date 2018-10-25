@@ -4,7 +4,7 @@
 #include "Code.h"
 #include "TypeDef.h"
 
-namespace push
+namespace Push
 {
 	class Env;
 	class Type;

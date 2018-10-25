@@ -3,7 +3,7 @@
 #include "Code.h"
 #include "Type.h"
 
-namespace push
+namespace Push
 {
 	template <typename T>  inline size_t get_stack_num()
 	{

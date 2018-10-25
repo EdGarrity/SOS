@@ -4,7 +4,7 @@
 #include "Env.h"
 #include "CodeUtils.h"
 
-namespace push
+namespace Push
 {
 	inline unsigned rand_bool()
 	{

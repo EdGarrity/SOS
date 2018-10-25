@@ -5,7 +5,7 @@
 #include "Env.h"
 #include "..\Utilities\MyException.h"
 
-namespace push
+namespace Push
 {
 	//class Env;
 
@@ -75,6 +75,21 @@ namespace push
 			}
 
 			return codeString;
+		}
+
+		TYPE_ID get_type2()
+		{
+			if (typeid(value) == typeid(bool))
+				return TYPE_ID::boolean;
+
+			else if (typeid(value) == typeid(int))
+				return TYPE_ID::integer;
+
+			else if (typeid(value) == typeid(double))
+				return TYPE_ID::floating_point;
+
+			else
+				return TYPE_ID::unknown;
 		}
 
 		T get() const

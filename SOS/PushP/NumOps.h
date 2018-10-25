@@ -3,7 +3,7 @@
 #include <exception>
 #include "Env.h"
 
-namespace push
+namespace Push
 {
 	// plus, minus, multiplies, divides
 	template <class T>
@@ -36,8 +36,8 @@ namespace push
 	template <class T>
 	inline unsigned divides()
 	{
-		//if (NOT(has_elements<T>(env,2))) return 1;	//Was commented out in original code.  I uncommented after encountering an exception which appeared to be caused by not having enough data on the stack.
-		//
+		if ((has_elements<T>(2)) == false) return 1;	//Was commented out in original code.  I uncommented after encountering an exception which appeared to be caused by not having enough data on the stack.
+		
 		//if ( get_stack<T>( env ).back() == T() )
 		//{
 		//	env.error();

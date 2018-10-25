@@ -4,6 +4,7 @@
 #include "Random.h"
 #include "Selection.h"
 #include "Breed.h"
+#include "..\PushP\StaticInit.h"
 
 namespace pushGP
 {
@@ -25,14 +26,12 @@ namespace pushGP
 		}
 	}
 
-	void evaluate_individual(Individual & individual, std::function<void(Individual)> error_function)
+	void evaluate_individual(Individual & individual, std::function<void(Individual&)> error_function)
 	{
 		error_function(individual);
-
-
 	}
 
-	void compute_errors(std::function<void(Individual)> error_function)
+	void compute_errors(std::function<void(Individual&)> error_function)
 	{
 		for (int n = 0; n < argmap::population_size; n++)
 		{
@@ -54,10 +53,12 @@ namespace pushGP
 		}
 	}
 
-	void pushgp(std::function<void(Individual)> error_function)
+	void pushgp(std::function<void(Individual&)> error_function)
 	{
 		unsigned int generation = 0;
 		bool done = false;
+
+		Push::init_push();
 
 		make_pop_agents();
 		make_child_agents();

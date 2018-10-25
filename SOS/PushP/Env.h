@@ -6,7 +6,7 @@
 #include "CodeUtils.h" // for cdr
 #include "..\Finance\Broker.h"
 
-namespace push
+namespace Push
 {
 	// This needs to be initialize in Push Initialze and stored in Thread Local Storage
 	extern thread_local Env env;

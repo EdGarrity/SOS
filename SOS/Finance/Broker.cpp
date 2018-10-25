@@ -15,12 +15,12 @@ namespace finance
 	unsigned int datatable_rows_;
 	unsigned int datatable_columns_;
 
-	Broker::Broker()
+	Broker::Broker(double opening_balance)
 	{
-//		account_ = new Account(openingBalance_);
-		load_datatable("data.csv");
+		cash_ = opening_balance;
+		stock_ = 0;
 
-//		Reset(parameter.seed_cash);
+		load_datatable("C:\\Temp\\PushP\\push-3.1.0\\test - Search\\dataTable.csv");
 	}
 
 	/**
@@ -49,7 +49,7 @@ namespace finance
 
 			// Ignore header row
 			if (l == 1)
-				break;
+				continue;
 
 			if (s[0] != '#')
 			{
@@ -88,6 +88,18 @@ namespace finance
 		datatable_columns_ = datatable_[0].size();
 
 		return datatable_;
+	}
+
+	unsigned int Broker::get_number_of_datatable_rows()
+	{
+		load_datatable("C:\\Temp\\PushP\\push-3.1.0\\test - Search\\dataTable.csv");
+
+		return datatable_rows_;
+	}
+
+	unsigned int Broker::get_number_of_datatable_columns()
+	{
+		return datatable_columns_;
 	}
 
 	/// <summary>Returns the data from the Stock Data Array pointed to by the row and column parameters</summary>

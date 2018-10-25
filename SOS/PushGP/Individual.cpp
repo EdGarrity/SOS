@@ -9,7 +9,7 @@
 // counts as a point.
 namespace pushGP
 {
-	using namespace push;
+	using namespace Push;
 
 	Individual::Individual()
 	{
@@ -196,7 +196,7 @@ namespace pushGP
 			// If here, ready for next instruction
 			else
 			{
-				unsigned int number_paren_groups = push::lookup_instruction_paren_groups(genome.back().instruction);
+				unsigned int number_paren_groups = Push::lookup_instruction_paren_groups(genome.back().instruction);
 
 				if (number_paren_groups > 0)
 				{
@@ -227,7 +227,7 @@ namespace pushGP
 
 		program_ += ")";
 
-		if (count_points(program_) > push::global_parameters.max_points_in_program)
+		if (count_points(program_) > Push::global_parameters.max_points_in_program)
 			program_ = "";
 	}
 

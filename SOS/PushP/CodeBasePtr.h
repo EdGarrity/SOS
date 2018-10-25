@@ -1,5 +1,5 @@
 #pragma once
-namespace push
+namespace Push
 {
 	namespace detail
 	{

@@ -10,7 +10,7 @@
 #include <forward_list>
 #include "CodeBasePtr.h"
 
-namespace push
+namespace Push
 {
 	/*
 	 * program ::= instruction | literal | ( program* )
@@ -24,16 +24,16 @@ namespace push
 	extern thread_local Env env;
 
 
-	typedef push::detail::CodeBase_prt<CodeBase> Code;
-	typedef push::detail::ExecBase_ptr<CodeBase> Exec;
+	typedef Push::detail::CodeBase_prt<CodeBase> Code;
+	typedef Push::detail::ExecBase_ptr<CodeBase> Exec;
 	typedef std::vector<Code> CodeArray;
 	typedef unsigned(*Operator)(Env &);
 
-	typedef std::map<std::string, push::Code> String2CodeMap;
+	typedef std::map<std::string, Push::Code> String2CodeMap;
 
 	typedef std::map<std::string, unsigned int> String2ParenthesesMap;
 
-	typedef std::set<push::Code> CodeSet;
+	typedef std::set<Push::Code> CodeSet;
 
 	/* Globals (Check StaticInit) */
 	extern const String2CodeMap &str2code_map;
@@ -150,6 +150,20 @@ namespace push
 		bool operator==(const CodeBase &other) const;
 		bool operator!=(const CodeBase &other) const;
 		bool operator<(const CodeBase &other) const;
+
+		enum TYPE_ID
+		{
+			unknown = 0,
+			ins,
+			integer,
+			floating_point,
+			boolean
+		};
+
+		virtual TYPE_ID get_type2()
+		{
+			return TYPE_ID::unknown;
+		}
 	};
 
 	//class ExecBase : public CodeBase
@@ -235,6 +249,11 @@ namespace push
 			lst->_stack.swap(vec); // destructs vec
 			lst->calc_sizes();
 			return Code(lst);
+		}
+
+		TYPE_ID get_type()
+		{
+			return TYPE_ID::unknown;
 		}
 	};
 
