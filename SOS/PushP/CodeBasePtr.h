@@ -89,7 +89,7 @@ namespace Push
 			ExecBase_ptr() : ptr(0) {} 
 			explicit ExecBase_ptr(const CodeBase_prt<T> & s) : ptr(s.ptr) {} 
 
-			CodeBase_prt<T> lock() const
+			CodeBase_prt<T> to_CodeBase() const
 			{
 				return CodeBase_prt<T>(*this);
 			}

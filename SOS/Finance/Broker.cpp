@@ -11,9 +11,13 @@ using namespace std;
 
 namespace finance
 {
-	DataTable datatable_;
-	unsigned int datatable_rows_;
-	unsigned int datatable_columns_;
+	//DataTable datatable_;
+	//unsigned int datatable_rows_;
+	//unsigned int datatable_columns_;
+
+	double datatable_[1775][4043];
+	unsigned int datatable_rows_ = 0;
+	unsigned int datatable_columns_ = 0;
 
 	Broker::Broker(double opening_balance)
 	{
@@ -30,31 +34,35 @@ namespace finance
 	 *
 	 * (See https://waterprogramming.wordpress.com/2017/08/20/reading-csv-files-in-c/)
 	 */
-	vector<vector<double>> Broker::load_datatable(string inputFileName)
+	void Broker::load_datatable(string inputFileName)
 	{
-		if (datatable_.size() > 0)
-			return datatable_;
+		//if (datatable_.size() > 0)
+		//	return datatable_;
+		if (datatable_rows_ > 0)
+			return;
 
 		//	vector<vector<double> > datatable;
 		ifstream inputFile(inputFileName);
-		int l = 0;
+		int row = -1;
+		unsigned int column = 0;
 
 		while (inputFile)
 		{
-			l++;
+			row++;
 			string s;
 
 			if (!getline(inputFile, s))
 				break;
 
 			// Ignore header row
-			if (l == 1)
+			if (row == 0)
 				continue;
 
 			if (s[0] != '#')
 			{
 				istringstream ss(s);
-				vector<double> record;
+//				vector<double> record;
+				column = 0;
 
 				while (ss)
 				{
@@ -65,16 +73,17 @@ namespace finance
 
 					try
 					{
-						record.push_back(stof(line));
+//						record.push_back(stof(line));
+						datatable_[row][column++] = stof(line);
 					}
 					catch (const std::invalid_argument e)
 					{
-						cout << "NaN found in file " << inputFileName << " line " << l << endl;
+						cout << "NaN found in file " << inputFileName << " line " << row << endl;
 						e.what();
 					}
 				}
 
-				datatable_.push_back(record);
+//				datatable_.push_back(record);
 			}
 		}
 
@@ -84,10 +93,12 @@ namespace finance
 			throw MyException("File not found.");
 		}
 
-		datatable_rows_ = datatable_.size();
-		datatable_columns_ = datatable_[0].size();
+		//datatable_rows_ = datatable_.size();
+		//datatable_columns_ = datatable_[0].size();
+		datatable_rows_ = ++row;
+		datatable_columns_ = column;
 
-		return datatable_;
+//		return datatable_;
 	}
 
 	unsigned int Broker::get_number_of_datatable_rows()

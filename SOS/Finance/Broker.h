@@ -4,10 +4,14 @@
 
 namespace finance
 {
-	typedef std::vector<double> Row;
-	typedef std::vector<Row> DataTable;
+	//typedef std::vector<double> Row;
+	//typedef std::vector<Row> DataTable;
 
-	extern DataTable datatable_;
+	//extern DataTable datatable_;
+	//extern unsigned int datatable_rows_;
+	//extern unsigned int datatable_columns_;
+
+	extern double datatable_[1775][4043];
 	extern unsigned int datatable_rows_;
 	extern unsigned int datatable_columns_;
 
@@ -23,7 +27,7 @@ namespace finance
 	public:
 		Broker(double opening_balance);
 
-		static std::vector<std::vector<double>> load_datatable(std::string inputFileName);
+		static void load_datatable(std::string inputFileName);
 		static unsigned int get_number_of_datatable_rows();
 		static unsigned int get_number_of_datatable_columns();
 		static double get_value_from_datatable(unsigned _row, int _column);

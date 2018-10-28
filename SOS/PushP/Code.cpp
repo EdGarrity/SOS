@@ -36,6 +36,11 @@ namespace Push
 		codeBaseRegister.record(this);
 	}
 
+	istream& operator>>(istream& is, Code& code) {
+		code = parse(is);
+		return is;
+	}
+
 	bool CodeBase::operator==(const CodeBase & b) const
 	{
 		const CodeBase & a = *this;
@@ -151,15 +156,32 @@ namespace Push
 	void CodeList::calc_sizes()
 	{
 		_size = 1;
-		_binary_size = _stack.size() == 0 
+		_binary_size = (_stack.size() == 0) 
 			? 0 
 			: _stack.size() - 1; // internal nodes
+
+		// debug
+		if (_stack.size() > 0)
+		{
+			Code c1 = _stack[0];
+			CodeBase p1 = c1.get();
+			size_t s1 = c1->size();
+		}
 
 		for (CodeArray::const_iterator it = _stack.begin(); it != _stack.end(); ++it)
 		{
 			_size += (*it)->size();
 			_binary_size += (*it)->binary_size();
 		}
+
+		//_size = 1;
+		//_binary_size = _stack.size() - 1; // internal nodes
+
+		//for (CodeArray::const_iterator it = _stack.begin(); it != _stack.end(); ++it) 
+		//{
+		//	_size += (*it)->size();
+		//	_binary_size += (*it)->binary_size();
+		//}
 	}
 
 	std::string CodeList::to_string() const
@@ -183,23 +205,4 @@ namespace Push
 
 		return 1;
 	}
-
-	//CodeList* CodeFactory::newCodeList(const CodeArray & stack)
-	//{
-	//	CodeList* lp = new CodeList(stack);
-	//	_codeList.emplace_front(lp);
-	//	return lp;
-	//}
-
-	//CodeList * CodeFactory::newCodeList(const CodeBase & a)
-	//{
-	//	CodeList* lp = new CodeList(a);
-	//	_codeList.emplace_front(lp);
-	//	return lp;
-	//}
-
-	//void CodeFactory::registerObject(const CodeBase* code)
-	//{
-	//	_codeList.emplace_front(code);
-	//}
 }
