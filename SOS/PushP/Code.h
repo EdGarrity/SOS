@@ -83,6 +83,10 @@ namespace Push
 
 		void clean_up()
 		{
+			//***********************
+			// Left off here
+			//***********************
+
 			//CodeBaseRegisterNode* next = _head;
 			//CodeBaseRegisterNode* node = _head;
 			//while (next != nullptr)
