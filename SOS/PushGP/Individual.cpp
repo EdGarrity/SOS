@@ -53,6 +53,33 @@ namespace pushGP
 		return *this;
 	}
 
+	void Individual::set_genome(std::string _genome)
+	{
+		program_.clear();
+		genome_.clear();
+		errors_.clear();
+
+		parse_string_to_plush_genome(_genome);
+		translate_plush_genome_to_push_program();
+	}
+
+	std::string Individual::to_string()
+	{
+		std::string genome_string;
+
+		for (int n = 0; n < genome_.size(); n++)
+		{
+			genome_string += "{";
+			genome_string += ":instruction ";
+			genome_string += genome_[n].instruction;
+			genome_string += " :close  ";
+			genome_string += std::to_string(genome_[n].parentheses);
+			genome_string += "}";
+		}
+
+		return genome_string;
+	}
+
 	unsigned int count_points(const std::string & program)
 	{
 		if (program.length() == 0)

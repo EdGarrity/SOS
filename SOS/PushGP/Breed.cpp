@@ -26,7 +26,7 @@ namespace pushGP
 		}
 
 		// Check if child too big
-		if (child.genome().size() > (argmap::max_points / 4))
+		if (child.get_genome().size() > (argmap::max_points / 4))
 			child = Individual(random_plush_genome());
 
 		return child;

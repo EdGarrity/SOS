@@ -1,0 +1,56 @@
+\PushP\StaticInit.h(34):					instructions_ptr = new Code(*nil_ptr);
+\PushP\StaticInit.h(35):					str2code_map_ptr = new String2CodeMap();
+\PushP\StaticInit.h(36):					str2parentheses_map_ptr = new String2ParenthesesMap();
+\PushP\StaticInit.h(37):					erc_set_ptr = new CodeSet();
+
+\PushP\RNG.h(118):		state = new uint32[N + 1];
+
+\PushP\CodeOps.h(78):		push<Code>(Code(new Literal<T>(a)));
+\PushP\Literal.h(139):			new Literal<T>
+\PushP\CodeInstructions.cpp(30):			vec[3] = Code(new Literal<int>(n));
+\PushP\CodeInstructions.cpp(31):			vec[4] = Code(new Literal<int>(i));
+\PushP\CodeInstructions.cpp(50):		static Code zero = Code(new Literal<int>(0));
+\PushP\CodeInstructions.cpp(56):		vec[3] = Code(new Literal<int>(n - 1));
+\PushP\CodeInstructions.cpp(71):		static Code zero = Code(new Literal<int>(0));
+\PushP\CodeInstructions.cpp(78):		vec[3] = Code(new Literal<int>(n - 1));
+\PushP\CodeUtils.cpp(281):				Code value = Code(new Literal<bool>(atom == "TRUE" ? true : false));
+\PushP\CodeUtils.cpp(304):				Code v = Code(new Literal<int>(val));
+\PushP\CodeUtils.cpp(313):				Code v = Code(new Literal<double>(dbl));
+\PushP\Env.cpp(308):			result = Code(new Literal<int>(int_stack.back()));
+\PushP\Env.cpp(318):			result = Code(new Literal<bool>(bool_stack.back()));
+\PushP\Env.cpp(323):			result = Code(new Literal<double>(double_stack.back()));
+\PushP\ExecInstructions.cpp(91):				vec[3] = Code(new Literal<int>(i + direction));
+\PushP\ExecInstructions.cpp(110):		vec[2] = Code(new Literal<int>(n));
+\PushP\ExecInstructions.cpp(111):		vec[3] = Code(new Literal<int>(i));
+\PushP\ExecInstructions.cpp(127):		static Code zero = Code(new Literal<int>(0));
+\PushP\ExecInstructions.cpp(130):		vec[2] = Code(new Literal<int>(n - 1));
+\PushP\ExecInstructions.cpp(147):		static Code zero = Code(new Literal<int>(0));	// Potetial memory leak
+\PushP\ExecInstructions.cpp(152):		vec[2] = Code(new Literal<int>(n - 1));
+
+\PushP\Instruction.h(90):		return static_initializer.register_pushfunc(Code(new Instruction(op, type + "." + name, Type(), Type())));
+\PushP\Instruction.h(96):		return static_initializer.register_pushfunc(Code(new Instruction(op, type_name, Type(), Type())));
+\PushP\Instruction.h(106):		Instruction* ins = new Instruction(op, type + "." + name, in, out, parentheses);
+\PushP\Instruction.h(116):		return static_initializer.register_pushfunc(Code(new Instruction(op, type_name, intype, outtype, parentheses)));
+
+\PushP\Code.h(230):			CodeList* lst = new CodeList;
+\PushP\CodeOps.cpp(40):		push(Code(new CodeList(stack)));
+\PushP\CodeUtils.cpp(121):				resultvec.push_back(new CodeList(codevec)/*CodeList::adopt(codevec)*/); //Code(new CodeList(codevec)));
+\PushP\CodeUtils.cpp(334):		CodeList* lp = new CodeList(stack1);
+\PushP\StaticInit.cpp(88):			(*instructions_ptr) = new CodeList(instruction_table); //
+
+\PushP\CodeOps.h(104):		push<Code>(CodeList::adopt(second_stack)); //push<Code>(new CodeList(second_stack)); // push<Code>(CodeList::adopt(second_stack)); //Code(new CodeList(second_stack)));
+\PushP\CodeOps.h(131):			push<Code>(CodeList::adopt(stack)); //Code(new CodeList(stack)));
+\PushP\CodeUtils.h(26):		return CodeList::adopt(stack); //*new CodeList(stack); // CodeList::adopt(stack); //Code( new CodeList(stack) );
+\PushP\CodeUtils.h(34):		return CodeList::adopt(stack); //return *new CodeList(stack); // return CodeList::adopt(stack); //Code( new CodeList(stack) );
+\PushP\CodeUtils.h(53):		return CodeList::adopt(stack); //Code( new CodeList(stack));
+\PushP\StaticInit.h(33):					nil_ptr = new Code(new CodeList(CodeArray()));
+\PushP\CodeInstructions.cpp(32):			env.push_code_to_exec_stack(CodeList::adopt(vec)); //env.exec_stack.push_back(*new CodeList(vec));  //env.push_guarded(CodeList::adopt(vec)); //Code(new CodeList(vec)));
+\PushP\CodeInstructions.cpp(58):		env.push_code_to_exec_stack(CodeList::adopt(vec)); //Code(new CodeList(vec)));
+\PushP\CodeInstructions.cpp(80):		env.push_code_to_exec_stack(CodeList::adopt(vec)); //Code(new CodeList(vec)));
+\PushP\CodeUtils.cpp(75):				return CodeList::adopt(stack); //Code( new CodeList(stack) );
+\PushP\CodeUtils.cpp(124):		return CodeList::adopt(resultvec); //new CodeList(resultvec); // CodeList::adopt(resultvec); //Code(new CodeList(resultvec));
+\PushP\CodeUtils.cpp(188):		return CodeList::adopt(stack); //new CodeList(stack); // CodeList::adopt(stack); //Code(new CodeList(stack));
+
+\PushP\ExecInstructions.cpp(112):		Code result = Code(new DoRangeClass(vec));
+\PushP\ExecInstructions.cpp(132):		Code result = Code(new DoRangeClass(vec));
+\PushP\ExecInstructions.cpp(154):		Code result = Code(new DoRangeClass(vec)); // Potetial memory leak

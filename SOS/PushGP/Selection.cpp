@@ -76,7 +76,7 @@ namespace pushGP
 
 			for (int n = 0; n < argmap::population_size; n++)
 			{
-				individual_errors = globals::population_agents[n].errors();
+				individual_errors = globals::population_agents[n].get_errors();
 				test_case_errors.push_back(individual_errors[t]);
 			}
 
@@ -110,7 +110,7 @@ namespace pushGP
 			for (auto it = survivors_index.begin(); it != survivors_index.end(); it++)
 			{
 				Individual ind = globals::population_agents[*it];
-				std::vector<double> errors = ind.errors();
+				std::vector<double> errors = ind.get_errors();
 				elite = (errors[training_case] < elite) ? errors[training_case] : elite;
 			}
 
@@ -119,7 +119,7 @@ namespace pushGP
 			for (auto it = survivors_index.begin(); it != survivors_index.end(); it++)
 			{
 				Individual ind = globals::population_agents[*it];
-				std::vector<double> errors = ind.errors();
+				std::vector<double> errors = ind.get_errors();
 
 				if (errors[training_case] > (elite + globals::epsilons[training_case]))
 				{
