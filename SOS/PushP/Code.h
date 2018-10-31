@@ -21,8 +21,7 @@ namespace Push
 	class CodeBase;
 
 	// This needs to be initialize in Push Initialze and stored in Thread Local Storage
-//	extern thread_local Env env;
-	extern Env env;
+	extern thread_local Env env;
 
 
 	typedef Push::detail::CodeBase_prt<CodeBase> Code;

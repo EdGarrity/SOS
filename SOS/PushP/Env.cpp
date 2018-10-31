@@ -32,8 +32,7 @@ namespace Push
 	////}
 
 	// This needs to be initialized in Push Initialze and stored in Thread Local Storage
-//	thread_local Env env;
-	Env env;
+	thread_local Env env;
 
 	//CodeList * push::Env::newCodeList(const CodeArray & stack)
 	//{

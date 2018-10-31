@@ -9,8 +9,7 @@
 namespace Push
 {
 	// This needs to be initialize in Push Initialze and stored in Thread Local Storage
-//	extern thread_local Env env;
-	extern Env env;
+	extern thread_local Env env;
 
 //	typedef std::map<std::string, unsigned int> String2parenthesesMap;
 //	extern const String2parenthesesMap &str2parentheses_map;

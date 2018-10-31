@@ -11,8 +11,7 @@ using namespace std;
 
 namespace finance
 {
-//	const string data_table_filename = "C:\\Temp\\PushP\\push - 3.1.0\\test - Search\\dataTable.csv";
-	const string data_table_filename = "C:\\dataTable.csv";
+	const string data_table_filename = "C:\\Temp\\PushP\\push-3.1.0\\test - Search\\dataTable.csv";
 	DataTable datatable_;
 	unsigned int datatable_rows_;
 	unsigned int datatable_columns_;
@@ -40,8 +39,6 @@ namespace finance
 		//	vector<vector<double> > datatable;
 		ifstream inputFile(data_table_filename);
 		int l = 0;
-
-		char ch = inputFile.get();
 
 		while (inputFile.good())
 		{
