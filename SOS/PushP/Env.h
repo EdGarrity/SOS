@@ -9,7 +9,8 @@
 namespace Push
 {
 	// This needs to be initialize in Push Initialze and stored in Thread Local Storage
-	extern thread_local Env env;
+//	extern thread_local Env env;
+	extern Env env;
 
 //	typedef std::map<std::string, unsigned int> String2parenthesesMap;
 //	extern const String2parenthesesMap &str2parentheses_map;
@@ -71,7 +72,8 @@ namespace Push
 		std::vector<bool>   bool_stack;
 		std::vector<double>	double_stack;
 
-		Env(unsigned _reserve = 1000) : function_set(instructions), parameters(global_parameters)
+//		Env(unsigned _reserve = 1000) : function_set(instructions), parameters(global_parameters)
+		Env(unsigned _reserve = 1000) : parameters(global_parameters)
 		{
 			//_boolLiteralFactory = new LiteralFactory<bool>();
 			//_intLiteralFactory = new LiteralFactory<int>();
@@ -147,7 +149,7 @@ namespace Push
 		/* Needed for type based packing */
 		virtual Code pop_stack_from_id(int id);
 
-		int go(int n = 50);
+		int go(long n = 50);
 	};
 
 	extern std::string print(const Env &env);

@@ -32,7 +32,8 @@ namespace Push
 	////}
 
 	// This needs to be initialized in Push Initialze and stored in Thread Local Storage
-	thread_local Env env;
+//	thread_local Env env;
+	Env env;
 
 	//CodeList * push::Env::newCodeList(const CodeArray & stack)
 	//{
@@ -69,9 +70,9 @@ namespace Push
 //	}
 
 	/* The engine */
-	int Env::go(int n)
+	int Env::go(long n)
 	{
-		int effort = 0;
+		long effort = 0;
 
 		// The basic pop-exec cycle
 		while ((!exec_stack.empty()) && (effort < n))
@@ -79,7 +80,7 @@ namespace Push
 			Exec top = exec_stack.back();
 			exec_stack.pop_back();
 
-			int unit = (*top)();
+			long unit = (*top)();
 			effort += (1u) > (unit) ? (1u) : (unit);
 		}
 
@@ -215,7 +216,7 @@ namespace Push
 	{
 		std::ostringstream os;
 		os.setf(std::ios_base::showpoint);
-		os << "(\n";
+		os << "\n\n";
 		os << "INTEGER\t(";
 
 		for (unsigned i = 0; i < env.int_stack.size(); ++i)

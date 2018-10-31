@@ -14,12 +14,12 @@ namespace domain
 	{
 		// Setup
 		init_push();
-		Code code = parse(individual.program());
+		Code code = parse(individual.get_program());
 		push_call(code);
 		env.data_record_index = row;
 
 		// Evaluate
-		env.go(1000);
+		env.go(argmap::max_point_evaluations);
 
 		// Process Results
 		if (has_elements<bool>(1))

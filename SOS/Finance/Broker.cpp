@@ -11,6 +11,8 @@ using namespace std;
 
 namespace finance
 {
+//	const string data_table_filename = "C:\\Temp\\PushP\\push - 3.1.0\\test - Search\\dataTable.csv";
+	const string data_table_filename = "C:\\dataTable.csv";
 	DataTable datatable_;
 	unsigned int datatable_rows_;
 	unsigned int datatable_columns_;
@@ -20,7 +22,7 @@ namespace finance
 		cash_ = opening_balance;
 		stock_ = 0;
 
-		load_datatable("C:\\Temp\\PushP\\push-3.1.0\\test - Search\\dataTable.csv");
+		load_datatable();
 	}
 
 	/**
@@ -30,16 +32,18 @@ namespace finance
 	 *
 	 * (See https://waterprogramming.wordpress.com/2017/08/20/reading-csv-files-in-c/)
 	 */
-	vector<vector<double>> Broker::load_datatable(string inputFileName)
+	vector<vector<double>> Broker::load_datatable()
 	{
 		if (datatable_.size() > 0)
 			return datatable_;
 
 		//	vector<vector<double> > datatable;
-		ifstream inputFile(inputFileName);
+		ifstream inputFile(data_table_filename);
 		int l = 0;
 
-		while (inputFile)
+		char ch = inputFile.get();
+
+		while (inputFile.good())
 		{
 			l++;
 			string s;
@@ -69,7 +73,7 @@ namespace finance
 					}
 					catch (const std::invalid_argument e)
 					{
-						cout << "NaN found in file " << inputFileName << " line " << l << endl;
+						cout << "NaN found in file " << data_table_filename << " line " << l << endl;
 						e.what();
 					}
 				}
@@ -80,7 +84,7 @@ namespace finance
 
 		if (!inputFile.eof())
 		{
-			cerr << "Could not read file " << inputFileName << "\n";
+			cerr << "Could not read file " << data_table_filename << "\n";
 			throw MyException("File not found.");
 		}
 
@@ -92,7 +96,7 @@ namespace finance
 
 	unsigned int Broker::get_number_of_datatable_rows()
 	{
-		load_datatable("C:\\Temp\\PushP\\push-3.1.0\\test - Search\\dataTable.csv");
+		load_datatable();
 
 		return datatable_rows_;
 	}
