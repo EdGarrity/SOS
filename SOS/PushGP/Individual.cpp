@@ -15,8 +15,7 @@ namespace pushGP
 	{
 		program_.clear();
 		genome_.clear();
-//		errors_.clear();
-		number_of_errors_ = 0;
+		errors_.clear();
 	}
 
 	Individual::Individual()
@@ -46,24 +45,14 @@ namespace pushGP
 
 		program_ = other.program_;
 		genome_ = other.genome_;
-		number_of_errors_ = other.number_of_errors_;
-
-		for (unsigned int n = 0; n < other.number_of_errors_; n++)
-			errors_[n] = other.errors_[n];
-
-//		errors_ = other.errors_;
+		errors_ = other.errors_;
 	}
 
 	Individual & Individual::operator=(const Individual & other)
 	{
 		program_ = other.program_;
 		genome_ = other.genome_;
-//		errors_ = other.errors_;
-
-		number_of_errors_ = other.number_of_errors_;
-
-		for (unsigned int n = 0; n < other.number_of_errors_; n++)
-			errors_[n] = other.errors_[n];
+		errors_ = other.errors_;
 
 		return *this;
 	}

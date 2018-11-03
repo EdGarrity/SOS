@@ -72,6 +72,8 @@ namespace Push
 
 		void record(CodeBase* p)
 		{
+			//CodeBaseRegisterNode* node = new CodeBaseRegisterNode(p, _head);
+			//_head = node;
 		}
 
 		void reset()

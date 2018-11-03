@@ -161,12 +161,12 @@ namespace Push
 			: _stack.size() - 1; // internal nodes
 
 		// debug
-		if (_stack.size() > 0)
-		{
-			Code c1 = _stack[0];
-			CodeBase p1 = c1.get();
-			size_t s1 = c1->size();
-		}
+		//if (_stack.size() > 0)
+		//{
+		//	Code c1 = _stack[0];
+		//	CodeBase p1 = c1.get();
+		//	size_t s1 = c1->size();
+		//}
 
 		for (CodeArray::const_iterator it = _stack.begin(); it != _stack.end(); ++it)
 		{

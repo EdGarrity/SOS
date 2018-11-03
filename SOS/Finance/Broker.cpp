@@ -70,7 +70,7 @@ namespace finance
 					}
 					catch (const std::invalid_argument e)
 					{
-						cout << "NaN found in file " << data_table_filename << " line " << l << endl;
+						cout << "NaN found in file " << data_table_filename << " line " << row << endl;
 						e.what();
 					}
 				}
