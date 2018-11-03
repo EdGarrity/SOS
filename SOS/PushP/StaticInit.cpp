@@ -122,25 +122,22 @@ namespace Push
 		//atexit(collect_garbage);
 		static bool initialized = false;
 
-		if (initialized)
+		if (!initialized)
 		{
-			env.initialize();
-			return 1;
+			initialized = true;
+
+			detail::init_types();
+
+			/* Initialize all instructions */
+			initGenerics();
+			initCode();
+			//		initEnv();
+			initExec();
+			initInt();
+			initFloat();
+			initBool();
+			//		initName();
 		}
-
-		initialized = true;
-		
-		detail::init_types();
-
-		/* Initialize all instructions */
-		initGenerics();
-		initCode();
-//		initEnv();
-		initExec();
-		initInt();
-		initFloat();
-		initBool();
-//		initName();
 
 		env.initialize();
 		return 0;

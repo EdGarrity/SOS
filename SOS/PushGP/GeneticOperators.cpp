@@ -22,7 +22,7 @@ namespace pushGP
 	// Canidate for optimization.
 	Individual uniform_mutation(Individual parent)
 	{
-		const std::vector<struct Atom> old_genome = parent.genome();
+		const std::vector<struct Atom> old_genome = parent.get_genome();
 		std::vector<struct Atom> new_genome;
 
 		for (auto atom : old_genome)
@@ -80,8 +80,8 @@ namespace pushGP
 
 	Individual alternation(Individual parent1, Individual parent2)
 	{
-		const std::vector<struct Atom> s1 = parent1.genome();
-		const std::vector<struct Atom> s2 = parent2.genome();
+		const std::vector<struct Atom> s1 = parent1.get_genome();
+		const std::vector<struct Atom> s2 = parent2.get_genome();
 
 		unsigned int i = 0;
 		bool use_s1 = (random_double() > 0.5) ? true : false;

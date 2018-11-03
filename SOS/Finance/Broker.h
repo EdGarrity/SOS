@@ -27,7 +27,7 @@ namespace finance
 	public:
 		Broker(double opening_balance);
 
-		static void load_datatable(std::string inputFileName);
+		static std::vector<std::vector<double>> load_datatable();
 		static unsigned int get_number_of_datatable_rows();
 		static unsigned int get_number_of_datatable_columns();
 		static double get_value_from_datatable(unsigned _row, int _column);
