@@ -300,7 +300,7 @@ namespace Push
 		switch (id)
 		{
 		case EXEC_STACK:
-			result = exec_stack.back().lock();
+			result = exec_stack.back().to_CodeBase();
 			exec_stack.pop_back();
 			break;
 

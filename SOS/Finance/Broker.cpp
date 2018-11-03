@@ -33,8 +33,10 @@ namespace finance
 	 */
 	vector<vector<double>> Broker::load_datatable()
 	{
-		if (datatable_.size() > 0)
-			return datatable_;
+		//if (datatable_.size() > 0)
+		//	return datatable_;
+		if (datatable_rows_ > 0)
+			return;
 
 		//	vector<vector<double> > datatable;
 		ifstream inputFile(data_table_filename);
@@ -42,20 +44,21 @@ namespace finance
 
 		while (inputFile.good())
 		{
-			l++;
+			row++;
 			string s;
 
 			if (!getline(inputFile, s))
 				break;
 
 			// Ignore header row
-			if (l == 1)
+			if (row == 0)
 				continue;
 
 			if (s[0] != '#')
 			{
 				istringstream ss(s);
-				vector<double> record;
+//				vector<double> record;
+				column = 0;
 
 				while (ss)
 				{
@@ -66,7 +69,8 @@ namespace finance
 
 					try
 					{
-						record.push_back(stof(line));
+//						record.push_back(stof(line));
+						datatable_[row][column++] = stof(line);
 					}
 					catch (const std::invalid_argument e)
 					{
@@ -75,7 +79,7 @@ namespace finance
 					}
 				}
 
-				datatable_.push_back(record);
+//				datatable_.push_back(record);
 			}
 		}
 
@@ -85,10 +89,12 @@ namespace finance
 			throw MyException("File not found.");
 		}
 
-		datatable_rows_ = datatable_.size();
-		datatable_columns_ = datatable_[0].size();
+		//datatable_rows_ = datatable_.size();
+		//datatable_columns_ = datatable_[0].size();
+		datatable_rows_ = ++row;
+		datatable_columns_ = column;
 
-		return datatable_;
+//		return datatable_;
 	}
 
 	unsigned int Broker::get_number_of_datatable_rows()

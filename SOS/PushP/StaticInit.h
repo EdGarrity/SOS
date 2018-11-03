@@ -49,6 +49,7 @@ namespace Push
 					delete nil_ptr;
 					delete instructions_ptr;
 					delete str2code_map_ptr;
+					delete str2parentheses_map_ptr;
 					delete erc_set_ptr;
 //					delete exec_set_ptr;
 //					delete parse_extension_hooks_ptr;

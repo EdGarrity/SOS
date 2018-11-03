@@ -47,7 +47,11 @@ namespace pushGP
 		std::vector<struct Atom> genome_;
 
 		//Vector of errors
-		std::vector<double> errors_;
+//		std::vector<double> errors_;
+		double errors_[2000];
+		unsigned int number_of_errors_;
+
+		void init();
 
 	public:
 		Individual();
@@ -73,12 +77,13 @@ namespace pushGP
 
 		const std::vector<double> get_errors()
 		{
-			return errors_;
+			return errors_[n];
 		}
 
 		void log_error(double error)
 		{
-			errors_.push_back(error);
+//			errors_.push_back(error);
+			errors_[number_of_errors_++] = error;
 		}
 
 		std::string to_string();

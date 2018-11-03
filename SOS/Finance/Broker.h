@@ -4,10 +4,14 @@
 
 namespace finance
 {
-	typedef std::vector<double> Row;
-	typedef std::vector<Row> DataTable;
+	//typedef std::vector<double> Row;
+	//typedef std::vector<Row> DataTable;
 
-	extern DataTable datatable_;
+	//extern DataTable datatable_;
+	//extern unsigned int datatable_rows_;
+	//extern unsigned int datatable_columns_;
+
+	extern double datatable_[1775][4043];
 	extern unsigned int datatable_rows_;
 	extern unsigned int datatable_columns_;
 

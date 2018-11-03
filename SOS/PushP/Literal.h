@@ -35,7 +35,10 @@ namespace Push
 			return get_type<T>();
 		}
 
-		Literal(T val) : value(val) {}
+		Literal(T val) : value(val) 
+		{
+			value = value;
+		}
 
 		unsigned operator()() const
 		{
@@ -151,7 +154,7 @@ namespace Push
 	template <>
 	inline Code pack<Exec>()
 	{
-		return pop<Exec>(env).lock();
+		return pop<Exec>(env).to_CodeBase();
 	}
 
 	/* new untyped version of Set, called DEFINE: NAME.DEFINE, INTEGER.DEFINE, etc.*/

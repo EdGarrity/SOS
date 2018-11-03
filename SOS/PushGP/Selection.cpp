@@ -121,7 +121,8 @@ namespace pushGP
 				Individual ind = globals::population_agents[*it];
 				std::vector<double> errors = ind.get_errors();
 
-				if (errors[training_case] > (elite + globals::epsilons[training_case]))
+				//if (errors[training_case] > (elite + globals::epsilons[training_case]))
+				if (globals::population_agents[*it].get_error(training_case) > (elite + globals::epsilons[training_case]))
 				{
 					survivors_index.erase_after(before_it);
 					it = before_it;

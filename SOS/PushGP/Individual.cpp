@@ -11,27 +11,30 @@ namespace pushGP
 {
 	using namespace Push;
 
-	Individual::Individual()
+	void Individual::init()
 	{
 		program_.clear();
 		genome_.clear();
-		errors_.clear();
+//		errors_.clear();
+		number_of_errors_ = 0;
+	}
+
+	Individual::Individual()
+	{
+		init();
 	}
 
 	Individual::Individual(std::vector<struct Atom> _genome)
 	{
-		program_.clear();
+		init();
 		genome_ = _genome;
-		errors_.clear();
 
 		translate_plush_genome_to_push_program();
 	}
 
 	Individual::Individual(std::string _genome)
 	{
-		program_.clear();
-		genome_.clear();
-		errors_.clear();
+		init();
 
 		parse_string_to_plush_genome(_genome);
 		translate_plush_genome_to_push_program();
@@ -39,16 +42,28 @@ namespace pushGP
 
 	Individual::Individual(const Individual & other)
 	{
+		init();
+
 		program_ = other.program_;
 		genome_ = other.genome_;
-		errors_ = other.errors_;
+		number_of_errors_ = other.number_of_errors_;
+
+		for (unsigned int n = 0; n < other.number_of_errors_; n++)
+			errors_[n] = other.errors_[n];
+
+//		errors_ = other.errors_;
 	}
 
 	Individual & Individual::operator=(const Individual & other)
 	{
 		program_ = other.program_;
 		genome_ = other.genome_;
-		errors_ = other.errors_;
+//		errors_ = other.errors_;
+
+		number_of_errors_ = other.number_of_errors_;
+
+		for (unsigned int n = 0; n < other.number_of_errors_; n++)
+			errors_[n] = other.errors_[n];
 
 		return *this;
 	}

@@ -20,7 +20,7 @@ namespace Push
 			return 1;
 		}
 
-		env.push_code_to_exec_stack(list(y.lock(), z.lock()));
+		env.push_code_to_exec_stack(list(y.to_CodeBase(), z.to_CodeBase()));
 		push(z);
 		push(x);
 		return 1;
@@ -45,7 +45,7 @@ namespace Push
 			return 1;
 		}
 
-		env.push_code_to_exec_stack(list(ycode, x.lock()));
+		env.push_code_to_exec_stack(list(ycode, x.to_CodeBase()));
 		push(x);
 
 		return 1;
@@ -105,7 +105,7 @@ namespace Push
 		static Code DoRange = parse("EXEC.DO*RANGE");
 		Exec code = pop<Exec>(env);
 		CodeArray vec(4);
-		vec[0] = code.lock();
+		vec[0] = code.to_CodeBase();
 		vec[1] = DoRange;
 		vec[2] = Code(new Literal<int>(n));
 		vec[3] = Code(new Literal<int>(i));
@@ -125,7 +125,7 @@ namespace Push
 		static Code DoRange = parse("EXEC.DO*RANGE");
 		CodeArray vec(4);
 		static Code zero = Code(new Literal<int>(0));
-		vec[0] = code.lock();
+		vec[0] = code.to_CodeBase();
 		vec[1] = DoRange;
 		vec[2] = Code(new Literal<int>(n - 1));
 		vec[3] = zero;
@@ -144,14 +144,14 @@ namespace Push
 			return 1;
 
 		CodeArray vec(4);
-		static Code zero = Code(new Literal<int>(0));
+		static Code zero = Code(new Literal<int>(0));	// Potetial memory leak
 		static Code int_pop = parse("INTEGER.POP");
 		static Code DoRange = parse("EXEC.DO*RANGE");
-		vec[0] = cons(int_pop, code.lock());
+		vec[0] = cons(int_pop, code.to_CodeBase());
 		vec[1] = DoRange;
 		vec[2] = Code(new Literal<int>(n - 1));
 		vec[3] = zero;
-		Code result = Code(new DoRangeClass(vec));
+		Code result = Code(new DoRangeClass(vec)); // Potetial memory leak
 		env.push_code_to_exec_stack(result);
 
 		return 1;

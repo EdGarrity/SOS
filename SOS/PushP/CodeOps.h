@@ -55,7 +55,7 @@ namespace Push
 	}
 
 	inline unsigned _quote() {
-		push<Code>(pop<Exec>(env).lock());
+		push<Code>(pop<Exec>(env).to_CodeBase());
 		return 1;
 	}
 
