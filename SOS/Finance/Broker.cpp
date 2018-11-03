@@ -49,7 +49,7 @@ namespace finance
 				break;
 
 			// Ignore header row
-			if (row == 0)
+			if (row == 1)
 				continue;
 
 			if (s[0] != '#')
