@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include <fstream>
 #include <string>
 #include <malloc.h>
@@ -17,6 +18,8 @@ using namespace std;
 using namespace Push;
 using namespace pushGP;
 
+const string push_gp_test_filename = "..\\Test\\PushGP_test.txt";
+
 
 // Determine total heap size
 int heap_size()
@@ -34,11 +37,213 @@ int heap_size()
 	return size;
 }
 
+std::string remove_whitespace(std::string str_in)
+{
+	std::string str_out;
+	int i = 0;
+	char c;
+
+	while (str_in[i])
+	{
+		c = str_in[i++];
+		if (!isspace(c))
+			str_out += c;
+	}
+
+	return str_out;
+}
+
+unsigned int extract_test_case_id(std::string test_case)
+{
+	unsigned int id;
+
+	const string id_key = "\"id\": ";
+	std::size_t found1;
+	std::size_t found2;
+
+	found1 = test_case.find(id_key);
+	if (found1 != std::string::npos)
+	{
+		found2 = test_case.find("\",", found1);
+
+		if (found2 != std::string::npos)
+			id = stoi(test_case.substr(found1 + id_key.size(), found2 - (found1 + id_key.size())));
+	}
+
+	return id;
+}
+
+std::string extract_program(std::string test_case)
+{
+	string program;
+	const string program_key = "\"program\": \"";
+	std::size_t found1;
+	std::size_t found2;
+
+	found1 = test_case.find(program_key);
+	if (found1 != std::string::npos)
+	{
+		found2 = test_case.find("\",", found1);
+
+		if (found2 != std::string::npos)
+			program = test_case.substr(found1 + program_key.size(), found2 - (found1 + program_key.size()));
+	}
+
+	return program;
+}
+
+std::string extract_genome(std::string test_case)
+{
+	string genome;
+	const string genome_key = "\"genome\": \"";
+	std::size_t found1;
+	std::size_t found2;
+
+	found1 = test_case.find(genome_key);
+	if (found1 != std::string::npos)
+	{
+		found2 = test_case.find("\",", found1);
+
+		if (found2 != std::string::npos)
+			genome = test_case.substr(found1 + genome_key.size(), found2 - (found1 + genome_key.size()));
+	}
+
+	return genome;
+}
+
+// Format of test cases:
+//{ "id": 1,
+//  "genome" : "...",
+//  "program" : "...",
+//  "result-set" : { "integer-stack": { "size": 1 "data" : {1 2 3} },
+//                   "float-stack" :  { "size": 1 "data" : {1.0 2.0 3.0} },
+//                   "boolean-stack:: { "size": 1 "data": {TRUE FALSE} } }
+//}
+//{ "id": 2,
+//  "genome" : "...",
+//  "program" : "...",
+//  "result-set" : { "integer-stack": { "size": 1 "data" : {1 2 3} },
+//                   "float-stack" :  { "size": 1 "data" : {1.0 2.0 3.0} },
+//                   "boolean-stack:: { "size": 1 "data": {TRUE FALSE} } }
+//}
+std::string make_test_case(unsigned int _id,
+	string _genome, 
+	string _program, 
+	vector<int>& _int_stack,
+	vector<double>& _float_stack,
+	vector<bool>& _bool_stack)
+{
+	std::stringstream test_case;
+
+	test_case << "{ \"id\": " << _id << "," << endl;
+	test_case << "  \"genome\": \"" << _genome << "\"," << endl;
+	test_case << "  \"program\": \"" << _program << "\"," << endl;
+	
+	test_case << "  \"result-set\": { \"integer-stack\": {\"size\": " << _int_stack.size() << " \"data\" : {";
+
+	if (_int_stack.size() == 0)
+		test_case << "}";
+
+	else
+	{
+		while (_int_stack.size() > 0)
+		{
+			int n = _int_stack.back();
+			_int_stack.pop_back();
+
+			if (_int_stack.size() == 0)
+				test_case << n << "}";
+			else
+				test_case << n << " ";
+
+		}
+	}
+
+	test_case << " }," << endl;
+
+	test_case << "                  \"float-stack\": {\"size\": " << _float_stack.size() << " \"data\" : {";
+
+	if (_float_stack.size() == 0)
+		test_case << "}";
+
+	else
+	{
+		while (_float_stack.size() > 0)
+		{
+			double n = _float_stack.back();
+			_float_stack.pop_back();
+
+			if (_float_stack.size() == 0)
+				test_case << n << "}";
+			else
+				test_case << n << " ";
+
+		}
+	}
+
+	test_case << " }," << endl;
+
+	test_case << "                  \"bool-stack\": {\"size\": " << _bool_stack.size() << " \"data\" : {";
+
+	if (_bool_stack.size() == 0)
+		test_case << "}";
+
+	else
+	{
+		while (_bool_stack.size() > 0)
+		{
+			bool n = _bool_stack.back();
+			_bool_stack.pop_back();
+
+			if (_bool_stack.size() == 0)
+				test_case << n << "}";
+			else
+				test_case << n << " ";
+
+		}
+	}
+
+	test_case << " } }" << endl;
+	test_case << "}" << endl;
+
+	return test_case.str();
+}
+
+string load_test_case(ifstream & pushGP_test_file)
+{
+	string test_case;
+	int brace_count = 0;
+
+	while (pushGP_test_file.good())
+	{
+		char ch = pushGP_test_file.get();
+
+		if (brace_count > 0)
+			test_case += ch;
+
+		if (ch == '{')
+		{
+			if (brace_count == 0)
+				test_case += ch;
+
+			brace_count++;
+		}
+
+		else if (ch == '}')
+		{
+			if (--brace_count <= 0)
+				break;
+		}
+	}
+
+	return test_case;
+}
+
 int test()
 {
-	int start_size = heap_size();
-
 	finance::Broker::load_datatable();
+
+	int start_size = heap_size();
 
 	ifstream myfile("..\\Test\\PushP_test.txt");
 
@@ -78,16 +283,18 @@ int test()
 	cout << "*************************************" << endl;
 	cout << endl;
 
-	ifstream pushGP_test_file("..\\Test\\PushGP_test.txt");
+	std::ifstream pushGP_test_file(push_gp_test_filename);
 
 	if (!pushGP_test_file.is_open())
 	{
-		ofstream pushGP_test_file("..\\Test\\PushGP_test.txt");
+		ofstream push_gp_test_file(push_gp_test_filename);
 
 		make_pop_agents();
 
 		for (int n = 0; n < argmap::population_size; n++)
 		{
+			cout << n << endl;
+
 			string genome = globals::population_agents[n].to_string();
 			string program = globals::population_agents[n].get_program();
 
@@ -105,72 +312,34 @@ int test()
 			else
 				cout << std::to_string(n + 1) << endl;
 
-			vector<int>& int_stack = get_stack<int>();
 
-			if (int_stack.size() > 0)
-			{
-				char inst[60];
+			string test_case = make_test_case(n + 1, genome, program, get_stack<int>(), get_stack<double>(), get_stack<bool>());
 
-				sprintf_s(inst, 60, "{:instruction %d :close 0}{:instruction INTEGER.= :close 0}", int_stack.back());
-				genome += inst;
-			}
-
-			else
-				genome += "{:instruction INTEGER.STACKDEPTH :close 0}{:instruction 0 :close 0}{:instruction INTEGER.= :close 0}";
-
-
-			globals::population_agents[n].set_genome(genome);
-
-			genome = globals::population_agents[n].to_string();
-			program = globals::population_agents[n].get_program();
-
-			pushGP_test_file << genome << endl;
-			pushGP_test_file << program << endl;
+			push_gp_test_file << test_case;
 		}
 
-		pushGP_test_file.close();
+		push_gp_test_file.close();
 	}
 
 	else
 	{
+		string test_case;
 		string test_genome;
 		string test_program;
 		unsigned int test_case_number = 0;
 
-		while (getline(pushGP_test_file, test_genome))
+		while ((test_case = load_test_case(pushGP_test_file)).size() > 0)
 		{
-			getline(pushGP_test_file, test_program);
-			test_case_number++;
+			cout << test_case << endl;
 
-			cout << test_genome << endl;
-			cout << test_program << endl;
-			cout << endl;
+			test_case_number = extract_test_case_id(test_case);
+			test_genome = extract_genome(test_case);
+			test_program = extract_program(test_case);
 
 			Individual individual(test_genome);
 
-			if (test_program != individual.get_program())
-			{
-				cout << endl;
-				cout << "Program mismatch" << endl;
-				cout << "Test case number: " << std::to_string(test_case_number) << endl;
-				cout << "test_program" << endl;
-				cout << test_program << endl;
-				cout << endl;
-				cout << "individual.get_program()" << endl;
-				cout << individual.get_program() << endl;
-				cout << endl;
-				cout << "env" << endl;
-				cout << env;
-				cout << endl;
-				return 1;
-			}
-
 			init_push();
-
-			Code code = parse(test_program);
-
-			cout << code << endl;
-
+			Code code = parse(individual.get_program());
 			push_call(code);
 
 			long effort = env.go(argmap::max_point_evaluations);
@@ -179,22 +348,20 @@ int test()
 			{
 				cout << "Skipped" << endl;
 			}
-
 			else
 			{
-				vector<bool>& stack = get_stack<bool>();
+				string recreated_test_case = make_test_case(test_case_number, individual.to_string(), individual.get_program(), get_stack<int>(), get_stack<double>(), get_stack<bool>());
 
-				if (stack.empty() || stack.back() == false)
+				if (remove_whitespace(recreated_test_case) != remove_whitespace(test_case))
 				{
 					cout << endl;
-					cout << "Bool stack empty or FALSE" << endl;
 					cout << "Test case number: " << std::to_string(test_case_number) << endl;
 					cout << "Effort = " << std::to_string(effort) << endl;
-					cout << "test_program" << endl;
-					cout << test_program << endl;
+					cout << "test_case" << endl;
+					cout << test_case << endl;
 					cout << endl;
-					cout << "individual.get_program()" << endl;
-					cout << individual.get_program() << endl;
+					cout << "recreated_test_case" << endl;
+					cout << recreated_test_case << endl;
 					cout << endl;
 					cout << "env" << endl;
 					cout << env;
