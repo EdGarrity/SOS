@@ -7,6 +7,11 @@
 
 namespace Push
 {
+	Code quote;
+	Code DoRange;
+	Code zero;
+	Code int_pop;
+
 	unsigned code_do_range()
 	{
 		int n = pop<int>(env);
@@ -18,12 +23,13 @@ namespace Push
 
 		push(i);
 
+		quote = parse("CODE.QUOTE");
+		DoRange = parse("CODE.DO*RANGE");
+
 		if (i != n)
 		{
 			i += direction;
 			CodeArray vec(5);
-			static Code quote = parse("CODE.QUOTE");
-			static Code DoRange = parse("CODE.DO*RANGE");
 			vec[0] = DoRange;
 			vec[1] = code;
 			vec[2] = quote;
@@ -46,10 +52,11 @@ namespace Push
 		if (n <= 0)
 			return 1;
 
+		quote = parse("CODE.QUOTE");
+		DoRange = parse("CODE.DO*RANGE");
+		zero = Code(new Literal<int>(0));
+
 		CodeArray vec(5);
-		static Code zero = Code(new Literal<int>(0));
-		static Code quote = parse("CODE.QUOTE");
-		static Code DoRange = parse("CODE.DO*RANGE");
 		vec[0] = DoRange;
 		vec[1] = quote;
 		vec[2] = code;
@@ -67,11 +74,12 @@ namespace Push
 		if (n <= 0)
 			return 1;
 
+		quote = parse("CODE.QUOTE");
+		DoRange = parse("CODE.DO*RANGE");
+		zero = Code(new Literal<int>(0));
+		int_pop = parse("INTEGER.POP");
+
 		CodeArray vec(5);
-		static Code zero = Code(new Literal<int>(0));
-		static Code quote = parse("CODE.QUOTE");
-		static Code int_pop = parse("INTEGER.POP");
-		static Code DoRange = parse("CODE.DO*RANGE");
 		vec[0] = DoRange;
 		vec[1] = quote;
 		vec[2] = cons(int_pop, code);
@@ -88,6 +96,7 @@ namespace Push
 		if (initialized) return;
 
 		initialized = true;
+
 		/* CODE */
 		Type binaryCode = codeType + codeType;
 		make_instruction((Operator)_cons, "CODE.CONS", binaryCode, codeType);
