@@ -35,10 +35,7 @@ namespace Push
 			return get_type<T>();
 		}
 
-		Literal(T val) : value(val) 
-		{
-			value = value;
-		}
+		Literal(T val) : value(val) {}
 
 		unsigned operator()() const
 		{

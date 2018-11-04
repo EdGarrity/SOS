@@ -1,0 +1,2 @@
+{:instruction NOOP_OPEN_PAREN :close 0}{:instruction 5 :close 0}{:instruction INTEGER.DUP :close 1}{:instruction INTEGER.= :close 0}
+((5 INTEGER.DUP )INTEGER.= )

@@ -15,8 +15,7 @@ namespace pushGP
 	{
 		program_.clear();
 		genome_.clear();
-//		errors_.clear();
-		number_of_errors_ = 0;
+		errors_.clear();
 	}
 
 	Individual::Individual()
@@ -46,26 +45,43 @@ namespace pushGP
 
 		program_ = other.program_;
 		genome_ = other.genome_;
-		number_of_errors_ = other.number_of_errors_;
-
-		for (unsigned int n = 0; n < other.number_of_errors_; n++)
-			errors_[n] = other.errors_[n];
-
-//		errors_ = other.errors_;
+		errors_ = other.errors_;
 	}
 
 	Individual & Individual::operator=(const Individual & other)
 	{
 		program_ = other.program_;
 		genome_ = other.genome_;
-//		errors_ = other.errors_;
-
-		number_of_errors_ = other.number_of_errors_;
-
-		for (unsigned int n = 0; n < other.number_of_errors_; n++)
-			errors_[n] = other.errors_[n];
+		errors_ = other.errors_;
 
 		return *this;
+	}
+
+	void Individual::set_genome(std::string _genome)
+	{
+		program_.clear();
+		genome_.clear();
+		errors_.clear();
+
+		parse_string_to_plush_genome(_genome);
+		translate_plush_genome_to_push_program();
+	}
+
+	std::string Individual::to_string()
+	{
+		std::string genome_string;
+
+		for (int n = 0; n < genome_.size(); n++)
+		{
+			genome_string += "{";
+			genome_string += ":instruction ";
+			genome_string += genome_[n].instruction;
+			genome_string += " :close  ";
+			genome_string += std::to_string(genome_[n].parentheses);
+			genome_string += "}";
+		}
+
+		return genome_string;
 	}
 
 	unsigned int count_points(const std::string & program)

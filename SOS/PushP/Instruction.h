@@ -18,7 +18,7 @@ namespace Push
 		Type intype_;
 		Type outtype_;
 
-		unsigned int parentheses_;
+		unsigned int parentheses_; // Used by PushGP to determine number of parentheses groups needed in Plush code for this instruction.
 
 	public:
 		Instruction(Operator op, std::string name) : op_(op), name_(name) {}

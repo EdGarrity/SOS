@@ -47,9 +47,7 @@ namespace pushGP
 		std::vector<struct Atom> genome_;
 
 		//Vector of errors
-//		std::vector<double> errors_;
-		double errors_[2000];
-		unsigned int number_of_errors_;
+		std::vector<double> errors_;
 
 		void init();
 
@@ -63,30 +61,28 @@ namespace pushGP
 		void translate_plush_genome_to_push_program();
 		void parse_string_to_plush_genome(std::string genome);
 
-		const std::string program()
+		const std::string get_program()
 		{
 			return program_;
 		}
 
-		const std::vector<struct Atom> genome()
+		const std::vector<struct Atom> get_genome()
 		{
 			return genome_;
 		}
 
-		//const std::vector<double> errors()
-		//{
-		//	return errors_;
-		//}
+		void set_genome(std::string _genome);
 
-		double get_error(unsigned int n)
+		const std::vector<double> get_errors()
 		{
-			return errors_[n];
+			return errors_;
 		}
 
 		void log_error(double error)
 		{
-//			errors_.push_back(error);
-			errors_[number_of_errors_++] = error;
+			errors_.push_back(error);
 		}
+
+		std::string to_string();
 	};
 }

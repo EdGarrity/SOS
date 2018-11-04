@@ -11,20 +11,17 @@ using namespace std;
 
 namespace finance
 {
-	//DataTable datatable_;
-	//unsigned int datatable_rows_;
-	//unsigned int datatable_columns_;
-
-	double datatable_[1775][4043];
-	unsigned int datatable_rows_ = 0;
-	unsigned int datatable_columns_ = 0;
+	const string data_table_filename = "C:\\Temp\\PushP\\push-3.1.0\\test - Search\\dataTable.csv";
+	DataTable datatable_;
+	unsigned int datatable_rows_;
+	unsigned int datatable_columns_;
 
 	Broker::Broker(double opening_balance)
 	{
 		cash_ = opening_balance;
 		stock_ = 0;
 
-		load_datatable("C:\\Temp\\PushP\\push-3.1.0\\test - Search\\dataTable.csv");
+		load_datatable();
 	}
 
 	/**
@@ -34,19 +31,16 @@ namespace finance
 	 *
 	 * (See https://waterprogramming.wordpress.com/2017/08/20/reading-csv-files-in-c/)
 	 */
-	void Broker::load_datatable(string inputFileName)
+	vector<vector<double>> Broker::load_datatable()
 	{
-		//if (datatable_.size() > 0)
-		//	return datatable_;
-		if (datatable_rows_ > 0)
-			return;
+		if (datatable_.size() > 0)
+			return datatable_;
 
 		//	vector<vector<double> > datatable;
-		ifstream inputFile(inputFileName);
-		int row = -1;
-		unsigned int column = 0;
+		ifstream inputFile(data_table_filename);
+		int row = 0;
 
-		while (inputFile)
+		while (inputFile.good())
 		{
 			row++;
 			string s;
@@ -55,14 +49,13 @@ namespace finance
 				break;
 
 			// Ignore header row
-			if (row == 0)
+			if (row == 1)
 				continue;
 
 			if (s[0] != '#')
 			{
 				istringstream ss(s);
-//				vector<double> record;
-				column = 0;
+				vector<double> record;
 
 				while (ss)
 				{
@@ -73,43 +66,42 @@ namespace finance
 
 					try
 					{
-//						record.push_back(stof(line));
-						datatable_[row][column++] = stof(line);
+						record.push_back(stof(line));
 					}
 					catch (const std::invalid_argument e)
 					{
-						cout << "NaN found in file " << inputFileName << " line " << row << endl;
+						cout << "NaN found in file " << data_table_filename << " line " << row << endl;
 						e.what();
 					}
 				}
 
-//				datatable_.push_back(record);
+				datatable_.push_back(record);
 			}
 		}
 
 		if (!inputFile.eof())
 		{
-			cerr << "Could not read file " << inputFileName << "\n";
+			cerr << "Could not read file " << data_table_filename << "\n";
 			throw MyException("File not found.");
 		}
 
-		//datatable_rows_ = datatable_.size();
-		//datatable_columns_ = datatable_[0].size();
-		datatable_rows_ = ++row;
-		datatable_columns_ = column;
+		datatable_rows_ = datatable_.size();
+		datatable_columns_ = datatable_[0].size();
 
-//		return datatable_;
+		return datatable_;
 	}
 
 	unsigned int Broker::get_number_of_datatable_rows()
 	{
-		load_datatable("C:\\Temp\\PushP\\push-3.1.0\\test - Search\\dataTable.csv");
+		load_datatable();
 
 		return datatable_rows_;
 	}
 
 	unsigned int Broker::get_number_of_datatable_columns()
 	{
+		load_datatable();
+
 		return datatable_columns_;
 	}
 

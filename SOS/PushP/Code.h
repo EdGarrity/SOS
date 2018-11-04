@@ -72,8 +72,8 @@ namespace Push
 
 		void record(CodeBase* p)
 		{
-			CodeBaseRegisterNode* node = new CodeBaseRegisterNode(p, _head);
-			_head = node;
+			//CodeBaseRegisterNode* node = new CodeBaseRegisterNode(p, _head);
+			//_head = node;
 		}
 
 		void reset()
@@ -93,43 +93,8 @@ namespace Push
 			//{
 			//	node = next;
 			//	next = node->_next;
-
-			//	try
-			//	{
-			//		delete node->_p;
-			//	}
-			//	catch (std::exception& e)
-			//	{
-			//		std::cout << "Standard exception: " << e.what() << std::endl;
-			//	}
-			//	catch (...)
-			//	{
-			//		std::cout << "exception: " << std::endl;
-			//	}
-
-
 			//	delete node;
 			//}
-
-			//_head = nullptr;
-
-
-			CodeBaseRegisterNode* current_node = _head;
-
-			while (current_node != nullptr)
-			{
-				CodeBaseRegisterNode* next_node = current_node->_next;
-
-				delete current_node->_p;
-				current_node->_p = nullptr;
-
-				delete current_node;
-				current_node = nullptr;
-
-				current_node = next_node;
-			}
-
-			_head = nullptr;
 		}
 	};
 
