@@ -33,7 +33,7 @@ namespace finance
 	 */
 	vector<vector<double>> Broker::load_datatable()
 	{
-		if (datatable_.size() > 0)
+//		if (datatable_.size() > 0)
 			return datatable_;
 
 		//	vector<vector<double> > datatable;

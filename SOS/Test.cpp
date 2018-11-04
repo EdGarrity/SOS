@@ -253,11 +253,18 @@ int test()
 
 		while (getline(myfile, testCase))
 		{
+			// Create new heap manger
+			CodeBaseRegister codeBaseRegister_old = codeBaseRegister;
+			codeBaseRegister.reset();
+
+			// Setup
 			init_push();
 			Code code = parse(testCase);
 			push_call(code);
+			env.data_record_index = 1;
 			env.go(argmap::max_point_evaluations);
 
+			// Process Results
 			vector<bool>& stack = get_stack<bool>();
 
 			if (stack.empty() || stack.back() == false) 
@@ -265,6 +272,11 @@ int test()
 				cout << env;
 				return 1;
 			}
+
+			// Cleanup
+			codeBaseRegister.clean_up();
+			codeBaseRegister = codeBaseRegister_old;
+			codeBaseRegister_old = codeBaseRegister; // watchpoint for debugging.
 		}
 
 		myfile.close();
@@ -298,9 +310,15 @@ int test()
 			string genome = globals::population_agents[n].to_string();
 			string program = globals::population_agents[n].get_program();
 
+			// Create new heap manger
+			CodeBaseRegister codeBaseRegister_old = codeBaseRegister;
+			codeBaseRegister.reset();
+
+			// Setup
 			init_push();
 			Code code = parse(program);
 			push_call(code);
+			env.data_record_index = 1;
 			long effort = env.go(argmap::max_point_evaluations);
 	
 			if (effort >= argmap::max_point_evaluations)
@@ -313,9 +331,15 @@ int test()
 				cout << std::to_string(n + 1) << endl;
 
 
+			// Process Results
 			string test_case = make_test_case(n + 1, genome, program, get_stack<int>(), get_stack<double>(), get_stack<bool>());
 
 			push_gp_test_file << test_case;
+
+			// Cleanup
+			codeBaseRegister.clean_up();
+			codeBaseRegister = codeBaseRegister_old;
+			codeBaseRegister_old = codeBaseRegister; // watchpoint for debugging.
 		}
 
 		push_gp_test_file.close();
@@ -338,12 +362,19 @@ int test()
 
 			Individual individual(test_genome);
 
+			// Create new heap manger
+			CodeBaseRegister codeBaseRegister_old = codeBaseRegister;
+			codeBaseRegister.reset();
+
+			// Setup
 			init_push();
 			Code code = parse(individual.get_program());
 			push_call(code);
+			env.data_record_index = 1;
 
 			long effort = env.go(argmap::max_point_evaluations);
 
+			// Process Results
 			if (effort >= argmap::max_point_evaluations)
 			{
 				cout << "Skipped" << endl;
@@ -368,6 +399,11 @@ int test()
 					return 1;
 				}
 			}
+
+			// Cleanup
+			codeBaseRegister.clean_up();
+			codeBaseRegister = codeBaseRegister_old;
+			codeBaseRegister_old = codeBaseRegister; // watchpoint for debugging.
 		}
 
 		pushGP_test_file.close();
