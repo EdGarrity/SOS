@@ -18,22 +18,22 @@ namespace Push
 
 	CodeBase::CodeBase()
 	{
-		codeBaseRegister.record(this);
+//		codeBaseRegister.record(this);
 	}
 
 	CodeBase::CodeBase(const CodeArray & stack) : _stack(stack)
 	{
-		codeBaseRegister.record(this);
+//		codeBaseRegister.record(this);
 	}
 
 	CodeBase::CodeBase(const CodeBase & code) : _stack(code._stack)
 	{
-		codeBaseRegister.record(this);
+//		codeBaseRegister.record(this);
 	}
 
 	CodeBase::CodeBase(const CodeBase * code) : _stack(code->_stack)
 	{
-		codeBaseRegister.record(this);
+//		codeBaseRegister.record(this);
 	}
 
 	istream& operator>>(istream& is, Code& code) {

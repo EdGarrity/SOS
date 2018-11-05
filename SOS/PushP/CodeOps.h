@@ -73,10 +73,24 @@ namespace Push
 
 	///* From */
 	template <class T>
-	inline unsigned _from_T() {
+	inline unsigned _from_T() 
+	{
 		T a = pop<T>(env);
 		push<Code>(Code(new Literal<T>(a)));
 		return 1;
+
+		//T a = pop<T>(env);
+
+		//if (typeid(a) == typeid(int))
+		//	push<Code>(Code(intLiteralFactory.createLiteral(a)));  //Code(new Literal<T>(a))); // 
+		//
+		//else if (typeid(a) == typeid(double))
+		//	push<Code>(Code(floatLiteralFactory.createLiteral(a)));  //Code(new Literal<T>(a))); // 
+		//
+		//else if (typeid(a) == typeid(bool))
+		//	push<Code>(Code(boolLiteralFactory.createLiteral(a)));  //Code(new Literal<T>(a))); // 
+		//
+		//return 1;
 	}
 
 

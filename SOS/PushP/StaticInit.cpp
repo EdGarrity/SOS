@@ -30,7 +30,16 @@ namespace Push
 	const CodeSet					&erc_set = *detail::erc_set_ptr;
 //	const CodeSet					&exec_set = *detail::exec_set_ptr;
 
-	thread_local CodeBaseRegister codeBaseRegister;
+//	thread_local CodeBaseRegister codeBaseRegister;
+
+//	template <class T>
+//	class LiteralFactory;
+
+	//template <class T>
+	//thread_local LiteralFactory<T> literalFactory;
+	//thread_local LiteralFactory<int> literalFactory<int>;
+	//thread_local LiteralFactory<bool> boolLiteralFactory;
+	//thread_local LiteralFactory<double> floatLiteralFactory;
 
 	namespace detail
 	{

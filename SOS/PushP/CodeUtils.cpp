@@ -278,11 +278,8 @@ namespace Push
 			// check BOOLEAN
 			if (atom == "TRUE" || atom == "FALSE")
 			{
+//				Code value = Code(boolLiteralFactory.createLiteral(atom == "TRUE" ? true : false)); //new Literal<bool>(atom == "TRUE" ? true : false));
 				Code value = Code(new Literal<bool>(atom == "TRUE" ? true : false));
-				//if ( stack.empty() )
-				//                stack.push_back( value );
-				//            else
-				//                stack.back() = cons( value, stack.back() );
 				stack.push_back(value);
 				continue;
 			}
@@ -301,6 +298,7 @@ namespace Push
 
 			if (end == atom.c_str() + atom.size()) // it's an int
 			{
+//				Code v = Code(intLiteralFactory.createLiteral(val)); // new Literal<int>(val));
 				Code v = Code(new Literal<int>(val));
 				stack.push_back(v);
 				continue;
@@ -310,9 +308,8 @@ namespace Push
 
 			if (end == atom.c_str() + atom.size()) // it's a double
 			{
+//				Code v = Code(floatLiteralFactory.createLiteral(dbl)); // new Literal<double>(dbl));
 				Code v = Code(new Literal<double>(dbl));
-				//if ( stack.empty() ) stack.push_back( v );
-				//else stack.back() = cons( v, stack.back() );
 				stack.push_back(v);
 				continue;
 			}

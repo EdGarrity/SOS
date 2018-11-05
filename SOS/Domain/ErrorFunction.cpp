@@ -13,8 +13,8 @@ namespace domain
 	void eval_one_day_of_test_case(unsigned int row, Individual & individual)
 	{
 		// Create new heap manger
-		CodeBaseRegister codeBaseRegister_old = codeBaseRegister;
-		codeBaseRegister.reset();
+//		CodeBaseRegister codeBaseRegister_old = codeBaseRegister;
+//		codeBaseRegister.reset();
 
 		// Setup
 		init_push();
@@ -33,9 +33,9 @@ namespace domain
 		}
 
 		// Cleanup
-		codeBaseRegister.clean_up();
-		codeBaseRegister = codeBaseRegister_old;
-		codeBaseRegister_old = codeBaseRegister; // watchpoint for debugging.
+//		codeBaseRegister.clean_up();
+//		codeBaseRegister = codeBaseRegister_old;
+//		codeBaseRegister_old = codeBaseRegister; // watchpoint for debugging.
 	}
 
 	double eval_test_case(int input_start, Individual & individual)

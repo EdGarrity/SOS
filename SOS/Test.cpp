@@ -13,6 +13,7 @@
 #include "PushP/Env.h";
 #include "Finance/Broker.h"
 #include "Test.h"
+#include "PushP/Literal.h"
 
 using namespace std;
 using namespace Push;
@@ -239,6 +240,15 @@ string load_test_case(ifstream & pushGP_test_file)
 	return test_case;
 }
 
+//template <class T>
+//class Push::LiteralFactory;
+//
+//template <class T>
+//thread_local Push::LiteralFactory<T> literalFactory;
+//thread_local Push::LiteralFactory<int> intLiteralFactory;
+//thread_local Push::LiteralFactory<float> floatLiteralFactory;
+//thread_local Push::LiteralFactory<bool> boolLiteralFactory;
+
 int test()
 {
 	finance::Broker::load_datatable();
@@ -254,8 +264,16 @@ int test()
 		while (getline(myfile, testCase))
 		{
 			// Create new heap manger
-			CodeBaseRegister codeBaseRegister_old = codeBaseRegister;
-			codeBaseRegister.reset();
+			//CodeBaseRegister codeBaseRegister_old = codeBaseRegister;
+			//codeBaseRegister.reset();
+			Push::LiteralFactory<int> intLiteralFactory_old = Push::intLiteralFactory;
+			Push::intLiteralFactory.reset();
+
+			Push::LiteralFactory<double> floatLiteralFactory_old = Push::floatLiteralFactory;
+			Push::floatLiteralFactory.reset();
+
+			Push::LiteralFactory<bool> boolLiteralFactory_old = Push::boolLiteralFactory;
+			Push::boolLiteralFactory.reset();
 
 			// Setup
 			init_push();
@@ -274,9 +292,13 @@ int test()
 			}
 
 			// Cleanup
-			codeBaseRegister.clean_up();
-			codeBaseRegister = codeBaseRegister_old;
-			codeBaseRegister_old = codeBaseRegister; // watchpoint for debugging.
+			//codeBaseRegister.clean_up();
+			//codeBaseRegister = codeBaseRegister_old;
+			//codeBaseRegister_old = codeBaseRegister; // watchpoint for debugging.
+
+			Push::intLiteralFactory.clean_up();
+			Push::floatLiteralFactory.clean_up();
+			Push::boolLiteralFactory.clean_up();
 		}
 
 		myfile.close();
@@ -311,8 +333,8 @@ int test()
 			string program = globals::population_agents[n].get_program();
 
 			// Create new heap manger
-			CodeBaseRegister codeBaseRegister_old = codeBaseRegister;
-			codeBaseRegister.reset();
+			//CodeBaseRegister codeBaseRegister_old = codeBaseRegister;
+			//codeBaseRegister.reset();
 
 			// Setup
 			init_push();
@@ -337,9 +359,9 @@ int test()
 			push_gp_test_file << test_case;
 
 			// Cleanup
-			codeBaseRegister.clean_up();
-			codeBaseRegister = codeBaseRegister_old;
-			codeBaseRegister_old = codeBaseRegister; // watchpoint for debugging.
+			//codeBaseRegister.clean_up();
+			//codeBaseRegister = codeBaseRegister_old;
+			//codeBaseRegister_old = codeBaseRegister; // watchpoint for debugging.
 		}
 
 		push_gp_test_file.close();
@@ -363,8 +385,8 @@ int test()
 			Individual individual(test_genome);
 
 			// Create new heap manger
-			CodeBaseRegister codeBaseRegister_old = codeBaseRegister;
-			codeBaseRegister.reset();
+			//CodeBaseRegister codeBaseRegister_old = codeBaseRegister;
+			//codeBaseRegister.reset();
 
 			// Setup
 			init_push();
@@ -401,9 +423,9 @@ int test()
 			}
 
 			// Cleanup
-			codeBaseRegister.clean_up();
-			codeBaseRegister = codeBaseRegister_old;
-			codeBaseRegister_old = codeBaseRegister; // watchpoint for debugging.
+			//codeBaseRegister.clean_up();
+			//codeBaseRegister = codeBaseRegister_old;
+			//codeBaseRegister_old = codeBaseRegister; // watchpoint for debugging.
 		}
 
 		pushGP_test_file.close();

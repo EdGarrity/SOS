@@ -43,112 +43,121 @@ namespace Push
 	//
 	// Code/Exec memory manager
 	//
+	template <class T>
+	class LiteralFactory;
 
-	class CodeBaseRegisterNode
-	{
-		CodeBase* _p;
-		CodeBaseRegisterNode* _next;
-
-		friend class CodeBaseRegister;
-
-	public:
-		CodeBaseRegisterNode(CodeBase *p_, CodeBaseRegisterNode* next_)
-		{
-			_p = p_;
-			_next = next_;
-		}
-	};
-
-	class CodeBaseRegister
-	{
-		CodeBaseRegisterNode* _head;
-
-	public:
-		CodeBaseRegister() : _head(nullptr) {}
-		~CodeBaseRegister()
-		{
-			clean_up();
-		}
-
-		void record(CodeBase* p)
-		{
-			CodeBaseRegisterNode* node = new CodeBaseRegisterNode(p, _head);
-			_head = node;
-		}
-
-		void reset()
-		{
-			_head = nullptr;
-		}
-
-		void clean_up()
-		{
-			//***********************
-			// Left off here
-			//***********************
-
-			//CodeBaseRegisterNode* next = _head;
-			//CodeBaseRegisterNode* node = _head;
-			//while (next != nullptr)
-			//{
-			//	node = next;
-			//	next = node->_next;
-
-			//	try
-			//	{
-			//		delete node->_p;
-			//	}
-			//	catch (std::exception& e)
-			//	{
-			//		std::cout << "Standard exception: " << e.what() << std::endl;
-			//	}
-			//	catch (...)
-			//	{
-			//		std::cout << "exception: " << std::endl;
-			//	}
+	template <class T>
+	extern thread_local LiteralFactory<T> literalFactory;
+	extern thread_local LiteralFactory<int> intLiteralFactory;
+	extern thread_local LiteralFactory<double> floatLiteralFactory;
+	extern thread_local LiteralFactory<bool> boolLiteralFactory;
 
 
-			//	delete node;
-			//}
+	//class CodeBaseRegisterNode
+	//{
+	//	CodeBase* _p;
+	//	CodeBaseRegisterNode* _next;
 
-			//_head = nullptr;
+	//	friend class CodeBaseRegister;
+
+	//public:
+	//	CodeBaseRegisterNode(CodeBase *p_, CodeBaseRegisterNode* next_)
+	//	{
+	//		_p = p_;
+	//		_next = next_;
+	//	}
+	//};
+
+	//class CodeBaseRegister
+	//{
+	//	CodeBaseRegisterNode* _head;
+
+	//public:
+	//	CodeBaseRegister() : _head(nullptr) {}
+	//	~CodeBaseRegister()
+	//	{
+	//		clean_up();
+	//	}
+
+	//	void record(CodeBase* p)
+	//	{
+	//		CodeBaseRegisterNode* node = new CodeBaseRegisterNode(p, _head);
+	//		_head = node;
+	//	}
+
+	//	void reset()
+	//	{
+	//		_head = nullptr;
+	//	}
+
+	//	void clean_up()
+	//	{
+	//		//***********************
+	//		// Left off here
+	//		//***********************
+
+	//		//CodeBaseRegisterNode* next = _head;
+	//		//CodeBaseRegisterNode* node = _head;
+	//		//while (next != nullptr)
+	//		//{
+	//		//	node = next;
+	//		//	next = node->_next;
+
+	//		//	try
+	//		//	{
+	//		//		delete node->_p;
+	//		//	}
+	//		//	catch (std::exception& e)
+	//		//	{
+	//		//		std::cout << "Standard exception: " << e.what() << std::endl;
+	//		//	}
+	//		//	catch (...)
+	//		//	{
+	//		//		std::cout << "exception: " << std::endl;
+	//		//	}
 
 
-			CodeBaseRegisterNode* current_node = _head;
-			int n = 0;
-			bool p_ok = true;
+	//		//	delete node;
+	//		//}
 
-			while (current_node != nullptr)
-			{
-				CodeBaseRegisterNode* next_node = current_node->_next;
+	//		//_head = nullptr;
 
-				try
-				{
-					p_ok = true;
 
-					delete current_node->_p;
+	//		CodeBaseRegisterNode* current_node = _head;
+	//		int n = 0;
+	//		bool p_ok = true;
 
-					//if (p_ok)
-					//	current_node->_p = nullptr;
-				}
-				catch (...)
-				{
-					// Do nothing.
-					p_ok = false;
-					n++;
-				}
+	//		while (current_node != nullptr)
+	//		{
+	//			CodeBaseRegisterNode* next_node = current_node->_next;
 
-				delete current_node;
-				current_node = nullptr;
+	//			try
+	//			{
+	//				p_ok = true;
 
-				current_node = next_node;
-			}
+	//				delete current_node->_p;
 
-			_head = nullptr;
-		}
-	};
+	//				//if (p_ok)
+	//				//	current_node->_p = nullptr;
+	//			}
+	//			catch (...)
+	//			{
+	//				// Do nothing.
+	//				p_ok = false;
+	//				n++;
+	//			}
 
-	extern thread_local CodeBaseRegister codeBaseRegister;
+	//			delete current_node;
+	//			current_node = nullptr;
+
+	//			current_node = next_node;
+	//		}
+
+	//		_head = nullptr;
+	//	}
+	//};
+
+	//extern thread_local CodeBaseRegister codeBaseRegister;
 
 	//
 	// CodeBase
