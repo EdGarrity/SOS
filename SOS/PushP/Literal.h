@@ -233,7 +233,7 @@ namespace Push
 			new Literal<T>
 			(
 				pop<T>(env)
-				)
+			)
 		);
 
 
