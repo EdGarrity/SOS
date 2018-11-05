@@ -41,62 +41,6 @@ namespace Push
 	extern const Code &nil;
 
 	//
-	// Code/Exec memory manager
-	//
-
-	class CodeBaseRegisterNode
-	{
-		CodeBase* _p;
-		CodeBaseRegisterNode* _next;
-
-		friend class CodeBaseRegister;
-
-	public:
-		CodeBaseRegisterNode(CodeBase *p_, CodeBaseRegisterNode* next_)
-		{
-			_p = p_;
-			_next = next_;
-		}
-	};
-
-	class CodeBaseRegister
-	{
-		CodeBaseRegisterNode* _head;
-
-	public:
-		CodeBaseRegister() : _head(nullptr) {}
-		~CodeBaseRegister()
-		{
-			clean_up();
-		}
-
-		void record(CodeBase* p)
-		{
-			//CodeBaseRegisterNode* node = new CodeBaseRegisterNode(p, _head);
-			//_head = node;
-		}
-
-		void reset()
-		{
-			_head = nullptr;
-		}
-
-		void clean_up()
-		{
-			//CodeBaseRegisterNode* next = _head;
-			//CodeBaseRegisterNode* node = _head;
-			//while (next != nullptr)
-			//{
-			//	node = next;
-			//	next = node->_next;
-			//	delete node;
-			//}
-		}
-	};
-
-	extern thread_local CodeBaseRegister codeBaseRegister;
-
-	//
 	// CodeBase
 	//
 

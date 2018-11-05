@@ -30,8 +30,6 @@ namespace Push
 	const CodeSet					&erc_set = *detail::erc_set_ptr;
 //	const CodeSet					&exec_set = *detail::exec_set_ptr;
 
-	thread_local CodeBaseRegister codeBaseRegister;
-
 	namespace detail
 	{
 		void init_types()
