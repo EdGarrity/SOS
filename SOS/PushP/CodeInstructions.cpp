@@ -33,8 +33,10 @@ namespace Push
 			vec[0] = DoRange;
 			vec[1] = code;
 			vec[2] = quote;
-			vec[3] = Code(new Literal<int>(n));
-			vec[4] = Code(new Literal<int>(i));
+			//vec[3] = Code(new Literal<int>(n));
+			//vec[4] = Code(new Literal<int>(i));
+			vec[3] = Code(intLiteralFactory.createLiteral(n));
+			vec[4] = Code(intLiteralFactory.createLiteral(i));
 			env.push_code_to_exec_stack(CodeList::adopt(vec)); //env.exec_stack.push_back(*new CodeList(vec));  //env.push_guarded(CodeList::adopt(vec)); //Code(new CodeList(vec)));
 		}
 
@@ -54,13 +56,15 @@ namespace Push
 
 		quote = parse("CODE.QUOTE");
 		DoRange = parse("CODE.DO*RANGE");
-		zero = Code(new Literal<int>(0));
+//		zero = Code(new Literal<int>(0));
+		zero = Code(intLiteralFactory.createLiteral(0));
 
 		CodeArray vec(5);
 		vec[0] = DoRange;
 		vec[1] = quote;
 		vec[2] = code;
-		vec[3] = Code(new Literal<int>(n - 1));
+//		vec[3] = Code(new Literal<int>(n - 1));
+		vec[3] = Code(intLiteralFactory.createLiteral(n - 1));
 		vec[4] = zero;
 		env.push_code_to_exec_stack(CodeList::adopt(vec)); //Code(new CodeList(vec)));
 		return 1;
@@ -76,14 +80,16 @@ namespace Push
 
 		quote = parse("CODE.QUOTE");
 		DoRange = parse("CODE.DO*RANGE");
-		zero = Code(new Literal<int>(0));
+//		zero = Code(new Literal<int>(0));
+		zero = Code(intLiteralFactory.createLiteral(0));
 		int_pop = parse("INTEGER.POP");
 
 		CodeArray vec(5);
 		vec[0] = DoRange;
 		vec[1] = quote;
 		vec[2] = cons(int_pop, code);
-		vec[3] = Code(new Literal<int>(n - 1));
+//		vec[3] = Code(new Literal<int>(n - 1));
+		vec[3] = Code(intLiteralFactory.createLiteral(n - 1));
 		vec[4] = zero;
 		env.push_code_to_exec_stack(CodeList::adopt(vec)); //Code(new CodeList(vec)));
 		return 1;

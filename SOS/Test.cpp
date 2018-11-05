@@ -11,6 +11,7 @@
 #include "PushGP/Individual.h"
 #include "PushGP/PushGP.h"
 #include "PushP/Env.h";
+#include "PushP/Literal.h"
 #include "Finance/Broker.h"
 #include "Test.h"
 
@@ -253,6 +254,17 @@ int test()
 
 		while (getline(myfile, testCase))
 		{
+			//// Create new heap manger
+			Push::LiteralFactory<int> intLiteralFactory_old = Push::intLiteralFactory;
+			Push::intLiteralFactory.reset();
+
+			Push::LiteralFactory<double> floatLiteralFactory_old = Push::floatLiteralFactory;
+			Push::floatLiteralFactory.reset();
+
+			Push::LiteralFactory<bool> boolLiteralFactory_old = Push::boolLiteralFactory;
+			Push::boolLiteralFactory.reset();
+
+			// Setup
 			init_push();
 			Code code = parse(testCase);
 			push_call(code);
@@ -265,6 +277,11 @@ int test()
 				cout << env;
 				return 1;
 			}
+
+			//// Cleanup
+			Push::intLiteralFactory.clean_up();
+			Push::floatLiteralFactory.clean_up();
+			Push::boolLiteralFactory.clean_up();
 		}
 
 		myfile.close();
@@ -298,6 +315,17 @@ int test()
 			string genome = globals::population_agents[n].to_string();
 			string program = globals::population_agents[n].get_program();
 
+			//// Create new heap manger
+			Push::LiteralFactory<int> intLiteralFactory_old = Push::intLiteralFactory;
+			Push::intLiteralFactory.reset();
+
+			Push::LiteralFactory<double> floatLiteralFactory_old = Push::floatLiteralFactory;
+			Push::floatLiteralFactory.reset();
+
+			Push::LiteralFactory<bool> boolLiteralFactory_old = Push::boolLiteralFactory;
+			Push::boolLiteralFactory.reset();
+
+			// Setup
 			init_push();
 			Code code = parse(program);
 			push_call(code);
@@ -316,6 +344,11 @@ int test()
 			string test_case = make_test_case(n + 1, genome, program, get_stack<int>(), get_stack<double>(), get_stack<bool>());
 
 			push_gp_test_file << test_case;
+
+			//// Cleanup
+			Push::intLiteralFactory.clean_up();
+			Push::floatLiteralFactory.clean_up();
+			Push::boolLiteralFactory.clean_up();
 		}
 
 		push_gp_test_file.close();
@@ -338,6 +371,17 @@ int test()
 
 			Individual individual(test_genome);
 
+			//// Create new heap manger
+			Push::LiteralFactory<int> intLiteralFactory_old = Push::intLiteralFactory;
+			Push::intLiteralFactory.reset();
+
+			Push::LiteralFactory<double> floatLiteralFactory_old = Push::floatLiteralFactory;
+			Push::floatLiteralFactory.reset();
+
+			Push::LiteralFactory<bool> boolLiteralFactory_old = Push::boolLiteralFactory;
+			Push::boolLiteralFactory.reset();
+
+			// Setup
 			init_push();
 			Code code = parse(individual.get_program());
 			push_call(code);
@@ -368,6 +412,11 @@ int test()
 					return 1;
 				}
 			}
+
+			//// Cleanup
+			Push::intLiteralFactory.clean_up();
+			Push::floatLiteralFactory.clean_up();
+			Push::boolLiteralFactory.clean_up();
 		}
 
 		pushGP_test_file.close();

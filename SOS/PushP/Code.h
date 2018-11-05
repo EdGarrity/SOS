@@ -41,6 +41,19 @@ namespace Push
 	extern const Code &nil;
 
 	//
+	// Code/Exec memory manager
+	//
+
+	template <class T>
+	class LiteralFactory;
+
+	template <class T>
+	extern thread_local LiteralFactory<T> literalFactory;
+	extern thread_local LiteralFactory<int> intLiteralFactory;
+	extern thread_local LiteralFactory<double> floatLiteralFactory;
+	extern thread_local LiteralFactory<bool> boolLiteralFactory;
+
+	//
 	// CodeBase
 	//
 

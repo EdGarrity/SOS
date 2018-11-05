@@ -6,6 +6,11 @@ using namespace std;
 
 namespace Push
 {
+	extern Code quote;
+	extern Code DoRange;
+	extern Code zero;
+	extern Code int_pop;
+
 	unsigned s()
 	{
 		Exec x = pop<Exec>(env);
@@ -88,7 +93,8 @@ namespace Push
 
 			if (i != n)
 			{
-				vec[3] = Code(new Literal<int>(i + direction));
+//				vec[3] = Code(new Literal<int>(i + direction));
+				vec[3] = Code(intLiteralFactory.createLiteral(i + direction));
 				Code ranger = CodeList::adopt(vec);
 				env.push_code_to_exec_stack(ranger);
 			}
@@ -107,8 +113,10 @@ namespace Push
 		CodeArray vec(4);
 		vec[0] = code.to_CodeBase();
 		vec[1] = DoRange;
-		vec[2] = Code(new Literal<int>(n));
-		vec[3] = Code(new Literal<int>(i));
+		//vec[2] = Code(new Literal<int>(n));
+		//vec[3] = Code(new Literal<int>(i));
+		vec[2] = Code(intLiteralFactory.createLiteral(n));
+		vec[3] = Code(intLiteralFactory.createLiteral(i));
 		Code result = Code(new DoRangeClass(vec));
 		env.push_code_to_exec_stack(result);
 		return 1;
@@ -124,10 +132,12 @@ namespace Push
 
 		static Code DoRange = parse("EXEC.DO*RANGE");
 		CodeArray vec(4);
-		static Code zero = Code(new Literal<int>(0));
+//		static Code zero = Code(new Literal<int>(0));
+		zero = Code(intLiteralFactory.createLiteral(0));
 		vec[0] = code.to_CodeBase();
 		vec[1] = DoRange;
-		vec[2] = Code(new Literal<int>(n - 1));
+//		vec[2] = Code(new Literal<int>(n - 1));
+		vec[2] = Code(intLiteralFactory.createLiteral(n - 1));
 		vec[3] = zero;
 		Code result = Code(new DoRangeClass(vec));
 		env.push_code_to_exec_stack(result);
@@ -144,12 +154,14 @@ namespace Push
 			return 1;
 
 		CodeArray vec(4);
-		static Code zero = Code(new Literal<int>(0));	// Potetial memory leak
+//		static Code zero = Code(new Literal<int>(0));	// Potetial memory leak
+		zero = Code(intLiteralFactory.createLiteral(0));
 		static Code int_pop = parse("INTEGER.POP");
 		static Code DoRange = parse("EXEC.DO*RANGE");
 		vec[0] = cons(int_pop, code.to_CodeBase());
 		vec[1] = DoRange;
-		vec[2] = Code(new Literal<int>(n - 1));
+//		vec[2] = Code(new Literal<int>(n - 1));
+		vec[2] = Code(intLiteralFactory.createLiteral(n - 1));
 		vec[3] = zero;
 		Code result = Code(new DoRangeClass(vec)); // Potetial memory leak
 		env.push_code_to_exec_stack(result);

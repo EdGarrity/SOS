@@ -110,22 +110,87 @@ namespace Push
 		return value ? "TRUE" : "FALSE";
 	}
 
-	//template <class T>
-	//class LiteralFactory
-	//{
-	//	std::forward_list <Literal<T>*> _list;
+	//
+	// Literal memory manager
+	//
+	template<class T>
+	class LiteralRegisterNode
+	{
+		Literal<T>* _p;
+		LiteralRegisterNode* _next;
+		template<class T>
+		friend class LiteralRegister;
+	public:
+		LiteralRegisterNode(Literal<T> *p_, LiteralRegisterNode* next_)
+		{
+			_p = p_;
+			_next = next_;
+		}
+	};
 
-	//public:
-	//	Literal<T>* newLiteral(T val);
-	//};
+	template<class T>
+	class LiteralRegister
+	{
+		LiteralRegisterNode<T>* _head;
+	public:
+		LiteralRegister() : _head(nullptr) {}
+		~LiteralRegister()
+		{
+			clean_up();
+		}
+		void record(Literal<T>* p)
+		{
+			LiteralRegisterNode<T>* node = new LiteralRegisterNode<T>(p, _head);
+			_head = node;
+		}
+		void reset()
+		{
+			_head = nullptr;
+		}
+		void clean_up()
+		{
+			LiteralRegisterNode<T>* current_node = _head;
+			while (current_node != nullptr)
+			{
+				LiteralRegisterNode<T>* next_node = current_node->_next;
+				delete current_node->_p;
+				current_node->_p = nullptr;
+				delete current_node;
+				current_node = nullptr;
+				current_node = next_node;
+			}
+			_head = nullptr;
+		}
+	};
 
-	//template<class T>
-	//inline Literal<T> * LiteralFactory<T>::newLiteral(T val)
-	//{
-	//	Literal<T>* lp = new Literal<T>(val);
-	//	_list.emplace_front(lp);
-	//	return lp;
-	//}
+	template <class T>
+	class LiteralFactory
+	{
+		LiteralRegister<T> literalRegister;
+	public:
+		Literal<T>* createLiteral(T val);
+		void reset()
+		{
+			literalRegister.reset();
+		}
+		void clean_up()
+		{
+			literalRegister.clean_up();
+		}
+	};
+
+	template<class T>
+	inline Literal<T> * LiteralFactory<T>::createLiteral(T val)
+	{
+		Literal<T>* lp = new Literal<T>(val);
+		literalRegister.record(lp);
+		return lp;
+	}
+	template <class T>
+	extern thread_local LiteralFactory<T> literalFactory;
+	extern thread_local LiteralFactory<int> intLiteralFactory;
+	extern thread_local LiteralFactory<double> floatLiteralFactory;
+	extern thread_local LiteralFactory<bool> boolLiteralFactory;
 
 	/* Packs a single type in a piece of code */
 	template <class T>
