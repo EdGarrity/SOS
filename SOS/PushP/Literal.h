@@ -118,8 +118,10 @@ namespace Push
 	{
 		Literal<T>* _p;
 		LiteralRegisterNode* _next;
+
 		template<class T>
 		friend class LiteralRegister;
+
 	public:
 		LiteralRegisterNode(Literal<T> *p_, LiteralRegisterNode* next_)
 		{
@@ -132,33 +134,43 @@ namespace Push
 	class LiteralRegister
 	{
 		LiteralRegisterNode<T>* _head;
+
 	public:
 		LiteralRegister() : _head(nullptr) {}
+
 		~LiteralRegister()
 		{
 			clean_up();
 		}
+
 		void record(Literal<T>* p)
 		{
 			LiteralRegisterNode<T>* node = new LiteralRegisterNode<T>(p, _head);
 			_head = node;
 		}
+
 		void reset()
 		{
 			_head = nullptr;
 		}
+
 		void clean_up()
 		{
 			LiteralRegisterNode<T>* current_node = _head;
+
 			while (current_node != nullptr)
 			{
 				LiteralRegisterNode<T>* next_node = current_node->_next;
+
 				delete current_node->_p;
 				current_node->_p = nullptr;
+
 				delete current_node;
 				current_node = nullptr;
+
 				current_node = next_node;
 			}
+
 			_head = nullptr;
 		}
 	};
@@ -167,12 +179,15 @@ namespace Push
 	class LiteralFactory
 	{
 		LiteralRegister<T> literalRegister;
+
 	public:
 		Literal<T>* createLiteral(T val);
+
 		void reset()
 		{
 			literalRegister.reset();
 		}
+
 		void clean_up()
 		{
 			literalRegister.clean_up();
@@ -186,6 +201,7 @@ namespace Push
 		literalRegister.record(lp);
 		return lp;
 	}
+
 	template <class T>
 	extern thread_local LiteralFactory<T> literalFactory;
 	extern thread_local LiteralFactory<int> intLiteralFactory;
@@ -196,13 +212,26 @@ namespace Push
 	template <class T>
 	inline Code pack()
 	{
-		return Code
-		(
-			new Literal<T>
-			(
-				pop<T>(env)
-			)
-		);
+		//return Code
+		//(
+		//	new Literal<T>
+		//	(
+		//		pop<T>(env)
+		//	)
+		//);
+
+		T a = pop<T>(env);
+
+		if (typeid(a) == typeid(int))
+			return Code(intLiteralFactory.createLiteral(a));
+
+		else if (typeid(a) == typeid(double))
+			return Code(floatLiteralFactory.createLiteral(a));
+
+		else if (typeid(a) == typeid(bool))
+			return Code(boolLiteralFactory.createLiteral(a));
+
+		return Code();
 	}
 
 	/* Specialization for Code, just return it */
