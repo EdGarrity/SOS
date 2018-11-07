@@ -23,7 +23,7 @@ namespace Push
 			stack[1] = a;
 		}
 
-		return CodeList::adopt(stack); //*new CodeList(stack); // CodeList::adopt(stack); //Code( new CodeList(stack) );
+		return Code(new CodeList(stack)); //CodeList::adopt(stack); //*new CodeList(stack); // CodeList::adopt(stack); //Code( new CodeList(stack) );
 	}
 
 	inline Code list(Code a, Code b)
@@ -31,7 +31,7 @@ namespace Push
 		CodeArray stack(2);
 		stack[0] = b;
 		stack[1] = a;
-		return CodeList::adopt(stack); //return *new CodeList(stack); // return CodeList::adopt(stack); //Code( new CodeList(stack) );
+		return Code(new CodeList(stack)); //CodeList::adopt(stack); //return *new CodeList(stack); // return CodeList::adopt(stack); //Code( new CodeList(stack) );
 	}
 
 	inline Code car(Code a)
@@ -50,7 +50,7 @@ namespace Push
 		if (stack.size() == 0) return nil;
 
 		stack.pop_back();
-		return CodeList::adopt(stack); //Code( new CodeList(stack));
+		return Code(new CodeList(stack)); //CodeList::adopt(stack); //Code( new CodeList(stack));
 	}
 
 	extern Code random_code(unsigned maxpoints);

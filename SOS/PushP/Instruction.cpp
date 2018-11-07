@@ -52,6 +52,7 @@ namespace Push
 	//	return static_initializer.register_pushfunc(*new Instruction(op, type + "." + name, Type(), Type(), true));
 	//}
 
+	thread_local InstructionFactory instructionFactory;
 
 	template <typename T> Type yankdup_in()
 	{

@@ -72,7 +72,7 @@ namespace Push
 				Code newcode = insert(stack[i], val, subcode);
 
 				stack[i] = newcode;
-				return CodeList::adopt(stack); //Code( new CodeList(stack) );
+				return Code(new CodeList(stack));  //CodeList::adopt(stack); //Code( new CodeList(stack) );
 			}
 
 			val -= stack[i]->size();
@@ -121,7 +121,7 @@ namespace Push
 				resultvec.push_back(new CodeList(codevec)/*CodeList::adopt(codevec)*/); //Code(new CodeList(codevec)));
 		}
 
-		return CodeList::adopt(resultvec); //new CodeList(resultvec); // CodeList::adopt(resultvec); //Code(new CodeList(resultvec));
+		return Code(new CodeList(resultvec));  //CodeList::adopt(resultvec); //new CodeList(resultvec); // CodeList::adopt(resultvec); //Code(new CodeList(resultvec));
 	}
 
 	Code make_terminal()
@@ -185,7 +185,7 @@ namespace Push
 		for (unsigned i = 0; i < sizes_this_level.size(); ++i)
 			stack[i] = random_code_with_size(sizes_this_level[i]);
 
-		return CodeList::adopt(stack); //new CodeList(stack); // CodeList::adopt(stack); //Code(new CodeList(stack));
+		return Code(new CodeList(stack));  //CodeList::adopt(stack); //new CodeList(stack); // CodeList::adopt(stack); //Code(new CodeList(stack));
 	}
 
 	Code random_code(unsigned maxpoints)

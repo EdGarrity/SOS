@@ -130,4 +130,93 @@ namespace Push
 	//	Instruction* newInstruction(Operator op, std::string name);
 	//	Instruction* newInstruction(Operator op, std::string name, Type intype, Type outtype, bool static_ = true);
 	//};
+
+	//
+	// Literal memory manager
+	//
+	class InstructionRegisterNode
+	{
+		Instruction* _p;
+		InstructionRegisterNode* _next;
+
+		friend class InstructionRegister;
+
+	public:
+		InstructionRegisterNode(Instruction *p_, InstructionRegisterNode* next_)
+		{
+			_p = p_;
+			_next = next_;
+		}
+	};
+
+	class InstructionRegister
+	{
+		InstructionRegisterNode* _head;
+
+	public:
+		InstructionRegister() : _head(nullptr) {}
+
+		~InstructionRegister()
+		{
+			clean_up();
+		}
+
+		void record(Instruction* p)
+		{
+			InstructionRegisterNode* node = new InstructionRegisterNode(p, _head);
+			_head = node;
+		}
+
+		void reset()
+		{
+			_head = nullptr;
+		}
+
+		void clean_up()
+		{
+			InstructionRegisterNode* current_node = _head;
+
+			while (current_node != nullptr)
+			{
+				InstructionRegisterNode* next_node = current_node->_next;
+
+				delete current_node->_p;
+				current_node->_p = nullptr;
+
+				delete current_node;
+				current_node = nullptr;
+
+				current_node = next_node;
+			}
+
+			_head = nullptr;
+		}
+	};
+
+	class InstructionFactory
+	{
+		InstructionRegister instructionRegister;
+
+	public:
+		Instruction* createInstruction(Instruction val);
+
+		void reset()
+		{
+			instructionRegister.reset();
+		}
+
+		void clean_up()
+		{
+			instructionRegister.clean_up();
+		}
+	};
+
+	inline Instruction* InstructionFactory::createInstruction(Instruction val)
+	{
+		Instruction* lp = new Instruction(val);
+		instructionRegister.record(lp);
+		return lp;
+	}
+
+	extern thread_local InstructionFactory instructionFactory;
 }

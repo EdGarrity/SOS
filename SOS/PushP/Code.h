@@ -192,13 +192,13 @@ namespace Push
 		// no equal_to overload, equality checked in parent
 
 		// special 'constructor' that will destroy the argument (for efficiency reasons)
-		static Code adopt(CodeArray &vec)  // beware, destructs vec!
-		{
-			CodeList* lst = new CodeList;
-			lst->_stack.swap(vec); // destructs vec
-			lst->calc_sizes();
-			return Code(lst);
-		}
+		//static Code adopt(CodeArray &vec)  // beware, destructs vec!
+		//{
+		//	CodeList* lst = new CodeList;
+		//	lst->_stack.swap(vec); // destructs vec
+		//	lst->calc_sizes();
+		//	return Code(lst);
+		//}
 
 		TYPE_ID get_type()
 		{
