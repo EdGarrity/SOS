@@ -245,6 +245,7 @@ int test()
 	Push::LiteralFactory<int> intLiteralFactory_old = Push::intLiteralFactory;
 	Push::LiteralFactory<double> floatLiteralFactory_old = Push::floatLiteralFactory;
 	Push::LiteralFactory<bool> boolLiteralFactory_old = Push::boolLiteralFactory;
+	Push::CodeListFactory codeListFactory_old = Push::codeListFactory;
 
 	finance::Broker::load_datatable();
 
@@ -266,6 +267,9 @@ int test()
 		boolLiteralFactory_old = Push::boolLiteralFactory;
 		Push::boolLiteralFactory.reset();
 
+		codeListFactory_old = Push::codeListFactory;
+		Push::codeListFactory.reset();
+
 		while (getline(myfile, testCase))
 		{
 			// Setup
@@ -286,12 +290,14 @@ int test()
 			Push::intLiteralFactory.clean_up();
 			Push::floatLiteralFactory.clean_up();
 			Push::boolLiteralFactory.clean_up();
+			Push::codeListFactory.clean_up();
 		}
 
 		// Restore old heap manager
 		Push::intLiteralFactory = intLiteralFactory_old;
 		Push::floatLiteralFactory = floatLiteralFactory_old;
 		Push::boolLiteralFactory = boolLiteralFactory_old;
+		Push::codeListFactory = codeListFactory_old;
 
 		myfile.close();
 	}

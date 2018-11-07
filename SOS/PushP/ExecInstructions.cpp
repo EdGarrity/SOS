@@ -95,7 +95,7 @@ namespace Push
 			{
 //				vec[3] = Code(new Literal<int>(i + direction));
 				vec[3] = Code(intLiteralFactory.createLiteral(i + direction));
-				Code ranger = Code(new CodeList(vec));  //CodeList::adopt(vec);
+				Code ranger = Code(codeListFactory.createCodeList(vec));  // new CodeList(vec));  //CodeList::adopt(vec);
 				env.push_code_to_exec_stack(ranger);
 			}
 

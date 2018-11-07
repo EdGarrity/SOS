@@ -134,89 +134,89 @@ namespace Push
 	//
 	// Literal memory manager
 	//
-	class InstructionRegisterNode
-	{
-		Instruction* _p;
-		InstructionRegisterNode* _next;
+	//class InstructionRegisterNode
+	//{
+	//	Instruction* _p;
+	//	InstructionRegisterNode* _next;
 
-		friend class InstructionRegister;
+	//	friend class InstructionRegister;
 
-	public:
-		InstructionRegisterNode(Instruction *p_, InstructionRegisterNode* next_)
-		{
-			_p = p_;
-			_next = next_;
-		}
-	};
+	//public:
+	//	InstructionRegisterNode(Instruction *p_, InstructionRegisterNode* next_)
+	//	{
+	//		_p = p_;
+	//		_next = next_;
+	//	}
+	//};
 
-	class InstructionRegister
-	{
-		InstructionRegisterNode* _head;
+	//class InstructionRegister
+	//{
+	//	InstructionRegisterNode* _head;
 
-	public:
-		InstructionRegister() : _head(nullptr) {}
+	//public:
+	//	InstructionRegister() : _head(nullptr) {}
 
-		~InstructionRegister()
-		{
-			clean_up();
-		}
+	//	~InstructionRegister()
+	//	{
+	//		clean_up();
+	//	}
 
-		void record(Instruction* p)
-		{
-			InstructionRegisterNode* node = new InstructionRegisterNode(p, _head);
-			_head = node;
-		}
+	//	void record(Instruction* p)
+	//	{
+	//		InstructionRegisterNode* node = new InstructionRegisterNode(p, _head);
+	//		_head = node;
+	//	}
 
-		void reset()
-		{
-			_head = nullptr;
-		}
+	//	void reset()
+	//	{
+	//		_head = nullptr;
+	//	}
 
-		void clean_up()
-		{
-			InstructionRegisterNode* current_node = _head;
+	//	void clean_up()
+	//	{
+	//		InstructionRegisterNode* current_node = _head;
 
-			while (current_node != nullptr)
-			{
-				InstructionRegisterNode* next_node = current_node->_next;
+	//		while (current_node != nullptr)
+	//		{
+	//			InstructionRegisterNode* next_node = current_node->_next;
 
-				delete current_node->_p;
-				current_node->_p = nullptr;
+	//			delete current_node->_p;
+	//			current_node->_p = nullptr;
 
-				delete current_node;
-				current_node = nullptr;
+	//			delete current_node;
+	//			current_node = nullptr;
 
-				current_node = next_node;
-			}
+	//			current_node = next_node;
+	//		}
 
-			_head = nullptr;
-		}
-	};
+	//		_head = nullptr;
+	//	}
+	//};
 
-	class InstructionFactory
-	{
-		InstructionRegister instructionRegister;
+	//class InstructionFactory
+	//{
+	//	InstructionRegister instructionRegister;
 
-	public:
-		Instruction* createInstruction(Instruction val);
+	//public:
+	//	Instruction* createInstruction(Instruction val);
 
-		void reset()
-		{
-			instructionRegister.reset();
-		}
+	//	void reset()
+	//	{
+	//		instructionRegister.reset();
+	//	}
 
-		void clean_up()
-		{
-			instructionRegister.clean_up();
-		}
-	};
+	//	void clean_up()
+	//	{
+	//		instructionRegister.clean_up();
+	//	}
+	//};
 
-	inline Instruction* InstructionFactory::createInstruction(Instruction val)
-	{
-		Instruction* lp = new Instruction(val);
-		instructionRegister.record(lp);
-		return lp;
-	}
+	//inline Instruction* InstructionFactory::createInstruction(Instruction val)
+	//{
+	//	Instruction* lp = new Instruction(val);
+	//	instructionRegister.record(lp);
+	//	return lp;
+	//}
 
-	extern thread_local InstructionFactory instructionFactory;
+	//extern thread_local InstructionFactory instructionFactory;
 }

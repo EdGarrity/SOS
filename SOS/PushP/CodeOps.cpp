@@ -37,7 +37,7 @@ namespace Push
 
 		while (--val >= 0) stack.pop_back();
 
-		push(Code(new CodeList(stack)));
+		push(Code(codeListFactory.createCodeList(stack)));  // new CodeList(stack)));
 
 		return first->len();
 	}

@@ -206,6 +206,96 @@ namespace Push
 		}
 	};
 
+	//
+	// CodeList memory manager
+	//
+	class CodeListRegisterNode
+	{
+		CodeList* _p;
+		CodeListRegisterNode* _next;
+
+		friend class CodeListRegister;
+
+	public:
+		CodeListRegisterNode(CodeList *p_, CodeListRegisterNode* next_)
+		{
+			_p = p_;
+			_next = next_;
+		}
+	};
+
+	class CodeListRegister
+	{
+		CodeListRegisterNode* _head;
+
+	public:
+		CodeListRegister() : _head(nullptr) {}
+
+		~CodeListRegister()
+		{
+			clean_up();
+		}
+
+		void record(CodeList* p)
+		{
+			CodeListRegisterNode* node = new CodeListRegisterNode(p, _head);
+			_head = node;
+		}
+
+		void reset()
+		{
+			_head = nullptr;
+		}
+
+		void clean_up()
+		{
+			CodeListRegisterNode* current_node = _head;
+
+			while (current_node != nullptr)
+			{
+				CodeListRegisterNode* next_node = current_node->_next;
+
+				delete current_node->_p;
+				current_node->_p = nullptr;
+
+				delete current_node;
+				current_node = nullptr;
+
+				current_node = next_node;
+			}
+
+			_head = nullptr;
+		}
+	};
+
+	class CodeListFactory
+	{
+		CodeListRegister codeListRegister;
+
+	public:
+		CodeList* createCodeList(const CodeArray &stack);
+
+		void reset()
+		{
+			codeListRegister.reset();
+		}
+
+		void clean_up()
+		{
+			codeListRegister.clean_up();
+		}
+	};
+
+	inline CodeList* CodeListFactory::createCodeList(const CodeArray &stack)
+	{
+		CodeList* lp = new CodeList(stack);
+		codeListRegister.record(lp);
+		return lp;
+	}
+
+	extern thread_local CodeListFactory codeListFactory;
+
+
 	inline std::string str(Code code)
 	{
 		if (code.get() == 0) return "no code";
