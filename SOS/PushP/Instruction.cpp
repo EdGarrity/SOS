@@ -53,7 +53,7 @@ namespace Push
 	//}
 
 //	thread_local InstructionFactory instructionFactory;
-	thread_local CodeListFactory codeListFactory;
+	thread_local CodeListFactory* codeListFactory;
 
 	template <typename T> Type yankdup_in()
 	{

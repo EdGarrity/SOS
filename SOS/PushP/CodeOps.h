@@ -119,7 +119,7 @@ namespace Push
 		second_stack.reserve(second_stack.size() + first_stack.size());
 		std::copy(first_stack.begin(), first_stack.end(), std::back_inserter(second_stack));
 
-		push<Code>(Code(codeListFactory.createCodeList(second_stack)));  // new CodeList(second_stack))); //CodeList::adopt(second_stack)); //push<Code>(new CodeList(second_stack)); // push<Code>(CodeList::adopt(second_stack)); //Code(new CodeList(second_stack)));
+		push<Code>(Code(codeListFactory->createCodeList(second_stack)));  // new CodeList(second_stack))); //CodeList::adopt(second_stack)); //push<Code>(new CodeList(second_stack)); // push<Code>(CodeList::adopt(second_stack)); //Code(new CodeList(second_stack)));
 		return first_stack.size();
 	}
 
@@ -147,7 +147,7 @@ namespace Push
 		{
 			CodeArray stack = pop<Code>(env)->get_stack();
 			stack.pop_back();
-			push<Code>(Code(codeListFactory.createCodeList(stack)));  // new CodeList(stack)));  //CodeList::adopt(stack)); //Code(new CodeList(stack)));
+			push<Code>(Code(codeListFactory->createCodeList(stack)));  // new CodeList(stack)));  //CodeList::adopt(stack)); //Code(new CodeList(stack)));
 		}
 
 		return 1;

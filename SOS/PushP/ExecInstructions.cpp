@@ -7,10 +7,10 @@ using namespace std;
 namespace Push
 {
 	extern Code quote;
-	extern Code DoRange;
+//	extern Code DoRange;
 	extern Code zero;
 	extern Code int_pop;
-
+	
 	unsigned s()
 	{
 		Exec x = pop<Exec>(env);
@@ -95,7 +95,7 @@ namespace Push
 			{
 //				vec[3] = Code(new Literal<int>(i + direction));
 				vec[3] = Code(intLiteralFactory.createLiteral(i + direction));
-				Code ranger = Code(codeListFactory.createCodeList(vec));  // new CodeList(vec));  //CodeList::adopt(vec);
+				Code ranger = Code(codeListFactory->createCodeList(vec));  // new CodeList(vec));  //CodeList::adopt(vec);
 				env.push_code_to_exec_stack(ranger);
 			}
 
@@ -106,6 +106,13 @@ namespace Push
 
 	unsigned do_range()
 	{
+		if (MyDoRange != parse("EXEC.DO*RANGE"))
+		{
+			Code DoRange1 = parse("EXEC.DO*RANGE");
+			cerr << MyDoRange;
+//			abort();
+		}
+
 		int n = pop<int>(env);
 		int i = pop<int>(env);
 		static Code DoRange = parse("EXEC.DO*RANGE");
@@ -113,6 +120,7 @@ namespace Push
 		CodeArray vec(4);
 		vec[0] = code.to_CodeBase();
 		vec[1] = DoRange;
+//		vec[1] = MyDoRange;
 		//vec[2] = Code(new Literal<int>(n));
 		//vec[3] = Code(new Literal<int>(i));
 		vec[2] = Code(intLiteralFactory.createLiteral(n));

@@ -70,9 +70,8 @@ namespace Push
 			if (val < stack[i]->size())
 			{
 				Code newcode = insert(stack[i], val, subcode);
-
 				stack[i] = newcode;
-				return Code(codeListFactory.createCodeList(stack));  // new CodeList(stack));  //CodeList::adopt(stack); //Code( new CodeList(stack) );
+				return Code(codeListFactory->createCodeList(stack));  // new CodeList(stack));  //CodeList::adopt(stack); //Code( new CodeList(stack) );
 			}
 
 			val -= stack[i]->size();
@@ -118,10 +117,10 @@ namespace Push
 			}
 
 			if (codevec.size())
-				resultvec.push_back(codeListFactory.createCodeList(codevec));  // new CodeList(codevec)/*CodeList::adopt(codevec)*/); //Code(new CodeList(codevec)));
+				resultvec.push_back(codeListFactory->createCodeList(codevec));  // new CodeList(codevec)/*CodeList::adopt(codevec)*/); //Code(new CodeList(codevec)));
 		}
 
-		return Code(codeListFactory.createCodeList(resultvec));  // new CodeList(resultvec));  //CodeList::adopt(resultvec); //new CodeList(resultvec); // CodeList::adopt(resultvec); //Code(new CodeList(resultvec));
+		return Code(codeListFactory->createCodeList(resultvec));  // new CodeList(resultvec));  //CodeList::adopt(resultvec); //new CodeList(resultvec); // CodeList::adopt(resultvec); //Code(new CodeList(resultvec));
 	}
 
 	Code make_terminal()
@@ -185,7 +184,7 @@ namespace Push
 		for (unsigned i = 0; i < sizes_this_level.size(); ++i)
 			stack[i] = random_code_with_size(sizes_this_level[i]);
 
-		return Code(codeListFactory.createCodeList(stack));  // new CodeList(stack));  //CodeList::adopt(stack); //new CodeList(stack); // CodeList::adopt(stack); //Code(new CodeList(stack));
+		return Code(codeListFactory->createCodeList(stack));  // new CodeList(stack));  //CodeList::adopt(stack); //new CodeList(stack); // CodeList::adopt(stack); //Code(new CodeList(stack));
 	}
 
 	Code random_code(unsigned maxpoints)
@@ -328,7 +327,7 @@ namespace Push
 		for (CodeArray::const_reverse_iterator it = stack.rbegin(); it != stack.rend(); ++it)
 			stack1.push_back(*it);
 
-		CodeList* lp = codeListFactory.createCodeList(stack1);  // new CodeList(stack1);
+		CodeList* lp = codeListFactory->createCodeList(stack1);  // new CodeList(stack1);
 		return lp;
 	}
 }

@@ -7,14 +7,15 @@ using namespace std;
 
 namespace Push
 {
-//	void * CodeBase::operator new(size_t size)
-//	{
-////		cout << "Overloading new operator with size: " << size << endl;
-//		void * p = ::new CodeBase();
-//		//void * p = malloc(size); //will also work fine 
-//
-//		return p;
-//	}
+	Code MyDoRange;
+	int init_push();
+
+	void init_static_PushP_instructions()
+	{
+		init_push();
+
+		MyDoRange = parse("EXEC.DO*RANGE");
+	}
 
 	CodeBase::CodeBase()
 	{

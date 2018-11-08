@@ -245,9 +245,13 @@ int test()
 	Push::LiteralFactory<int> intLiteralFactory_old = Push::intLiteralFactory;
 	Push::LiteralFactory<double> floatLiteralFactory_old = Push::floatLiteralFactory;
 	Push::LiteralFactory<bool> boolLiteralFactory_old = Push::boolLiteralFactory;
-	Push::CodeListFactory codeListFactory_old = Push::codeListFactory;
+
+	Push::codeListFactory = new Push::CodeListFactory();
+	Push::CodeListFactory* codeListFactory_old = Push::codeListFactory;
 
 	finance::Broker::load_datatable();
+
+	Push::init_static_PushP_instructions();
 
 	int start_size = heap_size();
 
@@ -268,10 +272,12 @@ int test()
 		Push::boolLiteralFactory.reset();
 
 		codeListFactory_old = Push::codeListFactory;
-		Push::codeListFactory.reset();
+//		Push::codeListFactory.reset();
 
 		while (getline(myfile, testCase))
 		{
+			Push::codeListFactory = new Push::CodeListFactory();
+
 			// Setup
 			init_push();
 			Code code = parse(testCase);
@@ -290,7 +296,8 @@ int test()
 			Push::intLiteralFactory.clean_up();
 			Push::floatLiteralFactory.clean_up();
 			Push::boolLiteralFactory.clean_up();
-			Push::codeListFactory.clean_up();
+//			Push::codeListFactory.clean_up();
+			delete Push::codeListFactory;
 		}
 
 		// Restore old heap manager
@@ -315,137 +322,155 @@ int test()
 	//cout << "*************************************" << endl;
 	//cout << endl;
 
-	//std::ifstream pushGP_test_file(push_gp_test_filename);
+	std::ifstream pushGP_test_file(push_gp_test_filename);
 
-	//if (!pushGP_test_file.is_open())
-	//{
-	//	ofstream push_gp_test_file(push_gp_test_filename);
+	if (!pushGP_test_file.is_open())
+	{
+		ofstream push_gp_test_file(push_gp_test_filename);
 
-	//	make_pop_agents();
+		make_pop_agents();
 
-	//	// Save old heap manger
-	//	intLiteralFactory_old = Push::intLiteralFactory;
-	//	Push::intLiteralFactory.reset();
+		// Save old heap manger
+		intLiteralFactory_old = Push::intLiteralFactory;
+		Push::intLiteralFactory.reset();
 
-	//	floatLiteralFactory_old = Push::floatLiteralFactory;
-	//	Push::floatLiteralFactory.reset();
+		floatLiteralFactory_old = Push::floatLiteralFactory;
+		Push::floatLiteralFactory.reset();
 
-	//	boolLiteralFactory_old = Push::boolLiteralFactory;
-	//	Push::boolLiteralFactory.reset();
+		boolLiteralFactory_old = Push::boolLiteralFactory;
+		Push::boolLiteralFactory.reset();
 
-	//	for (int n = 0; n < argmap::population_size; n++)
-	//	{
-	//		cout << n << endl;
+		codeListFactory_old = Push::codeListFactory;
+//		Push::codeListFactory.reset();
 
-	//		string genome = globals::population_agents[n].to_string();
-	//		string program = globals::population_agents[n].get_program();
+		for (int n = 0; n < argmap::population_size; n++)
+		{
+			Push::codeListFactory = new Push::CodeListFactory();
 
-	//		// Setup
-	//		init_push();
-	//		Code code = parse(program);
-	//		push_call(code);
-	//		long effort = env.go(argmap::max_point_evaluations);
-	//
-	//		if (effort >= argmap::max_point_evaluations)
-	//		{
-	//			cout << "Overfow" << endl;
-	//			continue;
-	//		}
+			cout << n << endl;
 
-	//		else
-	//			cout << std::to_string(n + 1) << endl;
+			string genome = globals::population_agents[n].to_string();
+			string program = globals::population_agents[n].get_program();
+
+			// Setup
+			init_push();
+			Code code = parse(program);
+			push_call(code);
+			long effort = env.go(argmap::max_point_evaluations);
+	
+			if (effort >= argmap::max_point_evaluations)
+			{
+				cout << "Overfow" << endl;
+				continue;
+			}
+
+			else
+				cout << std::to_string(n + 1) << endl;
 
 
-	//		string test_case = make_test_case(n + 1, genome, program, get_stack<int>(), get_stack<double>(), get_stack<bool>());
+			string test_case = make_test_case(n + 1, genome, program, get_stack<int>(), get_stack<double>(), get_stack<bool>());
 
-	//		push_gp_test_file << test_case;
+			push_gp_test_file << test_case;
 
-	//		//// Cleanup
-	//		Push::intLiteralFactory.clean_up();
-	//		Push::floatLiteralFactory.clean_up();
-	//		Push::boolLiteralFactory.clean_up();
-	//	}
+			//// Cleanup
+			Push::intLiteralFactory.clean_up();
+			Push::floatLiteralFactory.clean_up();
+			Push::boolLiteralFactory.clean_up();
+//			Push::codeListFactory.clean_up();
+			delete Push::codeListFactory;
+		}
 
-	//	// Restore old heap manager
-	//	Push::intLiteralFactory = intLiteralFactory_old;
-	//	Push::floatLiteralFactory = floatLiteralFactory_old;
-	//	Push::boolLiteralFactory = boolLiteralFactory_old;
+		// Restore old heap manager
+		Push::intLiteralFactory = intLiteralFactory_old;
+		Push::floatLiteralFactory = floatLiteralFactory_old;
+		Push::boolLiteralFactory = boolLiteralFactory_old;
+		Push::codeListFactory = codeListFactory_old;
 
-	//	push_gp_test_file.close();
-	//}
+		push_gp_test_file.close();
+	}
 
-	//else
-	//{
-	//	string test_case;
-	//	string test_genome;
-	//	string test_program;
-	//	unsigned int test_case_number = 0;
+	else
+	{
+		string test_case;
+		string test_genome;
+		string test_program;
+		unsigned int test_case_number = 0;
 
-	//	// Save old heap manger
-	//	intLiteralFactory_old = Push::intLiteralFactory;
-	//	Push::intLiteralFactory.reset();
+		// Save old heap manger
+		intLiteralFactory_old = Push::intLiteralFactory;
+		Push::intLiteralFactory.reset();
 
-	//	floatLiteralFactory_old = Push::floatLiteralFactory;
-	//	Push::floatLiteralFactory.reset();
+		floatLiteralFactory_old = Push::floatLiteralFactory;
+		Push::floatLiteralFactory.reset();
 
-	//	boolLiteralFactory_old = Push::boolLiteralFactory;
-	//	Push::boolLiteralFactory.reset();
+		boolLiteralFactory_old = Push::boolLiteralFactory;
+		Push::boolLiteralFactory.reset();
 
-	//	while ((test_case = load_test_case(pushGP_test_file)).size() > 0)
-	//	{
-	//		cout << test_case << endl;
+		codeListFactory_old = Push::codeListFactory;
+//		Push::codeListFactory.reset();
 
-	//		test_case_number = extract_test_case_id(test_case);
-	//		test_genome = extract_genome(test_case);
-	//		test_program = extract_program(test_case);
+		while ((test_case = load_test_case(pushGP_test_file)).size() > 0)
+		{
+			Push::codeListFactory = new Push::CodeListFactory();
 
-	//		Individual individual(test_genome);
+			cout << test_case << endl;
 
-	//		// Setup
-	//		init_push();
-	//		Code code = parse(individual.get_program());
-	//		push_call(code);
+			test_case_number = extract_test_case_id(test_case);
+			test_genome = extract_genome(test_case);
+			test_program = extract_program(test_case);
 
-	//		long effort = env.go(argmap::max_point_evaluations);
+			Individual individual(test_genome);
 
-	//		if (effort >= argmap::max_point_evaluations)
-	//		{
-	//			cout << "Skipped" << endl;
-	//		}
-	//		else
-	//		{
-	//			string recreated_test_case = make_test_case(test_case_number, individual.to_string(), individual.get_program(), get_stack<int>(), get_stack<double>(), get_stack<bool>());
+			// Setup
+			init_push();
+			Code code = parse(individual.get_program());
+			push_call(code);
 
-	//			if (remove_whitespace(recreated_test_case) != remove_whitespace(test_case))
-	//			{
-	//				cout << endl;
-	//				cout << "Test case number: " << std::to_string(test_case_number) << endl;
-	//				cout << "Effort = " << std::to_string(effort) << endl;
-	//				cout << "test_case" << endl;
-	//				cout << test_case << endl;
-	//				cout << endl;
-	//				cout << "recreated_test_case" << endl;
-	//				cout << recreated_test_case << endl;
-	//				cout << endl;
-	//				cout << "env" << endl;
-	//				cout << env;
-	//				return 1;
-	//			}
-	//		}
+			long effort = env.go(argmap::max_point_evaluations);
 
-	//		//// Cleanup
-	//		Push::intLiteralFactory.clean_up();
-	//		Push::floatLiteralFactory.clean_up();
-	//		Push::boolLiteralFactory.clean_up();
-	//	}
+			if (effort >= argmap::max_point_evaluations)
+			{
+				cout << "Skipped" << endl;
+			}
+			else
+			{
+				string recreated_test_case = make_test_case(test_case_number, individual.to_string(), individual.get_program(), get_stack<int>(), get_stack<double>(), get_stack<bool>());
 
-	//	// Restore old heap manager
-	//	Push::intLiteralFactory = intLiteralFactory_old;
-	//	Push::floatLiteralFactory = floatLiteralFactory_old;
-	//	Push::boolLiteralFactory = boolLiteralFactory_old;
+				if (remove_whitespace(recreated_test_case) != remove_whitespace(test_case))
+				{
+					cout << endl;
+					cout << "Test case number: " << std::to_string(test_case_number) << endl;
+					cout << "Effort = " << std::to_string(effort) << endl;
+					cout << "test_case" << endl;
+					cout << test_case << endl;
+					cout << endl;
+					cout << "recreated_test_case" << endl;
+					cout << recreated_test_case << endl;
+					cout << endl;
+					cout << "env" << endl;
+					cout << env;
+					return 1;
+				}
+			}
 
-	//	pushGP_test_file.close();
-	//}
+			//// Cleanup
+			Push::intLiteralFactory.clean_up();
+			Push::floatLiteralFactory.clean_up();
+			Push::boolLiteralFactory.clean_up();
+//			Push::codeListFactory.clean_up();
+			delete Push::codeListFactory;
+		}
+
+		// Restore old heap manager
+		Push::intLiteralFactory = intLiteralFactory_old;
+		Push::floatLiteralFactory = floatLiteralFactory_old;
+		Push::boolLiteralFactory = boolLiteralFactory_old;
+		Push::codeListFactory = codeListFactory_old;
+
+		pushGP_test_file.close();
+	}
+
+	delete Push::codeListFactory;
 
 	cout << endl;
 	cout << endl;

@@ -54,6 +54,14 @@ namespace Push
 	extern thread_local LiteralFactory<bool> boolLiteralFactory;
 
 	//
+	// Static Push instructions
+	//
+	extern Code MyDoRange;
+	Code parse(std::string s);
+
+	void init_static_PushP_instructions();
+
+	//
 	// CodeBase
 	//
 
@@ -242,11 +250,6 @@ namespace Push
 			_head = node;
 		}
 
-		void reset()
-		{
-			_head = nullptr;
-		}
-
 		void clean_up()
 		{
 			CodeListRegisterNode* current_node = _head;
@@ -275,11 +278,6 @@ namespace Push
 	public:
 		CodeList* createCodeList(const CodeArray &stack);
 
-		void reset()
-		{
-			codeListRegister.reset();
-		}
-
 		void clean_up()
 		{
 			codeListRegister.clean_up();
@@ -293,7 +291,7 @@ namespace Push
 		return lp;
 	}
 
-	extern thread_local CodeListFactory codeListFactory;
+	extern thread_local CodeListFactory *codeListFactory;
 
 
 	inline std::string str(Code code)
