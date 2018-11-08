@@ -57,6 +57,13 @@ namespace Push
 	// Static Push instructions
 	//
 	extern Code MyDoRange;
+	extern Code zero;
+	extern Code quote;
+	extern Code int_pop;
+	extern Code code_pop;
+	extern Code rnd;
+	extern Code ycode;
+
 	Code parse(std::string s);
 
 	void init_static_PushP_instructions();

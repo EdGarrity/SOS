@@ -42,8 +42,9 @@ namespace Push
 
 	/* Few Executable/quoting constructs */
 
-	inline unsigned _do() {
-		static Code code_pop = parse("CODE.POP");
+	inline unsigned _do() 
+	{
+//		static Code code_pop = parse("CODE.POP");
 		env.push_code_to_exec_stack(code_pop);
 		env.push_code_to_exec_stack(top<Code>());
 		return 1;

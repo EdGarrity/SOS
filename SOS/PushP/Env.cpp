@@ -295,7 +295,7 @@ namespace Push
 	Code Env::pop_stack_from_id(int id)
 	{
 		Code result;
-		static Code quote = parse("CODE.QUOTE");
+//		static Code quote = parse("CODE.QUOTE");
 
 		switch (id)
 		{

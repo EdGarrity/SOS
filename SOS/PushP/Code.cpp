@@ -8,6 +8,13 @@ using namespace std;
 namespace Push
 {
 	Code MyDoRange;
+	Code zero;
+	Code quote;
+	Code int_pop;
+	Code code_pop;
+	Code rnd;
+	Code ycode;
+
 	int init_push();
 
 	void init_static_PushP_instructions()
@@ -15,6 +22,13 @@ namespace Push
 		init_push();
 
 		MyDoRange = parse("EXEC.DO*RANGE");
+		zero = Code(intLiteralFactory.createLiteral(0));
+//		zero = Code(new Literal<int>(0));
+		quote = parse("CODE.QUOTE");
+		int_pop = parse("INTEGER.POP");
+		code_pop = parse("CODE.POP");
+		rnd = parse("CODE.RAND");
+		ycode = parse("EXEC.Y");
 	}
 
 	CodeBase::CodeBase()

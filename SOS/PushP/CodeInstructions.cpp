@@ -7,11 +7,6 @@
 
 namespace Push
 {
-	Code quote;
-	Code DoRange;
-	Code zero;
-	Code int_pop;
-
 	unsigned code_do_range()
 	{
 		int n = pop<int>(env);
@@ -23,14 +18,14 @@ namespace Push
 
 		push(i);
 
-		quote = parse("CODE.QUOTE");
-		DoRange = parse("CODE.DO*RANGE");
+		//quote = parse("CODE.QUOTE");
+		//DoRange = parse("CODE.DO*RANGE");
 
 		if (i != n)
 		{
 			i += direction;
 			CodeArray vec(5);
-			vec[0] = DoRange;
+			vec[0] = MyDoRange;
 			vec[1] = code;
 			vec[2] = quote;
 			//vec[3] = Code(new Literal<int>(n));
@@ -54,13 +49,13 @@ namespace Push
 		if (n <= 0)
 			return 1;
 
-		quote = parse("CODE.QUOTE");
-		DoRange = parse("CODE.DO*RANGE");
+//		quote = parse("CODE.QUOTE");
+//		DoRange = parse("CODE.DO*RANGE");
 //		zero = Code(new Literal<int>(0));
-		zero = Code(intLiteralFactory.createLiteral(0));
+//		zero = Code(intLiteralFactory.createLiteral(0));
 
 		CodeArray vec(5);
-		vec[0] = DoRange;
+		vec[0] = MyDoRange;
 		vec[1] = quote;
 		vec[2] = code;
 //		vec[3] = Code(new Literal<int>(n - 1));
@@ -78,14 +73,14 @@ namespace Push
 		if (n <= 0)
 			return 1;
 
-		quote = parse("CODE.QUOTE");
-		DoRange = parse("CODE.DO*RANGE");
+//		quote = parse("CODE.QUOTE");
+//		DoRange = parse("CODE.DO*RANGE");
 //		zero = Code(new Literal<int>(0));
-		zero = Code(intLiteralFactory.createLiteral(0));
-		int_pop = parse("INTEGER.POP");
+//		zero = Code(intLiteralFactory.createLiteral(0));
+//		int_pop = parse("INTEGER.POP");
 
 		CodeArray vec(5);
-		vec[0] = DoRange;
+		vec[0] = MyDoRange;
 		vec[1] = quote;
 		vec[2] = cons(int_pop, code);
 //		vec[3] = Code(new Literal<int>(n - 1));

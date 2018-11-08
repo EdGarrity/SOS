@@ -125,7 +125,7 @@ namespace Push
 
 	Code make_terminal()
 	{
-		static Code rnd = parse("CODE.RAND"); // special case
+//		static Code rnd = parse("CODE.RAND"); // special case
 		const CodeArray &instruction_list = env.function_set->get_stack();
 //		Code ins = instruction_list[rng.random(instruction_list.size())];  Debugging this line
 

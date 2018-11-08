@@ -42,7 +42,7 @@ namespace Push
 	unsigned y()
 	{
 		Exec x = pop<Exec>(env);
-		static Code ycode = parse("EXEC.Y");
+//		static Code ycode = parse("EXEC.Y");
 
 		if (2 + x->size() >= env.parameters.max_points_in_program)
 		{
@@ -106,21 +106,21 @@ namespace Push
 
 	unsigned do_range()
 	{
-		if (MyDoRange != parse("EXEC.DO*RANGE"))
-		{
-			Code DoRange1 = parse("EXEC.DO*RANGE");
-			cerr << MyDoRange;
-//			abort();
-		}
+//		if (MyDoRange != parse("EXEC.DO*RANGE"))
+//		{
+//			Code DoRange1 = parse("EXEC.DO*RANGE");
+//			cerr << MyDoRange;
+////			abort();
+//		}
 
 		int n = pop<int>(env);
 		int i = pop<int>(env);
-		static Code DoRange = parse("EXEC.DO*RANGE");
+//		static Code DoRange = parse("EXEC.DO*RANGE");
 		Exec code = pop<Exec>(env);
 		CodeArray vec(4);
 		vec[0] = code.to_CodeBase();
-		vec[1] = DoRange;
-//		vec[1] = MyDoRange;
+//		vec[1] = DoRange;
+		vec[1] = MyDoRange;
 		//vec[2] = Code(new Literal<int>(n));
 		//vec[3] = Code(new Literal<int>(i));
 		vec[2] = Code(intLiteralFactory.createLiteral(n));
@@ -138,13 +138,14 @@ namespace Push
 		if (n < 0)
 			return 1;
 
-		static Code DoRange = parse("EXEC.DO*RANGE");
+//		static Code DoRange = parse("EXEC.DO*RANGE");
 		CodeArray vec(4);
 //		static Code zero = Code(new Literal<int>(0));
-		zero = Code(intLiteralFactory.createLiteral(0));
+//		zero = Code(intLiteralFactory.createLiteral(0));
 		vec[0] = code.to_CodeBase();
-		vec[1] = DoRange;
-//		vec[2] = Code(new Literal<int>(n - 1));
+//		vec[1] = DoRange;
+		vec[1] = MyDoRange;
+		//		vec[2] = Code(new Literal<int>(n - 1));
 		vec[2] = Code(intLiteralFactory.createLiteral(n - 1));
 		vec[3] = zero;
 		Code result = Code(new DoRangeClass(vec));
@@ -163,12 +164,13 @@ namespace Push
 
 		CodeArray vec(4);
 //		static Code zero = Code(new Literal<int>(0));	// Potetial memory leak
-		zero = Code(intLiteralFactory.createLiteral(0));
-		static Code int_pop = parse("INTEGER.POP");
-		static Code DoRange = parse("EXEC.DO*RANGE");
+//		zero = Code(intLiteralFactory.createLiteral(0));
+//		static Code int_pop = parse("INTEGER.POP");
+//		static Code DoRange = parse("EXEC.DO*RANGE");
 		vec[0] = cons(int_pop, code.to_CodeBase());
-		vec[1] = DoRange;
-//		vec[2] = Code(new Literal<int>(n - 1));
+//		vec[1] = DoRange;
+		vec[1] = MyDoRange;
+		//		vec[2] = Code(new Literal<int>(n - 1));
 		vec[2] = Code(intLiteralFactory.createLiteral(n - 1));
 		vec[3] = zero;
 		Code result = Code(new DoRangeClass(vec)); // Potetial memory leak
