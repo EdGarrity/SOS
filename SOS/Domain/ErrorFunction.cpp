@@ -12,10 +12,6 @@ namespace domain
 {
 	void eval_one_day_of_test_case(unsigned int row, Individual & individual)
 	{
-		// Create new heap manger
-		CodeBaseRegister codeBaseRegister_old = codeBaseRegister;
-		codeBaseRegister.reset();
-
 		// Setup
 		init_push();
 		Code code = parse(individual.get_program());
@@ -31,11 +27,6 @@ namespace domain
 			bool val = pop<bool>(env);
 			env.parameters.pBroker->update_brokeage_account(val, row);
 		}
-
-		// Cleanup
-		codeBaseRegister.clean_up();
-		codeBaseRegister = codeBaseRegister_old;
-		codeBaseRegister_old = codeBaseRegister; // watchpoint for debugging.
 	}
 
 	double eval_test_case(int input_start, Individual & individual)

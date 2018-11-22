@@ -7,33 +7,44 @@ using namespace std;
 
 namespace Push
 {
-//	void * CodeBase::operator new(size_t size)
-//	{
-////		cout << "Overloading new operator with size: " << size << endl;
-//		void * p = ::new CodeBase();
-//		//void * p = malloc(size); //will also work fine 
-//
-//		return p;
-//	}
+	Code MyDoRange;
+	Code zero;
+	Code quote;
+	Code int_pop;
+	Code code_pop;
+	Code rnd;
+	Code ycode;
+
+	int init_push();
+
+	void init_static_PushP_instructions()
+	{
+		init_push();
+
+		MyDoRange = parse("EXEC.DO*RANGE");
+		zero = Code(intLiteralFactory->createLiteral(0));
+//		zero = Code(new Literal<int>(0));
+		quote = parse("CODE.QUOTE");
+		int_pop = parse("INTEGER.POP");
+		code_pop = parse("CODE.POP");
+		rnd = parse("CODE.RAND");
+		ycode = parse("EXEC.Y");
+	}
 
 	CodeBase::CodeBase()
 	{
-		codeBaseRegister.record(this);
 	}
 
 	CodeBase::CodeBase(const CodeArray & stack) : _stack(stack)
 	{
-		codeBaseRegister.record(this);
 	}
 
 	CodeBase::CodeBase(const CodeBase & code) : _stack(code._stack)
 	{
-		codeBaseRegister.record(this);
 	}
 
 	CodeBase::CodeBase(const CodeBase * code) : _stack(code->_stack)
 	{
-		codeBaseRegister.record(this);
 	}
 
 	istream& operator>>(istream& is, Code& code) {

@@ -70,9 +70,8 @@ namespace Push
 			if (val < stack[i]->size())
 			{
 				Code newcode = insert(stack[i], val, subcode);
-
 				stack[i] = newcode;
-				return CodeList::adopt(stack); //Code( new CodeList(stack) );
+				return Code(codeListFactory->createCodeList(stack));  // new CodeList(stack));  //CodeList::adopt(stack); //Code( new CodeList(stack) );
 			}
 
 			val -= stack[i]->size();
@@ -118,15 +117,15 @@ namespace Push
 			}
 
 			if (codevec.size())
-				resultvec.push_back(new CodeList(codevec)/*CodeList::adopt(codevec)*/); //Code(new CodeList(codevec)));
+				resultvec.push_back(codeListFactory->createCodeList(codevec));  // new CodeList(codevec)/*CodeList::adopt(codevec)*/); //Code(new CodeList(codevec)));
 		}
 
-		return CodeList::adopt(resultvec); //new CodeList(resultvec); // CodeList::adopt(resultvec); //Code(new CodeList(resultvec));
+		return Code(codeListFactory->createCodeList(resultvec));  // new CodeList(resultvec));  //CodeList::adopt(resultvec); //new CodeList(resultvec); // CodeList::adopt(resultvec); //Code(new CodeList(resultvec));
 	}
 
 	Code make_terminal()
 	{
-		static Code rnd = parse("CODE.RAND"); // special case
+//		static Code rnd = parse("CODE.RAND"); // special case
 		const CodeArray &instruction_list = env.function_set->get_stack();
 //		Code ins = instruction_list[rng.random(instruction_list.size())];  Debugging this line
 
@@ -185,7 +184,7 @@ namespace Push
 		for (unsigned i = 0; i < sizes_this_level.size(); ++i)
 			stack[i] = random_code_with_size(sizes_this_level[i]);
 
-		return CodeList::adopt(stack); //new CodeList(stack); // CodeList::adopt(stack); //Code(new CodeList(stack));
+		return Code(codeListFactory->createCodeList(stack));  // new CodeList(stack));  //CodeList::adopt(stack); //new CodeList(stack); // CodeList::adopt(stack); //Code(new CodeList(stack));
 	}
 
 	Code random_code(unsigned maxpoints)
@@ -278,11 +277,8 @@ namespace Push
 			// check BOOLEAN
 			if (atom == "TRUE" || atom == "FALSE")
 			{
-				Code value = Code(new Literal<bool>(atom == "TRUE" ? true : false));
-				//if ( stack.empty() )
-				//                stack.push_back( value );
-				//            else
-				//                stack.back() = cons( value, stack.back() );
+//				Code value = Code(new Literal<bool>(atom == "TRUE" ? true : false));
+				Code value = Code(boolLiteralFactory->createLiteral(atom == "TRUE" ? true : false));
 				stack.push_back(value);
 				continue;
 			}
@@ -301,7 +297,8 @@ namespace Push
 
 			if (end == atom.c_str() + atom.size()) // it's an int
 			{
-				Code v = Code(new Literal<int>(val));
+//				Code v = Code(new Literal<int>(val));
+				Code v = Code(intLiteralFactory->createLiteral(val));
 				stack.push_back(v);
 				continue;
 			}
@@ -310,9 +307,8 @@ namespace Push
 
 			if (end == atom.c_str() + atom.size()) // it's a double
 			{
-				Code v = Code(new Literal<double>(dbl));
-				//if ( stack.empty() ) stack.push_back( v );
-				//else stack.back() = cons( v, stack.back() );
+//				Code v = Code(new Literal<double>(dbl));
+				Code v = Code(floatLiteralFactory->createLiteral(dbl));
 				stack.push_back(v);
 				continue;
 			}
@@ -331,7 +327,7 @@ namespace Push
 		for (CodeArray::const_reverse_iterator it = stack.rbegin(); it != stack.rend(); ++it)
 			stack1.push_back(*it);
 
-		CodeList* lp = new CodeList(stack1);
+		CodeList* lp = codeListFactory->createCodeList(stack1);  // new CodeList(stack1);
 		return lp;
 	}
 }

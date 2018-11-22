@@ -44,57 +44,29 @@ namespace Push
 	// Code/Exec memory manager
 	//
 
-	class CodeBaseRegisterNode
-	{
-		CodeBase* _p;
-		CodeBaseRegisterNode* _next;
+	template <class T>
+	class LiteralFactory;
 
-		friend class CodeBaseRegister;
+	template <class T>
+	extern thread_local LiteralFactory<T> *literalFactory;
+	extern thread_local LiteralFactory<int> *intLiteralFactory;
+	extern thread_local LiteralFactory<double> *floatLiteralFactory;
+	extern thread_local LiteralFactory<bool> *boolLiteralFactory;
 
-	public:
-		CodeBaseRegisterNode(CodeBase *p_, CodeBaseRegisterNode* next_)
-		{
-			_p = p_;
-			_next = next_;
-		}
-	};
+	//
+	// Static Push instructions
+	//
+	extern Code MyDoRange;
+	extern Code zero;
+	extern Code quote;
+	extern Code int_pop;
+	extern Code code_pop;
+	extern Code rnd;
+	extern Code ycode;
 
-	class CodeBaseRegister
-	{
-		CodeBaseRegisterNode* _head;
+	Code parse(std::string s);
 
-	public:
-		CodeBaseRegister() : _head(nullptr) {}
-		~CodeBaseRegister()
-		{
-			clean_up();
-		}
-
-		void record(CodeBase* p)
-		{
-			//CodeBaseRegisterNode* node = new CodeBaseRegisterNode(p, _head);
-			//_head = node;
-		}
-
-		void reset()
-		{
-			_head = nullptr;
-		}
-
-		void clean_up()
-		{
-			//CodeBaseRegisterNode* next = _head;
-			//CodeBaseRegisterNode* node = _head;
-			//while (next != nullptr)
-			//{
-			//	node = next;
-			//	next = node->_next;
-			//	delete node;
-			//}
-		}
-	};
-
-	extern thread_local CodeBaseRegister codeBaseRegister;
+	void init_static_PushP_instructions();
 
 	//
 	// CodeBase
@@ -235,19 +207,99 @@ namespace Push
 		// no equal_to overload, equality checked in parent
 
 		// special 'constructor' that will destroy the argument (for efficiency reasons)
-		static Code adopt(CodeArray &vec)  // beware, destructs vec!
-		{
-			CodeList* lst = new CodeList;
-			lst->_stack.swap(vec); // destructs vec
-			lst->calc_sizes();
-			return Code(lst);
-		}
+		//static Code adopt(CodeArray &vec)  // beware, destructs vec!
+		//{
+		//	CodeList* lst = new CodeList;
+		//	lst->_stack.swap(vec); // destructs vec
+		//	lst->calc_sizes();
+		//	return Code(lst);
+		//}
 
 		TYPE_ID get_type()
 		{
 			return TYPE_ID::unknown;
 		}
 	};
+
+	//
+	// CodeList memory manager
+	//
+	class CodeListRegisterNode
+	{
+		CodeList* _p;
+		CodeListRegisterNode* _next;
+
+		friend class CodeListRegister;
+
+	public:
+		CodeListRegisterNode(CodeList *p_, CodeListRegisterNode* next_)
+		{
+			_p = p_;
+			_next = next_;
+		}
+	};
+
+	class CodeListRegister
+	{
+		CodeListRegisterNode* _head;
+
+	public:
+		CodeListRegister() : _head(nullptr) {}
+
+		~CodeListRegister()
+		{
+			clean_up();
+		}
+
+		void record(CodeList* p)
+		{
+			CodeListRegisterNode* node = new CodeListRegisterNode(p, _head);
+			_head = node;
+		}
+
+		void clean_up()
+		{
+			CodeListRegisterNode* current_node = _head;
+
+			while (current_node != nullptr)
+			{
+				CodeListRegisterNode* next_node = current_node->_next;
+
+				delete current_node->_p;
+				current_node->_p = nullptr;
+
+				delete current_node;
+				current_node = nullptr;
+
+				current_node = next_node;
+			}
+
+			_head = nullptr;
+		}
+	};
+
+	class CodeListFactory
+	{
+		CodeListRegister codeListRegister;
+
+	public:
+		CodeList* createCodeList(const CodeArray &stack);
+
+		void clean_up()
+		{
+			codeListRegister.clean_up();
+		}
+	};
+
+	inline CodeList* CodeListFactory::createCodeList(const CodeArray &stack)
+	{
+		CodeList* lp = new CodeList(stack);
+		codeListRegister.record(lp);
+		return lp;
+	}
+
+	extern thread_local CodeListFactory *codeListFactory;
+
 
 	inline std::string str(Code code)
 	{
