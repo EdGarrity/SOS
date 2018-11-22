@@ -168,6 +168,7 @@
     <ClInclude Include="PushP\CodeOps.h" />
     <ClInclude Include="PushP\CodeUtils.h" />
     <ClInclude Include="PushP\Env.h" />
+    <ClInclude Include="PushP\ExecInstruction.h" />
     <ClInclude Include="PushP\Instruction.h" />
     <ClInclude Include="PushP\Literal.h" />
     <ClInclude Include="PushP\NumOps.h" />

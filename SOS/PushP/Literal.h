@@ -149,10 +149,10 @@ namespace Push
 			_head = node;
 		}
 
-		void reset()
-		{
-			_head = nullptr;
-		}
+		//void reset()
+		//{
+		//	_head = nullptr;
+		//}
 
 		void clean_up()
 		{
@@ -183,10 +183,10 @@ namespace Push
 	public:
 		Literal<T>* createLiteral(T val);
 
-		void reset()
-		{
-			literalRegister.reset();
-		}
+		//void reset()
+		//{
+		//	literalRegister.reset();
+		//}
 
 		void clean_up()
 		{
@@ -203,10 +203,10 @@ namespace Push
 	}
 
 	template <class T>
-	extern thread_local LiteralFactory<T> literalFactory;
-	extern thread_local LiteralFactory<int> intLiteralFactory;
-	extern thread_local LiteralFactory<double> floatLiteralFactory;
-	extern thread_local LiteralFactory<bool> boolLiteralFactory;
+	extern thread_local LiteralFactory<T> *literalFactory;
+	extern thread_local LiteralFactory<int> *intLiteralFactory;
+	extern thread_local LiteralFactory<double> *floatLiteralFactory;
+	extern thread_local LiteralFactory<bool> *boolLiteralFactory;
 
 	/* Packs a single type in a piece of code */
 	template <class T>

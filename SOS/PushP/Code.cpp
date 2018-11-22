@@ -22,7 +22,7 @@ namespace Push
 		init_push();
 
 		MyDoRange = parse("EXEC.DO*RANGE");
-		zero = Code(intLiteralFactory.createLiteral(0));
+		zero = Code(intLiteralFactory->createLiteral(0));
 //		zero = Code(new Literal<int>(0));
 		quote = parse("CODE.QUOTE");
 		int_pop = parse("INTEGER.POP");

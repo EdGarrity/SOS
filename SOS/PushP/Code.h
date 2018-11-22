@@ -48,10 +48,10 @@ namespace Push
 	class LiteralFactory;
 
 	template <class T>
-	extern thread_local LiteralFactory<T> literalFactory;
-	extern thread_local LiteralFactory<int> intLiteralFactory;
-	extern thread_local LiteralFactory<double> floatLiteralFactory;
-	extern thread_local LiteralFactory<bool> boolLiteralFactory;
+	extern thread_local LiteralFactory<T> *literalFactory;
+	extern thread_local LiteralFactory<int> *intLiteralFactory;
+	extern thread_local LiteralFactory<double> *floatLiteralFactory;
+	extern thread_local LiteralFactory<bool> *boolLiteralFactory;
 
 	//
 	// Static Push instructions

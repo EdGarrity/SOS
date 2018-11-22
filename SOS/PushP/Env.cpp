@@ -306,7 +306,7 @@ namespace Push
 
 		case INTEGER_STACK:
 //			result = Code(new Literal<int>(int_stack.back()));
-			result = Code(intLiteralFactory.createLiteral(int_stack.back()));
+			result = Code(intLiteralFactory->createLiteral(int_stack.back()));
 			int_stack.pop_back();
 			break;
 
@@ -317,13 +317,13 @@ namespace Push
 
 		case BOOL_STACK:
 //			result = Code(new Literal<bool>(bool_stack.back()));
-			result = Code(boolLiteralFactory.createLiteral(bool_stack.back()));
+			result = Code(boolLiteralFactory->createLiteral(bool_stack.back()));
 			bool_stack.pop_back();
 			break;
 
 		case FLOAT_STACK:
 //			result = Code(new Literal<double>(double_stack.back()));
-			result = Code(floatLiteralFactory.createLiteral(double_stack.back()));
+			result = Code(floatLiteralFactory->createLiteral(double_stack.back()));
 			double_stack.pop_back();
 			break;
 

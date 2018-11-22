@@ -85,7 +85,6 @@ namespace Push
 			//instruction_table.push_back(code);			
 			(*instructions_ptr) = new CodeList(instruction_table); //
 
-			//std::cout << "Registered: " << name << std::endl;
 			(*str2code_map_ptr)[name] = code;
 			(*str2parentheses_map_ptr)[name] = code->instruction_paren_groups();
 
@@ -95,29 +94,21 @@ namespace Push
 			if (name.size() >= 3 && i >= 0 && name.substr(i, 3) == "ERC" || name == "NAME.RANDBOUNDNAME")
 				(*erc_set_ptr).insert(code);
 
-//			if (name == "CODE.DO" || name == "CODE.IF" || name == "CODE.DO*")
-//				(*exec_set_ptr).insert(code);
-
 			return code;
 		}
-
 	}
 
 	// static initialization
 
 	extern void initGenerics();
 	extern void initCode();
-//	extern void initEnv();
 	extern void initExec();
 	extern void initInt();
 	extern void initFloat();
 	extern void initBool();
-//	extern void initName();
 
 	int init_push()
 	{
-		// run garbage collector at exit
-		//atexit(collect_garbage);
 		static bool initialized = false;
 
 		if (!initialized)
@@ -129,12 +120,10 @@ namespace Push
 			/* Initialize all instructions */
 			initGenerics();
 			initCode();
-			//		initEnv();
 			initExec();
 			initInt();
 			initFloat();
 			initBool();
-			//		initName();
 		}
 
 		env.initialize();

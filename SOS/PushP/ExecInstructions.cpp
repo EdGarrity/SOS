@@ -1,11 +1,11 @@
-#include "Instruction.h"
-#include "Env.h"
-#include "CodeOps.h"
+#include "ExecInstruction.h"
 
 using namespace std;
 
 namespace Push
 {
+	thread_local DoRangeClassFactory *doRangeClassFactory;
+
 	extern Code quote;
 //	extern Code DoRange;
 	extern Code zero;
@@ -71,61 +71,50 @@ namespace Push
 		return 1;
 	}
 
-	class DoRangeClass : public CodeList
-	{
-	public:
-		DoRangeClass(const CodeArray & vec) : CodeList(vec)
-		{
-			//			assert(vec.size() == 4);
-		}
+	//class DoRangeClass : public CodeList
+	//{
+	//public:
+	//	DoRangeClass(const CodeArray & vec) : CodeList(vec)
+	//	{
+	//		//			assert(vec.size() == 4);
+	//	}
 
-		unsigned operator()() const
-		{
-			CodeArray vec = get_stack();
-			int i = static_cast<Literal<int>*>(vec[3].get())->get();
-			int n = static_cast<Literal<int>*>(vec[2].get())->get();
-			int direction = 1;
+	//	unsigned operator()() const
+	//	{
+	//		CodeArray vec = get_stack();
+	//		int i = static_cast<Literal<int>*>(vec[3].get())->get();
+	//		int n = static_cast<Literal<int>*>(vec[2].get())->get();
+	//		int direction = 1;
 
-			if (i > n) direction = -1;
+	//		if (i > n) direction = -1;
 
-			push(i);
-			Exec code = Exec(vec[0]);
+	//		push(i);
+	//		Exec code = Exec(vec[0]);
 
-			if (i != n)
-			{
-//				vec[3] = Code(new Literal<int>(i + direction));
-				vec[3] = Code(intLiteralFactory.createLiteral(i + direction));
-				Code ranger = Code(codeListFactory->createCodeList(vec));  // new CodeList(vec));  //CodeList::adopt(vec);
-				env.push_code_to_exec_stack(ranger);
-			}
+	//		if (i != n)
+	//		{
+	//			vec[3] = Code(intLiteralFactory->createLiteral(i + direction));
+	//			Code ranger = Code(codeListFactory->createCodeList(vec));  // new CodeList(vec));  //CodeList::adopt(vec);
+	//			env.push_code_to_exec_stack(ranger);
+	//		}
 
-			push(code);
-			return 1;
-		}
-	};
+	//		push(code);
+	//		return 1;
+	//	}
+	//};
 
 	unsigned do_range()
 	{
-//		if (MyDoRange != parse("EXEC.DO*RANGE"))
-//		{
-//			Code DoRange1 = parse("EXEC.DO*RANGE");
-//			cerr << MyDoRange;
-////			abort();
-//		}
-
 		int n = pop<int>(env);
 		int i = pop<int>(env);
-//		static Code DoRange = parse("EXEC.DO*RANGE");
 		Exec code = pop<Exec>(env);
 		CodeArray vec(4);
 		vec[0] = code.to_CodeBase();
-//		vec[1] = DoRange;
 		vec[1] = MyDoRange;
-		//vec[2] = Code(new Literal<int>(n));
-		//vec[3] = Code(new Literal<int>(i));
-		vec[2] = Code(intLiteralFactory.createLiteral(n));
-		vec[3] = Code(intLiteralFactory.createLiteral(i));
-		Code result = Code(new DoRangeClass(vec));
+		vec[2] = Code(intLiteralFactory->createLiteral(n));
+		vec[3] = Code(intLiteralFactory->createLiteral(i));
+//		Code result = Code(new DoRangeClass(vec));
+		Code result = Code(doRangeClassFactory->createDoRangeClass(vec));  //  new DoRangeClass(vec));
 		env.push_code_to_exec_stack(result);
 		return 1;
 	}
@@ -146,9 +135,10 @@ namespace Push
 //		vec[1] = DoRange;
 		vec[1] = MyDoRange;
 		//		vec[2] = Code(new Literal<int>(n - 1));
-		vec[2] = Code(intLiteralFactory.createLiteral(n - 1));
+		vec[2] = Code(intLiteralFactory->createLiteral(n - 1));
 		vec[3] = zero;
-		Code result = Code(new DoRangeClass(vec));
+//		Code result = Code(new DoRangeClass(vec));
+		Code result = Code(doRangeClassFactory->createDoRangeClass(vec));  //  new DoRangeClass(vec));
 		env.push_code_to_exec_stack(result);
 
 		return 1;
@@ -171,7 +161,7 @@ namespace Push
 //		vec[1] = DoRange;
 		vec[1] = MyDoRange;
 		//		vec[2] = Code(new Literal<int>(n - 1));
-		vec[2] = Code(intLiteralFactory.createLiteral(n - 1));
+		vec[2] = Code(intLiteralFactory->createLiteral(n - 1));
 		vec[3] = zero;
 		Code result = Code(new DoRangeClass(vec)); // Potetial memory leak
 		env.push_code_to_exec_stack(result);

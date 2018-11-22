@@ -84,13 +84,13 @@ namespace Push
 		T a = pop<T>(env);
 
 		if (typeid(a) == typeid(int))
-			push<Code>(Code(intLiteralFactory.createLiteral(a)));  
+			push<Code>(Code(intLiteralFactory->createLiteral(a)));  
 		
 		else if (typeid(a) == typeid(double))
-			push<Code>(Code(floatLiteralFactory.createLiteral(a)));
+			push<Code>(Code(floatLiteralFactory->createLiteral(a)));
 		
 		else if (typeid(a) == typeid(bool))
-			push<Code>(Code(boolLiteralFactory.createLiteral(a))); 
+			push<Code>(Code(boolLiteralFactory->createLiteral(a))); 
 		
 		return 1;
 	}

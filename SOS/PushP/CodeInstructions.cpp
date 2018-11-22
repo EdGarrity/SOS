@@ -30,8 +30,8 @@ namespace Push
 			vec[2] = quote;
 			//vec[3] = Code(new Literal<int>(n));
 			//vec[4] = Code(new Literal<int>(i));
-			vec[3] = Code(intLiteralFactory.createLiteral(n));
-			vec[4] = Code(intLiteralFactory.createLiteral(i));
+			vec[3] = Code(intLiteralFactory->createLiteral(n));
+			vec[4] = Code(intLiteralFactory->createLiteral(i));
 			env.push_code_to_exec_stack(Code(codeListFactory->createCodeList(vec)));  // new CodeList(vec)));  //CodeList::adopt(vec)); //env.exec_stack.push_back(*new CodeList(vec));  //env.push_guarded(CodeList::adopt(vec)); //Code(new CodeList(vec)));
 		}
 
@@ -59,7 +59,7 @@ namespace Push
 		vec[1] = quote;
 		vec[2] = code;
 //		vec[3] = Code(new Literal<int>(n - 1));
-		vec[3] = Code(intLiteralFactory.createLiteral(n - 1));
+		vec[3] = Code(intLiteralFactory->createLiteral(n - 1));
 		vec[4] = zero;
 		env.push_code_to_exec_stack(Code(codeListFactory->createCodeList(vec)));  // new CodeList(vec)));  //CodeList::adopt(vec)); //Code(new CodeList(vec)));
 		return 1;
@@ -84,7 +84,7 @@ namespace Push
 		vec[1] = quote;
 		vec[2] = cons(int_pop, code);
 //		vec[3] = Code(new Literal<int>(n - 1));
-		vec[3] = Code(intLiteralFactory.createLiteral(n - 1));
+		vec[3] = Code(intLiteralFactory->createLiteral(n - 1));
 		vec[4] = zero;
 		env.push_code_to_exec_stack(Code(codeListFactory->createCodeList(vec)));  // new CodeList(vec)));  //CodeList::adopt(vec)); //Code(new CodeList(vec)));
 		return 1;

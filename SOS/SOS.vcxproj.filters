@@ -135,6 +135,9 @@
     <ClInclude Include="Domain\ErrorFunction.h">
       <Filter>Header Files\Domain</Filter>
     </ClInclude>
+    <ClInclude Include="PushP\ExecInstruction.h">
+      <Filter>Header Files\PushP</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
