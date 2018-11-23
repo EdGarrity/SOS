@@ -97,11 +97,11 @@ namespace Push
 			bool_stack.clear();
 			double_stack.clear();
 
-			exec_stack.shrink_to_fit();
-			int_stack.shrink_to_fit();
-			code_stack.shrink_to_fit();
-			bool_stack.shrink_to_fit();
-			double_stack.shrink_to_fit();
+			//exec_stack.shrink_to_fit();
+			//int_stack.shrink_to_fit();
+			//code_stack.shrink_to_fit();
+			//bool_stack.shrink_to_fit();
+			//double_stack.shrink_to_fit();
 		}
 
 		/* Needed for type checking of preconditions */

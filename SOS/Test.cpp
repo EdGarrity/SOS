@@ -262,7 +262,7 @@ int test()
 	int start_size = heap_size();
 
 
-	for (int pass = 0; pass < 1000; pass++)
+	for (int pass = 0; pass < 100; pass++)
 	{
 		ifstream myfile("..\\Test\\PushP_test.txt");
 

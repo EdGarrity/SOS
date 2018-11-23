@@ -1,3 +1,4 @@
+#include "..\PushGP\Globals.h"
 #include "StaticInit.h"
 #include "Env.h"
 
@@ -111,6 +112,8 @@ namespace Push
 	{
 		static bool initialized = false;
 
+		env.initialize(pushGP::argmap::max_point_evaluations);
+
 		if (!initialized)
 		{
 			initialized = true;
@@ -126,7 +129,6 @@ namespace Push
 			initBool();
 		}
 
-		env.initialize();
 		return 0;
 	}
 }
