@@ -87,13 +87,25 @@ namespace Push
 		public:
 
 			ExecBase_ptr() : ptr(0) {} 
+			~ExecBase_ptr() {}
+			ExecBase_ptr(const ExecBase_ptr<T> & o) : ptr(o.ptr) {} 
+			ExecBase_ptr(T* p) : ptr(p) {} 
+
 			explicit ExecBase_ptr(const CodeBase_prt<T> & s) : ptr(s.ptr) {} 
 
-			CodeBase_prt<T> lock() const
+			CodeBase_prt<T> to_CodeBase() const
 			{
 				return CodeBase_prt<T>(*this);
 			}
 
+			ExecBase_ptr<T> & operator=(const ExecBase_ptr<T> & o) 
+			{
+				if (ptr == o.ptr)
+					return *this;
+
+				ptr = o.ptr;
+				return *this;
+			}
 
 			T* get()
 			{
@@ -125,17 +137,17 @@ namespace Push
 				return *ptr;
 			}
 
-			bool operator==(const CodeBase_prt<T> & o) const
+			bool operator==(const ExecBase_ptr<T> & o) const
 			{
 				return ptr == o.ptr;
 			}
 
-			bool operator!=(const CodeBase_prt<T> & o) const
+			bool operator!=(const ExecBase_ptr<T> & o) const
 			{
 				return ptr != o.ptr;
 			}
 
-			bool operator<(const CodeBase_prt<T> & o) const
+			bool operator<(const ExecBase_ptr<T> & o) const
 			{
 				return ptr < o.ptr;
 			}

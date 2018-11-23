@@ -8,6 +8,8 @@
 #include <map>
 #include <set>
 #include <forward_list>
+#include <iostream>
+#include <exception>
 #include "CodeBasePtr.h"
 
 namespace Push
@@ -23,67 +25,52 @@ namespace Push
 	// This needs to be initialize in Push Initialze and stored in Thread Local Storage
 	extern thread_local Env env;
 
-
 	typedef Push::detail::CodeBase_prt<CodeBase> Code;
 	typedef Push::detail::ExecBase_ptr<CodeBase> Exec;
 	typedef std::vector<Code> CodeArray;
 	typedef unsigned(*Operator)(Env &);
 
 	typedef std::map<std::string, Push::Code> String2CodeMap;
-
 	typedef std::map<std::string, unsigned int> String2ParenthesesMap;
-
 	typedef std::set<Push::Code> CodeSet;
 
 	/* Globals (Check StaticInit) */
 	extern const String2CodeMap &str2code_map;
-//	extern const String2ParenthesesMap &str2parentheses_map;
 	extern const Code &instructions;
 	extern const CodeSet &erc_set;
-//	extern const CodeSet &exec_set;  // DO, DO*, IF
 	extern const Code &nil;
 
-	class CodeBaseRegisterNode
-	{
-		CodeBase* _p;
-		CodeBaseRegisterNode* _next;
+	//
+	// Code/Exec memory manager
+	//
 
-		friend class CodeBaseRegister;
+	template <class T>
+	class LiteralFactory;
 
-	public:
-		CodeBaseRegisterNode(CodeBase *p_, CodeBaseRegisterNode* next_)
-		{
-			_p = p_;
-			_next = next_;
-		}
-	};
+	template <class T>
+	extern thread_local LiteralFactory<T> *literalFactory;
+	extern thread_local LiteralFactory<int> *intLiteralFactory;
+	extern thread_local LiteralFactory<double> *floatLiteralFactory;
+	extern thread_local LiteralFactory<bool> *boolLiteralFactory;
 
-	class CodeBaseRegister
-	{
-		CodeBaseRegisterNode* _head;
+	//
+	// Static Push instructions
+	//
+	extern Code MyDoRange;
+	extern Code zero;
+	extern Code quote;
+	extern Code int_pop;
+	extern Code code_pop;
+	extern Code rnd;
+	extern Code ycode;
 
-	public:
-		CodeBaseRegister() : _head(nullptr) {}
-		~CodeBaseRegister()
-		{
-			CodeBaseRegisterNode* next = _head;
-			CodeBaseRegisterNode* node = _head;
-			while (next != nullptr)
-			{
-				node = next;
-				next = node->_next;
+	Code parse(std::string s);
 
-				delete node;
-			}
-		}
-		void record(CodeBase* p)
-		{
-			CodeBaseRegisterNode* node = new CodeBaseRegisterNode(p, _head);
-			_head = node;
-		}
-	};
+	void init_static_PushP_instructions();
 
-	extern thread_local CodeBaseRegister codeBaseRegister;
+	//
+	// CodeBase
+	//
 
 	class CodeBase
 	{
@@ -138,13 +125,10 @@ namespace Push
 			return;
 		}
 
-	//protected:
 		virtual bool equal_to(const CodeBase &other) const
 		{
 			return true;
 		};
-
-//		void * operator new(size_t size);
 
 		// Comparitor fuctions required for std::set
 		bool operator==(const CodeBase &other) const;
@@ -165,26 +149,6 @@ namespace Push
 			return TYPE_ID::unknown;
 		}
 	};
-
-	//class ExecBase : public CodeBase
-	//{
-	//public:
-	//	ExecBase(const CodeBase &code) : CodeBase(code) {}
-	//	ExecBase() {};
-
-	//	size_t binary_size() const
-	//	{
-	//		return 1;
-	//	}
-	//	unsigned size() const
-	//	{
-	//		return 1;
-	//	}
-	//	size_t len() const
-	//	{
-	//		return 1;
-	//	}
-	//};
 
 	class CodeAtom : public CodeBase
 	{
@@ -237,25 +201,105 @@ namespace Push
 		}
 
 		std::string to_string() const;
-		//std::string to_code(const std::string& name) const;
+
 		unsigned operator()() const;
 
 		// no equal_to overload, equality checked in parent
 
 		// special 'constructor' that will destroy the argument (for efficiency reasons)
-		static Code adopt(CodeArray &vec)  // beware, destructs vec!
-		{
-			CodeList* lst = new CodeList;
-			lst->_stack.swap(vec); // destructs vec
-			lst->calc_sizes();
-			return Code(lst);
-		}
+		//static Code adopt(CodeArray &vec)  // beware, destructs vec!
+		//{
+		//	CodeList* lst = new CodeList;
+		//	lst->_stack.swap(vec); // destructs vec
+		//	lst->calc_sizes();
+		//	return Code(lst);
+		//}
 
 		TYPE_ID get_type()
 		{
 			return TYPE_ID::unknown;
 		}
 	};
+
+	//
+	// CodeList memory manager
+	//
+	class CodeListRegisterNode
+	{
+		CodeList* _p;
+		CodeListRegisterNode* _next;
+
+		friend class CodeListRegister;
+
+	public:
+		CodeListRegisterNode(CodeList *p_, CodeListRegisterNode* next_)
+		{
+			_p = p_;
+			_next = next_;
+		}
+	};
+
+	class CodeListRegister
+	{
+		CodeListRegisterNode* _head;
+
+	public:
+		CodeListRegister() : _head(nullptr) {}
+
+		~CodeListRegister()
+		{
+			clean_up();
+		}
+
+		void record(CodeList* p)
+		{
+			CodeListRegisterNode* node = new CodeListRegisterNode(p, _head);
+			_head = node;
+		}
+
+		void clean_up()
+		{
+			CodeListRegisterNode* current_node = _head;
+
+			while (current_node != nullptr)
+			{
+				CodeListRegisterNode* next_node = current_node->_next;
+
+				delete current_node->_p;
+				current_node->_p = nullptr;
+
+				delete current_node;
+				current_node = nullptr;
+
+				current_node = next_node;
+			}
+
+			_head = nullptr;
+		}
+	};
+
+	class CodeListFactory
+	{
+		CodeListRegister codeListRegister;
+
+	public:
+		CodeList* createCodeList(const CodeArray &stack);
+
+		void clean_up()
+		{
+			codeListRegister.clean_up();
+		}
+	};
+
+	inline CodeList* CodeListFactory::createCodeList(const CodeArray &stack)
+	{
+		CodeList* lp = new CodeList(stack);
+		codeListRegister.record(lp);
+		return lp;
+	}
+
+	extern thread_local CodeListFactory *codeListFactory;
+
 
 	inline std::string str(Code code)
 	{
@@ -282,14 +326,4 @@ namespace Push
 		return *a == *b;
 	}
 	bool smallerCode(Code &a, Code &b);
-
-	//class CodeFactory
-	//{
-	//	std::forward_list <CodeList*> _codeList;
-
-	//public:
-	//	CodeList* newCodeList(const CodeArray &stack);
-	//	CodeList* newCodeList(const CodeBase& a);
-	//	void registerObject(const CodeBase * code);
-	//};
 }

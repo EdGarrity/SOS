@@ -11,6 +11,10 @@ namespace finance
 	extern unsigned int datatable_rows_;
 	extern unsigned int datatable_columns_;
 
+	//extern double datatable_[1775][4043];
+	//extern unsigned int datatable_rows_;
+	//extern unsigned int datatable_columns_;
+
 	class Broker
 	{
 		const unsigned int trading_days_in_year = 252;

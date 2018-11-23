@@ -7,33 +7,49 @@ using namespace std;
 
 namespace Push
 {
-//	void * CodeBase::operator new(size_t size)
-//	{
-////		cout << "Overloading new operator with size: " << size << endl;
-//		void * p = ::new CodeBase();
-//		//void * p = malloc(size); //will also work fine 
-//
-//		return p;
-//	}
+	Code MyDoRange;
+	Code zero;
+	Code quote;
+	Code int_pop;
+	Code code_pop;
+	Code rnd;
+	Code ycode;
+
+	int init_push();
+
+	void init_static_PushP_instructions()
+	{
+		init_push();
+
+		MyDoRange = parse("EXEC.DO*RANGE");
+		zero = Code(intLiteralFactory->createLiteral(0));
+//		zero = Code(new Literal<int>(0));
+		quote = parse("CODE.QUOTE");
+		int_pop = parse("INTEGER.POP");
+		code_pop = parse("CODE.POP");
+		rnd = parse("CODE.RAND");
+		ycode = parse("EXEC.Y");
+	}
 
 	CodeBase::CodeBase()
 	{
-		codeBaseRegister.record(this);
 	}
 
 	CodeBase::CodeBase(const CodeArray & stack) : _stack(stack)
 	{
-		codeBaseRegister.record(this);
 	}
 
 	CodeBase::CodeBase(const CodeBase & code) : _stack(code._stack)
 	{
-		codeBaseRegister.record(this);
 	}
 
 	CodeBase::CodeBase(const CodeBase * code) : _stack(code->_stack)
 	{
-		codeBaseRegister.record(this);
+	}
+
+	istream& operator>>(istream& is, Code& code) {
+		code = parse(is);
+		return is;
 	}
 
 	bool CodeBase::operator==(const CodeBase & b) const
@@ -151,15 +167,32 @@ namespace Push
 	void CodeList::calc_sizes()
 	{
 		_size = 1;
-		_binary_size = _stack.size() == 0 
+		_binary_size = (_stack.size() == 0) 
 			? 0 
 			: _stack.size() - 1; // internal nodes
+
+		// debug
+		//if (_stack.size() > 0)
+		//{
+		//	Code c1 = _stack[0];
+		//	CodeBase p1 = c1.get();
+		//	size_t s1 = c1->size();
+		//}
 
 		for (CodeArray::const_iterator it = _stack.begin(); it != _stack.end(); ++it)
 		{
 			_size += (*it)->size();
 			_binary_size += (*it)->binary_size();
 		}
+
+		//_size = 1;
+		//_binary_size = _stack.size() - 1; // internal nodes
+
+		//for (CodeArray::const_iterator it = _stack.begin(); it != _stack.end(); ++it) 
+		//{
+		//	_size += (*it)->size();
+		//	_binary_size += (*it)->binary_size();
+		//}
 	}
 
 	std::string CodeList::to_string() const
@@ -183,23 +216,4 @@ namespace Push
 
 		return 1;
 	}
-
-	//CodeList* CodeFactory::newCodeList(const CodeArray & stack)
-	//{
-	//	CodeList* lp = new CodeList(stack);
-	//	_codeList.emplace_front(lp);
-	//	return lp;
-	//}
-
-	//CodeList * CodeFactory::newCodeList(const CodeBase & a)
-	//{
-	//	CodeList* lp = new CodeList(a);
-	//	_codeList.emplace_front(lp);
-	//	return lp;
-	//}
-
-	//void CodeFactory::registerObject(const CodeBase* code)
-	//{
-	//	_codeList.emplace_front(code);
-	//}
 }

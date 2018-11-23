@@ -42,8 +42,9 @@ namespace Push
 
 	/* Few Executable/quoting constructs */
 
-	inline unsigned _do() {
-		static Code code_pop = parse("CODE.POP");
+	inline unsigned _do() 
+	{
+//		static Code code_pop = parse("CODE.POP");
 		env.push_code_to_exec_stack(code_pop);
 		env.push_code_to_exec_stack(top<Code>());
 		return 1;
@@ -55,11 +56,12 @@ namespace Push
 	}
 
 	inline unsigned _quote() {
-		push<Code>(pop<Exec>(env).lock());
+		push<Code>(pop<Exec>(env).to_CodeBase());
 		return 1;
 	}
 
-	inline unsigned _if() {
+	inline unsigned _if() 
+	{
 		Code first = pop<Code>(env);
 		Code second = pop<Code>(env);
 
@@ -73,9 +75,23 @@ namespace Push
 
 	///* From */
 	template <class T>
-	inline unsigned _from_T() {
+	inline unsigned _from_T() 
+	{
+//		T a = pop<T>(env);
+//		push<Code>(Code(new Literal<T>(a)));
+//		return 1;
+
 		T a = pop<T>(env);
-		push<Code>(Code(new Literal<T>(a)));
+
+		if (typeid(a) == typeid(int))
+			push<Code>(Code(intLiteralFactory->createLiteral(a)));  
+		
+		else if (typeid(a) == typeid(double))
+			push<Code>(Code(floatLiteralFactory->createLiteral(a)));
+		
+		else if (typeid(a) == typeid(bool))
+			push<Code>(Code(boolLiteralFactory->createLiteral(a))); 
+		
 		return 1;
 	}
 
@@ -87,21 +103,24 @@ namespace Push
 	}
 
 	inline unsigned _append() {
-		if (1 + first<Code>()->size() + second<Code>()->size() >= env.parameters.max_points_in_program) return 1;
+		if (1 + first<Code>()->size() + second<Code>()->size() >= env.parameters.max_points_in_program) 
+			return 1;
 
 		Code first = pop<Code>(env);
 		Code second = pop<Code>(env);
 
 		CodeArray first_stack = first->get_stack();
-		if (first_stack.empty()) first_stack.push_back(first);
+		if (first_stack.empty()) 
+			first_stack.push_back(first);
 
 		CodeArray second_stack = second->get_stack();
-		if (second_stack.empty()) second_stack.push_back(second);
+		if (second_stack.empty()) 
+			second_stack.push_back(second);
 
 		second_stack.reserve(second_stack.size() + first_stack.size());
 		std::copy(first_stack.begin(), first_stack.end(), std::back_inserter(second_stack));
 
-		push<Code>(CodeList::adopt(second_stack)); //push<Code>(new CodeList(second_stack)); // push<Code>(CodeList::adopt(second_stack)); //Code(new CodeList(second_stack)));
+		push<Code>(Code(codeListFactory->createCodeList(second_stack)));  // new CodeList(second_stack))); //CodeList::adopt(second_stack)); //push<Code>(new CodeList(second_stack)); // push<Code>(CodeList::adopt(second_stack)); //Code(new CodeList(second_stack)));
 		return first_stack.size();
 	}
 
@@ -125,10 +144,11 @@ namespace Push
 
 	inline unsigned _cdr() 
 	{
-		if (top<Code>()->get_stack().size()) {
+		if (top<Code>()->get_stack().size()) 
+		{
 			CodeArray stack = pop<Code>(env)->get_stack();
 			stack.pop_back();
-			push<Code>(CodeList::adopt(stack)); //Code(new CodeList(stack)));
+			push<Code>(Code(codeListFactory->createCodeList(stack)));  // new CodeList(stack)));  //CodeList::adopt(stack)); //Code(new CodeList(stack)));
 		}
 
 		return 1;

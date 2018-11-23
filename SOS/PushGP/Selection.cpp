@@ -114,7 +114,7 @@ namespace pushGP
 				elite = (errors[training_case] < elite) ? errors[training_case] : elite;
 			}
 
-			// Redure selection pool
+			// Reduce selection pool
 			before_it = survivors_index.before_begin();
 			for (auto it = survivors_index.begin(); it != survivors_index.end(); it++)
 			{

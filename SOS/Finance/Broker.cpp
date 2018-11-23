@@ -38,18 +38,18 @@ namespace finance
 
 		//	vector<vector<double> > datatable;
 		ifstream inputFile(data_table_filename);
-		int l = 0;
+		int row = 0;
 
 		while (inputFile.good())
 		{
-			l++;
+			row++;
 			string s;
 
 			if (!getline(inputFile, s))
 				break;
 
 			// Ignore header row
-			if (l == 1)
+			if (row == 1)
 				continue;
 
 			if (s[0] != '#')
@@ -70,7 +70,7 @@ namespace finance
 					}
 					catch (const std::invalid_argument e)
 					{
-						cout << "NaN found in file " << data_table_filename << " line " << l << endl;
+						cout << "NaN found in file " << data_table_filename << " line " << row << endl;
 						e.what();
 					}
 				}
@@ -100,6 +100,8 @@ namespace finance
 
 	unsigned int Broker::get_number_of_datatable_columns()
 	{
+		load_datatable();
+
 		return datatable_columns_;
 	}
 

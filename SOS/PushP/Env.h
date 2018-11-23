@@ -33,24 +33,7 @@ namespace Push
 
 	class Env
 	{
-//		CodeFactory _codeFactory;
-//		LiteralFactory<bool>* _boolLiteralFactory;
-//		LiteralFactory<int>* _intLiteralFactory;
-//		LiteralFactory<double>* _doubleLiteralFactory;
-//		InstructionFactory _instructionFactory;
-
 	public:
-		// Factories
-		//CodeList* newCodeList(const CodeArray &stack);
-		//CodeList* newCodeList(const CodeBase & a);
-
-		//Literal<bool>* newBoolLiteral(bool val);
-		//Literal<int>* newIntLiteral(int val);
-		//Literal<double>* newDoubleLiteral(double val);
-
-		//Instruction* newInstruction(Operator op, std::string name);
-		//Instruction* newInstruction(Operator op, std::string name, Type intype, Type outtype, bool static_ = true);
-
 		/* instructions */
 		Code function_set;
 		Parameters parameters;
@@ -74,10 +57,6 @@ namespace Push
 //		Env(unsigned _reserve = 1000) : function_set(instructions), parameters(global_parameters)
 		Env(unsigned _reserve = 1000) : parameters(global_parameters)
 		{
-			//_boolLiteralFactory = new LiteralFactory<bool>();
-			//_intLiteralFactory = new LiteralFactory<int>();
-			//_doubleLiteralFactory = new LiteralFactory<double>();
-
 			reserve(_reserve);
 			clear_stacks();
 			data_record_index = 0;
@@ -117,6 +96,12 @@ namespace Push
 			code_stack.clear();
 			bool_stack.clear();
 			double_stack.clear();
+
+			exec_stack.shrink_to_fit();
+			int_stack.shrink_to_fit();
+			code_stack.shrink_to_fit();
+			bool_stack.shrink_to_fit();
+			double_stack.shrink_to_fit();
 		}
 
 		/* Needed for type checking of preconditions */
@@ -271,7 +256,7 @@ namespace Push
 	{
 		int effort = 0;
 
-		push(equal_to(pop<Exec>(env).lock(), pop<Exec>(env).lock(), effort));
+		push(equal_to(pop<Exec>(env).to_CodeBase(), pop<Exec>(env).to_CodeBase(), effort));
 		return effort;
 	}
 

@@ -49,6 +49,8 @@ namespace pushGP
 		//Vector of errors
 		std::vector<double> errors_;
 
+		void init();
+
 	public:
 		Individual();
 		Individual(std::vector<struct Atom> _genome);
