@@ -11,10 +11,13 @@ namespace pushGP
 		// Domain specific globals
 
 		// Number of training cases for elite lexicase selection
-		extern unsigned int number_of_training_cases;
+//		extern unsigned int number_of_training_cases;
 
 		// Brokeage account opening balance
-		extern double opening_balance;
+//		extern double opening_balance;
+
+		// Load data Plush instruction
+		extern std::vector<struct Atom> load_data_genome;
 
 		//*******************************************************
 		// General GP storage variables

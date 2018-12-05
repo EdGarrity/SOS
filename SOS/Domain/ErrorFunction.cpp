@@ -4,6 +4,8 @@
 #include "..\PushP\StaticInit.h"
 #include "..\PushP\CodeUtils.h"
 #include "..\PushP\Env.h"
+#include "..\PushP\Literal.h"
+#include "..\PushP\ExecInstruction.h"
 
 using namespace finance;
 using namespace Push;
@@ -12,6 +14,13 @@ namespace domain
 {
 	void eval_one_day_of_test_case(unsigned int row, Individual & individual)
 	{
+		// Create thread factories
+		Push::intLiteralFactory = new Push::LiteralFactory<int>();
+		Push::floatLiteralFactory = new Push::LiteralFactory<double>();
+		Push::boolLiteralFactory = new Push::LiteralFactory<bool>();
+		Push::codeListFactory = new Push::CodeListFactory();
+		Push::doRangeClassFactory = new Push::DoRangeClassFactory();
+
 		// Setup
 		init_push();
 		Code code = parse(individual.get_program());
@@ -27,31 +36,56 @@ namespace domain
 			bool val = pop<bool>(env);
 			env.parameters.pBroker->update_brokeage_account(val, row);
 		}
+
+		// Cleanup thread factories
+		env.clear_stacks();
+
+		delete Push::intLiteralFactory;
+		delete Push::floatLiteralFactory;
+		delete Push::boolLiteralFactory;
+		delete Push::codeListFactory;
+		delete Push::doRangeClassFactory;
 	}
 
+	// Evaluate a single test case
 	double eval_test_case(int input_start, Individual & individual)
 	{
 		int day_index = 0;
-		Broker broker = Broker(globals::opening_balance);
+		Broker broker = Broker(argmap::opening_balance);
 
 		env.parameters.pBroker = &broker;
 
+		//if ((input_start % 100) == 0)
+		//	std::cout << "    Test case " << input_start << std::endl;
+
 		// Evaluate each day of the test case.
-		for (day_index = input_start; day_index < input_start + globals::number_of_training_cases - 1; day_index++)
+		for (day_index = input_start; day_index < input_start + argmap::number_of_training_days_in_year - 1; day_index++)
 			eval_one_day_of_test_case(day_index, individual);
 
 		// Calculate test case error by calculating loss
-		double error = globals::opening_balance - broker.close_brokeage_account(day_index);
+		double error = argmap::opening_balance - broker.close_brokeage_account(day_index);
 
 		return (error == 0.0 ? std::numeric_limits<double>::max() : error);
 	}
 
-	void error_function(Individual & individual)
+	double error_function(Individual & individual)
 	{
-		unsigned int number_of_test_cases = Broker::get_number_of_datatable_rows() - globals::number_of_training_cases - 1;
+		const unsigned int input_end = Broker::get_number_of_datatable_rows() - argmap::number_of_training_days_in_year - 1;
+		double min_error = std::numeric_limits<double>::max();
 
-		for (int input_start = 0; input_start < number_of_test_cases; input_start++)
-			individual.log_error(eval_test_case(input_start, individual));
+		// Evaluate test cases
+		for (int input_start = 0; input_start < input_end; input_start += argmap::training_case_step)
+		{
+//			individual.log_error(eval_test_case(input_start, individual));
+
+			double error = eval_test_case(input_start, individual);
+			individual.log_error(error);
+
+			min_error = (min_error < error) ? min_error : error;
+		}
+
+//		std::cout << "    Min error = " << min_error << std::endl;
+		return min_error;
 	}
 
 	void load_argmap()

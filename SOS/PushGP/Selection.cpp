@@ -66,19 +66,22 @@ namespace pushGP
 	void calculate_epsilons_for_epsilon_lexicase()
 	{
 		std::vector<double> test_case_errors;
-		std::vector<double> individual_errors;
 
 		globals::epsilons.clear();
 
-		for (int t = 0; t < globals::number_of_training_cases; t++)
+		for (int t = 0; t < Number_Of_Test_Cases; t++)
 		{
 			test_case_errors.clear();
 
-			for (int n = 0; n < argmap::population_size; n++)
-			{
-				individual_errors = globals::population_agents[n].get_errors();
-				test_case_errors.push_back(individual_errors[t]);
-			}
+			//for (int n = 0; n < argmap::population_size; n++)
+			//{
+			//	const std::vector<double> * individual_errors = globals::population_agents[n].get_errors();
+			//	double error = (*individual_errors)[t];
+			//	test_case_errors.push_back(error);
+			//}
+
+			for (auto ind : globals::population_agents)
+				test_case_errors.push_back(ind.get_errors()[t]);
 
 			globals::epsilons.push_back(mad(test_case_errors));
 		}
@@ -93,7 +96,7 @@ namespace pushGP
 			survivors_index.push_front(n);
 
 		// Get a randomized deck of test cases
-		std::vector<unsigned int> test_cases = lshuffle(globals::number_of_training_cases); //randomized_training_cases_deck_;
+		std::vector<unsigned int> test_cases = lshuffle(Number_Of_Test_Cases); //randomized_training_cases_deck_;
 
 		while ((!test_cases.size() > 1) && (!survivors_index.empty()))
 		{

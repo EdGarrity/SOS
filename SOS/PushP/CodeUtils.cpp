@@ -125,20 +125,30 @@ namespace Push
 
 	Code make_terminal()
 	{
+		std::cout << "        make_terminal()" << std::endl;
+
 //		static Code rnd = parse("CODE.RAND"); // special case
 		const CodeArray &instruction_list = env.function_set->get_stack();
 //		Code ins = instruction_list[rng.random(instruction_list.size())];  Debugging this line
 
 		int n = rng.random(instruction_list.size());
+		std::cout << "        n = " << n << std::endl;
+
 		Code ins = instruction_list[n];
+		std::cout << "        ins = " << ins->to_string() << std::endl;
 
 		if (ins != rnd && erc_set.find(ins) != erc_set.end())
 		{
 			(*ins)();
 			// get everything that's produced in this env. Need to car twice to get rid of the 'list of lists' that are produced by atoms
 			Code retval = car(car(pack(env.make_type())));
+
+			std::cout << "        make_terminal() return retval;" << std::endl;
+
 			return retval;
 		}
+
+		std::cout << "        make_terminal() return ins;" << std::endl;
 
 		return ins;
 	}

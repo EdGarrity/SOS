@@ -7,11 +7,8 @@ namespace pushGP
 		//*******************************************************
 		// Domain specific globals
 
-		// Set number of training cases to number of trading days in a year
-		unsigned int number_of_training_cases = 252;
-
-		// Brokeage account opening balance
-		double opening_balance = 10000;
+		// Load data Plush instruction
+		std::vector<struct Atom> load_data_genome;
 
 		//*******************************************************
 		// General GP storage variables

@@ -2,7 +2,7 @@
 #include <random>
 #include <chrono>
 
-#include "Arguments.h"
+#include "Globals.h"
 #include "Random.h"
 #include "Individual.h"
 #include "..\PushP\Code.h"
@@ -16,10 +16,12 @@ namespace pushGP
 
 	double random_double()
 	{
-		std::default_random_engine generator;
-		std::uniform_real_distribution<double> distribution(0.0, 1.0);
+		//std::default_random_engine generator;
+		//std::uniform_real_distribution<double> distribution(0.0, 1.0);
 
-		return distribution(generator);
+		//return distribution(generator);
+
+		return rng.uniform(1.0);
 	}
 
 	static unsigned int random_closes()
@@ -38,11 +40,15 @@ namespace pushGP
 
 	struct Atom random_atom()
 	{
+		std::cout << "        random_atom()" << std::endl;
+
 		struct Atom gene;
 
 		Code code = make_terminal();
 
 		gene.instruction = code->to_string();
+
+		std::cout << "          gene.instruction = code->to_string(); " << gene.instruction << std::endl;
 
 		CodeBase::TYPE_ID code_type = code->get_type2();
 
@@ -58,7 +64,15 @@ namespace pushGP
 		else
 			gene.type = Atom::ins;
 
+		std::cout << "        random_atom() return;" << std::endl;
+
 		return gene;
+	}
+
+	void append_genome(std::vector<struct Atom>& a, const std::vector<struct Atom>& b)
+	{
+		a.reserve(a.size() + b.size());
+		a.insert(a.end(), b.begin(), b.end());  // std::move(b.begin(), b.end(), std::back_inserter(a));
 	}
 
 	std::vector<struct Atom> random_plush_genome_with_size(unsigned int genome_size)
@@ -70,10 +84,18 @@ namespace pushGP
 
 		while (--n > 0)
 		{
-			atom = random_atom();
-			atom.parentheses = random_closes();
+			if (random_double() < argmap::seed_with_data_rate)
+			{
+				append_genome(genome, globals::load_data_genome);
+			}
 
-			genome.push_back(atom);
+			else
+			{
+				atom = random_atom();
+				atom.parentheses = random_closes();
+
+				genome.push_back(atom);
+			}
 		}
 
 		return genome;
