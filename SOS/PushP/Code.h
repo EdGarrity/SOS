@@ -28,7 +28,8 @@ namespace Push
 	typedef Push::detail::CodeBase_prt<CodeBase> Code;
 	typedef Push::detail::ExecBase_ptr<CodeBase> Exec;
 	typedef std::vector<Code> CodeArray;
-	typedef unsigned(*Operator)(Env &);
+//	typedef unsigned(*Operator)(Env &);
+	typedef unsigned(*Operator)();
 
 	typedef std::map<std::string, Push::Code> String2CodeMap;
 	typedef std::map<std::string, unsigned int> String2ParenthesesMap;
@@ -93,6 +94,7 @@ namespace Push
 
 	//	/* virtual functions */
 		virtual unsigned operator()() const //virtual unsigned operator()(Env &env) const
+//		virtual unsigned operator()(Env &env) const
 		{
 			return 1;
 		}

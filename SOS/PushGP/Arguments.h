@@ -127,6 +127,9 @@ namespace pushGP
 			//	;; Arguments related to genetic operators
 			//	;; ----------------------------------------
 
+		// The probability of generating a constant Plush atom
+		const double probability_of_generating_a_constant_Plush_atom = 0.1;
+
 		// When using alternation, the probability of alternating between the parents when moving
 		// to the next gene.
 		const double alternation_rate = 0.01;

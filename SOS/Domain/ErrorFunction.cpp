@@ -55,9 +55,6 @@ namespace domain
 
 		env.parameters.pBroker = &broker;
 
-		//if ((input_start % 100) == 0)
-		//	std::cout << "    Test case " << input_start << std::endl;
-
 		// Evaluate each day of the test case.
 		for (day_index = input_start; day_index < input_start + argmap::number_of_training_days_in_year - 1; day_index++)
 			eval_one_day_of_test_case(day_index, individual);
@@ -76,15 +73,12 @@ namespace domain
 		// Evaluate test cases
 		for (int input_start = 0; input_start < input_end; input_start += argmap::training_case_step)
 		{
-//			individual.log_error(eval_test_case(input_start, individual));
-
 			double error = eval_test_case(input_start, individual);
 			individual.log_error(error);
 
 			min_error = (min_error < error) ? min_error : error;
 		}
 
-//		std::cout << "    Min error = " << min_error << std::endl;
 		return min_error;
 	}
 

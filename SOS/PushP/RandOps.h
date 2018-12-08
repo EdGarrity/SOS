@@ -30,13 +30,13 @@ namespace Push
 		return 1;
 	}
 
-	inline unsigned rand_code()
-	{
-		// make sure random code is generated in a 'fresh' environment
-//		Env* fresh = env.clone();
-		Code code = random_code(env.parameters.max_points_in_random_expression);
-		push(code);
-//		delete fresh;
-		return code->size();
-	}
+//	inline unsigned rand_code()
+//	{
+//		// make sure random code is generated in a 'fresh' environment
+////		Env* fresh = env.clone();
+//		Code code = random_code(env.parameters.max_points_in_random_expression);
+//		push(code);
+////		delete fresh;
+//		return code->size();
+//	}
 }

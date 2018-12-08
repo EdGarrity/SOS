@@ -56,10 +56,7 @@ namespace pushGP
 	void produce_new_offspring()
 	{
 		for (unsigned int n = 0; n < argmap::population_size; n++)
-		{
-			cout << "  n = " << n << endl;
 			globals::child_agents[n] = breed();
-		}
 	}
 
 	void install_next_generation()
@@ -70,76 +67,84 @@ namespace pushGP
 		}
 	}
 
-	void init_static_PushGP_instructions()
-	{
-		globals::load_data_genome = String_to_plush_genome("{:instruction FLOAT.ERC :close  0}{:instruction FLOAT.FROMDATA :close  0}");
-	}
-
 	void pushgp(std::function<double(Individual&)> error_function)
 	{
-		unsigned int generation = 0;
-		bool done = false;
-
-		// Create main factories
-		Push::intLiteralFactory = new Push::LiteralFactory<int>();
-		Push::floatLiteralFactory = new Push::LiteralFactory<double>();
-		Push::boolLiteralFactory = new Push::LiteralFactory<bool>();
-		Push::codeListFactory = new Push::CodeListFactory();
-		Push::doRangeClassFactory = new Push::DoRangeClassFactory();
-
-		// Create references to the main factories
-		Push::LiteralFactory<int> *intLiteralFactory_old = intLiteralFactory;
-		Push::LiteralFactory<double> *floatLiteralFactory_old = floatLiteralFactory;
-		Push::LiteralFactory<bool> *boolLiteralFactory_old = boolLiteralFactory;
-		Push::CodeListFactory* codeListFactory_old = Push::codeListFactory;
-		Push::DoRangeClassFactory* doRangeClassFactory_old = Push::doRangeClassFactory;
-
-		// Initialze
-		finance::Broker::load_datatable();
-		init_static_PushGP_instructions();
-		Push::init_static_PushP_instructions();
-		Push::init_push();
-
-		// Create population
-		cout << "Create Population Agents" << endl;
-		make_pop_agents();
-		cout << "Create Child Agents" << endl;
-		make_child_agents();
-
-		// Save references to the main factories
-		intLiteralFactory_old = Push::intLiteralFactory;
-		floatLiteralFactory_old = Push::floatLiteralFactory;
-		boolLiteralFactory_old = Push::boolLiteralFactory;
-		codeListFactory_old = Push::codeListFactory;
-		doRangeClassFactory_old = Push::doRangeClassFactory;
-
-		while (!done)
+		try
 		{
-			cout << "Generation " << generation << endl;
-			cout << "Compte Errors" << endl;
-			compute_errors(error_function);
-			cout << "Number_Of_Test_Cases = " << Number_Of_Test_Cases << endl;
-			cout << "Calculate Epsilons" << endl;
-			calculate_epsilons_for_epsilon_lexicase();
-			cout << "Produce New Offspring" << endl;
-			produce_new_offspring();
-			cout << "Install New Generation" << endl;
-			install_next_generation();
-			generation++;
+			unsigned int generation = 0;
+			bool done = false;
+
+			// Create main factories
+			Push::intLiteralFactory = new Push::LiteralFactory<int>();
+			Push::floatLiteralFactory = new Push::LiteralFactory<double>();
+			Push::boolLiteralFactory = new Push::LiteralFactory<bool>();
+			Push::codeListFactory = new Push::CodeListFactory();
+			Push::doRangeClassFactory = new Push::DoRangeClassFactory();
+
+			// Create references to the main factories
+			Push::LiteralFactory<int> *intLiteralFactory_old = intLiteralFactory;
+			Push::LiteralFactory<double> *floatLiteralFactory_old = floatLiteralFactory;
+			Push::LiteralFactory<bool> *boolLiteralFactory_old = boolLiteralFactory;
+			Push::CodeListFactory* codeListFactory_old = Push::codeListFactory;
+			Push::DoRangeClassFactory* doRangeClassFactory_old = Push::doRangeClassFactory;
+
+			// Initialze
+			finance::Broker::load_datatable();
+			Push::init_static_PushP_instructions();
+			Push::init_push();
+
+			// Create population
+			cout << "Create Population Agents" << endl;
+			make_pop_agents();
+			cout << "Create Child Agents" << endl;
+			make_child_agents();
+
+			// Save references to the main factories
+			intLiteralFactory_old = Push::intLiteralFactory;
+			floatLiteralFactory_old = Push::floatLiteralFactory;
+			boolLiteralFactory_old = Push::boolLiteralFactory;
+			codeListFactory_old = Push::codeListFactory;
+			doRangeClassFactory_old = Push::doRangeClassFactory;
+
+			while (!done)
+			{
+				cout << "Generation " << generation << endl;
+				cout << "Compte Errors" << endl;
+				compute_errors(error_function);
+				cout << "Number_Of_Test_Cases = " << Number_Of_Test_Cases << endl;
+				cout << "Calculate Epsilons" << endl;
+				calculate_epsilons_for_epsilon_lexicase();
+				cout << "Produce New Offspring" << endl;
+				produce_new_offspring();
+				cout << "Install New Generation" << endl;
+				install_next_generation();
+				generation++;
+			}
+
+			// Restore old heap manager
+			Push::intLiteralFactory = intLiteralFactory_old;
+			Push::floatLiteralFactory = floatLiteralFactory_old;
+			Push::boolLiteralFactory = boolLiteralFactory_old;
+			Push::codeListFactory = codeListFactory_old;
+			Push::doRangeClassFactory = doRangeClassFactory_old;
+
+			// Cleanup main factories
+			delete Push::intLiteralFactory;
+			delete Push::floatLiteralFactory;
+			delete Push::boolLiteralFactory;
+			delete Push::codeListFactory;
+			delete Push::doRangeClassFactory;
+
 		}
-
-		// Restore old heap manager
-		Push::intLiteralFactory = intLiteralFactory_old;
-		Push::floatLiteralFactory = floatLiteralFactory_old;
-		Push::boolLiteralFactory = boolLiteralFactory_old;
-		Push::codeListFactory = codeListFactory_old;
-		Push::doRangeClassFactory = doRangeClassFactory_old;
-
-		// Cleanup main factories
-		delete Push::intLiteralFactory;
-		delete Push::floatLiteralFactory;
-		delete Push::boolLiteralFactory;
-		delete Push::codeListFactory;
-		delete Push::doRangeClassFactory;
+		catch (const std::exception& e)
+		{
+			cout << "Standard exception: " << e.what() << endl;
+			throw;
+		}
+		catch (...)
+		{
+			cout << "Exception occurred" << endl;
+			throw;
+		}
 	}
 }

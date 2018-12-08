@@ -19,6 +19,6 @@ namespace Push
 		make_instruction((Operator)_max<int>, "INTEGER.MAX", binaryInt, integerType);
 		make_instruction((Operator)_min<int>, "INTEGER.MIN", binaryInt, integerType);
 //		make_instruction((Operator)rand_int, "INTEGER.RAND", nullType, integerType);
-		make_instruction((Operator)rand_int, "INTEGER.ERC", nullType, integerType);
+//		make_instruction((Operator)rand_int, "INTEGER.ERC", nullType, integerType);
 	}
 } // namespace push

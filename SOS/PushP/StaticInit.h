@@ -8,12 +8,15 @@ namespace Push
 	
 	namespace detail
 	{
+		typedef std::vector<std::string> Names;
+
 		extern Code* nil_ptr;
 		extern Code* instructions_ptr;
 		extern String2CodeMap* str2code_map_ptr;
 		extern String2ParenthesesMap* str2parentheses_map_ptr;
 		extern CodeSet* erc_set_ptr;
 		extern CodeSet* exec_set_ptr;
+		extern Names function_names;
 
 		//        extern Env* default_root_env_ptr;
 

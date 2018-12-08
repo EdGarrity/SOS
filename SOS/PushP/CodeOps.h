@@ -102,7 +102,8 @@ namespace Push
 		return 1; 
 	}
 
-	inline unsigned _append() {
+	inline size_t _append()
+	{
 		if (1 + first<Code>()->size() + second<Code>()->size() >= env.parameters.max_points_in_program) 
 			return 1;
 

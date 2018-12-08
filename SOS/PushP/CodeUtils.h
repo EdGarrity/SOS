@@ -55,7 +55,7 @@ namespace Push
 		return Code(codeListFactory->createCodeList(stack));  // new CodeList(stack)); //CodeList::adopt(stack); //Code( new CodeList(stack));
 	}
 
-	extern Code random_code(unsigned maxpoints);
+//	extern Code random_code(unsigned maxpoints);
 	extern Code find_container(Code tree, Code subtree);
 
 	extern Code extract(Code code, unsigned val);
@@ -67,5 +67,6 @@ namespace Push
 	extern Code parse(std::istream &is);
 	extern Code parse1(std::istream &is);
 
-	extern Code make_terminal();
+	//	extern Code make_terminal();
+	extern std::string make_terminal();
 }

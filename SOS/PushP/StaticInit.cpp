@@ -41,7 +41,6 @@ namespace Push
 			floatType = Type(FLOAT_STACK + 1, FLOAT_STACK, 1);
 		}
 
-		typedef std::vector<std::string> Names;
 		Names function_names;
 
 		//StaticInit::StaticInit()
