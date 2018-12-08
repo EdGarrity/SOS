@@ -138,6 +138,9 @@
     <ClInclude Include="PushP\ExecInstruction.h">
       <Filter>Header Files\PushP</Filter>
     </ClInclude>
+    <ClInclude Include="Utilities\Conversion.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -217,6 +220,9 @@
     </ClCompile>
     <ClCompile Include="Domain\ErrorFunction.cpp">
       <Filter>Source Files\Domain</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\Conversion.cpp">
+      <Filter>Source Files\Utilities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -11,7 +11,7 @@ namespace domain
 	// Evaluates a test case by processing a year's worth of input and returns the aggregate error
 	double eval_test_case(int input_start, Individual & individual);
 
-	void error_function(Individual & individual);
+	double error_function(Individual & individual);
 
 	void load_argmap();
 }

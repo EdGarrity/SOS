@@ -73,7 +73,7 @@ namespace pushGP
 
 		void set_genome(std::string _genome);
 
-		const std::vector<double> get_errors()
+		const std::vector<double> & get_errors()
 		{
 			return errors_;
 		}
@@ -85,4 +85,10 @@ namespace pushGP
 
 		std::string to_string();
 	};
+
+	// Helper functions
+	std::vector<struct Atom> String_to_plush_genome(std::string _genome_str);
+
+//	template <typename T>
+//	void Append(std::vector<T>& a, const std::vector<T>& b);
 }

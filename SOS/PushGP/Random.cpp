@@ -2,13 +2,14 @@
 #include <random>
 #include <chrono>
 
-#include "Arguments.h"
+#include "Globals.h"
 #include "Random.h"
 #include "Individual.h"
 #include "..\PushP\Code.h"
 #include "..\PushP\CodeUtils.h"
 #include "..\PushP\RNG.h"
 #include "..\PushP\Literal.h"
+#include "..\Utilities\Conversion.h"
 
 namespace pushGP
 {
@@ -16,10 +17,22 @@ namespace pushGP
 
 	double random_double()
 	{
-		std::default_random_engine generator;
-		std::uniform_real_distribution<double> distribution(0.0, 1.0);
+		//std::default_random_engine generator;
+		//std::uniform_real_distribution<double> distribution(0.0, 1.0);
 
-		return distribution(generator);
+		//return distribution(generator);
+
+		return rng.uniform(1.0);
+	}
+
+	unsigned long random_integer()
+	{
+		//std::default_random_engine generator;
+		//std::uniform_real_distribution<double> distribution(0.0, 1.0);
+
+		//return distribution(generator);
+
+		return rng.random();
 	}
 
 	static unsigned int random_closes()
@@ -40,25 +53,53 @@ namespace pushGP
 	{
 		struct Atom gene;
 
-		Code code = make_terminal();
+		if (random_double() < argmap::probability_of_generating_a_constant_Plush_atom)
+		{
+			uint32 r = rng.random(3);
+			switch (r)
+			{
+				case 0:
+				{
+					gene.instruction = toString(rng.uniform(std::numeric_limits<double>::max()));
+					gene.type = Atom::AtomType::floating_point;
+					break;
+				}
+				case 1:
+				{
+					gene.instruction = toString(rng.random(std::numeric_limits<int>::max()));
+					gene.type = Atom::AtomType::integer;
+					break;
+				}
+				case 2:
+				{
+					if (rng.flip())
+						gene.instruction = "True";
+					else
+						gene.instruction = "False";
 
-		gene.instruction = code->to_string();
-
-		CodeBase::TYPE_ID code_type = code->get_type2();
-
-		if (code_type == CodeBase::TYPE_ID::floating_point)
-			gene.type = Atom::AtomType::floating_point;
-
-		else if (code_type == CodeBase::TYPE_ID::integer)
-			gene.type = Atom::AtomType::integer;
-
-		else if (code_type == CodeBase::TYPE_ID::boolean)
-			gene.type = Atom::AtomType::boolean;
+					gene.type = Atom::AtomType::boolean;
+					break;
+				}
+				default:
+				{
+					throw MyException("random_atom() - Invalid random number generated.");
+				}
+			}
+		}
 
 		else
+		{
+			gene.instruction = make_terminal();	// gets a random instruction.
 			gene.type = Atom::ins;
+		}
 
 		return gene;
+	}
+
+	void append_genome(std::vector<struct Atom>& a, const std::vector<struct Atom>& b)
+	{
+		a.reserve(a.size() + b.size());
+		a.insert(a.end(), b.begin(), b.end());  // std::move(b.begin(), b.end(), std::back_inserter(a));
 	}
 
 	std::vector<struct Atom> random_plush_genome_with_size(unsigned int genome_size)
@@ -70,10 +111,23 @@ namespace pushGP
 
 		while (--n > 0)
 		{
-			atom = random_atom();
-			atom.parentheses = random_closes();
+			if (random_double() < argmap::seed_with_data_rate)
+			{
+				std::string load_data_genome = "{:instruction ";
+				load_data_genome += random_integer();
+				load_data_genome += " :close  0}{:instruction FLOAT.FROMDATA :close  0}";
 
-			genome.push_back(atom);
+//				append_genome(genome, globals::load_data_genome);
+				append_genome(genome, String_to_plush_genome(load_data_genome));
+			}
+
+			else
+			{
+				atom = random_atom();
+				atom.parentheses = random_closes();
+
+				genome.push_back(atom);
+			}
 		}
 
 		return genome;

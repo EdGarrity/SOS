@@ -144,7 +144,7 @@ public :
 	/**
 	   random() returns a random integer in the range [0, m)
 	*/
-	uint32 random( uint32 m )
+	uint32 random( uint32 m = std::numeric_limits<unsigned long>::max() )
 	{
 		return uint32( uniform() * double( m ) );
 	}

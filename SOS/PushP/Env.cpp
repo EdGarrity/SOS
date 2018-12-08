@@ -81,6 +81,9 @@ namespace Push
 
 			long unit = (*top)();
 			effort += (1u) > (unit) ? (1u) : (unit);
+
+			if ((effort % 10000000L) == 0)
+				std::cout << ".";
 		}
 
 		return effort;

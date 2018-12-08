@@ -24,7 +24,7 @@ namespace Push
 		int evalpush_limit;						// = 1000
 		double new_erc_name_probability;		// = 0.001
 		int max_points_in_random_expression;	// = 50
-		int max_points_in_program;				// = 100
+		unsigned int max_points_in_program;				// = 100
 		int random_seed;						// = time.time()
 		finance::Broker* pBroker;				// Give Push access to the Broker object.
 	};

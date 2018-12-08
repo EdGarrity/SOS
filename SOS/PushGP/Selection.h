@@ -6,6 +6,8 @@
 
 namespace pushGP
 {
+	#define Number_Of_Test_Cases (globals::population_agents[0].get_errors().size())
+
 	// Return a random permutation of a sequential range from [0 to n).
 	std::vector<unsigned int> lshuffle(unsigned int end);
 

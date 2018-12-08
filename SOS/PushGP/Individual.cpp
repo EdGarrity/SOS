@@ -265,17 +265,25 @@ namespace pushGP
 	// genome ::= { :instruction atom :close n :slient true }
 	void pushGP::Individual::parse_string_to_plush_genome(std::string _genome)
 	{
-		genome_.clear();
+		genome_ = String_to_plush_genome(_genome);
+	}
 
-		std::string genome = _genome;
+	std::vector<struct Atom> String_to_plush_genome(std::string _genome_str)
+	{
+		// Plush genome
+		std::vector<struct Atom> genome;
+
+		genome.clear();
+
+//		std::string genome_str = _genome;
 		std::string gene;
 		std::size_t index, start_of_optional_tokens, start_of_optional_value, end_of_optional_value;
 		struct Atom atom;
 
-		while (genome.length() > 0)
+		while (_genome_str.length() > 0)
 		{
-			gene = first_atom(genome);
-			genome = rest_atom(genome);
+			gene = first_atom(_genome_str);
+			_genome_str = rest_atom(_genome_str);
 
 			// Find token for the instruction
 			index = gene.find(":instruction");
@@ -320,7 +328,16 @@ namespace pushGP
 			else
 				atom.type = atom.ins;
 
-			genome_.push_back(atom);
+			genome.push_back(atom);
 		}
+
+		return genome;
 	}
+
+	//template <typename T>
+	//void Append(std::vector<T>& a, const std::vector<T>& b)
+	//{
+	//	a.reserve(a.size() + b.size());
+	//	a.insert(a.end(), b.begin(), b.end());
+	//}
 }

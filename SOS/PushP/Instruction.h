@@ -57,7 +57,7 @@ namespace Push
 		virtual unsigned operator()() const
 		{
 			if (can_run()) 
-				op_(env); // Remove env?
+				op_(); // Remove env?
 
 			return 1;
 		} // currently ignores 'effort'

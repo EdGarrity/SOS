@@ -7,6 +7,7 @@
 #include "RNG.h"
 #include "Env.h"
 #include "Literal.h"
+#include "StaticInit.h"
 
 namespace Push
 {
@@ -123,24 +124,10 @@ namespace Push
 		return Code(codeListFactory->createCodeList(resultvec));  // new CodeList(resultvec));  //CodeList::adopt(resultvec); //new CodeList(resultvec); // CodeList::adopt(resultvec); //Code(new CodeList(resultvec));
 	}
 
-	Code make_terminal()
+	std::string make_terminal()
 	{
-//		static Code rnd = parse("CODE.RAND"); // special case
-		const CodeArray &instruction_list = env.function_set->get_stack();
-//		Code ins = instruction_list[rng.random(instruction_list.size())];  Debugging this line
-
-		int n = rng.random(instruction_list.size());
-		Code ins = instruction_list[n];
-
-		if (ins != rnd && erc_set.find(ins) != erc_set.end())
-		{
-			(*ins)();
-			// get everything that's produced in this env. Need to car twice to get rid of the 'list of lists' that are produced by atoms
-			Code retval = car(car(pack(env.make_type())));
-			return retval;
-		}
-
-		return ins;
+		uint32 r = rng.random(Push::detail::function_names.size());
+		return (Push::detail::function_names[r]);
 	}
 
 	std::vector<unsigned> decompose(int number, int max_parts)
@@ -160,38 +147,6 @@ namespace Push
 		for (unsigned i = 0; i < sub.size(); ++i)
 			result.push_back(sub[i]);
 
-		return result;
-	}
-
-	Code random_code_with_size(unsigned points)
-	{
-		if (points == 1)
-			return make_terminal();
-
-		std::vector<unsigned> sizes_this_level = decompose(points - 1, points - 1);
-
-		// shuffle
-		for (int i = sizes_this_level.size() - 1; i > 0; --i)
-		{
-			int j = rng.random(i + 1);
-
-			if (i != j)
-				std::swap(sizes_this_level[i], sizes_this_level[j]);
-		}
-
-		CodeArray stack(sizes_this_level.size());
-
-		for (unsigned i = 0; i < sizes_this_level.size(); ++i)
-			stack[i] = random_code_with_size(sizes_this_level[i]);
-
-		return Code(codeListFactory->createCodeList(stack));  // new CodeList(stack));  //CodeList::adopt(stack); //new CodeList(stack); // CodeList::adopt(stack); //Code(new CodeList(stack));
-	}
-
-	Code random_code(unsigned maxpoints)
-	{
-		unsigned points = rng.random(maxpoints) + 1;
-		env.clear_stacks();
-		Code result = random_code_with_size(points);
 		return result;
 	}
 

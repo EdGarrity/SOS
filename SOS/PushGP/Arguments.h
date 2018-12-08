@@ -40,14 +40,14 @@ namespace pushGP
 			//		;; The instructions that pushgp will use in random code.
 
 		// Number of individuals in the population.
-		const unsigned int population_size = 10000;
+		const unsigned int population_size = 25;
 
 			//		:max - generations 1001
 			//		;; The maximum number of generations to run GP.
 
 		//		;; The limit for the number of point(instruction) evaluations to
 		//		;; execute during the run.
-		const unsigned int max_point_evaluations = 10000000; //INT_MAX; // 100000; // 10e100
+		const unsigned int max_point_evaluations = 1000;  //10000000; //INT_MAX; // 100000; // 10e100
 
 			//		:genome - representation : plush
 			//		;; The representation for the genomes used for initialiation and inheritance.
@@ -60,7 +60,19 @@ namespace pushGP
 
 		// Maximum size of initial Plush genomes in generation 0. Keep in mind
 		// that genome lengths will otherwise be limited by 1 / 4 of :max - points.
-		const unsigned int max_genome_size_in_initial_program = 50;
+		const unsigned int max_genome_size_in_initial_program = max_points / 4;
+
+		// Probability that a FLOAT.FROMDATA instruction will be inserted into a Plus Genome
+		const double seed_with_data_rate = 0.25;
+
+		// Brokeage account opening balance
+		const double opening_balance = 10000;
+
+		// Number of trading days in a year.  Use to calculat the number of test cases
+		const unsigned int number_of_training_days_in_year = 252;
+
+		// Granularity of test cases
+		const unsigned int training_case_step = 100;
 
 			//		: evalpush - limit 150
 			//		;; The number of Push instructions that can be evaluated before stopping
@@ -114,6 +126,9 @@ namespace pushGP
 			//	;; ----------------------------------------
 			//	;; Arguments related to genetic operators
 			//	;; ----------------------------------------
+
+		// The probability of generating a constant Plush atom
+		const double probability_of_generating_a_constant_Plush_atom = 0.1;
 
 		// When using alternation, the probability of alternating between the parents when moving
 		// to the next gene.
