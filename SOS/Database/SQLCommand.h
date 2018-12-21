@@ -1,0 +1,144 @@
+#pragma once
+
+#include "SQLConnection.h"
+#include "SQLField.h"
+
+namespace database
+{
+	const unsigned int NUMROWS_CHUNK = 5;
+
+	class SQLCommand
+	{
+	private:
+		SQLConnection*	connection_;
+		std::string		command_;
+		HRESULT			hr_;
+		ICommandText*   pICommandText_;
+		IRowset*        pIRowset_ = NULL;
+		DBROWCOUNT		cRowsAffected_;
+		DBBINDING*      pDBBindings_ = NULL;
+		DBBINDSTATUS*   pDBBindStatus_ = NULL;
+		DBCOLUMNINFO*   pColumnsInfo_ = NULL;
+		OLECHAR*        pColumnStrings_ = NULL;
+		ULONG           iRow_;                  // Row count
+		DBCOUNTITEM     cRowsObtained_;         // Number of rows obtained
+		DBORDINAL       nCols_;
+		IAccessor*      pIAccessor_;            // Pointer to the accessor
+		char*           pRowValues_;
+		HACCESSOR       hAccessor_;             // Accessor handle
+		HROW            rghRows_[NUMROWS_CHUNK];// Row handles
+
+		// Global task memory allocator
+		IMalloc*        g_pIMalloc = NULL;
+
+		HRESULT myGetColumnsInfo
+		(
+			IRowset*        pIRowset,        // [in]
+			DBORDINAL*      pnCols,          // [out]
+			DBCOLUMNINFO**  ppColumnsInfo,   // [out]
+			OLECHAR**       ppColumnStrings  // [out]
+		);
+
+		void myCreateDBBindings
+		(
+			ULONG nCols,                 // [in]
+			DBCOLUMNINFO* pColumnsInfo,  // [in]
+			DBBINDING** ppDBBindings,    // [out]
+			char** ppRowValues           // [out]
+		);
+
+	public:
+		SQLCommand();
+		SQLCommand(SQLConnection *connection, std::string command);
+		~SQLCommand();
+
+		// Executes the current command
+		//
+		// Description:
+		//		Use the Execute method to execute the query or stored procedure specified in the 
+		//		command text. Execute method calls Prepare method implicitly if needed. If the 
+		//		command has input parameters, they should be bound before calling Execute method. 
+		//		Input parameters represented by SQLParam object. To bind input variables assign 
+		//		a value to SQLParam object returning by Param or ParamByIndex methods or bind 
+		//		input variables using stream operator <<.
+		//
+		//		A command(an SQL statement or procedure) can have a result set after executing.
+		//		To check whether a result set exists use isResultSet method.If result set exists, 
+		//		a set of SAField objects is created after command execution.Rows from the result 
+		//		set can be fetched one by one using FetchNext method.  To get field description 
+		//		or value use Field method.
+		//
+		//		Output parameters represented by SQLParam objects.  They are available after 
+		//		command execution.  To get parameter description or value use Param or 
+		//		ParamByIndex methods.
+		void execute();
+
+		// Tests whether a result set exists after the command execution
+		//
+		// Returns:
+		//		Returns true if the result set exists; otherwise false.
+		bool isResultSet();
+
+		// Returns the number of fields (columns) in a result set.
+		//
+		// Description: 
+		//		FieldCount method returns the number of fields created implicitly after the 
+		//		command execution if a result set exists. 
+		//
+		//		A field is represented by SQLField object.  You can get field value and 
+		//		description using Field method or operator [ ] .
+		long  fieldCount();
+
+		// Returns the column specified by its position or name in the result set.
+		//
+		// Description:
+		//		Use Field method to access a field by its name or position in the result set.
+		//
+		//		Using field smaller than 1 and greater then the value returned by fieldCount 
+		//		method will result in a failed assertion.
+		//
+		//		A set of SQLField objects creates implicitly after the command execution if 
+		//		the result set exists.  SQLField object contains full information about a 
+		//		column : name, type, size, value.SAField object can also be gotten by operator [ ] .
+		//
+		// Parameters:
+		//		Field	A one-based field number in a result set.
+		long getFieldAsLong(int field);
+
+		// Returns the column specified by its position or name in the result set.
+		//
+		// Description:
+		//		Use Field method to access a field by its name or position in the result set.
+		//
+		//		Using a non - existent field name will throw an exception.
+		//
+		//		A set of SQLField objects creates implicitly after the command execution if 
+		//		the result set exists.  SQLField object contains full information about a 
+		//		column : name, type, size, value.SAField object can also be gotten by operator [ ] .
+		//
+		// Parameters:
+		//		Field	A one-based field number in a result set.
+//		SQLField &field(const std::string field);
+
+		// Fetches rows from a result set
+		//
+		//
+		// Description:
+		//		Use FetchNext method to fetch row by row from the result set.
+		//
+		//		Each column of fetched row is represented by SQLField object.  If a result set 
+		//		exists after the last command execution, a set of SQLField objects is created 
+		//		implicitly.  To check whether a result set exists use isResultSet method.  
+		//		FetchNext method updates value parts of SQLField objects.
+		//
+		//		To get field description or value use Field method.
+		//
+		// Returns:
+		//		True if the next row was fetched; otherwise false
+		bool fetchNext();
+
+		void myGetBLOBData();
+
+		void myGetData();
+	};
+}

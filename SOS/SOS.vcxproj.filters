@@ -43,6 +43,12 @@
     <Filter Include="Header Files\Domain">
       <UniqueIdentifier>{9303fbb5-400f-4c99-b592-ee8539eac7d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Database">
+      <UniqueIdentifier>{7675bc22-f794-46b2-8a6d-39fb4030bce6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Database">
+      <UniqueIdentifier>{42d0b88d-e49c-4578-a887-607943b1ce32}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -141,6 +147,15 @@
     <ClInclude Include="Utilities\Conversion.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="Database\SQLConnection.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="Database\SQLCommand.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="Database\SQLField.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -223,6 +238,15 @@
     </ClCompile>
     <ClCompile Include="Utilities\Conversion.cpp">
       <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Database\SQLConnection.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="Database\SQLCommand.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="Database\SQLField.cpp">
+      <Filter>Source Files\Database</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
