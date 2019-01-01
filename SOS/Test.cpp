@@ -358,7 +358,7 @@ int test()
 
 				cout << n << endl;
 
-				string genome = globals::population_agents[n].to_string();
+				string genome = globals::population_agents[n].get_genome_as_string();
 				string program = globals::population_agents[n].get_program();
 
 				// Setup
@@ -443,7 +443,7 @@ int test()
 				}
 				else
 				{
-					string recreated_test_case = make_test_case(test_case_number, individual.to_string(), individual.get_program(), get_stack<int>(), get_stack<double>(), get_stack<bool>());
+					string recreated_test_case = make_test_case(test_case_number, individual.get_genome_as_string(), individual.get_program(), get_stack<int>(), get_stack<double>(), get_stack<bool>());
 
 					if (remove_whitespace(recreated_test_case) != remove_whitespace(test_case))
 					{

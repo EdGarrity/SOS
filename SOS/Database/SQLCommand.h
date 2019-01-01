@@ -6,6 +6,8 @@
 namespace database
 {
 	const unsigned int NUMROWS_CHUNK = 5;
+	#define  BLOCK_SIZE     250
+	const unsigned int MAX_PARAMETERS = 100;
 
 	class SQLCommand
 	{
@@ -27,6 +29,15 @@ namespace database
 		char*           pRowValues_;
 		HACCESSOR       hAccessor_;             // Accessor handle
 		HROW            rghRows_[NUMROWS_CHUNK];// Row handles
+
+		ULONG			nParams;
+		DBPARAMBINDINFO ParamBindInfo[MAX_PARAMETERS];
+		DB_UPARAMS		ParamOrdinals[MAX_PARAMETERS];
+		ICommandWithParameters* pICommandWithParams = NULL;
+
+		// Declare array of DBBINDING structures, one for each parameter in the command  
+		DBBINDING		acDBBinding[MAX_PARAMETERS];
+		DBBINDSTATUS	acDBBindStatus[MAX_PARAMETERS];
 
 		// Global task memory allocator
 		IMalloc*        g_pIMalloc = NULL;
@@ -51,6 +62,9 @@ namespace database
 		SQLCommand();
 		SQLCommand(SQLConnection *connection, std::string command);
 		~SQLCommand();
+
+		// Sets value as character string data
+		void setAsString(unsigned int parm_no, std::string parameter);
 
 		// Executes the current command
 		//
@@ -77,7 +91,7 @@ namespace database
 		//
 		// Returns:
 		//		Returns true if the result set exists; otherwise false.
-		bool isResultSet();
+		bool is_result_set();
 
 		// Returns the number of fields (columns) in a result set.
 		//
@@ -87,7 +101,7 @@ namespace database
 		//
 		//		A field is represented by SQLField object.  You can get field value and 
 		//		description using Field method or operator [ ] .
-		long  fieldCount();
+		long  field_count();
 
 		// Returns the column specified by its position or name in the result set.
 		//
@@ -103,7 +117,7 @@ namespace database
 		//
 		// Parameters:
 		//		Field	A one-based field number in a result set.
-		long getFieldAsLong(int field);
+		long get_field_as_long(int field);
 
 		// Returns the column specified by its position or name in the result set.
 		//
@@ -135,7 +149,7 @@ namespace database
 		//
 		// Returns:
 		//		True if the next row was fetched; otherwise false
-		bool fetchNext();
+		bool fetch_next();
 
 		void myGetBLOBData();
 

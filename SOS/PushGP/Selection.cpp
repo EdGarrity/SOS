@@ -3,6 +3,7 @@
 #include <chrono>
 #include "Selection.h"
 #include "Globals.h"
+#include "Random.h"
 
 namespace pushGP
 {
@@ -98,7 +99,7 @@ namespace pushGP
 		// Get a randomized deck of test cases
 		std::vector<unsigned int> test_cases = lshuffle(Number_Of_Test_Cases); //randomized_training_cases_deck_;
 
-		while ((!test_cases.size() > 1) && (!survivors_index.empty()))
+		while ((test_cases.size() > 1) && (!survivors_index.empty()))
 		{
 			double elite = std::numeric_limits<double>::max();
 
@@ -109,38 +110,53 @@ namespace pushGP
 			test_cases.pop_back();
 
 			// Set elite to the minimum error
-			auto before_it = survivors_index.before_begin();
-			for (auto it = survivors_index.begin(); it != survivors_index.end(); it++)
+//			auto before_it = survivors_index.before_begin();
+//			for (auto it = survivors_index.begin(); it != survivors_index.end(); it++)
+			for (unsigned int it : survivors_index)
 			{
-				Individual ind = globals::population_agents[*it];
+				Individual ind = globals::population_agents[it];
 				std::vector<double> errors = ind.get_errors();
 				elite = (errors[training_case] < elite) ? errors[training_case] : elite;
 			}
 
 			// Reduce selection pool
-			before_it = survivors_index.before_begin();
-			for (auto it = survivors_index.begin(); it != survivors_index.end(); it++)
+			auto before_it = survivors_index.before_begin();
+//			for (auto it = survivors_index.begin(); it != survivors_index.end(); it++)
+			auto it = survivors_index.begin();
+			while (it != survivors_index.end())
 			{
 				Individual ind = globals::population_agents[*it];
 				std::vector<double> errors = ind.get_errors();
 
 				if (errors[training_case] > (elite + globals::epsilons[training_case]))
 				{
-					survivors_index.erase_after(before_it);
-					it = before_it;
+					if (it == survivors_index.begin())
+					{
+						survivors_index.pop_front();
+						it = survivors_index.begin();
+					}
+
+					else
+						it = survivors_index.erase_after(before_it);
 				}
 
 				else
+				{
 					before_it = it;
+					it++;
+				}
 			}
 		}
 
 		// Return a parent from remaining survivors 
 		unsigned number_of_survivors = 0;
-		for (auto it = survivors_index.begin(); it != survivors_index.end(); it++)
-			number_of_survivors++;
+
+		if (!survivors_index.empty())
+			for (auto it : survivors_index)
+				number_of_survivors++;
 
 		auto it = survivors_index.begin();
+		auto before_it = survivors_index.begin();
 
 		if (number_of_survivors > 1)
 		{
@@ -149,9 +165,19 @@ namespace pushGP
 
 			for (int count_down = distribution(generator);
 				it != survivors_index.end(), count_down > 0;
-				it++, count_down--);
+				it++, count_down--)
+			{
+				before_it = it;
+			}
 		}
 
-		return globals::population_agents[*it];
+		if (number_of_survivors > 0)
+			return globals::population_agents[*before_it];
+
+		else
+		{
+			int n = (int)(random_double() * argmap::population_size);
+			return globals::population_agents[*it];
+		}
 	}
 }

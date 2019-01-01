@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <string>
 #include <vector>
 #include <stack> 
@@ -83,8 +84,19 @@ namespace pushGP
 			errors_.push_back(error);
 		}
 
-		std::string to_string();
+		std::string get_genome_as_string();
+
 	};
+
+	std::ostream& operator<<(std::ostream& os, Individual& individual);
+
+	//std::istream& operator>>(std::istream& is, T& obj)
+	//{
+	//	// read obj from stream
+	//	if ( /* T could not be constructed */)
+	//		is.setstate(std::ios::failbit);
+	//	return is;
+	//}
 
 	// Helper functions
 	std::vector<struct Atom> String_to_plush_genome(std::string _genome_str);

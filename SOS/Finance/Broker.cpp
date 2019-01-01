@@ -135,7 +135,7 @@ namespace finance
 	void Broker::update_brokeage_account(bool action, unsigned int row)
 	{
 		// Get tomorrow's stock close
-		double stock_price = datatable_[row++][adj_close_column];
+		double stock_price = datatable_[++row][adj_close_column];
 
 		// Buy
 		if (action == true)
@@ -147,8 +147,6 @@ namespace finance
 			{
 				stock_ += quantity_to_purchase;
 				cash_ -= total_cost;
-
-//				std::cout << "    Bought " << quantity_to_purchase << " at " << total_cost << std::endl;
 			}
 		}
 
@@ -159,8 +157,6 @@ namespace finance
 
 			if ((stock_ > 0) && (total_gain > 0.0))
 			{
-//				std::cout << "    Sold " << stock_ << " at " << total_gain << std::endl;
-
 				stock_ = 0;
 				cash_ += total_gain;
 			}

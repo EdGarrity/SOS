@@ -113,8 +113,10 @@ namespace pushGP
 		{
 			if (random_double() < argmap::seed_with_data_rate)
 			{
+				char random_integer_string[sizeof(long) * 8 + 1];
 				std::string load_data_genome = "{:instruction ";
-				load_data_genome += random_integer();
+				_ltoa_s(random_integer(), random_integer_string, _countof(random_integer_string), 10);
+				load_data_genome += random_integer_string;
 				load_data_genome += " :close  0}{:instruction FLOAT.FROMDATA :close  0}";
 
 //				append_genome(genome, globals::load_data_genome);

@@ -3,6 +3,7 @@
 #include <forward_list>
 #include <functional> 
 #include "Individual.h"
+#include "..\Database\SQLConnection.h"
 
 namespace pushGP
 {
@@ -19,6 +20,8 @@ namespace pushGP
 	void produce_new_offspring();
 
 	void install_next_generation();
+
+	void save_generation(database::SQLConnection & con);
 
 	// The top-level routine of pushgp
 	void pushgp(std::function<double(Individual&)> error_function);

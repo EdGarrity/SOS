@@ -3,7 +3,7 @@
 
 namespace database
 {
-	HRESULT SQLConnection::InitializeAndEstablishConnection(const OLECHAR * server, const OLECHAR * dbString, const OLECHAR * userID, const OLECHAR * password)
+	HRESULT SQLConnection::initialize_and_establish_connection(const OLECHAR * server, const OLECHAR * dbString, const OLECHAR * userID, const OLECHAR * password)
 	{
 		IDBProperties   *pIDBProperties = nullptr;
 		DBPROP          InitProperties[4] = { 0 };
@@ -137,7 +137,7 @@ namespace database
 
 		try
 		{
-			hr = InitializeAndEstablishConnection(strtowstr(server).c_str(), strtowstr(dbString).c_str(), strtowstr(userID).c_str(), strtowstr(password).c_str());
+			hr = initialize_and_establish_connection(strtowstr(server).c_str(), strtowstr(dbString).c_str(), strtowstr(userID).c_str(), strtowstr(password).c_str());
 
 			if (FAILED(hr))
 				throw MyException("Failed to establish connection.");

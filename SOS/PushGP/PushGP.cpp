@@ -8,6 +8,8 @@
 #include "..\PushP\Literal.h"
 #include "..\PushP\ExecInstruction.h"
 #include "..\Finance\Broker.h"
+#include "..\Database/SQLCommand.h"
+#include "..\Database/SQLField.h"
 
 using namespace std;
 using namespace Push;
@@ -15,6 +17,13 @@ using namespace pushGP;
 
 namespace pushGP
 {
+	// 
+	database::SQLConnection con;
+
+	database::SQLCommand* cmdDeleteIndividuals;
+	database::SQLCommand* cmdInsertNewIndividual;
+
+
 	void make_pop_agents()
 	{
 		for (int n = 0; n < argmap::population_size; n++)
@@ -67,12 +76,30 @@ namespace pushGP
 		}
 	}
 
+	void save_generation(database::SQLConnection& con)
+	{
+		// Delete previously saved generation
+		cmdDeleteIndividuals->execute();
+
+		// Save new generation
+		for (int n = 0; n < argmap::population_size; n++)
+		{
+			cmdInsertNewIndividual->setAsString(1, globals::population_agents[n].get_genome_as_string());
+			cmdInsertNewIndividual->execute();
+		}
+	}
+
 	void pushgp(std::function<double(Individual&)> error_function)
 	{
 		try
 		{
 			unsigned int generation = 0;
 			bool done = false;
+
+			con.connect("HOMEOFFICE", "SOS", "MySOS", "MySOS");
+
+			cmdDeleteIndividuals = new database::SQLCommand(&con, "DELETE FROM [SOS].[dbo].[Individuals]");
+			cmdInsertNewIndividual = new database::SQLCommand(&con, "INSERT INTO [dbo].[Individuals] ([Genome]) VALUES (?);");
 
 			// Create main factories
 			Push::intLiteralFactory = new Push::LiteralFactory<int>();
@@ -109,13 +136,18 @@ namespace pushGP
 			while (!done)
 			{
 				cout << "Generation " << generation << endl;
+				save_generation(con);
+
 				cout << "Compte Errors" << endl;
 				compute_errors(error_function);
+
 				cout << "Number_Of_Test_Cases = " << Number_Of_Test_Cases << endl;
 				cout << "Calculate Epsilons" << endl;
 				calculate_epsilons_for_epsilon_lexicase();
+
 				cout << "Produce New Offspring" << endl;
 				produce_new_offspring();
+				
 				cout << "Install New Generation" << endl;
 				install_next_generation();
 				generation++;
@@ -135,6 +167,8 @@ namespace pushGP
 			delete Push::codeListFactory;
 			delete Push::doRangeClassFactory;
 
+			delete cmdDeleteIndividuals;
+			delete cmdInsertNewIndividual;
 		}
 		catch (const std::exception& e)
 		{

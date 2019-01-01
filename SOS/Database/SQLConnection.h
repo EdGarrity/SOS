@@ -12,7 +12,7 @@ namespace database
 	private:
 		IDBInitialize       *pIDBInitialize_ = nullptr;
 
-		HRESULT InitializeAndEstablishConnection(const OLECHAR * server, const OLECHAR * dbString, const OLECHAR * userID, const OLECHAR * password);
+		HRESULT initialize_and_establish_connection(const OLECHAR * server, const OLECHAR * dbString, const OLECHAR * userID, const OLECHAR * password);
 
 	public:
 		~SQLConnection();
@@ -34,6 +34,6 @@ namespace database
 		void disconnect();
 
 		// Returns the data source object for this connection
-		IDBInitialize * getIDBInitialize() { return pIDBInitialize_; };
+		IDBInitialize * get_IDBInitialize() { return pIDBInitialize_; };
 	};
 }
