@@ -8,12 +8,14 @@ namespace database
 	const unsigned int NUMROWS_CHUNK = 5;
 	#define  BLOCK_SIZE     250
 	const unsigned int MAX_PARAMETERS = 100;
+	const unsigned int MAX_ROW_LENGTH = 8000;
 
 	class SQLCommand
 	{
 	private:
 		SQLConnection*	connection_;
 		std::string		command_;
+		ULONG			number_of_parameters_in_command_;
 		HRESULT			hr_;
 		ICommandText*   pICommandText_;
 		IRowset*        pIRowset_ = NULL;
@@ -24,20 +26,20 @@ namespace database
 		OLECHAR*        pColumnStrings_ = NULL;
 		ULONG           iRow_;                  // Row count
 		DBCOUNTITEM     cRowsObtained_;         // Number of rows obtained
-		DBORDINAL       nCols_;
 		IAccessor*      pIAccessor_;            // Pointer to the accessor
 		char*           pRowValues_;
 		HACCESSOR       hAccessor_;             // Accessor handle
 		HROW            rghRows_[NUMROWS_CHUNK];// Row handles
 
-		ULONG			nParams;
-		DBPARAMBINDINFO ParamBindInfo[MAX_PARAMETERS];
-		DB_UPARAMS		ParamOrdinals[MAX_PARAMETERS];
-		ICommandWithParameters* pICommandWithParams = NULL;
+		DBPARAMBINDINFO ParamBindInfo_[MAX_PARAMETERS];
+		DB_UPARAMS		ParamOrdinals_[MAX_PARAMETERS];
+		ICommandWithParameters* pICommandWithParams_ = NULL;
+
+		DBBINDING *           rgBindings_ = NULL;
+		ULONG                 dwOffset_ = 0;
 
 		// Declare array of DBBINDING structures, one for each parameter in the command  
-		DBBINDING		acDBBinding[MAX_PARAMETERS];
-		DBBINDSTATUS	acDBBindStatus[MAX_PARAMETERS];
+		DBBINDSTATUS	acDBBindStatus_[MAX_PARAMETERS];
 
 		// Global task memory allocator
 		IMalloc*        g_pIMalloc = NULL;
@@ -150,9 +152,5 @@ namespace database
 		// Returns:
 		//		True if the next row was fetched; otherwise false
 		bool fetch_next();
-
-		void myGetBLOBData();
-
-		void myGetData();
 	};
 }

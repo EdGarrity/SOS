@@ -3,15 +3,23 @@
 
 namespace database
 {
-	// The following buffer is used to store parameter values.  
-	typedef struct tagSPROCPARAMS {
-		char inParam1[8000];
-	} SPROCPARAMS;  
+	//ROUNDUP on all platforms pointers must be aligned properly
+	#define ROUNDUP_AMOUNT	8
+	#define ROUNDUP_(size,amount)	(((ULONG)(size)+((amount)-1))&~((amount)-1))
+	#define ROUNDUP(size)	ROUNDUP_(size, ROUNDUP_AMOUNT)
 
-	SPROCPARAMS sprocparams = { "This is a test" };
+	// The following buffer is used to store parameter values.  
+	//typedef struct tagSPROCPARAMS {
+	//	char inParam1[8000];
+	//} SPROCPARAMS;
+
+	//SPROCPARAMS sprocparams = { "This is a test" };
+	//LPVOID sprocparams;
+	char	sprocparams[MAX_ROW_LENGTH + 1];
 
 	SQLCommand::SQLCommand()
 	{
+		throw MyException("Illegal call to default constructor SQLCommand::SQLCommand()");
 	}
 
 	SQLCommand::SQLCommand(SQLConnection * _connection, std::string _command) : connection_(_connection), command_(_command)
@@ -19,21 +27,43 @@ namespace database
 		IDBCreateSession*   pIDBCreateSession;
 		IDBCreateCommand*   pIDBCreateCommand;
 
-		for (int i = 0; i < MAX_PARAMETERS; i++) {
-			acDBBinding[i].obLength = 0;
-			acDBBinding[i].obStatus = 0;
-			acDBBinding[i].pTypeInfo = NULL;
-			acDBBinding[i].pObject = NULL;
-			acDBBinding[i].pBindExt = NULL;
-			acDBBinding[i].dwPart = DBPART_VALUE;
-			acDBBinding[i].dwMemOwner = DBMEMOWNER_CLIENTOWNED;
-			acDBBinding[i].dwFlags = 0;
-			acDBBinding[i].bScale = 0;
-		} 
-
 		// Get the task memory allocator.
 		if (FAILED(CoGetMalloc(MEMCTX_TASK, &g_pIMalloc)))
 			throw MyException("Failed to get the task memory allocator");
+
+		// Get count of parameters
+		number_of_parameters_in_command_ = std::count(_command.begin(), _command.end(), '?');
+
+		if (rgBindings_ != NULL)
+			CoTaskMemFree(rgBindings_);
+
+		if (number_of_parameters_in_command_ > 0)
+		{
+			// Allocate memory for the bindings array
+			rgBindings_ = (DBBINDING*)CoTaskMemAlloc(number_of_parameters_in_command_ * sizeof(DBBINDING));
+			memset(rgBindings_, 0, number_of_parameters_in_command_ * sizeof(DBBINDING));
+
+			// Allocate memory for the parameter buffer
+			//sprocparams = CoTaskMemAlloc(MAX_ROW_LENGTH);
+			memset(sprocparams, 0, MAX_ROW_LENGTH);
+			dwOffset_ = 0;
+
+			for (int i = 0; i < number_of_parameters_in_command_; i++)
+			{
+				rgBindings_[i].obLength = 0;
+				rgBindings_[i].obStatus = 0;
+				rgBindings_[i].pTypeInfo = NULL;
+				rgBindings_[i].pObject = NULL;
+				rgBindings_[i].pBindExt = NULL;
+				rgBindings_[i].dwPart = DBPART_VALUE;
+				rgBindings_[i].dwMemOwner = DBMEMOWNER_CLIENTOWNED;
+				rgBindings_[i].dwFlags = 0;
+				rgBindings_[i].bScale = 0;
+			}
+		}
+
+		else
+			rgBindings_ = NULL;
 
 		// Get the DB session object.
 		IDBInitialize *pIDBInitialize = connection_->get_IDBInitialize();
@@ -60,8 +90,6 @@ namespace database
 		// The command requires the actual text as well as an indicator
 		// of its language and dialect.
 		pICommandText_->SetCommandText(DBGUID_DEFAULT, strtowstr(command_).c_str());
-
-		nParams = 0;
 	}
 
 	SQLCommand::~SQLCommand()
@@ -83,33 +111,49 @@ namespace database
 
 		if (g_pIMalloc != NULL)
 			g_pIMalloc->Release();
+
+//		CoTaskMemFree(sprocparams);
+
+		if (rgBindings_ != NULL)
+			CoTaskMemFree(rgBindings_);
 	}
 	
-	wchar_t tt[] = L"DBTYPE_STR";
+	wchar_t wszDBTYPE_STR[] = L"DBTYPE_STR";
 
 	void SQLCommand::setAsString(unsigned int parm_no, std::string parameter)
 	{
 		unsigned int n = parm_no - 1;
-		strcpy_s(sprocparams.inParam1, 8000, parameter.c_str());
 
-		ParamBindInfo[n].pwszDataSourceType = tt;
-		ParamBindInfo[n].pwszName = NULL;
-		ParamBindInfo[n].ulParamSize = parameter.length();
-		ParamBindInfo[n].dwFlags = DBPARAMFLAGS_ISINPUT;
-		ParamBindInfo[n].bPrecision = 0;
-		ParamBindInfo[n].bScale = 0;
-		ParamOrdinals[n] = parm_no;
+		// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms725393(v=vs.85)"
+		ParamBindInfo_[n].pwszDataSourceType = wszDBTYPE_STR;
+		ParamBindInfo_[n].pwszName = NULL;
+		ParamBindInfo_[n].ulParamSize = parameter.size();
+		ParamBindInfo_[n].dwFlags = DBPARAMFLAGS_ISINPUT;
+		ParamBindInfo_[n].bPrecision = 0;
+		ParamBindInfo_[n].bScale = 0;
+		ParamOrdinals_[n] = parm_no;
 
-		nParams = nParams > parm_no
-			? nParams
-			: parm_no;
+		// This binding applies to the ordinal of this column
+		// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms716845%28v%3dvs.85%29"
+		rgBindings_[n].iOrdinal = parm_no;
+		rgBindings_[n].obValue = dwOffset_;
+		rgBindings_[n].eParamIO = DBPARAMIO_INPUT;
+		rgBindings_[n].wType = DBTYPE_STR;
+		rgBindings_[n].cbMaxLen = parameter.length();
 
-		acDBBinding[n].iOrdinal = parm_no;
-		acDBBinding[n].obValue = offsetof(SPROCPARAMS, inParam1);
-		acDBBinding[n].eParamIO = DBPARAMIO_INPUT;
-		acDBBinding[n].cbMaxLen = strlen(sprocparams.inParam1);
-		acDBBinding[n].wType = DBTYPE_STR;
-		acDBBinding[n].bPrecision = 0;
+		// Copy parameter data into buffer
+		memcpy(sprocparams + dwOffset_, parameter.c_str(), rgBindings_[n].cbMaxLen + 1);
+
+		// Update the offset past the end of this column's data, so
+		// that the next column will begin in the correct place in
+		// the buffer
+		dwOffset_ += rgBindings_[n].cbMaxLen + 1;
+
+		// Ensure that the data for the next column will be correctly
+		// aligned for all platforms, or, if we're done with columns,
+		// that if we allocate space for multiple rows that the data
+		// for every row is correctly aligned
+		dwOffset_ = ROUNDUP(dwOffset_);
 	}
 
 	HRESULT SQLCommand::myGetColumnsInfo
@@ -186,47 +230,54 @@ namespace database
 
 	void SQLCommand::execute()
 	{
-		IRowset*            pIRowset;
-		DBPARAMS Params;
+		IRowset*	pIRowset;
+		DBPARAMS	Params;
+		DBORDINAL	nCols;
 
 		// Create input parameters
-		if (nParams > 0)
+		if (number_of_parameters_in_command_ > 0)
 		{
 			// Set the parameters information.  
-			if (FAILED(pICommandText_->QueryInterface(IID_ICommandWithParameters, (void**)&pICommandWithParams)))
+			if (FAILED(pICommandText_->QueryInterface(IID_ICommandWithParameters, (void**)&pICommandWithParams_)))
 			{
 				throw MyException("failed to obtain ICommandWithParameters");
 //				goto EXIT;
 			}
 
-			if (FAILED(pICommandWithParams->SetParameterInfo(nParams, ParamOrdinals, ParamBindInfo))) 
+			// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms725393(v=vs.85)"
+			if (FAILED(pICommandWithParams_->SetParameterInfo(number_of_parameters_in_command_, ParamOrdinals_, ParamBindInfo_)))
 			{
 				throw MyException("failed in setting parameter info.(SetParameterInfo)");
 //				goto EXIT;
 			}  
 
 			// Let us create an accessor from the above set of bindings.  
-			hr_ = pICommandWithParams->QueryInterface(IID_IAccessor, (void**)&pIAccessor_);
+			hr_ = pICommandWithParams_->QueryInterface(IID_IAccessor, (void**)&pIAccessor_);
 			if (FAILED(hr_))
 				throw MyException("Failed to get IAccessor interface");
 
+			// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms720969(v%3Dvs.85)"
 			hr_ = pIAccessor_->CreateAccessor(DBACCESSOR_PARAMETERDATA,
-				nParams,
-				acDBBinding,
-				sizeof(SPROCPARAMS),
+				number_of_parameters_in_command_,
+				rgBindings_,
+				dwOffset_,
 				&hAccessor_,
-				acDBBindStatus);
+				acDBBindStatus_); 
 			if (FAILED(hr_))
 				throw MyException("failed to create accessor for the defined parameters");
 
 			// Initialize DBPARAMS structure for command execution. DBPARAMS specifies the  
 			// parameter values in the command.  DBPARAMS is then passed to Execute.  
-			Params.pData = &sprocparams;
-			Params.cParamSets = 1;
+			Params.pData = sprocparams;
+			Params.cParamSets = number_of_parameters_in_command_;
 			Params.hAccessor = hAccessor_;
 
 			// Execute the command.
 			hr_ = pICommandText_->Execute(NULL, IID_IRowset, &Params, &cRowsAffected_, (IUnknown**)&pIRowset_);
+
+			// Clear parameter buffer.
+			memset(sprocparams, 0, MAX_ROW_LENGTH);
+			dwOffset_ = 0;
 		}
 		else
 			hr_ = pICommandText_->Execute(NULL, IID_IRowset, NULL, &cRowsAffected_, (IUnknown**)&pIRowset_);
@@ -235,23 +286,23 @@ namespace database
 			throw MyException("Command execution failed.");
 
 		if (pIRowset_ == NULL)
-			nCols_ = 0;
+			nCols = 0;
 		
 		else
 		{
 			// Get the description of the rowset for use in binding structure creation.
-			if (FAILED(myGetColumnsInfo(pIRowset_, &nCols_, &pColumnsInfo_, &pColumnStrings_)))
+			if (FAILED(myGetColumnsInfo(pIRowset_, &nCols, &pColumnsInfo_, &pColumnStrings_)))
 				throw MyException("Failed to get the description of the rowset for use in binding structure creation.");
 
 			// Create the binding structures.
-			myCreateDBBindings(nCols_, pColumnsInfo_, &pDBBindings_, &pRowValues_);
-			pDBBindStatus_ = new DBBINDSTATUS[nCols_];
+			myCreateDBBindings(nCols, pColumnsInfo_, &pDBBindings_, &pRowValues_);
+			pDBBindStatus_ = new DBBINDSTATUS[nCols];
 
 			// Create the accessor.
 			pIRowset_->QueryInterface(IID_IAccessor, (void**)&pIAccessor_);
 			pIAccessor_->CreateAccessor(
 				DBACCESSOR_ROWDATA,		// Accessor will be used to retrieve row data.
-				nCols_,					// Number of columns being bound
+				nCols,					// Number of columns being bound
 				pDBBindings_,			// Structure containing bind info
 				0,						// Not used for row accessors 
 				&hAccessor_,				// Returned accessor handle
@@ -353,276 +404,9 @@ namespace database
 		if (cRowsObtained_ > 0)
 		{
 			pIRowset_->GetData(rghRows_[iRow_++], hAccessor_, pRowValues_);
-
-			//for (nCol = 0; nCol < nCols; nCol++)
-			//{
-			//	wprintf(OLESTR("%s%s:"), pColumnsInfo_[nCol].pwszName,
-			//		wcslen(pColumnsInfo_[nCol].pwszName) > 10 ?
-			//		OLESTR("\t") :
-			//		OLESTR("\t\t"));
-
-			//	long *     pl = (long *)&pRowValues[pDBBindings_[nCol].obValue];
-
-			//	printf("\t%ld\n", *pl);
-
-			//	//printf("\t%ld\n",
-			//	//	(long)&pRowValues[pDBBindings_[nCol].obValue]);
-			//}
-
 			return true;
 		}
 
 		return false;
-	}
-
-
-
-
-
-
-
-
-
-
-
-	void SQLCommand::myGetBLOBData()
-	{
-		DBOBJECT        ObjectStruct;    // For binding, retrieve an
-					// object pointer.
-		DBBINDING       rgBinding[1];    // Bind a single column.
-
-		IAccessor*      pIAccessor = NULL;     // Accessor creation
-		HACCESSOR       hAccessor = NULL;
-		ULONG           ulErrorBinding;
-
-		void*           pData;                 // Bound consumer buffer
-		HROW            rghRows[1];
-		HROW*           pRows = &rghRows[0];
-		DBCOUNTITEM     cRows;
-
-		char            szNotes[BLOCK_SIZE + 1];// Text data from "Notes"
-		ULONG           cbRead;                 // Count of bytes read
-
-		// Set up the object structure for accessor creation. Ask the
-		// provider to return an ISequentialStream interface for reading.
-		ObjectStruct.dwFlags = STGM_READ;
-		ObjectStruct.iid = IID_ISequentialStream;
-
-		// Set up the binding struct for the accessor.
-		rgBinding[0].iOrdinal = 1;                  // Only one column
-		rgBinding[0].obValue = 0;                  // Offset to data
-		rgBinding[0].obLength = 0;                  // Ignore length 
-		rgBinding[0].obStatus = sizeof(IUnknown*);  // Offset to status 
-		rgBinding[0].pTypeInfo = NULL;              // Reserved
-		rgBinding[0].pObject = &ObjectStruct;      // Our interface 
-													// request
-		rgBinding[0].pBindExt = NULL;               // Reserved
-		rgBinding[0].dwPart = DBPART_VALUE |      // Get both VALUE
-			DBPART_STATUS;  // and STATUS
-	   // parts.
-		rgBinding[0].dwMemOwner = DBMEMOWNER_CLIENTOWNED;
-		rgBinding[0].eParamIO = DBPARAMIO_NOTPARAM;
-		rgBinding[0].cbMaxLen = 0;                  // Not applicable
-		rgBinding[0].dwFlags = 0;                  // Reserved
-		rgBinding[0].wType = DBTYPE_IUNKNOWN;       // Type 
-													// DBTYPE_IUNKNOWN
-		rgBinding[0].bPrecision = 0;                // Not applicable
-		rgBinding[0].bScale = 0;                    // Not applicable
-
-		// Get the accessor interface and create the accessor.
-		pIRowset_->QueryInterface(IID_IAccessor, (void**)&pIAccessor);
-
-		if (FAILED(pIAccessor->CreateAccessor(DBACCESSOR_ROWDATA, 1,
-			rgBinding, sizeof(IUnknown*) + sizeof(ULONG), &hAccessor,
-			&ulErrorBinding)))
-		{
-			throw MyException("CreateAccessor failed.");
-			return;
-		}
-
-		// Allocate memory for the returned pointer and the status field. 
-		// The first sizeof(IUnknown*) bytes are for the pointer to the 
-		// object; the next sizeof(ULONG) bytes are for the status.
-		pData = new BYTE[sizeof(IUnknown*) + sizeof(ULONG)];
-
-		while (TRUE)
-		{
-			// Get the next row.
-			if (FAILED(pIRowset_->GetNextRows(NULL, 0, 1, &cRows,
-				&pRows)))
-			{
-				throw MyException("GetNextRows failed.\n");
-				break;
-			}
-
-			if (cRows == 0)
-			{
-				break;
-			}
-
-			// Get the row data, the pointer to an ISequentialStream*.
-			if (FAILED(pIRowset_->GetData(*pRows, hAccessor, pData)))
-			{
-				throw MyException("GetData failed.\n");
-				break;
-			}
-
-			// Read and process BLOCK_SIZE bytes at a time.
-			if ((ULONG)((BYTE*)pData)[rgBinding[0].obStatus] ==
-				DBSTATUS_S_ISNULL)
-			{
-				// Process NULL data.
-				printf("<null>");
-			}
-			else if ((ULONG)((BYTE*)pData)[rgBinding[0].obStatus] ==
-				DBSTATUS_S_OK)
-			{
-				do
-				{
-					(*((ISequentialStream**)pData))->Read(szNotes,
-						BLOCK_SIZE, &cbRead);
-					if (cbRead > 0)
-					{
-						// process data
-						szNotes[cbRead] = (char)NULL;
-						printf(szNotes);
-					}
-				} while (cbRead >= BLOCK_SIZE);
-
-				(*((ISequentialStream**)pData))->Release();
-
-				printf("\n\n");
-			}
-
-			pIRowset_->ReleaseRows(cRows, pRows, NULL, NULL, NULL);
-		}
-
-		// Clean up.
-		pIAccessor->ReleaseAccessor(hAccessor, NULL);
-		pIAccessor->Release();
-
-		delete[] pDBBindings_;
-		delete[] pDBBindStatus_;
-
-		g_pIMalloc->Free(pColumnsInfo_);
-		g_pIMalloc->Free(pColumnStrings_);
-
-		delete[] pData;
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-	
-	
-	
-	
-	void SQLCommand::myGetData()
-	{
-		DBORDINAL       nCols;
-		ULONG           nCol;
-		DBCOUNTITEM     cRowsObtained;         // Number of rows obtained
-		ULONG           iRow;                  // Row count
-		HROW            rghRows[NUMROWS_CHUNK];// Row handles
-		HROW*           pRows = &rghRows[0];   // Pointer to the row 
-											   // handles
-		IAccessor*      pIAccessor;            // Pointer to the accessor
-		HACCESSOR       hAccessor;             // Accessor handle
-		char*           pRowValues;
-
-		// Get the description of the rowset for use in binding structure
-		// creation.
-		if (FAILED(myGetColumnsInfo(pIRowset_, &nCols, &pColumnsInfo_,
-			&pColumnStrings_)))
-		{
-			return;
-		}
-
-		// Create the binding structures.
-		myCreateDBBindings(nCols, pColumnsInfo_, &pDBBindings_,
-			&pRowValues);
-		pDBBindStatus_ = new DBBINDSTATUS[nCols];
-
-		// Create the accessor.
-		pIRowset_->QueryInterface(IID_IAccessor, (void**)&pIAccessor);
-		pIAccessor->CreateAccessor(
-			DBACCESSOR_ROWDATA, // Accessor will be used to retrieve row data.
-			nCols,              // Number of columns being bound
-			pDBBindings_,        // Structure containing bind info
-			0,                  // Not used for row accessors 
-			&hAccessor,         // Returned accessor handle
-			pDBBindStatus_       // Information about binding validity
-		);
-
-		// Process all the rows, NUMROWS_CHUNK rows at a time
-		while (TRUE)
-		{
-			pIRowset_->GetNextRows(
-				0,                  // Reserved
-				0,                  // cRowsToSkip
-				NUMROWS_CHUNK,      // cRowsDesired
-				&cRowsObtained,     // cRowsObtained
-				&pRows);           // Filled in w/ row handles.
-
-
-			// All done; there is no more rows left to get.
-			if (cRowsObtained == 0)
-				break;
-
-			// Loop over rows obtained, getting data for each.
-			for (iRow = 0; iRow < cRowsObtained; iRow++)
-			{
-				pIRowset_->GetData(rghRows[iRow], hAccessor, pRowValues);
-				for (nCol = 0; nCol < nCols; nCol++)
-				{
-					wprintf(OLESTR("%s%s:"), pColumnsInfo_[nCol].pwszName,
-						wcslen(pColumnsInfo_[nCol].pwszName) > 10 ?
-						OLESTR("\t") :
-						OLESTR("\t\t"));
-
-					long *     pl = (long *)&pRowValues[pDBBindings_[nCol].obValue];
-
-					printf("\t%ld\n", *pl);
-
-					//printf("\t%ld\n",
-					//	(long)&pRowValues[pDBBindings_[nCol].obValue]);
-				}
-				printf("\n");
-			}
-
-			// Release row handles.
-			pIRowset_->ReleaseRows(cRowsObtained, rghRows, NULL, NULL,
-				NULL);
-		}  // End while
-
-	// Release the accessor.
-		pIAccessor->ReleaseAccessor(hAccessor, NULL);
-		pIAccessor->Release();
-
-		delete[] pDBBindings_;
-		delete[] pDBBindStatus_;
-
-		g_pIMalloc->Free(pColumnsInfo_);
-		g_pIMalloc->Free(pColumnStrings_);
-
-		return;
 	}
 }

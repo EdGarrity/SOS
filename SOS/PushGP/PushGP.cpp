@@ -84,7 +84,7 @@ namespace pushGP
 		// Save new generation
 		for (int n = 0; n < argmap::population_size; n++)
 		{
-			cmdInsertNewIndividual->setAsString(1, globals::population_agents[n].get_genome_as_string());
+			cmdInsertNewIndividual->setAsString(1, globals::population_agents[n]);
 			cmdInsertNewIndividual->execute();
 		}
 	}

@@ -86,21 +86,15 @@ namespace pushGP
 
 		std::string get_genome_as_string();
 
+		// conversion operator to std::string
+		operator std::string() 
+		{
+			return get_genome_as_string();
+		}
 	};
 
 	std::ostream& operator<<(std::ostream& os, Individual& individual);
 
-	//std::istream& operator>>(std::istream& is, T& obj)
-	//{
-	//	// read obj from stream
-	//	if ( /* T could not be constructed */)
-	//		is.setstate(std::ios::failbit);
-	//	return is;
-	//}
-
 	// Helper functions
 	std::vector<struct Atom> String_to_plush_genome(std::string _genome_str);
-
-//	template <typename T>
-//	void Append(std::vector<T>& a, const std::vector<T>& b);
 }
