@@ -156,6 +156,7 @@
     <ClInclude Include="Database\SQLCommand.h" />
     <ClInclude Include="Database\SQLConnection.h" />
     <ClInclude Include="Database\SQLField.h" />
+    <ClInclude Include="Database\SQLTransaction.h" />
     <ClInclude Include="Domain\ErrorFunction.h" />
     <ClInclude Include="Finance\Broker.h" />
     <ClInclude Include="pch.h" />
@@ -193,6 +194,7 @@
     <ClCompile Include="Database\SQLCommand.cpp" />
     <ClCompile Include="Database\SQLConnection.cpp" />
     <ClCompile Include="Database\SQLField.cpp" />
+    <ClCompile Include="Database\SQLTransaction.cpp" />
     <ClCompile Include="Domain\ErrorFunction.cpp" />
     <ClCompile Include="Finance\Broker.cpp" />
     <ClCompile Include="pch.cpp">

@@ -65,7 +65,7 @@ namespace database
 		else
 			rgBindings_ = NULL;
 
-		// Get the DB session object.
+/*		// Get the DB session object.
 		IDBInitialize *pIDBInitialize = connection_->get_IDBInitialize();
 
 		if (FAILED(pIDBInitialize->QueryInterface(IID_IDBCreateSession, (void**)&pIDBCreateSession)))
@@ -90,7 +90,7 @@ namespace database
 		// The command requires the actual text as well as an indicator
 		// of its language and dialect.
 		pICommandText_->SetCommandText(DBGUID_DEFAULT, strtowstr(command_).c_str());
-	}
+*/	}
 
 	SQLCommand::~SQLCommand()
 	{
@@ -98,7 +98,7 @@ namespace database
 //		hr_ = pIAccessor_->ReleaseAccessor(hAccessor_, NULL);
 //		pIAccessor_->Release();
 
-		pICommandText_->Release();
+//		pICommandText_->Release();
 
 		if (cRowsObtained_ > 0)
 			pIRowset_->ReleaseRows(cRowsObtained_, rghRows_, NULL, NULL, NULL);
@@ -233,12 +233,20 @@ namespace database
 		IRowset*	pIRowset;
 		DBPARAMS	Params;
 		DBORDINAL	nCols;
+		ICommandText*   pICommandText;
+
+		// Get the pointer to the Command text object.
+		pICommandText = connection_->get_ICommandText();
+				
+		// The command requires the actual text as well as an indicator
+		// of its language and dialect.
+		pICommandText->SetCommandText(DBGUID_DEFAULT, strtowstr(command_).c_str());
 
 		// Create input parameters
 		if (number_of_parameters_in_command_ > 0)
 		{
 			// Set the parameters information.  
-			if (FAILED(pICommandText_->QueryInterface(IID_ICommandWithParameters, (void**)&pICommandWithParams_)))
+			if (FAILED(pICommandText->QueryInterface(IID_ICommandWithParameters, (void**)&pICommandWithParams_)))
 			{
 				throw MyException("failed to obtain ICommandWithParameters");
 //				goto EXIT;
@@ -273,14 +281,14 @@ namespace database
 			Params.hAccessor = hAccessor_;
 
 			// Execute the command.
-			hr_ = pICommandText_->Execute(NULL, IID_IRowset, &Params, &cRowsAffected_, (IUnknown**)&pIRowset_);
+			hr_ = pICommandText->Execute(NULL, IID_IRowset, &Params, &cRowsAffected_, (IUnknown**)&pIRowset_);
 
 			// Clear parameter buffer.
 			memset(sprocparams, 0, MAX_ROW_LENGTH);
 			dwOffset_ = 0;
 		}
 		else
-			hr_ = pICommandText_->Execute(NULL, IID_IRowset, NULL, &cRowsAffected_, (IUnknown**)&pIRowset_);
+			hr_ = pICommandText->Execute(NULL, IID_IRowset, NULL, &cRowsAffected_, (IUnknown**)&pIRowset_);
 
 		if (FAILED(hr_))
 			throw MyException("Command execution failed.");

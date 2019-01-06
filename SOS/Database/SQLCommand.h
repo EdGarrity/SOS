@@ -17,7 +17,7 @@ namespace database
 		std::string		command_;
 		ULONG			number_of_parameters_in_command_;
 		HRESULT			hr_;
-		ICommandText*   pICommandText_;
+//		ICommandText*   pICommandText_;
 		IRowset*        pIRowset_ = NULL;
 		DBROWCOUNT		cRowsAffected_;
 		DBBINDING*      pDBBindings_ = NULL;

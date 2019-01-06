@@ -10,9 +10,15 @@ namespace database
 	class SQLConnection
 	{
 	private:
+		HRESULT			hr_;
 		IDBInitialize       *pIDBInitialize_ = nullptr;
+		IDBCreateCommand*   pIDBCreateCommand_;
+		ICommandText*   pICommandText_;
+		ITransactionLocal*	pTransLocal_;
 
 		HRESULT initialize_and_establish_connection(const OLECHAR * server, const OLECHAR * dbString, const OLECHAR * userID, const OLECHAR * password);
+
+		void setup_command();
 
 	public:
 		~SQLConnection();
@@ -34,6 +40,10 @@ namespace database
 		void disconnect();
 
 		// Returns the data source object for this connection
-		IDBInitialize * get_IDBInitialize() { return pIDBInitialize_; };
+//		IDBInitialize* get_IDBInitialize() { return pIDBInitialize_; };
+
+		IDBCreateCommand*   get_IDBCreateCommand() { return pIDBCreateCommand_; };
+		ICommandText* get_ICommandText() { return pICommandText_;  };
+		ITransactionLocal* get_ITransactionLocal() { return pTransLocal_; };
 	};
 }
