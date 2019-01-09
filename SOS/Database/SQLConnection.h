@@ -10,17 +10,16 @@ namespace database
 	class SQLConnection
 	{
 	private:
-		HRESULT			hr_;
-		IDBInitialize       *pIDBInitialize_ = nullptr;
-		IDBCreateCommand*   pIDBCreateCommand_;
-		ICommandText*   pICommandText_;
-		ITransactionLocal*	pTransLocal_;
+		HRESULT				hr_;
+		IDBInitialize       *pIDBInitialize_ = NULL;
+		//IDBCreateCommand*   pIDBCreateCommand_ = NULL;
+		ICommandText*		pICommandText_ = NULL;
+		//ITransactionLocal*	pTransLocal_ = NULL;
 
 		HRESULT initialize_and_establish_connection(const OLECHAR * server, const OLECHAR * dbString, const OLECHAR * userID, const OLECHAR * password);
 
-		void setup_command();
-
 	public:
+		SQLConnection();
 		~SQLConnection();
 
 		// Opens the connection to a data source.
@@ -39,11 +38,13 @@ namespace database
 		// Disconnects the connection from the database
 		void disconnect();
 
-		// Returns the data source object for this connection
-//		IDBInitialize* get_IDBInitialize() { return pIDBInitialize_; };
+//		void setup_command();
 
-		IDBCreateCommand*   get_IDBCreateCommand() { return pIDBCreateCommand_; };
-		ICommandText* get_ICommandText() { return pICommandText_;  };
-		ITransactionLocal* get_ITransactionLocal() { return pTransLocal_; };
+		// Returns the data source object for this connection
+		IDBInitialize* get_IDBInitialize() { return pIDBInitialize_; };
+
+		//IDBCreateCommand*   get_IDBCreateCommand() { return pIDBCreateCommand_; };
+		//ICommandText* get_ICommandText() { return pICommandText_;  };
+		//ITransactionLocal* get_ITransactionLocal() { return pTransLocal_; };
 	};
 }

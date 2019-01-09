@@ -17,7 +17,8 @@ namespace database
 		std::string		command_;
 		ULONG			number_of_parameters_in_command_;
 		HRESULT			hr_;
-//		ICommandText*   pICommandText_;
+		IDBCreateCommand*   pIDBCreateCommand_ = NULL;
+		ICommandText*   pICommandText_;
 		IRowset*        pIRowset_ = NULL;
 		DBROWCOUNT		cRowsAffected_;
 		DBBINDING*      pDBBindings_ = NULL;
@@ -37,6 +38,9 @@ namespace database
 
 		DBBINDING *           rgBindings_ = NULL;
 		ULONG                 dwOffset_ = 0;
+
+		ITransactionLocal*	pTransLocal_ = NULL;
+		ITransaction*		pTrans_;
 
 		// Declare array of DBBINDING structures, one for each parameter in the command  
 		DBBINDSTATUS	acDBBindStatus_[MAX_PARAMETERS];
@@ -62,11 +66,20 @@ namespace database
 
 	public:
 		SQLCommand();
+		SQLCommand(SQLConnection * _connection);
 		SQLCommand(SQLConnection *connection, std::string command);
 		~SQLCommand();
 
+		void begin_transaction();
+
+		void setup();
+
+		void commit_transaction();
+
+		void set_command(std::string _command);
+
 		// Sets value as character string data
-		void setAsString(unsigned int parm_no, std::string parameter);
+		void set_as_string(unsigned int parm_no, std::string parameter);
 
 		// Executes the current command
 		//
@@ -88,6 +101,8 @@ namespace database
 		//		command execution.  To get parameter description or value use Param or 
 		//		ParamByIndex methods.
 		void execute();
+//		void release();
+		void execute(const std::string _command);
 
 		// Tests whether a result set exists after the command execution
 		//
@@ -120,6 +135,22 @@ namespace database
 		// Parameters:
 		//		Field	A one-based field number in a result set.
 		long get_field_as_long(int field);
+
+		// Returns the column specified by its position or name in the result set.
+		//
+		// Description:
+		//		Use Field method to access a field by its name or position in the result set.
+		//
+		//		Using field smaller than 1 and greater then the value returned by fieldCount 
+		//		method will result in a failed assertion.
+		//
+		//		A set of SQLField objects creates implicitly after the command execution if 
+		//		the result set exists.  SQLField object contains full information about a 
+		//		column : name, type, size, value.SAField object can also be gotten by operator [ ] .
+		//
+		// Parameters:
+		//		Field	A one-based field number in a result set.
+		std::string get_field_as_string(int _field);
 
 		// Returns the column specified by its position or name in the result set.
 		//

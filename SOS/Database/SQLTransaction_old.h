@@ -11,7 +11,7 @@ namespace database
 		HRESULT			hr_;
 //		IDBCreateCommand*   pIDBCreateCommand_;
 //		ITransactionLocal*	pTransLocal_;
-		ITransaction*		pTrans_;
+		//ITransaction*		pTrans_;
 
 	public:
 		SQLTransaction();

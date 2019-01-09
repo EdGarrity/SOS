@@ -123,40 +123,50 @@ namespace database
 		return hr;
 	}
 
-	void SQLConnection::setup_command()
+	//void SQLConnection::setup_command()
+	//{
+	//	IDBCreateSession*   pIDBCreateSession;
+
+	//	if (FAILED(pIDBInitialize_->QueryInterface(IID_IDBCreateSession, (void**)&pIDBCreateSession)))
+	//	{
+	//		hr_ = E_FAIL;
+	//		throw MyException("Session initialization failed.");
+	//	}
+
+	//	// Create the session, getting an interface for command creation.
+	//	hr_ = pIDBCreateSession->CreateSession(NULL, IID_IDBCreateCommand, (IUnknown**)&pIDBCreateCommand_);
+	//	pIDBCreateSession->Release();
+	//	if (FAILED(hr_))
+	//		throw MyException("Create session failed.");
+
+	//	// Create the command object.
+	//	hr_ = pIDBCreateCommand_->CreateCommand(NULL, IID_ICommandText, (IUnknown**)&pICommandText_);
+	//	if (FAILED(hr_))
+	//		throw MyException("Create command failed.");
+
+	//	// Access the Transaction Interface
+	//	hr_ = pIDBCreateCommand_->QueryInterface(IID_ITransactionLocal, (void **)&pTransLocal_);
+	//	if (FAILED(hr_))
+	//		throw MyException("Create transaction failed.");
+	//}
+
+	SQLConnection::SQLConnection()
 	{
-		IDBCreateSession*   pIDBCreateSession;
-
-		if (FAILED(pIDBInitialize_->QueryInterface(IID_IDBCreateSession, (void**)&pIDBCreateSession)))
-		{
-			hr_ = E_FAIL;
-			throw MyException("Session initialization failed.");
-		}
-
-		// Create the session, getting an interface for command creation.
-		hr_ = pIDBCreateSession->CreateSession(NULL, IID_IDBCreateCommand, (IUnknown**)&pIDBCreateCommand_);
-		pIDBCreateSession->Release();
-		if (FAILED(hr_))
-			throw MyException("Create session failed.");
-
-		// Create the command object.
-		hr_ = pIDBCreateCommand_->CreateCommand(NULL, IID_ICommandText, (IUnknown**)&pICommandText_);
-		if (FAILED(hr_))
-			throw MyException("Create command failed.");
-
-		// Access the Transaction Interface
-		hr_ = pIDBCreateCommand_->QueryInterface(IID_ITransactionLocal, (void **)&pTransLocal_);
-		if (FAILED(hr_))
-			throw MyException("Create transaction failed.");
+		pIDBInitialize_ = NULL;
+//		pIDBCreateCommand_ = NULL;
+		pICommandText_ = NULL;
+//		pTransLocal_ = NULL;
 	}
 
 	SQLConnection::~SQLConnection()
 	{
-		pIDBCreateCommand_->Release();
+//		pTransLocal_->Release();
+
+//		pIDBCreateCommand_->Release();
 
 		disconnect();
 
-		pICommandText_->Release();
+//		pICommandText_->Release();
 	}
 
 	void SQLConnection::connect(const std::string server, const std::string dbString, const std::string userID, const std::string password)
@@ -173,7 +183,7 @@ namespace database
 			if (FAILED(hr))
 				throw MyException("Failed to establish connection.");
 
-			setup_command();
+//			setup_command();
 		}
 		catch (MyException e)
 		{

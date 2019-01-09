@@ -8,7 +8,7 @@
 namespace pushGP
 {
 	// Makes the population of agents containing the initial random individuals in the population
-	void make_pop_agents();
+	void make_pop_agents(int start = 0);
 
 	// Makes the population of agents containing the initial random individuals in the population
 	void make_child_agents();

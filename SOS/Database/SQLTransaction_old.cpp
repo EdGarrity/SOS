@@ -32,7 +32,9 @@ namespace database
 		hr_ = pIDBCreateCommand_->QueryInterface(IID_ITransactionLocal, (void **)&pTransLocal_);
 		if (FAILED(hr_))
 			throw MyException("Create transaction failed.");
-*/	}
+*/	
+//		_pConnection->setup_command();
+	}
 
 	SQLTransaction::~SQLTransaction()
 	{
