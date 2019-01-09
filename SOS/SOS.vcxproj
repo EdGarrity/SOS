@@ -75,6 +75,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\181\SDK\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\181\SDK\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -151,6 +153,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Database\SQLCommand.h" />
+    <ClInclude Include="Database\SQLConnection.h" />
+    <ClInclude Include="Database\SQLField.h" />
     <ClInclude Include="Domain\ErrorFunction.h" />
     <ClInclude Include="Finance\Broker.h" />
     <ClInclude Include="pch.h" />
@@ -185,6 +190,9 @@
     <ClInclude Include="Utilities\Singleton.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Database\SQLCommand.cpp" />
+    <ClCompile Include="Database\SQLConnection.cpp" />
+    <ClCompile Include="Database\SQLField.cpp" />
     <ClCompile Include="Domain\ErrorFunction.cpp" />
     <ClCompile Include="Finance\Broker.cpp" />
     <ClCompile Include="pch.cpp">

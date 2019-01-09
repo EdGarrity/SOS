@@ -8,6 +8,8 @@
 #include "..\PushP\Literal.h"
 #include "..\PushP\ExecInstruction.h"
 #include "..\Finance\Broker.h"
+#include "..\Database/SQLCommand.h"
+#include "..\Database/SQLField.h"
 
 using namespace std;
 using namespace Push;
@@ -15,9 +17,38 @@ using namespace pushGP;
 
 namespace pushGP
 {
-	void make_pop_agents()
+	database::SQLConnection con;
+
+	database::SQLCommand* cmdDeleteIndividuals;
+	database::SQLCommand* cmdInsertNewIndividual;
+	database::SQLCommand* cmdGetIndividuals;
+
+	const std::string delete_individuals("DELETE FROM [SOS].[dbo].[Individuals];");
+	const std::string insert_new_individual("INSERT INTO [dbo].[Individuals] ([Genome]) VALUES (?);");
+
+
+	unsigned int load_pop_agents()
 	{
-		for (int n = 0; n < argmap::population_size; n++)
+		unsigned int n = 0;
+
+		cmdGetIndividuals->execute();
+
+		if (cmdGetIndividuals->is_result_set())
+		{
+			while (cmdGetIndividuals->fetch_next())
+			{
+				std::string ind = cmdGetIndividuals->get_field_as_string(1);
+				Individual individual(ind);
+				globals::population_agents[n++] = individual;
+			}
+		}
+
+		return n;
+	}
+
+	void make_pop_agents(int start_)
+	{
+		for (int n = start_; n < argmap::population_size; n++)
 		{
 			Individual individual(random_plush_genome());
 			globals::population_agents[n] = individual;
@@ -67,12 +98,41 @@ namespace pushGP
 		}
 	}
 
+	void save_generation(database::SQLConnection& con)
+	{
+		// Begin a transaction
+		cmdInsertNewIndividual->begin_transaction();  //transaction->begin();
+
+		// Delete previously saved generation
+		cmdInsertNewIndividual->execute(delete_individuals);
+//		cmdInsertNewIndividual->release();
+//		cmdDeleteIndividuals->execute();
+
+		// Save new generation
+		cmdInsertNewIndividual->set_command(insert_new_individual);
+
+		for (int n = 0; n < argmap::population_size; n++)
+		{
+			cmdInsertNewIndividual->set_as_string(1, globals::population_agents[n]);
+			cmdInsertNewIndividual->execute();
+		}
+
+		// Commit transaction
+		cmdInsertNewIndividual->commit_transaction();  //transaction->commit();
+	}
+
 	void pushgp(std::function<double(Individual&)> error_function)
 	{
 		try
 		{
 			unsigned int generation = 0;
 			bool done = false;
+
+			con.connect("HOMEOFFICE", "SOS", "MySOS", "MySOS");
+
+			cmdDeleteIndividuals = new database::SQLCommand(&con, delete_individuals);
+			cmdInsertNewIndividual = new database::SQLCommand(&con);
+			cmdGetIndividuals = new database::SQLCommand(&con, "SELECT [Genome] FROM [dbo].[Individuals];");
 
 			// Create main factories
 			Push::intLiteralFactory = new Push::LiteralFactory<int>();
@@ -93,9 +153,9 @@ namespace pushGP
 			Push::init_static_PushP_instructions();
 			Push::init_push();
 
-			// Create population
+			// Load population.  Create more if not enough loaded.
 			cout << "Create Population Agents" << endl;
-			make_pop_agents();
+			make_pop_agents(load_pop_agents());
 			cout << "Create Child Agents" << endl;
 			make_child_agents();
 
@@ -109,13 +169,18 @@ namespace pushGP
 			while (!done)
 			{
 				cout << "Generation " << generation << endl;
+				save_generation(con);
+
 				cout << "Compte Errors" << endl;
 				compute_errors(error_function);
+
 				cout << "Number_Of_Test_Cases = " << Number_Of_Test_Cases << endl;
 				cout << "Calculate Epsilons" << endl;
 				calculate_epsilons_for_epsilon_lexicase();
+
 				cout << "Produce New Offspring" << endl;
 				produce_new_offspring();
+				
 				cout << "Install New Generation" << endl;
 				install_next_generation();
 				generation++;
@@ -135,6 +200,9 @@ namespace pushGP
 			delete Push::codeListFactory;
 			delete Push::doRangeClassFactory;
 
+			delete cmdDeleteIndividuals;
+			delete cmdInsertNewIndividual;
+			delete cmdGetIndividuals;
 		}
 		catch (const std::exception& e)
 		{

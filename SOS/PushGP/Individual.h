@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <string>
 #include <vector>
 #include <stack> 
@@ -83,12 +84,17 @@ namespace pushGP
 			errors_.push_back(error);
 		}
 
-		std::string to_string();
+		std::string get_genome_as_string();
+
+		// conversion operator to std::string
+		operator std::string() 
+		{
+			return get_genome_as_string();
+		}
 	};
+
+	std::ostream& operator<<(std::ostream& os, Individual& individual);
 
 	// Helper functions
 	std::vector<struct Atom> String_to_plush_genome(std::string _genome_str);
-
-//	template <typename T>
-//	void Append(std::vector<T>& a, const std::vector<T>& b);
 }

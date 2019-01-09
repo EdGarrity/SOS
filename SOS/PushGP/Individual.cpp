@@ -67,7 +67,7 @@ namespace pushGP
 		translate_plush_genome_to_push_program();
 	}
 
-	std::string Individual::to_string()
+	std::string Individual::get_genome_as_string()
 	{
 		std::string genome_string;
 
@@ -332,6 +332,12 @@ namespace pushGP
 		}
 
 		return genome;
+	}
+
+	std::ostream& operator<<(std::ostream& os, Individual& individual)
+	{
+		os << individual.get_genome_as_string();
+		return os;
 	}
 
 	//template <typename T>
