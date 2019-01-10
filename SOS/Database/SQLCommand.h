@@ -5,8 +5,7 @@
 
 namespace database
 {
-	const unsigned int NUMROWS_CHUNK = 5;
-	#define  BLOCK_SIZE     250
+	const unsigned int NUMROWS_CHUNK = 1000;
 	const unsigned int MAX_PARAMETERS = 100;
 	const unsigned int MAX_ROW_LENGTH = 8000;
 
@@ -101,7 +100,6 @@ namespace database
 		//		command execution.  To get parameter description or value use Param or 
 		//		ParamByIndex methods.
 		void execute();
-//		void release();
 		void execute(const std::string _command);
 
 		// Tests whether a result set exists after the command execution

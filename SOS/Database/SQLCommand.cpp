@@ -9,12 +9,6 @@ namespace database
 	#define ROUNDUP(size)	ROUNDUP_(size, ROUNDUP_AMOUNT)
 
 	// The following buffer is used to store parameter values.  
-	//typedef struct tagSPROCPARAMS {
-	//	char inParam1[8000];
-	//} SPROCPARAMS;
-
-	//SPROCPARAMS sprocparams = { "This is a test" };
-	//LPVOID sprocparams;
 	char	sprocparams[MAX_ROW_LENGTH + 1];
 
 	SQLCommand::SQLCommand()
@@ -25,73 +19,9 @@ namespace database
 
 	SQLCommand::SQLCommand(SQLConnection * _connection) : connection_(_connection)
 	{
-//		IDBCreateSession*   pIDBCreateSession;
-//		IDBCreateCommand*   pIDBCreateCommand_;
-
 		// Get the task memory allocator.
 		if (FAILED(CoGetMalloc(MEMCTX_TASK, &g_pIMalloc)))
 			throw MyException("Failed to get the task memory allocator");
-
-		//// Get count of parameters
-		//number_of_parameters_in_command_ = std::count(_command.begin(), _command.end(), '?');
-
-		//if (rgBindings_ != NULL)
-		//	CoTaskMemFree(rgBindings_);
-
-		//if (number_of_parameters_in_command_ > 0)
-		//{
-		//	// Allocate memory for the bindings array
-		//	rgBindings_ = (DBBINDING*)CoTaskMemAlloc(number_of_parameters_in_command_ * sizeof(DBBINDING));
-		//	memset(rgBindings_, 0, number_of_parameters_in_command_ * sizeof(DBBINDING));
-
-		//	// Allocate memory for the parameter buffer
-		//	//sprocparams = CoTaskMemAlloc(MAX_ROW_LENGTH);
-		//	memset(sprocparams, 0, MAX_ROW_LENGTH);
-		//	dwOffset_ = 0;
-
-		//	for (int i = 0; i < number_of_parameters_in_command_; i++)
-		//	{
-		//		rgBindings_[i].obLength = 0;
-		//		rgBindings_[i].obStatus = 0;
-		//		rgBindings_[i].pTypeInfo = NULL;
-		//		rgBindings_[i].pObject = NULL;
-		//		rgBindings_[i].pBindExt = NULL;
-		//		rgBindings_[i].dwPart = DBPART_VALUE;
-		//		rgBindings_[i].dwMemOwner = DBMEMOWNER_CLIENTOWNED;
-		//		rgBindings_[i].dwFlags = 0;
-		//		rgBindings_[i].bScale = 0;
-		//	}
-		//}
-
-		//else
-		//	rgBindings_ = NULL;
-
-		// Get the DB session object.
-/*		IDBInitialize *pIDBInitialize = connection_->get_IDBInitialize();
-
-		if (FAILED(pIDBInitialize->QueryInterface(IID_IDBCreateSession, (void**)&pIDBCreateSession)))
-		{
-			hr_ = E_FAIL;
-			throw MyException("Session initialization failed.");
-		}
-
-		// Create the session, getting an interface for command creation.
-		hr_ = pIDBCreateSession->CreateSession(NULL, IID_IDBCreateCommand, (IUnknown**)&pIDBCreateCommand_);
-		pIDBCreateSession->Release();
-		if (FAILED(hr_))
-			throw MyException("Create session failed.");
-
-		// Create the command object.
-		hr_ = pIDBCreateCommand_->CreateCommand(NULL, IID_ICommandText, (IUnknown**)&pICommandText_);
-		if (FAILED(hr_))
-			throw MyException("Create command failed.");
-
-		// Access the Transaction Interface
-		hr_ = pIDBCreateCommand_->QueryInterface(IID_ITransactionLocal, (void **)&pTransLocal_);
-		if (FAILED(hr_))
-			throw MyException("Create transaction failed.");
-*/
-//		pIDBCreateCommand->Release();
 
 		setup();
 	}
@@ -170,16 +100,10 @@ namespace database
 		hr_ = pIDBCreateCommand_->QueryInterface(IID_ITransactionLocal, (void **)&pTransLocal_);
 		if (FAILED(hr_))
 			throw MyException("Create transaction failed.");
-
-//		pIDBCreateCommand->Release();
 	}
 
 	void SQLCommand::commit_transaction()
 	{
-		//IDBCreateCommand*   pIDBCreateCommand;
-
-		//pIDBCreateCommand = pConnection_->get_IDBCreateCommand();
-
 		// Commit The Transaction
 		pIDBCreateCommand_->QueryInterface(IID_ITransaction, (void **)&pTrans_);
 
@@ -205,7 +129,6 @@ namespace database
 			memset(rgBindings_, 0, number_of_parameters_in_command_ * sizeof(DBBINDING));
 
 			// Allocate memory for the parameter buffer
-			//sprocparams = CoTaskMemAlloc(MAX_ROW_LENGTH);
 			memset(sprocparams, 0, MAX_ROW_LENGTH);
 			dwOffset_ = 0;
 
@@ -346,16 +269,6 @@ namespace database
 		IRowset*	pIRowset;
 		DBPARAMS	Params;
 		DBORDINAL	nCols;
-//		ICommandWithParameters* pICommandWithParams = NULL;
-		//ICommandText*   pICommandText;
-
-		//if (cRowsObtained_ > 0)
-		//	pIRowset_->ReleaseRows(cRowsObtained_, rghRows_, NULL, NULL, NULL);
-
-		//cRowsObtained_ = 0;
-
-		// Get the pointer to the Command text object.
-		//pICommandText = connection_->get_ICommandText();
 				
 		// The command requires the actual text as well as an indicator
 		// of its language and dialect.
@@ -372,13 +285,6 @@ namespace database
 			}
 
 			// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms725393(v=vs.85)"
-			//hr_ = pICommandWithParams->SetParameterInfo(0, NULL, NULL);
-			//if (FAILED(hr_))
-			//{
-			//	throw MyException("failed in resetting parameter info.(SetParameterInfo)");
-			//	//				goto EXIT;
-			//}
-
 			hr_ = pICommandWithParams_->SetParameterInfo(number_of_parameters_in_command_, ParamOrdinals_, ParamBindInfo_);
 			if (FAILED(hr_))
 			{
@@ -413,8 +319,6 @@ namespace database
 			// Clear parameter buffer.
 			memset(sprocparams, 0, MAX_ROW_LENGTH);
 			dwOffset_ = 0;
-
-//			pICommandWithParams->Release();
 		}
 		else
 			hr_ = pICommandText_->Execute(NULL, IID_IRowset, NULL, &cRowsAffected_, (IUnknown**)&pIRowset_);
@@ -492,45 +396,13 @@ namespace database
 
 		CoUninitialize();
 */	
-}
+	}
 
-//void SQLCommand::release()
-//{
-//	if (pIAccessor_ != NULL)
-//	{
-//		pIAccessor_->Release();
-//		pIAccessor_ = NULL;
-//	}
-//
-//	if (pICommandText_ != NULL)
-//	{
-//		pICommandText_->Release();
-//		pICommandText_ = NULL;
-//	}
-//
-//	if (pIDBCreateCommand_ != NULL)
-//	{
-//		pIDBCreateCommand_->Release();
-//		pIDBCreateCommand_ = NULL;
-//	}
-//
-//	//if (pIDBCreateSession_ != NULL)
-//	//	pIDBCreateSession_->Release();
-//	//if (pIDBInitialize_ != NULL)
-//	//	if (FAILED(pIDBInitialize_->Uninitialize()))
-//	//		// Uninitialize is not required, but it fails if an interface has   
-//	//		// not been released.  This can be used for debugging.  
-//	//		throw MyException("problem in uninitializing");
-//	//pIDBInitialize_->Release();
-//	
-//	setup();
-//}
-
-void SQLCommand::execute(const std::string _command)
-{
-	set_command(_command);
-	execute();
-}
+	void SQLCommand::execute(const std::string _command)
+	{
+		set_command(_command);
+		execute();
+	}
 
 	bool SQLCommand::is_result_set()
 	{
@@ -561,6 +433,7 @@ void SQLCommand::execute(const std::string _command)
 	//{
 	//	// TODO: insert return statement here
 	//}
+
 	bool SQLCommand::fetch_next()
 	{
 		HROW*           pRows = &rghRows_[0];   // Pointer to the row 

@@ -11,10 +11,8 @@ namespace database
 	{
 	private:
 		HRESULT				hr_;
-		IDBInitialize       *pIDBInitialize_ = NULL;
-		//IDBCreateCommand*   pIDBCreateCommand_ = NULL;
+		IDBInitialize*		pIDBInitialize_ = NULL;
 		ICommandText*		pICommandText_ = NULL;
-		//ITransactionLocal*	pTransLocal_ = NULL;
 
 		HRESULT initialize_and_establish_connection(const OLECHAR * server, const OLECHAR * dbString, const OLECHAR * userID, const OLECHAR * password);
 
@@ -38,13 +36,7 @@ namespace database
 		// Disconnects the connection from the database
 		void disconnect();
 
-//		void setup_command();
-
 		// Returns the data source object for this connection
 		IDBInitialize* get_IDBInitialize() { return pIDBInitialize_; };
-
-		//IDBCreateCommand*   get_IDBCreateCommand() { return pIDBCreateCommand_; };
-		//ICommandText* get_ICommandText() { return pICommandText_;  };
-		//ITransactionLocal* get_ITransactionLocal() { return pTransLocal_; };
 	};
 }
