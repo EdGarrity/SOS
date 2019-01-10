@@ -11,7 +11,7 @@ namespace database
 	{
 	private:
 		HRESULT				hr_;
-		IDBInitialize       *pIDBInitialize_ = NULL;
+		IDBInitialize*		pIDBInitialize_ = NULL;
 		ICommandText*		pICommandText_ = NULL;
 
 		HRESULT initialize_and_establish_connection(const OLECHAR * server, const OLECHAR * dbString, const OLECHAR * userID, const OLECHAR * password);
