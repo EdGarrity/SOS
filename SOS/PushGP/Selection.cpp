@@ -70,19 +70,12 @@ namespace pushGP
 
 		globals::epsilons.clear();
 
-		for (int t = 0; t < Number_Of_Test_Cases; t++)
+		for (int test_case = 0; test_case < Number_Of_Test_Cases; test_case++)
 		{
 			test_case_errors.clear();
 
-			//for (int n = 0; n < argmap::population_size; n++)
-			//{
-			//	const std::vector<double> * individual_errors = globals::population_agents[n].get_errors();
-			//	double error = (*individual_errors)[t];
-			//	test_case_errors.push_back(error);
-			//}
-
 			for (auto ind : globals::population_agents)
-				test_case_errors.push_back(ind.get_errors()[t]);
+				test_case_errors.push_back(ind.get_errors()[test_case]);
 
 			globals::epsilons.push_back(mad(test_case_errors));
 		}
@@ -110,8 +103,6 @@ namespace pushGP
 			test_cases.pop_back();
 
 			// Set elite to the minimum error
-//			auto before_it = survivors_index.before_begin();
-//			for (auto it = survivors_index.begin(); it != survivors_index.end(); it++)
 			for (unsigned int it : survivors_index)
 			{
 				Individual ind = globals::population_agents[it];
@@ -121,7 +112,6 @@ namespace pushGP
 
 			// Reduce selection pool
 			auto before_it = survivors_index.before_begin();
-//			for (auto it = survivors_index.begin(); it != survivors_index.end(); it++)
 			auto it = survivors_index.begin();
 			while (it != survivors_index.end())
 			{

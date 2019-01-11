@@ -74,7 +74,19 @@ namespace pushGP
 		// Granularity of test cases
 		const unsigned int training_case_step = 100;
 
-			//		: evalpush - limit 150
+		// Date range for training
+//		const std::string training_start_date = "'2000-01-01 00:00:00.000'";
+//		const std::string training_end_date = "'2009-12-31 00:00:00.000'";
+		const long int training_start_index = 0;	// 2001-01-03
+		const long int training_end_index = 2507;	// 2009-12-31
+
+		// Date range for testing
+//		const std::string testing_start_date = "'2010-01-01 00:00:00.000'";
+//		const std::string testing_end_date = "'2015-12-31 00:00:00.000'";
+		const long int test_start_index = 2508;	// 2010-01-04
+		const long int test_end_index = 3765;	// 2014-12-31
+
+		//		: evalpush - limit 150
 			//		;; The number of Push instructions that can be evaluated before stopping
 			//		;; evaluation.
 
