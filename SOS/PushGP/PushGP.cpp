@@ -17,14 +17,12 @@ using namespace pushGP;
 
 namespace pushGP
 {
-	database::SQLConnection con;
+	//database::SQLConnection con;
 
-	database::SQLCommand* sqlcmd_delete_indiciduals;
-	database::SQLCommand* sqlcmd_insert_new_individual;
-	database::SQLCommand* sqlcmd_get_individuals;
-	database::SQLCommand* sqlcmd_save_status_report;
-	database::SQLCommand* sqlcmd_get_start_index;
-	database::SQLCommand* sqlcmd_get_end_index;
+//	database::SQLCommand* sqlcmd_delete_indiciduals;
+//	database::SQLCommand* sqlcmd_insert_new_individual;
+//	database::SQLCommand* sqlcmd_get_individuals;
+	//database::SQLCommand* sqlcmd_save_status_report;
 
 	const std::string sqlstmt_delete_individuals("DELETE FROM [SOS].[dbo].[Individuals];");
 	const std::string sqlstmt_insert_new_individual("INSERT INTO [dbo].[Individuals] ([Genome]) VALUES (?);");
@@ -59,6 +57,13 @@ namespace pushGP
 	{
 		unsigned int n = 0;
 
+		database::SQLConnection con;
+		con.connect("HOMEOFFICE", "SOS", "MySOS", "MySOS");
+
+		database::SQLCommand* sqlcmd_get_individuals;
+
+		sqlcmd_get_individuals = new database::SQLCommand(&con, "SELECT [Genome] FROM [dbo].[Individuals];");
+
 		sqlcmd_get_individuals->execute();
 
 		if (sqlcmd_get_individuals->is_result_set())
@@ -70,6 +75,8 @@ namespace pushGP
 				globals::population_agents[n++] = individual;
 			}
 		}
+
+		delete sqlcmd_get_individuals;
 
 		return n;
 	}
@@ -104,7 +111,6 @@ namespace pushGP
 		for (int n = 0; n < argmap::population_size; n++)
 		{
 			cout << "  Evaluate Individual " << n;
-//			double error = evaluate_individual(reproduction_selection_error_function, globals::population_agents[n], input_start, input_end);
 			double error = reproduction_selection_error_function(globals::population_agents[n], input_start, input_end);
 			cout << " Min error = " << error << std::endl;
 			min_error = min_error < error ? min_error : error;
@@ -127,15 +133,22 @@ namespace pushGP
 		}
 	}
 
-	void save_generation(database::SQLConnection& con)
+	void save_generation()
 	{
+		database::SQLConnection con;
+		con.connect("HOMEOFFICE", "SOS", "MySOS", "MySOS");
+
+		database::SQLCommand* sqlcmd_delete_indiciduals;
+		database::SQLCommand* sqlcmd_insert_new_individual;
+
+		sqlcmd_delete_indiciduals = new database::SQLCommand(&con, sqlstmt_delete_individuals);
+		sqlcmd_insert_new_individual = new database::SQLCommand(&con);
+
 		// Begin a transaction
 		sqlcmd_insert_new_individual->begin_transaction();  //transaction->begin();
 
 		// Delete previously saved generation
 		sqlcmd_insert_new_individual->execute(sqlstmt_delete_individuals);
-//		cmdInsertNewIndividual->release();
-//		cmdDeleteIndividuals->execute();
 
 		// Save new generation
 		sqlcmd_insert_new_individual->set_command(sqlstmt_insert_new_individual);
@@ -148,6 +161,9 @@ namespace pushGP
 
 		// Commit transaction
 		sqlcmd_insert_new_individual->commit_transaction();  //transaction->commit();
+
+		delete sqlcmd_delete_indiciduals;
+		delete sqlcmd_insert_new_individual;
 	}
 
 	void generate_status_report(int generation_, 
@@ -160,9 +176,15 @@ namespace pushGP
 		unsigned int n = 0;
 		double min_error = std::numeric_limits<double>::max();
 		Individual best_individual;
+		database::SQLCommand* sqlcmd_save_status_report;
 
 		double group_training_score = 0;
 		double group_test_score = 0;
+
+		database::SQLConnection con;
+		con.connect("HOMEOFFICE", "SOS", "MySOS", "MySOS");
+
+		sqlcmd_save_status_report = new database::SQLCommand(&con, sqlstmt_save_status_report);
 
 		// Calcuate the group training score
 		min_error = std::numeric_limits<double>::max();
@@ -207,6 +229,8 @@ namespace pushGP
 		sqlcmd_save_status_report->set_as_integer(13, argmap::population_size);
 
 		sqlcmd_save_status_report->execute();
+
+		delete sqlcmd_save_status_report;
 	}
 
 	void pushgp(std::function<double(Individual&, unsigned long, unsigned long)> reproduction_selection_error_function,
@@ -221,14 +245,12 @@ namespace pushGP
 			unsigned long test_input_start = argmap::test_start_index;
 			unsigned long test_input_end = argmap::test_end_index;
 
-			con.connect("HOMEOFFICE", "SOS", "MySOS", "MySOS");
+			//con.connect("HOMEOFFICE", "SOS", "MySOS", "MySOS");
 
-			sqlcmd_delete_indiciduals = new database::SQLCommand(&con, sqlstmt_delete_individuals);
-			sqlcmd_insert_new_individual = new database::SQLCommand(&con);
-			sqlcmd_get_individuals = new database::SQLCommand(&con, "SELECT [Genome] FROM [dbo].[Individuals];");
-			sqlcmd_save_status_report = new database::SQLCommand(&con, sqlstmt_save_status_report);
-			//sqlcmd_get_start_index = new database::SQLCommand(&con, sqlstmt_get_start_index);
-			//sqlcmd_get_end_index = new database::SQLCommand(&con, sqlstmt_get_end_index);
+			//sqlcmd_delete_indiciduals = new database::SQLCommand(&con, sqlstmt_delete_individuals);
+			//sqlcmd_insert_new_individual = new database::SQLCommand(&con);
+			//sqlcmd_get_individuals = new database::SQLCommand(&con, "SELECT [Genome] FROM [dbo].[Individuals];");
+			//sqlcmd_save_status_report = new database::SQLCommand(&con, sqlstmt_save_status_report);
 
 			// Create main factories
 			Push::intLiteralFactory = new Push::LiteralFactory<int>();
@@ -265,7 +287,7 @@ namespace pushGP
 			while (!done)
 			{
 				cout << "Generation " << generation << endl;
-				save_generation(con);
+				save_generation();
 
 				cout << "Compte Errors" << endl;
 				compute_errors(reproduction_selection_error_function, training_input_start, training_input_end);
@@ -300,12 +322,10 @@ namespace pushGP
 			delete Push::codeListFactory;
 			delete Push::doRangeClassFactory;
 
-			delete sqlcmd_delete_indiciduals;
-			delete sqlcmd_insert_new_individual;
-			delete sqlcmd_get_individuals;
-			delete sqlcmd_save_status_report;
-			//delete sqlcmd_get_start_index;
-			//delete sqlcmd_get_end_index;
+			//delete sqlcmd_delete_indiciduals;
+			//delete sqlcmd_insert_new_individual;
+			//delete sqlcmd_get_individuals;
+			//delete sqlcmd_save_status_report;
 		}
 		catch (const std::exception& e)
 		{

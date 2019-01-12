@@ -126,7 +126,6 @@ namespace database
 	SQLConnection::SQLConnection()
 	{
 		pIDBInitialize_ = NULL;
-		pICommandText_ = NULL;
 	}
 
 	SQLConnection::~SQLConnection()

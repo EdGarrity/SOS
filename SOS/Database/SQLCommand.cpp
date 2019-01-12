@@ -349,7 +349,7 @@ namespace database
 				
 		// The command requires the actual text as well as an indicator
 		// of its language and dialect.
-		pICommandText_->SetCommandText(DBGUID_DEFAULT, strtowstr(command_).c_str());
+//		pICommandText_->SetCommandText(DBGUID_DEFAULT, strtowstr(command_).c_str());
 
 		// Create input parameters
 		if (number_of_parameters_in_command_ > 0)
@@ -387,7 +387,7 @@ namespace database
 			// Initialize DBPARAMS structure for command execution. DBPARAMS specifies the  
 			// parameter values in the command.  DBPARAMS is then passed to Execute.  
 			Params.pData = sprocparams;
-			Params.cParamSets = number_of_parameters_in_command_;
+			Params.cParamSets = 1; //number_of_parameters_in_command_;
 			Params.hAccessor = hAccessor_;
 
 			// Execute the command.
