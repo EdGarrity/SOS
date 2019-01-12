@@ -17,6 +17,7 @@ namespace database
 
 	public:
 		SQLConnection();
+		SQLConnection(const std::string server, const std::string dbString, const std::string userID, const std::string password);
 		~SQLConnection();
 
 		// Opens the connection to a data source.

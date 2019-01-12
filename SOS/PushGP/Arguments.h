@@ -580,6 +580,24 @@ namespace pushGP
 		//	;; If set, will send this in the configuration of the run, to the
 		//	;; external record
 
+		//	;; ----------------------------------------
+		//	;; Arguments related to progress reports and recording
+		//	;; ----------------------------------------
+
+		// Network name of a server running an instance of MicrosoftSQL Server. If there are multiple instances of SQL Server running on the computer, in order to 
+		// connect to a specific instance of SQL Server the value init_datasource is specified as \\ServerName\InstanceName. The escape sequence \\ is used for 
+		// backslash itself
+		const std::string db_init_datasource = "HOMEOFFICE";
+
+		// Name of an existing SQL Server database to which to connect.
+		const std::string db_init_catalog = "SOS";
+
+		// SQL Server login. This property is used when SQL Server Authentication is selected for authorizing access to a SQL Server database.
+		const std::string db_user_id = "MySOS";
+
+		// Password assigned to a SQL Server login. This property is used when SQL Server Authentication is selected for authorizing access to a SQL Server database.
+		const std::string db_user_password = "MySOS";
+
 	//};
 
 	//extern ArgType argmap;

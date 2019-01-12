@@ -8,7 +8,7 @@
 namespace pushGP
 {
 	// Makes the population of agents containing the initial random individuals in the population
-	void make_pop_agents(int start = 0);
+	unsigned int make_pop_agents(int start = 0);
 
 	// Makes the population of agents containing the initial random individuals in the population
 	void make_child_agents();
@@ -21,7 +21,7 @@ namespace pushGP
 
 	void install_next_generation();
 
-	void save_generation(database::SQLConnection & con);
+	void save_generation();
 
 	void generate_status_report(int generation_, std::function<double(Individual&, unsigned long, unsigned long)> individual_selection_error_function, unsigned int training_input_start, unsigned int training_input_end, unsigned int test_input_start, unsigned int test_input_end);
 

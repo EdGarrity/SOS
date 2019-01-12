@@ -17,13 +17,8 @@ using namespace pushGP;
 
 namespace pushGP
 {
-	//database::SQLConnection con;
-
-//	database::SQLCommand* sqlcmd_delete_indiciduals;
-//	database::SQLCommand* sqlcmd_insert_new_individual;
-//	database::SQLCommand* sqlcmd_get_individuals;
-	//database::SQLCommand* sqlcmd_save_status_report;
-
+	const std::string sqlstmt_get_last_saved_generation_number = "SELECT TOP 1 [Generation] FROM[SOS].[dbo].[ProgressLog] ORDER BY[Update_DTS] DESC;";
+	const std::string sqlstmt_sqlcmd_get_individuals = "SELECT [Genome] FROM [dbo].[Individuals];";
 	const std::string sqlstmt_delete_individuals("DELETE FROM [SOS].[dbo].[Individuals];");
 	const std::string sqlstmt_insert_new_individual("INSERT INTO [dbo].[Individuals] ([Genome]) VALUES (?);");
 	const std::string sqlstmt_save_status_report("INSERT INTO [dbo].[ProgressLog]"
@@ -44,25 +39,35 @@ namespace pushGP
 		"           (?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			//       1 2 3 4 5 6 7 8 9 0 1 2 3
 
-	//const std::string sqlstmt_get_start_index("SELECT min(Id), min([Date]) AS [StartDate]"
-	//	"  FROM [Decision Support System].[dbo].[StockPrices]"
-	//	"  WHERE Symbol = 'RIMM'"
-	//	"  AND [Date] >= ?");
-	//const std::string sqlstmt_get_end_index("SELECT MAX(Id), MAX([Date]) AS [EndDate]"
-	//	"  FROM [Decision Support System].[dbo].[StockPrices]"
-	//	"  WHERE Symbol = 'RIMM'"
-	//	"  AND [Date] <= ?");
+	unsigned long get_last_saved_generation_number()
+	{
+		unsigned long n = 0;
+
+		database::SQLConnection con(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
+
+		database::SQLCommand* sqlcmd_get_last_saved_generation_number;
+
+		sqlcmd_get_last_saved_generation_number = new database::SQLCommand(&con, sqlstmt_get_last_saved_generation_number);
+
+		sqlcmd_get_last_saved_generation_number->execute();
+
+		if (sqlcmd_get_last_saved_generation_number->fetch_next())
+			n = sqlcmd_get_last_saved_generation_number->get_field_as_long(1);
+
+		delete sqlcmd_get_last_saved_generation_number;
+
+		return n;
+	}
 
 	unsigned int load_pop_agents()
 	{
 		unsigned int n = 0;
 
-		database::SQLConnection con;
-		con.connect("HOMEOFFICE", "SOS", "MySOS", "MySOS");
+		database::SQLConnection con(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
 
 		database::SQLCommand* sqlcmd_get_individuals;
 
-		sqlcmd_get_individuals = new database::SQLCommand(&con, "SELECT [Genome] FROM [dbo].[Individuals];");
+		sqlcmd_get_individuals = new database::SQLCommand(&con, sqlstmt_sqlcmd_get_individuals);
 
 		sqlcmd_get_individuals->execute();
 
@@ -81,13 +86,18 @@ namespace pushGP
 		return n;
 	}
 
-	void make_pop_agents(int start_)
+	unsigned int make_pop_agents(int start_)
 	{
+		unsigned int agents_created = 0;
+
 		for (int n = start_; n < argmap::population_size; n++)
 		{
 			Individual individual(random_plush_genome());
 			globals::population_agents[n] = individual;
+			agents_created++;
 		}
+
+		return agents_created;
 	}
 
 	void make_child_agents()
@@ -98,11 +108,6 @@ namespace pushGP
 			globals::child_agents[n] = individual;
 		}
 	}
-
-	//double evaluate_individual(std::function<double(Individual&, unsigned long, unsigned long)> reproduction_selection_error_function, Individual & individual, unsigned long input_start, unsigned long input_end)
-	//{
-	//	return reproduction_selection_error_function(individual, input_start, input_end);
-	//}
 
 	void compute_errors(std::function<double(Individual&, unsigned long, unsigned long)> reproduction_selection_error_function, unsigned long input_start, unsigned long input_end)
 	{
@@ -135,8 +140,7 @@ namespace pushGP
 
 	void save_generation()
 	{
-		database::SQLConnection con;
-		con.connect("HOMEOFFICE", "SOS", "MySOS", "MySOS");
+		database::SQLConnection con(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
 
 		database::SQLCommand* sqlcmd_delete_indiciduals;
 		database::SQLCommand* sqlcmd_insert_new_individual;
@@ -181,8 +185,7 @@ namespace pushGP
 		double group_training_score = 0;
 		double group_test_score = 0;
 
-		database::SQLConnection con;
-		con.connect("HOMEOFFICE", "SOS", "MySOS", "MySOS");
+		database::SQLConnection con(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
 
 		sqlcmd_save_status_report = new database::SQLCommand(&con, sqlstmt_save_status_report);
 
@@ -238,19 +241,9 @@ namespace pushGP
 	{
 		try
 		{
-			unsigned int generation = 1;
+			unsigned int generation_number = 1;
+			unsigned int agents_created = 0;
 			bool done = false;
-			unsigned long training_input_start = argmap::training_start_index;
-			unsigned long training_input_end = argmap::training_end_index;
-			unsigned long test_input_start = argmap::test_start_index;
-			unsigned long test_input_end = argmap::test_end_index;
-
-			//con.connect("HOMEOFFICE", "SOS", "MySOS", "MySOS");
-
-			//sqlcmd_delete_indiciduals = new database::SQLCommand(&con, sqlstmt_delete_individuals);
-			//sqlcmd_insert_new_individual = new database::SQLCommand(&con);
-			//sqlcmd_get_individuals = new database::SQLCommand(&con, "SELECT [Genome] FROM [dbo].[Individuals];");
-			//sqlcmd_save_status_report = new database::SQLCommand(&con, sqlstmt_save_status_report);
 
 			// Create main factories
 			Push::intLiteralFactory = new Push::LiteralFactory<int>();
@@ -273,7 +266,12 @@ namespace pushGP
 
 			// Load population.  Create more if not enough loaded.
 			cout << "Create Population Agents" << endl;
-			make_pop_agents(load_pop_agents());
+			generation_number = get_last_saved_generation_number() + 1;
+			agents_created = make_pop_agents(load_pop_agents());
+			
+			if (agents_created > 0)
+				generation_number = 0;
+
 			cout << "Create Child Agents" << endl;
 			make_child_agents();
 
@@ -286,11 +284,11 @@ namespace pushGP
 
 			while (!done)
 			{
-				cout << "Generation " << generation << endl;
+				cout << "Generation " << generation_number << endl;
 				save_generation();
 
 				cout << "Compte Errors" << endl;
-				compute_errors(reproduction_selection_error_function, training_input_start, training_input_end);
+				compute_errors(reproduction_selection_error_function, argmap::training_start_index, argmap::training_end_index);
 
 				cout << "Number_Of_Test_Cases = " << Number_Of_Test_Cases << endl;
 
@@ -301,11 +299,16 @@ namespace pushGP
 				produce_new_offspring();
 				
 				cout << "Generate status report" << endl;
-				generate_status_report(generation, individual_selection_error_function, training_input_start, training_input_end, test_input_start, test_input_end);
+				generate_status_report(generation_number, 
+					individual_selection_error_function, 
+					argmap::training_start_index, 
+					argmap::training_end_index, 
+					argmap::test_start_index, 
+					argmap::test_end_index);
 
 				cout << "Install New Generation" << endl;
 				install_next_generation();
-				generation++;
+				generation_number++;
 			}
 
 			// Restore old heap manager
@@ -321,11 +324,6 @@ namespace pushGP
 			delete Push::boolLiteralFactory;
 			delete Push::codeListFactory;
 			delete Push::doRangeClassFactory;
-
-			//delete sqlcmd_delete_indiciduals;
-			//delete sqlcmd_insert_new_individual;
-			//delete sqlcmd_get_individuals;
-			//delete sqlcmd_save_status_report;
 		}
 		catch (const std::exception& e)
 		{
