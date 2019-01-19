@@ -15,7 +15,7 @@ namespace pushGP
 
 //	double evaluate_individual(std::function<double(Individual&, unsigned long, unsigned long)> error_function, Individual & individual, unsigned long input_start, unsigned long input_end);
 
-	void compute_errors(std::function<double(Individual&, unsigned long, unsigned long)> error_function, unsigned long input_start, unsigned long input_end);
+	void compute_errors(static std::function<double(static unsigned int, static unsigned long, static unsigned long)> error_function, static unsigned long input_start, static unsigned long input_end);
 	
 	void produce_new_offspring();
 
@@ -23,9 +23,9 @@ namespace pushGP
 
 	void save_generation();
 
-	void generate_status_report(int generation_, std::function<double(Individual&, unsigned long, unsigned long)> individual_selection_error_function, unsigned int training_input_start, unsigned int training_input_end, unsigned int test_input_start, unsigned int test_input_end);
+	void generate_status_report(int generation_, static std::function<double(std::vector<unsigned int>&, unsigned long, unsigned long)> individual_selection_error_function, static unsigned int training_input_start, static unsigned int training_input_end, static unsigned int test_input_start, static unsigned int test_input_end);
 
 	// The top-level routine of pushgp
-	void pushgp(std::function<double(Individual&, unsigned long, unsigned long)> reproduction_selection_error_function,
-		        std::function<double(Individual&, unsigned long, unsigned long)> individual_selection_error_function);
+	void pushgp(std::function<double(static unsigned int, static unsigned long, static unsigned long)> reproduction_selection_error_function,
+		        std::function<double(static std::vector<unsigned int> & individual_indexes, static unsigned long, static unsigned long)> individual_selection_error_function);
 }

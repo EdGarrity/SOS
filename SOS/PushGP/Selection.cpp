@@ -81,8 +81,11 @@ namespace pushGP
 		}
 	}
 
+	// Returns an individual that does within epsilon of the best on the fitness cases when considered one at a time in random order.
 	Individual pushGP::epsilon_lexicase_selection()
 	{
+		unsigned number_of_survivors = argmap::population_size;
+
 		// Set survivors to be a copy of the population
 		std::forward_list<unsigned int> survivors_index;
 
@@ -92,7 +95,8 @@ namespace pushGP
 		// Get a randomized deck of test cases
 		std::vector<unsigned int> test_cases = lshuffle(Number_Of_Test_Cases); //randomized_training_cases_deck_;
 
-		while ((test_cases.size() > 1) && (!survivors_index.empty()))
+//		while ((test_cases.size() > 1) && (!survivors_index.empty()))
+		while ((!test_cases.empty()) && (number_of_survivors > 1))
 		{
 			double elite = std::numeric_limits<double>::max();
 
@@ -136,10 +140,13 @@ namespace pushGP
 					it++;
 				}
 			}
+
+			number_of_survivors--;
 		}
 
 		// Return a parent from remaining survivors 
-		unsigned number_of_survivors = 0;
+//		unsigned number_of_survivors = 0;
+		number_of_survivors = 0;
 
 		if (!survivors_index.empty())
 			for (auto it : survivors_index)

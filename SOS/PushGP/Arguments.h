@@ -144,14 +144,14 @@ namespace pushGP
 
 		// When using alternation, the probability of alternating between the parents when moving
 		// to the next gene.
-		const double alternation_rate = 0.01;
+		const double alternation_rate = 0.20;
 
 		// When using alternation, the standard deviation of how far alternation may jump between
 		// indices when switching between parents.
 		const unsigned int alignment_deviation = 10;
 
 		// The probability of each token being mutated during uniform mutation.
-		const double uniform_mutation_rate = 0.01;
+		const double uniform_mutation_rate = 0.20;
 
 		//	The probability of mutating a constant instead of simply replacing the token
 		//	with a random instruction during uniform mutation.

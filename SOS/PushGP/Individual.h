@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <stack> 
+#include <set>
 
 #include "..\PushP\Code.h"
 
@@ -46,9 +47,16 @@ namespace pushGP
 
 		// Plush genome
 		std::vector<struct Atom> genome_;
+		std::string genome_string_;
 
 		//Vector of errors
 		std::vector<double> errors_;
+
+		// Is this an elite individual
+		bool is_elite_;
+
+		// Set of test cases this individual is an elite member of
+		std::set<unsigned int> elite_test_cases_;
 
 		void init();
 
@@ -79,10 +87,13 @@ namespace pushGP
 			return errors_;
 		}
 
-		void log_error(double error)
-		{
-			errors_.push_back(error);
-		}
+		void log_error(double error);
+
+		void log_elite_test_case(unsigned int test_case_index);
+
+		void clear_elite_test_cases();
+
+		unsigned int count_elite_test_cases();
 
 		std::string get_genome_as_string();
 
@@ -90,6 +101,16 @@ namespace pushGP
 		operator std::string() 
 		{
 			return get_genome_as_string();
+		}
+
+		bool is_elite()
+		{
+			return is_elite_;
+		}
+
+		void make_elite()
+		{
+			is_elite_ = true;
 		}
 	};
 
