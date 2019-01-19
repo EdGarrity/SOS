@@ -16,6 +16,9 @@ namespace pushGP
 		program_.clear();
 		genome_.clear();
 		errors_.clear();
+		is_elite_ = false;
+		genome_string_.clear();
+		elite_test_cases_.clear();
 	}
 
 	Individual::Individual()
@@ -31,21 +34,20 @@ namespace pushGP
 		translate_plush_genome_to_push_program();
 	}
 
-	Individual::Individual(std::string _genome)
+	Individual::Individual(std::string _genome_string)
 	{
-		init();
-
-		parse_string_to_plush_genome(_genome);
-		translate_plush_genome_to_push_program();
+		set_genome(_genome_string);
 	}
 
 	Individual::Individual(const Individual & other)
 	{
-		init();
-
 		program_ = other.program_;
 		genome_ = other.genome_;
 		errors_ = other.errors_;
+
+		genome_string_ = other.genome_string_;
+		is_elite_ = other.is_elite_;
+//		elite_test_cases_ = other.elite_test_cases_;
 	}
 
 	Individual & Individual::operator=(const Individual & other)
@@ -54,34 +56,62 @@ namespace pushGP
 		genome_ = other.genome_;
 		errors_ = other.errors_;
 
+		genome_string_ = other.genome_string_;
+		is_elite_ = other.is_elite_;
+//		elite_test_cases_ = other.elite_test_cases_;
+
 		return *this;
 	}
 
-	void Individual::set_genome(std::string _genome)
+	void Individual::log_error(double error)
 	{
-		program_.clear();
-		genome_.clear();
-		errors_.clear();
+		errors_.push_back(error);
+	}
 
-		parse_string_to_plush_genome(_genome);
+	void Individual::log_elite_test_case(unsigned int test_case_index)
+	{
+		elite_test_cases_.insert(test_case_index);
+	}
+
+	void Individual::clear_elite_test_cases()
+	{
+		elite_test_cases_.clear();
+	}
+
+	unsigned int Individual::count_elite_test_cases()
+	{
+		return elite_test_cases_.size();
+	}
+
+	void Individual::set_genome(std::string _genome_string)
+	{
+		init();
+
+		genome_string_ = _genome_string;
+		parse_string_to_plush_genome(_genome_string);
 		translate_plush_genome_to_push_program();
 	}
 
 	std::string Individual::get_genome_as_string()
 	{
-		std::string genome_string;
-
-		for (int n = 0; n < genome_.size(); n++)
+		if (genome_string_.empty())
 		{
-			genome_string += "{";
-			genome_string += ":instruction ";
-			genome_string += genome_[n].instruction;
-			genome_string += " :close  ";
-			genome_string += std::to_string(genome_[n].parentheses);
-			genome_string += "}";
+			std::string genome_string;
+
+			for (int n = 0; n < genome_.size(); n++)
+			{
+				genome_string += "{";
+				genome_string += ":instruction ";
+				genome_string += genome_[n].instruction;
+				genome_string += " :close  ";
+				genome_string += std::to_string(genome_[n].parentheses);
+				genome_string += "}";
+			}
+
+			genome_string_ = genome_string;
 		}
 
-		return genome_string;
+		return genome_string_;
 	}
 
 	unsigned int count_points(const std::string & program)
@@ -151,6 +181,7 @@ namespace pushGP
 	// paren - stack.If the top item of the paren - stack is : close, a close paren
 	// will be inserted.If the top item is : close - open, a close paren followed by
 	// an open paren will be inserted.
+	//
 	// If the end of the program is reached but parens are still needed(as indicated by
 	// the paren - stack), parens are added until the paren - stack is empty.
 	// Instruction maps that have : silence set to true will be ignored entirely.
@@ -263,9 +294,9 @@ namespace pushGP
 	}
 
 	// genome ::= { :instruction atom :close n :slient true }
-	void pushGP::Individual::parse_string_to_plush_genome(std::string _genome)
+	void pushGP::Individual::parse_string_to_plush_genome(std::string _genome_string)
 	{
-		genome_ = String_to_plush_genome(_genome);
+		genome_ = String_to_plush_genome(_genome_string);
 	}
 
 	std::vector<struct Atom> String_to_plush_genome(std::string _genome_str)
@@ -287,6 +318,9 @@ namespace pushGP
 
 			// Find token for the instruction
 			index = gene.find(":instruction");
+
+			if (index == std::string::npos)
+				break;
 
 			// Find start of instruction atom
 			index += strlen(":instruction");

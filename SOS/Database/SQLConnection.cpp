@@ -126,7 +126,11 @@ namespace database
 	SQLConnection::SQLConnection()
 	{
 		pIDBInitialize_ = NULL;
-		pICommandText_ = NULL;
+	}
+
+	SQLConnection::SQLConnection(const std::string server, const std::string dbString, const std::string userID, const std::string password)
+	{
+		connect(server, dbString, userID, password);
 	}
 
 	SQLConnection::~SQLConnection()

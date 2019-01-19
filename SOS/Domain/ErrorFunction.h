@@ -5,13 +5,23 @@ using namespace pushGP;
 
 namespace domain
 {
+	enum order_types
+	{
+		buy = 1,
+		hold = 0,
+		sell = -1
+	};
+
+	// Evaluate an individual's program for a given day
+	order_types run_individual_program(static unsigned int individual_index, static unsigned long input_row);
+
 	// Evaluates one day in a test case
-	void eval_one_day_of_test_case(unsigned int input_row, Individual & individual);
+	void eval_one_day_of_test_case(static std::vector<unsigned int> & individual_indexes, static unsigned long input_row);
 
-	// Evaluates a test case by processing a year's worth of input and returns the aggregate error
-	double eval_test_case(int input_start, Individual & individual);
+	// Evaluates an individual using the provided range
+	double evaluate_individuals(static std::vector<unsigned int> & individual_indexes, static unsigned long input_start, static unsigned long input_end);
 
-	double error_function(Individual & individual);
+	double lexicase_reproduction_selection_error_function(static unsigned int individual, static unsigned long input_start, static unsigned long input_end);
 
 	void load_argmap();
 }

@@ -11,7 +11,9 @@ using namespace std;
 
 namespace finance
 {
-	const string data_table_filename = "C:\\Temp\\PushP\\push-3.1.0\\test - Search\\dataTable.csv";
+//	const string data_table_filename = "C:\\Temp\\PushP\\push-3.1.0\\test - Search\\dataTable.csv";
+	const string data_table_csv_filename = "C:\\Temp\\PushP\\push-3.1.0\\test - Search\\dataTable.csv";
+	const string data_table_bin_filename = "C:\\Temp\\PushP\\push-3.1.0\\test - Search\\dataTable.bin";
 	DataTable datatable_;
 	unsigned int datatable_rows_;
 	unsigned int datatable_columns_;
@@ -31,64 +33,103 @@ namespace finance
 	 *
 	 * (See https://waterprogramming.wordpress.com/2017/08/20/reading-csv-files-in-c/)
 	 */
-	vector<vector<double>> Broker::load_datatable()
+//	vector<vector<double>> Broker::load_datatable()
+	void Broker::load_datatable()
 	{
+		// If already loaded, exit.
 		if (datatable_.size() > 0)
-			return datatable_;
+//			return datatable_;
+			return;
 
-		//	vector<vector<double> > datatable;
-		ifstream inputFile(data_table_filename);
-		int row = 0;
+		//// Try loading the binary file
+		//fstream input_binary_file(data_table_bin_filename, ios::in | ios::binary);
 
-		while (inputFile.good())
-		{
-			row++;
-			string s;
+		//if (input_binary_file.is_open())
+		//{
+		//	std::cout << "Reading data from binary file" << std::endl;
 
-			if (!getline(inputFile, s))
-				break;
+		//	char * memblock;
+		//	memblock = static_cast<char *>(static_cast<void *>(&datatable_));
 
-			// Ignore header row
-			if (row == 1)
-				continue;
+		//	input_binary_file.seekg(0, ios::beg);
+		//	input_binary_file.read(memblock, sizeof(datatable_));
+		//	input_binary_file.close();
+		//}
 
-			if (s[0] != '#')
+		//// Load the csv file
+		//else
+		//{
+			std::cout << "Reading data from csv file" << std::endl;
+
+			//	vector<vector<double> > datatable;
+			ifstream inputFile(data_table_csv_filename);
+			int row = 0;
+
+			while (inputFile.good())
 			{
-				istringstream ss(s);
-				vector<double> record;
+				row++;
+				string s;
 
-				while (ss)
+				if (!getline(inputFile, s))
+					break;
+
+				// Ignore header row
+				if (row == 1)
+					continue;
+
+				if (s[0] != '#')
 				{
-					string line;
+					istringstream ss(s);
+					vector<double> record;
 
-					if (!getline(ss, line, ','))
-						break;
+					while (ss)
+					{
+						string line;
 
-					try
-					{
-						record.push_back(stof(line));
+						if (!getline(ss, line, ','))
+							break;
+
+						try
+						{
+							record.push_back(stof(line));
+						}
+						catch (const std::invalid_argument e)
+						{
+							cout << "NaN found in file " << data_table_csv_filename << " line " << row << endl;
+							e.what();
+						}
 					}
-					catch (const std::invalid_argument e)
-					{
-						cout << "NaN found in file " << data_table_filename << " line " << row << endl;
-						e.what();
-					}
+
+					datatable_.push_back(record);
 				}
-
-				datatable_.push_back(record);
 			}
-		}
 
-		if (!inputFile.eof())
-		{
-			cerr << "Could not read file " << data_table_filename << "\n";
-			throw MyException("File not found.");
-		}
+			if (!inputFile.eof())
+			{
+				cerr << "Could not read file " << data_table_csv_filename << "\n";
+				throw MyException("File not found.");
+			}
 
-		datatable_rows_ = datatable_.size();
-		datatable_columns_ = datatable_[0].size();
+			inputFile.close();
 
-		return datatable_;
+			datatable_rows_ = datatable_.size();
+			datatable_columns_ = datatable_[0].size();
+
+			// Save as a binary file so it will load quicker next time.
+		//	fstream output_binary_file(data_table_bin_filename, ios::out | ios::binary | ios::trunc);
+
+		//	if (output_binary_file.is_open())
+		//	{
+		//		std::cout << "Saving data to binary file" << std::endl;
+
+		//		char * memblock;
+		//		memblock = static_cast<char *>(static_cast<void *>(&datatable_));
+
+		//		output_binary_file.write(memblock, sizeof(datatable_));
+		//		output_binary_file.close();
+		//	}
+		//}
+//		return datatable_;
 	}
 
 	unsigned int Broker::get_number_of_datatable_rows()

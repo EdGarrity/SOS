@@ -70,26 +70,22 @@ namespace pushGP
 
 		globals::epsilons.clear();
 
-		for (int t = 0; t < Number_Of_Test_Cases; t++)
+		for (int test_case = 0; test_case < Number_Of_Test_Cases; test_case++)
 		{
 			test_case_errors.clear();
 
-			//for (int n = 0; n < argmap::population_size; n++)
-			//{
-			//	const std::vector<double> * individual_errors = globals::population_agents[n].get_errors();
-			//	double error = (*individual_errors)[t];
-			//	test_case_errors.push_back(error);
-			//}
-
 			for (auto ind : globals::population_agents)
-				test_case_errors.push_back(ind.get_errors()[t]);
+				test_case_errors.push_back(ind.get_errors()[test_case]);
 
 			globals::epsilons.push_back(mad(test_case_errors));
 		}
 	}
 
+	// Returns an individual that does within epsilon of the best on the fitness cases when considered one at a time in random order.
 	Individual pushGP::epsilon_lexicase_selection()
 	{
+		unsigned number_of_survivors = argmap::population_size;
+
 		// Set survivors to be a copy of the population
 		std::forward_list<unsigned int> survivors_index;
 
@@ -99,7 +95,8 @@ namespace pushGP
 		// Get a randomized deck of test cases
 		std::vector<unsigned int> test_cases = lshuffle(Number_Of_Test_Cases); //randomized_training_cases_deck_;
 
-		while ((test_cases.size() > 1) && (!survivors_index.empty()))
+//		while ((test_cases.size() > 1) && (!survivors_index.empty()))
+		while ((!test_cases.empty()) && (number_of_survivors > 1))
 		{
 			double elite = std::numeric_limits<double>::max();
 
@@ -110,8 +107,6 @@ namespace pushGP
 			test_cases.pop_back();
 
 			// Set elite to the minimum error
-//			auto before_it = survivors_index.before_begin();
-//			for (auto it = survivors_index.begin(); it != survivors_index.end(); it++)
 			for (unsigned int it : survivors_index)
 			{
 				Individual ind = globals::population_agents[it];
@@ -121,7 +116,6 @@ namespace pushGP
 
 			// Reduce selection pool
 			auto before_it = survivors_index.before_begin();
-//			for (auto it = survivors_index.begin(); it != survivors_index.end(); it++)
 			auto it = survivors_index.begin();
 			while (it != survivors_index.end())
 			{
@@ -146,10 +140,13 @@ namespace pushGP
 					it++;
 				}
 			}
+
+			number_of_survivors--;
 		}
 
 		// Return a parent from remaining survivors 
-		unsigned number_of_survivors = 0;
+//		unsigned number_of_survivors = 0;
+		number_of_survivors = 0;
 
 		if (!survivors_index.empty())
 			for (auto it : survivors_index)

@@ -154,6 +154,7 @@ namespace database
 		pICommandText_->SetCommandText(DBGUID_DEFAULT, strtowstr(command_).c_str());
 	}
 
+	// See "https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/ole-db-data-type-mappings"
 	wchar_t wszDBTYPE_STR[] = L"DBTYPE_STR";
 
 	void SQLCommand::set_as_string(unsigned int parm_no, std::string parameter)
@@ -184,6 +185,82 @@ namespace database
 		// that the next column will begin in the correct place in
 		// the buffer
 		dwOffset_ += rgBindings_[n].cbMaxLen + 1;
+
+		// Ensure that the data for the next column will be correctly
+		// aligned for all platforms, or, if we're done with columns,
+		// that if we allocate space for multiple rows that the data
+		// for every row is correctly aligned
+		dwOffset_ = ROUNDUP(dwOffset_);
+	}
+
+	wchar_t wszDBTYPE_I4[] = L"DBTYPE_I4";
+
+	void SQLCommand::set_as_integer(unsigned int parm_no, int parameter)
+	{
+		unsigned int n = parm_no - 1;
+
+		// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms725393(v=vs.85)"
+		ParamBindInfo_[n].pwszDataSourceType = wszDBTYPE_I4;
+		ParamBindInfo_[n].pwszName = NULL;
+		ParamBindInfo_[n].ulParamSize = ~0;
+		ParamBindInfo_[n].dwFlags = DBPARAMFLAGS_ISINPUT;
+		ParamBindInfo_[n].bPrecision = 0;
+		ParamBindInfo_[n].bScale = 0;
+		ParamOrdinals_[n] = parm_no;
+
+		// This binding applies to the ordinal of this column
+		// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms716845%28v%3dvs.85%29"
+		rgBindings_[n].iOrdinal = parm_no;
+		rgBindings_[n].obValue = dwOffset_;
+		rgBindings_[n].eParamIO = DBPARAMIO_INPUT;
+		rgBindings_[n].wType = DBTYPE_I4;
+		rgBindings_[n].cbMaxLen = sizeof(int);
+
+		// Copy parameter data into buffer
+		memcpy(sprocparams + dwOffset_, &parameter, rgBindings_[n].cbMaxLen);
+
+		// Update the offset past the end of this column's data, so
+		// that the next column will begin in the correct place in
+		// the buffer
+		dwOffset_ += rgBindings_[n].cbMaxLen;
+
+		// Ensure that the data for the next column will be correctly
+		// aligned for all platforms, or, if we're done with columns,
+		// that if we allocate space for multiple rows that the data
+		// for every row is correctly aligned
+		dwOffset_ = ROUNDUP(dwOffset_);
+	}
+
+	wchar_t wszDBTYPE_R8[] = L"DBTYPE_R8";
+
+	void SQLCommand::set_as_float(unsigned int parm_no, double parameter)
+	{
+		unsigned int n = parm_no - 1;
+
+		// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms725393(v=vs.85)"
+		ParamBindInfo_[n].pwszDataSourceType = wszDBTYPE_R8;
+		ParamBindInfo_[n].pwszName = NULL;
+		ParamBindInfo_[n].ulParamSize = ~0;
+		ParamBindInfo_[n].dwFlags = DBPARAMFLAGS_ISINPUT;
+		ParamBindInfo_[n].bPrecision = 0;
+		ParamBindInfo_[n].bScale = 0;
+		ParamOrdinals_[n] = parm_no;
+
+		// This binding applies to the ordinal of this column
+		// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms716845%28v%3dvs.85%29"
+		rgBindings_[n].iOrdinal = parm_no;
+		rgBindings_[n].obValue = dwOffset_;
+		rgBindings_[n].eParamIO = DBPARAMIO_INPUT;
+		rgBindings_[n].wType = DBTYPE_R8;
+		rgBindings_[n].cbMaxLen = sizeof(double);
+
+		// Copy parameter data into buffer
+		memcpy(sprocparams + dwOffset_, &parameter, rgBindings_[n].cbMaxLen);
+
+		// Update the offset past the end of this column's data, so
+		// that the next column will begin in the correct place in
+		// the buffer
+		dwOffset_ += rgBindings_[n].cbMaxLen;
 
 		// Ensure that the data for the next column will be correctly
 		// aligned for all platforms, or, if we're done with columns,
@@ -272,7 +349,7 @@ namespace database
 				
 		// The command requires the actual text as well as an indicator
 		// of its language and dialect.
-		pICommandText_->SetCommandText(DBGUID_DEFAULT, strtowstr(command_).c_str());
+//		pICommandText_->SetCommandText(DBGUID_DEFAULT, strtowstr(command_).c_str());
 
 		// Create input parameters
 		if (number_of_parameters_in_command_ > 0)
@@ -310,7 +387,7 @@ namespace database
 			// Initialize DBPARAMS structure for command execution. DBPARAMS specifies the  
 			// parameter values in the command.  DBPARAMS is then passed to Execute.  
 			Params.pData = sprocparams;
-			Params.cParamSets = number_of_parameters_in_command_;
+			Params.cParamSets = 1; //number_of_parameters_in_command_;
 			Params.hAccessor = hAccessor_;
 
 			// Execute the command.

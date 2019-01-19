@@ -12,8 +12,10 @@ using namespace Push;
 
 namespace domain
 {
-	void eval_one_day_of_test_case(unsigned int row, Individual & individual)
+	order_types run_individual_program(static unsigned int individual_index, static unsigned long row)
 	{
+		order_types order = order_types::hold;
+
 		// Create thread factories
 		Push::intLiteralFactory = new Push::LiteralFactory<int>();
 		Push::floatLiteralFactory = new Push::LiteralFactory<double>();
@@ -23,19 +25,16 @@ namespace domain
 
 		// Setup
 		init_push();
-		Code code = parse(individual.get_program());
+		Code code = parse(globals::population_agents[individual_index].get_program());
 		push_call(code);
 		env.data_record_index = row;
 
 		// Evaluate
 		env.go(argmap::max_point_evaluations);
 
-		// Process Results
+		// Gets result
 		if (has_elements<bool>(1))
-		{
-			bool val = pop<bool>(env);
-			env.parameters.pBroker->update_brokeage_account(val, row);
-		}
+			order = pop<bool>(env) ? order_types::buy : order_types::sell;
 
 		// Cleanup thread factories
 		env.clear_stacks();
@@ -45,36 +44,79 @@ namespace domain
 		delete Push::boolLiteralFactory;
 		delete Push::codeListFactory;
 		delete Push::doRangeClassFactory;
+
+		return order;
+	}
+
+	void eval_one_day_of_test_case(static std::vector<unsigned int> & individual_indexes, static unsigned long row)
+	{
+		std::map<order_types, unsigned int> orders = { {order_types::buy, 0}, {order_types::hold, 0}, {order_types::sell, 0} };
+		order_types order;
+
+		// Generate orders
+		for (unsigned int individual_index : individual_indexes)
+		{
+			order = run_individual_program(individual_index, row);
+			orders[order]++;
+		}
+
+		// Get the most popular order
+		//auto n = std::max_element(orders.cbegin(), orders.cend());
+		//order = n->first;
+
+		if ((orders[order_types::buy] > orders[order_types::sell]) && (orders[order_types::buy] > orders[order_types::hold]))
+			order = order_types::buy;
+		
+		else if ((orders[order_types::sell] > orders[order_types::buy]) && (orders[order_types::sell] > orders[order_types::hold]))
+			order = order_types::sell;
+
+		else
+			order = order_types::hold;
+
+		// Process order
+		if ((order == order_types::buy) || (order == order_types::sell))
+			env.parameters.pBroker->update_brokeage_account((order == order_types::buy), row);
 	}
 
 	// Evaluate a single test case
-	double eval_test_case(int input_start, Individual & individual)
+//	double evaluate_individual(Individual & individual, unsigned long input_start, unsigned long input_end)
+	double evaluate_individuals(static std::vector<unsigned int> & individual_indexes, static unsigned long input_start, static unsigned long input_end)
 	{
-		int day_index = 0;
+		unsigned long day_index = 0;
 		Broker broker = Broker(argmap::opening_balance);
 
+		// Provide a reference to the broker object to to PushP.  It is used to retieve 
 		env.parameters.pBroker = &broker;
 
 		// Evaluate each day of the test case.
-		for (day_index = input_start; day_index < input_start + argmap::number_of_training_days_in_year - 1; day_index++)
-			eval_one_day_of_test_case(day_index, individual);
+//		for (day_index = input_start; day_index < input_start + argmap::number_of_training_days_in_year - 1; day_index++)
+		for (day_index = input_start; day_index < input_end; day_index++)
+			eval_one_day_of_test_case(individual_indexes, day_index);
 
 		// Calculate test case error by calculating loss
 		double error = argmap::opening_balance - broker.close_brokeage_account(day_index);
 
+		// Remove reference to broker object from the PushP environment.
+		env.parameters.pBroker = NULL;
+
+		// Return the error value
 		return (error == 0.0 ? std::numeric_limits<double>::max() : error);
 	}
 
-	double error_function(Individual & individual)
+	// epsilon-lexicase
+//	double lexicase_reproduction_selection_error_function(Individual & individual_, unsigned long input_start_, unsigned long input_end_)
+	double lexicase_reproduction_selection_error_function(static unsigned int individual_index, static unsigned long input_start_, static unsigned long input_end_)
 	{
-		const unsigned int input_end = Broker::get_number_of_datatable_rows() - argmap::number_of_training_days_in_year - 1;
+//		const unsigned int input_end = Broker::get_number_of_datatable_rows() - argmap::number_of_training_days_in_year - 1;
 		double min_error = std::numeric_limits<double>::max();
+		std::vector<unsigned int> individual_indexes = { individual_index };
 
 		// Evaluate test cases
-		for (int input_start = 0; input_start < input_end; input_start += argmap::training_case_step)
+		for (unsigned long input_start = input_start_; input_start < input_end_ - argmap::number_of_training_days_in_year - 1; input_start += argmap::training_case_step)
 		{
-			double error = eval_test_case(input_start, individual);
-			individual.log_error(error);
+			// Process a year's worth of data
+			double error = evaluate_individuals(individual_indexes, input_start, input_start + argmap::number_of_training_days_in_year - 1);
+			globals::population_agents[individual_index].log_error(error);
 
 			min_error = (min_error < error) ? min_error : error;
 		}

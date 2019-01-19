@@ -74,7 +74,19 @@ namespace pushGP
 		// Granularity of test cases
 		const unsigned int training_case_step = 100;
 
-			//		: evalpush - limit 150
+		// Date range for training
+//		const std::string training_start_date = "'2000-01-01 00:00:00.000'";
+//		const std::string training_end_date = "'2009-12-31 00:00:00.000'";
+		const long int training_start_index = 0;	// 2001-01-03
+		const long int training_end_index = 2507;	// 2009-12-31
+
+		// Date range for testing
+//		const std::string testing_start_date = "'2010-01-01 00:00:00.000'";
+//		const std::string testing_end_date = "'2015-12-31 00:00:00.000'";
+		const long int test_start_index = 2508;	// 2010-01-04
+		const long int test_end_index = 3765;	// 2014-12-31
+
+		//		: evalpush - limit 150
 			//		;; The number of Push instructions that can be evaluated before stopping
 			//		;; evaluation.
 
@@ -132,14 +144,14 @@ namespace pushGP
 
 		// When using alternation, the probability of alternating between the parents when moving
 		// to the next gene.
-		const double alternation_rate = 0.01;
+		const double alternation_rate = 0.20;
 
 		// When using alternation, the standard deviation of how far alternation may jump between
 		// indices when switching between parents.
 		const unsigned int alignment_deviation = 10;
 
 		// The probability of each token being mutated during uniform mutation.
-		const double uniform_mutation_rate = 0.01;
+		const double uniform_mutation_rate = 0.20;
 
 		//	The probability of mutating a constant instead of simply replacing the token
 		//	with a random instruction during uniform mutation.
@@ -567,6 +579,24 @@ namespace pushGP
 		//	:label nil
 		//	;; If set, will send this in the configuration of the run, to the
 		//	;; external record
+
+		//	;; ----------------------------------------
+		//	;; Arguments related to progress reports and recording
+		//	;; ----------------------------------------
+
+		// Network name of a server running an instance of MicrosoftSQL Server. If there are multiple instances of SQL Server running on the computer, in order to 
+		// connect to a specific instance of SQL Server the value init_datasource is specified as \\ServerName\InstanceName. The escape sequence \\ is used for 
+		// backslash itself
+		const std::string db_init_datasource = "HOMEOFFICE";
+
+		// Name of an existing SQL Server database to which to connect.
+		const std::string db_init_catalog = "SOS";
+
+		// SQL Server login. This property is used when SQL Server Authentication is selected for authorizing access to a SQL Server database.
+		const std::string db_user_id = "MySOS";
+
+		// Password assigned to a SQL Server login. This property is used when SQL Server Authentication is selected for authorizing access to a SQL Server database.
+		const std::string db_user_password = "MySOS";
 
 	//};
 
