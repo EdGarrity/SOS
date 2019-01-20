@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
 #include <stack> 
@@ -40,6 +41,22 @@ namespace pushGP
 		};
 	};
 
+	enum order_types
+	{
+		buy = 1,
+		hold = 0,
+		sell = -1
+	};
+
+	struct Transaction
+	{
+		unsigned int test_case;
+		unsigned long row;
+		order_types order;
+		int number_of_shares;
+		double cash_balance;
+	};
+
 	class Individual
 	{
 		// Push program
@@ -49,7 +66,7 @@ namespace pushGP
 		std::vector<struct Atom> genome_;
 		std::string genome_string_;
 
-		//Vector of errors
+		// Vector of errors
 		std::vector<double> errors_;
 
 		// Is this an elite individual
@@ -57,6 +74,9 @@ namespace pushGP
 
 		// Set of test cases this individual is an elite member of
 		std::set<unsigned int> elite_test_cases_;
+
+		// Collection of stock transactions
+		std::vector<Transaction> transactions_;
 
 		void init();
 
@@ -112,6 +132,9 @@ namespace pushGP
 		{
 			is_elite_ = true;
 		}
+
+		void log_transaction(unsigned int _test_case, unsigned long _row, order_types _order, int _number_of_shares, double _cash_balance);
+		void dump_transactions();
 	};
 
 	std::ostream& operator<<(std::ostream& os, Individual& individual);

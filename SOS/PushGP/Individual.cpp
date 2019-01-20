@@ -19,6 +19,7 @@ namespace pushGP
 		is_elite_ = false;
 		genome_string_.clear();
 		elite_test_cases_.clear();
+		transactions_.clear();
 	}
 
 	Individual::Individual()
@@ -112,6 +113,33 @@ namespace pushGP
 		}
 
 		return genome_string_;
+	}
+
+	void Individual::log_transaction(unsigned int _test_case, unsigned long _row, order_types _order, int _number_of_shares, double _cash_balance)
+	{
+		Transaction transaction{ _test_case, _row, _order, _number_of_shares, _cash_balance };
+		transactions_.push_back(transaction);
+	}
+
+	void Individual::dump_transactions()
+	{
+		std::ofstream ofs;
+		ofs.open("transactions.csv", std::ofstream::out | std::ofstream::trunc);
+
+		ofs << "Test Case,Row,Order,Shares,Cash" << std::endl;
+
+		for (Transaction transaction : transactions_)
+			ofs << transaction.test_case << ","
+				<< transaction.row << ","
+				<< (
+						(transaction.order == order_types::buy) ? "Buy"
+				      : (transaction.order == order_types::sell) ? "Sell"
+				      : "Hold"
+					) << ","
+				<< transaction.number_of_shares << ","
+				<< transaction.cash_balance << std::endl;
+
+		ofs.close();
 	}
 
 	unsigned int count_points(const std::string & program)

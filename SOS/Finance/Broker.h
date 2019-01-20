@@ -32,6 +32,8 @@ namespace finance
 		static unsigned int get_number_of_datatable_rows();
 		static unsigned int get_number_of_datatable_columns();
 		static double get_value_from_datatable(unsigned _row, int _column);
+		double get_cash_balance() { return cash_; };
+		unsigned int get_number_of_shares() { return stock_; };
 		void update_brokeage_account(bool action, unsigned int row);
 		double close_brokeage_account(unsigned int row);
 	};

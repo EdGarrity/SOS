@@ -23,9 +23,14 @@ namespace pushGP
 
 	void save_generation();
 
-	void generate_status_report(int generation_, static std::function<double(std::vector<unsigned int>&, unsigned long, unsigned long)> individual_selection_error_function, static unsigned int training_input_start, static unsigned int training_input_end, static unsigned int test_input_start, static unsigned int test_input_end);
+	void generate_status_report(int generation_, 
+		static std::function<double(static std::vector<unsigned int> & individual_indexes, static unsigned long input_start, static unsigned long input_end, unsigned int _test_case, bool _record_transactions)> individual_selection_error_function,
+		static unsigned int training_input_start, 
+		static unsigned int training_input_end, 
+		static unsigned int test_input_start, 
+		static unsigned int test_input_end);
 
 	// The top-level routine of pushgp
 	void pushgp(std::function<double(static unsigned int, static unsigned long, static unsigned long)> reproduction_selection_error_function,
-		        std::function<double(static std::vector<unsigned int> & individual_indexes, static unsigned long, static unsigned long)> individual_selection_error_function);
+		        std::function<double(static std::vector<unsigned int> & individual_indexes, static unsigned long input_start, static unsigned long input_end, unsigned int _test_case, bool _record_transactions)> individual_selection_error_function);
 }
