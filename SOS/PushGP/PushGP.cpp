@@ -318,6 +318,7 @@ namespace pushGP
 		// Calculate maximum number of test cases for any elite individual
 		int number_of_elite_individuals = 0;
 		int number_of_test_cases_for_any_elite_individual = 0;
+//		int winning_individual_index = 0;
 
 		for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 		{
@@ -332,7 +333,10 @@ namespace pushGP
 			}
 
 			if (number_of_test_cases_for_any_elite_individual < globals::population_agents[individual_index].count_elite_test_cases())
+//			{
 				number_of_test_cases_for_any_elite_individual = globals::population_agents[individual_index].count_elite_test_cases();
+//				winning_individual_index = individual_index;
+//			}
 		}
 
 		// Calculate number of test cases which pass with at least one individual
