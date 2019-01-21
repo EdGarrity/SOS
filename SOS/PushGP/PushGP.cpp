@@ -216,7 +216,7 @@ namespace pushGP
 
 		sqlcmd_save_status_report = new database::SQLCommand(&con, sqlstmt_save_status_report);
 
-		// Calcuate the best individual's training score
+		// Calculate the best individual's training score
 		// Clear test case counts
 		min_error = std::numeric_limits<double>::max();
 
@@ -224,7 +224,7 @@ namespace pushGP
 		{
 			globals::population_agents[individual_index].clear_elite_test_cases();
 
-			std::cout << "Calcuate the group training score for individual #" << ++individual_index << std::endl;
+			std::cout << "Calculate the group training score for individual #" << individual_index + 1 << std::endl;
 
 			std::vector<unsigned int> individual_indexes = { individual_index };
 
@@ -241,7 +241,7 @@ namespace pushGP
 
 		std::cout << "Group Training Score = " << training_score_of_individual_with_best_training_score_for_all_data << std::endl;
 
-		// Calcuate the best individual's test score
+		// Calculate the best individual's test score
 		std::vector<unsigned int> best_individual_indexes = { index_of_individual_with_best_training_score_for_all_data };
 		double error = individual_selection_error_function(best_individual_indexes, test_input_start, test_input_end, 0, false);
 		validation_score_of_individual_with_best_training_score_for_all_data = 0.0 - error;
