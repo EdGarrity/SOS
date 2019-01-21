@@ -32,17 +32,19 @@ namespace pushGP
 		"           ,[TestCase_Best_leIndividuals_TestScore]"	// 7
 		"           ,[BestIndividual_TrainingScore]"			// 8
 		"           ,[BestIndividual_TestScore]"				// 9
-		"           ,[Elite_Size]"								// 10
-		"           ,[Elite_TestCases]"							// 11
-		"           ,[Total_TestCases]"							// 12
-		"           ,[Opening_Balance]"							// 13
-		"           ,[Population_Size]"							// 14
-		"           ,[Alternation_Rate]"						// 15
-		"           ,[Uniform_Mutation_Rate]"					// 16
+		"           ,[Training_Sscore_of_Eelite_Individual_with_Maximum_Number_Test_Cases]"	// 10
+		"           ,[Test_Sscore_of_Eelite_Individual_with_Maximum_Number_Test_Cases]"		// 11
+		"           ,[Elite_Size]"								// 12
+		"           ,[Elite_TestCases]"							// 13
+		"           ,[Total_TestCases]"							// 14
+		"           ,[Opening_Balance]"							// 15
+		"           ,[Population_Size]"							// 16
+		"           ,[Alternation_Rate]"						// 17
+		"           ,[Uniform_Mutation_Rate]"					// 18
 		"           )"
 		"     VALUES"
-		"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-			//       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6
+		"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			//       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8
 
 	unsigned long get_last_saved_generation_number()
 	{
@@ -196,7 +198,7 @@ namespace pushGP
 	}
 
 	void generate_status_report(int generation_, 
-		std::function<double(std::vector<unsigned int>&, unsigned long, unsigned long)> individual_selection_error_function,
+		std::function<double(static std::vector<unsigned int> & individual_indexes, static unsigned long input_start, static unsigned long input_end, unsigned int _test_case, bool _record_transactions)> individual_selection_error_function,
 		unsigned int training_input_start, 
 		unsigned int training_input_end,
 		unsigned int test_input_start,
@@ -204,11 +206,11 @@ namespace pushGP
 	{
 		unsigned int n = 0;
 		double min_error = std::numeric_limits<double>::max();
-		unsigned int best_individual_index = 0;
+		unsigned int index_of_individual_with_best_training_score_for_all_data = 0;
 		database::SQLCommand* sqlcmd_save_status_report;
 
-		double best_individual_training_score = 0;
-		double best_individual_test_score = 0;
+		double training_score_of_individual_with_best_training_score_for_all_data = 0;
+		double validation_score_of_individual_with_best_training_score_for_all_data = 0;
 
 		database::SQLConnection con(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
 
@@ -226,29 +228,29 @@ namespace pushGP
 
 			std::vector<unsigned int> individual_indexes = { individual_index };
 
-			double error = individual_selection_error_function(individual_indexes, training_input_start, training_input_end);
+			double error = individual_selection_error_function(individual_indexes, training_input_start, training_input_end, 0, false);
 
 			if (error < min_error)
 			{
 				min_error = error;
-				best_individual_index = individual_index;
+				index_of_individual_with_best_training_score_for_all_data = individual_index;
 			}
 		}
 
-		best_individual_training_score = 0.0 - min_error;
+		training_score_of_individual_with_best_training_score_for_all_data = 0.0 - min_error;
 
-		std::cout << "Group Training Score = " << best_individual_training_score << std::endl;
+		std::cout << "Group Training Score = " << training_score_of_individual_with_best_training_score_for_all_data << std::endl;
 
 		// Calcuate the best individual's test score
-		std::vector<unsigned int> best_individual_indexes = { best_individual_index };
-		double error = individual_selection_error_function(best_individual_indexes, test_input_start, test_input_end);
-		best_individual_test_score = 0.0 - error;
+		std::vector<unsigned int> best_individual_indexes = { index_of_individual_with_best_training_score_for_all_data };
+		double error = individual_selection_error_function(best_individual_indexes, test_input_start, test_input_end, 0, false);
+		validation_score_of_individual_with_best_training_score_for_all_data = 0.0 - error;
 
-		std::cout << "Group Test Score = " << best_individual_test_score << std::endl;
+		std::cout << "Group Test Score = " << validation_score_of_individual_with_best_training_score_for_all_data << std::endl;
 
 		// Find the individual with the minimum error for each test case
 		std::vector<double> test_case_minimum_error(Number_Of_Test_Cases);
-		std::vector<unsigned int> index_of_best_individual_for_test_case(Number_Of_Test_Cases);
+		std::vector<unsigned int> index_of_best_individual_for_each_test_case(Number_Of_Test_Cases);
 		std::set<unsigned int> set_of_eligible_parents;
 		std::vector<unsigned int> index_of_eligible_parents;
 
@@ -256,14 +258,14 @@ namespace pushGP
 		{
 			// Set elite to the minimum error
 			test_case_minimum_error[test_case_index] = std::numeric_limits<double>::max();
-			index_of_best_individual_for_test_case[test_case_index] = -1;	// Initialize to refer to a non-existing individual
+			index_of_best_individual_for_each_test_case[test_case_index] = -1;	// Initialize to refer to a non-existing individual
 
 			for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 			{
 				if (globals::population_agents[individual_index].get_errors()[test_case_index] < test_case_minimum_error[test_case_index])
 				{
 					test_case_minimum_error[test_case_index] = globals::population_agents[individual_index].get_errors()[test_case_index];
-					index_of_best_individual_for_test_case[test_case_index] = individual_index;
+					index_of_best_individual_for_each_test_case[test_case_index] = individual_index;
 				}
 
 				if ( (test_case_minimum_error[test_case_index] < 0.0) //std::numeric_limits<double>::max())
@@ -280,24 +282,24 @@ namespace pushGP
 			index_of_eligible_parents.push_back(individual_index);
 
 		// Calculate the training error from the best individuals from each test case
-		error = individual_selection_error_function(index_of_best_individual_for_test_case, training_input_start, training_input_end);
-		double test_case_best_individuals_training_score = 0.0 - error;
-		std::cout << "Training error from the best individuals from each test case = " << test_case_best_individuals_training_score << std::endl;
+		error = individual_selection_error_function(index_of_best_individual_for_each_test_case, training_input_start, training_input_end, 0, false);
+		double best_individual_for_each_test_case_group_training_score = 0.0 - error;
+		std::cout << "Training error from the best individuals from each test case = " << best_individual_for_each_test_case_group_training_score << std::endl;
 
 		// Calculate the test error from the best individuals from each test case
-		error = individual_selection_error_function(index_of_best_individual_for_test_case, test_input_start, test_input_end);
-		double test_case_best_individuals_test_score = 0.0 - error;
-		std::cout << "Test error from the best individuals from each test case = " << test_case_best_individuals_test_score << std::endl;
+		error = individual_selection_error_function(index_of_best_individual_for_each_test_case, test_input_start, test_input_end, 0, false);
+		double best_individual_for_each_test_case_group_validation_score = 0.0 - error;
+		std::cout << "Test error from the best individuals from each test case = " << best_individual_for_each_test_case_group_validation_score << std::endl;
 
 		// Calculate the training error for the eligible parents
-		error = individual_selection_error_function(index_of_eligible_parents, training_input_start, training_input_end);
+		error = individual_selection_error_function(index_of_eligible_parents, training_input_start, training_input_end, 0, false);
 		double eligible_parents_training_score = 0.0 - error;
 		std::cout << "Eligible parents training score = " << eligible_parents_training_score << std::endl;
 
 		// Calculate the test error for the eligible parents
-		error = individual_selection_error_function(index_of_eligible_parents, test_input_start, test_input_end);
-		double eligible_parents_test_score = 0.0 - error;
-		std::cout << "Eligible parents test score = " << eligible_parents_test_score << std::endl;
+		error = individual_selection_error_function(index_of_eligible_parents, test_input_start, test_input_end, 0, false);
+		double eligible_parents_validation_score = 0.0 - error;
+		std::cout << "Eligible parents test score = " << eligible_parents_validation_score << std::endl;
 
 		// Calculte group training score
 		std::vector<unsigned int> index_of_individuals;
@@ -305,20 +307,20 @@ namespace pushGP
 		for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 			index_of_individuals.push_back(individual_index);
 
-		error = individual_selection_error_function(index_of_individuals, training_input_start, training_input_end);
+		error = individual_selection_error_function(index_of_individuals, training_input_start, training_input_end, 0, false);
 		double group_training_score = 0.0 - error;
 		std::cout << "Group training score = " << group_training_score << std::endl;
 
 		// Calculte group test score
-		error = individual_selection_error_function(index_of_individuals, test_input_start, test_input_end);
-		double group_test_score = 0.0 - error;
-		std::cout << "Group test score = " << group_test_score << std::endl;
+		error = individual_selection_error_function(index_of_individuals, test_input_start, test_input_end, 0, false);
+		double group_validation_score = 0.0 - error;
+		std::cout << "Group test score = " << group_validation_score << std::endl;
 
 		// Calculate number of individuals whom qualify as an elite individual			
 		// Calculate maximum number of test cases for any elite individual
 		int number_of_elite_individuals = 0;
-		int number_of_test_cases_for_any_elite_individual = 0;
-//		int winning_individual_index = 0;
+		int maximum_number_of_test_cases_for_any_elite_individual = 0;
+		int index_of_elite_individual_with_maximum_number_test_cases = 0;
 
 		for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 		{
@@ -332,54 +334,64 @@ namespace pushGP
 				}
 			}
 
-			if (number_of_test_cases_for_any_elite_individual < globals::population_agents[individual_index].count_elite_test_cases())
-//			{
-				number_of_test_cases_for_any_elite_individual = globals::population_agents[individual_index].count_elite_test_cases();
-//				winning_individual_index = individual_index;
-//			}
+			if (maximum_number_of_test_cases_for_any_elite_individual < globals::population_agents[individual_index].count_elite_test_cases())
+			{
+				maximum_number_of_test_cases_for_any_elite_individual = globals::population_agents[individual_index].count_elite_test_cases();
+				index_of_elite_individual_with_maximum_number_test_cases = individual_index;
+			}
 		}
 
-		// Calculate number of test cases which pass with at least one individual
-		//int number_of_covered_test_cases = 0;
+		// Calculate training score for elite individual with the maximum number of test cases
+		double training_score_of_elite_individual_with_maximum_number_test_cases = 0.0;
+		index_of_individuals.clear();
+		index_of_individuals.push_back(index_of_elite_individual_with_maximum_number_test_cases);
 
-		//for (int test_case_index = 0; test_case_index < Number_Of_Test_Cases; test_case_index++)
-		//{
-		//	for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
-		//	{
-		//		if (globals::population_agents[individual_index].get_errors()[test_case_index] <= (test_case_minimum_error[test_case_index] + globals::epsilons[test_case_index]))
-		//		{
-		//			number_of_covered_test_cases++;
-		//			break;
-		//		}
-		//	}
-		//}
+		error = individual_selection_error_function(index_of_individuals, training_input_start, training_input_end, 0, true);
+
+		training_score_of_elite_individual_with_maximum_number_test_cases = 0.0 - error;
+		std::cout << "training_score_of_elite_individual_with_maximum_number_test_cases = " << training_score_of_elite_individual_with_maximum_number_test_cases << std::endl;
+
+		// Calculate test score for elite individual with the maximum number of test cases
+		double validation_score_of_elite_individual_with_maximum_number_test_cases = 0.0;
+
+		error = individual_selection_error_function(index_of_individuals, test_input_start, test_input_end, -1, true);
+
+		validation_score_of_elite_individual_with_maximum_number_test_cases = 0.0 - error;
+		std::cout << "test_score_of_elite_individual_with_maximum_number_test_cases = " << validation_score_of_elite_individual_with_maximum_number_test_cases << std::endl;
 
 		// Set parameters to save
 		sqlcmd_save_status_report->set_as_integer(1, generation_);
 		sqlcmd_save_status_report->set_as_float(2, group_training_score);
-		sqlcmd_save_status_report->set_as_float(3, group_test_score);
+		sqlcmd_save_status_report->set_as_float(3, group_validation_score);
 		sqlcmd_save_status_report->set_as_float(4, eligible_parents_training_score);
-		sqlcmd_save_status_report->set_as_float(5, eligible_parents_test_score);
-		sqlcmd_save_status_report->set_as_float(6, test_case_best_individuals_training_score);
-		sqlcmd_save_status_report->set_as_float(7, test_case_best_individuals_test_score);
-		sqlcmd_save_status_report->set_as_float(8, best_individual_training_score);
-		sqlcmd_save_status_report->set_as_float(9, best_individual_test_score);
-		sqlcmd_save_status_report->set_as_integer(10, number_of_elite_individuals);
-		sqlcmd_save_status_report->set_as_integer(11, number_of_test_cases_for_any_elite_individual);
-		sqlcmd_save_status_report->set_as_integer(12, Number_Of_Test_Cases);
+		sqlcmd_save_status_report->set_as_float(5, eligible_parents_validation_score);
+		sqlcmd_save_status_report->set_as_float(6, best_individual_for_each_test_case_group_training_score);
+		sqlcmd_save_status_report->set_as_float(7, best_individual_for_each_test_case_group_validation_score);
+		sqlcmd_save_status_report->set_as_float(8, training_score_of_individual_with_best_training_score_for_all_data);
+		sqlcmd_save_status_report->set_as_float(9, validation_score_of_individual_with_best_training_score_for_all_data);
 
-		sqlcmd_save_status_report->set_as_float(13, argmap::opening_balance);
-		sqlcmd_save_status_report->set_as_integer(14, argmap::population_size);
-		sqlcmd_save_status_report->set_as_float(15, argmap::alternation_rate);
-		sqlcmd_save_status_report->set_as_float(16, argmap::uniform_mutation_rate);
+		sqlcmd_save_status_report->set_as_float(10, training_score_of_elite_individual_with_maximum_number_test_cases);
+		sqlcmd_save_status_report->set_as_float(11, validation_score_of_elite_individual_with_maximum_number_test_cases);
+
+		sqlcmd_save_status_report->set_as_integer(12, number_of_elite_individuals);
+		sqlcmd_save_status_report->set_as_integer(13, maximum_number_of_test_cases_for_any_elite_individual);
+		sqlcmd_save_status_report->set_as_integer(14, Number_Of_Test_Cases);
+
+		sqlcmd_save_status_report->set_as_float(15, argmap::opening_balance);
+		sqlcmd_save_status_report->set_as_integer(16, argmap::population_size);
+		sqlcmd_save_status_report->set_as_float(17, argmap::alternation_rate);
+		sqlcmd_save_status_report->set_as_float(18, argmap::uniform_mutation_rate);
 
 		sqlcmd_save_status_report->execute();
 
 		delete sqlcmd_save_status_report;
+
+		// Save transaction log to file.
+		globals::population_agents[index_of_elite_individual_with_maximum_number_test_cases].dump_transactions();
 	}
 
 	void pushgp(std::function<double(unsigned int, unsigned long, unsigned long)> reproduction_selection_error_function,
-		        std::function<double(std::vector<unsigned int>&, unsigned long, unsigned long)> individual_selection_error_function)
+		        std::function<double(static std::vector<unsigned int> & individual_indexes, static unsigned long input_start, static unsigned long input_end, unsigned int _test_case, bool _record_transactions)> individual_selection_error_function)
 	{
 		try
 		{

@@ -19,7 +19,6 @@ namespace finance
 	{
 		const unsigned int trading_days_in_year = 252;
 		const double transaction_fee = 10.0;
-		const unsigned int adj_close_column = 5;
 
 		double cash_ = 0.0;
 		unsigned int stock_ = 0;
@@ -27,11 +26,14 @@ namespace finance
 	public:
 		Broker(double opening_balance);
 
-//		static std::vector<std::vector<double>> load_datatable();
+		const unsigned int adj_close_column = 5;
+
 		static void load_datatable();
 		static unsigned int get_number_of_datatable_rows();
 		static unsigned int get_number_of_datatable_columns();
 		static double get_value_from_datatable(unsigned _row, int _column);
+		double get_cash_balance() { return cash_; };
+		unsigned int get_number_of_shares() { return stock_; };
 		void update_brokeage_account(bool action, unsigned int row);
 		double close_brokeage_account(unsigned int row);
 	};

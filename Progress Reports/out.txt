@@ -1,0 +1,1971 @@
+Reading data from csv file
+Create Population Agents
+n = 0
+n = 1
+n = 2
+n = 3
+n = 4
+n = 5
+n = 6
+n = 7
+n = 8
+n = 9
+n = 10
+n = 11
+n = 12
+n = 13
+n = 14
+n = 15
+n = 16
+n = 17
+n = 18
+n = 19
+n = 20
+n = 21
+n = 22
+n = 23
+n = 24
+Create Child Agents
+Generation 271
+Compte Errors
+  Evaluate Individual 0 Min error = 1.79769e+308
+  Evaluate Individual 1 Min error = -329.655
+  Evaluate Individual 2 Min error = 1.79769e+308
+  Evaluate Individual 3 Min error = 1.79769e+308
+  Evaluate Individual 4 Min error = 1.79769e+308
+  Evaluate Individual 5 Min error = -18532.8
+  Evaluate Individual 6 Min error = -58501.8
+  Evaluate Individual 7 Min error = -58501.8
+  Evaluate Individual 8 Min error = 1.79769e+308
+  Evaluate Individual 9 Min error = 1.79769e+308
+  Evaluate Individual 10 Min error = -58501.8
+  Evaluate Individual 11 Min error = 1.79769e+308
+  Evaluate Individual 12 Min error = -58501.8
+  Evaluate Individual 13 Min error = 1.79769e+308
+  Evaluate Individual 14 Min error = 1.79769e+308
+  Evaluate Individual 15 Min error = -58501.8
+  Evaluate Individual 16 Min error = -58501.8
+  Evaluate Individual 17 Min error = -58501.8
+  Evaluate Individual 18 Min error = -58501.8
+  Evaluate Individual 19 Min error = -58501.8
+  Evaluate Individual 20 Min error = -58501.8
+  Evaluate Individual 21 Min error = -61527.2
+  Evaluate Individual 22 Min error = 1.79769e+308
+  Evaluate Individual 23 Min error = 1.79769e+308
+  Evaluate Individual 24 Min error = 1.79769e+308
+   Min error = -61527.2
+Number_Of_Test_Cases = 23
+Calculate Epsilons
+Produce New Offspring
+    mutation
+    alternation
+    alternation
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+    mutation
+    mutation
+    alternation
+    alternation
+    alternation
+    alternation
+    mutation
+    alternation
+    mutation
+    alternation
+    mutation
+    alternation
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+Generate status report
+Calcuate the group training score for individual #1
+Calcuate the group training score for individual #3
+Calcuate the group training score for individual #5
+Calcuate the group training score for individual #7
+Calcuate the group training score for individual #9
+Calcuate the group training score for individual #11
+Calcuate the group training score for individual #13
+Calcuate the group training score for individual #15
+Calcuate the group training score for individual #17
+Calcuate the group training score for individual #19
+Calcuate the group training score for individual #21
+Calcuate the group training score for individual #23
+Calcuate the group training score for individual #25
+Group Training Score = 70082.5
+Group Test Score = -8356.55
+Training error from the best individuals from each test case = 58144.1
+Test error from the best individuals from each test case = -8247.57
+Eligible parents training score = 70082.5
+Eligible parents test score = -8356.55
+Group training score = 70082.5
+Group test score = -8356.55
+training_score_of_elite_individual_with_maximum_number_test_cases = -9988.21
+test_score_of_elite_individual_with_maximum_number_test_cases = -9992.9
+Install New Generation
+Generation 272
+Compte Errors
+  Evaluate Individual 0 Min error = -61527.2
+  Evaluate Individual 1 Min error = -58501.8
+  Evaluate Individual 2 Min error = 1.79769e+308
+  Evaluate Individual 3 Min error = 1.79769e+308
+  Evaluate Individual 4 Min error = 1.79769e+308
+  Evaluate Individual 5 Min error = 1.79769e+308
+  Evaluate Individual 6 Min error = 1.79769e+308
+  Evaluate Individual 7 Min error = -58501.8
+  Evaluate Individual 8 Min error = 1.79769e+308
+  Evaluate Individual 9 Min error = 1.79769e+308
+  Evaluate Individual 10 Min error = 1.79769e+308
+  Evaluate Individual 11 Min error = 1.79769e+308
+  Evaluate Individual 12 Min error = 1.79769e+308
+  Evaluate Individual 13 Min error = 1.79769e+308
+  Evaluate Individual 14 Min error = -18532.8
+  Evaluate Individual 15 Min error = -58501.8
+  Evaluate Individual 16 Min error = 1.79769e+308
+  Evaluate Individual 17 Min error = 1.79769e+308
+  Evaluate Individual 18 Min error = 1.79769e+308
+  Evaluate Individual 19 Min error = 1.79769e+308
+  Evaluate Individual 20 Min error = 1.79769e+308
+  Evaluate Individual 21 Min error = 1.79769e+308
+  Evaluate Individual 22 Min error = 1.79769e+308
+  Evaluate Individual 23 Min error = 1.79769e+308
+  Evaluate Individual 24 Min error = 1.79769e+308
+   Min error = -61527.2
+Number_Of_Test_Cases = 23
+Calculate Epsilons
+Produce New Offspring
+    alternation
+    mutation
+    mutation
+    alternation
+    alternation
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+    mutation
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+    mutation
+    mutation
+    mutation
+    alternation
+    alternation
+    mutation
+Generate status report
+Calcuate the group training score for individual #1
+Calcuate the group training score for individual #3
+Calcuate the group training score for individual #5
+Calcuate the group training score for individual #7
+Calcuate the group training score for individual #9
+Calcuate the group training score for individual #11
+Calcuate the group training score for individual #13
+Calcuate the group training score for individual #15
+Calcuate the group training score for individual #17
+Calcuate the group training score for individual #19
+Calcuate the group training score for individual #21
+Calcuate the group training score for individual #23
+Calcuate the group training score for individual #25
+Group Training Score = 70082.5
+Group Test Score = -8356.55
+Training error from the best individuals from each test case = 58144.1
+Test error from the best individuals from each test case = -8247.57
+Eligible parents training score = 70082.5
+Eligible parents test score = -8356.55
+Group training score = -1.79769e+308
+Group test score = -1.79769e+308
+training_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+test_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+Install New Generation
+Generation 273
+Compte Errors
+  Evaluate Individual 0 Min error = -58501.8
+  Evaluate Individual 1 Min error = -58501.8
+  Evaluate Individual 2 Min error = 1.79769e+308
+  Evaluate Individual 3 Min error = 1.79769e+308
+  Evaluate Individual 4 Min error = 1.79769e+308
+  Evaluate Individual 5 Min error = 1.79769e+308
+  Evaluate Individual 6 Min error = -18532.8
+  Evaluate Individual 7 Min error = 1.79769e+308
+  Evaluate Individual 8 Min error = -58501.8
+  Evaluate Individual 9 Min error = 1.79769e+308
+  Evaluate Individual 10 Min error = -58501.8
+  Evaluate Individual 11 Min error = 1.79769e+308
+  Evaluate Individual 12 Min error = 1.79769e+308
+  Evaluate Individual 13 Min error = -61527.2
+  Evaluate Individual 14 Min error = -58501.8
+  Evaluate Individual 15 Min error = 1.79769e+308
+  Evaluate Individual 16 Min error = -18204.6
+  Evaluate Individual 17 Min error = 1.79769e+308
+  Evaluate Individual 18 Min error = 1.79769e+308
+  Evaluate Individual 19 Min error = -61527.2
+  Evaluate Individual 20 Min error = -61527.2
+  Evaluate Individual 21 Min error = -18532.8
+  Evaluate Individual 22 Min error = 1.79769e+308
+  Evaluate Individual 23 Min error = 1.79769e+308
+  Evaluate Individual 24 Min error = 1.79769e+308
+   Min error = -61527.2
+Number_Of_Test_Cases = 23
+Calculate Epsilons
+Produce New Offspring
+    mutation
+    mutation
+    mutation
+    mutation
+    mutation
+    mutation
+    alternation
+    alternation
+    alternation
+    alternation
+    mutation
+    alternation
+    mutation
+    alternation
+    alternation
+    alternation
+    alternation
+    alternation
+    alternation
+    alternation
+    mutation
+    mutation
+    mutation
+    mutation
+    alternation
+Generate status report
+Calcuate the group training score for individual #1
+Calcuate the group training score for individual #3
+Calcuate the group training score for individual #5
+Calcuate the group training score for individual #7
+Calcuate the group training score for individual #9
+Calcuate the group training score for individual #11
+Calcuate the group training score for individual #13
+Calcuate the group training score for individual #15
+Calcuate the group training score for individual #17
+Calcuate the group training score for individual #19
+Calcuate the group training score for individual #21
+Calcuate the group training score for individual #23
+Calcuate the group training score for individual #25
+Group Training Score = 70082.5
+Group Test Score = -8356.55
+Training error from the best individuals from each test case = 44748.9
+Test error from the best individuals from each test case = -8317.66
+Eligible parents training score = 44748.9
+Eligible parents test score = -8317.66
+Group training score = -1.79769e+308
+Group test score = -1.79769e+308
+training_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+test_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+Install New Generation
+Generation 274
+Compte Errors
+  Evaluate Individual 0 Min error = -58501.8
+  Evaluate Individual 1 Min error = -58501.8
+  Evaluate Individual 2 Min error = 1.79769e+308
+  Evaluate Individual 3 Min error = -58501.8
+  Evaluate Individual 4 Min error = -58501.8
+  Evaluate Individual 5 Min error = -58501.8
+  Evaluate Individual 6 Min error = -18204.6
+  Evaluate Individual 7 Min error = -58501.8
+  Evaluate Individual 8 Min error = -58501.8
+  Evaluate Individual 9 Min error = -58457.3
+  Evaluate Individual 10 Min error = 1.79769e+308
+  Evaluate Individual 11 Min error = 1.79769e+308
+  Evaluate Individual 12 Min error = -58501.8
+  Evaluate Individual 13 Min error = 1.79769e+308
+  Evaluate Individual 14 Min error = -18204.6
+  Evaluate Individual 15 Min error = 1.79769e+308
+  Evaluate Individual 16 Min error = 1.79769e+308
+  Evaluate Individual 17 Min error = -58501.8
+  Evaluate Individual 18 Min error = 1.79769e+308
+  Evaluate Individual 19 Min error = 1.79769e+308
+  Evaluate Individual 20 Min error = 1.79769e+308
+  Evaluate Individual 21 Min error = -58501.8
+  Evaluate Individual 22 Min error = 1.79769e+308
+  Evaluate Individual 23 Min error = 1.79769e+308
+  Evaluate Individual 24 Min error = 1.79769e+308
+   Min error = -58501.8
+Number_Of_Test_Cases = 23
+Calculate Epsilons
+Produce New Offspring
+    mutation
+    alternation
+    alternation
+    alternation
+    mutation
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+    mutation
+    mutation
+    alternation
+    alternation
+    mutation
+    alternation
+    alternation
+    mutation
+    alternation
+    mutation
+    alternation
+    alternation
+    alternation
+    alternation
+    mutation
+Generate status report
+Calcuate the group training score for individual #1
+Calcuate the group training score for individual #3
+Calcuate the group training score for individual #5
+Calcuate the group training score for individual #7
+Calcuate the group training score for individual #9
+Calcuate the group training score for individual #11
+Calcuate the group training score for individual #13
+Calcuate the group training score for individual #15
+Calcuate the group training score for individual #17
+Calcuate the group training score for individual #19
+Calcuate the group training score for individual #21
+Calcuate the group training score for individual #23
+Calcuate the group training score for individual #25
+Group Training Score = 97488.1
+Group Test Score = -8378.48
+Training error from the best individuals from each test case = 85678.6
+Test error from the best individuals from each test case = -8427.55
+Eligible parents training score = 70082.5
+Eligible parents test score = -8356.55
+Group training score = 70082.5
+Group test score = -8356.55
+training_score_of_elite_individual_with_maximum_number_test_cases = 70082.5
+test_score_of_elite_individual_with_maximum_number_test_cases = -8356.55
+Install New Generation
+Generation 275
+Compte Errors
+  Evaluate Individual 0 Min error = 1.79769e+308
+  Evaluate Individual 1 Min error = 1.79769e+308
+  Evaluate Individual 2 Min error = -58501.8
+  Evaluate Individual 3 Min error = -58501.8
+  Evaluate Individual 4 Min error = 1.79769e+308
+  Evaluate Individual 5 Min error = 1.79769e+308
+  Evaluate Individual 6 Min error = 1.79769e+308
+  Evaluate Individual 7 Min error = 1.79769e+308
+  Evaluate Individual 8 Min error = 1.79769e+308
+  Evaluate Individual 9 Min error = 1.79769e+308
+  Evaluate Individual 10 Min error = -58501.8
+  Evaluate Individual 11 Min error = -58501.8
+  Evaluate Individual 12 Min error = -58501.8
+  Evaluate Individual 13 Min error = -58501.8
+  Evaluate Individual 14 Min error = 1.79769e+308
+  Evaluate Individual 15 Min error = 1.79769e+308
+  Evaluate Individual 16 Min error = -58501.8
+  Evaluate Individual 17 Min error = 1.79769e+308
+  Evaluate Individual 18 Min error = 1.79769e+308
+  Evaluate Individual 19 Min error = -58501.8
+  Evaluate Individual 20 Min error = -58501.8
+  Evaluate Individual 21 Min error = 1.79769e+308
+  Evaluate Individual 22 Min error = 1.79769e+308
+  Evaluate Individual 23 Min error = 1.79769e+308
+  Evaluate Individual 24 Min error = -58501.8
+   Min error = -58501.8
+Number_Of_Test_Cases = 23
+Calculate Epsilons
+Produce New Offspring
+    alternation
+    mutation
+    alternation
+    mutation
+    alternation
+    alternation
+    alternation
+    mutation
+    alternation
+    alternation
+    mutation
+    alternation
+    mutation
+    mutation
+    alternation
+    alternation
+    alternation
+    alternation
+    mutation
+    alternation
+    alternation
+    alternation
+    alternation
+    mutation
+    mutation
+Generate status report
+Calcuate the group training score for individual #1
+Calcuate the group training score for individual #3
+Calcuate the group training score for individual #5
+Calcuate the group training score for individual #7
+Calcuate the group training score for individual #9
+Calcuate the group training score for individual #11
+Calcuate the group training score for individual #13
+Calcuate the group training score for individual #15
+Calcuate the group training score for individual #17
+Calcuate the group training score for individual #19
+Calcuate the group training score for individual #21
+Calcuate the group training score for individual #23
+Calcuate the group training score for individual #25
+Group Training Score = 70082.5
+Group Test Score = -8356.55
+Training error from the best individuals from each test case = 70082.5
+Test error from the best individuals from each test case = -8356.55
+Eligible parents training score = 70082.5
+Eligible parents test score = -8356.55
+Group training score = -1.79769e+308
+Group test score = -1.79769e+308
+training_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+test_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+Install New Generation
+Generation 276
+Compte Errors
+  Evaluate Individual 0 Min error = -58501.8
+  Evaluate Individual 1 Min error = -58501.8
+  Evaluate Individual 2 Min error = -58501.8
+  Evaluate Individual 3 Min error = 1.79769e+308
+  Evaluate Individual 4 Min error = 1.79769e+308
+  Evaluate Individual 5 Min error = 1.79769e+308
+  Evaluate Individual 6 Min error = 1.79769e+308
+  Evaluate Individual 7 Min error = -58501.8
+  Evaluate Individual 8 Min error = -58501.8
+  Evaluate Individual 9 Min error = 1.79769e+308
+  Evaluate Individual 10 Min error = 1.79769e+308
+  Evaluate Individual 11 Min error = -58501.8
+  Evaluate Individual 12 Min error = -58501.8
+  Evaluate Individual 13 Min error = 1.79769e+308
+  Evaluate Individual 14 Min error = 1.79769e+308
+  Evaluate Individual 15 Min error = -58501.8
+  Evaluate Individual 16 Min error = 1.79769e+308
+  Evaluate Individual 17 Min error = -58501.8
+  Evaluate Individual 18 Min error = -58501.8
+  Evaluate Individual 19 Min error = -58501.8
+  Evaluate Individual 20 Min error = 1.79769e+308
+  Evaluate Individual 21 Min error = 1.79769e+308
+  Evaluate Individual 22 Min error = -20913.2
+  Evaluate Individual 23 Min error = 1.79769e+308
+  Evaluate Individual 24 Min error = -58501.8
+   Min error = -58501.8
+Number_Of_Test_Cases = 23
+Calculate Epsilons
+Produce New Offspring
+    alternation
+    mutation
+    alternation
+    mutation
+    alternation
+    alternation
+    mutation
+    mutation
+    mutation
+    alternation
+    mutation
+    alternation
+    mutation
+    mutation
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+    mutation
+Generate status report
+Calcuate the group training score for individual #1
+Calcuate the group training score for individual #3
+Calcuate the group training score for individual #5
+Calcuate the group training score for individual #7
+Calcuate the group training score for individual #9
+Calcuate the group training score for individual #11
+Calcuate the group training score for individual #13
+Calcuate the group training score for individual #15
+Calcuate the group training score for individual #17
+Calcuate the group training score for individual #19
+Calcuate the group training score for individual #21
+Calcuate the group training score for individual #23
+Calcuate the group training score for individual #25
+Group Training Score = 70082.5
+Group Test Score = -8356.55
+Training error from the best individuals from each test case = 70082.5
+Test error from the best individuals from each test case = -8356.55
+Eligible parents training score = 70082.5
+Eligible parents test score = -8356.55
+Group training score = 70082.5
+Group test score = -8356.55
+training_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+test_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+Install New Generation
+Generation 277
+Compte Errors
+  Evaluate Individual 0 Min error = -58501.8
+  Evaluate Individual 1 Min error = -58501.8
+  Evaluate Individual 2 Min error = 1.79769e+308
+  Evaluate Individual 3 Min error = 1.79769e+308
+  Evaluate Individual 4 Min error = -58501.8
+  Evaluate Individual 5 Min error = 1.79769e+308
+  Evaluate Individual 6 Min error = 1.79769e+308
+  Evaluate Individual 7 Min error = -58501.8
+  Evaluate Individual 8 Min error = 1.79769e+308
+  Evaluate Individual 9 Min error = 1.79769e+308
+  Evaluate Individual 10 Min error = -58501.8
+  Evaluate Individual 11 Min error = 1.79769e+308
+  Evaluate Individual 12 Min error = 1.79769e+308
+  Evaluate Individual 13 Min error = 1.79769e+308
+  Evaluate Individual 14 Min error = -58501.8
+  Evaluate Individual 15 Min error = 1.79769e+308
+  Evaluate Individual 16 Min error = -58501.8
+  Evaluate Individual 17 Min error = 1.79769e+308
+  Evaluate Individual 18 Min error = 1.79769e+308
+  Evaluate Individual 19 Min error = -58501.8
+  Evaluate Individual 20 Min error = -58501.8
+  Evaluate Individual 21 Min error = 1.79769e+308
+  Evaluate Individual 22 Min error = 20.0616
+  Evaluate Individual 23 Min error = -58501.8
+  Evaluate Individual 24 Min error = 1.79769e+308
+   Min error = -58501.8
+Number_Of_Test_Cases = 23
+Calculate Epsilons
+Produce New Offspring
+    mutation
+    alternation
+    mutation
+    alternation
+    mutation
+    mutation
+    mutation
+    mutation
+    mutation
+    alternation
+    alternation
+    mutation
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+    alternation
+    mutation
+    alternation
+    mutation
+    alternation
+    mutation
+    alternation
+    alternation
+Generate status report
+Calcuate the group training score for individual #1
+Calcuate the group training score for individual #3
+Calcuate the group training score for individual #5
+Calcuate the group training score for individual #7
+Calcuate the group training score for individual #9
+Calcuate the group training score for individual #11
+Calcuate the group training score for individual #13
+Calcuate the group training score for individual #15
+Calcuate the group training score for individual #17
+Calcuate the group training score for individual #19
+Calcuate the group training score for individual #21
+Calcuate the group training score for individual #23
+Calcuate the group training score for individual #25
+Group Training Score = 70082.5
+Group Test Score = -8356.55
+Training error from the best individuals from each test case = 70082.5
+Test error from the best individuals from each test case = -8356.55
+Eligible parents training score = 70082.5
+Eligible parents test score = -8356.55
+Group training score = 70082.5
+Group test score = -8356.55
+training_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+test_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+Install New Generation
+Generation 278
+Compte Errors
+  Evaluate Individual 0 Min error = 1.79769e+308
+  Evaluate Individual 1 Min error = 1.79769e+308
+  Evaluate Individual 2 Min error = -58501.8
+  Evaluate Individual 3 Min error = -58501.8
+  Evaluate Individual 4 Min error = 1.79769e+308
+  Evaluate Individual 5 Min error = -58501.8
+  Evaluate Individual 6 Min error = -58501.8
+  Evaluate Individual 7 Min error = -58501.8
+  Evaluate Individual 8 Min error = 1.79769e+308
+  Evaluate Individual 9 Min error = -58501.8
+  Evaluate Individual 10 Min error = -58501.8
+  Evaluate Individual 11 Min error = 1.79769e+308
+  Evaluate Individual 12 Min error = -58501.8
+  Evaluate Individual 13 Min error = -58501.8
+  Evaluate Individual 14 Min error = 1.79769e+308
+  Evaluate Individual 15 Min error = 1.79769e+308
+  Evaluate Individual 16 Min error = -58501.8
+  Evaluate Individual 17 Min error = 1.79769e+308
+  Evaluate Individual 18 Min error = 1.79769e+308
+  Evaluate Individual 19 Min error = 1.79769e+308
+  Evaluate Individual 20 Min error = -58501.8
+  Evaluate Individual 21 Min error = 1.79769e+308
+  Evaluate Individual 22 Min error = -58501.8
+  Evaluate Individual 23 Min error = 1.79769e+308
+  Evaluate Individual 24 Min error = 1.79769e+308
+   Min error = -58501.8
+Number_Of_Test_Cases = 23
+Calculate Epsilons
+Produce New Offspring
+    alternation
+    alternation
+    mutation
+    mutation
+    mutation
+    alternation
+    alternation
+    mutation
+    mutation
+    mutation
+    mutation
+    alternation
+    alternation
+    alternation
+    mutation
+    alternation
+    alternation
+    mutation
+    alternation
+    alternation
+    mutation
+    alternation
+    mutation
+    alternation
+    alternation
+Generate status report
+Calcuate the group training score for individual #1
+Calcuate the group training score for individual #3
+Calcuate the group training score for individual #5
+Calcuate the group training score for individual #7
+Calcuate the group training score for individual #9
+Calcuate the group training score for individual #11
+Calcuate the group training score for individual #13
+Calcuate the group training score for individual #15
+Calcuate the group training score for individual #17
+Calcuate the group training score for individual #19
+Calcuate the group training score for individual #21
+Calcuate the group training score for individual #23
+Calcuate the group training score for individual #25
+Group Training Score = 70082.5
+Group Test Score = -8356.55
+Training error from the best individuals from each test case = 70082.5
+Test error from the best individuals from each test case = -8356.55
+Eligible parents training score = 70082.5
+Eligible parents test score = -8356.55
+Group training score = 70082.5
+Group test score = -8356.55
+training_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+test_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+Install New Generation
+Generation 279
+Compte Errors
+  Evaluate Individual 0 Min error = -58501.8
+  Evaluate Individual 1 Min error = -58501.8
+  Evaluate Individual 2 Min error = -58501.8
+  Evaluate Individual 3 Min error = 20.0616
+  Evaluate Individual 4 Min error = -58501.8
+  Evaluate Individual 5 Min error = -58501.8
+  Evaluate Individual 6 Min error = -58501.8
+  Evaluate Individual 7 Min error = -58501.8
+  Evaluate Individual 8 Min error = -58501.8
+  Evaluate Individual 9 Min error = -58501.8
+  Evaluate Individual 10 Min error = 1.79769e+308
+  Evaluate Individual 11 Min error = 1.79769e+308
+  Evaluate Individual 12 Min error = 1.79769e+308
+  Evaluate Individual 13 Min error = -58501.8
+  Evaluate Individual 14 Min error = 1.79769e+308
+  Evaluate Individual 15 Min error = -58501.8
+  Evaluate Individual 16 Min error = 1.79769e+308
+  Evaluate Individual 17 Min error = 1.79769e+308
+  Evaluate Individual 18 Min error = -58501.8
+  Evaluate Individual 19 Min error = -58501.8
+  Evaluate Individual 20 Min error = -58501.8
+  Evaluate Individual 21 Min error = -58501.8
+  Evaluate Individual 22 Min error = 1.79769e+308
+  Evaluate Individual 23 Min error = 1.79769e+308
+  Evaluate Individual 24 Min error = 1.79769e+308
+   Min error = -58501.8
+Number_Of_Test_Cases = 23
+Calculate Epsilons
+Produce New Offspring
+    mutation
+    mutation
+    alternation
+    alternation
+    alternation
+    alternation
+    alternation
+    alternation
+    alternation
+    mutation
+    alternation
+    mutation
+    alternation
+    mutation
+    alternation
+    mutation
+    alternation
+    mutation
+    alternation
+    alternation
+    mutation
+    alternation
+    mutation
+    mutation
+    mutation
+Generate status report
+Calcuate the group training score for individual #1
+Calcuate the group training score for individual #3
+Calcuate the group training score for individual #5
+Calcuate the group training score for individual #7
+Calcuate the group training score for individual #9
+Calcuate the group training score for individual #11
+Calcuate the group training score for individual #13
+Calcuate the group training score for individual #15
+Calcuate the group training score for individual #17
+Calcuate the group training score for individual #19
+Calcuate the group training score for individual #21
+Calcuate the group training score for individual #23
+Calcuate the group training score for individual #25
+Group Training Score = 70082.5
+Group Test Score = -8356.55
+Training error from the best individuals from each test case = 70082.5
+Test error from the best individuals from each test case = -8356.55
+Eligible parents training score = 70082.5
+Eligible parents test score = -8356.55
+Group training score = 70082.5
+Group test score = -8356.55
+training_score_of_elite_individual_with_maximum_number_test_cases = 70082.5
+test_score_of_elite_individual_with_maximum_number_test_cases = -8356.55
+Install New Generation
+Generation 280
+Compte Errors
+  Evaluate Individual 0 Min error = -58501.8
+  Evaluate Individual 1 Min error = 1.79769e+308
+  Evaluate Individual 2 Min error = 1.79769e+308
+  Evaluate Individual 3 Min error = 1.79769e+308
+  Evaluate Individual 4 Min error = 1.79769e+308
+  Evaluate Individual 5 Min error = 1.79769e+308
+  Evaluate Individual 6 Min error = 1.79769e+308
+  Evaluate Individual 7 Min error = 1.79769e+308
+  Evaluate Individual 8 Min error = -58501.8
+  Evaluate Individual 9 Min error = 1.79769e+308
+  Evaluate Individual 10 Min error = 1.79769e+308
+  Evaluate Individual 11 Min error = -58501.8
+  Evaluate Individual 12 Min error = -58501.8
+  Evaluate Individual 13 Min error = -58501.8
+  Evaluate Individual 14 Min error = -58501.8
+  Evaluate Individual 15 Min error = 1.79769e+308
+  Evaluate Individual 16 Min error = 1.79769e+308
+  Evaluate Individual 17 Min error = 1.79769e+308
+  Evaluate Individual 18 Min error = 1.79769e+308
+  Evaluate Individual 19 Min error = -58501.8
+  Evaluate Individual 20 Min error = 1.79769e+308
+  Evaluate Individual 21 Min error = -58501.8
+  Evaluate Individual 22 Min error = 1.79769e+308
+  Evaluate Individual 23 Min error = 1.79769e+308
+  Evaluate Individual 24 Min error = 1.79769e+308
+   Min error = -58501.8
+Number_Of_Test_Cases = 23
+Calculate Epsilons
+Produce New Offspring
+    mutation
+    alternation
+    alternation
+    alternation
+    alternation
+    alternation
+    mutation
+    alternation
+    mutation
+    alternation
+    alternation
+    mutation
+    alternation
+    alternation
+    mutation
+    mutation
+    alternation
+    alternation
+    mutation
+    alternation
+    mutation
+    mutation
+    mutation
+    mutation
+    mutation
+Generate status report
+Calcuate the group training score for individual #1
+Calcuate the group training score for individual #3
+Calcuate the group training score for individual #5
+Calcuate the group training score for individual #7
+Calcuate the group training score for individual #9
+Calcuate the group training score for individual #11
+Calcuate the group training score for individual #13
+Calcuate the group training score for individual #15
+Calcuate the group training score for individual #17
+Calcuate the group training score for individual #19
+Calcuate the group training score for individual #21
+Calcuate the group training score for individual #23
+Calcuate the group training score for individual #25
+Group Training Score = 70082.5
+Group Test Score = -8356.55
+Training error from the best individuals from each test case = 70082.5
+Test error from the best individuals from each test case = -8356.55
+Eligible parents training score = 70082.5
+Eligible parents test score = -8356.55
+Group training score = -1.79769e+308
+Group test score = -1.79769e+308
+training_score_of_elite_individual_with_maximum_number_test_cases = 70082.5
+test_score_of_elite_individual_with_maximum_number_test_cases = -8356.55
+Install New Generation
+Generation 281
+Compte Errors
+  Evaluate Individual 0 Min error = 1.79769e+308
+  Evaluate Individual 1 Min error = -58501.8
+  Evaluate Individual 2 Min error = -58501.8
+  Evaluate Individual 3 Min error = 1.79769e+308
+  Evaluate Individual 4 Min error = 1.79769e+308
+  Evaluate Individual 5 Min error = -58501.8
+  Evaluate Individual 6 Min error = -58501.8
+  Evaluate Individual 7 Min error = 1.79769e+308
+  Evaluate Individual 8 Min error = -58501.8
+  Evaluate Individual 9 Min error = 1.79769e+308
+  Evaluate Individual 10 Min error = -58501.8
+  Evaluate Individual 11 Min error = -58501.8
+  Evaluate Individual 12 Min error = -58501.8
+  Evaluate Individual 13 Min error = -58501.8
+  Evaluate Individual 14 Min error = -58501.8
+  Evaluate Individual 15 Min error = -58501.8
+  Evaluate Individual 16 Min error = 1.79769e+308
+  Evaluate Individual 17 Min error = -58501.8
+  Evaluate Individual 18 Min error = -58501.8
+  Evaluate Individual 19 Min error = 1.79769e+308
+  Evaluate Individual 20 Min error = -58501.8
+  Evaluate Individual 21 Min error = -58501.8
+  Evaluate Individual 22 Min error = 1.79769e+308
+  Evaluate Individual 23 Min error = 20.0616
+  Evaluate Individual 24 Min error = -58501.8
+   Min error = -58501.8
+Number_Of_Test_Cases = 23
+Calculate Epsilons
+Produce New Offspring
+    mutation
+    alternation
+    mutation
+    mutation
+    alternation
+    Child too big
+    mutation
+    mutation
+    alternation
+    Child too big
+    mutation
+    alternation
+    alternation
+    mutation
+    alternation
+    alternation
+    mutation
+    mutation
+    mutation
+    alternation
+    alternation
+    Child too big
+    alternation
+    alternation
+    alternation
+    alternation
+    mutation
+    alternation
+Generate status report
+Calcuate the group training score for individual #1
+Calcuate the group training score for individual #3
+Calcuate the group training score for individual #5
+Calcuate the group training score for individual #7
+Calcuate the group training score for individual #9
+Calcuate the group training score for individual #11
+Calcuate the group training score for individual #13
+Calcuate the group training score for individual #15
+Calcuate the group training score for individual #17
+Calcuate the group training score for individual #19
+Calcuate the group training score for individual #21
+Calcuate the group training score for individual #23
+Calcuate the group training score for individual #25
+Group Training Score = 70082.5
+Group Test Score = -8356.55
+Training error from the best individuals from each test case = 70082.5
+Test error from the best individuals from each test case = -8356.55
+Eligible parents training score = 70082.5
+Eligible parents test score = -8356.55
+Group training score = 70082.5
+Group test score = -8356.55
+training_score_of_elite_individual_with_maximum_number_test_cases = 70082.5
+test_score_of_elite_individual_with_maximum_number_test_cases = -8356.55
+Install New Generation
+Generation 282
+Compte Errors
+  Evaluate Individual 0 Min error = 1.79769e+308
+  Evaluate Individual 1 Min error = 1.79769e+308
+  Evaluate Individual 2 Min error = -58501.8
+  Evaluate Individual 3 Min error = 1.79769e+308
+  Evaluate Individual 4 Min error = 1.79769e+308
+  Evaluate Individual 5 Min error = 1.79769e+308
+  Evaluate Individual 6 Min error = -58501.8
+  Evaluate Individual 7 Min error = -56208
+  Evaluate Individual 8 Min error = 1.79769e+308
+  Evaluate Individual 9 Min error = 1.79769e+308
+  Evaluate Individual 10 Min error = 1.79769e+308
+  Evaluate Individual 11 Min error = 1.79769e+308
+  Evaluate Individual 12 Min error = 1.79769e+308
+  Evaluate Individual 13 Min error = 1.79769e+308
+  Evaluate Individual 14 Min error = -58501.8
+  Evaluate Individual 15 Min error = -58501.8
+  Evaluate Individual 16 Min error = -58501.8
+  Evaluate Individual 17 Min error = -58501.8
+  Evaluate Individual 18 Min error = 1.79769e+308
+  Evaluate Individual 19 Min error = 1.79769e+308
+  Evaluate Individual 20 Min error = 1.79769e+308
+  Evaluate Individual 21 Min error = 1.79769e+308
+  Evaluate Individual 22 Min error = 1.79769e+308
+  Evaluate Individual 23 Min error = 1.79769e+308
+  Evaluate Individual 24 Min error = 1.79769e+308
+   Min error = -58501.8
+Number_Of_Test_Cases = 23
+Calculate Epsilons
+Produce New Offspring
+    alternation
+    mutation
+    alternation
+    mutation
+    mutation
+    alternation
+    mutation
+    alternation
+    alternation
+    mutation
+    alternation
+    mutation
+    mutation
+    alternation
+    alternation
+    mutation
+    mutation
+    alternation
+    mutation
+    alternation
+    mutation
+    alternation
+    alternation
+    mutation
+    alternation
+Generate status report
+Calcuate the group training score for individual #1
+Calcuate the group training score for individual #3
+Calcuate the group training score for individual #5
+Calcuate the group training score for individual #7
+Calcuate the group training score for individual #9
+Calcuate the group training score for individual #11
+Calcuate the group training score for individual #13
+Calcuate the group training score for individual #15
+Calcuate the group training score for individual #17
+Calcuate the group training score for individual #19
+Calcuate the group training score for individual #21
+Calcuate the group training score for individual #23
+Calcuate the group training score for individual #25
+Group Training Score = 73761.1
+Group Test Score = -8440.74
+Training error from the best individuals from each test case = 70082.5
+Test error from the best individuals from each test case = -8356.55
+Eligible parents training score = 70082.5
+Eligible parents test score = -8356.55
+Group training score = -1.79769e+308
+Group test score = -1.79769e+308
+training_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+test_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+Install New Generation
+Generation 283
+Compte Errors
+  Evaluate Individual 0 Min error = 1.79769e+308
+  Evaluate Individual 1 Min error = -56208
+  Evaluate Individual 2 Min error = 1.79769e+308
+  Evaluate Individual 3 Min error = 1.79769e+308
+  Evaluate Individual 4 Min error = -56208
+  Evaluate Individual 5 Min error = 1.79769e+308
+  Evaluate Individual 6 Min error = -58501.8
+  Evaluate Individual 7 Min error = 1.79769e+308
+  Evaluate Individual 8 Min error = 1.79769e+308
+  Evaluate Individual 9 Min error = -58501.8
+  Evaluate Individual 10 Min error = 1.79769e+308
+  Evaluate Individual 11 Min error = -56208
+  Evaluate Individual 12 Min error = -56208
+  Evaluate Individual 13 Min error = 1.79769e+308
+  Evaluate Individual 14 Min error = -58501.8
+  Evaluate Individual 15 Min error = 1.79769e+308
+  Evaluate Individual 16 Min error = 1.79769e+308
+  Evaluate Individual 17 Min error = -56208
+  Evaluate Individual 18 Min error = -58501.8
+  Evaluate Individual 19 Min error = 1.79769e+308
+  Evaluate Individual 20 Min error = -58501.8
+  Evaluate Individual 21 Min error = 1.79769e+308
+  Evaluate Individual 22 Min error = 1.79769e+308
+  Evaluate Individual 23 Min error = 1.79769e+308
+  Evaluate Individual 24 Min error = 1.79769e+308
+   Min error = -58501.8
+Number_Of_Test_Cases = 23
+Calculate Epsilons
+Produce New Offspring
+    alternation
+    mutation
+    alternation
+    alternation
+    alternation
+    mutation
+    alternation
+    mutation
+    alternation
+    mutation
+    mutation
+    mutation
+    alternation
+    mutation
+    alternation
+    mutation
+    alternation
+    Child too big
+    alternation
+    alternation
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+    alternation
+Generate status report
+Calcuate the group training score for individual #1
+Calcuate the group training score for individual #3
+Calcuate the group training score for individual #5
+Calcuate the group training score for individual #7
+Calcuate the group training score for individual #9
+Calcuate the group training score for individual #11
+Calcuate the group training score for individual #13
+Calcuate the group training score for individual #15
+Calcuate the group training score for individual #17
+Calcuate the group training score for individual #19
+Calcuate the group training score for individual #21
+Calcuate the group training score for individual #23
+Calcuate the group training score for individual #25
+Group Training Score = 73761.1
+Group Test Score = -8440.74
+Training error from the best individuals from each test case = 73761.1
+Test error from the best individuals from each test case = -8440.74
+Eligible parents training score = 70082.5
+Eligible parents test score = -8356.55
+Group training score = -1.79769e+308
+Group test score = -1.79769e+308
+training_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+test_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+Install New Generation
+Generation 284
+Compte Errors
+  Evaluate Individual 0 Min error = 1.79769e+308
+  Evaluate Individual 1 Min error = -58501.8
+  Evaluate Individual 2 Min error = -58501.8
+  Evaluate Individual 3 Min error = 1.79769e+308
+  Evaluate Individual 4 Min error = 1.79769e+308
+  Evaluate Individual 5 Min error = 1.79769e+308
+  Evaluate Individual 6 Min error = 1.79769e+308
+  Evaluate Individual 7 Min error = -56208
+  Evaluate Individual 8 Min error = 1.79769e+308
+  Evaluate Individual 9 Min error = 1.79769e+308
+  Evaluate Individual 10 Min error = -58501.8
+  Evaluate Individual 11 Min error = 1.79769e+308
+  Evaluate Individual 12 Min error = 1.79769e+308
+  Evaluate Individual 13 Min error = 1.79769e+308
+  Evaluate Individual 14 Min error = -58501.8
+  Evaluate Individual 15 Min error = 1.79769e+308
+  Evaluate Individual 16 Min error = 1.79769e+308
+  Evaluate Individual 17 Min error = 1.79769e+308
+  Evaluate Individual 18 Min error = 1.79769e+308
+  Evaluate Individual 19 Min error = 1.79769e+308
+  Evaluate Individual 20 Min error = -56208
+  Evaluate Individual 21 Min error = 1.79769e+308
+  Evaluate Individual 22 Min error = 1.79769e+308
+  Evaluate Individual 23 Min error = 1.79769e+308
+  Evaluate Individual 24 Min error = -56208
+   Min error = -58501.8
+Number_Of_Test_Cases = 23
+Calculate Epsilons
+Produce New Offspring
+    mutation
+    alternation
+    mutation
+    alternation
+    alternation
+    alternation
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+    alternation
+    mutation
+    alternation
+    mutation
+    mutation
+    mutation
+    alternation
+    mutation
+    alternation
+    alternation
+    alternation
+Generate status report
+Calcuate the group training score for individual #1
+Calcuate the group training score for individual #3
+Calcuate the group training score for individual #5
+Calcuate the group training score for individual #7
+Calcuate the group training score for individual #9
+Calcuate the group training score for individual #11
+Calcuate the group training score for individual #13
+Calcuate the group training score for individual #15
+Calcuate the group training score for individual #17
+Calcuate the group training score for individual #19
+Calcuate the group training score for individual #21
+Calcuate the group training score for individual #23
+Calcuate the group training score for individual #25
+Group Training Score = 73761.1
+Group Test Score = -8440.74
+Training error from the best individuals from each test case = 70082.5
+Test error from the best individuals from each test case = -8356.55
+Eligible parents training score = 70082.5
+Eligible parents test score = -8356.55
+Group training score = -1.79769e+308
+Group test score = -1.79769e+308
+training_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+test_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+Install New Generation
+Generation 285
+Compte Errors
+  Evaluate Individual 0 Min error = 1.79769e+308
+  Evaluate Individual 1 Min error = 1.79769e+308
+  Evaluate Individual 2 Min error = -58501.8
+  Evaluate Individual 3 Min error = 1.79769e+308
+  Evaluate Individual 4 Min error = -58501.8
+  Evaluate Individual 5 Min error = -56208
+  Evaluate Individual 6 Min error = 1.79769e+308
+  Evaluate Individual 7 Min error = 1.79769e+308
+  Evaluate Individual 8 Min error = 1.79769e+308
+  Evaluate Individual 9 Min error = 1.79769e+308
+  Evaluate Individual 10 Min error = -56208
+  Evaluate Individual 11 Min error = -58501.8
+  Evaluate Individual 12 Min error = 1.79769e+308
+  Evaluate Individual 13 Min error = 1.79769e+308
+  Evaluate Individual 14 Min error = -58501.8
+  Evaluate Individual 15 Min error = 1.79769e+308
+  Evaluate Individual 16 Min error = 1.79769e+308
+  Evaluate Individual 17 Min error = 1.79769e+308
+  Evaluate Individual 18 Min error = 1.79769e+308
+  Evaluate Individual 19 Min error = -56208
+  Evaluate Individual 20 Min error = -58501.8
+  Evaluate Individual 21 Min error = 1.79769e+308
+  Evaluate Individual 22 Min error = 1.79769e+308
+  Evaluate Individual 23 Min error = 1.79769e+308
+  Evaluate Individual 24 Min error = 1.79769e+308
+   Min error = -58501.8
+Number_Of_Test_Cases = 23
+Calculate Epsilons
+Produce New Offspring
+    mutation
+    alternation
+    alternation
+    alternation
+    alternation
+    mutation
+    mutation
+    mutation
+    mutation
+    mutation
+    alternation
+    alternation
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+    mutation
+    mutation
+    alternation
+    alternation
+    mutation
+    alternation
+    mutation
+    mutation
+Generate status report
+Calcuate the group training score for individual #1
+Calcuate the group training score for individual #3
+Calcuate the group training score for individual #5
+Calcuate the group training score for individual #7
+Calcuate the group training score for individual #9
+Calcuate the group training score for individual #11
+Calcuate the group training score for individual #13
+Calcuate the group training score for individual #15
+Calcuate the group training score for individual #17
+Calcuate the group training score for individual #19
+Calcuate the group training score for individual #21
+Calcuate the group training score for individual #23
+Calcuate the group training score for individual #25
+Group Training Score = 73761.1
+Group Test Score = -8440.74
+Training error from the best individuals from each test case = 70082.5
+Test error from the best individuals from each test case = -8356.55
+Eligible parents training score = 70082.5
+Eligible parents test score = -8356.55
+Group training score = -1.79769e+308
+Group test score = -1.79769e+308
+training_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+test_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+Install New Generation
+Generation 286
+Compte Errors
+  Evaluate Individual 0 Min error = -56208
+  Evaluate Individual 1 Min error = 1.79769e+308
+  Evaluate Individual 2 Min error = 1.79769e+308
+  Evaluate Individual 3 Min error = 1.79769e+308
+  Evaluate Individual 4 Min error = 1.79769e+308
+  Evaluate Individual 5 Min error = 1.79769e+308
+  Evaluate Individual 6 Min error = 1.79769e+308
+  Evaluate Individual 7 Min error = -58501.8
+  Evaluate Individual 8 Min error = 1.79769e+308
+  Evaluate Individual 9 Min error = 1.79769e+308
+  Evaluate Individual 10 Min error = 1.79769e+308
+  Evaluate Individual 11 Min error = 1.79769e+308
+  Evaluate Individual 12 Min error = 1.79769e+308
+  Evaluate Individual 13 Min error = 1.79769e+308
+  Evaluate Individual 14 Min error = 1.79769e+308
+  Evaluate Individual 15 Min error = -58501.8
+  Evaluate Individual 16 Min error = -58501.8
+  Evaluate Individual 17 Min error = 1.79769e+308
+  Evaluate Individual 18 Min error = -58501.8
+  Evaluate Individual 19 Min error = 1.79769e+308
+  Evaluate Individual 20 Min error = 1.79769e+308
+  Evaluate Individual 21 Min error = 1.79769e+308
+  Evaluate Individual 22 Min error = 1.79769e+308
+  Evaluate Individual 23 Min error = -58501.8
+  Evaluate Individual 24 Min error = -58501.8
+   Min error = -58501.8
+Number_Of_Test_Cases = 23
+Calculate Epsilons
+Produce New Offspring
+    mutation
+    alternation
+    mutation
+    mutation
+    mutation
+    alternation
+    alternation
+    alternation
+    alternation
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+    mutation
+    mutation
+    alternation
+    alternation
+    mutation
+    mutation
+Generate status report
+Calcuate the group training score for individual #1
+Calcuate the group training score for individual #3
+Calcuate the group training score for individual #5
+Calcuate the group training score for individual #7
+Calcuate the group training score for individual #9
+Calcuate the group training score for individual #11
+Calcuate the group training score for individual #13
+Calcuate the group training score for individual #15
+Calcuate the group training score for individual #17
+Calcuate the group training score for individual #19
+Calcuate the group training score for individual #21
+Calcuate the group training score for individual #23
+Calcuate the group training score for individual #25
+Group Training Score = 70082.5
+Group Test Score = -8356.55
+Training error from the best individuals from each test case = 73761.1
+Test error from the best individuals from each test case = -8440.74
+Eligible parents training score = 70082.5
+Eligible parents test score = -8356.55
+Group training score = -1.79769e+308
+Group test score = -1.79769e+308
+training_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+test_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+Install New Generation
+Generation 287
+Compte Errors
+  Evaluate Individual 0 Min error = -56208
+  Evaluate Individual 1 Min error = 1.79769e+308
+  Evaluate Individual 2 Min error = 1.79769e+308
+  Evaluate Individual 3 Min error = -56208
+  Evaluate Individual 4 Min error = 1.79769e+308
+  Evaluate Individual 5 Min error = 1.79769e+308
+  Evaluate Individual 6 Min error = -56208
+  Evaluate Individual 7 Min error = 1.79769e+308
+  Evaluate Individual 8 Min error = -58501.8
+  Evaluate Individual 9 Min error = -58501.8
+  Evaluate Individual 10 Min error = 1.79769e+308
+  Evaluate Individual 11 Min error = 1.79769e+308
+  Evaluate Individual 12 Min error = 1.79769e+308
+  Evaluate Individual 13 Min error = -56208
+  Evaluate Individual 14 Min error = -58501.8
+  Evaluate Individual 15 Min error = 1.79769e+308
+  Evaluate Individual 16 Min error = 1.79769e+308
+  Evaluate Individual 17 Min error = 1.79769e+308
+  Evaluate Individual 18 Min error = 1.79769e+308
+  Evaluate Individual 19 Min error = 1.79769e+308
+  Evaluate Individual 20 Min error = 1.79769e+308
+  Evaluate Individual 21 Min error = 1.79769e+308
+  Evaluate Individual 22 Min error = -56208
+  Evaluate Individual 23 Min error = -58501.8
+  Evaluate Individual 24 Min error = -58501.8
+   Min error = -58501.8
+Number_Of_Test_Cases = 23
+Calculate Epsilons
+Produce New Offspring
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+    mutation
+    alternation
+    alternation
+    mutation
+    alternation
+    alternation
+    alternation
+    mutation
+    alternation
+    mutation
+    mutation
+    mutation
+    alternation
+    alternation
+    mutation
+    mutation
+    alternation
+    alternation
+    alternation
+    mutation
+Generate status report
+Calcuate the group training score for individual #1
+Calcuate the group training score for individual #3
+Calcuate the group training score for individual #5
+Calcuate the group training score for individual #7
+Calcuate the group training score for individual #9
+Calcuate the group training score for individual #11
+Calcuate the group training score for individual #13
+Calcuate the group training score for individual #15
+Calcuate the group training score for individual #17
+Calcuate the group training score for individual #19
+Calcuate the group training score for individual #21
+Calcuate the group training score for individual #23
+Calcuate the group training score for individual #25
+Group Training Score = 73761.1
+Group Test Score = -8440.74
+Training error from the best individuals from each test case = 73761.1
+Test error from the best individuals from each test case = -8440.74
+Eligible parents training score = 70082.5
+Eligible parents test score = -8356.55
+Group training score = -1.79769e+308
+Group test score = -1.79769e+308
+training_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+test_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+Install New Generation
+Generation 288
+Compte Errors
+  Evaluate Individual 0 Min error = 1.79769e+308
+  Evaluate Individual 1 Min error = -56208
+  Evaluate Individual 2 Min error = 1.79769e+308
+  Evaluate Individual 3 Min error = 1.79769e+308
+  Evaluate Individual 4 Min error = -58501.8
+  Evaluate Individual 5 Min error = 1.79769e+308
+  Evaluate Individual 6 Min error = 1.79769e+308
+  Evaluate Individual 7 Min error = 1.79769e+308
+  Evaluate Individual 8 Min error = -58501.8
+  Evaluate Individual 9 Min error = 1.79769e+308
+  Evaluate Individual 10 Min error = 1.79769e+308
+  Evaluate Individual 11 Min error = 1.79769e+308
+  Evaluate Individual 12 Min error = 1.79769e+308
+  Evaluate Individual 13 Min error = 1.79769e+308
+  Evaluate Individual 14 Min error = 1.79769e+308
+  Evaluate Individual 15 Min error = -56208
+  Evaluate Individual 16 Min error = -56208
+  Evaluate Individual 17 Min error = 1.79769e+308
+  Evaluate Individual 18 Min error = 1.79769e+308
+  Evaluate Individual 19 Min error = 1.79769e+308
+  Evaluate Individual 20 Min error = 1.79769e+308
+  Evaluate Individual 21 Min error = 1.79769e+308
+  Evaluate Individual 22 Min error = 1.79769e+308
+  Evaluate Individual 23 Min error = 1.79769e+308
+  Evaluate Individual 24 Min error = 1.79769e+308
+   Min error = -58501.8
+Number_Of_Test_Cases = 23
+Calculate Epsilons
+Produce New Offspring
+    alternation
+    alternation
+    alternation
+    alternation
+    mutation
+    mutation
+    alternation
+    alternation
+    alternation
+    alternation
+    mutation
+    mutation
+    mutation
+    mutation
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+    alternation
+    mutation
+    alternation
+    mutation
+    mutation
+    mutation
+Generate status report
+Calcuate the group training score for individual #1
+Calcuate the group training score for individual #3
+Calcuate the group training score for individual #5
+Calcuate the group training score for individual #7
+Calcuate the group training score for individual #9
+Calcuate the group training score for individual #11
+Calcuate the group training score for individual #13
+Calcuate the group training score for individual #15
+Calcuate the group training score for individual #17
+Calcuate the group training score for individual #19
+Calcuate the group training score for individual #21
+Calcuate the group training score for individual #23
+Calcuate the group training score for individual #25
+Group Training Score = 73761.1
+Group Test Score = -8440.74
+Training error from the best individuals from each test case = 73761.1
+Test error from the best individuals from each test case = -8440.74
+Eligible parents training score = 73761.1
+Eligible parents test score = -8440.74
+Group training score = -1.79769e+308
+Group test score = -1.79769e+308
+training_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+test_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+Install New Generation
+Generation 289
+Compte Errors
+  Evaluate Individual 0 Min error = 1.79769e+308
+  Evaluate Individual 1 Min error = -56208
+  Evaluate Individual 2 Min error = 1.79769e+308
+  Evaluate Individual 3 Min error = 1.79769e+308
+  Evaluate Individual 4 Min error = -58501.8
+  Evaluate Individual 5 Min error = -56208
+  Evaluate Individual 6 Min error = -56208
+  Evaluate Individual 7 Min error = -56208
+  Evaluate Individual 8 Min error = 1.79769e+308
+  Evaluate Individual 9 Min error = 1.79769e+308
+  Evaluate Individual 10 Min error = -56208
+  Evaluate Individual 11 Min error = -58501.8
+  Evaluate Individual 12 Min error = 1.79769e+308
+  Evaluate Individual 13 Min error = 1.79769e+308
+  Evaluate Individual 14 Min error = 1.79769e+308
+  Evaluate Individual 15 Min error = 1.79769e+308
+  Evaluate Individual 16 Min error = 1.79769e+308
+  Evaluate Individual 17 Min error = -2344.01
+  Evaluate Individual 18 Min error = -58501.8
+  Evaluate Individual 19 Min error = 1.79769e+308
+  Evaluate Individual 20 Min error = -58501.8
+  Evaluate Individual 21 Min error = -56208
+  Evaluate Individual 22 Min error = -58501.8
+  Evaluate Individual 23 Min error = -58501.8
+  Evaluate Individual 24 Min error = -20913.2
+   Min error = -58501.8
+Number_Of_Test_Cases = 23
+Calculate Epsilons
+Produce New Offspring
+    alternation
+    alternation
+    mutation
+    alternation
+    alternation
+    alternation
+    mutation
+    alternation
+    mutation
+    mutation
+    mutation
+    alternation
+    mutation
+    alternation
+    mutation
+    alternation
+    mutation
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+    mutation
+    alternation
+    mutation
+Generate status report
+Calcuate the group training score for individual #1
+Calcuate the group training score for individual #3
+Calcuate the group training score for individual #5
+Calcuate the group training score for individual #7
+Calcuate the group training score for individual #9
+Calcuate the group training score for individual #11
+Calcuate the group training score for individual #13
+Calcuate the group training score for individual #15
+Calcuate the group training score for individual #17
+Calcuate the group training score for individual #19
+Calcuate the group training score for individual #21
+Calcuate the group training score for individual #23
+Calcuate the group training score for individual #25
+Group Training Score = 73761.1
+Group Test Score = -8440.74
+Training error from the best individuals from each test case = 76914.6
+Test error from the best individuals from each test case = -8321.22
+Eligible parents training score = 94209.4
+Eligible parents test score = -8375.44
+Group training score = 70082.5
+Group test score = -8356.55
+training_score_of_elite_individual_with_maximum_number_test_cases = -2876.7
+test_score_of_elite_individual_with_maximum_number_test_cases = -5860
+Install New Generation
+Generation 290
+Compte Errors
+  Evaluate Individual 0 Min error = 1.79769e+308
+  Evaluate Individual 1 Min error = 1.79769e+308
+  Evaluate Individual 2 Min error = 1.79769e+308
+  Evaluate Individual 3 Min error = -56208
+  Evaluate Individual 4 Min error = 1.79769e+308
+  Evaluate Individual 5 Min error = -58501.8
+  Evaluate Individual 6 Min error = 1.79769e+308
+  Evaluate Individual 7 Min error = 1.79769e+308
+  Evaluate Individual 8 Min error = -58501.8
+  Evaluate Individual 9 Min error = 1.79769e+308
+  Evaluate Individual 10 Min error = 1.79769e+308
+  Evaluate Individual 11 Min error = 1.79769e+308
+  Evaluate Individual 12 Min error = 1.79769e+308
+  Evaluate Individual 13 Min error = 1.79769e+308
+  Evaluate Individual 14 Min error = 1.79769e+308
+  Evaluate Individual 15 Min error = 1.79769e+308
+  Evaluate Individual 16 Min error = 1.79769e+308
+  Evaluate Individual 17 Min error = 1.79769e+308
+  Evaluate Individual 18 Min error = 1.79769e+308
+  Evaluate Individual 19 Min error = 1.79769e+308
+  Evaluate Individual 20 Min error = 1.79769e+308
+  Evaluate Individual 21 Min error = 1.79769e+308
+  Evaluate Individual 22 Min error = -58501.8
+  Evaluate Individual 23 Min error = 1.79769e+308
+  Evaluate Individual 24 Min error = -58501.8
+   Min error = -58501.8
+Number_Of_Test_Cases = 23
+Calculate Epsilons
+Produce New Offspring
+    alternation
+    mutation
+    alternation
+    alternation
+    mutation
+    alternation
+    mutation
+    mutation
+    alternation
+    alternation
+    alternation
+    alternation
+    mutation
+    mutation
+    mutation
+    mutation
+    mutation
+    mutation
+    alternation
+    alternation
+    mutation
+    alternation
+    alternation
+    mutation
+    alternation
+Generate status report
+Calcuate the group training score for individual #1
+Calcuate the group training score for individual #3
+Calcuate the group training score for individual #5
+Calcuate the group training score for individual #7
+Calcuate the group training score for individual #9
+Calcuate the group training score for individual #11
+Calcuate the group training score for individual #13
+Calcuate the group training score for individual #15
+Calcuate the group training score for individual #17
+Calcuate the group training score for individual #19
+Calcuate the group training score for individual #21
+Calcuate the group training score for individual #23
+Calcuate the group training score for individual #25
+Group Training Score = 73761.1
+Group Test Score = -8440.74
+Training error from the best individuals from each test case = 73761.1
+Test error from the best individuals from each test case = -8440.74
+Eligible parents training score = 70082.5
+Eligible parents test score = -8356.55
+Group training score = -1.79769e+308
+Group test score = -1.79769e+308
+training_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+test_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+Install New Generation
+Generation 291
+Compte Errors
+  Evaluate Individual 0 Min error = -58501.8
+  Evaluate Individual 1 Min error = -56208
+  Evaluate Individual 2 Min error = 1.79769e+308
+  Evaluate Individual 3 Min error = 1.79769e+308
+  Evaluate Individual 4 Min error = 1.79769e+308
+  Evaluate Individual 5 Min error = 1.79769e+308
+  Evaluate Individual 6 Min error = -58501.8
+  Evaluate Individual 7 Min error = 1.79769e+308
+  Evaluate Individual 8 Min error = 1.79769e+308
+  Evaluate Individual 9 Min error = 1.79769e+308
+  Evaluate Individual 10 Min error = -56208
+  Evaluate Individual 11 Min error = 1.79769e+308
+  Evaluate Individual 12 Min error = 1.79769e+308
+  Evaluate Individual 13 Min error = 1.79769e+308
+  Evaluate Individual 14 Min error = 1.79769e+308
+  Evaluate Individual 15 Min error = -58501.8
+  Evaluate Individual 16 Min error = -58501.8
+  Evaluate Individual 17 Min error = 1.79769e+308
+  Evaluate Individual 18 Min error = -56208
+  Evaluate Individual 19 Min error = 1.79769e+308
+  Evaluate Individual 20 Min error = 1.79769e+308
+  Evaluate Individual 21 Min error = -12227.8
+  Evaluate Individual 22 Min error = 1.79769e+308
+  Evaluate Individual 23 Min error = 1.79769e+308
+  Evaluate Individual 24 Min error = -58501.8
+   Min error = -58501.8
+Number_Of_Test_Cases = 23
+Calculate Epsilons
+Produce New Offspring
+    mutation
+    alternation
+    alternation
+    alternation
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+    alternation
+    alternation
+    alternation
+    alternation
+    alternation
+    mutation
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+    alternation
+    mutation
+Generate status report
+Calcuate the group training score for individual #1
+Calcuate the group training score for individual #3
+Calcuate the group training score for individual #5
+Calcuate the group training score for individual #7
+Calcuate the group training score for individual #9
+Calcuate the group training score for individual #11
+Calcuate the group training score for individual #13
+Calcuate the group training score for individual #15
+Calcuate the group training score for individual #17
+Calcuate the group training score for individual #19
+Calcuate the group training score for individual #21
+Calcuate the group training score for individual #23
+Calcuate the group training score for individual #25
+Group Training Score = 73761.1
+Group Test Score = -8440.74
+Training error from the best individuals from each test case = 66755.8
+Test error from the best individuals from each test case = -8453.22
+Eligible parents training score = 70082.5
+Eligible parents test score = -8356.55
+Group training score = -1.79769e+308
+Group test score = -1.79769e+308
+training_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+test_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+Install New Generation
+Generation 292
+Compte Errors
+  Evaluate Individual 0 Min error = 1.79769e+308
+  Evaluate Individual 1 Min error = -58501.8
+  Evaluate Individual 2 Min error = -12227.8
+  Evaluate Individual 3 Min error = -56208
+  Evaluate Individual 4 Min error = 1.79769e+308
+  Evaluate Individual 5 Min error = -58501.8
+  Evaluate Individual 6 Min error = 1.79769e+308
+  Evaluate Individual 7 Min error = 1.79769e+308
+  Evaluate Individual 8 Min error = 1.79769e+308
+  Evaluate Individual 9 Min error = -12227.8
+  Evaluate Individual 10 Min error = 1.79769e+308
+  Evaluate Individual 11 Min error = 1.79769e+308
+  Evaluate Individual 12 Min error = 1.79769e+308
+  Evaluate Individual 13 Min error = 1.79769e+308
+  Evaluate Individual 14 Min error = 1.79769e+308
+  Evaluate Individual 15 Min error = 1.79769e+308
+  Evaluate Individual 16 Min error = 1.79769e+308
+  Evaluate Individual 17 Min error = 1.79769e+308
+  Evaluate Individual 18 Min error = 1.79769e+308
+  Evaluate Individual 19 Min error = 1.79769e+308
+  Evaluate Individual 20 Min error = 1.79769e+308
+  Evaluate Individual 21 Min error = -58501.8
+  Evaluate Individual 22 Min error = 1.79769e+308
+  Evaluate Individual 23 Min error = 1.79769e+308
+  Evaluate Individual 24 Min error = -58501.8
+   Min error = -58501.8
+Number_Of_Test_Cases = 23
+Calculate Epsilons
+Produce New Offspring
+    mutation
+    mutation
+    alternation
+    alternation
+    alternation
+    alternation
+    alternation
+    alternation
+    mutation
+    alternation
+    alternation
+    alternation
+    mutation
+    mutation
+    mutation
+    mutation
+    mutation
+    alternation
+    mutation
+    alternation
+    alternation
+    mutation
+    mutation
+    alternation
+    alternation
+Generate status report
+Calcuate the group training score for individual #1
+Calcuate the group training score for individual #3
+Calcuate the group training score for individual #5
+Calcuate the group training score for individual #7
+Calcuate the group training score for individual #9
+Calcuate the group training score for individual #11
+Calcuate the group training score for individual #13
+Calcuate the group training score for individual #15
+Calcuate the group training score for individual #17
+Calcuate the group training score for individual #19
+Calcuate the group training score for individual #21
+Calcuate the group training score for individual #23
+Calcuate the group training score for individual #25
+Group Training Score = 73761.1
+Group Test Score = -8440.74
+Training error from the best individuals from each test case = 66755.8
+Test error from the best individuals from each test case = -8453.22
+Eligible parents training score = 70082.5
+Eligible parents test score = -8356.55
+Group training score = -1.79769e+308
+Group test score = -1.79769e+308
+training_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+test_score_of_elite_individual_with_maximum_number_test_cases = -1.79769e+308
+Install New Generation
+Generation 293
+Compte Errors
+  Evaluate Individual 0 Min error = -3142.27
+  Evaluate Individual 1 Min error = 1.79769e+308
+  Evaluate Individual 2 Min error = -56208
+  Evaluate Individual 3 Min error = 1.79769e+308
+  Evaluate Individual 4 Min error = -58135.4
+  Evaluate Individual 5 Min error = 1.79769e+308
+  Evaluate Individual 6 Min error = 1.79769e+308
+  Evaluate Individual 7 Min error = 1.79769e+308
+  Evaluate Individual 8 Min error = -12227.8
+  Evaluate Individual 9 Min error = 1.79769e+308
+  Evaluate Individual 10 Min error = 1.79769e+308
+  Evaluate Individual 11 Min error = 1.79769e+308
+  Evaluate Individual 12 Min error = -12227.8
+  Evaluate Individual 13 Min error = -58501.8
+  Evaluate Individual 14 Min error = 1.79769e+308
+  Evaluate Individual 15 Min error = 1.79769e+308
+  Evaluate Individual 16 Min error = 1.79769e+308
+  Evaluate Individual 17 Min error = -56208
+  Evaluate Individual 18 Min error = 1.79769e+308
+  Evaluate Individual 19 Min error = -12227.8
+  Evaluate Individual 20 Min error = -12227.8
+  Evaluate Individual 21 Min error = -58501.8
+  Evaluate Individual 22 Min error = -58501.8
+  Evaluate Individual 23 Min error = 1.79769e+308
+  Evaluate Individual 24 Min error = 1.79769e+308
+   Min error = -58501.8
+Number_Of_Test_Cases = 23
+Calculate Epsilons
+Produce New Offspring
+    alternation
+    alternation
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+    alternation
+    alternation
+    alternation
+    mutation
+    alternation
+    alternation
+    mutation
+    alternation
+    mutation
+    alternation
+    alternation
+    alternation
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+    alternation
+Generate status report
+Calcuate the group training score for individual #1
+Calcuate the group training score for individual #3
+Calcuate the group training score for individual #5
+Calcuate the group training score for individual #7
+Calcuate the group training score for individual #9
+Calcuate the group training score for individual #11
+Calcuate the group training score for individual #13
+Calcuate the group training score for individual #15
+Calcuate the group training score for individual #17
+Calcuate the group training score for individual #19
+Calcuate the group training score for individual #21
+Calcuate the group training score for individual #23
+Calcuate the group training score for individual #25
+Group Training Score = 73761.1
+Group Test Score = -8440.74
+Training error from the best individuals from each test case = 73761.1
+Test error from the best individuals from each test case = -8440.74
+Eligible parents training score = 74536.4
+Eligible parents test score = -8216.48
+Group training score = -1.79769e+308
+Group test score = -1.79769e+308
+training_score_of_elite_individual_with_maximum_number_test_cases = 73761.1
+test_score_of_elite_individual_with_maximum_number_test_cases = -8440.74
+Install New Generation
+Generation 294
+Compte Errors
+  Evaluate Individual 0 Min error = -3142.27
+  Evaluate Individual 1 Min error = 1.79769e+308
+  Evaluate Individual 2 Min error = -58135.4
+  Evaluate Individual 3 Min error = 1.79769e+308
+  Evaluate Individual 4 Min error = 1.79769e+308
+  Evaluate Individual 5 Min error = 1.79769e+308
+  Evaluate Individual 6 Min error = -12227.8
+  Evaluate Individual 7 Min error = 1.79769e+308
+  Evaluate Individual 8 Min error = 1.79769e+308
+  Evaluate Individual 9 Min error = 1.79769e+308
+  Evaluate Individual 10 Min error = 1.79769e+308
+  Evaluate Individual 11 Min error = -56208
+  Evaluate Individual 12 Min error = 1.79769e+308
+  Evaluate Individual 13 Min error = 1.79769e+308
+  Evaluate Individual 14 Min error = 1.79769e+308
+  Evaluate Individual 15 Min error = -58501.8
+  Evaluate Individual 16 Min error = 1.79769e+308
+  Evaluate Individual 17 Min error = 1.79769e+308
+  Evaluate Individual 18 Min error = 1.79769e+308
+  Evaluate Individual 19 Min error = 1.79769e+308
+  Evaluate Individual 20 Min error = -58135.4
+  Evaluate Individual 21 Min error = 1.79769e+308
+  Evaluate Individual 22 Min error = -12227.8
+  Evaluate Individual 23 Min error = 1.79769e+308
+  Evaluate Individual 24 Min error = -58501.8
+   Min error = -58501.8
+Number_Of_Test_Cases = 23
+Calculate Epsilons
+Produce New Offspring
+    mutation
+    alternation
+    mutation
+    alternation
+    alternation
+    mutation
+    alternation
+    mutation
+    mutation
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+    alternation
+    alternation
+    mutation
+    mutation
+    alternation
+    mutation
+    mutation
+    alternation
+    alternation
+    mutation
+    mutation
+Generate status report
+Calcuate the group training score for individual #1
+Calcuate the group training score for individual #3
+Calcuate the group training score for individual #5
+Calcuate the group training score for individual #7
+Calcuate the group training score for individual #9
+Calcuate the group training score for individual #11
+Calcuate the group training score for individual #13
+Calcuate the group training score for individual #15
+Calcuate the group training score for individual #17
+Calcuate the group training score for individual #19
+Calcuate the group training score for individual #21
+Calcuate the group training score for individual #23
+Calcuate the group training score for individual #25
+Group Training Score = 73761.1
+Group Test Score = -8440.74
+
+C:\Users\edgar\OneDrive\Projects\Source\Repos\EdGarrity\SOS\x64\Debug\SOS.exe (process 23640) exited with code -1.
+To automatically close the console when debugging stops, enable Tools->Options->Debugging->Automatically close the console when debugging stops.
+Press any key to close this window . . .
