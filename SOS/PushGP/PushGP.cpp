@@ -43,8 +43,8 @@ namespace pushGP
 		"           ,[Uniform_Mutation_Rate]"					// 18
 		"           )"
 		"     VALUES"
-		"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-			//       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6
+		"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			//       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8
 
 	unsigned long get_last_saved_generation_number()
 	{

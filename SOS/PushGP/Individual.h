@@ -50,7 +50,7 @@ namespace pushGP
 
 	struct Transaction
 	{
-		unsigned int test_case;
+		int test_case;
 		unsigned long row;
 		double adj_close;
 		order_types order;
