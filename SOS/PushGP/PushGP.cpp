@@ -32,13 +32,15 @@ namespace pushGP
 		"           ,[TestCase_Best_leIndividuals_TestScore]"	// 7
 		"           ,[BestIndividual_TrainingScore]"			// 8
 		"           ,[BestIndividual_TestScore]"				// 9
-		"           ,[Elite_Size]"								// 10
-		"           ,[Elite_TestCases]"							// 11
-		"           ,[Total_TestCases]"							// 12
-		"           ,[Opening_Balance]"							// 13
-		"           ,[Population_Size]"							// 14
-		"           ,[Alternation_Rate]"						// 15
-		"           ,[Uniform_Mutation_Rate]"					// 16
+		"           ,[Training_Sscore_of_Eelite_Individual_with_Maximum_Number_Test_Cases]"	// 10
+		"           ,[Test_Sscore_of_Eelite_Individual_with_Maximum_Number_Test_Cases]"		// 11
+		"           ,[Elite_Size]"								// 12
+		"           ,[Elite_TestCases]"							// 13
+		"           ,[Total_TestCases]"							// 14
+		"           ,[Opening_Balance]"							// 15
+		"           ,[Population_Size]"							// 16
+		"           ,[Alternation_Rate]"						// 17
+		"           ,[Uniform_Mutation_Rate]"					// 18
 		"           )"
 		"     VALUES"
 		"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -350,12 +352,12 @@ namespace pushGP
 		std::cout << "training_score_of_elite_individual_with_maximum_number_test_cases = " << training_score_of_elite_individual_with_maximum_number_test_cases << std::endl;
 
 		// Calculate test score for elite individual with the maximum number of test cases
-		double test_score_of_elite_individual_with_maximum_number_test_cases = 0.0;
+		double validation_score_of_elite_individual_with_maximum_number_test_cases = 0.0;
 
-		error = individual_selection_error_function(index_of_individuals, test_input_start, test_input_end, 0, true);
+		error = individual_selection_error_function(index_of_individuals, test_input_start, test_input_end, -1, true);
 
-		test_score_of_elite_individual_with_maximum_number_test_cases = 0.0 - error;
-		std::cout << "test_score_of_elite_individual_with_maximum_number_test_cases = " << test_score_of_elite_individual_with_maximum_number_test_cases << std::endl;
+		validation_score_of_elite_individual_with_maximum_number_test_cases = 0.0 - error;
+		std::cout << "test_score_of_elite_individual_with_maximum_number_test_cases = " << validation_score_of_elite_individual_with_maximum_number_test_cases << std::endl;
 
 		// Set parameters to save
 		sqlcmd_save_status_report->set_as_integer(1, generation_);
@@ -368,15 +370,17 @@ namespace pushGP
 		sqlcmd_save_status_report->set_as_float(8, training_score_of_individual_with_best_training_score_for_all_data);
 		sqlcmd_save_status_report->set_as_float(9, validation_score_of_individual_with_best_training_score_for_all_data);
 
+		sqlcmd_save_status_report->set_as_float(10, training_score_of_elite_individual_with_maximum_number_test_cases);
+		sqlcmd_save_status_report->set_as_float(11, validation_score_of_elite_individual_with_maximum_number_test_cases);
 
-		sqlcmd_save_status_report->set_as_integer(10, number_of_elite_individuals);
-		sqlcmd_save_status_report->set_as_integer(11, maximum_number_of_test_cases_for_any_elite_individual);
-		sqlcmd_save_status_report->set_as_integer(12, Number_Of_Test_Cases);
+		sqlcmd_save_status_report->set_as_integer(12, number_of_elite_individuals);
+		sqlcmd_save_status_report->set_as_integer(13, maximum_number_of_test_cases_for_any_elite_individual);
+		sqlcmd_save_status_report->set_as_integer(14, Number_Of_Test_Cases);
 
-		sqlcmd_save_status_report->set_as_float(13, argmap::opening_balance);
-		sqlcmd_save_status_report->set_as_integer(14, argmap::population_size);
-		sqlcmd_save_status_report->set_as_float(15, argmap::alternation_rate);
-		sqlcmd_save_status_report->set_as_float(16, argmap::uniform_mutation_rate);
+		sqlcmd_save_status_report->set_as_float(15, argmap::opening_balance);
+		sqlcmd_save_status_report->set_as_integer(16, argmap::population_size);
+		sqlcmd_save_status_report->set_as_float(17, argmap::alternation_rate);
+		sqlcmd_save_status_report->set_as_float(18, argmap::uniform_mutation_rate);
 
 		sqlcmd_save_status_report->execute();
 

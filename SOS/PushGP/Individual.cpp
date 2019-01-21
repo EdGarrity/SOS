@@ -115,9 +115,9 @@ namespace pushGP
 		return genome_string_;
 	}
 
-	void Individual::log_transaction(unsigned int _test_case, unsigned long _row, order_types _order, int _number_of_shares, double _cash_balance)
+	void Individual::log_transaction(int _test_case, unsigned long _row, double _adj_close, order_types _order, int _number_of_shares, double _cash_balance)
 	{
-		Transaction transaction{ _test_case, _row, _order, _number_of_shares, _cash_balance };
+		Transaction transaction{ _test_case, _row, _adj_close, _order, _number_of_shares, _cash_balance };
 		transactions_.push_back(transaction);
 	}
 
@@ -126,11 +126,12 @@ namespace pushGP
 		std::ofstream ofs;
 		ofs.open("transactions.csv", std::ofstream::out | std::ofstream::trunc);
 
-		ofs << "Test Case,Row,Order,Shares,Cash" << std::endl;
+		ofs << "Test Case,Row,Adj Close,Order,Shares,Cash" << std::endl;
 
 		for (Transaction transaction : transactions_)
 			ofs << transaction.test_case << ","
 				<< transaction.row << ","
+				<< transaction.adj_close << ","
 				<< (
 						(transaction.order == order_types::buy) ? "Buy"
 				      : (transaction.order == order_types::sell) ? "Sell"

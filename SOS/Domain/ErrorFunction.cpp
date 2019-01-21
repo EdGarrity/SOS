@@ -81,9 +81,10 @@ namespace domain
 		{
 			int number_of_shares = env.parameters.pBroker->get_number_of_shares();
 			double cash_balance = env.parameters.pBroker->get_cash_balance();
+			double adj_close = env.parameters.pBroker->get_value_from_datatable(_row, env.parameters.pBroker->adj_close_column);
 
 			for (unsigned int individual_index : _individual_indexes)
-				globals::population_agents[individual_index].log_transaction(_test_case, _row, order, number_of_shares, cash_balance);
+				globals::population_agents[individual_index].log_transaction(_test_case, _row, adj_close, order, number_of_shares, cash_balance);
 		}
 	}
 

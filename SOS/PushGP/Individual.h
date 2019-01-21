@@ -52,6 +52,7 @@ namespace pushGP
 	{
 		unsigned int test_case;
 		unsigned long row;
+		double adj_close;
 		order_types order;
 		int number_of_shares;
 		double cash_balance;
@@ -133,7 +134,7 @@ namespace pushGP
 			is_elite_ = true;
 		}
 
-		void log_transaction(unsigned int _test_case, unsigned long _row, order_types _order, int _number_of_shares, double _cash_balance);
+		void log_transaction(int _test_case, unsigned long _row, double _adj_close, order_types _order, int _number_of_shares, double _cash_balance);
 		void dump_transactions();
 	};
 
