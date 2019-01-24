@@ -92,6 +92,10 @@ namespace domain
 //	double evaluate_individual(Individual & individual, unsigned long input_start, unsigned long input_end)
 	double evaluate_individuals(static std::vector<unsigned int> & _individual_indexes, static unsigned long _input_start, static unsigned long _input_end, unsigned int _test_case, bool _record_transactions)
 	{
+		// Check if the list of individuals is empty
+		if (_individual_indexes.empty())
+			return std::numeric_limits<double>::max();
+
 		unsigned long day_index = 0;
 		Broker broker = Broker(argmap::opening_balance);
 
