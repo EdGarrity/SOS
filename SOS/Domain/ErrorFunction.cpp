@@ -48,16 +48,21 @@ namespace domain
 		return order;
 	}
 
-	void eval_one_day_of_test_case(static std::vector<unsigned int> & _individual_indexes, static unsigned long _row, unsigned int _test_case, bool _record_transactions)
+	void eval_one_day_of_test_case(static std::vector<int> & _individual_indexes, static unsigned long _row, unsigned int _test_case, bool _record_transactions)
 	{
 		std::map<order_types, unsigned int> orders = { {order_types::buy, 0}, {order_types::hold, 0}, {order_types::sell, 0} };
 		order_types order;
 
 		// Generate orders
-		for (unsigned int individual_index : _individual_indexes)
+		for (int individual_index : _individual_indexes)
 		{
-			order = run_individual_program(individual_index, _row);
-			orders[order]++;
+			if (individual_index >= 0)
+			{
+				order = run_individual_program(individual_index, _row);
+				orders[order]++;
+			}
+			else
+				orders[order_types::hold]++;
 		}
 
 		// Get the most popular order
@@ -90,7 +95,7 @@ namespace domain
 
 	// Evaluate a single test case
 //	double evaluate_individual(Individual & individual, unsigned long input_start, unsigned long input_end)
-	double evaluate_individuals(static std::vector<unsigned int> & _individual_indexes, static unsigned long _input_start, static unsigned long _input_end, unsigned int _test_case, bool _record_transactions)
+	double evaluate_individuals(static std::vector<int> & _individual_indexes, static unsigned long _input_start, static unsigned long _input_end, unsigned int _test_case, bool _record_transactions)
 	{
 		// Check if the list of individuals is empty
 		if (_individual_indexes.empty())
@@ -119,11 +124,11 @@ namespace domain
 
 	// epsilon-lexicase
 //	double lexicase_reproduction_selection_error_function(Individual & individual_, unsigned long input_start_, unsigned long input_end_)
-	double lexicase_reproduction_selection_error_function(static unsigned int individual_index, static unsigned long input_start_, static unsigned long input_end_)
+	double lexicase_reproduction_selection_error_function(static int individual_index, static unsigned long input_start_, static unsigned long input_end_)
 	{
 //		const unsigned int input_end = Broker::get_number_of_datatable_rows() - argmap::number_of_training_days_in_year - 1;
 		double min_error = std::numeric_limits<double>::max();
-		std::vector<unsigned int> individual_indexes = { individual_index };
+		std::vector<int> individual_indexes = { individual_index };
 
 		// Evaluate test cases
 		unsigned int test_case = 1;
