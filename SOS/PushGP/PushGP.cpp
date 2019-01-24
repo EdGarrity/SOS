@@ -201,7 +201,7 @@ namespace pushGP
 	}
 
 	void generate_status_report(int generation_, 
-		std::function<double(static std::vector<unsigned int> & individual_indexes, static unsigned long input_start, static unsigned long input_end, unsigned int _test_case, bool _record_transactions)> individual_selection_error_function,
+		std::function<double(static std::vector<int> & individual_indexes, static unsigned long input_start, static unsigned long input_end, unsigned int _test_case, bool _record_transactions)> individual_selection_error_function,
 		unsigned int training_input_start, 
 		unsigned int training_input_end,
 		unsigned int test_input_start,
@@ -209,7 +209,7 @@ namespace pushGP
 	{
 		unsigned int n = 0;
 		double min_error = std::numeric_limits<double>::max();
-		unsigned int index_of_individual_with_best_training_score_for_all_data = 0;
+		int index_of_individual_with_best_training_score_for_all_data = 0;
 		database::SQLCommand* sqlcmd_save_status_report;
 
 		double training_score_of_individual_with_best_training_score_for_all_data = 0;
@@ -223,13 +223,13 @@ namespace pushGP
 		// Clear test case counts
 		min_error = std::numeric_limits<double>::max();
 
-		for (unsigned int individual_index = 0; individual_index < argmap::population_size; individual_index++)
+		for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 		{
 			globals::population_agents[individual_index].clear_elite_test_cases();
 
 			std::cout << "Calculate the group training score for individual #" << individual_index + 1 << std::endl;
 
-			std::vector<unsigned int> individual_indexes = { individual_index };
+			std::vector<int> individual_indexes = { individual_index };
 
 			double error = individual_selection_error_function(individual_indexes, training_input_start, training_input_end, 0, false);
 
@@ -245,7 +245,7 @@ namespace pushGP
 		std::cout << "Group Training Score = " << training_score_of_individual_with_best_training_score_for_all_data << std::endl;
 
 		// Calculate the best individual's test score
-		std::vector<unsigned int> best_individual_indexes = { index_of_individual_with_best_training_score_for_all_data };
+		std::vector<int> best_individual_indexes = { index_of_individual_with_best_training_score_for_all_data };
 		double error = individual_selection_error_function(best_individual_indexes, test_input_start, test_input_end, 0, false);
 		validation_score_of_individual_with_best_training_score_for_all_data = 0.0 - error;
 
@@ -253,9 +253,9 @@ namespace pushGP
 
 		// Find the individual with the minimum error for each test case
 		std::vector<double> test_case_minimum_error(Number_Of_Test_Cases);
-		std::vector<unsigned int> index_of_best_individual_for_each_test_case(Number_Of_Test_Cases);
+		std::vector<int> index_of_best_individual_for_each_test_case(Number_Of_Test_Cases);
 		std::set<unsigned int> set_of_eligible_parents;
-		std::vector<unsigned int> index_of_eligible_parents;
+		std::vector<int> index_of_eligible_parents;
 
 		for (int test_case_index = 0; test_case_index < Number_Of_Test_Cases; test_case_index++)
 		{
@@ -281,7 +281,7 @@ namespace pushGP
 			}
 		}
 
-		for (unsigned int individual_index : set_of_eligible_parents)
+		for (int individual_index : set_of_eligible_parents)
 			index_of_eligible_parents.push_back(individual_index);
 
 		// Calculate the training error from the best individuals from each test case
@@ -305,7 +305,7 @@ namespace pushGP
 		std::cout << "Eligible parents test score = " << eligible_parents_validation_score << std::endl;
 
 		// Calculte group training score
-		std::vector<unsigned int> index_of_individuals;
+		std::vector<int> index_of_individuals;
 
 		for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 			index_of_individuals.push_back(individual_index);
@@ -393,8 +393,8 @@ namespace pushGP
 		globals::population_agents[index_of_elite_individual_with_maximum_number_test_cases].dump_transactions();
 	}
 
-	void pushgp(std::function<double(unsigned int, unsigned long, unsigned long)> reproduction_selection_error_function,
-		        std::function<double(static std::vector<unsigned int> & individual_indexes, static unsigned long input_start, static unsigned long input_end, unsigned int _test_case, bool _record_transactions)> individual_selection_error_function)
+	void pushgp(std::function<double(int, unsigned long, unsigned long)> reproduction_selection_error_function,
+		        std::function<double(static std::vector<int> & individual_indexes, static unsigned long input_start, static unsigned long input_end, unsigned int _test_case, bool _record_transactions)> individual_selection_error_function)
 	{
 		try
 		{
