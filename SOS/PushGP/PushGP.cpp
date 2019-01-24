@@ -17,6 +17,9 @@ using namespace pushGP;
 
 namespace pushGP
 {
+	database::SQLConnection con;
+
+
 	const std::string sqlstmt_get_last_saved_generation_number = "SELECT TOP 1 [Generation] FROM[SOS].[dbo].[ProgressLog] ORDER BY[Update_DTS] DESC;";
 	const std::string sqlstmt_sqlcmd_get_individuals = "SELECT [Genome] FROM [dbo].[Individuals];";
 	const std::string sqlstmt_delete_individuals("DELETE FROM [SOS].[dbo].[Individuals];");
@@ -50,7 +53,7 @@ namespace pushGP
 	{
 		unsigned long n = 0;
 
-		database::SQLConnection con(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
+//		database::SQLConnection con(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
 
 		database::SQLCommand* sqlcmd_get_last_saved_generation_number;
 
@@ -70,7 +73,7 @@ namespace pushGP
 	{
 		unsigned int n = 0;
 
-		database::SQLConnection con(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
+//		database::SQLConnection con(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
 
 		database::SQLCommand* sqlcmd_get_individuals;
 
@@ -167,7 +170,7 @@ namespace pushGP
 
 	void save_generation()
 	{
-		database::SQLConnection con(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
+//		database::SQLConnection con(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
 
 		database::SQLCommand* sqlcmd_delete_indiciduals;
 		database::SQLCommand* sqlcmd_insert_new_individual;
@@ -212,7 +215,7 @@ namespace pushGP
 		double training_score_of_individual_with_best_training_score_for_all_data = 0;
 		double validation_score_of_individual_with_best_training_score_for_all_data = 0;
 
-		database::SQLConnection con(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
+//		database::SQLConnection con(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
 
 		sqlcmd_save_status_report = new database::SQLCommand(&con, sqlstmt_save_status_report);
 
@@ -398,6 +401,9 @@ namespace pushGP
 			unsigned int generation_number = 1;
 			unsigned int agents_created = 0;
 			bool done = false;
+
+			// Initialize database connection
+			con.connect(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
 
 			// Create main factories
 			Push::intLiteralFactory = new Push::LiteralFactory<int>();
