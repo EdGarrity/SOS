@@ -94,9 +94,12 @@ namespace domain
 	}
 
 	// Evaluate a single test case
-//	double evaluate_individual(Individual & individual, unsigned long input_start, unsigned long input_end)
 	double evaluate_individuals(static std::vector<int> & _individual_indexes, static unsigned long _input_start, static unsigned long _input_end, unsigned int _test_case, bool _record_transactions)
 	{
+		// Check if the list of individuals is empty
+		if (_individual_indexes.empty())
+			return std::numeric_limits<double>::max();
+
 		unsigned long day_index = 0;
 		Broker broker = Broker(argmap::opening_balance);
 
@@ -119,10 +122,8 @@ namespace domain
 	}
 
 	// epsilon-lexicase
-//	double lexicase_reproduction_selection_error_function(Individual & individual_, unsigned long input_start_, unsigned long input_end_)
 	double lexicase_reproduction_selection_error_function(static int individual_index, static unsigned long input_start_, static unsigned long input_end_)
 	{
-//		const unsigned int input_end = Broker::get_number_of_datatable_rows() - argmap::number_of_training_days_in_year - 1;
 		double min_error = std::numeric_limits<double>::max();
 		std::vector<int> individual_indexes = { individual_index };
 
