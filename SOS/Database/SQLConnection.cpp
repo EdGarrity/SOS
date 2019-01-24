@@ -1,3 +1,6 @@
+#include <chrono>
+#include <iostream>
+#include <thread>
 #include "SQLConnection.h"
 #include "..\Utilities\Conversion.h"
 
@@ -12,14 +15,33 @@ namespace database
 
 		try
 		{
-			// Obtain access to the OLE DB Driver for SQL Server.  
-			hr = CoCreateInstance(CLSID_MSOLEDBSQL,
-				NULL,
-				CLSCTX_INPROC_SERVER,
-				IID_IDBInitialize,
-				(void **)&pIDBInitialize_);
-			if (FAILED(hr))
-				throw MyException("Failed to obtain access to the OLE DB Driver.");
+			int attempts = 0;
+
+			do
+			{
+				attempts++;
+
+				// Obtain access to the OLE DB Driver for SQL Server.  
+				hr = CoCreateInstance(CLSID_MSOLEDBSQL,
+					NULL,
+					CLSCTX_INPROC_SERVER,
+					IID_IDBInitialize,
+					(void **)&pIDBInitialize_);
+				
+				if (FAILED(hr))
+				{
+					char error[80];
+					sprintf_s(error, 80, "Attempt %d.  Failed to obtain access to the OLE DB Driver.  hr = %lX", attempts, hr);
+
+					std::cout << error << std::endl;
+
+					std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
+					if (attempts == 3)
+						throw MyException(error);
+				}
+			}
+			while (FAILED(hr));
 
 			// Initialize property values needed to establish connection.  
 			for (int i = 0; i < 4; i++)
