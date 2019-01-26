@@ -15,6 +15,7 @@ namespace pushGP
 
 			//	:use - single - thread false
 			//	;; When true, Clojush will only use a single thread.
+		const bool use_single_thread = false;
 
 			//	:random - seed(random / generate - mersennetwister - seed)
 			//	;; The seed for the random number generator.

@@ -156,8 +156,8 @@
     <ClInclude Include="Database\SQLField.h">
       <Filter>Header Files\Database</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities\FunctionPool.h">
-      <Filter>Header Files\Utilities</Filter>
+    <ClInclude Include="PushGP\AsyncErrorFunction.h">
+      <Filter>Header Files\PushGP</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -251,8 +251,8 @@
     <ClCompile Include="Database\SQLField.cpp">
       <Filter>Source Files\Database</Filter>
     </ClCompile>
-    <ClCompile Include="Utilities\FunctionPool.cpp">
-      <Filter>Source Files\Utilities</Filter>
+    <ClCompile Include="PushGP\AsyncErrorFunction.cpp">
+      <Filter>Source Files\PushGP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

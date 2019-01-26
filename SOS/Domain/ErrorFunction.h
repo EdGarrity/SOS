@@ -21,7 +21,7 @@ namespace domain
 	// Evaluates an individual using the provided range
 	double evaluate_individuals(static std::vector<int> & individual_indexes, static unsigned long input_start, static unsigned long input_end, unsigned int _test_case, bool _record_transactions);
 
-	double lexicase_reproduction_selection_error_function(static int individual, static unsigned long input_start, static unsigned long input_end);
+	double lexicase_reproduction_selection_error_function(static int individual_index, static unsigned long input_start, static unsigned long input_end);
 
 	void load_argmap();
 }

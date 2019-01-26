@@ -1,3 +1,7 @@
+#include <mutex>
+#include <functional>
+#include <thread>
+
 #include "PushGP.h"
 #include "Globals.h"
 #include "Individual.h"
@@ -10,6 +14,7 @@
 #include "..\Finance\Broker.h"
 #include "..\Database/SQLCommand.h"
 #include "..\Database/SQLField.h"
+#include "AsyncErrorFunction.h"
 
 using namespace std;
 using namespace Push;
@@ -17,6 +22,8 @@ using namespace pushGP;
 
 namespace pushGP
 {
+	AsyncErrorFunction async_error_function;
+
 	database::SQLConnection con;
 
 
@@ -132,17 +139,48 @@ namespace pushGP
 
 	void compute_errors(std::function<double(unsigned int, unsigned long, unsigned long)> reproduction_selection_error_function, unsigned long input_start, unsigned long input_end)
 	{
-		double min_error = std::numeric_limits<double>::max();
-
-		for (int n = 0; n < argmap::population_size; n++)
+		if (argmap::use_single_thread)
 		{
-			cout << "  Evaluate Individual " << n;
-			double error = reproduction_selection_error_function(n, input_start, input_end);
-			cout << " Min error = " << error << std::endl;
-			min_error = min_error < error ? min_error : error;
+			double min_error = std::numeric_limits<double>::max();
+
+			for (int n = 0; n < argmap::population_size; n++)
+			{
+				cout << "  Evaluate Individual " << n;
+				double error = reproduction_selection_error_function(n, input_start, input_end);
+				cout << " Min error = " << error << std::endl;
+				min_error = min_error < error ? min_error : error;
+			}
+
+			cout << "   Min error = " << min_error << std::endl;
 		}
 
-		cout << "   Min error = " << min_error << std::endl;
+		else
+		{
+			int num_threads = std::thread::hardware_concurrency();
+			std::vector<std::thread> thread_pool;
+
+			cout << "  Number of threads = " << num_threads << std::endl;
+
+			for (int i = 0; i < num_threads - 1; i++)
+				thread_pool.push_back(std::thread(&AsyncErrorFunction::infinite_loop_func, &async_error_function, reproduction_selection_error_function));
+
+
+			cout << "  Evaluate Individuals";
+
+			for (int n = 0; n < argmap::population_size; n++)
+			{
+				async_error_function.push(n, input_start, input_end);
+			}
+
+			async_error_function.done();
+
+			for (unsigned int i = 0; i < thread_pool.size(); i++)
+			{
+				thread_pool.at(i).join();
+			}
+
+			cout << std::endl;
+		}
 	}
 
 	void produce_new_offspring()
