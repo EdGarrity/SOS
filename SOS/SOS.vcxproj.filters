@@ -156,6 +156,9 @@
     <ClInclude Include="Database\SQLField.h">
       <Filter>Header Files\Database</Filter>
     </ClInclude>
+    <ClInclude Include="Utilities\FunctionPool.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -247,6 +250,9 @@
     </ClCompile>
     <ClCompile Include="Database\SQLField.cpp">
       <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\FunctionPool.cpp">
+      <Filter>Source Files\Utilities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
