@@ -174,7 +174,12 @@ namespace Push
 		}
 
 		int first = pop<int>(env);
-		get_stack<int>().back() %= first;
+		int second = get_stack<int>().back();
+		
+		// Check for integer overflow
+		if ((first != -1) || (second != INT_MIN))
+			second %= first;
+
 		return 1;
 	}
 
