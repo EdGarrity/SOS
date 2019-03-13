@@ -1,7 +1,6 @@
 #include  <iostream>
 
 #include "AsyncErrorFunction.h"
-//#include "..\Utilities\AtomicFunctions.h"
 
 namespace pushGP
 {
@@ -17,7 +16,7 @@ namespace pushGP
 
 	void AsyncErrorFunction::push(int _individual_index, unsigned long _input_start, unsigned long _input_end)
 	{
-		WorkOrder work_order; //= { _individual_index, _input_start, _input_end };
+		WorkOrder work_order;
 
 		work_order.individual_index = _individual_index;
 		work_order.input_start = _input_start;
@@ -89,15 +88,6 @@ namespace pushGP
 		}
 	}
 
-	//template<typename T>
-	//void update_maximum(std::atomic<T>& maximum_value, T const& value) noexcept
-	//{
-	//	T prev_value = maximum_value;
-	//	while (prev_value < value &&
-	//		!maximum_value.compare_exchange_weak(prev_value, value))
-	//		;
-	//}
-
 	void AsyncErrorFunction::individual_selection_error_function_thread_pool(std::function<double(std::vector<int>&, unsigned long, unsigned long, unsigned int, bool)> error_function)
 	{
 		double error;
@@ -108,21 +98,23 @@ namespace pushGP
 			{
 				std::unique_lock<std::mutex> lock(lock_);
 				data_condition_.wait(lock, [this]() {return !work_order_queue_.empty() || !accept_functions_; });
+
 				if (!accept_functions_ && work_order_queue_.empty())
 				{
 					//lock will be release automatically.
 					//finish the thread loop and let it join in the main thread.
 					return;
 				}
+
 				work_order = work_order_queue_.front();
 				work_order_queue_.pop();
+
 				//release the lock
 			}
 
 			std::cout << ".";
 			error = error_function(work_order.individual_indexes, work_order.input_start, work_order.input_end, work_order.test_case, work_order.record_transactions);
 
-//			update_maximum<double>(min_error_, error);
 			{
 				std::unique_lock<std::mutex> lock(min_error_lock_);
 

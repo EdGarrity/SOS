@@ -514,10 +514,10 @@ namespace pushGP
 			codeListFactory_old = Push::codeListFactory;
 			doRangeClassFactory_old = Push::doRangeClassFactory;
 
-			//while (!done)			Commented out so as not to change the generation while running tests.
-			//{
+			while (!done)
+			{
 				cout << "Generation " << generation_number << endl;
-//				save_generation();	Commented out so as not to change the generation while running tests.
+				save_generation();
 
 				cout << "Compte Errors" << endl;
 				compute_errors(reproduction_selection_error_function, argmap::training_start_index, argmap::training_end_index);
@@ -527,8 +527,8 @@ namespace pushGP
 				cout << "Calculate Epsilons" << endl;
 				calculate_epsilons_for_epsilon_lexicase();
 
-				//cout << "Produce New Offspring" << endl;		Commented out so as not to change the generation while running tests.
-				//produce_new_offspring();
+				cout << "Produce New Offspring" << endl;
+				produce_new_offspring();
 				
 				cout << "Generate status report" << endl;
 				generate_status_report(generation_number, 
@@ -538,10 +538,10 @@ namespace pushGP
 					argmap::test_start_index, 
 					argmap::test_end_index);
 
-				//cout << "Install New Generation" << endl;		Commented out so as not to change the generation while running tests.
-				//install_next_generation();
-				//generation_number++;
-			//}								Commented out so as not to change the generation while running tests.
+				cout << "Install New Generation" << endl;
+				install_next_generation();
+				generation_number++;
+			}
 
 			// Restore old heap manager
 			Push::intLiteralFactory = intLiteralFactory_old;
