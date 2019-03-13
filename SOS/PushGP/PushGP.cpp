@@ -22,8 +22,6 @@ using namespace pushGP;
 
 namespace pushGP
 {
-	AsyncErrorFunction async_error_function;
-
 	database::SQLConnection con;
 
 
@@ -139,6 +137,8 @@ namespace pushGP
 
 	void compute_errors(std::function<double(unsigned int, unsigned long, unsigned long)> reproduction_selection_error_function, unsigned long input_start, unsigned long input_end)
 	{
+		AsyncErrorFunction async_error_function;
+
 		if (argmap::use_single_thread)
 		{
 			double min_error = std::numeric_limits<double>::max();
@@ -162,7 +162,7 @@ namespace pushGP
 			cout << "  Number of threads = " << num_threads << std::endl;
 
 			for (int i = 0; i < num_threads - 1; i++)
-				thread_pool.push_back(std::thread(&AsyncErrorFunction::infinite_loop_func, &async_error_function, reproduction_selection_error_function));
+				thread_pool.push_back(std::thread(&AsyncErrorFunction::reproduction_selection_error_function_thread_pool, &async_error_function, reproduction_selection_error_function));
 
 
 			cout << "  Evaluate Individuals";
@@ -261,21 +261,55 @@ namespace pushGP
 		// Clear test case counts
 		min_error = std::numeric_limits<double>::max();
 
-		for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
+		AsyncErrorFunction async_error_function;
+
+		if (argmap::use_single_thread)
 		{
-			globals::population_agents[individual_index].clear_elite_test_cases();
-
-			std::cout << "Calculate the group training score for individual #" << individual_index + 1 << std::endl;
-
-			std::vector<int> individual_indexes = { individual_index };
-
-			double error = individual_selection_error_function(individual_indexes, training_input_start, training_input_end, 0, false);
-
-			if (error < min_error)
+			for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 			{
-				min_error = error;
-				index_of_individual_with_best_training_score_for_all_data = individual_index;
+				globals::population_agents[individual_index].clear_elite_test_cases();
+
+				std::cout << "Calculate the group training score for individual #" << individual_index + 1 << std::endl;
+
+				std::vector<int> individual_indexes = { individual_index };
+
+				double error = individual_selection_error_function(individual_indexes, training_input_start, training_input_end, 0, false);
+
+				if (error < min_error)
+				{
+					min_error = error;
+					index_of_individual_with_best_training_score_for_all_data = individual_index;
+				}
 			}
+		}
+		else
+		{
+			int num_threads = std::thread::hardware_concurrency();
+			std::vector<std::thread> thread_pool;
+
+			for (int i = 0; i < num_threads - 1; i++)
+				thread_pool.push_back(std::thread(&AsyncErrorFunction::individual_selection_error_function_thread_pool, &async_error_function, individual_selection_error_function));
+
+			std::cout << "Calculate the group training score";
+
+			for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
+			{
+				globals::population_agents[individual_index].clear_elite_test_cases();
+
+				std::vector<int> individual_indexes = { individual_index };
+
+				async_error_function.push(individual_indexes, training_input_start, training_input_end, 0, false);
+			}
+
+			async_error_function.done();
+
+			for (unsigned int i = 0; i < thread_pool.size(); i++)
+				thread_pool.at(i).join();
+
+			cout << std::endl;
+
+			min_error = async_error_function.min_error();
+			index_of_individual_with_best_training_score_for_all_data = async_error_function.min_error_individual_index();
 		}
 
 		training_score_of_individual_with_best_training_score_for_all_data = 0.0 - min_error;
@@ -480,10 +514,10 @@ namespace pushGP
 			codeListFactory_old = Push::codeListFactory;
 			doRangeClassFactory_old = Push::doRangeClassFactory;
 
-			while (!done)
-			{
+			//while (!done)			Commented out so as not to change the generation while running tests.
+			//{
 				cout << "Generation " << generation_number << endl;
-				save_generation();
+//				save_generation();	Commented out so as not to change the generation while running tests.
 
 				cout << "Compte Errors" << endl;
 				compute_errors(reproduction_selection_error_function, argmap::training_start_index, argmap::training_end_index);
@@ -493,8 +527,8 @@ namespace pushGP
 				cout << "Calculate Epsilons" << endl;
 				calculate_epsilons_for_epsilon_lexicase();
 
-				cout << "Produce New Offspring" << endl;
-				produce_new_offspring();
+				//cout << "Produce New Offspring" << endl;		Commented out so as not to change the generation while running tests.
+				//produce_new_offspring();
 				
 				cout << "Generate status report" << endl;
 				generate_status_report(generation_number, 
@@ -504,10 +538,10 @@ namespace pushGP
 					argmap::test_start_index, 
 					argmap::test_end_index);
 
-				cout << "Install New Generation" << endl;
-				install_next_generation();
-				generation_number++;
-			}
+				//cout << "Install New Generation" << endl;		Commented out so as not to change the generation while running tests.
+				//install_next_generation();
+				//generation_number++;
+			//}								Commented out so as not to change the generation while running tests.
 
 			// Restore old heap manager
 			Push::intLiteralFactory = intLiteralFactory_old;
