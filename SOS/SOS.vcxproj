@@ -160,6 +160,7 @@
     <ClInclude Include="Finance\Broker.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PushGP\Arguments.h" />
+    <ClInclude Include="PushGP\AsyncErrorFunction.h" />
     <ClInclude Include="PushGP\Breed.h" />
     <ClInclude Include="PushGP\GeneticOperators.h" />
     <ClInclude Include="PushGP\Globals.h" />
@@ -185,6 +186,7 @@
     <ClInclude Include="PushP\TypedAtom.h" />
     <ClInclude Include="PushP\TypeDef.h" />
     <ClInclude Include="Test.h" />
+    <ClInclude Include="Utilities\AtomicFunctions.h" />
     <ClInclude Include="Utilities\Conversion.h" />
     <ClInclude Include="Utilities\MyException.h" />
     <ClInclude Include="Utilities\Singleton.h" />
@@ -202,6 +204,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PushGP\AsyncErrorFunction.cpp" />
     <ClCompile Include="PushGP\Breed.cpp" />
     <ClCompile Include="PushGP\GeneticOperators.cpp" />
     <ClCompile Include="PushGP\Globals.cpp" />
@@ -223,6 +226,7 @@
     <ClCompile Include="PushP\StaticInit.cpp" />
     <ClCompile Include="PushP\Type.cpp" />
     <ClCompile Include="Test.cpp" />
+    <ClCompile Include="Utilities\AtomicFunctions.cpp" />
     <ClCompile Include="Utilities\Conversion.cpp" />
     <ClCompile Include="Utilities\MyException.cpp" />
   </ItemGroup>

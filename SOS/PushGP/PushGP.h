@@ -15,7 +15,7 @@ namespace pushGP
 
 //	double evaluate_individual(std::function<double(Individual&, unsigned long, unsigned long)> error_function, Individual & individual, unsigned long input_start, unsigned long input_end);
 
-	void compute_errors(static std::function<double(static unsigned int, static unsigned long, static unsigned long)> error_function, static unsigned long input_start, static unsigned long input_end);
+	void compute_errors(static unsigned long input_start, static unsigned long input_end);
 	
 	void produce_new_offspring();
 

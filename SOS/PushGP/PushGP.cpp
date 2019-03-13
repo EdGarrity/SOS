@@ -1,3 +1,7 @@
+#include <mutex>
+#include <functional>
+#include <thread>
+
 #include "PushGP.h"
 #include "Globals.h"
 #include "Individual.h"
@@ -10,6 +14,7 @@
 #include "..\Finance\Broker.h"
 #include "..\Database/SQLCommand.h"
 #include "..\Database/SQLField.h"
+#include "AsyncErrorFunction.h"
 
 using namespace std;
 using namespace Push;
@@ -132,17 +137,50 @@ namespace pushGP
 
 	void compute_errors(std::function<double(unsigned int, unsigned long, unsigned long)> reproduction_selection_error_function, unsigned long input_start, unsigned long input_end)
 	{
-		double min_error = std::numeric_limits<double>::max();
+		AsyncErrorFunction async_error_function;
 
-		for (int n = 0; n < argmap::population_size; n++)
+		if (argmap::use_single_thread)
 		{
-			cout << "  Evaluate Individual " << n;
-			double error = reproduction_selection_error_function(n, input_start, input_end);
-			cout << " Min error = " << error << std::endl;
-			min_error = min_error < error ? min_error : error;
+			double min_error = std::numeric_limits<double>::max();
+
+			for (int n = 0; n < argmap::population_size; n++)
+			{
+				cout << "  Evaluate Individual " << n;
+				double error = reproduction_selection_error_function(n, input_start, input_end);
+				cout << " Min error = " << error << std::endl;
+				min_error = min_error < error ? min_error : error;
+			}
+
+			cout << "   Min error = " << min_error << std::endl;
 		}
 
-		cout << "   Min error = " << min_error << std::endl;
+		else
+		{
+			int num_threads = std::thread::hardware_concurrency();
+			std::vector<std::thread> thread_pool;
+
+			cout << "  Number of threads = " << num_threads << std::endl;
+
+			for (int i = 0; i < num_threads - 1; i++)
+				thread_pool.push_back(std::thread(&AsyncErrorFunction::reproduction_selection_error_function_thread_pool, &async_error_function, reproduction_selection_error_function));
+
+
+			cout << "  Evaluate Individuals";
+
+			for (int n = 0; n < argmap::population_size; n++)
+			{
+				async_error_function.push(n, input_start, input_end);
+			}
+
+			async_error_function.done();
+
+			for (unsigned int i = 0; i < thread_pool.size(); i++)
+			{
+				thread_pool.at(i).join();
+			}
+
+			cout << std::endl;
+		}
 	}
 
 	void produce_new_offspring()
@@ -223,21 +261,55 @@ namespace pushGP
 		// Clear test case counts
 		min_error = std::numeric_limits<double>::max();
 
-		for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
+		AsyncErrorFunction async_error_function;
+
+		if (argmap::use_single_thread)
 		{
-			globals::population_agents[individual_index].clear_elite_test_cases();
-
-			std::cout << "Calculate the group training score for individual #" << individual_index + 1 << std::endl;
-
-			std::vector<int> individual_indexes = { individual_index };
-
-			double error = individual_selection_error_function(individual_indexes, training_input_start, training_input_end, 0, false);
-
-			if (error < min_error)
+			for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 			{
-				min_error = error;
-				index_of_individual_with_best_training_score_for_all_data = individual_index;
+				globals::population_agents[individual_index].clear_elite_test_cases();
+
+				std::cout << "Calculate the group training score for individual #" << individual_index + 1 << std::endl;
+
+				std::vector<int> individual_indexes = { individual_index };
+
+				double error = individual_selection_error_function(individual_indexes, training_input_start, training_input_end, 0, false);
+
+				if (error < min_error)
+				{
+					min_error = error;
+					index_of_individual_with_best_training_score_for_all_data = individual_index;
+				}
 			}
+		}
+		else
+		{
+			int num_threads = std::thread::hardware_concurrency();
+			std::vector<std::thread> thread_pool;
+
+			for (int i = 0; i < num_threads - 1; i++)
+				thread_pool.push_back(std::thread(&AsyncErrorFunction::individual_selection_error_function_thread_pool, &async_error_function, individual_selection_error_function));
+
+			std::cout << "Calculate the group training score";
+
+			for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
+			{
+				globals::population_agents[individual_index].clear_elite_test_cases();
+
+				std::vector<int> individual_indexes = { individual_index };
+
+				async_error_function.push(individual_indexes, training_input_start, training_input_end, 0, false);
+			}
+
+			async_error_function.done();
+
+			for (unsigned int i = 0; i < thread_pool.size(); i++)
+				thread_pool.at(i).join();
+
+			cout << std::endl;
+
+			min_error = async_error_function.min_error();
+			index_of_individual_with_best_training_score_for_all_data = async_error_function.min_error_individual_index();
 		}
 
 		training_score_of_individual_with_best_training_score_for_all_data = 0.0 - min_error;

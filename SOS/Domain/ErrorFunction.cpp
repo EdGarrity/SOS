@@ -66,9 +66,6 @@ namespace domain
 		}
 
 		// Get the most popular order
-		//auto n = std::max_element(orders.cbegin(), orders.cend());
-		//order = n->first;
-
 		if ((orders[order_types::buy] > orders[order_types::sell]) && (orders[order_types::buy] > orders[order_types::hold]))
 			order = order_types::buy;
 		
@@ -107,7 +104,6 @@ namespace domain
 		env.parameters.pBroker = &broker;
 
 		// Evaluate each day of the test case.
-//		for (day_index = input_start; day_index < input_start + argmap::number_of_training_days_in_year - 1; day_index++)
 		for (day_index = _input_start; day_index < _input_end; day_index++)
 			eval_one_day_of_test_case(_individual_indexes, day_index, _test_case, _record_transactions);
 
