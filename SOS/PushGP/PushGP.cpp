@@ -49,10 +49,11 @@ namespace pushGP
 		"           ,[Population_Size]"							// 16
 		"           ,[Alternation_Rate]"						// 17
 		"           ,[Uniform_Mutation_Rate]"					// 18
+		"           ,[Genome]"									// 19
 		"           )"
 		"     VALUES"
-		"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-			//       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8
+		"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			//       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9
 
 	unsigned long get_last_saved_generation_number()
 	{
@@ -156,7 +157,7 @@ namespace pushGP
 
 		else
 		{
-			int num_threads = std::thread::hardware_concurrency();
+			int num_threads = std::thread::hardware_concurrency() - argmap::number_of_cores_to_reserve;
 			std::vector<std::thread> thread_pool;
 
 			cout << "  Number of threads = " << num_threads << std::endl;
@@ -284,7 +285,7 @@ namespace pushGP
 		}
 		else
 		{
-			int num_threads = std::thread::hardware_concurrency();
+			int num_threads = std::thread::hardware_concurrency() - argmap::number_of_cores_to_reserve;
 			std::vector<std::thread> thread_pool;
 
 			for (int i = 0; i < num_threads - 1; i++)
@@ -357,24 +358,28 @@ namespace pushGP
 			index_of_eligible_parents.push_back(individual_index);
 
 		// Calculate the training error from the best individuals from each test case
+		std::cout << "Training error from the best individuals from each test case = ";
 		error = individual_selection_error_function(index_of_best_individual_for_each_test_case, training_input_start, training_input_end, 0, false);
 		double best_individual_for_each_test_case_group_training_score = 0.0 - error;
-		std::cout << "Training error from the best individuals from each test case = " << best_individual_for_each_test_case_group_training_score << std::endl;
+		std::cout << best_individual_for_each_test_case_group_training_score << std::endl;
 
 		// Calculate the test error from the best individuals from each test case
+		std::cout << "Test error from the best individuals from each test case = ";
 		error = individual_selection_error_function(index_of_best_individual_for_each_test_case, test_input_start, test_input_end, 0, false);
 		double best_individual_for_each_test_case_group_validation_score = 0.0 - error;
-		std::cout << "Test error from the best individuals from each test case = " << best_individual_for_each_test_case_group_validation_score << std::endl;
+		std::cout << best_individual_for_each_test_case_group_validation_score << std::endl;
 
 		// Calculate the training error for the eligible parents
+		std::cout << "Eligible parents training score = ";
 		error = individual_selection_error_function(index_of_eligible_parents, training_input_start, training_input_end, 0, false);
 		double eligible_parents_training_score = 0.0 - error;
-		std::cout << "Eligible parents training score = " << eligible_parents_training_score << std::endl;
+		std::cout << eligible_parents_training_score << std::endl;
 
 		// Calculate the test error for the eligible parents
+		std::cout << "Eligible parents test score = ";
 		error = individual_selection_error_function(index_of_eligible_parents, test_input_start, test_input_end, 0, false);
 		double eligible_parents_validation_score = 0.0 - error;
-		std::cout << "Eligible parents test score = " << eligible_parents_validation_score << std::endl;
+		std::cout << eligible_parents_validation_score << std::endl;
 
 		// Calculte group training score
 		std::vector<int> index_of_individuals;
@@ -382,14 +387,16 @@ namespace pushGP
 		for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 			index_of_individuals.push_back(individual_index);
 
+		std::cout << "Group training score = ";
 		error = individual_selection_error_function(index_of_individuals, training_input_start, training_input_end, 0, false);
 		double group_training_score = 0.0 - error;
-		std::cout << "Group training score = " << group_training_score << std::endl;
+		std::cout << group_training_score << std::endl;
 
 		// Calculte group test score
+		std::cout << "Group test score = ";
 		error = individual_selection_error_function(index_of_individuals, test_input_start, test_input_end, 0, false);
 		double group_validation_score = 0.0 - error;
-		std::cout << "Group test score = " << group_validation_score << std::endl;
+		std::cout << group_validation_score << std::endl;
 
 		// Calculate number of individuals whom qualify as an elite individual			
 		// Calculate maximum number of test cases for any elite individual
@@ -417,6 +424,7 @@ namespace pushGP
 		}
 
 		// Calculate training score for elite individual with the maximum number of test cases
+		std::cout << "training_score_of_elite_individual_with_maximum_number_test_cases = ";
 		double training_score_of_elite_individual_with_maximum_number_test_cases = 0.0;
 		index_of_individuals.clear();
 		index_of_individuals.push_back(index_of_elite_individual_with_maximum_number_test_cases);
@@ -424,15 +432,16 @@ namespace pushGP
 		error = individual_selection_error_function(index_of_individuals, training_input_start, training_input_end, 0, true);
 
 		training_score_of_elite_individual_with_maximum_number_test_cases = 0.0 - error;
-		std::cout << "training_score_of_elite_individual_with_maximum_number_test_cases = " << training_score_of_elite_individual_with_maximum_number_test_cases << std::endl;
+		std::cout << training_score_of_elite_individual_with_maximum_number_test_cases << std::endl;
 
 		// Calculate test score for elite individual with the maximum number of test cases
+		std::cout << "test_score_of_elite_individual_with_maximum_number_test_cases = ";
 		double validation_score_of_elite_individual_with_maximum_number_test_cases = 0.0;
 
 		error = individual_selection_error_function(index_of_individuals, test_input_start, test_input_end, -1, true);
 
 		validation_score_of_elite_individual_with_maximum_number_test_cases = 0.0 - error;
-		std::cout << "test_score_of_elite_individual_with_maximum_number_test_cases = " << validation_score_of_elite_individual_with_maximum_number_test_cases << std::endl;
+		std::cout << validation_score_of_elite_individual_with_maximum_number_test_cases << std::endl;
 
 		// Set parameters to save
 		sqlcmd_save_status_report->set_as_integer(1, generation_);
@@ -456,6 +465,7 @@ namespace pushGP
 		sqlcmd_save_status_report->set_as_integer(16, argmap::population_size);
 		sqlcmd_save_status_report->set_as_float(17, argmap::alternation_rate);
 		sqlcmd_save_status_report->set_as_float(18, argmap::uniform_mutation_rate);
+		sqlcmd_save_status_report->set_as_string(19, globals::population_agents[index_of_individual_with_best_training_score_for_all_data].get_genome_as_string());
 
 		sqlcmd_save_status_report->execute();
 
