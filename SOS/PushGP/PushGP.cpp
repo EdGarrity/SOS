@@ -49,10 +49,11 @@ namespace pushGP
 		"           ,[Population_Size]"							// 16
 		"           ,[Alternation_Rate]"						// 17
 		"           ,[Uniform_Mutation_Rate]"					// 18
+		"           ,[Genome]"									// 19
 		"           )"
 		"     VALUES"
-		"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-			//       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8
+		"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			//       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9
 
 	unsigned long get_last_saved_generation_number()
 	{
@@ -456,6 +457,7 @@ namespace pushGP
 		sqlcmd_save_status_report->set_as_integer(16, argmap::population_size);
 		sqlcmd_save_status_report->set_as_float(17, argmap::alternation_rate);
 		sqlcmd_save_status_report->set_as_float(18, argmap::uniform_mutation_rate);
+		sqlcmd_save_status_report->set_as_string(19, globals::population_agents[index_of_individual_with_best_training_score_for_all_data].get_genome_as_string());
 
 		sqlcmd_save_status_report->execute();
 
