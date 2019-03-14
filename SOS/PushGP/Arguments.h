@@ -16,6 +16,7 @@ namespace pushGP
 			//	:use - single - thread false
 			//	;; When true, will only use a single thread.
 		const bool use_single_thread = false;
+		const unsigned int number_of_cores_to_reserve = 2;
 
 			//	:random - seed(random / generate - mersennetwister - seed)
 			//	;; The seed for the random number generator.
