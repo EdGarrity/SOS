@@ -1,7 +1,7 @@
 USE [SOS]
 GO
 
-/****** Object:  Table [dbo].[ProgressLog]    Script Date: 1/20/2019 9:16:21 PM ******/
+/****** Object:  Table [dbo].[ProgressLog]    Script Date: 3/14/2019 9:00:10 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -31,6 +31,7 @@ CREATE TABLE [dbo].[ProgressLog](
 	[Population_Size] [int] NOT NULL,
 	[Alternation_Rate] [float] NOT NULL,
 	[Uniform_Mutation_Rate] [float] NOT NULL,
+	[Genome] [varchar](5000) NULL,
  CONSTRAINT [PK_ProgressLog] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
