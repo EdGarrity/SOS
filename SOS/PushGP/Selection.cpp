@@ -4,6 +4,7 @@
 #include "Selection.h"
 #include "Globals.h"
 #include "Random.h"
+#include "..\Utilities\MyRandom.h"
 
 namespace pushGP
 {
@@ -173,7 +174,7 @@ namespace pushGP
 
 		else
 		{
-			int n = (int)(random_double() * argmap::population_size);
+			int n = (int)(utilities::random_double() * argmap::population_size);
 			return globals::population_agents[*it];
 		}
 	}

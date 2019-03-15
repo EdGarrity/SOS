@@ -4,6 +4,7 @@
 #include "Arguments.h"
 #include "GeneticOperators.h"
 #include "Random.h"
+#include "..\Utilities\MyRandom.h"
 
 namespace pushGP
 {
@@ -11,7 +12,7 @@ namespace pushGP
 
 	double gaussian_noise_factor()
 	{
-		return (std::sqrt(-2.0 * std::log(random_double())) * (std::cos(2.0 * argmap::PI * random_double())));
+		return (std::sqrt(-2.0 * std::log(utilities::random_double())) * (std::cos(2.0 * argmap::PI * utilities::random_double())));
 	}
 
 	double perturb_with_gaussian_noise(double sd, double n)
@@ -31,9 +32,9 @@ namespace pushGP
 		{
 //			std::cout << "        instruction = " << atom.instruction << std::endl;
 
-			if (random_double() < argmap::uniform_mutation_rate)
+			if (utilities::random_double() < argmap::uniform_mutation_rate)
 			{
-				if (random_double() < argmap::uniform_mutation_constant_tweak_rate)
+				if (utilities::random_double() < argmap::uniform_mutation_constant_tweak_rate)
 				{
 					if (atom.type == atom.floating_point)
 					{
@@ -110,7 +111,7 @@ namespace pushGP
 		const std::vector<struct Atom> s2 = parent2.get_genome();
 
 		unsigned int i = 0;
-		bool use_s1 = (random_double() > 0.5) ? true : false;
+		bool use_s1 = (utilities::random_double() > 0.5) ? true : false;
 		std::vector<struct Atom> result_genome;
 		int iteration_budget = s1.size() + s2.size();
 
@@ -119,7 +120,7 @@ namespace pushGP
 			 && (iteration_budget > 0)						// looping too long
 			  )
 		{
-			if (random_double() < argmap::alternation_rate)
+			if (utilities::random_double() < argmap::alternation_rate)
 			{
 				i = std::fmax(0.0, i + std::round(argmap::alignment_deviation * gaussian_noise_factor()));
 				use_s1 = !use_s1;

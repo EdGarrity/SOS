@@ -6,6 +6,12 @@
 #include "CodeUtils.h" // for cdr
 #include "..\Finance\Broker.h"
 
+// TODO: check for various compilers if this is exactly 32 bits
+// Unfortunately MSVC's preprocessor does not comprehend sizeof()
+// so neat preprocessing tricks will not work
+
+typedef unsigned long uint32; // Compiler and platform dependent!
+
 namespace Push
 {
 	// This needs to be initialize in Push Initialze and stored in Thread Local Storage

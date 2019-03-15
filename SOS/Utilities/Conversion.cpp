@@ -8,7 +8,7 @@ std::string toString(double value)
 	return o.str();
 }
 
-std::string toString(unsigned long value)
+std::string toString(unsigned int value)
 {
 	std::ostringstream o;
 	if (!(o << value))

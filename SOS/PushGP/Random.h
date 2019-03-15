@@ -6,8 +6,6 @@
 
 namespace pushGP
 {
-	double random_double();
-
 	unsigned int random_closes();
 	struct Atom random_atom();
 	std::vector<struct Atom> random_plush_genome_with_size(unsigned int genome_size);

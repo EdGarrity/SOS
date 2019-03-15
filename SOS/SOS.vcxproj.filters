@@ -87,9 +87,6 @@
     <ClInclude Include="PushP\Instruction.h">
       <Filter>Header Files\PushP</Filter>
     </ClInclude>
-    <ClInclude Include="PushP\RNG.h">
-      <Filter>Header Files\PushP</Filter>
-    </ClInclude>
     <ClInclude Include="Test.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -160,6 +157,9 @@
       <Filter>Header Files\PushGP</Filter>
     </ClInclude>
     <ClInclude Include="Utilities\AtomicFunctions.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\MyRandom.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
@@ -258,6 +258,9 @@
       <Filter>Source Files\PushGP</Filter>
     </ClCompile>
     <ClCompile Include="Utilities\AtomicFunctions.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\MyRandom.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
   </ItemGroup>

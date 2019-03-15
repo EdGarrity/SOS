@@ -4,10 +4,10 @@
 #include <string>       // std::string
 
 #include "CodeUtils.h"
-#include "RNG.h"
 #include "Env.h"
 #include "Literal.h"
 #include "StaticInit.h"
+#include "..\Utilities\MyRandom.h"
 
 namespace Push
 {
@@ -126,7 +126,7 @@ namespace Push
 
 	std::string make_terminal()
 	{
-		uint32 r = rng.random(Push::detail::function_names.size());
+		uint32 r = utilities::random_integer(Push::detail::function_names.size());
 		return (Push::detail::function_names[r]);
 	}
 
@@ -140,7 +140,7 @@ namespace Push
 			return result;
 		}
 
-		unsigned this_part = rng.random(number - 1) + 1;
+		unsigned this_part = utilities::random_integer(number - 1) + 1;
 		result.push_back(this_part);
 		std::vector<unsigned> sub = decompose(number - this_part, max_parts - 1);
 

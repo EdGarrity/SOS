@@ -179,7 +179,6 @@
     <ClInclude Include="PushP\Literal.h" />
     <ClInclude Include="PushP\NumOps.h" />
     <ClInclude Include="PushP\RandOps.h" />
-    <ClInclude Include="PushP\RNG.h" />
     <ClInclude Include="PushP\StaticInit.h" />
     <ClInclude Include="PushP\StaticLibMacros.h" />
     <ClInclude Include="PushP\Type.h" />
@@ -189,6 +188,7 @@
     <ClInclude Include="Utilities\AtomicFunctions.h" />
     <ClInclude Include="Utilities\Conversion.h" />
     <ClInclude Include="Utilities\MyException.h" />
+    <ClInclude Include="Utilities\MyRandom.h" />
     <ClInclude Include="Utilities\Singleton.h" />
   </ItemGroup>
   <ItemGroup>
@@ -229,6 +229,7 @@
     <ClCompile Include="Utilities\AtomicFunctions.cpp" />
     <ClCompile Include="Utilities\Conversion.cpp" />
     <ClCompile Include="Utilities\MyException.cpp" />
+    <ClCompile Include="Utilities\MyRandom.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="test.config" />

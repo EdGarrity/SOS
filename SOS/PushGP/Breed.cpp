@@ -3,13 +3,14 @@
 #include "Selection.h"
 #include "GeneticOperators.h"
 #include "Arguments.h"
+#include "..\Utilities\MyRandom.h"
 
 namespace pushGP
 {
 	// Returns an empty individual with just the genome defined.
 	Individual breed()
 	{
-		double prob = random_double();
+		double prob = utilities::random_double();
 		Individual child;
 
 		if (prob <= 0.5)

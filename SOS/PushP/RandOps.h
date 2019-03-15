@@ -1,14 +1,14 @@
 #pragma once
 
-#include "RNG.h"
 #include "Env.h"
 #include "CodeUtils.h"
+#include "..\Utilities\MyRandom.h"
 
 namespace Push
 {
 	inline unsigned rand_bool()
 	{
-		push<bool>(rng.flip(0.5));
+		push<bool>(utilities::flip(0.5));
 		return 1;
 	}
 
@@ -16,7 +16,7 @@ namespace Push
 	{
 		int mn = env.parameters.min_random_integer;
 		int mx = env.parameters.max_random_integer;
-		int erc = rng.random(mx - mn) + mn;
+		int erc = utilities::random_integer(mx - mn) + mn;
 		push(erc);
 		return 1;
 	}
@@ -25,7 +25,7 @@ namespace Push
 	{
 		double mn = env.parameters.min_random_float;
 		double mx = env.parameters.max_random_float;
-		double erc = rng.uniform() * (mx - mn) + mn;
+		double erc = utilities::random_double() * (mx - mn) + mn;
 		push(erc);
 		return 1;
 	}
