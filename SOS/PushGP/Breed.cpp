@@ -7,6 +7,9 @@
 
 namespace pushGP
 {
+	std::atomic<int> bread_a_count;
+	std::atomic<int> bread_m_count;
+
 	// Returns an empty individual with just the genome defined.
 	Individual breed()
 	{
@@ -15,7 +18,9 @@ namespace pushGP
 
 		if (prob <= 0.5)
 		{
-			std::cout << "    alternation" << std::endl;
+//			std::cout << "    alternation" << std::endl;
+			std::cout << "A";
+			bread_a_count++;
 
 			Individual first_parent = epsilon_lexicase_selection();
 			Individual other_parent = epsilon_lexicase_selection();
@@ -25,7 +30,9 @@ namespace pushGP
 
 		else
 		{
-			std::cout << "    mutation" << std::endl;
+//			std::cout << "    mutation" << std::endl;
+			std::cout << "M";
+			bread_m_count++;
 
 			Individual parent = epsilon_lexicase_selection();
 			child = uniform_mutation(parent);
@@ -34,7 +41,8 @@ namespace pushGP
 		// Check if child too big
 		if (child.get_genome().size() > (argmap::max_points / 4))
 		{
-			std::cout << "    Child too big" << std::endl;
+//			std::cout << "    Child too big" << std::endl;
+			std::cout << "X";
 			child = Individual(random_plush_genome());
 		}
 

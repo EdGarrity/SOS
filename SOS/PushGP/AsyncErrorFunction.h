@@ -7,6 +7,7 @@
 
 namespace pushGP
 {
+	// See function_pool.h response on page https://stackoverflow.com/questions/15752659/thread-pooling-in-c11?lq=1.
 	class AsyncErrorFunction
 	{
 	private:

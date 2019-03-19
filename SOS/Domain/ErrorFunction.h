@@ -24,4 +24,8 @@ namespace domain
 	double lexicase_reproduction_selection_error_function(static int individual_index, static unsigned long input_start, static unsigned long input_end);
 
 	void load_argmap();
+
+
+	void eval_one_day_of_test_case_async(static std::vector<int> & individual_indexes, static unsigned long input_row, unsigned int _test_case, bool _record_transactions);
+	double evaluate_individuals_async(static std::vector<int> & individual_indexes, static unsigned long input_start, static unsigned long input_end, unsigned int _test_case, bool _record_transactions);
 }

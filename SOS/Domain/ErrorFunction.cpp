@@ -1,3 +1,7 @@
+#include <mutex>
+#include <functional>
+#include <thread>
+
 #include "ErrorFunction.h"
 #include "..\PushGP\Globals.h"
 #include "..\Finance\Broker.h"
@@ -6,6 +10,7 @@
 #include "..\PushP\Env.h"
 #include "..\PushP\Literal.h"
 #include "..\PushP\ExecInstruction.h"
+#include "..\Utilities\ctpl_stl.h"
 
 using namespace finance;
 using namespace Push;
@@ -143,5 +148,95 @@ namespace domain
 
 	void load_argmap()
 	{
+	}
+
+
+
+
+
+	void eval_one_day_of_test_case_async(static std::vector<int> & _individual_indexes, static unsigned long _row, unsigned int _test_case, bool _record_transactions)
+	{
+		std::map<order_types, unsigned int> orders = { {order_types::buy, 0}, {order_types::hold, 0}, {order_types::sell, 0} };
+		order_types order;
+
+		int num_threads = std::thread::hardware_concurrency() - argmap::number_of_cores_to_reserve;
+
+		ctpl::thread_pool p(num_threads);
+		std::vector<std::future<order_types>> results(argmap::population_size);
+
+		// Generate orders
+		for (int individual_index : _individual_indexes)
+		{
+			if (individual_index >= 0)
+			{
+				results[individual_index] = p.push([individual_index, _row](int id)
+				{
+					return run_individual_program(individual_index, _row);
+				});
+			}
+		}
+
+		// Collect orders
+		for (int individual_index : _individual_indexes)
+		{
+			if (individual_index >= 0)
+			{
+				order = results[individual_index].get();
+				orders[order]++;
+			}
+			else
+				orders[order_types::hold]++;
+		}
+
+		// Get the most popular order
+		if ((orders[order_types::buy] > orders[order_types::sell]) && (orders[order_types::buy] > orders[order_types::hold]))
+			order = order_types::buy;
+
+		else if ((orders[order_types::sell] > orders[order_types::buy]) && (orders[order_types::sell] > orders[order_types::hold]))
+			order = order_types::sell;
+
+		else
+			order = order_types::hold;
+
+		// Process order
+		if ((order == order_types::buy) || (order == order_types::sell))
+			env.parameters.pBroker->update_brokeage_account((order == order_types::buy), _row);
+
+		if (_record_transactions)
+		{
+			int number_of_shares = env.parameters.pBroker->get_number_of_shares();
+			double cash_balance = env.parameters.pBroker->get_cash_balance();
+			double adj_close = env.parameters.pBroker->get_value_from_datatable(_row, env.parameters.pBroker->adj_close_column);
+
+			for (unsigned int individual_index : _individual_indexes)
+				globals::population_agents[individual_index].log_transaction(_test_case, _row, adj_close, order, number_of_shares, cash_balance);
+		}
+	}
+
+	// Evaluate a single test case
+	double evaluate_individuals_async(static std::vector<int> & _individual_indexes, static unsigned long _input_start, static unsigned long _input_end, unsigned int _test_case, bool _record_transactions)
+	{
+		// Check if the list of individuals is empty
+		if (_individual_indexes.empty())
+			return std::numeric_limits<double>::max();
+
+		unsigned long day_index = 0;
+		Broker broker = Broker(argmap::opening_balance);
+
+		// Provide a reference to the broker object to to PushP.  It is used to retieve 
+		env.parameters.pBroker = &broker;
+
+		// Evaluate each day of the test case.
+		for (day_index = _input_start; day_index < _input_end; day_index++)
+			eval_one_day_of_test_case_async(_individual_indexes, day_index, _test_case, _record_transactions);
+
+		// Calculate test case error by calculating loss
+		double error = argmap::opening_balance - broker.close_brokeage_account(day_index);
+
+		// Remove reference to broker object from the PushP environment.
+		env.parameters.pBroker = NULL;
+
+		// Return the error value
+		return (error == 0.0 ? std::numeric_limits<double>::max() : error);
 	}
 }

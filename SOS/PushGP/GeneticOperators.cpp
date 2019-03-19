@@ -23,23 +23,17 @@ namespace pushGP
 	// Canidate for optimization.
 	Individual uniform_mutation(Individual parent)
 	{
-//		std::cout << "      uniform_mutation" << std::endl;
-
 		const std::vector<struct Atom> old_genome = parent.get_genome();
 		std::vector<struct Atom> new_genome;
 
 		for (auto atom : old_genome)
 		{
-//			std::cout << "        instruction = " << atom.instruction << std::endl;
-
 			if (utilities::random_double() < argmap::uniform_mutation_rate)
 			{
 				if (utilities::random_double() < argmap::uniform_mutation_constant_tweak_rate)
 				{
 					if (atom.type == atom.floating_point)
 					{
-//						std::cout << "      atom.type == atom.floating_point" << std::endl;
-
 						double n = atof(atom.instruction.c_str());
 						n = perturb_with_gaussian_noise(argmap::uniform_mutation_float_int_gaussian_standard_deviation, n);
 						atom.instruction = std::to_string(n);
@@ -49,8 +43,6 @@ namespace pushGP
 
 					else if (atom.type == atom.integer)
 					{
-//						std::cout << "      atom.type == atom.floating_point" << std::endl;
-
 						int n = atoi(atom.instruction.c_str());
 						perturb_with_gaussian_noise(argmap::uniform_mutation_float_int_gaussian_standard_deviation, n);
 						atom.instruction = std::to_string(n);
@@ -60,8 +52,6 @@ namespace pushGP
 
 					else if (atom.type == atom.boolean)
 					{
-//						std::cout << "      atom.type == atom.floating_point" << std::endl;
-
 						if (atom.instruction == "TRUE")
 							atom.instruction = "FALSE";
 
@@ -72,35 +62,19 @@ namespace pushGP
 					}
 
 					else
-					{
-//						std::cout << "      new_genome.push_back(random_atom() 1);" << std::endl;
-
 						new_genome.push_back(random_atom());
-					}
 
 				} // if (random_double() < argmap.uniform_mutation_constant_tweak_rate)
 
 				else
-				{
-//					std::cout << "      new_genome.push_back(random_atom() 2);" << std::endl;
-
 					new_genome.push_back(random_atom());
-
-//					std::cout << "      new_genome.push_back(random_atom() 2 returned);" << std::endl;
-				}
 
 			} // if (random_double() < argmap.uniform_mutation_rate)
 
 			else
-			{
-//				std::cout << "      new_genome.push_back(atom);" << std::endl;
-
 				new_genome.push_back(atom);
-			}
 
 		} // for (auto atom : old_genome)
-
-//		std::cout << "      return Individual(new_genome);" << std::endl;
 
 		return Individual(new_genome);
 	}

@@ -84,7 +84,7 @@ namespace pushGP
 			
 			std::cout << ".";
 			error_function(work_order.individual_index, work_order.input_start, work_order.input_end);
-			std::cout << "X";
+//			std::cout << "X";
 		}
 	}
 
@@ -127,7 +127,7 @@ namespace pushGP
 				//release the lock
 			}
 
-			std::cout << "X";
+//			std::cout << "X";
 		}
 	}
 

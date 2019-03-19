@@ -187,6 +187,7 @@
     <ClInclude Include="Test.h" />
     <ClInclude Include="Utilities\AtomicFunctions.h" />
     <ClInclude Include="Utilities\Conversion.h" />
+    <ClInclude Include="Utilities\ctpl_stl.h" />
     <ClInclude Include="Utilities\MyException.h" />
     <ClInclude Include="Utilities\MyRandom.h" />
     <ClInclude Include="Utilities\Singleton.h" />

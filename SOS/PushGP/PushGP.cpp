@@ -15,6 +15,7 @@
 #include "..\Database/SQLCommand.h"
 #include "..\Database/SQLField.h"
 #include "AsyncErrorFunction.h"
+#include "..\Utilities\ctpl_stl.h"
 
 using namespace std;
 using namespace Push;
@@ -189,13 +190,46 @@ namespace pushGP
 		std::set<std::string> set_of_gnomes;
 		std::pair<std::set<std::string>::iterator, bool> ret;
 
-		for (unsigned int n = 0; n < argmap::population_size; n++)
+		// Canidate for multi-threading
+		if (argmap::use_single_thread)
 		{
-			ret = set_of_gnomes.insert(globals::child_agents[n] = breed());
+			for (unsigned int n = 0; n < argmap::population_size; n++)
+			{
+				ret = set_of_gnomes.insert(globals::child_agents[n] = breed());
+
+				// If a child with the same genome aalready exists, create a new random child.
+				if (ret.second == false)
+					globals::child_agents[n] = Individual(random_plush_genome());
+			}
+		}
+
+		else
+		{
+			int num_threads = std::thread::hardware_concurrency() - argmap::number_of_cores_to_reserve;
+
+			ctpl::thread_pool p(num_threads);
+			std::vector<std::future<Individual>> results(argmap::population_size);
+
+			bread_a_count = 0;
+			bread_m_count = 0;
+
+			for (unsigned int n = 0; n < argmap::population_size; n++)
+				results[n] = p.push([](int id) { return breed(); });               //async_breed);
+
+			for (unsigned int n = 0; n < argmap::population_size; n++)
+				globals::child_agents[n] = results[n].get();
+
+			cout << std::endl;
+			cout << bread_a_count << " / " << bread_m_count << std::endl;
 
 			// If a child with the same genome aalready exists, create a new random child.
-			if (ret.second == false)
-				globals::child_agents[n] = Individual(random_plush_genome());
+			for (unsigned int n = 0; n < argmap::population_size; n++)
+			{
+				ret = set_of_gnomes.insert(globals::child_agents[n]);
+
+				if (ret.second == false)
+					globals::child_agents[n] = Individual(random_plush_genome());
+			}
 		}
 	}
 
@@ -240,8 +274,17 @@ namespace pushGP
 	}
 
 	void generate_status_report(int generation_, 
-		std::function<double(static std::vector<int> & individual_indexes, static unsigned long input_start, static unsigned long input_end, unsigned int _test_case, bool _record_transactions)> individual_selection_error_function,
-		unsigned int training_input_start, 
+		std::function<double(static std::vector<int> & individual_indexes, 
+			static unsigned long input_start, 
+			static unsigned long input_end, 
+			unsigned int _test_case, 
+			bool _record_transactions)> individual_selection_error_function,
+		std::function<double(static std::vector<int> & individual_indexes,
+			static unsigned long input_start,
+			static unsigned long input_end,
+			unsigned int _test_case,
+			bool _record_transactions)> individual_selection_error_function_async,
+		unsigned int training_input_start,
 		unsigned int training_input_end,
 		unsigned int test_input_start,
 		unsigned int test_input_end)
@@ -326,22 +369,25 @@ namespace pushGP
 
 		// Find the individual with the minimum error for each test case
 		std::vector<double> test_case_minimum_error(Number_Of_Test_Cases);
-		std::vector<int> index_of_best_individual_for_each_test_case(Number_Of_Test_Cases);
+
+		std::set<unsigned int> set_of_best_individual_for_each_test_case;
+//		std::vector<int>     index_of_best_individual_for_each_test_case(Number_Of_Test_Cases);
+
 		std::set<unsigned int> set_of_eligible_parents;
-		std::vector<int> index_of_eligible_parents;
 
 		for (int test_case_index = 0; test_case_index < Number_Of_Test_Cases; test_case_index++)
 		{
 			// Set elite to the minimum error
 			test_case_minimum_error[test_case_index] = std::numeric_limits<double>::max();
-			index_of_best_individual_for_each_test_case[test_case_index] = -1;	// Initialize to refer to a non-existing individual
+//			index_of_best_individual_for_each_test_case[test_case_index] = -1;	// Initialize to refer to a non-existing individual
 
 			for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 			{
 				if (globals::population_agents[individual_index].get_errors()[test_case_index] < test_case_minimum_error[test_case_index])
 				{
 					test_case_minimum_error[test_case_index] = globals::population_agents[individual_index].get_errors()[test_case_index];
-					index_of_best_individual_for_each_test_case[test_case_index] = individual_index;
+//					index_of_best_individual_for_each_test_case[test_case_index] = individual_index;
+					set_of_best_individual_for_each_test_case.insert(individual_index);
 				}
 
 				if ( (test_case_minimum_error[test_case_index] < 0.0) //std::numeric_limits<double>::max())
@@ -354,47 +400,54 @@ namespace pushGP
 			}
 		}
 
+		// Convert SET to VECTOR
+		std::vector<int> index_of_best_individual_for_each_test_case(set_of_best_individual_for_each_test_case.begin(), set_of_best_individual_for_each_test_case.end());
+
+		std::vector<int>     index_of_eligible_parents;
 		for (int individual_index : set_of_eligible_parents)
 			index_of_eligible_parents.push_back(individual_index);
 
 		// Calculate the training error from the best individuals from each test case
 		std::cout << "Training error from the best individuals from each test case = ";
-		error = individual_selection_error_function(index_of_best_individual_for_each_test_case, training_input_start, training_input_end, 0, false);
+		error = individual_selection_error_function_async(index_of_best_individual_for_each_test_case, training_input_start, training_input_end, 0, false);
 		double best_individual_for_each_test_case_group_training_score = 0.0 - error;
 		std::cout << best_individual_for_each_test_case_group_training_score << std::endl;
 
 		// Calculate the test error from the best individuals from each test case
 		std::cout << "Test error from the best individuals from each test case = ";
-		error = individual_selection_error_function(index_of_best_individual_for_each_test_case, test_input_start, test_input_end, 0, false);
+		error = individual_selection_error_function_async(index_of_best_individual_for_each_test_case, test_input_start, test_input_end, 0, false);
 		double best_individual_for_each_test_case_group_validation_score = 0.0 - error;
 		std::cout << best_individual_for_each_test_case_group_validation_score << std::endl;
 
 		// Calculate the training error for the eligible parents
 		std::cout << "Eligible parents training score = ";
-		error = individual_selection_error_function(index_of_eligible_parents, training_input_start, training_input_end, 0, false);
+		error = individual_selection_error_function_async(index_of_eligible_parents, training_input_start, training_input_end, 0, false);
 		double eligible_parents_training_score = 0.0 - error;
 		std::cout << eligible_parents_training_score << std::endl;
 
 		// Calculate the test error for the eligible parents
 		std::cout << "Eligible parents test score = ";
-		error = individual_selection_error_function(index_of_eligible_parents, test_input_start, test_input_end, 0, false);
+		error = individual_selection_error_function_async(index_of_eligible_parents, test_input_start, test_input_end, 0, false);
 		double eligible_parents_validation_score = 0.0 - error;
 		std::cout << eligible_parents_validation_score << std::endl;
 
 		// Calculte group training score
-		std::vector<int> index_of_individuals;
+		std::set<unsigned int> set_of_individuals;
 
 		for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
-			index_of_individuals.push_back(individual_index);
+			set_of_individuals.insert(individual_index);
+
+		// Convert SET to VECTOR
+		std::vector<int> index_of_individuals(set_of_individuals.begin(), set_of_individuals.end());
 
 		std::cout << "Group training score = ";
-		error = individual_selection_error_function(index_of_individuals, training_input_start, training_input_end, 0, false);
+		error = individual_selection_error_function_async(index_of_individuals, training_input_start, training_input_end, 0, false);
 		double group_training_score = 0.0 - error;
 		std::cout << group_training_score << std::endl;
 
 		// Calculte group test score
 		std::cout << "Group test score = ";
-		error = individual_selection_error_function(index_of_individuals, test_input_start, test_input_end, 0, false);
+		error = individual_selection_error_function_async(index_of_individuals, test_input_start, test_input_end, 0, false);
 		double group_validation_score = 0.0 - error;
 		std::cout << group_validation_score << std::endl;
 
@@ -476,7 +529,15 @@ namespace pushGP
 	}
 
 	void pushgp(std::function<double(int, unsigned long, unsigned long)> reproduction_selection_error_function,
-		        std::function<double(static std::vector<int> & individual_indexes, static unsigned long input_start, static unsigned long input_end, unsigned int _test_case, bool _record_transactions)> individual_selection_error_function)
+		        std::function<double(static std::vector<int> & individual_indexes, 
+					static unsigned long input_start, 
+					static unsigned long input_end, 
+					unsigned int _test_case, bool _record_transactions)> individual_selection_error_function,
+				std::function<double(static std::vector<int> & individual_indexes,
+					static unsigned long input_start,
+					static unsigned long input_end,
+					unsigned int _test_case, bool _record_transactions)> individual_selection_error_function_async
+		)
 	{
 		try
 		{
@@ -543,7 +604,8 @@ namespace pushGP
 				cout << "Generate status report" << endl;
 				generate_status_report(generation_number, 
 					individual_selection_error_function, 
-					argmap::training_start_index, 
+					individual_selection_error_function_async,
+					argmap::training_start_index,
 					argmap::training_end_index, 
 					argmap::test_start_index, 
 					argmap::test_end_index);
