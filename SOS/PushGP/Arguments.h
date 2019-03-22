@@ -17,6 +17,9 @@ namespace pushGP
 			//	;; When true, will only use a single thread.
 		const bool use_single_thread = false;
 
+			// Prevent Buy-And-Hold solutions
+		const bool prevent_buy_and_hold = true;
+
 			//	:random - seed(random / generate - mersennetwister - seed)
 			//	;; The seed for the random number generator.
 

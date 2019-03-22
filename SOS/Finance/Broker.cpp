@@ -8,6 +8,7 @@ using namespace std;
 
 #include "Broker.h"
 #include "..\Utilities\MyException.h"
+#include "..\PushGP\Globals.h"
 
 namespace finance
 {
@@ -211,7 +212,7 @@ namespace finance
 	double Broker::close_brokeage_account(unsigned int row)
 	{
 		// To prevent buy-and-hold solutions, chek if any stock was sold before.
-		if (number_of_sell_transactions_ == 0)
+		if ((pushGP::argmap::prevent_buy_and_hold) && (number_of_sell_transactions_ == 0))
 			return opening_balance_;
 
 		else
