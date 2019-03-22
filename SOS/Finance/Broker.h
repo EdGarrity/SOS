@@ -20,8 +20,10 @@ namespace finance
 		const unsigned int trading_days_in_year = 252;
 		const double transaction_fee = 10.0;
 
+		double opening_balance_ = 0.0;
 		double cash_ = 0.0;
 		unsigned int stock_ = 0;
+		unsigned int number_of_sell_transactions_ = 0;
 
 	public:
 		Broker(double opening_balance);

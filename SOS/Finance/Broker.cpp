@@ -20,8 +20,10 @@ namespace finance
 
 	Broker::Broker(double opening_balance)
 	{
+		opening_balance_ = opening_balance;
 		cash_ = opening_balance;
 		stock_ = 0;
+		number_of_sell_transactions_ = 0;
 
 		load_datatable();
 	}
@@ -200,6 +202,7 @@ namespace finance
 			{
 				stock_ = 0;
 				cash_ += total_gain;
+				number_of_sell_transactions_++;
 			}
 		}
 	}
@@ -207,9 +210,16 @@ namespace finance
 	// Close account and return value
 	double Broker::close_brokeage_account(unsigned int row)
 	{
-		// Sell all stock in account
-		update_brokeage_account(false, row);
+		// To prevent buy-and-hold solutions, chek if any stock was sold before.
+		if (number_of_sell_transactions_ == 0)
+			return opening_balance_;
 
-		return cash_;
+		else
+		{
+			// Sell all stock in account
+			update_brokeage_account(false, row);
+
+			return cash_;
+		}
 	}
 }
