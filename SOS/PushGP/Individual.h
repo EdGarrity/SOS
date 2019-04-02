@@ -5,9 +5,13 @@
 #include <string>
 #include <vector>
 #include <stack> 
-#include <set>
+#include <unordered_set>
 
 #include "..\PushP\Code.h"
+
+// For UUID
+#include <Rpc.h>
+#pragma comment(lib, "Rpcrt4.lib")
 
 namespace pushGP
 {
@@ -79,11 +83,21 @@ namespace pushGP
 		// Collection of stock transactions
 		std::vector<Transaction> transactions_;
 
+		// Uniquely identify the indivudal to track genealogy
+		// See (https://stackoverflow.com/questions/1327157/whats-the-c-version-of-guid-newguid)
+		UUID id_;
+
+		// Track individual's parents and grandparents
+		std::unordered_set<UUID> parents_;
+		std::unordered_set<UUID> grandparents_;
+		std::unordered_set<UUID> greatgrandparents_;
+
 		void init();
 
 	public:
 		Individual();
 		Individual(std::vector<struct Atom> _genome);
+		Individual(std::vector<struct Atom> _genome, std::unordered_set<UUID> _parents, std::unordered_set<UUID> _grandparents, std::unordered_set<UUID> _greatgrandparents);
 		Individual(std::string _genome);
 		Individual(const Individual & other);
 		Individual& operator = (const Individual &other);
@@ -136,6 +150,26 @@ namespace pushGP
 
 		void log_transaction(int _test_case, unsigned long _row, double _adj_close, order_types _order, int _number_of_shares, double _cash_balance);
 		void dump_transactions();
+
+		UUID get_id()
+		{
+			return id_;
+		}
+
+		std::unordered_set<UUID> get_parents()
+		{
+			return parents_;
+		}
+
+		std::unordered_set<UUID> get_grandparents()
+		{
+			return grandparents_;
+		}
+
+		std::unordered_set<UUID> get_greatgrandparents()
+		{
+			return greatgrandparents_;
+		}
 	};
 
 	std::ostream& operator<<(std::ostream& os, Individual& individual);

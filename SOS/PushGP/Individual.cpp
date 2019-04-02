@@ -20,6 +20,13 @@ namespace pushGP
 		genome_string_.clear();
 		elite_test_cases_.clear();
 		transactions_.clear();
+
+		// Uniquely identify the indivudal to track genealogy
+		UUID newId;
+		::UuidCreate(&id_);
+
+		parents_.clear();
+		grandparents_.clear();
 	}
 
 	Individual::Individual()
@@ -33,6 +40,21 @@ namespace pushGP
 		genome_ = _genome;
 
 		translate_plush_genome_to_push_program();
+	}
+
+	Individual::Individual(std::vector<struct Atom> _genome, 
+		std::unordered_set<UUID> _parents, 
+		std::unordered_set<UUID> _grandparents, 
+		std::unordered_set<UUID> _greatgrandparents)
+	{
+		init();
+		genome_ = _genome;
+
+		translate_plush_genome_to_push_program();
+
+		parents_ = _parents;
+		grandparents_ = _grandparents;
+		greatgrandparents_ = _greatgrandparents;
 	}
 
 	Individual::Individual(std::string _genome_string)

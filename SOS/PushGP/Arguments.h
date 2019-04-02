@@ -323,6 +323,11 @@ namespace pushGP
 		//	;; Arguments related to parent selection
 		//	;; ----------------------------------------
 
+		// Incest probabilities
+		const double probability_of_sibling_incest = 0.01;
+		const double probability_of_first_cousin_incest = 0.02;
+		const double probability_of_second_cousin_incest = 0.03;
+
 		//	:parent - selection : lexicase
 		//	;; The parent selection method.Options include : tournament, : lexicase, : epsilon - lexicase,
 		//	;; :elitegroup - lexicase, : uniform, : leaky - lexicase, : random - threshold - lexicase,

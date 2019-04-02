@@ -1,6 +1,7 @@
 #include <mutex>
 #include <functional>
 #include <thread>
+#include <unordered_set>
 
 #include "PushGP.h"
 #include "Globals.h"
@@ -185,14 +186,14 @@ namespace pushGP
 
 	void produce_new_offspring()
 	{
-		std::set<std::string> set_of_gnomes;
-		std::pair<std::set<std::string>::iterator, bool> ret;
+		std::unordered_set<std::string> set_of_gnomes;
+		std::pair<std::unordered_set<std::string>::iterator, bool> ret;
 
 		for (unsigned int n = 0; n < argmap::population_size; n++)
 		{
 			ret = set_of_gnomes.insert(globals::child_agents[n] = breed());
 
-			// If a child with the same genome aalready exists, create a new random child.
+			// If a child with the same genome already exists, create a new random child.
 			if (ret.second == false)
 				globals::child_agents[n] = Individual(random_plush_genome());
 		}
