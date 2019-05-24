@@ -79,8 +79,6 @@ namespace pushGP
 	{
 		unsigned int n = 0;
 
-//		database::SQLConnection con(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
-
 		database::SQLCommand* sqlcmd_get_individuals;
 
 		sqlcmd_get_individuals = new database::SQLCommand(&con, sqlstmt_sqlcmd_get_individuals);
@@ -96,8 +94,7 @@ namespace pushGP
 					std::cout << "n = " << n << std::endl;
 
 					std::string ind = sqlcmd_get_individuals->get_field_as_string(1);
-					Individual individual(ind);
-					globals::population_agents[n++] = individual;
+					globals::population_agents[n++].set_genome(ind);
 				}
 			}
 		}
@@ -119,22 +116,21 @@ namespace pushGP
 
 		for (int n = start_; n < argmap::population_size; n++)
 		{
-			Individual individual(random_plush_genome());
-			globals::population_agents[n] = individual;
+			globals::population_agents[n].set_genome(random_plush_genome());
 			agents_created++;
 		}
 
 		return agents_created;
 	}
 
-	void make_child_agents()
-	{
-		for (int n = 0; n < argmap::population_size; n++)
-		{
-			Individual individual = Individual();
-			globals::child_agents[n] = individual;
-		}
-	}
+	//void make_child_agents()
+	//{
+	//	for (int n = 0; n < argmap::population_size; n++)
+	//	{
+	//		Individual individual = Individual();
+	//		globals::child_agents[n] = individual;
+	//	}
+	//}
 
 	void compute_errors(std::function<double(unsigned int, unsigned long, unsigned long)> reproduction_selection_error_function, unsigned long input_start, unsigned long input_end)
 	{
@@ -191,26 +187,27 @@ namespace pushGP
 
 		for (unsigned int n = 0; n < argmap::population_size; n++)
 		{
-			ret = set_of_gnomes.insert(globals::child_agents[n] = breed());
+			ret = set_of_gnomes.insert(breed(globals::child_agents[n]).get_genome_as_string());
 
 			// If a child with the same genome aalready exists, create a new random child.
 			if (ret.second == false)
-				globals::child_agents[n] = Individual(random_plush_genome());
+				globals::child_agents[n].set_genome(random_plush_genome());
 		}
 	}
 
 	void install_next_generation()
 	{
+		//for (unsigned int n = 0; n < argmap::population_size; n++)
+		//{
+		//	globals::population_agents[n] = globals::child_agents[n];
+		//}
+
 		for (unsigned int n = 0; n < argmap::population_size; n++)
-		{
-			globals::population_agents[n] = globals::child_agents[n];
-		}
+			globals::population_agents[n].set(globals::child_agents[n]);
 	}
 
 	void save_generation()
 	{
-//		database::SQLConnection con(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
-
 		database::SQLCommand* sqlcmd_delete_indiciduals;
 		database::SQLCommand* sqlcmd_insert_new_individual;
 
@@ -514,8 +511,8 @@ namespace pushGP
 			if (agents_created > 0)
 				generation_number = 0;
 
-			cout << "Create Child Agents" << endl;
-			make_child_agents();
+//			cout << "Create Child Agents" << endl;
+//			make_child_agents();
 
 			// Save references to the main factories
 			intLiteralFactory_old = Push::intLiteralFactory;

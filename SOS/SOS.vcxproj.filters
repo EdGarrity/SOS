@@ -90,9 +90,6 @@
     <ClInclude Include="PushP\RNG.h">
       <Filter>Header Files\PushP</Filter>
     </ClInclude>
-    <ClInclude Include="Test.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PushP\CodeOps.h">
       <Filter>Header Files\PushP</Filter>
     </ClInclude>
@@ -193,9 +190,6 @@
     </ClCompile>
     <ClCompile Include="PushP\Instruction.cpp">
       <Filter>Source Files\PushP</Filter>
-    </ClCompile>
-    <ClCompile Include="Test.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PushP\CodeInstructions.cpp">
       <Filter>Source Files\PushP</Filter>

@@ -74,15 +74,15 @@ namespace pushGP
 		{
 			test_case_errors.clear();
 
-			for (auto ind : globals::population_agents)
-				test_case_errors.push_back(ind.get_errors()[test_case]);
+			for (int ind = 0; ind < argmap::population_size; ind++)
+				test_case_errors.push_back(globals::population_agents[ind].get_errors()[test_case]);
 
 			globals::epsilons.push_back(mad(test_case_errors));
 		}
 	}
 
 	// Returns an individual that does within epsilon of the best on the fitness cases when considered one at a time in random order.
-	Individual pushGP::epsilon_lexicase_selection()
+	Individual& pushGP::epsilon_lexicase_selection()
 	{
 		unsigned number_of_survivors = argmap::population_size;
 
@@ -95,7 +95,6 @@ namespace pushGP
 		// Get a randomized deck of test cases
 		std::vector<unsigned int> test_cases = lshuffle(Number_Of_Test_Cases); //randomized_training_cases_deck_;
 
-//		while ((test_cases.size() > 1) && (!survivors_index.empty()))
 		while ((!test_cases.empty()) && (number_of_survivors > 1))
 		{
 			double elite = std::numeric_limits<double>::max();
@@ -109,8 +108,7 @@ namespace pushGP
 			// Set elite to the minimum error
 			for (unsigned int it : survivors_index)
 			{
-				Individual ind = globals::population_agents[it];
-				std::vector<double> errors = ind.get_errors();
+				std::vector<double> errors = globals::population_agents[it].get_errors();
 				elite = (errors[training_case] < elite) ? errors[training_case] : elite;
 			}
 
@@ -119,8 +117,7 @@ namespace pushGP
 			auto it = survivors_index.begin();
 			while (it != survivors_index.end())
 			{
-				Individual ind = globals::population_agents[*it];
-				std::vector<double> errors = ind.get_errors();
+				std::vector<double> errors = globals::population_agents[*it].get_errors();
 
 				if (errors[training_case] > (elite + globals::epsilons[training_case]))
 				{

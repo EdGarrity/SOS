@@ -185,7 +185,6 @@
     <ClInclude Include="PushP\Type.h" />
     <ClInclude Include="PushP\TypedAtom.h" />
     <ClInclude Include="PushP\TypeDef.h" />
-    <ClInclude Include="Test.h" />
     <ClInclude Include="Utilities\AtomicFunctions.h" />
     <ClInclude Include="Utilities\Conversion.h" />
     <ClInclude Include="Utilities\MyException.h" />
@@ -225,7 +224,6 @@
     <ClCompile Include="PushP\Literal.cpp" />
     <ClCompile Include="PushP\StaticInit.cpp" />
     <ClCompile Include="PushP\Type.cpp" />
-    <ClCompile Include="Test.cpp" />
     <ClCompile Include="Utilities\AtomicFunctions.cpp" />
     <ClCompile Include="Utilities\Conversion.cpp" />
     <ClCompile Include="Utilities\MyException.cpp" />
