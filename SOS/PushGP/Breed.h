@@ -5,5 +5,5 @@
 namespace pushGP
 {
 	// Returns an individual bred from the given population using the given parameters
-	Individual breed();
+	Individual& breed(Individual& child);
 }

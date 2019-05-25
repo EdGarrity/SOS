@@ -83,10 +83,10 @@ namespace pushGP
 
 	public:
 		Individual();
-		Individual(std::vector<struct Atom> _genome);
-		Individual(std::string _genome);
-		Individual(const Individual & other);
-		Individual& operator = (const Individual &other);
+		Individual(std::vector<struct Atom> _genome) = delete;
+		Individual(std::string _genome) = delete;
+		Individual(const Individual & other) = delete;
+		Individual& operator = (const Individual &other) = delete;
 		
 		void translate_plush_genome_to_push_program();
 		void parse_string_to_plush_genome(std::string genome);
@@ -102,6 +102,8 @@ namespace pushGP
 		}
 
 		void set_genome(std::string _genome);
+		void set_genome(std::vector<struct Atom> _genome);
+		void set(Individual& other);
 
 		const std::vector<double> & get_errors()
 		{

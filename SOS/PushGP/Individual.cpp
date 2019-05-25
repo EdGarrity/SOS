@@ -27,42 +27,42 @@ namespace pushGP
 		init();
 	}
 
-	Individual::Individual(std::vector<struct Atom> _genome)
-	{
-		init();
-		genome_ = _genome;
-
-		translate_plush_genome_to_push_program();
-	}
-
-	Individual::Individual(std::string _genome_string)
-	{
-		set_genome(_genome_string);
-	}
-
-	Individual::Individual(const Individual & other)
-	{
-		program_ = other.program_;
-		genome_ = other.genome_;
-		errors_ = other.errors_;
-
-		genome_string_ = other.genome_string_;
-		is_elite_ = other.is_elite_;
-//		elite_test_cases_ = other.elite_test_cases_;
-	}
-
-	Individual & Individual::operator=(const Individual & other)
-	{
-		program_ = other.program_;
-		genome_ = other.genome_;
-		errors_ = other.errors_;
-
-		genome_string_ = other.genome_string_;
-		is_elite_ = other.is_elite_;
-//		elite_test_cases_ = other.elite_test_cases_;
-
-		return *this;
-	}
+//	Individual::Individual(std::vector<struct Atom> _genome)
+//	{
+//		init();
+//		genome_ = _genome;
+//
+//		translate_plush_genome_to_push_program();
+//	}
+//
+//	Individual::Individual(std::string _genome_string)
+//	{
+//		set_genome(_genome_string);
+//	}
+//
+//	Individual::Individual(const Individual & other)
+//	{
+//		program_ = other.program_;
+//		genome_ = other.genome_;
+//		errors_ = other.errors_;
+//
+//		genome_string_ = other.genome_string_;
+//		is_elite_ = other.is_elite_;
+////		elite_test_cases_ = other.elite_test_cases_;
+//	}
+//
+//	Individual & Individual::operator=(const Individual & other)
+//	{
+//		program_ = other.program_;
+//		genome_ = other.genome_;
+//		errors_ = other.errors_;
+//
+//		genome_string_ = other.genome_string_;
+//		is_elite_ = other.is_elite_;
+////		elite_test_cases_ = other.elite_test_cases_;
+//
+//		return *this;
+//	}
 
 	void Individual::log_error(double error)
 	{
@@ -91,6 +91,24 @@ namespace pushGP
 		genome_string_ = _genome_string;
 		parse_string_to_plush_genome(_genome_string);
 		translate_plush_genome_to_push_program();
+	}
+
+	void Individual::set_genome(std::vector<struct Atom> _genome)
+	{
+		init();
+		genome_ = _genome;
+		
+		translate_plush_genome_to_push_program();
+	}
+
+	void Individual::set(Individual & other)
+	{
+		program_ = other.program_;
+		genome_ = other.genome_;
+		errors_ = other.errors_;
+		
+		genome_string_ = other.genome_string_;
+		is_elite_ = other.is_elite_;
 	}
 
 	std::string Individual::get_genome_as_string()
