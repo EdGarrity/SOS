@@ -11,7 +11,7 @@ namespace pushGP
 	unsigned int make_pop_agents(int start = 0);
 
 	// Makes the population of agents containing the initial random individuals in the population
-	void make_child_agents();
+//	void make_child_agents();
 
 //	double evaluate_individual(std::function<double(Individual&, unsigned long, unsigned long)> error_function, Individual & individual, unsigned long input_start, unsigned long input_end);
 

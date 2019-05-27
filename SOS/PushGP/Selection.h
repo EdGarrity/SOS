@@ -20,5 +20,5 @@ namespace pushGP
 
 	// Returns an individual that does within epsilon of the best on the fitness cases when 
 	// considered one at a time in random order.  Returns a selected parent.
-	Individual epsilon_lexicase_selection();
+	unsigned int epsilon_lexicase_selection(int exclude);
 }

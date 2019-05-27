@@ -5,9 +5,40 @@
 #include <string>
 #include <vector>
 #include <stack> 
-#include <set>
+#include <unordered_set>
 
 #include "..\PushP\Code.h"
+
+// For UUID
+#include <Rpc.h>
+#pragma comment(lib, "Rpcrt4.lib")
+
+// See https://stackoverflow.com/questions/24113864/what-is-the-right-way-to-use-a-guid-as-the-key-in-stdhash-map
+bool operator < (const GUID &guid1, const GUID &guid2);
+
+// Ensure it has 128 bits
+static_assert(sizeof(_GUID) == 128 / CHAR_BIT, "GUID");
+
+// The compare operator is required by std::unordered_map
+//inline bool operator == (const GUID& a, const GUID& b) {
+//	return std::memcmp(&a, &b, sizeof(GUID)) == 0;
+//}
+
+// Specialize std::hash
+namespace std {
+	template<> struct hash<GUID>
+	{
+		size_t operator()(const GUID& guid) const noexcept {
+			const std::uint64_t* p = reinterpret_cast<const std::uint64_t*>(&guid);
+			std::hash<std::uint64_t> hash;
+			return hash(p[0]) ^ hash(p[1]);
+		}
+	};
+}
+
+
+
+
 
 namespace pushGP
 {
@@ -79,14 +110,24 @@ namespace pushGP
 		// Collection of stock transactions
 		std::vector<Transaction> transactions_;
 
+		// Uniquely identify the indivudal to track genealogy
+		// See (https://stackoverflow.com/questions/1327157/whats-the-c-version-of-guid-newguid)
+		UUID id_;
+
+		// Track individual's parents and grandparents
+		std::unordered_set<UUID> parents_;
+		std::unordered_set<UUID> grandparents_;
+		std::unordered_set<UUID> greatgrandparents_;
+
 		void init();
 
 	public:
 		Individual();
-		Individual(std::vector<struct Atom> _genome);
-		Individual(std::string _genome);
-		Individual(const Individual & other);
-		Individual& operator = (const Individual &other);
+		//Individual(std::vector<struct Atom> _genome) = delete;
+		//Individual(std::vector<struct Atom> _genome, std::unordered_set<UUID> _parents, std::unordered_set<UUID> _grandparents, std::unordered_set<UUID> _greatgrandparents) = delete;
+		//Individual(std::string _genome) = delete;
+		Individual(const Individual & other) = delete;
+		Individual& operator = (const Individual &other) = delete;
 		
 		void translate_plush_genome_to_push_program();
 		void parse_string_to_plush_genome(std::string genome);
@@ -102,11 +143,16 @@ namespace pushGP
 		}
 
 		void set_genome(std::string _genome);
+		void set_genome(std::vector<struct Atom> _genome);
+		void set(Individual & other);
 
 		const std::vector<double> & get_errors()
 		{
 			return errors_;
 		}
+
+		void record_family_tree(Individual& parent);
+		void record_family_tree(Individual& parent1, Individual& parent2);
 
 		void log_error(double error);
 
@@ -136,6 +182,26 @@ namespace pushGP
 
 		void log_transaction(int _test_case, unsigned long _row, double _adj_close, order_types _order, int _number_of_shares, double _cash_balance);
 		void dump_transactions();
+
+		UUID get_id()
+		{
+			return id_;
+		}
+
+		std::unordered_set<UUID>& get_parents()
+		{
+			return parents_;
+		}
+
+		std::unordered_set<UUID>& get_grandparents()
+		{
+			return grandparents_;
+		}
+
+		std::unordered_set<UUID>& get_greatgrandparents()
+		{
+			return greatgrandparents_;
+		}
 	};
 
 	std::ostream& operator<<(std::ostream& os, Individual& individual);

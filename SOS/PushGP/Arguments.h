@@ -16,6 +16,7 @@ namespace pushGP
 			//	:use - single - thread false
 			//	;; When true, will only use a single thread.
 		const bool use_single_thread = false;
+		const unsigned int number_of_cores_to_reserve = 2;
 
 			// Prevent Buy-And-Hold solutions
 		const bool prevent_buy_and_hold = true;
@@ -44,7 +45,7 @@ namespace pushGP
 			//		;; The instructions that pushgp will use in random code.
 
 		// Number of individuals in the population.
-		const unsigned int population_size = 2500; //25;
+		const unsigned int population_size = 2500;
 
 			//		:max - generations 1001
 			//		;; The maximum number of generations to run GP.
@@ -325,6 +326,11 @@ namespace pushGP
 		//	;; ----------------------------------------
 		//	;; Arguments related to parent selection
 		//	;; ----------------------------------------
+
+		// Incest probabilities
+		const double probability_of_sibling_incest = 0.01;
+		const double probability_of_first_cousin_incest = 0.02;
+		const double probability_of_second_cousin_incest = 0.03;
 
 		//	:parent - selection : lexicase
 		//	;; The parent selection method.Options include : tournament, : lexicase, : epsilon - lexicase,
