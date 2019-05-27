@@ -225,13 +225,9 @@
     <ClCompile Include="PushP\Literal.cpp" />
     <ClCompile Include="PushP\StaticInit.cpp" />
     <ClCompile Include="PushP\Type.cpp" />
-    <ClCompile Include="Test.cpp" />
     <ClCompile Include="Utilities\AtomicFunctions.cpp" />
     <ClCompile Include="Utilities\Conversion.cpp" />
     <ClCompile Include="Utilities\MyException.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="test.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -74,16 +74,17 @@ namespace pushGP
 		{
 			test_case_errors.clear();
 
-			for (auto ind : globals::population_agents)
-				test_case_errors.push_back(ind.get_errors()[test_case]);
+			for (int ind = 0; ind < argmap::population_size; ind++)
+				test_case_errors.push_back(globals::population_agents[ind].get_errors()[test_case]);
 
 			globals::epsilons.push_back(mad(test_case_errors));
 		}
 	}
 
 	// Returns an individual that does within epsilon of the best on the fitness cases when considered one at a time in random order.
-	Individual pushGP::epsilon_lexicase_selection()
+	unsigned int pushGP::epsilon_lexicase_selection(int _exclude)
 	{
+		unsigned individual_index = 0;
 		unsigned number_of_survivors = argmap::population_size;
 
 		// Set survivors to be a copy of the population
@@ -95,7 +96,6 @@ namespace pushGP
 		// Get a randomized deck of test cases
 		std::vector<unsigned int> test_cases = lshuffle(Number_Of_Test_Cases); //randomized_training_cases_deck_;
 
-//		while ((test_cases.size() > 1) && (!survivors_index.empty()))
 		while ((!test_cases.empty()) && (number_of_survivors > 1))
 		{
 			double elite = std::numeric_limits<double>::max();
@@ -109,8 +109,7 @@ namespace pushGP
 			// Set elite to the minimum error
 			for (unsigned int it : survivors_index)
 			{
-				Individual ind = globals::population_agents[it];
-				std::vector<double> errors = ind.get_errors();
+				std::vector<double> errors = globals::population_agents[it].get_errors();
 				elite = (errors[training_case] < elite) ? errors[training_case] : elite;
 			}
 
@@ -119,8 +118,7 @@ namespace pushGP
 			auto it = survivors_index.begin();
 			while (it != survivors_index.end())
 			{
-				Individual ind = globals::population_agents[*it];
-				std::vector<double> errors = ind.get_errors();
+				std::vector<double> errors = globals::population_agents[*it].get_errors();
 
 				if (errors[training_case] > (elite + globals::epsilons[training_case]))
 				{
@@ -155,26 +153,32 @@ namespace pushGP
 		auto it = survivors_index.begin();
 		auto before_it = survivors_index.begin();
 
-		if (number_of_survivors > 1)
+		if ((number_of_survivors == 1) && (*before_it == _exclude))
+			number_of_survivors = 0;
+
+		else if (number_of_survivors > 1)
 		{
 			std::default_random_engine generator;
 			std::uniform_int_distribution<int> distribution(1, number_of_survivors);
 
 			for (int count_down = distribution(generator);
-				it != survivors_index.end(), count_down > 0;
+				it != survivors_index.end(), count_down >= 0;
 				it++, count_down--)
 			{
-				before_it = it;
+				if (*it != _exclude)
+					before_it = it;
 			}
 		}
 
 		if (number_of_survivors > 0)
-			return globals::population_agents[*before_it];
+//			_individual = globals::population_agents[*before_it];
+			return *before_it;
 
 		else
 		{
 			int n = (int)(random_double() * argmap::population_size);
-			return globals::population_agents[*it];
+//			_individual = globals::population_agents[*it];
+			return n;
 		}
 	}
 }

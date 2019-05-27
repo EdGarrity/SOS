@@ -194,9 +194,6 @@
     <ClCompile Include="PushP\Instruction.cpp">
       <Filter>Source Files\PushP</Filter>
     </ClCompile>
-    <ClCompile Include="Test.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PushP\CodeInstructions.cpp">
       <Filter>Source Files\PushP</Filter>
     </ClCompile>
@@ -260,10 +257,5 @@
     <ClCompile Include="Utilities\AtomicFunctions.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="test.config">
-      <Filter>Source Files</Filter>
-    </None>
   </ItemGroup>
 </Project>

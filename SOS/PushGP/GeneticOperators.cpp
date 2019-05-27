@@ -20,7 +20,7 @@ namespace pushGP
 	}
 
 	// Canidate for optimization.
-	Individual uniform_mutation(Individual parent)
+	Individual& uniform_mutation(Individual& parent, Individual& child)
 	{
 		const std::vector<struct Atom> old_genome = parent.get_genome();
 		std::vector<struct Atom> new_genome;
@@ -76,17 +76,22 @@ namespace pushGP
 		} // for (auto atom : old_genome)
 
 		// Track individual's parents and grandparents
-		std::unordered_set<UUID> parents;
-		parents.insert(parent.get_id());
+		//std::unordered_set<UUID> parents;
+		//parents.insert(parent.get_id());
 
-		std::unordered_set<UUID> grandparents = parent.get_parents();
-		std::unordered_set<UUID> greatgrandparents = parent.get_greatparents();
+		//std::unordered_set<UUID> grandparents = parent.get_parents();
+		//std::unordered_set<UUID> greatgrandparents = parent.get_grandparents();
 
 		// Create new child
-		return Individual(new_genome, parents, grandparents, greatgrandparents);
+		child.set_genome(new_genome);
+
+		// Track individual's parents and grandparents
+		child.record_family_tree(parent);
+
+		return child;
 	}
 
-	Individual alternation(Individual parent1, Individual parent2)
+	Individual& alternation(Individual& parent1, Individual& parent2, Individual& child)
 	{
 		const std::vector<struct Atom> s1 = parent1.get_genome();
 		const std::vector<struct Atom> s2 = parent2.get_genome();
@@ -96,9 +101,9 @@ namespace pushGP
 		std::vector<struct Atom> result_genome;
 		int iteration_budget = s1.size() + s2.size();
 
-		while ( (i < (use_s1 ? s1.size() : s2.size()))		// finished current program
+		while ( (i < (use_s1 ? s1.size() : s2.size()))				// finished current program
 			 && (result_genome.size() <= (argmap::max_points / 4))	// runaway growth
-			 && (iteration_budget > 0)						// looping too long
+			 && (iteration_budget > 0)								// looping too long
 			  )
 		{
 			if (random_double() < argmap::alternation_rate)
@@ -116,19 +121,12 @@ namespace pushGP
 			}
 		}
 
-		// Track individual's parents and grandparents
-		std::unordered_set<UUID> parents;
-		parents.insert(parent1.get_id());
-		parents.insert(parent2.get_id());
-
-		std::unordered_set<UUID> grandparents = parent1.get_parents();
-		grandparents.insert(parent2.get_parents().begin(), parent2.get_parents().end());
-
-		std::unordered_set<UUID> greatgrandparents = parent1.get_grandparents();
-		greatgrandparents.insert(parent2.get_grandparents().begin(), parent2.get_grandparents().end());
-
 		// Create new child
-		Individual new_individual = Individual(result_genome, parents, grandparents, greatgrandparents);
-		return new_individual;
+		child.set_genome(result_genome);
+
+		// Track individual's parents and grandparents
+		child.record_family_tree(parent1, parent2);
+
+		return child;
 	}
 }

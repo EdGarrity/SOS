@@ -15,8 +15,8 @@ namespace pushGP
 	// mutated, it has a uniform_mutation_constant_tweak_rate probability of being
 	// mutated using a constant mutator (which varies depending on the type of the
 	// token), and otherwise is replaced with a random instruction.
-	Individual uniform_mutation(Individual parent);
+	Individual& uniform_mutation(Individual& parent, Individual& child);
 
 	// Uniformly alternates between the two parents
-	Individual alternation(Individual parent1, Individual parent2);
+	Individual& alternation(Individual& parent1, Individual& parent2, Individual& child);
 }

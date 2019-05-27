@@ -16,6 +16,7 @@ namespace pushGP
 			//	:use - single - thread false
 			//	;; When true, will only use a single thread.
 		const bool use_single_thread = false;
+		const unsigned int number_of_cores_to_reserve = 2;
 
 			//	:random - seed(random / generate - mersennetwister - seed)
 			//	;; The seed for the random number generator.
@@ -41,7 +42,7 @@ namespace pushGP
 			//		;; The instructions that pushgp will use in random code.
 
 		// Number of individuals in the population.
-		const unsigned int population_size = 2500; //25;
+		const unsigned int population_size = 2500;
 
 			//		:max - generations 1001
 			//		;; The maximum number of generations to run GP.
