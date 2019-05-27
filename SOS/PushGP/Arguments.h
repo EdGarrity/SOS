@@ -18,6 +18,9 @@ namespace pushGP
 		const bool use_single_thread = false;
 		const unsigned int number_of_cores_to_reserve = 2;
 
+			// Prevent Buy-And-Hold solutions
+		const bool prevent_buy_and_hold = true;
+
 			//	:random - seed(random / generate - mersennetwister - seed)
 			//	;; The seed for the random number generator.
 
