@@ -5,6 +5,28 @@
 #include "..\PushP\Env.h"
 #include "..\PushP\Literal.h"
 
+
+bool operator < (const GUID &guid1, const GUID &guid2) {
+	if (guid1.Data1 != guid2.Data1) {
+		return guid1.Data1 < guid2.Data1;
+	}
+	if (guid1.Data2 != guid2.Data2) {
+		return guid1.Data2 < guid2.Data2;
+	}
+	if (guid1.Data3 != guid2.Data3) {
+		return guid1.Data3 < guid2.Data3;
+	}
+	for (int i = 0; i < 8; i++) {
+		if (guid1.Data4[i] != guid2.Data4[i]) {
+			return guid1.Data4[i] < guid2.Data4[i];
+		}
+	}
+	return false;
+}
+
+
+
+
 // Returns the number of points in tree, where each atom and each pair of parentheses 
 // counts as a point.
 namespace pushGP
@@ -20,6 +42,13 @@ namespace pushGP
 		genome_string_.clear();
 		elite_test_cases_.clear();
 		transactions_.clear();
+
+		// Uniquely identify the indivudal to track genealogy
+		::UuidCreate(&id_);
+
+		parents_.clear();
+		grandparents_.clear();
+		greatgrandparents_.clear();
 	}
 
 	Individual::Individual()
@@ -33,6 +62,21 @@ namespace pushGP
 //		genome_ = _genome;
 //
 //		translate_plush_genome_to_push_program();
+//	}
+//
+//	Individual::Individual(std::vector<struct Atom> _genome, 
+//		std::unordered_set<UUID> _parents, 
+//		std::unordered_set<UUID> _grandparents, 
+//		std::unordered_set<UUID> _greatgrandparents)
+//	{
+//		init();
+//		genome_ = _genome;
+//
+//		translate_plush_genome_to_push_program();
+//
+//		parents_ = _parents;
+//		grandparents_ = _grandparents;
+//		greatgrandparents_ = _greatgrandparents;
 //	}
 //
 //	Individual::Individual(std::string _genome_string)
@@ -63,6 +107,32 @@ namespace pushGP
 //
 //		return *this;
 //	}
+
+	void Individual::record_family_tree(Individual & parent)
+	{
+		parents_.clear();
+		grandparents_.clear();
+		greatgrandparents_.clear();
+
+		parents_.insert(parent.get_id());
+		grandparents_.insert(parent.get_parents().begin(), parent.get_parents().end());
+		greatgrandparents_.insert(parent.get_grandparents().begin(), parent.get_grandparents().end());
+	}
+
+	void Individual::record_family_tree(Individual & parent1, Individual & parent2)
+	{
+		parents_.clear();
+		grandparents_.clear();
+		greatgrandparents_.clear();
+
+		parents_.insert(parent1.get_id());
+		grandparents_.insert(parent1.get_parents().begin(), parent1.get_parents().end());
+		greatgrandparents_.insert(parent1.get_grandparents().begin(), parent1.get_grandparents().end());
+
+		parents_.insert(parent2.get_id());
+		grandparents_.insert(parent2.get_parents().begin(), parent2.get_parents().end());
+		greatgrandparents_.insert(parent2.get_grandparents().begin(), parent2.get_grandparents().end());
+	}
 
 	void Individual::log_error(double error)
 	{
@@ -97,18 +167,23 @@ namespace pushGP
 	{
 		init();
 		genome_ = _genome;
-		
 		translate_plush_genome_to_push_program();
 	}
 
 	void Individual::set(Individual & other)
 	{
+		init();
+
 		program_ = other.program_;
 		genome_ = other.genome_;
 		errors_ = other.errors_;
-		
+	
 		genome_string_ = other.genome_string_;
 		is_elite_ = other.is_elite_;
+
+		id_ = other.id_;
+
+		record_family_tree(other);
 	}
 
 	std::string Individual::get_genome_as_string()

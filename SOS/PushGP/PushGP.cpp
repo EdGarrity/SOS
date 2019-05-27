@@ -1,6 +1,7 @@
 #include <mutex>
 #include <functional>
 #include <thread>
+#include <unordered_set>
 
 #include "PushGP.h"
 #include "Globals.h"
@@ -59,8 +60,6 @@ namespace pushGP
 	{
 		unsigned long n = 0;
 
-//		database::SQLConnection con(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
-
 		database::SQLCommand* sqlcmd_get_last_saved_generation_number;
 
 		sqlcmd_get_last_saved_generation_number = new database::SQLCommand(&con, sqlstmt_get_last_saved_generation_number);
@@ -89,12 +88,12 @@ namespace pushGP
 
 			if (sqlcmd_get_individuals->is_result_set())
 			{
-				while (sqlcmd_get_individuals->fetch_next())
+				while ((sqlcmd_get_individuals->fetch_next()) && (n < argmap::population_size))
 				{
 					std::cout << "n = " << n << std::endl;
 
-					std::string ind = sqlcmd_get_individuals->get_field_as_string(1);
-					globals::population_agents[n++].set_genome(ind);
+					std::string genome = sqlcmd_get_individuals->get_field_as_string(1);
+					globals::population_agents[n++].set_genome(genome);
 				}
 			}
 		}
@@ -182,14 +181,18 @@ namespace pushGP
 
 	void produce_new_offspring()
 	{
+		//std::unordered_set<std::string> set_of_gnomes;
+		//std::pair<std::unordered_set<std::string>::iterator, bool> ret;
 		std::set<std::string> set_of_gnomes;
 		std::pair<std::set<std::string>::iterator, bool> ret;
 
 		for (unsigned int n = 0; n < argmap::population_size; n++)
 		{
+			std::cout << "  n = " << n;
+
 			ret = set_of_gnomes.insert(breed(globals::child_agents[n]).get_genome_as_string());
 
-			// If a child with the same genome aalready exists, create a new random child.
+			// If a child with the same genome already exists, create a new random child.
 			if (ret.second == false)
 				globals::child_agents[n].set_genome(random_plush_genome());
 		}
@@ -250,8 +253,6 @@ namespace pushGP
 
 		double training_score_of_individual_with_best_training_score_for_all_data = 0;
 		double validation_score_of_individual_with_best_training_score_for_all_data = 0;
-
-//		database::SQLConnection con(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
 
 		sqlcmd_save_status_report = new database::SQLCommand(&con, sqlstmt_save_status_report);
 
@@ -359,24 +360,28 @@ namespace pushGP
 		error = individual_selection_error_function(index_of_best_individual_for_each_test_case, training_input_start, training_input_end, 0, false);
 		double best_individual_for_each_test_case_group_training_score = 0.0 - error;
 		std::cout << best_individual_for_each_test_case_group_training_score << std::endl;
+		std::cout << std::endl;
 
 		// Calculate the test error from the best individuals from each test case
 		std::cout << "Test error from the best individuals from each test case = ";
 		error = individual_selection_error_function(index_of_best_individual_for_each_test_case, test_input_start, test_input_end, 0, false);
 		double best_individual_for_each_test_case_group_validation_score = 0.0 - error;
 		std::cout << best_individual_for_each_test_case_group_validation_score << std::endl;
+		std::cout << std::endl;
 
 		// Calculate the training error for the eligible parents
 		std::cout << "Eligible parents training score = ";
 		error = individual_selection_error_function(index_of_eligible_parents, training_input_start, training_input_end, 0, false);
 		double eligible_parents_training_score = 0.0 - error;
 		std::cout << eligible_parents_training_score << std::endl;
+		std::cout << std::endl;
 
 		// Calculate the test error for the eligible parents
 		std::cout << "Eligible parents test score = ";
 		error = individual_selection_error_function(index_of_eligible_parents, test_input_start, test_input_end, 0, false);
 		double eligible_parents_validation_score = 0.0 - error;
 		std::cout << eligible_parents_validation_score << std::endl;
+		std::cout << std::endl;
 
 		// Calculte group training score
 		std::vector<int> index_of_individuals;
@@ -511,8 +516,8 @@ namespace pushGP
 			if (agents_created > 0)
 				generation_number = 0;
 
-//			cout << "Create Child Agents" << endl;
-//			make_child_agents();
+			//cout << "Create Child Agents" << endl;
+			//make_child_agents();
 
 			// Save references to the main factories
 			intLiteralFactory_old = Push::intLiteralFactory;

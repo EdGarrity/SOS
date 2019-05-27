@@ -82,8 +82,9 @@ namespace pushGP
 	}
 
 	// Returns an individual that does within epsilon of the best on the fitness cases when considered one at a time in random order.
-	Individual& pushGP::epsilon_lexicase_selection()
+	unsigned int pushGP::epsilon_lexicase_selection(int _exclude)
 	{
+		unsigned individual_index = 0;
 		unsigned number_of_survivors = argmap::population_size;
 
 		// Set survivors to be a copy of the population
@@ -152,26 +153,32 @@ namespace pushGP
 		auto it = survivors_index.begin();
 		auto before_it = survivors_index.begin();
 
-		if (number_of_survivors > 1)
+		if ((number_of_survivors == 1) && (*before_it == _exclude))
+			number_of_survivors = 0;
+
+		else if (number_of_survivors > 1)
 		{
 			std::default_random_engine generator;
 			std::uniform_int_distribution<int> distribution(1, number_of_survivors);
 
 			for (int count_down = distribution(generator);
-				it != survivors_index.end(), count_down > 0;
+				it != survivors_index.end(), count_down >= 0;
 				it++, count_down--)
 			{
-				before_it = it;
+				if (*it != _exclude)
+					before_it = it;
 			}
 		}
 
 		if (number_of_survivors > 0)
-			return globals::population_agents[*before_it];
+//			_individual = globals::population_agents[*before_it];
+			return *before_it;
 
 		else
 		{
 			int n = (int)(random_double() * argmap::population_size);
-			return globals::population_agents[*it];
+//			_individual = globals::population_agents[*it];
+			return n;
 		}
 	}
 }

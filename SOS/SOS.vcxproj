@@ -228,9 +228,6 @@
     <ClCompile Include="Utilities\Conversion.cpp" />
     <ClCompile Include="Utilities\MyException.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="test.config" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

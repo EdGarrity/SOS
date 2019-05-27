@@ -34,6 +34,7 @@ namespace pushGP
 					if (atom.type == atom.floating_point)
 					{
 						double n = atof(atom.instruction.c_str());
+
 						n = perturb_with_gaussian_noise(argmap::uniform_mutation_float_int_gaussian_standard_deviation, n);
 						atom.instruction = std::to_string(n);
 
@@ -43,6 +44,7 @@ namespace pushGP
 					else if (atom.type == atom.integer)
 					{
 						int n = atoi(atom.instruction.c_str());
+
 						perturb_with_gaussian_noise(argmap::uniform_mutation_float_int_gaussian_standard_deviation, n);
 						atom.instruction = std::to_string(n);
 
@@ -67,15 +69,25 @@ namespace pushGP
 
 				else
 					new_genome.push_back(random_atom());
-
 			} // if (random_double() < argmap.uniform_mutation_rate)
 
 			else
 				new_genome.push_back(atom);
-
 		} // for (auto atom : old_genome)
 
+		// Track individual's parents and grandparents
+		//std::unordered_set<UUID> parents;
+		//parents.insert(parent.get_id());
+
+		//std::unordered_set<UUID> grandparents = parent.get_parents();
+		//std::unordered_set<UUID> greatgrandparents = parent.get_grandparents();
+
+		// Create new child
 		child.set_genome(new_genome);
+
+		// Track individual's parents and grandparents
+		child.record_family_tree(parent);
+
 		return child;
 	}
 
@@ -109,7 +121,12 @@ namespace pushGP
 			}
 		}
 
+		// Create new child
 		child.set_genome(result_genome);
+
+		// Track individual's parents and grandparents
+		child.record_family_tree(parent1, parent2);
+
 		return child;
 	}
 }

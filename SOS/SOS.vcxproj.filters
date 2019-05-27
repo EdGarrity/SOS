@@ -255,9 +255,4 @@
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="test.config">
-      <Filter>Source Files</Filter>
-    </None>
-  </ItemGroup>
 </Project>
