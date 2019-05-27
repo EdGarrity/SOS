@@ -167,7 +167,6 @@ namespace pushGP
 	{
 		init();
 		genome_ = _genome;
-
 		translate_plush_genome_to_push_program();
 	}
 
