@@ -200,6 +200,11 @@ namespace pushGP
 
 	void install_next_generation()
 	{
+		//for (unsigned int n = 0; n < argmap::population_size; n++)
+		//{
+		//	globals::population_agents[n] = globals::child_agents[n];
+		//}
+
 		for (unsigned int n = 0; n < argmap::population_size; n++)
 			globals::population_agents[n].set(globals::child_agents[n]);
 	}
