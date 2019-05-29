@@ -91,6 +91,8 @@ namespace pushGP
 		const long int test_start_index = 2508;	// 2010-01-04
 		const long int test_end_index = 3765;	// 2014-12-31
 
+		const long int last_data_index = test_end_index;
+
 		//		: evalpush - limit 150
 			//		;; The number of Push instructions that can be evaluated before stopping
 			//		;; evaluation.

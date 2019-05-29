@@ -93,7 +93,12 @@ namespace pushGP
 					std::cout << "n = " << n << std::endl;
 
 					std::string genome = sqlcmd_get_individuals->get_field_as_string(1);
-					globals::population_agents[n++].set_genome(genome);
+					globals::population_agents[n].set_genome(genome);
+
+					for (int i = 0; i < argmap::last_data_index; i++)
+						globals::order_bank[n][i] = order_types::not_available;
+
+					n++;
 				}
 			}
 		}
@@ -116,6 +121,10 @@ namespace pushGP
 		for (int n = start_; n < argmap::population_size; n++)
 		{
 			globals::population_agents[n].set_genome(random_plush_genome());
+
+			for (int i = 0; i < argmap::last_data_index; i++)
+				globals::order_bank[n][i] = order_types::not_available;
+
 			agents_created++;
 		}
 
@@ -206,7 +215,12 @@ namespace pushGP
 		//}
 
 		for (unsigned int n = 0; n < argmap::population_size; n++)
+		{
 			globals::population_agents[n].set(globals::child_agents[n]);
+
+			for (int i = 0; i < argmap::last_data_index; i++)
+				globals::order_bank[n][i] = order_types::not_available;
+		}
 	}
 
 	void save_generation()
