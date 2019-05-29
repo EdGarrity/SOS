@@ -56,58 +56,6 @@ namespace pushGP
 		init();
 	}
 
-//	Individual::Individual(std::vector<struct Atom> _genome)
-//	{
-//		init();
-//		genome_ = _genome;
-//
-//		translate_plush_genome_to_push_program();
-//	}
-//
-//	Individual::Individual(std::vector<struct Atom> _genome, 
-//		std::unordered_set<UUID> _parents, 
-//		std::unordered_set<UUID> _grandparents, 
-//		std::unordered_set<UUID> _greatgrandparents)
-//	{
-//		init();
-//		genome_ = _genome;
-//
-//		translate_plush_genome_to_push_program();
-//
-//		parents_ = _parents;
-//		grandparents_ = _grandparents;
-//		greatgrandparents_ = _greatgrandparents;
-//	}
-//
-//	Individual::Individual(std::string _genome_string)
-//	{
-//		set_genome(_genome_string);
-//	}
-//
-//	Individual::Individual(const Individual & other)
-//	{
-//		program_ = other.program_;
-//		genome_ = other.genome_;
-//		errors_ = other.errors_;
-//
-//		genome_string_ = other.genome_string_;
-//		is_elite_ = other.is_elite_;
-////		elite_test_cases_ = other.elite_test_cases_;
-//	}
-//
-//	Individual & Individual::operator=(const Individual & other)
-//	{
-//		program_ = other.program_;
-//		genome_ = other.genome_;
-//		errors_ = other.errors_;
-//
-//		genome_string_ = other.genome_string_;
-//		is_elite_ = other.is_elite_;
-////		elite_test_cases_ = other.elite_test_cases_;
-//
-//		return *this;
-//	}
-
 	void Individual::record_family_tree(Individual & parent)
 	{
 		parents_.clear();

@@ -58,7 +58,17 @@ namespace domain
 		{
 			if (individual_index >= 0)
 			{
-				order = run_individual_program(individual_index, _row);
+				// Check if we already processed this row for this individual
+				if (globals::order_bank[individual_index][_row] == order_types::not_available)
+				{
+					order = run_individual_program(individual_index, _row);
+
+					// Remember result for this row
+					globals::order_bank[individual_index][_row] = order;
+				}
+				else
+					order = globals::order_bank[individual_index][_row];
+
 				orders[order]++;
 			}
 			else

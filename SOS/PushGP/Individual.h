@@ -76,7 +76,8 @@ namespace pushGP
 	{
 		buy = 1,
 		hold = 0,
-		sell = -1
+		sell = -1,
+		not_available = -2
 	};
 
 	struct Transaction
