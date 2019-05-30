@@ -197,7 +197,7 @@ namespace pushGP
 
 		for (unsigned int n = 0; n < argmap::population_size; n++)
 		{
-			std::cout << "  n = " << n;
+//			std::cout << "  n = " << n;
 
 			ret = set_of_gnomes.insert(breed(globals::child_agents[n]).get_genome_as_string());
 

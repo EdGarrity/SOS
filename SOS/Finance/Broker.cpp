@@ -151,7 +151,7 @@ namespace finance
 
 	/// <summary>Returns the data from the Stock Data Array pointed to by the row and column parameters</summary>
 	/// <param name="row">Zero-based Row number index.  Must be greater than zero for derivative</param>  
-	/// <param name="colum">Zero-based Column number index for stock data, negative column number for first derivative</param>  
+	/// <param name="colum">Zero-based Column number index for stock data, negative column number for first derivative.  If column less than (-1 * datatable_columns_) then returns first differences</param>  
 	/// <returns>Stock data if column is less than or equal to 0, first derivative of stock data if column less than 0</returns>
 	double Broker::get_value_from_datatable(unsigned row, int column)
 	{
@@ -162,8 +162,17 @@ namespace finance
 			if (row > 0)
 			{
 				column = -1 - column;
-				column %= datatable_columns_;
-				value = datatable_[row][column] - datatable_[row - 1][column];
+
+				if (column > datatable_columns_)
+				{
+					column %= datatable_columns_;
+					value = (datatable_[row - 1][column] == 0) ? 0 : (datatable_[row][column] - datatable_[row - 1][column]) / datatable_[row - 1][column];
+				}
+				else
+				{
+					column %= datatable_columns_;
+					value = datatable_[row][column] - datatable_[row - 1][column];
+				}
 			}
 		}
 
