@@ -140,7 +140,7 @@ namespace pushGP
 	//	}
 	//}
 
-	void compute_errors(std::function<double(unsigned int, unsigned long, unsigned long)> reproduction_selection_error_function, unsigned long input_start, unsigned long input_end)
+	void compute_errors(std::function<double(unsigned int, unsigned long, unsigned long)> _reproduction_selection_error_function, unsigned long _input_start, unsigned long _input_end)
 	{
 		AsyncErrorFunction async_error_function;
 
@@ -151,7 +151,7 @@ namespace pushGP
 			for (int n = 0; n < argmap::population_size; n++)
 			{
 				cout << "  Evaluate Individual " << n;
-				double error = reproduction_selection_error_function(n, input_start, input_end);
+				double error = _reproduction_selection_error_function(n, _input_start, _input_end);
 				cout << " Min error = " << error << std::endl;
 				min_error = min_error < error ? min_error : error;
 			}
@@ -167,14 +167,14 @@ namespace pushGP
 			cout << "  Number of threads = " << num_threads << std::endl;
 
 			for (int i = 0; i < num_threads - 1; i++)
-				thread_pool.push_back(std::thread(&AsyncErrorFunction::reproduction_selection_error_function_thread_pool, &async_error_function, reproduction_selection_error_function));
+				thread_pool.push_back(std::thread(&AsyncErrorFunction::reproduction_selection_error_function_thread_pool, &async_error_function, _reproduction_selection_error_function));
 
 
 			cout << "  Evaluate Individuals";
 
 			for (int n = 0; n < argmap::population_size; n++)
 			{
-				async_error_function.push(n, input_start, input_end);
+				async_error_function.push(n, _input_start, _input_end);
 			}
 
 			async_error_function.done();
@@ -498,8 +498,9 @@ namespace pushGP
 		globals::population_agents[index_of_elite_individual_with_maximum_number_test_cases].dump_transactions();
 	}
 
-	void pushgp(std::function<double(int, unsigned long, unsigned long)> reproduction_selection_error_function,
-		        std::function<double(static std::vector<int> & individual_indexes, static unsigned long input_start, static unsigned long input_end, unsigned int _test_case, bool _record_transactions)> individual_selection_error_function)
+	void pushgp(std::function<double(static int, static unsigned long, static unsigned long)> _run_program_function,
+		std::function<double(static int, static unsigned long, static unsigned long)> _reproduction_selection_error_function,
+		std::function<double(static std::vector<int> & individual_indexes, static unsigned long input_start, static unsigned long input_end, unsigned int _test_case, bool _record_transactions)> _individual_selection_error_function)
 	{
 		try
 		{
@@ -552,8 +553,11 @@ namespace pushGP
 				cout << "Generation " << generation_number << endl;
 				save_generation();
 
+				cout << "Run Programs" << endl;
+				compute_errors(_run_program_function, argmap::training_start_index, argmap::last_data_index);
+
 				cout << "Compte Errors" << endl;
-				compute_errors(reproduction_selection_error_function, argmap::training_start_index, argmap::training_end_index);
+				compute_errors(_reproduction_selection_error_function, argmap::training_start_index, argmap::training_end_index);
 
 				cout << "Number_Of_Test_Cases = " << Number_Of_Test_Cases << endl;
 
@@ -565,7 +569,7 @@ namespace pushGP
 				
 				cout << "Generate status report" << endl;
 				generate_status_report(generation_number, 
-					individual_selection_error_function, 
+					_individual_selection_error_function, 
 					argmap::training_start_index, 
 					argmap::training_end_index, 
 					argmap::test_start_index, 
