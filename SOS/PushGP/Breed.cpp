@@ -17,11 +17,7 @@ namespace pushGP
 
 		if (prob <= 0.5)
 		{
-//			std::cout << "    alternation" << std::endl;
 			std::cout << "A";
-
-			//Individual& first_parent = child;
-			//Individual& other_parent = child;
 
 			double incest_prob = random_double();
 			bool done = false;
@@ -31,7 +27,6 @@ namespace pushGP
 			{
 				if (!first)
 				{
-//					std::cout << "    incest" << count_down << std::endl;
 					std::cout << "I";
 
 					count_down--;
@@ -125,7 +120,6 @@ namespace pushGP
 
 		else
 		{
-//			std::cout << "    mutation" << std::endl;
 			std::cout << "M";
 
 			uniform_mutation(globals::population_agents[epsilon_lexicase_selection(-1)], child);
@@ -134,12 +128,11 @@ namespace pushGP
 		// Check if child too big
 		if (child.get_genome().size() > (argmap::max_points / 4))
 		{
-//			std::cout << "    Child too big" << std::endl;
 			std::cout << "B";
 			child.set_genome(random_plush_genome());
 		}
 
-		std::cout << std::endl;
+//		std::cout << std::endl;
 
 		return child;
 	}

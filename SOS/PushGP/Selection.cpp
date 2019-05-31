@@ -26,25 +26,46 @@ namespace pushGP
 	{
 		std::sort(x.begin(), x.end());
 		auto z = x.begin();
-		double middle;
+//		double middle;
+		std::vector<double>::size_type middle;
 		double median_x;
 
 		switch (x.size() % 2)
 		{
 		case 0: // even
-			z = x.begin();
-			middle = x.size() / 2.0;
-			z += middle;
-			median_x = (*z + *(--z)) / 2.0;
+			//z = x.begin();
+			//middle = x.size() / 2.0;
+			//z += middle;
+			//median_x = (*z + *(--z)) / 2.0;
+
+//			std::cout << "     median(0) ";
+
+			middle = x.size() / 2;
+//			std::cout << " middle = " << middle;
+
+			median_x = (x[middle] + x[middle - 1]) / 2.0;
+//			std::cout << " x[middle] = " << x[middle] << " x[middle - 1] = " << x[middle - 1] << "median_x = " << median_x;
+
 			break;
 
 		case 1: // odd
-			z = x.begin();
-			middle = x.size() / 2.0;
-			z += middle;
-			median_x = *z;
+			//z = x.begin();
+			//middle = x.size() / 2.0;
+			//z += middle;
+			//median_x = *z;
 
+//			std::cout << "     median(1) ";
+
+			middle = x.size() / 2;
+//			std::cout << " middle = " << middle;
+
+			median_x = x[middle];
+//			std::cout << " median_x = " << median_x;
+
+			break;
 		}
+
+//		std::cout << std::endl;
 
 		return median_x;
 	}
@@ -55,13 +76,22 @@ namespace pushGP
 
 		std::vector<double> dev;
 
-		for (auto it = x.begin(); it != x.end(); it++)
-		{
-			double y = *it;
-			dev.push_back(std::fabs(y - median_x));
-		}
+//		std::cout << "     mad() median_x = " << median_x;
 
-		return median(dev);
+		//for (auto it = x.begin(); it != x.end(); it++)
+		//{
+		//	double y = *it;
+		//	dev.push_back(std::fabs(y - median_x));
+		//}
+
+		for (double y : x)
+			dev.push_back(std::fabs(y - median_x));
+
+		double m = median(dev);
+
+//		std::cout << "   m = " << m << std::endl;
+
+		return m;
 	}
 
 	void calculate_epsilons_for_epsilon_lexicase()
@@ -75,7 +105,16 @@ namespace pushGP
 			test_case_errors.clear();
 
 			for (int ind = 0; ind < argmap::population_size; ind++)
-				test_case_errors.push_back(globals::population_agents[ind].get_errors()[test_case]);
+			{
+				// std::numeric_limits<double>::max() represent zero error (a do nothing)
+
+				double error = globals::population_agents[ind].get_errors()[test_case];
+
+				if (error == std::numeric_limits<double>::max())
+					error = 0;
+
+				test_case_errors.push_back(error);
+			}
 
 			globals::epsilons.push_back(mad(test_case_errors));
 		}
@@ -162,7 +201,7 @@ namespace pushGP
 			std::uniform_int_distribution<int> distribution(1, number_of_survivors);
 
 			for (int count_down = distribution(generator);
-				it != survivors_index.end(), count_down >= 0;
+				it != survivors_index.end(), count_down > 0;
 				it++, count_down--)
 			{
 				if (*it != _exclude)
