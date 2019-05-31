@@ -132,7 +132,7 @@ namespace pushGP
 			child.set_genome(random_plush_genome());
 		}
 
-		std::cout << std::endl;
+//		std::cout << std::endl;
 
 		return child;
 	}

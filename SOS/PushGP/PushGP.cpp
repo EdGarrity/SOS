@@ -205,6 +205,8 @@ namespace pushGP
 			if (ret.second == false)
 				globals::child_agents[n].set_genome(random_plush_genome());
 		}
+
+		std::cout << std::endl;
 	}
 
 	void install_next_generation()
@@ -282,7 +284,7 @@ namespace pushGP
 			{
 				globals::population_agents[individual_index].clear_elite_test_cases();
 
-				std::cout << "Calculate the group training score for individual #" << individual_index + 1 << std::endl;
+				std::cout << "Calculate the best individual's training score for individual #" << individual_index + 1 << std::endl;
 
 				std::vector<int> individual_indexes = { individual_index };
 
@@ -303,7 +305,7 @@ namespace pushGP
 			for (int i = 0; i < num_threads - 1; i++)
 				thread_pool.push_back(std::thread(&AsyncErrorFunction::individual_selection_error_function_thread_pool, &async_error_function, individual_selection_error_function));
 
-			std::cout << "Calculate the group training score";
+			std::cout << "Calculate the best individual's training score";
 
 			for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 			{
@@ -327,14 +329,14 @@ namespace pushGP
 
 		training_score_of_individual_with_best_training_score_for_all_data = 0.0 - min_error;
 
-		std::cout << "Group Training Score = " << training_score_of_individual_with_best_training_score_for_all_data << std::endl;
+		std::cout << "Best individual's Training Score = " << training_score_of_individual_with_best_training_score_for_all_data << std::endl;
 
 		// Calculate the best individual's test score
 		std::vector<int> best_individual_indexes = { index_of_individual_with_best_training_score_for_all_data };
 		double error = individual_selection_error_function(best_individual_indexes, test_input_start, test_input_end, 0, false);
 		validation_score_of_individual_with_best_training_score_for_all_data = 0.0 - error;
 
-		std::cout << "Group Test Score = " << validation_score_of_individual_with_best_training_score_for_all_data << std::endl;
+		std::cout << "Best individual's Test Score = " << validation_score_of_individual_with_best_training_score_for_all_data << std::endl;
 
 		// Find the individual with the minimum error for each test case
 		std::vector<double> test_case_minimum_error(Number_Of_Test_Cases);
@@ -419,6 +421,11 @@ namespace pushGP
 		int number_of_elite_individuals = 0;
 		int maximum_number_of_test_cases_for_any_elite_individual = 0;
 		int index_of_elite_individual_with_maximum_number_test_cases = 0;
+
+		std::cout << "test_case_index, test_case_minimum_error[test_case_index], globals::epsilons[test_case_index]" << std::endl;
+		for (int test_case_index = 0; test_case_index < Number_Of_Test_Cases; test_case_index++)
+			std::cout << test_case_index << ", " << test_case_minimum_error[test_case_index] << ", " << globals::epsilons[test_case_index] << std::endl;
+		std::cout << std::endl;
 
 		for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 		{
