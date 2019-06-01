@@ -552,6 +552,7 @@ namespace pushGP
 			while ((!done) && (generations_completed_this_session < argmap::max_generations_in_one_session))
 			{
 				cout << "Generation " << generation_number << endl;
+				cout << "Session " << generations_completed_this_session << endl;
 				save_generation();
 
 				cout << "Run Programs" << endl;
