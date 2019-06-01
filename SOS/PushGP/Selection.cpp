@@ -33,7 +33,13 @@ namespace pushGP
 		{
 		case 0: // even
 			middle = x.size() / 2;
-			median_x = (x[middle] + x[middle - 1]) / 2.0;
+
+			// Check for overflow
+			if ((x[middle] >= std::numeric_limits<double>::max() / 2.0) or (x[middle - 1] >= std::numeric_limits<double>::max() / 2.0))
+				median_x = x[middle];
+
+			else
+				median_x = (x[middle] + x[middle - 1]) / 2.0;
 
 			break;
 
@@ -72,16 +78,7 @@ namespace pushGP
 			test_case_errors.clear();
 
 			for (int ind = 0; ind < argmap::population_size; ind++)
-			{
-				// std::numeric_limits<double>::max() represent zero error (a do nothing)
-
-				double error = globals::population_agents[ind].get_errors()[test_case];
-
-				if (error == std::numeric_limits<double>::max())
-					error = 0;
-
-				test_case_errors.push_back(error);
-			}
+				test_case_errors.push_back(globals::population_agents[ind].get_errors()[test_case]);
 
 			globals::epsilons.push_back(mad(test_case_errors));
 		}
