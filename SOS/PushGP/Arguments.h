@@ -16,7 +16,7 @@ namespace pushGP
 			//	:use - single - thread false
 			//	;; When true, will only use a single thread.
 		const bool use_single_thread = false;
-		const unsigned int number_of_cores_to_reserve = 2;
+		const unsigned int number_of_cores_to_reserve = 8;
 
 			// Prevent Buy-And-Hold solutions
 		const bool prevent_buy_and_hold = true;
