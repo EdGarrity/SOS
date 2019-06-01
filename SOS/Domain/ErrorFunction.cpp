@@ -123,8 +123,9 @@ namespace domain
 		// Remove reference to broker object from the PushP environment.
 		env.parameters.pBroker = NULL;
 
-		// Return the error value
-		return (error == 0.0 ? std::numeric_limits<double>::max() : error);
+		// Return the error value.  Penalize individuals which did nothing. 
+//		return (error == 0.0 ? std::numeric_limits<double>::max() : error);
+		return (error == 0.0 ? argmap::opening_balance : error);
 	}
 
 	// epsilon-lexicase
