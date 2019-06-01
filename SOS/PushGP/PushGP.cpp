@@ -505,6 +505,7 @@ namespace pushGP
 		try
 		{
 			unsigned int generation_number = 1;
+			unsigned int generations_completed_this_session = 0;
 			unsigned int agents_created = 0;
 			bool done = false;
 
@@ -548,7 +549,7 @@ namespace pushGP
 			codeListFactory_old = Push::codeListFactory;
 			doRangeClassFactory_old = Push::doRangeClassFactory;
 
-			while (!done)
+			while ((!done) && (generations_completed_this_session < argmap::max_generations_in_one_session))
 			{
 				cout << "Generation " << generation_number << endl;
 				save_generation();
@@ -578,6 +579,7 @@ namespace pushGP
 				cout << "Install New Generation" << endl;
 				install_next_generation();
 				generation_number++;
+				generations_completed_this_session++;
 			}
 
 			// Restore old heap manager
