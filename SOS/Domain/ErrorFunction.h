@@ -23,5 +23,7 @@ namespace domain
 
 	double lexicase_reproduction_selection_error_function(static int individual_index, static unsigned long input_start, static unsigned long input_end);
 
-	void load_argmap();
+	// Evaluate an individual's program for all days from input_start to input_end
+	double run_individuals_program(static int individual_index, static unsigned long input_start, static unsigned long input_end);
+
 }

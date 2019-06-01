@@ -151,7 +151,11 @@ namespace domain
 		return min_error;
 	}
 
-	void load_argmap()
+	double run_individuals_program(static int individual_index, static unsigned long input_start_, static unsigned long input_end_)
 	{
+		for (unsigned int row = input_start_; row < input_end_; row++)
+			globals::order_bank[individual_index][row] = run_individual_program(individual_index, row);
+
+		return 0.0;
 	}
 }

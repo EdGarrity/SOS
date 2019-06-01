@@ -26,46 +26,23 @@ namespace pushGP
 	{
 		std::sort(x.begin(), x.end());
 		auto z = x.begin();
-//		double middle;
 		std::vector<double>::size_type middle;
 		double median_x;
 
 		switch (x.size() % 2)
 		{
 		case 0: // even
-			//z = x.begin();
-			//middle = x.size() / 2.0;
-			//z += middle;
-			//median_x = (*z + *(--z)) / 2.0;
-
-//			std::cout << "     median(0) ";
-
 			middle = x.size() / 2;
-//			std::cout << " middle = " << middle;
-
 			median_x = (x[middle] + x[middle - 1]) / 2.0;
-//			std::cout << " x[middle] = " << x[middle] << " x[middle - 1] = " << x[middle - 1] << "median_x = " << median_x;
 
 			break;
 
 		case 1: // odd
-			//z = x.begin();
-			//middle = x.size() / 2.0;
-			//z += middle;
-			//median_x = *z;
-
-//			std::cout << "     median(1) ";
-
 			middle = x.size() / 2;
-//			std::cout << " middle = " << middle;
-
 			median_x = x[middle];
-//			std::cout << " median_x = " << median_x;
 
 			break;
 		}
-
-//		std::cout << std::endl;
 
 		return median_x;
 	}
@@ -76,20 +53,10 @@ namespace pushGP
 
 		std::vector<double> dev;
 
-//		std::cout << "     mad() median_x = " << median_x;
-
-		//for (auto it = x.begin(); it != x.end(); it++)
-		//{
-		//	double y = *it;
-		//	dev.push_back(std::fabs(y - median_x));
-		//}
-
 		for (double y : x)
 			dev.push_back(std::fabs(y - median_x));
 
 		double m = median(dev);
-
-//		std::cout << "   m = " << m << std::endl;
 
 		return m;
 	}
@@ -182,7 +149,6 @@ namespace pushGP
 		}
 
 		// Return a parent from remaining survivors 
-//		unsigned number_of_survivors = 0;
 		number_of_survivors = 0;
 
 		if (!survivors_index.empty())
@@ -210,13 +176,11 @@ namespace pushGP
 		}
 
 		if (number_of_survivors > 0)
-//			_individual = globals::population_agents[*before_it];
 			return *before_it;
 
 		else
 		{
 			int n = (int)(random_double() * argmap::population_size);
-//			_individual = globals::population_agents[*it];
 			return n;
 		}
 	}

@@ -31,6 +31,7 @@ namespace pushGP
 		static unsigned int test_input_end);
 
 	// The top-level routine of pushgp
-	void pushgp(std::function<double(static int, static unsigned long, static unsigned long)> reproduction_selection_error_function,
-		        std::function<double(static std::vector<int> & individual_indexes, static unsigned long input_start, static unsigned long input_end, unsigned int _test_case, bool _record_transactions)> individual_selection_error_function);
+	void pushgp(std::function<double(static int, static unsigned long, static unsigned long)> _run_program_function,
+		std::function<double(static int, static unsigned long, static unsigned long)> _reproduction_selection_error_function, 
+		std::function<double(static std::vector<int> & individual_indexes, static unsigned long input_start, static unsigned long input_end, unsigned int _test_case, bool _record_transactions)> _individual_selection_error_function);
 }
