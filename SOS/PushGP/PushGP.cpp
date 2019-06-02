@@ -513,9 +513,9 @@ namespace pushGP
 		auto minmax_non_zero_epsilons = std::minmax_element(globals::non_zero_epsilons.begin(), globals::non_zero_epsilons.end());
 		float average_non_zero_epsilons = std::accumulate(globals::non_zero_epsilons.begin(), globals::non_zero_epsilons.end(), 0.0) / globals::non_zero_epsilons.size();
 
-		sqlcmd_save_status_report->set_as_integer(24, *minmax_epsilon.first);
-		sqlcmd_save_status_report->set_as_integer(25, average_epsilon);
-		sqlcmd_save_status_report->set_as_integer(26, *minmax_epsilon.second);
+		sqlcmd_save_status_report->set_as_integer(24, *minmax_non_zero_epsilons.first);
+		sqlcmd_save_status_report->set_as_float(25, average_non_zero_epsilons);
+		sqlcmd_save_status_report->set_as_integer(26, *minmax_non_zero_epsilons.second);
 
 		sqlcmd_save_status_report->execute();
 
