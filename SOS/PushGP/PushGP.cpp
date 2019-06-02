@@ -1,3 +1,5 @@
+#include <numeric>
+#include <algorithm>
 #include <mutex>
 #include <functional>
 #include <thread>
@@ -50,11 +52,18 @@ namespace pushGP
 		"           ,[Population_Size]"							// 16
 		"           ,[Alternation_Rate]"						// 17
 		"           ,[Uniform_Mutation_Rate]"					// 18
-		"           ,[Genome]"									// 19
+		"           ,[Genome_of_individual_with_best_training_score_for_all_data]"									// 19
+		"           ,[Genome_of_elite_individual_with_maximum_number_test_cases]"									// 20
+		"           ,[Minimum_Epsilon]"									// 21
+		"           ,[Avgerage_Epsilon]"									// 22
+		"           ,[Maximum_Epsilon]"									// 23
+		"           ,[Minimum_Non_Zero_Epsilons]"									// 24
+		"           ,[Average_Non_Zero_Epsilons]"									// 25
+		"           ,[Maximum_Non_Zero_Epsilons]"									// 26
 		"           )"
 		"     VALUES"
-		"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-			//       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9
+		"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			//       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6
 
 	unsigned long get_last_saved_generation_number()
 	{
@@ -422,9 +431,12 @@ namespace pushGP
 		int maximum_number_of_test_cases_for_any_elite_individual = 0;
 		int index_of_elite_individual_with_maximum_number_test_cases = 0;
 
-		std::cout << "test_case_index, test_case_minimum_error[test_case_index], globals::epsilons[test_case_index]" << std::endl;
+		std::cout << "test_case_index, test_case_minimum_error[test_case_index], globals::epsilons[test_case_index], globals::non_zero_epsilons[test_case_index]" << std::endl;
 		for (int test_case_index = 0; test_case_index < Number_Of_Test_Cases; test_case_index++)
-			std::cout << test_case_index << ", " << test_case_minimum_error[test_case_index] << ", " << globals::epsilons[test_case_index] << std::endl;
+			std::cout << test_case_index << ", " 
+					  << test_case_minimum_error[test_case_index] << ", " 
+					  << globals::epsilons[test_case_index] << ","
+					  << globals::non_zero_epsilons[test_case_index] << std::endl;
 		std::cout << std::endl;
 
 		for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
@@ -489,6 +501,21 @@ namespace pushGP
 		sqlcmd_save_status_report->set_as_float(17, argmap::alternation_rate);
 		sqlcmd_save_status_report->set_as_float(18, argmap::uniform_mutation_rate);
 		sqlcmd_save_status_report->set_as_string(19, globals::population_agents[index_of_individual_with_best_training_score_for_all_data].get_genome_as_string());
+		sqlcmd_save_status_report->set_as_string(20, globals::population_agents[index_of_elite_individual_with_maximum_number_test_cases].get_genome_as_string());
+
+		auto minmax_epsilon = std::minmax_element(globals::epsilons.begin(), globals::epsilons.end());
+		float average_epsilon = std::accumulate(globals::epsilons.begin(), globals::epsilons.end(), 0.0) / globals::epsilons.size();
+
+		sqlcmd_save_status_report->set_as_float(21, *minmax_epsilon.first);
+		sqlcmd_save_status_report->set_as_float(22, average_epsilon);
+		sqlcmd_save_status_report->set_as_float(23, *minmax_epsilon.second);
+
+		auto minmax_non_zero_epsilons = std::minmax_element(globals::non_zero_epsilons.begin(), globals::non_zero_epsilons.end());
+		float average_non_zero_epsilons = std::accumulate(globals::non_zero_epsilons.begin(), globals::non_zero_epsilons.end(), 0.0) / globals::non_zero_epsilons.size();
+
+		sqlcmd_save_status_report->set_as_integer(24, *minmax_epsilon.first);
+		sqlcmd_save_status_report->set_as_integer(25, average_epsilon);
+		sqlcmd_save_status_report->set_as_integer(26, *minmax_epsilon.second);
 
 		sqlcmd_save_status_report->execute();
 

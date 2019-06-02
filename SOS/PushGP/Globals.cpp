@@ -22,5 +22,6 @@ namespace pushGP
 
 		// Used in epsilon lexicase. Only calculated once per population
 		std::vector<double> epsilons;
+		std::vector<unsigned int> non_zero_epsilons;
 	}
 }
