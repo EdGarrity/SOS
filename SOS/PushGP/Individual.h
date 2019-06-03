@@ -145,6 +145,8 @@ namespace pushGP
 
 		void set_genome(std::string _genome);
 		void set_genome(std::vector<struct Atom> _genome);
+		void clear_genome();
+
 		void set(Individual & other);
 
 		const std::vector<double> & get_errors()

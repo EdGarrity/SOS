@@ -118,6 +118,11 @@ namespace pushGP
 		translate_plush_genome_to_push_program();
 	}
 
+	void Individual::clear_genome()
+	{
+		init();
+	}
+
 	void Individual::set(Individual & other)
 	{
 		init();

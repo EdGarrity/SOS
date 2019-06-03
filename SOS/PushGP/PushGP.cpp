@@ -204,15 +204,20 @@ namespace pushGP
 		std::set<std::string> set_of_gnomes;
 		std::pair<std::set<std::string>::iterator, bool> ret;
 
+		// Reset children.
+		for (unsigned int n = 0; n < argmap::population_size; n++)
+			globals::child_agents[n].clear_genome();
+
 		for (unsigned int n = 0; n < argmap::population_size; n++)
 		{
-//			std::cout << "  n = " << n;
+			if (globals::child_agents[n].get_genome().empty())
+			{
+				ret = set_of_gnomes.insert(breed(globals::child_agents[n]).get_genome_as_string());
 
-			ret = set_of_gnomes.insert(breed(globals::child_agents[n]).get_genome_as_string());
-
-			// If a child with the same genome already exists, create a new random child.
-			if (ret.second == false)
-				globals::child_agents[n].set_genome(random_plush_genome());
+				// If a child with the same genome already exists, create a new random child.
+				if (ret.second == false)
+					globals::child_agents[n].set_genome(random_plush_genome());
+			}
 		}
 
 		std::cout << std::endl;
