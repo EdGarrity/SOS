@@ -148,6 +148,19 @@ namespace Push
 		return 1;
 	}
 
+	inline unsigned _exp()
+	{
+		std::vector<double> &stack = get_stack<double>();
+		stack.back() = std::exp(stack.back());
+		return 1;
+	}
+
+	inline unsigned _log()
+	{
+		std::vector<double> &stack = get_stack<double>();
+		stack.back() = std::log(stack.back());
+		return 1;
+	}
 
 	inline unsigned _fmod()
 	{

@@ -31,5 +31,7 @@ namespace Push
 //		make_instruction((Operator)rand_float, "FLOAT.ERC", nullType, floatType);
 
 		make_instruction((Operator)data2float, "FLOAT.FROMDATA", integerType, floatType);
+		make_instruction((Operator)_exp, "FLOAT.EXP", floatType, floatType);
+		make_instruction((Operator)_log, "FLOAT.LOG", floatType, floatType);
 	}
 }
