@@ -13,7 +13,8 @@ namespace pushGP
 
 	// Returns median absolute deviation (MAD)
 	double median(std::vector<double> x);
-	double mad(std::vector<double> x);
+//	double mad(std::vector<double> x);
+	std::tuple<double, unsigned int> mad(std::vector<double> x);
 
 	// Calculates the epsilon values for epsilon lexicase selection. Only runs once per generation.
 	void calculate_epsilons_for_epsilon_lexicase();

@@ -25,7 +25,7 @@ namespace pushGP
 	double median(std::vector<double> x)
 	{
 		std::sort(x.begin(), x.end());
-		auto z = x.begin();
+//		auto z = x.begin();
 		std::vector<double>::size_type middle;
 		double median_x;
 
@@ -33,7 +33,13 @@ namespace pushGP
 		{
 		case 0: // even
 			middle = x.size() / 2;
-			median_x = (x[middle] + x[middle - 1]) / 2.0;
+
+			// Check for overflow
+			if ((x[middle] >= std::numeric_limits<double>::max() / 2.0) or (x[middle - 1] >= std::numeric_limits<double>::max() / 2.0))
+				median_x = x[middle];
+
+			else
+				median_x = (x[middle] + x[middle - 1]) / 2.0;
 
 			break;
 
@@ -47,43 +53,47 @@ namespace pushGP
 		return median_x;
 	}
 
-	double mad(std::vector<double> x)
+	std::tuple<double, unsigned int> mad(std::vector<double> x)
 	{
+		unsigned int n = 0;
 		double median_x = median(x);
 
 		std::vector<double> dev;
 
 		for (double y : x)
-			dev.push_back(std::fabs(y - median_x));
+		{
+			double a = std::fabs(y - median_x);
+			dev.push_back(a);
+
+			if (a > 0.0)
+				n++;
+		}
 
 		double m = median(dev);
 
-		return m;
+		return std::make_tuple(m, n);
 	}
 
 	void calculate_epsilons_for_epsilon_lexicase()
 	{
+		double median_absolute_deviation = 0.0;
+		unsigned int non_zero_count = 0;
+
 		std::vector<double> test_case_errors;
 
 		globals::epsilons.clear();
+		globals::non_zero_epsilons.clear();
 
 		for (int test_case = 0; test_case < Number_Of_Test_Cases; test_case++)
 		{
 			test_case_errors.clear();
 
 			for (int ind = 0; ind < argmap::population_size; ind++)
-			{
-				// std::numeric_limits<double>::max() represent zero error (a do nothing)
+				test_case_errors.push_back(globals::population_agents[ind].get_errors()[test_case]);
 
-				double error = globals::population_agents[ind].get_errors()[test_case];
-
-				if (error == std::numeric_limits<double>::max())
-					error = 0;
-
-				test_case_errors.push_back(error);
-			}
-
-			globals::epsilons.push_back(mad(test_case_errors));
+			std::tie(median_absolute_deviation, non_zero_count) = mad(test_case_errors);
+			globals::epsilons.push_back(median_absolute_deviation);
+			globals::non_zero_epsilons.push_back(non_zero_count);
 		}
 	}
 

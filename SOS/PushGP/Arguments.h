@@ -16,7 +16,7 @@ namespace pushGP
 			//	:use - single - thread false
 			//	;; When true, will only use a single thread.
 		const bool use_single_thread = false;
-		const unsigned int number_of_cores_to_reserve = 8;
+		const unsigned int number_of_cores_to_reserve = 12;
 
 			// Prevent Buy-And-Hold solutions
 		const bool prevent_buy_and_hold = true;
@@ -330,9 +330,9 @@ namespace pushGP
 		//	;; ----------------------------------------
 
 		// Incest probabilities
-		const double probability_of_sibling_incest = 0.01;
-		const double probability_of_first_cousin_incest = 0.02;
-		const double probability_of_second_cousin_incest = 0.03;
+		const double probability_of_sibling_incest = 0.10;
+		const double probability_of_first_cousin_incest = 0.20;
+		const double probability_of_second_cousin_incest = 0.30;
 
 		//	:parent - selection : lexicase
 		//	;; The parent selection method.Options include : tournament, : lexicase, : epsilon - lexicase,
