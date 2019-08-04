@@ -334,8 +334,8 @@ namespace pushGP
 		const double probability_of_first_cousin_incest = 0.20;
 		const double probability_of_second_cousin_incest = 0.30;
 
-		// Probability that a parent will not be replaced by a child.
-		const double probability_of_retaining_parents = 0.20;
+		// Which parents have a chance to survive to the next generation.
+		const unsigned int error_ratio_cap_for_retaining_parents = 0.2;
 
 		//	:parent - selection : lexicase
 		//	;; The parent selection method.Options include : tournament, : lexicase, : epsilon - lexicase,

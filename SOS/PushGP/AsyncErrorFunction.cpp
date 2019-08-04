@@ -1,12 +1,14 @@
 #include  <iostream>
 
 #include "AsyncErrorFunction.h"
+#include "Globals.h"
 
 namespace pushGP
 {
 	AsyncErrorFunction::AsyncErrorFunction() : work_order_queue_(), lock_(), data_condition_(), accept_functions_(true)
 	{
 		min_error_ = std::numeric_limits<double>::max();
+		max_error_for_all_individuals_for_all_data_ = std::numeric_limits<double>::min();
 		index_of_individual_with_best_training_score_for_all_data_ = 0;
 	}
 
@@ -124,6 +126,17 @@ namespace pushGP
 					index_of_individual_with_best_training_score_for_all_data_ = work_order.individual_indexes[0];
 				}
 
+				globals::population_agents[work_order.individual_indexes[0]].set_error_for_all_training_data(error);
+
+				//release the lock
+			}
+
+			{
+				std::unique_lock<std::mutex> lock(max_error_for_all_individuals_for_all_data_lock_);
+
+				if (error > max_error_for_all_individuals_for_all_data_)
+					max_error_for_all_individuals_for_all_data_ = error;
+
 				//release the lock
 			}
 
@@ -134,6 +147,11 @@ namespace pushGP
 	double AsyncErrorFunction::min_error()
 	{
 		return min_error_;
+	}
+
+	double AsyncErrorFunction::max_error_for_all_individuals_for_all_data()
+	{
+		return max_error_for_all_individuals_for_all_data_;
 	}
 
 	int AsyncErrorFunction::min_error_individual_index()

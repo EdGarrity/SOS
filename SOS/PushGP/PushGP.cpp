@@ -4,6 +4,7 @@
 #include <functional>
 #include <thread>
 #include <unordered_set>
+#include <random>
 
 #include "PushGP.h"
 #include "Globals.h"
@@ -278,6 +279,7 @@ namespace pushGP
 	{
 		unsigned int n = 0;
 		double min_error = std::numeric_limits<double>::max();
+		double max_error_for_all_individuals_for_all_data = std::numeric_limits<double>::min();
 		int index_of_individual_with_best_training_score_for_all_data = 0;
 		database::SQLCommand* sqlcmd_save_status_report;
 
@@ -288,7 +290,6 @@ namespace pushGP
 
 		// Calculate the best individual's training score
 		// Clear test case counts
-		min_error = std::numeric_limits<double>::max();
 
 		AsyncErrorFunction async_error_function;
 
@@ -304,11 +305,16 @@ namespace pushGP
 
 				double error = individual_selection_error_function(individual_indexes, training_input_start, training_input_end, 0, false);
 
+				globals::population_agents[individual_index].set_error_for_all_training_data(error);
+
 				if (error < min_error)
 				{
 					min_error = error;
 					index_of_individual_with_best_training_score_for_all_data = individual_index;
 				}
+
+				if (error > max_error_for_all_individuals_for_all_data)
+					max_error_for_all_individuals_for_all_data = error;
 			}
 		}
 		else
@@ -338,6 +344,8 @@ namespace pushGP
 			cout << std::endl;
 
 			min_error = async_error_function.min_error();
+			max_error_for_all_individuals_for_all_data = async_error_function.max_error_for_all_individuals_for_all_data();
+
 			index_of_individual_with_best_training_score_for_all_data = async_error_function.min_error_individual_index();
 		}
 
@@ -413,7 +421,7 @@ namespace pushGP
 		std::cout << eligible_parents_validation_score << std::endl;
 		std::cout << std::endl;
 
-		// Calculte group training score
+		// Calculate group training score
 		std::vector<int> index_of_individuals;
 
 		for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
@@ -526,6 +534,25 @@ namespace pushGP
 
 		delete sqlcmd_save_status_report;
 
+		// Allow best individuals to survive
+		if (pushGP::argmap::error_ratio_cap_for_retaining_parents > 0.0)
+		{
+			globals::child_agents[index_of_elite_individual_with_maximum_number_test_cases].set(globals::population_agents[index_of_elite_individual_with_maximum_number_test_cases]);
+
+			if (max_error_for_all_individuals_for_all_data > 0.0)
+			{
+				double cap = random_double(pushGP::argmap::error_ratio_cap_for_retaining_parents); 
+
+				for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
+				{
+					double ratio = globals::population_agents[individual_index].get_error_for_all_training_data() / max_error_for_all_individuals_for_all_data;
+
+					if (ratio < cap)
+						globals::child_agents[individual_index].set(globals::population_agents[individual_index]);
+				}
+			}
+		}
+
 		// Save transaction log to file.
 		globals::population_agents[index_of_elite_individual_with_maximum_number_test_cases].dump_transactions();
 	}
@@ -602,11 +629,11 @@ namespace pushGP
 				produce_new_offspring();
 				
 				cout << "Generate status report" << endl;
-				generate_status_report(generation_number, 
-					_individual_selection_error_function, 
-					argmap::training_start_index, 
-					argmap::training_end_index, 
-					argmap::test_start_index, 
+				generate_status_report(generation_number,
+					_individual_selection_error_function,
+					argmap::training_start_index,
+					argmap::training_end_index,
+					argmap::test_start_index,
 					argmap::test_end_index);
 
 				cout << "Install New Generation" << endl;

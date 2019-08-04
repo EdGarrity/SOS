@@ -116,12 +116,6 @@ namespace pushGP
 			};
 
 			alternation(globals::population_agents[first_parent], globals::population_agents[other_parent], child);
-
-			if (random_double() <= pushGP::argmap::probability_of_retaining_parents)
-			{
-				globals::child_agents[first_parent].set(globals::population_agents[first_parent]);
-				globals::child_agents[other_parent].set(globals::population_agents[other_parent]);
-			}
 		}
 
 		else
@@ -131,9 +125,6 @@ namespace pushGP
 			first_parent = epsilon_lexicase_selection(-1);
 
 			uniform_mutation(globals::population_agents[first_parent], child);
-
-			if (random_double() <= pushGP::argmap::probability_of_retaining_parents)
-				globals::child_agents[first_parent].set(globals::population_agents[first_parent]);
 		}
 
 		// Check if child too big
@@ -142,8 +133,6 @@ namespace pushGP
 			std::cout << "B";
 			child.set_genome(random_plush_genome());
 		}
-
-//		std::cout << std::endl;
 
 		return child;
 	}
