@@ -6,7 +6,7 @@
 
 namespace pushGP
 {
-	double random_double();
+	double random_double(double m = 1.0);
 
 	unsigned int random_closes();
 	struct Atom random_atom();

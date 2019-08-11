@@ -21,8 +21,11 @@ namespace pushGP
 		};
 
 		std::atomic<double> min_error_;
+		std::atomic<double> max_error_for_all_individuals_for_all_data_;
+
 		std::atomic<int> index_of_individual_with_best_training_score_for_all_data_;
 		std::mutex min_error_lock_;
+		std::mutex max_error_for_all_individuals_for_all_data_lock_;
 
 		std::queue<WorkOrder> work_order_queue_;
 		std::mutex lock_;
@@ -39,6 +42,7 @@ namespace pushGP
 		void reproduction_selection_error_function_thread_pool(std::function<double(int, unsigned long, unsigned long)> error_function);
 		void individual_selection_error_function_thread_pool(std::function<double(std::vector<int> &, unsigned long, unsigned long, unsigned int, bool)> error_function);
 		double min_error();
+		double max_error_for_all_individuals_for_all_data();
 		int min_error_individual_index();
 	};
 }

@@ -48,7 +48,7 @@ namespace pushGP
 		const unsigned int population_size = 2500;
 
 		// The maximum number of generations to run GP.
-		const unsigned int max_generations_in_one_session = 50;
+		const unsigned int max_generations_in_one_session = 5000;
 
 		//		;; The limit for the number of point(instruction) evaluations to
 		//		;; execute during the run.
@@ -333,6 +333,9 @@ namespace pushGP
 		const double probability_of_sibling_incest = 0.10;
 		const double probability_of_first_cousin_incest = 0.20;
 		const double probability_of_second_cousin_incest = 0.30;
+
+		// Which parents have a chance to survive to the next generation.
+		const unsigned int error_ratio_cap_for_retaining_parents = 0.2;
 
 		//	:parent - selection : lexicase
 		//	;; The parent selection method.Options include : tournament, : lexicase, : epsilon - lexicase,

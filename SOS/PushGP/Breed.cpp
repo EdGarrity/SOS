@@ -122,7 +122,9 @@ namespace pushGP
 		{
 			std::cout << "M";
 
-			uniform_mutation(globals::population_agents[epsilon_lexicase_selection(-1)], child);
+			first_parent = epsilon_lexicase_selection(-1);
+
+			uniform_mutation(globals::population_agents[first_parent], child);
 		}
 
 		// Check if child too big
@@ -131,8 +133,6 @@ namespace pushGP
 			std::cout << "B";
 			child.set_genome(random_plush_genome());
 		}
-
-//		std::cout << std::endl;
 
 		return child;
 	}

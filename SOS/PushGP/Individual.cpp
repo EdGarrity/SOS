@@ -37,6 +37,7 @@ namespace pushGP
 	{
 		program_.clear();
 		genome_.clear();
+		error_for_all_training_data_ = 0.0;
 		errors_.clear();
 		is_elite_ = false;
 		genome_string_.clear();
@@ -116,6 +117,11 @@ namespace pushGP
 		init();
 		genome_ = _genome;
 		translate_plush_genome_to_push_program();
+	}
+
+	void Individual::clear_genome()
+	{
+		init();
 	}
 
 	void Individual::set(Individual & other)

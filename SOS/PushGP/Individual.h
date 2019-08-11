@@ -99,6 +99,9 @@ namespace pushGP
 		std::vector<struct Atom> genome_;
 		std::string genome_string_;
 
+		// Error for all training data
+		double error_for_all_training_data_;
+
 		// Vector of errors
 		std::vector<double> errors_;
 
@@ -145,7 +148,19 @@ namespace pushGP
 
 		void set_genome(std::string _genome);
 		void set_genome(std::vector<struct Atom> _genome);
+		void clear_genome();
+
 		void set(Individual & other);
+
+		void set_error_for_all_training_data(double error)
+		{
+			error_for_all_training_data_ = error;
+		}
+
+		double get_error_for_all_training_data()
+		{
+			return error_for_all_training_data_;
+		}
 
 		const std::vector<double> & get_errors()
 		{

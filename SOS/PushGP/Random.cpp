@@ -15,14 +15,14 @@ namespace pushGP
 {
 	using namespace Push;
 
-	double random_double()
+	double random_double(double m)
 	{
 		//std::default_random_engine generator;
 		//std::uniform_real_distribution<double> distribution(0.0, 1.0);
 
 		//return distribution(generator);
 
-		return rng.uniform(1.0);
+		return rng.uniform(m);
 	}
 
 	unsigned long random_integer()
