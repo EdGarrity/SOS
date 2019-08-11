@@ -48,7 +48,7 @@ namespace pushGP
 		const unsigned int population_size = 2500;
 
 		// The maximum number of generations to run GP.
-		const unsigned int max_generations_in_one_session = 50;
+		const unsigned int max_generations_in_one_session = 5000;
 
 		//		;; The limit for the number of point(instruction) evaluations to
 		//		;; execute during the run.
