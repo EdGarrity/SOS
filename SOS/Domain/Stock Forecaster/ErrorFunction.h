@@ -1,5 +1,5 @@
 #pragma once
-#include "..\PushGP\Individual.h"
+#include "..\..\PushGP\Individual.h"
 
 using namespace pushGP;
 

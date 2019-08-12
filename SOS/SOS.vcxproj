@@ -156,7 +156,7 @@
     <ClInclude Include="Database\SQLCommand.h" />
     <ClInclude Include="Database\SQLConnection.h" />
     <ClInclude Include="Database\SQLField.h" />
-    <ClInclude Include="Domain\ErrorFunction.h" />
+    <ClInclude Include="Domain\Stock Forecaster\ErrorFunction.h" />
     <ClInclude Include="Finance\Broker.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PushGP\Arguments.h" />
@@ -194,7 +194,7 @@
     <ClCompile Include="Database\SQLCommand.cpp" />
     <ClCompile Include="Database\SQLConnection.cpp" />
     <ClCompile Include="Database\SQLField.cpp" />
-    <ClCompile Include="Domain\ErrorFunction.cpp" />
+    <ClCompile Include="Domain\Stock Forecaster\ErrorFunction.cpp" />
     <ClCompile Include="Finance\Broker.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
