@@ -1,29 +1,22 @@
 #pragma once
+
 #include "..\PushGP\Individual.h"
 
 using namespace pushGP;
 
 namespace domain
 {
-	//enum order_types
-	//{
-	//	buy = 1,
-	//	hold = 0,
-	//	sell = -1
-	//};
+	class ErrorFunction
+	{
 
-	// Evaluate an individual's program for a given day
-	order_types run_individual_program(static unsigned int individual_index, static unsigned long input_row);
+	public:
+		// Evaluates an individual using the provided range
+		static double evaluate_individuals(static std::vector<int> & individual_indexes, static unsigned long input_start, static unsigned long input_end, unsigned int _test_case, bool _record_transactions) {};
 
-	// Evaluates one day in a test case
-	void eval_one_day_of_test_case(static std::vector<int> & individual_indexes, static unsigned long input_row, unsigned int _test_case, bool _record_transactions);
+		static double lexicase_reproduction_selection_error_function(static int individual_index, static unsigned long input_start, static unsigned long input_end) {};
 
-	// Evaluates an individual using the provided range
-	double evaluate_individuals(static std::vector<int> & individual_indexes, static unsigned long input_start, static unsigned long input_end, unsigned int _test_case, bool _record_transactions);
+		// Evaluate an individual's program for all days from input_start to input_end
+		static double run_individuals_program(static int individual_index, static unsigned long input_start, static unsigned long input_end) {};
 
-	double lexicase_reproduction_selection_error_function(static int individual_index, static unsigned long input_start, static unsigned long input_end);
-
-	// Evaluate an individual's program for all days from input_start to input_end
-	double run_individuals_program(static int individual_index, static unsigned long input_start, static unsigned long input_end);
-
+	};
 }

@@ -135,9 +135,6 @@
     <ClInclude Include="PushP\BoolOps.h">
       <Filter>Header Files\PushP</Filter>
     </ClInclude>
-    <ClInclude Include="Domain\ErrorFunction.h">
-      <Filter>Header Files\Domain</Filter>
-    </ClInclude>
     <ClInclude Include="PushP\ExecInstruction.h">
       <Filter>Header Files\PushP</Filter>
     </ClInclude>
@@ -158,6 +155,12 @@
     </ClInclude>
     <ClInclude Include="Utilities\AtomicFunctions.h">
       <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\StockForecastingErrorFunction.h">
+      <Filter>Header Files\Domain</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\ErrorFunction.h">
+      <Filter>Header Files\Domain</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -233,9 +236,6 @@
     <ClCompile Include="PushGP\Globals.cpp">
       <Filter>Source Files\PushGP</Filter>
     </ClCompile>
-    <ClCompile Include="Domain\ErrorFunction.cpp">
-      <Filter>Source Files\Domain</Filter>
-    </ClCompile>
     <ClCompile Include="Utilities\Conversion.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
@@ -253,6 +253,12 @@
     </ClCompile>
     <ClCompile Include="Utilities\AtomicFunctions.cpp">
       <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Domain\StockForecastingErrorFunction.cpp">
+      <Filter>Source Files\Domain</Filter>
+    </ClCompile>
+    <ClCompile Include="Domain\ErrorFunction.cpp">
+      <Filter>Source Files\Domain</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
