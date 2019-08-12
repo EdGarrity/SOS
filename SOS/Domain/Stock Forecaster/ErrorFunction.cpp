@@ -1,11 +1,11 @@
 #include "ErrorFunction.h"
-#include "..\PushGP\Globals.h"
-#include "..\Finance\Broker.h"
-#include "..\PushP\StaticInit.h"
-#include "..\PushP\CodeUtils.h"
-#include "..\PushP\Env.h"
-#include "..\PushP\Literal.h"
-#include "..\PushP\ExecInstruction.h"
+#include "..\..\PushGP\Globals.h"
+#include "..\..\Finance\Broker.h"
+#include "..\..\PushP\StaticInit.h"
+#include "..\..\PushP\CodeUtils.h"
+#include "..\..\PushP\Env.h"
+#include "..\..\PushP\Literal.h"
+#include "..\..\PushP\ExecInstruction.h"
 
 using namespace finance;
 using namespace Push;
