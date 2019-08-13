@@ -1,7 +1,7 @@
 #include  <iostream>
 
 #include "AsyncErrorFunction.h"
-#include "Globals.h"
+#include "../Domain/Stock Forecaster/Globals.h"
 
 namespace pushGP
 {
@@ -126,7 +126,7 @@ namespace pushGP
 					index_of_individual_with_best_training_score_for_all_data_ = work_order.individual_indexes[0];
 				}
 
-				globals::population_agents[work_order.individual_indexes[0]].set_error_for_all_training_data(error);
+				domain::stock_forecaster::globals::population_agents[work_order.individual_indexes[0]].set_error_for_all_training_data(error);
 
 				//release the lock
 			}
