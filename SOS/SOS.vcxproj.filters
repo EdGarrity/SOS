@@ -31,12 +31,6 @@
     <Filter Include="Source Files\PushGP">
       <UniqueIdentifier>{0e981989-40c9-4cc0-b795-234e64b2e861}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Finance">
-      <UniqueIdentifier>{454eeece-9f93-434a-a82b-aace958775ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Finance">
-      <UniqueIdentifier>{5394fb34-2435-4635-bba8-263625ba54b5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Domain">
       <UniqueIdentifier>{48b827ef-e4f3-4798-805d-a6eb923b2590}</UniqueIdentifier>
     </Filter>
@@ -114,28 +108,16 @@
     <ClInclude Include="PushGP\Individual.h">
       <Filter>Header Files\PushGP</Filter>
     </ClInclude>
-    <ClInclude Include="Finance\Broker.h">
-      <Filter>Header Files\Finance</Filter>
-    </ClInclude>
     <ClInclude Include="PushGP\Random.h">
       <Filter>Header Files\PushGP</Filter>
     </ClInclude>
-    <ClInclude Include="PushGP\PushGP.h">
-      <Filter>Header Files\PushGP</Filter>
-    </ClInclude>
     <ClInclude Include="PushGP\Selection.h">
-      <Filter>Header Files\PushGP</Filter>
-    </ClInclude>
-    <ClInclude Include="PushGP\Arguments.h">
       <Filter>Header Files\PushGP</Filter>
     </ClInclude>
     <ClInclude Include="PushGP\GeneticOperators.h">
       <Filter>Header Files\PushGP</Filter>
     </ClInclude>
     <ClInclude Include="PushGP\Breed.h">
-      <Filter>Header Files\PushGP</Filter>
-    </ClInclude>
-    <ClInclude Include="PushGP\Globals.h">
       <Filter>Header Files\PushGP</Filter>
     </ClInclude>
     <ClInclude Include="PushP\BoolOps.h">
@@ -163,6 +145,18 @@
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="Domain\Stock Forecaster\ErrorFunction.h">
+      <Filter>Header Files\Domain\Stock Forecaster</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Stock Forecaster\Arguments.h">
+      <Filter>Header Files\Domain\Stock Forecaster</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Stock Forecaster\Globals.h">
+      <Filter>Header Files\Domain\Stock Forecaster</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Stock Forecaster\Broker.h">
+      <Filter>Header Files\Domain\Stock Forecaster</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Stock Forecaster\run.h">
       <Filter>Header Files\Domain\Stock Forecaster</Filter>
     </ClInclude>
   </ItemGroup>
@@ -218,9 +212,6 @@
     <ClCompile Include="PushGP\Individual.cpp">
       <Filter>Source Files\PushGP</Filter>
     </ClCompile>
-    <ClCompile Include="Finance\Broker.cpp">
-      <Filter>Source Files\Finance</Filter>
-    </ClCompile>
     <ClCompile Include="PushGP\Random.cpp">
       <Filter>Source Files\PushGP</Filter>
     </ClCompile>
@@ -230,13 +221,7 @@
     <ClCompile Include="PushGP\GeneticOperators.cpp">
       <Filter>Source Files\PushGP</Filter>
     </ClCompile>
-    <ClCompile Include="PushGP\PushGP.cpp">
-      <Filter>Source Files\PushGP</Filter>
-    </ClCompile>
     <ClCompile Include="PushGP\Breed.cpp">
-      <Filter>Source Files\PushGP</Filter>
-    </ClCompile>
-    <ClCompile Include="PushGP\Globals.cpp">
       <Filter>Source Files\PushGP</Filter>
     </ClCompile>
     <ClCompile Include="Utilities\Conversion.cpp">
@@ -258,6 +243,15 @@
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="Domain\Stock Forecaster\ErrorFunction.cpp">
+      <Filter>Source Files\Domain\Stock Forecaster</Filter>
+    </ClCompile>
+    <ClCompile Include="Domain\Stock Forecaster\Globals.cpp">
+      <Filter>Source Files\Domain\Stock Forecaster</Filter>
+    </ClCompile>
+    <ClCompile Include="Domain\Stock Forecaster\Broker.cpp">
+      <Filter>Source Files\Domain\Stock Forecaster</Filter>
+    </ClCompile>
+    <ClCompile Include="Domain\Stock Forecaster\run.cpp">
       <Filter>Source Files\Domain\Stock Forecaster</Filter>
     </ClCompile>
   </ItemGroup>

@@ -72,23 +72,23 @@ namespace pushGP
 		};
 	};
 
-	enum order_types
-	{
-		buy = 1,
-		hold = 0,
-		sell = -1,
-		not_available = -2
-	};
+	//enum order_types
+	//{
+	//	buy = 1,
+	//	hold = 0,
+	//	sell = -1,
+	//	not_available = -2
+	//};
 
-	struct Transaction
-	{
-		int test_case;
-		unsigned long row;
-		double adj_close;
-		order_types order;
-		int number_of_shares;
-		double cash_balance;
-	};
+	//struct Transaction
+	//{
+	//	int test_case;
+	//	unsigned long row;
+	//	double adj_close;
+	//	order_types order;
+	//	int number_of_shares;
+	//	double cash_balance;
+	//};
 
 	class Individual
 	{
@@ -111,8 +111,8 @@ namespace pushGP
 		// Set of test cases this individual is an elite member of
 		std::set<unsigned int> elite_test_cases_;
 
-		// Collection of stock transactions
-		std::vector<Transaction> transactions_;
+		//// Collection of stock transactions
+		//std::vector<Transaction> transactions_;
 
 		// Uniquely identify the indivudal to track genealogy
 		// See (https://stackoverflow.com/questions/1327157/whats-the-c-version-of-guid-newguid)
@@ -123,13 +123,11 @@ namespace pushGP
 		std::unordered_set<UUID> grandparents_;
 		std::unordered_set<UUID> greatgrandparents_;
 
+	protected:
 		void init();
 
 	public:
 		Individual();
-		//Individual(std::vector<struct Atom> _genome) = delete;
-		//Individual(std::vector<struct Atom> _genome, std::unordered_set<UUID> _parents, std::unordered_set<UUID> _grandparents, std::unordered_set<UUID> _greatgrandparents) = delete;
-		//Individual(std::string _genome) = delete;
 		Individual(const Individual & other) = delete;
 		Individual& operator = (const Individual &other) = delete;
 		
@@ -196,8 +194,8 @@ namespace pushGP
 			is_elite_ = true;
 		}
 
-		void log_transaction(int _test_case, unsigned long _row, double _adj_close, order_types _order, int _number_of_shares, double _cash_balance);
-		void dump_transactions();
+		//void log_transaction(int _test_case, unsigned long _row, double _adj_close, order_types _order, int _number_of_shares, double _cash_balance);
+		//void dump_transactions();
 
 		UUID get_id()
 		{

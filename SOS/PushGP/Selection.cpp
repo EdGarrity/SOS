@@ -2,8 +2,8 @@
 #include <random>
 #include <chrono>
 #include "Selection.h"
-#include "Globals.h"
 #include "Random.h"
+#include "../Domain/Stock Forecaster/Globals.h"
 
 namespace pushGP
 {
@@ -25,7 +25,6 @@ namespace pushGP
 	double median(std::vector<double> x)
 	{
 		std::sort(x.begin(), x.end());
-//		auto z = x.begin();
 		std::vector<double>::size_type middle;
 		double median_x;
 
@@ -81,19 +80,19 @@ namespace pushGP
 
 		std::vector<double> test_case_errors;
 
-		globals::epsilons.clear();
-		globals::non_zero_epsilons.clear();
+		domain::stock_forecaster::globals::epsilons.clear();
+		domain::stock_forecaster::globals::non_zero_epsilons.clear();
 
 		for (int test_case = 0; test_case < Number_Of_Test_Cases; test_case++)
 		{
 			test_case_errors.clear();
 
-			for (int ind = 0; ind < argmap::population_size; ind++)
-				test_case_errors.push_back(globals::population_agents[ind].get_errors()[test_case]);
+			for (int ind = 0; ind < domain::stock_forecaster::argmap::population_size; ind++)
+				test_case_errors.push_back(domain::stock_forecaster::globals::population_agents[ind].get_errors()[test_case]);
 
 			std::tie(median_absolute_deviation, non_zero_count) = mad(test_case_errors);
-			globals::epsilons.push_back(median_absolute_deviation);
-			globals::non_zero_epsilons.push_back(non_zero_count);
+			domain::stock_forecaster::globals::epsilons.push_back(median_absolute_deviation);
+			domain::stock_forecaster::globals::non_zero_epsilons.push_back(non_zero_count);
 		}
 	}
 
@@ -101,12 +100,12 @@ namespace pushGP
 	unsigned int pushGP::epsilon_lexicase_selection(int _exclude)
 	{
 		unsigned individual_index = 0;
-		unsigned number_of_survivors = argmap::population_size;
+		unsigned number_of_survivors = domain::stock_forecaster::argmap::population_size;
 
 		// Set survivors to be a copy of the population
 		std::forward_list<unsigned int> survivors_index;
 
-		for (int n = 0; n < argmap::population_size; n++)
+		for (int n = 0; n < domain::stock_forecaster::argmap::population_size; n++)
 			survivors_index.push_front(n);
 
 		// Get a randomized deck of test cases
@@ -125,7 +124,7 @@ namespace pushGP
 			// Set elite to the minimum error
 			for (unsigned int it : survivors_index)
 			{
-				std::vector<double> errors = globals::population_agents[it].get_errors();
+				std::vector<double> errors = domain::stock_forecaster::globals::population_agents[it].get_errors();
 				elite = (errors[training_case] < elite) ? errors[training_case] : elite;
 			}
 
@@ -134,9 +133,9 @@ namespace pushGP
 			auto it = survivors_index.begin();
 			while (it != survivors_index.end())
 			{
-				std::vector<double> errors = globals::population_agents[*it].get_errors();
+				std::vector<double> errors = domain::stock_forecaster::globals::population_agents[*it].get_errors();
 
-				if (errors[training_case] > (elite + globals::epsilons[training_case]))
+				if (errors[training_case] > (elite + domain::stock_forecaster::globals::epsilons[training_case]))
 				{
 					if (it == survivors_index.begin())
 					{
@@ -190,7 +189,7 @@ namespace pushGP
 
 		else
 		{
-			int n = (int)(random_double() * argmap::population_size);
+			int n = (int)(random_double() * domain::stock_forecaster::argmap::population_size);
 			return n;
 		}
 	}
