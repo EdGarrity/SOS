@@ -147,9 +147,6 @@
     <ClInclude Include="Domain\Stock Forecaster\Arguments.h">
       <Filter>Header Files\Domain\Stock Forecaster</Filter>
     </ClInclude>
-    <ClInclude Include="Domain\Stock Forecaster\Globals.h">
-      <Filter>Header Files\Domain\Stock Forecaster</Filter>
-    </ClInclude>
     <ClInclude Include="Domain\Stock Forecaster\Broker.h">
       <Filter>Header Files\Domain\Stock Forecaster</Filter>
     </ClInclude>
@@ -160,6 +157,15 @@
       <Filter>Header Files\Domain\Stock Forecaster</Filter>
     </ClInclude>
     <ClInclude Include="Domain\Stock Forecaster\AsyncErrorFunction.h">
+      <Filter>Header Files\Domain\Stock Forecaster</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Arguments.h">
+      <Filter>Header Files\Domain</Filter>
+    </ClInclude>
+    <ClInclude Include="PushGP\Globals.h">
+      <Filter>Header Files\PushGP</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Stock Forecaster\StockForecasterGlobals.h">
       <Filter>Header Files\Domain\Stock Forecaster</Filter>
     </ClInclude>
   </ItemGroup>
@@ -245,9 +251,6 @@
     <ClCompile Include="Domain\Stock Forecaster\ErrorFunction.cpp">
       <Filter>Source Files\Domain\Stock Forecaster</Filter>
     </ClCompile>
-    <ClCompile Include="Domain\Stock Forecaster\Globals.cpp">
-      <Filter>Source Files\Domain\Stock Forecaster</Filter>
-    </ClCompile>
     <ClCompile Include="Domain\Stock Forecaster\Broker.cpp">
       <Filter>Source Files\Domain\Stock Forecaster</Filter>
     </ClCompile>
@@ -258,6 +261,12 @@
       <Filter>Source Files\Domain\Stock Forecaster</Filter>
     </ClCompile>
     <ClCompile Include="Domain\Stock Forecaster\AsyncErrorFunction.cpp">
+      <Filter>Source Files\Domain\Stock Forecaster</Filter>
+    </ClCompile>
+    <ClCompile Include="PushGP\Globals.cpp">
+      <Filter>Source Files\PushGP</Filter>
+    </ClCompile>
+    <ClCompile Include="Domain\Stock Forecaster\StockForecasterGlobals.cpp">
       <Filter>Source Files\Domain\Stock Forecaster</Filter>
     </ClCompile>
   </ItemGroup>

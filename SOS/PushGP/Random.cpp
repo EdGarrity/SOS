@@ -4,7 +4,7 @@
 
 #include "Random.h"
 #include "Individual.h"
-#include "..\Domain\Stock Forecaster\Globals.h"
+#include "..\Domain\Stock Forecaster\StockForecasterGlobals.h"
 #include "..\PushP\Code.h"
 #include "..\PushP\CodeUtils.h"
 #include "..\PushP\RNG.h"
@@ -40,9 +40,9 @@ namespace pushGP
 		int n = 0;
 		double probability = rng.uniform(1.0);
 
-		for (n = 0; n < domain::stock_forecaster::argmap::close_parens_probabilities.size(); n++)
+		for (n = 0; n < domain::argmap::close_parens_probabilities.size(); n++)
 		{
-			if (probability <= domain::stock_forecaster::argmap::close_parens_probabilities[n])
+			if (probability <= domain::argmap::close_parens_probabilities[n])
 				return n;
 		}
 		
@@ -53,7 +53,7 @@ namespace pushGP
 	{
 		struct Atom gene;
 
-		if (random_double() < domain::stock_forecaster::argmap::probability_of_generating_a_constant_Plush_atom)
+		if (random_double() < domain::argmap::probability_of_generating_a_constant_Plush_atom)
 		{
 			uint32 r = rng.random(3);
 			switch (r)
@@ -111,7 +111,7 @@ namespace pushGP
 
 		while (--n > 0)
 		{
-			if (random_double() < domain::stock_forecaster::argmap::seed_with_data_rate)
+			if (random_double() < domain::argmap::seed_with_data_rate)
 			{
 				char random_integer_string[sizeof(long) * 8 + 1];
 				std::string load_data_genome = "{:instruction ";
@@ -136,6 +136,6 @@ namespace pushGP
 
 	std::vector<struct Atom> random_plush_genome()
 	{
-		return random_plush_genome_with_size(rng.random(domain::stock_forecaster::argmap::max_genome_size_in_initial_program) + 1);
+		return random_plush_genome_with_size(rng.random(domain::argmap::max_genome_size_in_initial_program) + 1);
 	}
 }
