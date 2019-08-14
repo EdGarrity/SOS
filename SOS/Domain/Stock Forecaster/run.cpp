@@ -2,7 +2,7 @@
 #include <numeric>
 
 #include "run.h"
-#include "Globals.h"
+//#include "Globals.h"
 #include "ErrorFunction.h"
 #include "Broker.h"
 #include "PushFunctions.h"
@@ -11,6 +11,7 @@
 #include "../../PushP/ExecInstruction.h"
 #include "../../Database/SQLCommand.h"
 #include "../../Database/SQLField.h"
+#include "../../PushGP/Globals.h"
 #include "../../PushGP/Random.h"
 #include "../../PushGP/Breed.h"
 #include "../../PushGP/Selection.h"
@@ -96,10 +97,10 @@ namespace domain
 						std::cout << "n = " << n << std::endl;
 
 						std::string genome = sqlcmd_get_individuals->get_field_as_string(1);
-						globals::population_agents[n].set_genome(genome);
+						pushGP::globals::population_agents[n].set_genome(genome);
 
 						for (int i = 0; i < argmap::last_data_index; i++)
-							globals::order_bank[n][i] = globals::order_types::not_available;
+							globalss::order_bank[n][i] = globalss::order_types::not_available;
 
 						n++;
 					}
@@ -123,10 +124,10 @@ namespace domain
 
 			for (int n = start_; n < argmap::population_size; n++)
 			{
-				globals::population_agents[n].set_genome(pushGP::random_plush_genome());
+				pushGP::globals::population_agents[n].set_genome(pushGP::random_plush_genome());
 
 				for (int i = 0; i < argmap::last_data_index; i++)
-					globals::order_bank[n][i] = globals::order_types::not_available;
+					globalss::order_bank[n][i] = globalss::order_types::not_available;
 
 				agents_created++;
 			}
@@ -191,17 +192,17 @@ namespace domain
 
 			// Reset children.
 			for (unsigned int n = 0; n < argmap::population_size; n++)
-				globals::child_agents[n].clear_genome();
+				pushGP::globals::child_agents[n].clear_genome();
 
 			for (unsigned int n = 0; n < argmap::population_size; n++)
 			{
-				if (globals::child_agents[n].get_genome().empty())
+				if (pushGP::globals::child_agents[n].get_genome().empty())
 				{
-					ret = set_of_gnomes.insert(pushGP::breed(globals::child_agents[n]).get_genome_as_string());
+					ret = set_of_gnomes.insert(pushGP::breed(pushGP::globals::child_agents[n]).get_genome_as_string());
 
 					// If a child with the same genome already exists, create a new random child.
 					if (ret.second == false)
-						globals::child_agents[n].set_genome(pushGP::random_plush_genome());
+						pushGP::globals::child_agents[n].set_genome(pushGP::random_plush_genome());
 				}
 			}
 
@@ -212,10 +213,10 @@ namespace domain
 		{
 			for (unsigned int n = 0; n < argmap::population_size; n++)
 			{
-				globals::population_agents[n].set(globals::child_agents[n]);
+				pushGP::globals::population_agents[n].set(pushGP::globals::child_agents[n]);
 
 				for (int i = 0; i < argmap::last_data_index; i++)
-					globals::order_bank[n][i] = globals::order_types::not_available;
+					globalss::order_bank[n][i] = globalss::order_types::not_available;
 			}
 		}
 
@@ -238,7 +239,7 @@ namespace domain
 
 			for (int n = 0; n < argmap::population_size; n++)
 			{
-				sqlcmd_insert_new_individual->set_as_string(1, globals::population_agents[n]);
+				sqlcmd_insert_new_individual->set_as_string(1, pushGP::globals::population_agents[n]);
 				sqlcmd_insert_new_individual->execute();
 			}
 
@@ -279,7 +280,7 @@ namespace domain
 			{
 				for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 				{
-					globals::population_agents[individual_index].clear_elite_test_cases();
+					pushGP::globals::population_agents[individual_index].clear_elite_test_cases();
 
 					std::cout << "Calculate the best individual's training score for individual #" << individual_index + 1 << std::endl;
 
@@ -287,7 +288,7 @@ namespace domain
 
 					double error = individual_selection_error_function(individual_indexes, training_input_start, training_input_end, 0, false);
 
-					globals::population_agents[individual_index].set_error_for_all_training_data(error);
+					pushGP::globals::population_agents[individual_index].set_error_for_all_training_data(error);
 
 					if (error < min_error)
 					{
@@ -311,7 +312,7 @@ namespace domain
 
 				for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 				{
-					globals::population_agents[individual_index].clear_elite_test_cases();
+					pushGP::globals::population_agents[individual_index].clear_elite_test_cases();
 
 					std::vector<int> individual_indexes = { individual_index };
 
@@ -356,18 +357,18 @@ namespace domain
 
 				for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 				{
-					if (globals::population_agents[individual_index].get_errors()[test_case_index] < test_case_minimum_error[test_case_index])
+					if (pushGP::globals::population_agents[individual_index].get_errors()[test_case_index] < test_case_minimum_error[test_case_index])
 					{
-						test_case_minimum_error[test_case_index] = globals::population_agents[individual_index].get_errors()[test_case_index];
+						test_case_minimum_error[test_case_index] = pushGP::globals::population_agents[individual_index].get_errors()[test_case_index];
 						index_of_best_individual_for_each_test_case[test_case_index] = individual_index;
 					}
 
 					if ((test_case_minimum_error[test_case_index] < 0.0) //std::numeric_limits<double>::max())
-						&& (globals::population_agents[individual_index].get_errors()[test_case_index] <= (test_case_minimum_error[test_case_index] + globals::epsilons[test_case_index]))
+						&& (pushGP::globals::population_agents[individual_index].get_errors()[test_case_index] <= (test_case_minimum_error[test_case_index] + pushGP::globals::epsilons[test_case_index]))
 						)
 					{
 						set_of_eligible_parents.insert(individual_index);
-						globals::population_agents[individual_index].log_elite_test_case(test_case_index);
+						pushGP::globals::population_agents[individual_index].log_elite_test_case(test_case_index);
 					}
 				}
 			}
@@ -430,25 +431,25 @@ namespace domain
 			for (int test_case_index = 0; test_case_index < Number_Of_Test_Cases; test_case_index++)
 				std::cout << test_case_index << ", "
 				<< test_case_minimum_error[test_case_index] << ", "
-				<< globals::epsilons[test_case_index] << ","
-				<< globals::non_zero_epsilons[test_case_index] << std::endl;
+				<< pushGP::globals::epsilons[test_case_index] << ","
+				<< pushGP::globals::non_zero_epsilons[test_case_index] << std::endl;
 			std::cout << std::endl;
 
 			for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 			{
 				for (int test_case_index = 0; test_case_index < Number_Of_Test_Cases; test_case_index++)
 				{
-					if (globals::population_agents[individual_index].get_errors()[test_case_index] <= (test_case_minimum_error[test_case_index] + globals::epsilons[test_case_index]))
+					if (pushGP::globals::population_agents[individual_index].get_errors()[test_case_index] <= (test_case_minimum_error[test_case_index] + pushGP::globals::epsilons[test_case_index]))
 					{
-						globals::population_agents[individual_index].make_elite();
+						pushGP::globals::population_agents[individual_index].make_elite();
 						number_of_elite_individuals++;
 						break;
 					}
 				}
 
-				if (maximum_number_of_test_cases_for_any_elite_individual < globals::population_agents[individual_index].count_elite_test_cases())
+				if (maximum_number_of_test_cases_for_any_elite_individual < pushGP::globals::population_agents[individual_index].count_elite_test_cases())
 				{
-					maximum_number_of_test_cases_for_any_elite_individual = globals::population_agents[individual_index].count_elite_test_cases();
+					maximum_number_of_test_cases_for_any_elite_individual = pushGP::globals::population_agents[individual_index].count_elite_test_cases();
 					index_of_elite_individual_with_maximum_number_test_cases = individual_index;
 				}
 			}
@@ -495,18 +496,18 @@ namespace domain
 			sqlcmd_save_status_report->set_as_integer(16, argmap::population_size);
 			sqlcmd_save_status_report->set_as_float(17, argmap::alternation_rate);
 			sqlcmd_save_status_report->set_as_float(18, argmap::uniform_mutation_rate);
-			sqlcmd_save_status_report->set_as_string(19, globals::population_agents[index_of_individual_with_best_training_score_for_all_data].get_genome_as_string());
-			sqlcmd_save_status_report->set_as_string(20, globals::population_agents[index_of_elite_individual_with_maximum_number_test_cases].get_genome_as_string());
+			sqlcmd_save_status_report->set_as_string(19, pushGP::globals::population_agents[index_of_individual_with_best_training_score_for_all_data].get_genome_as_string());
+			sqlcmd_save_status_report->set_as_string(20, pushGP::globals::population_agents[index_of_elite_individual_with_maximum_number_test_cases].get_genome_as_string());
 
-			auto minmax_epsilon = std::minmax_element(globals::epsilons.begin(), globals::epsilons.end());
-			float average_epsilon = std::accumulate(globals::epsilons.begin(), globals::epsilons.end(), 0.0) / globals::epsilons.size();
+			auto minmax_epsilon = std::minmax_element(pushGP::globals::epsilons.begin(), pushGP::globals::epsilons.end());
+			float average_epsilon = std::accumulate(pushGP::globals::epsilons.begin(), pushGP::globals::epsilons.end(), 0.0) / pushGP::globals::epsilons.size();
 
 			sqlcmd_save_status_report->set_as_float(21, *minmax_epsilon.first);
 			sqlcmd_save_status_report->set_as_float(22, average_epsilon);
 			sqlcmd_save_status_report->set_as_float(23, *minmax_epsilon.second);
 
-			auto minmax_non_zero_epsilons = std::minmax_element(globals::non_zero_epsilons.begin(), globals::non_zero_epsilons.end());
-			float average_non_zero_epsilons = std::accumulate(globals::non_zero_epsilons.begin(), globals::non_zero_epsilons.end(), 0.0) / globals::non_zero_epsilons.size();
+			auto minmax_non_zero_epsilons = std::minmax_element(pushGP::globals::non_zero_epsilons.begin(), pushGP::globals::non_zero_epsilons.end());
+			float average_non_zero_epsilons = std::accumulate(pushGP::globals::non_zero_epsilons.begin(), pushGP::globals::non_zero_epsilons.end(), 0.0) / pushGP::globals::non_zero_epsilons.size();
 
 			sqlcmd_save_status_report->set_as_integer(24, *minmax_non_zero_epsilons.first);
 			sqlcmd_save_status_report->set_as_float(25, average_non_zero_epsilons);
@@ -519,7 +520,7 @@ namespace domain
 			// Allow best individuals to survive
 			if (argmap::error_ratio_cap_for_retaining_parents > 0.0)
 			{
-				globals::child_agents[index_of_elite_individual_with_maximum_number_test_cases].set(globals::population_agents[index_of_elite_individual_with_maximum_number_test_cases]);
+				pushGP::globals::child_agents[index_of_elite_individual_with_maximum_number_test_cases].set(pushGP::globals::population_agents[index_of_elite_individual_with_maximum_number_test_cases]);
 
 				if (max_error_for_all_individuals_for_all_data > 0.0)
 				{
@@ -527,10 +528,10 @@ namespace domain
 
 					for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 					{
-						double ratio = globals::population_agents[individual_index].get_error_for_all_training_data() / max_error_for_all_individuals_for_all_data;
+						double ratio = pushGP::globals::population_agents[individual_index].get_error_for_all_training_data() / max_error_for_all_individuals_for_all_data;
 
 						if (ratio < cap)
-							globals::child_agents[individual_index].set(globals::population_agents[individual_index]);
+							pushGP::globals::child_agents[individual_index].set(pushGP::globals::population_agents[individual_index]);
 					}
 				}
 			}

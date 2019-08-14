@@ -11,7 +11,7 @@ namespace pushGP
 
 	double gaussian_noise_factor()
 	{
-		return (std::sqrt(-2.0 * std::log(random_double())) * (std::cos(2.0 * domain::stock_forecaster::argmap::PI * random_double())));
+		return (std::sqrt(-2.0 * std::log(random_double())) * (std::cos(2.0 * domain::argmap::PI * random_double())));
 	}
 
 	double perturb_with_gaussian_noise(double sd, double n)
@@ -27,15 +27,15 @@ namespace pushGP
 
 		for (auto atom : old_genome)
 		{
-			if (random_double() < domain::stock_forecaster::argmap::uniform_mutation_rate)
+			if (random_double() < domain::argmap::uniform_mutation_rate)
 			{
-				if (random_double() < domain::stock_forecaster::argmap::uniform_mutation_constant_tweak_rate)
+				if (random_double() < domain::argmap::uniform_mutation_constant_tweak_rate)
 				{
 					if (atom.type == atom.floating_point)
 					{
 						double n = atof(atom.instruction.c_str());
 
-						n = perturb_with_gaussian_noise(domain::stock_forecaster::argmap::uniform_mutation_float_int_gaussian_standard_deviation, n);
+						n = perturb_with_gaussian_noise(domain::argmap::uniform_mutation_float_int_gaussian_standard_deviation, n);
 						atom.instruction = std::to_string(n);
 
 						new_genome.push_back(atom);
@@ -45,7 +45,7 @@ namespace pushGP
 					{
 						int n = atoi(atom.instruction.c_str());
 
-						perturb_with_gaussian_noise(domain::stock_forecaster::argmap::uniform_mutation_float_int_gaussian_standard_deviation, n);
+						perturb_with_gaussian_noise(domain::argmap::uniform_mutation_float_int_gaussian_standard_deviation, n);
 						atom.instruction = std::to_string(n);
 
 						new_genome.push_back(atom);
@@ -95,13 +95,13 @@ namespace pushGP
 		int iteration_budget = s1.size() + s2.size();
 
 		while ( (i < (use_s1 ? s1.size() : s2.size()))				// finished current program
-			 && (result_genome.size() <= (domain::stock_forecaster::argmap::max_points / 4))	// runaway growth
+			 && (result_genome.size() <= (domain::argmap::max_points / 4))	// runaway growth
 			 && (iteration_budget > 0)								// looping too long
 			  )
 		{
-			if (random_double() < domain::stock_forecaster::argmap::alternation_rate)
+			if (random_double() < domain::argmap::alternation_rate)
 			{
-				i = std::fmax(0.0, i + std::round(domain::stock_forecaster::argmap::alignment_deviation * gaussian_noise_factor()));
+				i = std::fmax(0.0, i + std::round(domain::argmap::alignment_deviation * gaussian_noise_factor()));
 				use_s1 = !use_s1;
 				iteration_budget--;
 			}

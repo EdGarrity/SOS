@@ -156,16 +156,18 @@
     <ClInclude Include="Database\SQLCommand.h" />
     <ClInclude Include="Database\SQLConnection.h" />
     <ClInclude Include="Database\SQLField.h" />
+    <ClInclude Include="Domain\Arguments.h" />
     <ClInclude Include="Domain\Stock Forecaster\Arguments.h" />
     <ClInclude Include="Domain\Stock Forecaster\AsyncErrorFunction.h" />
     <ClInclude Include="Domain\Stock Forecaster\Broker.h" />
     <ClInclude Include="Domain\Stock Forecaster\ErrorFunction.h" />
-    <ClInclude Include="Domain\Stock Forecaster\Globals.h" />
+    <ClInclude Include="Domain\Stock Forecaster\StockForecasterGlobals.h" />
     <ClInclude Include="Domain\Stock Forecaster\PushFunctions.h" />
     <ClInclude Include="Domain\Stock Forecaster\run.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PushGP\Breed.h" />
     <ClInclude Include="PushGP\GeneticOperators.h" />
+    <ClInclude Include="PushGP\Globals.h" />
     <ClInclude Include="PushGP\Individual.h" />
     <ClInclude Include="PushGP\Random.h" />
     <ClInclude Include="PushGP\Selection.h" />
@@ -198,7 +200,7 @@
     <ClCompile Include="Domain\Stock Forecaster\AsyncErrorFunction.cpp" />
     <ClCompile Include="Domain\Stock Forecaster\Broker.cpp" />
     <ClCompile Include="Domain\Stock Forecaster\ErrorFunction.cpp" />
-    <ClCompile Include="Domain\Stock Forecaster\Globals.cpp" />
+    <ClCompile Include="Domain\Stock Forecaster\StockForecasterGlobals.cpp" />
     <ClCompile Include="Domain\Stock Forecaster\PushFunctions.cpp" />
     <ClCompile Include="Domain\Stock Forecaster\run.cpp" />
     <ClCompile Include="pch.cpp">
@@ -210,6 +212,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PushGP\Breed.cpp" />
     <ClCompile Include="PushGP\GeneticOperators.cpp" />
+    <ClCompile Include="PushGP\Globals.cpp" />
     <ClCompile Include="PushGP\Individual.cpp" />
     <ClCompile Include="PushGP\Random.cpp" />
     <ClCompile Include="PushGP\Selection.cpp" />
