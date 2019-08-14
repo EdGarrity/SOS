@@ -15,11 +15,11 @@ namespace Push
 	Code rnd;
 	Code ycode;
 
-	int init_push();
+//	int init_push();
 
 	void init_static_PushP_instructions()
 	{
-		init_push();
+//		init_push();	Must be called prior to calling this funtion.
 
 		MyDoRange = parse("EXEC.DO*RANGE");
 		zero = Code(intLiteralFactory->createLiteral(0));

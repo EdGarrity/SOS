@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Globals.h"
+#include "Broker.h"
 
 using namespace pushGP;
 
@@ -19,7 +20,10 @@ namespace domain
 		globals::order_types run_individual_program(static unsigned int individual_index, static unsigned long input_row);
 
 		// Evaluates one day in a test case
-		void eval_one_day_of_test_case(static std::vector<int> & individual_indexes, static unsigned long input_row, unsigned int _test_case, bool _record_transactions);
+		void eval_one_day_of_test_case(static std::vector<int> & individual_indexes, 
+			static unsigned long input_row, 
+			unsigned int _test_case, 
+			Broker & _broker);
 
 		// Evaluates an individual using the provided range
 		double evaluate_individuals(static std::vector<int> & individual_indexes, static unsigned long input_start, static unsigned long input_end, unsigned int _test_case, bool _record_transactions);

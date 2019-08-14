@@ -5,12 +5,13 @@
 #include "Globals.h"
 #include "ErrorFunction.h"
 #include "Broker.h"
+#include "PushFunctions.h"
+#include "AsyncErrorFunction.h"
 #include "../../PushP/Literal.h"
 #include "../../PushP/ExecInstruction.h"
 #include "../../Database/SQLCommand.h"
 #include "../../Database/SQLField.h"
 #include "../../PushGP/Random.h"
-#include "../../PushGP/AsyncErrorFunction.h"
 #include "../../PushGP/Breed.h"
 #include "../../PushGP/Selection.h"
 #include "../../PushP/Literal.h"
@@ -135,7 +136,7 @@ namespace domain
 
 		void compute_errors(std::function<double(unsigned int, unsigned long, unsigned long)> _reproduction_selection_error_function, unsigned long _input_start, unsigned long _input_end)
 		{
-			pushGP::AsyncErrorFunction async_error_function;
+			AsyncErrorFunction async_error_function;
 
 			if (argmap::use_single_thread)
 			{
@@ -160,7 +161,7 @@ namespace domain
 				std::cout << "  Number of threads = " << num_threads << std::endl;
 
 				for (int i = 0; i < num_threads - 1; i++)
-					thread_pool.push_back(std::thread(&pushGP::AsyncErrorFunction::reproduction_selection_error_function_thread_pool, &async_error_function, _reproduction_selection_error_function));
+					thread_pool.push_back(std::thread(&AsyncErrorFunction::reproduction_selection_error_function_thread_pool, &async_error_function, _reproduction_selection_error_function));
 
 
 				std::cout << "  Evaluate Individuals";
@@ -249,7 +250,10 @@ namespace domain
 		}
 
 		void generate_status_report(int generation_,
-			std::function<double(static std::vector<int> & individual_indexes, static unsigned long input_start, static unsigned long input_end, unsigned int _test_case, bool _record_transactions)> individual_selection_error_function,
+			std::function<double(static std::vector<int> & individual_indexes, 
+				static unsigned long input_start, 
+				static unsigned long input_end, 
+				unsigned int _test_case, bool _record_transactions)> individual_selection_error_function,
 			unsigned int training_input_start,
 			unsigned int training_input_end,
 			unsigned int test_input_start,
@@ -564,8 +568,8 @@ namespace domain
 
 				// Initialze
 				Broker::load_datatable();
+				Push::init_push(init_push_application_specific_functions);
 				Push::init_static_PushP_instructions();
-				Push::init_push();
 
 				// Load population.  Create more if not enough loaded.
 				std::cout << "Create Population Agents" << std::endl;

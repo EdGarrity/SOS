@@ -106,7 +106,7 @@ namespace Push
 	extern void initFloat();
 	extern void initBool();
 
-	int init_push()
+	int init_push(std::function<void(void)> _init_push_application_specific_functions = nullptr)
 	{
 		static bool initialized = false;
 
@@ -123,6 +123,9 @@ namespace Push
 			initInt();
 			initFloat();
 			initBool();
+
+			if (_init_push_application_specific_functions != nullptr)
+				_init_push_application_specific_functions();
 		}
 
 		env.initialize();

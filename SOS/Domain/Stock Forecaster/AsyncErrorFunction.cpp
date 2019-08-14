@@ -1,7 +1,7 @@
 #include  <iostream>
 
 #include "AsyncErrorFunction.h"
-#include "../Domain/Stock Forecaster/Globals.h"
+#include "Globals.h"
 
 namespace pushGP
 {

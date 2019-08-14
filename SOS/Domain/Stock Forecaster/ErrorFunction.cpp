@@ -1,6 +1,7 @@
 #include "ErrorFunction.h"
 #include "Globals.h"
 #include "Broker.h"
+#include "PushFunctions.h"
 #include "..\..\PushP\StaticInit.h"
 #include "..\..\PushP\CodeUtils.h"
 #include "..\..\PushP\Env.h"
@@ -25,7 +26,7 @@ namespace domain
 			Push::doRangeClassFactory = new Push::DoRangeClassFactory();
 
 			// Setup
-			init_push();
+			init_push(init_push_application_specific_functions);
 			Code code = parse(globals::population_agents[individual_index].get_program());
 			push_call(code);
 			env.data_record_index = row;
@@ -49,7 +50,11 @@ namespace domain
 			return order;
 		}
 
-		void eval_one_day_of_test_case(static std::vector<int> & _individual_indexes, static unsigned long _row, unsigned int _test_case, bool _record_transactions)
+		void eval_one_day_of_test_case(static std::vector<int> & _individual_indexes, 
+			static unsigned long _row, 
+			unsigned int _test_case, 
+//			bool _record_transactions, 
+			Broker & _broker)
 		{
 			std::map<globals::order_types, unsigned int> orders = { {globals::order_types::buy, 0}, {globals::order_types::hold, 0}, {globals::order_types::sell, 0} };
 			globals::order_types order;
@@ -88,7 +93,7 @@ namespace domain
 
 			// Process order
 			if ((order == globals::order_types::buy) || (order == globals::order_types::sell))
-				env.parameters.pBroker->update_brokeage_account((order == globals::order_types::buy), _row);
+				_broker.update_brokeage_account((order == globals::order_types::buy), _row);
 
 // EG
 			//if (_record_transactions)
@@ -103,7 +108,11 @@ namespace domain
 		}
 
 		// Evaluate a single test case
-		double evaluate_individuals(static std::vector<int> & _individual_indexes, static unsigned long _input_start, static unsigned long _input_end, unsigned int _test_case, bool _record_transactions)
+		double evaluate_individuals(static std::vector<int> & _individual_indexes, 
+			static unsigned long _input_start, 
+			static unsigned long _input_end, 
+			unsigned int _test_case, 
+			bool _record_transactions)
 		{
 			// Check if the list of individuals is empty
 			if (_individual_indexes.empty())
@@ -113,17 +122,17 @@ namespace domain
 			Broker broker = Broker(argmap::opening_balance);
 
 			// Provide a reference to the broker object to to PushP.  It is used to retieve 
-			env.parameters.pBroker = &broker;
+//			env.parameters.pBroker = &broker;
 
 			// Evaluate each day of the test case.
 			for (day_index = _input_start; day_index < _input_end; day_index++)
-				eval_one_day_of_test_case(_individual_indexes, day_index, _test_case, _record_transactions);
+				eval_one_day_of_test_case(_individual_indexes, day_index, _test_case, broker);
 
 			// Calculate test case error by calculating loss
 			double error = argmap::opening_balance - broker.close_brokeage_account(day_index);
 
 			// Remove reference to broker object from the PushP environment.
-			env.parameters.pBroker = NULL;
+//			env.parameters.pBroker = NULL;
 
 			// Return the error value.  Penalize individuals which did nothing. 
 			return (error == 0.0 ? argmap::opening_balance : error);
