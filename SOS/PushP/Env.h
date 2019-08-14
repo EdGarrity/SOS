@@ -4,7 +4,6 @@
 #include "Type.h"
 #include "TypeDef.h"
 #include "CodeUtils.h" // for cdr
-#include "../Domain/Stock Forecaster/Broker.h"
 
 namespace Push
 {
@@ -26,7 +25,6 @@ namespace Push
 		int max_points_in_random_expression;	// = 50
 		unsigned int max_points_in_program;				// = 100
 		int random_seed;						// = time.time()
-		domain::stock_forecaster::Broker* pBroker;				// Give Push access to the Broker object.
 	};
 
 	extern const Parameters global_parameters;

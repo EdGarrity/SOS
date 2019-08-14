@@ -157,12 +157,13 @@
     <ClInclude Include="Database\SQLConnection.h" />
     <ClInclude Include="Database\SQLField.h" />
     <ClInclude Include="Domain\Stock Forecaster\Arguments.h" />
+    <ClInclude Include="Domain\Stock Forecaster\AsyncErrorFunction.h" />
     <ClInclude Include="Domain\Stock Forecaster\Broker.h" />
     <ClInclude Include="Domain\Stock Forecaster\ErrorFunction.h" />
     <ClInclude Include="Domain\Stock Forecaster\Globals.h" />
+    <ClInclude Include="Domain\Stock Forecaster\PushFunctions.h" />
     <ClInclude Include="Domain\Stock Forecaster\run.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="PushGP\AsyncErrorFunction.h" />
     <ClInclude Include="PushGP\Breed.h" />
     <ClInclude Include="PushGP\GeneticOperators.h" />
     <ClInclude Include="PushGP\Individual.h" />
@@ -194,9 +195,11 @@
     <ClCompile Include="Database\SQLCommand.cpp" />
     <ClCompile Include="Database\SQLConnection.cpp" />
     <ClCompile Include="Database\SQLField.cpp" />
+    <ClCompile Include="Domain\Stock Forecaster\AsyncErrorFunction.cpp" />
     <ClCompile Include="Domain\Stock Forecaster\Broker.cpp" />
     <ClCompile Include="Domain\Stock Forecaster\ErrorFunction.cpp" />
     <ClCompile Include="Domain\Stock Forecaster\Globals.cpp" />
+    <ClCompile Include="Domain\Stock Forecaster\PushFunctions.cpp" />
     <ClCompile Include="Domain\Stock Forecaster\run.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -205,7 +208,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="PushGP\AsyncErrorFunction.cpp" />
     <ClCompile Include="PushGP\Breed.cpp" />
     <ClCompile Include="PushGP\GeneticOperators.cpp" />
     <ClCompile Include="PushGP\Individual.cpp" />
