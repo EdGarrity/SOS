@@ -58,7 +58,6 @@ namespace Push
 		vec[0] = MyDoRange;
 		vec[1] = quote;
 		vec[2] = code;
-//		vec[3] = Code(new Literal<int>(n - 1));
 		vec[3] = Code(intLiteralFactory->createLiteral(n - 1));
 		vec[4] = zero;
 		env.push_code_to_exec_stack(Code(codeListFactory->createCodeList(vec)));  // new CodeList(vec)));  //CodeList::adopt(vec)); //Code(new CodeList(vec)));
@@ -83,7 +82,6 @@ namespace Push
 		vec[0] = MyDoRange;
 		vec[1] = quote;
 		vec[2] = cons(int_pop, code);
-//		vec[3] = Code(new Literal<int>(n - 1));
 		vec[3] = Code(intLiteralFactory->createLiteral(n - 1));
 		vec[4] = zero;
 		env.push_code_to_exec_stack(Code(codeListFactory->createCodeList(vec)));  // new CodeList(vec)));  //CodeList::adopt(vec)); //Code(new CodeList(vec)));

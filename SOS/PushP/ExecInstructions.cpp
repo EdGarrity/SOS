@@ -113,7 +113,6 @@ namespace Push
 		vec[1] = MyDoRange;
 		vec[2] = Code(intLiteralFactory->createLiteral(n));
 		vec[3] = Code(intLiteralFactory->createLiteral(i));
-//		Code result = Code(new DoRangeClass(vec));
 		Code result = Code(doRangeClassFactory->createDoRangeClass(vec));  //  new DoRangeClass(vec));
 		env.push_code_to_exec_stack(result);
 		return 1;
@@ -127,17 +126,12 @@ namespace Push
 		if (n < 0)
 			return 1;
 
-//		static Code DoRange = parse("EXEC.DO*RANGE");
 		CodeArray vec(4);
-//		static Code zero = Code(new Literal<int>(0));
-//		zero = Code(intLiteralFactory.createLiteral(0));
 		vec[0] = code.to_CodeBase();
-//		vec[1] = DoRange;
 		vec[1] = MyDoRange;
-		//		vec[2] = Code(new Literal<int>(n - 1));
 		vec[2] = Code(intLiteralFactory->createLiteral(n - 1));
 		vec[3] = zero;
-//		Code result = Code(new DoRangeClass(vec));
+
 		Code result = Code(doRangeClassFactory->createDoRangeClass(vec));  //  new DoRangeClass(vec));
 		env.push_code_to_exec_stack(result);
 
@@ -153,16 +147,11 @@ namespace Push
 			return 1;
 
 		CodeArray vec(4);
-//		static Code zero = Code(new Literal<int>(0));	// Potetial memory leak
-//		zero = Code(intLiteralFactory.createLiteral(0));
-//		static Code int_pop = parse("INTEGER.POP");
-//		static Code DoRange = parse("EXEC.DO*RANGE");
 		vec[0] = cons(int_pop, code.to_CodeBase());
-//		vec[1] = DoRange;
 		vec[1] = MyDoRange;
-		//		vec[2] = Code(new Literal<int>(n - 1));
 		vec[2] = Code(intLiteralFactory->createLiteral(n - 1));
 		vec[3] = zero;
+
 		Code result = Code(new DoRangeClass(vec)); // Potetial memory leak
 		env.push_code_to_exec_stack(result);
 

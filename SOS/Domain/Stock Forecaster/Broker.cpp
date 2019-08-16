@@ -8,7 +8,7 @@ using namespace std;
 
 #include "Broker.h"
 #include "../../Utilities/MyException.h"
-#include "StockForecasterGlobals.h"
+#include "Globals.StockForecaster.h"
 
 namespace domain
 {

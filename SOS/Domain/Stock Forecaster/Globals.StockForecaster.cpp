@@ -1,10 +1,10 @@
-#include "StockForecasterGlobals.h"
+#include "Globals.StockForecaster.h"
 
 namespace domain
 {
 	namespace stock_forecaster
 	{
-		namespace globalss
+		namespace globals
 		{
 			//*******************************************************
 			// General GP storage variables

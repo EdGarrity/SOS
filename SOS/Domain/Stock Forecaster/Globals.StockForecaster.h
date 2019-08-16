@@ -7,7 +7,7 @@ namespace domain
 {
 	namespace stock_forecaster
 	{
-		namespace globalss
+		namespace globals
 		{
 			//*******************************************************
 			// Domain specific globals

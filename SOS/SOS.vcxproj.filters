@@ -49,6 +49,12 @@
     <Filter Include="Source Files\Domain\Stock Forecaster">
       <UniqueIdentifier>{7c0bcfc8-0410-47a6-9b25-773704c66376}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Domain\Learn From Examples">
+      <UniqueIdentifier>{97223f07-4b29-4883-b114-a17af862e61a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Domain\Learn From Examples">
+      <UniqueIdentifier>{4295dce2-1b14-45d3-8644-6cc6fb95d2fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -165,7 +171,13 @@
     <ClInclude Include="PushGP\Globals.h">
       <Filter>Header Files\PushGP</Filter>
     </ClInclude>
-    <ClInclude Include="Domain\Stock Forecaster\StockForecasterGlobals.h">
+    <ClInclude Include="Domain\Learn From Examples\Run.LearnFromExamples.h">
+      <Filter>Header Files\Domain\Learn From Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.h">
+      <Filter>Header Files\Domain\Learn From Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Stock Forecaster\Globals.StockForecaster.h">
       <Filter>Header Files\Domain\Stock Forecaster</Filter>
     </ClInclude>
   </ItemGroup>
@@ -266,7 +278,13 @@
     <ClCompile Include="PushGP\Globals.cpp">
       <Filter>Source Files\PushGP</Filter>
     </ClCompile>
-    <ClCompile Include="Domain\Stock Forecaster\StockForecasterGlobals.cpp">
+    <ClCompile Include="Domain\Learn From Examples\Run.LearnFromExamples.cpp">
+      <Filter>Source Files\Domain\Learn From Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.cpp">
+      <Filter>Source Files\Domain\Learn From Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Domain\Stock Forecaster\Globals.StockForecaster.cpp">
       <Filter>Source Files\Domain\Stock Forecaster</Filter>
     </ClCompile>
   </ItemGroup>

@@ -4,7 +4,7 @@
 
 #include "Random.h"
 #include "Individual.h"
-#include "..\Domain\Stock Forecaster\StockForecasterGlobals.h"
+#include "..\Domain\Stock Forecaster\Globals.StockForecaster.h"
 #include "..\PushP\Code.h"
 #include "..\PushP\CodeUtils.h"
 #include "..\PushP\RNG.h"
