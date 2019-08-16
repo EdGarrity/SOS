@@ -14,9 +14,9 @@ namespace domain
 {
 	namespace stock_forecaster
 	{
-		globalss::order_types run_individual_program(static unsigned int individual_index, static unsigned long row)
+		globals::order_types run_individual_program(static unsigned int individual_index, static unsigned long row)
 		{
-			globalss::order_types order = globalss::order_types::hold;
+			globals::order_types order = globals::order_types::hold;
 
 			// Create thread factories
 			Push::intLiteralFactory = new Push::LiteralFactory<int>();
@@ -36,7 +36,7 @@ namespace domain
 
 			// Gets result
 			if (has_elements<bool>(1))
-				order = pop<bool>(env) ? globalss::order_types::buy : globalss::order_types::sell;
+				order = pop<bool>(env) ? globals::order_types::buy : globals::order_types::sell;
 
 			// Cleanup thread factories
 			env.clear_stacks();
@@ -56,8 +56,8 @@ namespace domain
 //			bool _record_transactions, 
 			Broker & _broker)
 		{
-			std::map<globalss::order_types, unsigned int> orders = { {globalss::order_types::buy, 0}, {globalss::order_types::hold, 0}, {globalss::order_types::sell, 0} };
-			globalss::order_types order;
+			std::map<globals::order_types, unsigned int> orders = { {globals::order_types::buy, 0}, {globals::order_types::hold, 0}, {globals::order_types::sell, 0} };
+			globals::order_types order;
 
 			// Generate orders
 			for (int individual_index : _individual_indexes)
@@ -65,35 +65,35 @@ namespace domain
 				if (individual_index >= 0)
 				{
 					// Check if we already processed this row for this individual
-					if (globalss::order_bank[individual_index][_row] == globalss::order_types::not_available)
+					if (globals::order_bank[individual_index][_row] == globals::order_types::not_available)
 					{
 						order = run_individual_program(individual_index, _row);
 
 						// Remember result for this row
-						globalss::order_bank[individual_index][_row] = order;
+						globals::order_bank[individual_index][_row] = order;
 					}
 					else
-						order = globalss::order_bank[individual_index][_row];
+						order = globals::order_bank[individual_index][_row];
 
 					orders[order]++;
 				}
 				else
-					orders[globalss::order_types::hold]++;
+					orders[globals::order_types::hold]++;
 			}
 
 			// Get the most popular order
-			if ((orders[globalss::order_types::buy] > orders[globalss::order_types::sell]) && (orders[globalss::order_types::buy] > orders[globalss::order_types::hold]))
-				order = globalss::order_types::buy;
+			if ((orders[globals::order_types::buy] > orders[globals::order_types::sell]) && (orders[globals::order_types::buy] > orders[globals::order_types::hold]))
+				order = globals::order_types::buy;
 
-			else if ((orders[globalss::order_types::sell] > orders[globalss::order_types::buy]) && (orders[globalss::order_types::sell] > orders[globalss::order_types::hold]))
-				order = globalss::order_types::sell;
+			else if ((orders[globals::order_types::sell] > orders[globals::order_types::buy]) && (orders[globals::order_types::sell] > orders[globals::order_types::hold]))
+				order = globals::order_types::sell;
 
 			else
-				order = globalss::order_types::hold;
+				order = globals::order_types::hold;
 
 			// Process order
-			if ((order == globalss::order_types::buy) || (order == globalss::order_types::sell))
-				_broker.update_brokeage_account((order == globalss::order_types::buy), _row);
+			if ((order == globals::order_types::buy) || (order == globals::order_types::sell))
+				_broker.update_brokeage_account((order == globals::order_types::buy), _row);
 
 // EG
 			//if (_record_transactions)
@@ -165,7 +165,7 @@ namespace domain
 		double run_individuals_program(static int individual_index, static unsigned long input_start_, static unsigned long input_end_)
 		{
 			for (unsigned int row = input_start_; row < input_end_; row++)
-				globalss::order_bank[individual_index][row] = run_individual_program(individual_index, row);
+				globals::order_bank[individual_index][row] = run_individual_program(individual_index, row);
 
 			return 0.0;
 		}

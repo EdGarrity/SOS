@@ -106,6 +106,11 @@ namespace Push
 	extern void initFloat();
 	extern void initBool();
 
+	int init_push()
+	{
+		return init_push(nullptr);
+	}
+
 	int init_push(std::function<void(void)> _init_push_application_specific_functions = nullptr)
 	{
 		static bool initialized = false;

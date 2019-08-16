@@ -23,7 +23,7 @@ namespace domain
 	{
 		database::SQLConnection con;
 
-		const std::string sqlstmt_get_last_saved_generation_number = "SELECT TOP 1 [Generation] FROM[SOS].[dbo].[ProgressLog] ORDER BY[Update_DTS] DESC;";
+		const std::string sqlstmt_get_last_saved_generation_number = "SELECT TOP 1 [Generation] FROM [SOS].[dbo].[ProgressLog] ORDER BY[Update_DTS] DESC;";
 		const std::string sqlstmt_sqlcmd_get_individuals = "SELECT [Genome] FROM [dbo].[Individuals];";
 		const std::string sqlstmt_delete_individuals("DELETE FROM [SOS].[dbo].[Individuals];");
 		const std::string sqlstmt_insert_new_individual("INSERT INTO [dbo].[Individuals] ([Genome]) VALUES (?);");
@@ -100,7 +100,7 @@ namespace domain
 						pushGP::globals::population_agents[n].set_genome(genome);
 
 						for (int i = 0; i < argmap::last_data_index; i++)
-							globalss::order_bank[n][i] = globalss::order_types::not_available;
+							globals::order_bank[n][i] = globals::order_types::not_available;
 
 						n++;
 					}
@@ -127,7 +127,7 @@ namespace domain
 				pushGP::globals::population_agents[n].set_genome(pushGP::random_plush_genome());
 
 				for (int i = 0; i < argmap::last_data_index; i++)
-					globalss::order_bank[n][i] = globalss::order_types::not_available;
+					globals::order_bank[n][i] = globals::order_types::not_available;
 
 				agents_created++;
 			}
@@ -216,7 +216,7 @@ namespace domain
 				pushGP::globals::population_agents[n].set(pushGP::globals::child_agents[n]);
 
 				for (int i = 0; i < argmap::last_data_index; i++)
-					globalss::order_bank[n][i] = globalss::order_types::not_available;
+					globals::order_bank[n][i] = globals::order_types::not_available;
 			}
 		}
 

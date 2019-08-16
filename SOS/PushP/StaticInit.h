@@ -5,8 +5,9 @@
 
 namespace Push
 {
+	int init_push();
 	int init_push(std::function<void(void)> _init_push_application_specific_functions);
-	
+
 	namespace detail
 	{
 		typedef std::vector<std::string> Names;

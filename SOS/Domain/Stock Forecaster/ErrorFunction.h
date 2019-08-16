@@ -1,6 +1,6 @@
 #pragma once
 
-#include "StockForecasterGlobals.h"
+#include "Globals.StockForecaster.h"
 #include "Broker.h"
 
 using namespace pushGP;
@@ -17,7 +17,7 @@ namespace domain
 		//};
 
 		// Evaluate an individual's program for a given day
-		globalss::order_types run_individual_program(static unsigned int individual_index, static unsigned long input_row);
+		globals::order_types run_individual_program(static unsigned int individual_index, static unsigned long input_row);
 
 		// Evaluates one day in a test case
 		void eval_one_day_of_test_case(static std::vector<int> & individual_indexes, 
