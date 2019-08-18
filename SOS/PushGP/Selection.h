@@ -2,6 +2,7 @@
 
 #include <forward_list>
 #include <vector>
+#include <functional>
 #include "Individual.h"
 
 namespace pushGP
@@ -21,5 +22,9 @@ namespace pushGP
 
 	// Returns an individual that does within epsilon of the best on the fitness cases when 
 	// considered one at a time in random order.  Returns a selected parent.
-	unsigned int epsilon_lexicase_selection(int exclude);
+	unsigned int epsilon_lexicase_selection(std::function<double(static unsigned int _individual_index, static std::forward_list<int>& _input_list, static std::forward_list<int>& _output_list)> _run_individual_program,
+		int _number_of_test_cases,
+		std::forward_list<int> _test_cases_input[],
+		std::forward_list<int> _test_cases_output[],
+		int _index_of_other_parent);
 }

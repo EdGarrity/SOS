@@ -156,9 +156,6 @@
     <ClInclude Include="Domain\Stock Forecaster\Broker.h">
       <Filter>Header Files\Domain\Stock Forecaster</Filter>
     </ClInclude>
-    <ClInclude Include="Domain\Stock Forecaster\run.h">
-      <Filter>Header Files\Domain\Stock Forecaster</Filter>
-    </ClInclude>
     <ClInclude Include="Domain\Stock Forecaster\PushFunctions.h">
       <Filter>Header Files\Domain\Stock Forecaster</Filter>
     </ClInclude>
@@ -179,6 +176,9 @@
     </ClInclude>
     <ClInclude Include="Domain\Stock Forecaster\Globals.StockForecaster.h">
       <Filter>Header Files\Domain\Stock Forecaster</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Learn From Examples\AsyncErrorFunction.LearnFromExample.h">
+      <Filter>Header Files\Domain\Learn From Examples</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -266,9 +266,6 @@
     <ClCompile Include="Domain\Stock Forecaster\Broker.cpp">
       <Filter>Source Files\Domain\Stock Forecaster</Filter>
     </ClCompile>
-    <ClCompile Include="Domain\Stock Forecaster\run.cpp">
-      <Filter>Source Files\Domain\Stock Forecaster</Filter>
-    </ClCompile>
     <ClCompile Include="Domain\Stock Forecaster\PushFunctions.cpp">
       <Filter>Source Files\Domain\Stock Forecaster</Filter>
     </ClCompile>
@@ -286,6 +283,9 @@
     </ClCompile>
     <ClCompile Include="Domain\Stock Forecaster\Globals.StockForecaster.cpp">
       <Filter>Source Files\Domain\Stock Forecaster</Filter>
+    </ClCompile>
+    <ClCompile Include="Domain\Learn From Examples\AsyncErrorFunction.LearnFromExample.cpp">
+      <Filter>Source Files\Domain\Learn From Examples</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -23,8 +23,8 @@ namespace Push
 	{
 //		init_push();	Must be called prior to calling this funtion.
 
-		if (code_initialized == false)
-		{
+		//if (code_initialized == false)
+		//{
 			MyDoRange = parse("EXEC.DO*RANGE");
 			zero = Code(intLiteralFactory->createLiteral(0));
 			quote = parse("CODE.QUOTE");
@@ -34,7 +34,7 @@ namespace Push
 			ycode = parse("EXEC.Y");
 
 			code_initialized = true;
-		}
+		//}
 	}
 
 	CodeBase::CodeBase()

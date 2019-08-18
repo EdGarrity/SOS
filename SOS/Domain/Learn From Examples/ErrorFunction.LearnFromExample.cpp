@@ -10,7 +10,9 @@ namespace domain
 {
 	namespace learn_from_examples
 	{
-		double run_individual_program(static unsigned int _individual_index, static std::forward_list<int> input_list, static std::forward_list<int> output_list)
+		double run_individual_program(static unsigned int _individual_index, 
+			static std::forward_list<int>& input_list, 
+			static std::forward_list<int>& output_list)
 		{
 			double error = 0.0;
 			int result_length = 0;
@@ -24,13 +26,13 @@ namespace domain
 
 			// Setup
 			Push::init_push();
+			Push::init_static_PushP_instructions();
 			Push::Code code = Push::parse(pushGP::globals::population_agents[_individual_index].get_program());
 			Push::push_call(code);
 
 			// Load data
 			int input_length = input_list.front();
 			input_list.pop_front();
-			Push::push(input_length);
 
 			for (int n = 0; n < input_length; n++)
 			{
@@ -38,6 +40,8 @@ namespace domain
 				input_list.pop_front();
 				Push::push(input);
 			}
+
+			Push::push(input_length);
 
 			// Evaluate
 			Push::env.go(argmap::max_point_evaluations);
@@ -74,7 +78,7 @@ namespace domain
 				}
 			}
 
-			error = (double)correct / (double)(output_length + 1);
+			error = ((double)(output_length + 1) - (double)correct) / (double)(output_length + 1);
 
 			// Cleanup thread factories
 			Push::env.clear_stacks();
