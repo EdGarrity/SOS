@@ -7,14 +7,18 @@
 namespace pushGP
 {
 	// Returns an empty individual with just the genome defined.
-	Individual& breed(Individual& child)
+	Individual& breed(Individual& child, 
+		std::function<double(static unsigned int _individual_index, static std::forward_list<int>& _input_list, static std::forward_list<int>& _output_list)> _run_individual_program,
+		int _number_of_test_cases,
+		std::forward_list<int> _test_cases_input[],
+		std::forward_list<int> _test_cases_output[])
 	{
 		double prob = random_double();
 		unsigned int first_parent = 0;
 		unsigned int other_parent = 0;
 		int count_down = 3;
 
-		if (prob <= 0.5)
+		if (prob <= 0.5)  // Should be a parameter
 		{
 			std::cout << "A";
 
@@ -40,8 +44,16 @@ namespace pushGP
 				first = false;
 				done = true;
 				
-				first_parent = epsilon_lexicase_selection(-1);
-				other_parent = epsilon_lexicase_selection(first_parent);
+				first_parent = epsilon_lexicase_selection(_run_individual_program,
+					_number_of_test_cases,
+					_test_cases_input,
+					_test_cases_output, 
+					-1);
+				other_parent = epsilon_lexicase_selection(_run_individual_program,
+					_number_of_test_cases,
+					_test_cases_input,
+					_test_cases_output, 
+					first_parent);
 
 				// Check that both parents are not the same individual
 				if (globals::population_agents[first_parent].get_id() == globals::population_agents[other_parent].get_id())
@@ -121,7 +133,11 @@ namespace pushGP
 		{
 			std::cout << "M";
 
-			first_parent = epsilon_lexicase_selection(-1);
+			first_parent = epsilon_lexicase_selection(_run_individual_program,
+				_number_of_test_cases,
+				_test_cases_input,
+				_test_cases_output,
+				-1);
 
 			uniform_mutation(globals::population_agents[first_parent], child);
 		}
