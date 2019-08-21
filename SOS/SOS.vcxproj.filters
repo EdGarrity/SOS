@@ -43,12 +43,6 @@
     <Filter Include="Source Files\Database">
       <UniqueIdentifier>{42d0b88d-e49c-4578-a887-607943b1ce32}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Domain\Stock Forecaster">
-      <UniqueIdentifier>{4bc71e38-7537-4010-8df0-d4689597907a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Domain\Stock Forecaster">
-      <UniqueIdentifier>{7c0bcfc8-0410-47a6-9b25-773704c66376}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Domain\Learn From Examples">
       <UniqueIdentifier>{97223f07-4b29-4883-b114-a17af862e61a}</UniqueIdentifier>
     </Filter>
@@ -147,21 +141,6 @@
     <ClInclude Include="Utilities\AtomicFunctions.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="Domain\Stock Forecaster\ErrorFunction.h">
-      <Filter>Header Files\Domain\Stock Forecaster</Filter>
-    </ClInclude>
-    <ClInclude Include="Domain\Stock Forecaster\Arguments.h">
-      <Filter>Header Files\Domain\Stock Forecaster</Filter>
-    </ClInclude>
-    <ClInclude Include="Domain\Stock Forecaster\Broker.h">
-      <Filter>Header Files\Domain\Stock Forecaster</Filter>
-    </ClInclude>
-    <ClInclude Include="Domain\Stock Forecaster\PushFunctions.h">
-      <Filter>Header Files\Domain\Stock Forecaster</Filter>
-    </ClInclude>
-    <ClInclude Include="Domain\Stock Forecaster\AsyncErrorFunction.h">
-      <Filter>Header Files\Domain\Stock Forecaster</Filter>
-    </ClInclude>
     <ClInclude Include="Domain\Arguments.h">
       <Filter>Header Files\Domain</Filter>
     </ClInclude>
@@ -174,11 +153,14 @@
     <ClInclude Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.h">
       <Filter>Header Files\Domain\Learn From Examples</Filter>
     </ClInclude>
-    <ClInclude Include="Domain\Stock Forecaster\Globals.StockForecaster.h">
-      <Filter>Header Files\Domain\Stock Forecaster</Filter>
-    </ClInclude>
     <ClInclude Include="Domain\Learn From Examples\AsyncErrorFunction.LearnFromExample.h">
       <Filter>Header Files\Domain\Learn From Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Learn From Examples\Arguments.h">
+      <Filter>Header Files\Domain\Learn From Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\CSVIterator.h">
+      <Filter>Header Files\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -260,18 +242,6 @@
     <ClCompile Include="Utilities\AtomicFunctions.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="Domain\Stock Forecaster\ErrorFunction.cpp">
-      <Filter>Source Files\Domain\Stock Forecaster</Filter>
-    </ClCompile>
-    <ClCompile Include="Domain\Stock Forecaster\Broker.cpp">
-      <Filter>Source Files\Domain\Stock Forecaster</Filter>
-    </ClCompile>
-    <ClCompile Include="Domain\Stock Forecaster\PushFunctions.cpp">
-      <Filter>Source Files\Domain\Stock Forecaster</Filter>
-    </ClCompile>
-    <ClCompile Include="Domain\Stock Forecaster\AsyncErrorFunction.cpp">
-      <Filter>Source Files\Domain\Stock Forecaster</Filter>
-    </ClCompile>
     <ClCompile Include="PushGP\Globals.cpp">
       <Filter>Source Files\PushGP</Filter>
     </ClCompile>
@@ -280,9 +250,6 @@
     </ClCompile>
     <ClCompile Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.cpp">
       <Filter>Source Files\Domain\Learn From Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Domain\Stock Forecaster\Globals.StockForecaster.cpp">
-      <Filter>Source Files\Domain\Stock Forecaster</Filter>
     </ClCompile>
     <ClCompile Include="Domain\Learn From Examples\AsyncErrorFunction.LearnFromExample.cpp">
       <Filter>Source Files\Domain\Learn From Examples</Filter>

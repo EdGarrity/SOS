@@ -201,14 +201,29 @@ namespace pushGP
 		std::forward_list<int> _test_cases_output[],
 		int _index_of_other_parent)
 	{
+		unsigned int chosen = 0;
 		unsigned individual_index = 0;
 		int number_of_survivors = domain::argmap::population_size;
 
 		// Set survivors to be a copy of the population
 		std::forward_list<unsigned int> survivors_index;
 
+		std::cout << std::endl;
+		std::cout << "epsilon_lexicase_selection()";
+		std::cout << std::endl;
+		std::cout << std::endl;
+
 		for (int n = 0; n < domain::argmap::population_size; n++)
 			survivors_index.push_front(n);
+
+		for (unsigned int survivor_index : survivors_index)
+		{
+			std::cout << ",I";
+			std::cout << survivor_index;
+		}
+
+		std::cout << ",E";
+		std::cout << std::endl;
 
 		// Get a randomized deck of test cases
 		std::vector<unsigned int> test_cases = lshuffle(_number_of_test_cases); 
@@ -219,6 +234,8 @@ namespace pushGP
 
 			// Select a random training case
 			unsigned int training_case = test_cases.back();
+			std::cout << "T";
+			std::cout << training_case;
 
 			// Reduce remaining cases
 			test_cases.pop_back();
@@ -239,6 +256,9 @@ namespace pushGP
 				test_case_errors.push_back(error);
 
 				survivor_to_error_map[survivor_index] = error;
+
+				std::cout << ",";
+				std::cout << error;
 			}
 
 			// Calculate epsilon
@@ -246,6 +266,10 @@ namespace pushGP
 			unsigned int non_zero_count = 0;
 
 			std::tie(median_absolute_deviation, non_zero_count) = mad(test_case_errors);
+
+			std::cout << ",E:";
+			std::cout << median_absolute_deviation;
+			std::cout << std::endl;
 
 			// Reduce selection pool
 			auto before_it = survivors_index.before_begin();
@@ -304,12 +328,20 @@ namespace pushGP
 		}
 
 		if (number_of_survivors > 0)
-			return *before_it;
+			chosen = *before_it;
 
 		else
 		{
 			int n = (int)(random_double() * domain::argmap::population_size);
-			return n;
+			chosen = n;
 		}
+
+		std::cout << "Chosen = ";
+		std::cout << chosen;
+		std::cout << std::endl;
+		std::cout << std::endl;
+		std::cout << std::endl;
+
+		return chosen;
 	}
 }
