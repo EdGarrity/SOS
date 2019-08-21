@@ -157,15 +157,10 @@
     <ClInclude Include="Database\SQLConnection.h" />
     <ClInclude Include="Database\SQLField.h" />
     <ClInclude Include="Domain\Arguments.h" />
+    <ClInclude Include="Domain\Learn From Examples\Arguments.h" />
     <ClInclude Include="Domain\Learn From Examples\AsyncErrorFunction.LearnFromExample.h" />
     <ClInclude Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.h" />
     <ClInclude Include="Domain\Learn From Examples\Run.LearnFromExamples.h" />
-    <ClInclude Include="Domain\Stock Forecaster\Arguments.h" />
-    <ClInclude Include="Domain\Stock Forecaster\AsyncErrorFunction.h" />
-    <ClInclude Include="Domain\Stock Forecaster\Broker.h" />
-    <ClInclude Include="Domain\Stock Forecaster\ErrorFunction.h" />
-    <ClInclude Include="Domain\Stock Forecaster\Globals.StockForecaster.h" />
-    <ClInclude Include="Domain\Stock Forecaster\PushFunctions.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PushGP\Breed.h" />
     <ClInclude Include="PushGP\GeneticOperators.h" />
@@ -192,6 +187,7 @@
     <ClInclude Include="PushP\TypeDef.h" />
     <ClInclude Include="Utilities\AtomicFunctions.h" />
     <ClInclude Include="Utilities\Conversion.h" />
+    <ClInclude Include="Utilities\CSVIterator.h" />
     <ClInclude Include="Utilities\MyException.h" />
     <ClInclude Include="Utilities\Singleton.h" />
   </ItemGroup>
@@ -202,11 +198,6 @@
     <ClCompile Include="Domain\Learn From Examples\AsyncErrorFunction.LearnFromExample.cpp" />
     <ClCompile Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.cpp" />
     <ClCompile Include="Domain\Learn From Examples\Run.LearnFromExamples.cpp" />
-    <ClCompile Include="Domain\Stock Forecaster\AsyncErrorFunction.cpp" />
-    <ClCompile Include="Domain\Stock Forecaster\Broker.cpp" />
-    <ClCompile Include="Domain\Stock Forecaster\ErrorFunction.cpp" />
-    <ClCompile Include="Domain\Stock Forecaster\Globals.StockForecaster.cpp" />
-    <ClCompile Include="Domain\Stock Forecaster\PushFunctions.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

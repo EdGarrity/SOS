@@ -25,14 +25,14 @@ namespace pushGP
 		return rng.uniform(m);
 	}
 
-	unsigned long random_integer()
+	unsigned long random_integer(unsigned long m = std::numeric_limits<unsigned long>::max())
 	{
 		//std::default_random_engine generator;
 		//std::uniform_real_distribution<double> distribution(0.0, 1.0);
 
 		//return distribution(generator);
 
-		return rng.random();
+		return rng.random(m);
 	}
 
 	static unsigned int random_closes()
