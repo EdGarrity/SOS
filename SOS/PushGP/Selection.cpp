@@ -195,11 +195,9 @@ namespace pushGP
 	//}
 
 	// Returns an individual that does within epsilon of the best on the fitness cases when considered one at a time in random order.
-	unsigned int epsilon_lexicase_selection(std::function<double(static unsigned int _individual_index, static std::forward_list<int>& _input_list, static std::forward_list<int>& _output_list)> _run_individual_program,
-		int _number_of_test_cases,
-		std::forward_list<int> _test_cases_input[],
-		std::forward_list<int> _test_cases_output[],
-		int _index_of_other_parent)
+	unsigned int epsilon_lexicase_selection(int _number_of_test_cases,
+		int _index_of_other_parent,
+		double _error_matrix[][domain::argmap::population_size])
 	{
 		unsigned int chosen = 0;
 		unsigned individual_index = 0;
@@ -208,22 +206,22 @@ namespace pushGP
 		// Set survivors to be a copy of the population
 		std::forward_list<unsigned int> survivors_index;
 
-		std::cout << std::endl;
-		std::cout << "epsilon_lexicase_selection()";
-		std::cout << std::endl;
-		std::cout << std::endl;
+		//std::cout << std::endl;
+		//std::cout << "epsilon_lexicase_selection()";
+		//std::cout << std::endl;
+		//std::cout << std::endl;
 
 		for (int n = 0; n < domain::argmap::population_size; n++)
 			survivors_index.push_front(n);
 
-		for (unsigned int survivor_index : survivors_index)
-		{
-			std::cout << ",I";
-			std::cout << survivor_index;
-		}
+		//for (unsigned int survivor_index : survivors_index)
+		//{
+		//	std::cout << ",I";
+		//	std::cout << survivor_index;
+		//}
 
-		std::cout << ",E";
-		std::cout << std::endl;
+		//std::cout << ",E";
+		//std::cout << std::endl;
 
 		// Get a randomized deck of test cases
 		std::vector<unsigned int> test_cases = lshuffle(_number_of_test_cases); 
@@ -234,22 +232,19 @@ namespace pushGP
 
 			// Select a random training case
 			unsigned int training_case = test_cases.back();
-			std::cout << "T";
-			std::cout << training_case;
+			//std::cout << "T";
+			//std::cout << training_case;
 
 			// Reduce remaining cases
 			test_cases.pop_back();
 
-			// Calculate epsilon and error for each survivor and remember the minimum error
+			// Calculate epsilon for each survivor and remember the minimum error
 			std::vector<double> test_case_errors;
 			std::map<unsigned int, double> survivor_to_error_map;
 
 			for (unsigned int survivor_index : survivors_index)
 			{
-				std::forward_list<int> input_list = _test_cases_input[training_case];
-				std::forward_list<int> output_list = _test_cases_output[training_case];
-
-				double error = _run_individual_program(survivor_index, input_list, output_list);
+				double error = _error_matrix[training_case][survivor_index];
 
 				min_error = error < min_error ? error : min_error;
 
@@ -257,8 +252,8 @@ namespace pushGP
 
 				survivor_to_error_map[survivor_index] = error;
 
-				std::cout << ",";
-				std::cout << error;
+				//std::cout << ",";
+				//std::cout << error;
 			}
 
 			// Calculate epsilon
@@ -267,9 +262,9 @@ namespace pushGP
 
 			std::tie(median_absolute_deviation, non_zero_count) = mad(test_case_errors);
 
-			std::cout << ",E:";
-			std::cout << median_absolute_deviation;
-			std::cout << std::endl;
+			//std::cout << ",E:";
+			//std::cout << median_absolute_deviation;
+			//std::cout << std::endl;
 
 			// Reduce selection pool
 			auto before_it = survivors_index.before_begin();
@@ -336,11 +331,11 @@ namespace pushGP
 			chosen = n;
 		}
 
-		std::cout << "Chosen = ";
-		std::cout << chosen;
-		std::cout << std::endl;
-		std::cout << std::endl;
-		std::cout << std::endl;
+		//std::cout << "Chosen = ";
+		//std::cout << chosen;
+		//std::cout << std::endl;
+		//std::cout << std::endl;
+		//std::cout << std::endl;
 
 		return chosen;
 	}

@@ -11,11 +11,11 @@ namespace domain
 	namespace learn_from_examples
 	{
 		double run_individual_program(static unsigned int _individual_index, 
-			static std::forward_list<int>& input_list, 
-			static std::forward_list<int>& output_list)
+			static std::forward_list<int>& _example_problem, 
+			static std::forward_list<int>& _example_solution)
 		{
 			double error = 0.0;
-			int result_length = 0;
+			int actual_solution_length = 0;
 
 			// Create thread factories
 			Push::intLiteralFactory = new Push::LiteralFactory<int>();
@@ -31,54 +31,57 @@ namespace domain
 			Push::push_call(code);
 
 			// Load data
-			int input_length = input_list.front();
-			input_list.pop_front();
+			int problem_length = _example_problem.front();
+			_example_problem.pop_front();
 
-			for (int n = 0; n < input_length; n++)
+			for (int n = 0; n < problem_length; n++)
 			{
-				int input = input_list.front();
-				input_list.pop_front();
-				Push::push(input);
+				int problem = _example_problem.front();
+				_example_problem.pop_front();
+				Push::push(problem);
 			}
 
-			Push::push(input_length);
+			Push::push(problem_length);
 
 			// Evaluate
 			Push::env.go(argmap::max_point_evaluations);
 
 			// Get result
 			if (Push::has_elements<int>(1))
-				result_length = Push::pop<int>(Push::env);
+				actual_solution_length = Push::pop<int>(Push::env);
 
 			// Calculate error
-			int output_length = output_list.front();
-			output_list.pop_front();
-			int correct = 0;
+			int expected_solution_length = _example_solution.front();
+			_example_solution.pop_front();
+			//int correct = 0;
+			double sum_or_error_squared = 0;
 
-			if (result_length == output_length)
-				correct++;
+			//if (actual_solution_length == expected_solution_length)
+			//	correct++;
+			sum_or_error_squared = ((double)actual_solution_length - (double)expected_solution_length) * ((double)actual_solution_length - (double)expected_solution_length);
 
 			int result_size = Push::env.get_stack_size(Push::INTEGER_STACK);
 
 			if (result_size > 0)
 			{
-				int n = std::min(output_length, result_size);
+				int n = std::min(expected_solution_length, result_size);
 
 				while (n > 0)
 				{
-					int output = output_list.front();
-					output_list.pop_front();
+					int expected_solution = _example_solution.front();
+					_example_solution.pop_front();
 
 					int result = Push::pop<int>(Push::env);
 
-					if (output == result)
-						correct++;
-
+					//if (expected_solution == result)
+					//	correct++;
+					sum_or_error_squared += ((double)expected_solution - (double)result) * ((double)expected_solution - (double)result);
 					n = n - 1;
 				}
 			}
 
-			error = ((double)(output_length + 1) - (double)correct) / (double)(output_length + 1);
+			//error = ((double)(expected_solution_length + 1) - (double)correct) / (double)(expected_solution_length + 1);
+			error = sum_or_error_squared / (double)((double)expected_solution_length + 1.0);
 
 			// Cleanup thread factories
 			Push::env.clear_stacks();
