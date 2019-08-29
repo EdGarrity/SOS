@@ -548,6 +548,36 @@ namespace domain
 			return error;
 		}
 
+		double compute_errors(std::function<double(std::string _genome, static std::forward_list<int>& _example_problem, static std::forward_list<int>& _example_solution)> _run_genome,
+			int _number_of_example_cases,
+			std::forward_list<int> _example_cases_problem[],
+			std::forward_list<int> _example_cases_solution[],
+			std::string _genome)
+		{
+			double error = (std::numeric_limits<double>::max)();
+			int error_count = 0;
+
+			for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
+			{
+				std::cout << ".";
+
+				std::forward_list<int> example_problem = _example_cases_problem[example_case];
+				std::forward_list<int> example_solution = _example_cases_solution[example_case];
+
+				double example_case_error = _run_genome(_genome, example_problem, example_solution);
+
+				if (example_case_error > 0.0)
+					error_count++;
+			}
+
+			error = (double)error_count / (double)_number_of_example_cases;
+
+			std::cout << std::endl;
+			std::cout << std::endl;
+
+			return error;
+		}
+
 		void produce_new_offspring(int _number_of_example_cases, double _error_matrix[][domain::argmap::population_size])
 		{
 			std::set<std::string> set_of_gnomes;
@@ -671,7 +701,7 @@ namespace domain
 					save_generation();
 
 					std::cout << "Run Programs with Training Cases" << std::endl;
-					int best_individual = compute_errors(run_individual_program,
+					int best_individual = compute_errors(run_individual,
 						argmap::number_of_training_cases,
 						training_cases_problem,
 						training_cases_solution,
@@ -681,7 +711,6 @@ namespace domain
 					std::cout << "Produce New Offspring" << std::endl;
 					produce_new_offspring(argmap::number_of_training_cases,	error_matrix);
 
-//					int best_individual = 6;
 					std::cout << "Run Best Individual's Program with Test Cases" << std::endl;
 					
 					std::string program = pushGP::globals::population_agents[best_individual].get_program();
@@ -691,13 +720,26 @@ namespace domain
 					std::cout << "program = " << program << std::endl;
 					std::cout << "genome = " << genome << std::endl;
 
-					double test_case_error = compute_errors(run_individual_program,
+					double test_case_error = compute_errors(run_individual,
 						argmap::number_of_test_cases,
 						test_cases_problem,
 						test_cases_solution,
 						best_individual);
 
 					std::cout << "test_case_error = " << test_case_error << std::endl;
+					std::cout << std::endl;
+
+					std::cout << "Verify Best Individual's Program with Test Cases" << std::endl;
+
+					//std::string genome = "{:instruction EXEC.DO*RANGE :close  0}{:instruction FLOAT.SWAP :close  0}{:instruction FLOAT.- :close  0}{:instruction FLOAT.FROMINTEGER :close  0}{:instruction INTEGER.FLUSH :close  0}{:instruction INTEGER.> :close  0}{:instruction CODE.DUP :close  0}{:instruction BOOLEAN.NOR :close  0}{:instruction FLOAT.YANK :close  0}{:instruction INTEGER.FROMFLOAT :close  0}{:instruction FLOAT./ :close  4}{:instruction FLOAT.FLUSH :close  0}{:instruction EXEC.IF :close  0}";
+
+					double verify_test_case_error = compute_errors(run_genome,
+						argmap::number_of_test_cases,
+						test_cases_problem,
+						test_cases_solution,
+						genome);
+									   					 				  
+					std::cout << "verify_test_case_error = " << verify_test_case_error << std::endl;
 					std::cout << std::endl;
 
 					std::cout << "Generate Status Report" << std::endl;
