@@ -4,7 +4,8 @@
 
 #include "Random.h"
 #include "Individual.h"
-#include "..\Domain\Stock Forecaster\Globals.StockForecaster.h"
+//#include "..\Domain\Stock Forecaster\Globals.StockForecaster.h"
+#include "..\Domain\Arguments.h"
 #include "..\PushP\Code.h"
 #include "..\PushP\CodeUtils.h"
 #include "..\PushP\RNG.h"
@@ -111,24 +112,24 @@ namespace pushGP
 
 		while (--n > 0)
 		{
-			if (random_double() < domain::argmap::seed_with_data_rate)
-			{
-				char random_integer_string[sizeof(long) * 8 + 1];
-				std::string load_data_genome = "{:instruction ";
-				_ltoa_s(random_integer(), random_integer_string, _countof(random_integer_string), 10);
-				load_data_genome += random_integer_string;
-				load_data_genome += " :close  0}{:instruction FLOAT.FROMDATA :close  0}";
+			//if (random_double() < domain::argmap::seed_with_data_rate)
+			//{
+			//	char random_integer_string[sizeof(long) * 8 + 1];
+			//	std::string load_data_genome = "{:instruction ";
+			//	_ltoa_s(random_integer(), random_integer_string, _countof(random_integer_string), 10);
+			//	load_data_genome += random_integer_string;
+			//	load_data_genome += " :close  0}{:instruction FLOAT.FROMDATA :close  0}";
 
-				append_genome(genome, String_to_plush_genome(load_data_genome));
-			}
+			//	append_genome(genome, String_to_plush_genome(load_data_genome));
+			//}
 
-			else
-			{
+			//else
+			//{
 				atom = random_atom();
 				atom.parentheses = random_closes();
 
 				genome.push_back(atom);
-			}
+			//}
 		}
 
 		return genome;

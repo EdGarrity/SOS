@@ -1,7 +1,7 @@
 #include <math.h>
 #include <string>
 
-#include "../Domain/Stock Forecaster/Arguments.h"
+#include "../Domain/Arguments.h"
 #include "GeneticOperators.h"
 #include "Random.h"
 
@@ -95,7 +95,7 @@ namespace pushGP
 		int iteration_budget = s1.size() + s2.size();
 
 		while ( (i < (use_s1 ? s1.size() : s2.size()))				// finished current program
-			 && (result_genome.size() <= (domain::argmap::max_points / 4))	// runaway growth
+			 && (result_genome.size() <= (domain::argmap::max_points))	// runaway growth
 			 && (iteration_budget > 0)								// looping too long
 			  )
 		{

@@ -40,14 +40,14 @@ namespace domain
 		//		;; The instructions that pushgp will use in random code.
 
 		// Number of individuals in the population.
-		const unsigned int population_size = 2500;
+		const unsigned int population_size = 50000;
 
 		// The maximum number of generations to run GP.
-		const unsigned int max_generations_in_one_session = 1;
+		const unsigned int max_generations_in_one_session = 10000;
 
 		//		;; The limit for the number of point(instruction) evaluations to
 		//		;; execute during the run.
-		const unsigned int max_point_evaluations = 1000;  //10000000; //INT_MAX; // 100000; // 10e100
+		const unsigned int max_point_evaluations = 10000;  //10,000,000; //INT_MAX; // 100000; // 10e100
 
 			//		:genome - representation : plush
 			//		;; The representation for the genomes used for initialiation and inheritance.
@@ -56,24 +56,33 @@ namespace domain
 		// Maximum size of push programs and push code, as counted by points
 		// in the program. 1 / 4 this limit is used as the limit for sizes of
 		// Plush genomes.
-		const unsigned int max_points = 200;
+		const unsigned int max_points = 2000;
 
 		// Maximum size of initial Plush genomes in generation 0. Keep in mind
 		// that genome lengths will otherwise be limited by 1 / 4 of :max - points.
 		const unsigned int max_genome_size_in_initial_program = max_points / 4;
 
 		// Number of Available Test Cases
+		const long int number_of_training_cases = 10;
+
+		// Number of Available Test Cases
 		const long int number_of_test_cases = 10;
 
-		// Date range for training
-		const long int training_start_index = 0;
-		const long int training_end_index = 9;
+		// Maximum length of an example case
+		const long int example_case_max_length = 100;
 
-		// Date range for testing
-		const long int test_start_index = 2508;	// 2010-01-04
-		const long int test_end_index = 3765;	// 2014-12-31
+		// Upper range of numbers in the example case
+		const long int example_case_upper_range = 100;
 
-		const long int last_data_index = test_end_index;
+		//// Date range for training
+		//const long int training_start_index = 0;
+		//const long int training_end_index = 9;
+
+		//// Date range for testing
+		//const long int test_start_index = 2508;	// 2010-01-04
+		//const long int test_end_index = 3765;	// 2014-12-31
+
+		//const long int last_data_index = test_end_index;
 
 		//		: evalpush - limit 150
 			//		;; The number of Push instructions that can be evaluated before stopping
@@ -584,7 +593,8 @@ namespace domain
 		// Network name of a server running an instance of MicrosoftSQL Server. If there are multiple instances of SQL Server running on the computer, in order to 
 		// connect to a specific instance of SQL Server the value init_datasource is specified as \\ServerName\InstanceName. The escape sequence \\ is used for 
 		// backslash itself
-		const std::string db_init_datasource = "HOMEOFFICE";
+//		const std::string db_init_datasource = "HOMEOFFICE";
+		const std::string db_init_datasource = "(local)";
 
 		// Name of an existing SQL Server database to which to connect.
 		const std::string db_init_catalog = "SOS";
