@@ -137,6 +137,11 @@ namespace domain
 			//	;; Arguments related to genetic operators
 			//	;; ----------------------------------------
 
+		// Genetic Operator Probabilities (must add up to 100%)
+		const double probability_of_alternation = 0.50;
+		const double probability_of_mutation = 0.40;
+		const double probability_of_cloaning = 0.10;
+
 		// The probability of generating a constant Plush atom
 		const double probability_of_generating_a_constant_Plush_atom = 0.1;
 
@@ -326,7 +331,7 @@ namespace domain
 		const double probability_of_second_cousin_incest = 0.30;
 
 		// Which parents have a chance to survive to the next generation.
-		const unsigned int error_ratio_cap_for_retaining_parents = 0.2;
+		//const unsigned int error_ratio_cap_for_retaining_parents = 0.2;
 
 		//	:parent - selection : lexicase
 		//	;; The parent selection method.Options include : tournament, : lexicase, : epsilon - lexicase,

@@ -8,6 +8,7 @@ namespace pushGP
 {
 	// Returns an empty individual with just the genome defined.
 	Individual& breed(Individual& child, 
+		unsigned int _individual_index,
 		int _number_of_test_cases,
 		double _error_matrix[][domain::argmap::population_size])
 	{
@@ -16,7 +17,7 @@ namespace pushGP
 		unsigned int other_parent = 0;
 		int count_down = 3;
 
-		if (prob <= 0.5)  // Should be a parameter
+		if (prob < domain::argmap::probability_of_alternation)
 		{
 //			std::cout << "A";
 
@@ -119,13 +120,18 @@ namespace pushGP
 			alternation(globals::population_agents[first_parent], globals::population_agents[other_parent], child);
 		}
 
-		else
+		else if (prob < domain::argmap::probability_of_mutation)
 		{
 //			std::cout << "M";
 
 			first_parent = epsilon_lexicase_selection(_number_of_test_cases, -1, _error_matrix);
 
 			uniform_mutation(globals::population_agents[first_parent], child);
+		}
+
+		else
+		{
+			globals::child_agents[_individual_index].set(globals::population_agents[_individual_index]);
 		}
 
 		// Check if child too big

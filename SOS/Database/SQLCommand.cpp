@@ -161,6 +161,9 @@ namespace database
 	{
 		unsigned int n = parm_no - 1;
 
+		if (dwOffset_ > MAX_ROW_LENGTH)
+			abort();
+
 		// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms725393(v=vs.85)"
 		ParamBindInfo_[n].pwszDataSourceType = wszDBTYPE_STR;
 		ParamBindInfo_[n].pwszName = NULL;
@@ -191,6 +194,9 @@ namespace database
 		// that if we allocate space for multiple rows that the data
 		// for every row is correctly aligned
 		dwOffset_ = ROUNDUP(dwOffset_);
+
+		if (dwOffset_ > MAX_ROW_LENGTH)
+			abort();
 	}
 
 	wchar_t wszDBTYPE_I4[] = L"DBTYPE_I4";

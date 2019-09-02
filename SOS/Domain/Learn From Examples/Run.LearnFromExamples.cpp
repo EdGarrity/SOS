@@ -19,6 +19,17 @@ namespace domain
 {
 	namespace learn_from_examples
 	{
+		double error_matrix[argmap::number_of_training_cases][argmap::population_size];
+		double error_array[argmap::population_size];
+		double score_array[argmap::population_size];
+
+		std::forward_list<int> training_cases_problem[argmap::number_of_training_cases];
+		std::forward_list<int> training_cases_solution[argmap::number_of_training_cases];
+		std::forward_list<int> test_cases_problem[argmap::number_of_test_cases];
+		std::forward_list<int> test_cases_solution[argmap::number_of_test_cases];
+		std::deque<std::string> fitness_cases_problem;
+		std::deque<std::string> fitness_cases_solution;
+
 		database::SQLConnection con;
 
 		const std::string sqlstmt_get_last_saved_generation_number = "SELECT TOP 1 [Generation] FROM [SOS].[dbo].[ProgressLog] ORDER BY[Created_DTS] DESC;";
@@ -46,13 +57,6 @@ namespace domain
 
 			return n;
 		}
-
-		std::forward_list<int> training_cases_problem[argmap::number_of_training_cases];
-		std::forward_list<int> training_cases_solution[argmap::number_of_training_cases];
-		std::forward_list<int> test_cases_problem[argmap::number_of_test_cases];
-		std::forward_list<int> test_cases_solution[argmap::number_of_test_cases];
-		std::deque<std::string> fitness_cases_problem;
-		std::deque<std::string> fitness_cases_solution;
 
 		unsigned int load_example_cases()
 		{
@@ -470,12 +474,12 @@ namespace domain
 		}
 
 		int compute_errors(std::function<double(static unsigned int _individual_index, static std::forward_list<int>& _input_list, static std::forward_list<int>& _output_list)> _run_individual_program,
-			int _number_of_example_cases,
-			std::forward_list<int> _example_cases_problem[],
-			std::forward_list<int> _example_cases_solution[],
-			double _error_matrix[][domain::argmap::population_size],
-			double _error_array[],
-			double _score_array[])
+			int _number_of_example_cases) //,
+			//std::forward_list<int> _example_cases_problem[],
+			//std::forward_list<int> _example_cases_solution[],
+			//double _error_matrix[][domain::argmap::population_size],
+			//double _error_array[],
+			//double _score_array[])
 		{
 			int individual_with_least_error = -1;
 			int individual_with_best_score = -1;
@@ -489,34 +493,34 @@ namespace domain
 				if ((individual_index % 100) == 0)
 					std::cout << individual_index;
 
-				_error_array[individual_index] = (std::numeric_limits<double>::max)();
+				error_array[individual_index] = (std::numeric_limits<double>::max)();
 
 				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
 				{
-					std::forward_list<int> example_problem = _example_cases_problem[example_case];
-					std::forward_list<int> example_solution = _example_cases_solution[example_case];
+					std::forward_list<int> example_problem = training_cases_problem[example_case];
+					std::forward_list<int> example_solution = training_cases_solution[example_case];
 
-					_error_matrix[example_case][individual_index] = _run_individual_program(individual_index, example_problem, example_solution);
+					error_matrix[example_case][individual_index] = _run_individual_program(individual_index, example_problem, example_solution);
 
-					if (_error_matrix[example_case][individual_index] > 0.0)
+					if (error_matrix[example_case][individual_index] > 0.0)
 						error_count++;
 
 					// Set error array to the minimum error for all example cases
-					if (_error_array[individual_index] > _error_matrix[example_case][individual_index])
-						_error_array[individual_index] = _error_matrix[example_case][individual_index];
+					if (error_array[individual_index] > error_matrix[example_case][individual_index])
+						error_array[individual_index] = error_matrix[example_case][individual_index];
 				}
 
-				_score_array[individual_index] = (double)error_count / (double)_number_of_example_cases;
+				score_array[individual_index] = (double)error_count / (double)_number_of_example_cases;
 
-				if ((_score_array[individual_index] < 1.0) && (_score_array[individual_index] < min_score))
+				if ((score_array[individual_index] < 1.0) && (score_array[individual_index] < min_score))
 				{
-					min_score = _score_array[individual_index];
+					min_score = score_array[individual_index];
 					individual_with_best_score = individual_index;
 				}
 
-				if (_error_array[individual_index] < min_error)
+				if (error_array[individual_index] < min_error)
 				{
-					min_error = _error_array[individual_index];
+					min_error = error_array[individual_index];
 					individual_with_least_error = individual_index;
 				}
 
@@ -590,7 +594,7 @@ namespace domain
 			return error;
 		}
 
-		void produce_new_offspring(int _number_of_example_cases, double _error_matrix[][domain::argmap::population_size])
+		void produce_new_offspring(int _number_of_example_cases, double _error_matrix[][domain::argmap::population_size], unsigned int _best_individual)
 		{
 			std::set<std::string> set_of_gnomes;
 			std::pair<std::set<std::string>::iterator, bool> ret;
@@ -599,19 +603,23 @@ namespace domain
 			for (unsigned int n = 0; n < argmap::population_size; n++)
 				pushGP::globals::child_agents[n].clear_genome();
 
-			for (unsigned int n = 0; n < argmap::population_size; n++)
+			// Breed new generation
+			for (unsigned int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 			{
-				if (pushGP::globals::child_agents[n].get_genome().empty())
+				if (pushGP::globals::child_agents[individual_index].get_genome().empty())
 				{
-					pushGP::breed(pushGP::globals::child_agents[n],	_number_of_example_cases, _error_matrix);
+					pushGP::breed(pushGP::globals::child_agents[individual_index], individual_index, _number_of_example_cases, _error_matrix);
 
-					ret = set_of_gnomes.insert(pushGP::globals::child_agents[n].get_genome_as_string());
+					ret = set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string());
 
 					// If a child with the same genome already exists, create a new random child.
 					if (ret.second == false)
-						pushGP::globals::child_agents[n].set_genome(pushGP::random_plush_genome());
+						pushGP::globals::child_agents[individual_index].set_genome(pushGP::random_plush_genome());
 				}
 			}
+
+			// Keep the best individual
+			pushGP::globals::child_agents[_best_individual].set(pushGP::globals::population_agents[_best_individual]);
 
 			std::cout << std::endl;
 		}
@@ -678,10 +686,6 @@ namespace domain
 			delete sqlcmd_save_status_report;
 		}
 
-		double error_matrix[argmap::number_of_training_cases][argmap::population_size];
-		double error_array[argmap::population_size];
-		double score_array[argmap::population_size];
-
 //		int run(int argc, char** argv)
 		int run()
 		{
@@ -718,15 +722,15 @@ namespace domain
 
 					std::cout << "Run Programs with Training Cases" << std::endl;
 					int best_individual = compute_errors(run_individual,
-						argmap::number_of_training_cases,
-						training_cases_problem,
-						training_cases_solution,
-						error_matrix,
-						error_array,
-						score_array);
+						argmap::number_of_training_cases); //,
+						//training_cases_problem,
+						//training_cases_solution,
+						//error_matrix,
+						//error_array,
+						//score_array);
 
 					std::cout << "Produce New Offspring" << std::endl;
-					produce_new_offspring(argmap::number_of_training_cases,	error_matrix);
+					produce_new_offspring(argmap::number_of_training_cases,	error_matrix, best_individual);
 
 					std::cout << "Run Best Individual's Program with Test Cases" << std::endl;
 					
