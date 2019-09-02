@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Individual.h"
+#include <algorithm>
 
 namespace pushGP
 {

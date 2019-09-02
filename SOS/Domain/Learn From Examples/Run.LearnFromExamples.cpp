@@ -474,48 +474,60 @@ namespace domain
 			std::forward_list<int> _example_cases_problem[],
 			std::forward_list<int> _example_cases_solution[],
 			double _error_matrix[][domain::argmap::population_size],
-			double _error_array[])
+			double _error_array[],
+			double _score_array[])
 		{
-			int best_individual = -1;
+			int individual_with_least_error = -1;
+			int individual_with_best_score = -1;
 			double min_error = (std::numeric_limits<double>::max)();
+			double min_score = (std::numeric_limits<double>::max)();
 
-			for (int n = 0; n < domain::argmap::population_size; n++)
+			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			{
 				int error_count= 0;
 
-				if ((n % 100) == 0)
-					std::cout << n;
+				if ((individual_index % 100) == 0)
+					std::cout << individual_index;
 
-				//std::cout << " ";
+				_error_array[individual_index] = (std::numeric_limits<double>::max)();
 
 				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
 				{
-					//std::cout << ".";
-
 					std::forward_list<int> example_problem = _example_cases_problem[example_case];
 					std::forward_list<int> example_solution = _example_cases_solution[example_case];
 
-					_error_matrix[example_case][n] = _run_individual_program(n, example_problem, example_solution);
+					_error_matrix[example_case][individual_index] = _run_individual_program(individual_index, example_problem, example_solution);
 
-					if (_error_matrix[example_case][n] > 0.0)
+					if (_error_matrix[example_case][individual_index] > 0.0)
 						error_count++;
+
+					// Set error array to the minimum error for all example cases
+					if (_error_array[individual_index] > _error_matrix[example_case][individual_index])
+						_error_array[individual_index] = _error_matrix[example_case][individual_index];
 				}
 
-				_error_array[n] = (double)error_count / (double)_number_of_example_cases;
+				_score_array[individual_index] = (double)error_count / (double)_number_of_example_cases;
 
-				if (_error_array[n] < min_error)
+				if ((_score_array[individual_index] < 1.0) && (_score_array[individual_index] < min_score))
 				{
-					min_error = _error_array[n];
-					best_individual = n;
+					min_score = _score_array[individual_index];
+					individual_with_best_score = individual_index;
 				}
 
-				if ((n % 100) == 0)
+				if (_error_array[individual_index] < min_error)
+				{
+					min_error = _error_array[individual_index];
+					individual_with_least_error = individual_index;
+				}
+
+				if ((individual_index % 100) == 0)
 					std::cout << std::endl;
 			}
 
+
 			std::cout << std::endl;
 
-			return best_individual;
+			return (individual_with_best_score == -1) ? individual_with_least_error : individual_with_best_score;
 		}
 
 		double compute_errors(std::function<double(static unsigned int _individual_index, static std::forward_list<int>& _input_list, static std::forward_list<int>& _output_list)> _run_individual_program,
@@ -615,28 +627,30 @@ namespace domain
 			"            [Generation]"								// 1
 			"           ,[Generations_Completed_This_Session]"		// 2
 			"           ,[BestIndividual_ID]"						// 3
-			"           ,[BestIndividual_Training_Error]"			// 4
-			"           ,[Average_Training_Error]"					// 5
-			"           ,[BestIndividual_Test_Error]"				// 6
-			"           ,[Number_Of_Training_Cases]"				// 7
-			"           ,[Number_Of_Test_Cases]"					// 8
-			"           ,[Best_Genome]"								// 9
-			"           ,[Population_Size]"							// 10
-			"           ,[Alternation_Rate]"						// 11
-			"           ,[Uniform_Mutation_Rate]"					// 12
-			"           ,[Example_Case_Max_Length]"					// 13
-			"           ,[Example_Case_Upper_Range]"				// 14
+			"           ,[BestIndividual_Training_Score]"			// 4
+			"           ,[BestIndividual_Training_Error]"			// 5
+			"           ,[Average_Training_Error]"					// 6
+			"           ,[BestIndividual_Test_Score]"				// 7
+			"           ,[Number_Of_Training_Cases]"				// 8
+			"           ,[Number_Of_Test_Cases]"					// 9
+			"           ,[Best_Genome]"								// 10
+			"           ,[Population_Size]"							// 11
+			"           ,[Alternation_Rate]"						// 12
+			"           ,[Uniform_Mutation_Rate]"					// 13
+			"           ,[Example_Case_Max_Length]"					// 14
+			"           ,[Example_Case_Upper_Range]"				// 15
 			"           )"
 			"     VALUES"
-			"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-		        //       1 2 3 4 5 6 7 8 9 0 1 2 3 4 
+			"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+		        //       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
 
 		void generate_status_report(unsigned int _generation_number,
 			unsigned int _generations_completed_this_session, 
 			unsigned int _best_individual_id, 
-			double _best_individual_training_error, 
-			double _average_traiing_error, 
-			double _best_individual_test_error,
+			double _best_individual_training_score, 
+			double _best_individual_training_error,
+			double _average_traiing_error,
+			double _best_individual_test_score,
 			std::string _best_gnome)
 		{
 			database::SQLCommand* sqlcmd_save_status_report;
@@ -646,17 +660,18 @@ namespace domain
 			sqlcmd_save_status_report->set_as_integer(1, _generation_number);
 			sqlcmd_save_status_report->set_as_integer(2, _generations_completed_this_session);
 			sqlcmd_save_status_report->set_as_integer(3, _best_individual_id);
-			sqlcmd_save_status_report->set_as_float(4, _best_individual_training_error);
-			sqlcmd_save_status_report->set_as_float(5, _average_traiing_error);
-			sqlcmd_save_status_report->set_as_float(6, _best_individual_test_error);
-			sqlcmd_save_status_report->set_as_integer(7, argmap::number_of_training_cases);
-			sqlcmd_save_status_report->set_as_integer(8, argmap::number_of_test_cases);
-			sqlcmd_save_status_report->set_as_string(9, _best_gnome);
-			sqlcmd_save_status_report->set_as_integer(10, argmap::population_size);
-			sqlcmd_save_status_report->set_as_float(11, argmap::alternation_rate);
-			sqlcmd_save_status_report->set_as_float(12, argmap::uniform_mutation_rate);
-			sqlcmd_save_status_report->set_as_integer(13, argmap::example_case_max_length);
-			sqlcmd_save_status_report->set_as_integer(14, argmap::example_case_upper_range);
+			sqlcmd_save_status_report->set_as_float(4, _best_individual_training_score);
+			sqlcmd_save_status_report->set_as_float(5, _best_individual_training_error);
+			sqlcmd_save_status_report->set_as_float(6, _average_traiing_error);
+			sqlcmd_save_status_report->set_as_float(7, _best_individual_test_score);
+			sqlcmd_save_status_report->set_as_integer(8, argmap::number_of_training_cases);
+			sqlcmd_save_status_report->set_as_integer(9, argmap::number_of_test_cases);
+			sqlcmd_save_status_report->set_as_string(10, _best_gnome);
+			sqlcmd_save_status_report->set_as_integer(11, argmap::population_size);
+			sqlcmd_save_status_report->set_as_float(12, argmap::alternation_rate);
+			sqlcmd_save_status_report->set_as_float(13, argmap::uniform_mutation_rate);
+			sqlcmd_save_status_report->set_as_integer(14, argmap::example_case_max_length);
+			sqlcmd_save_status_report->set_as_integer(15, argmap::example_case_upper_range);
 
 			sqlcmd_save_status_report->execute();
 
@@ -665,6 +680,7 @@ namespace domain
 
 		double error_matrix[argmap::number_of_training_cases][argmap::population_size];
 		double error_array[argmap::population_size];
+		double score_array[argmap::population_size];
 
 //		int run(int argc, char** argv)
 		int run()
@@ -706,7 +722,8 @@ namespace domain
 						training_cases_problem,
 						training_cases_solution,
 						error_matrix,
-						error_array);
+						error_array,
+						score_array);
 
 					std::cout << "Produce New Offspring" << std::endl;
 					produce_new_offspring(argmap::number_of_training_cases,	error_matrix);
@@ -720,13 +737,13 @@ namespace domain
 					std::cout << "program = " << program << std::endl;
 					std::cout << "genome = " << genome << std::endl;
 
-					double test_case_error = compute_errors(run_individual,
+					double test_case_score = compute_errors(run_individual,
 						argmap::number_of_test_cases,
 						test_cases_problem,
 						test_cases_solution,
 						best_individual);
 
-					std::cout << "test_case_error = " << test_case_error << std::endl;
+					std::cout << "test_case_error = " << test_case_score << std::endl;
 					std::cout << std::endl;
 
 					std::cout << "Verify Best Individual's Program with Test Cases" << std::endl;
@@ -752,7 +769,14 @@ namespace domain
 					}
 					average_traiing_error /= (double)(domain::argmap::population_size * argmap::number_of_training_cases);
 
-					generate_status_report(generation_number, generations_completed_this_session, best_individual, error_array[best_individual], average_traiing_error, test_case_error, pushGP::globals::population_agents[best_individual]);
+					generate_status_report(generation_number, 
+						generations_completed_this_session, 
+						best_individual, 
+						score_array[best_individual],
+						error_array[best_individual],
+						average_traiing_error,
+						test_case_score, 
+						pushGP::globals::population_agents[best_individual]);
 
 					std::cout << "Install New Generation" << std::endl;
 					install_next_generation();
