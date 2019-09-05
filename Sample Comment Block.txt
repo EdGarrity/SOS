@@ -1,0 +1,21 @@
+	//
+	// Purpose: 
+	//   Extract the date & time from a line in the logfile and return in the format expected by a 
+	//   DateTime column in a SQL table.
+	//
+	// Parameters:
+	//   log_line - A line from the logfile
+	//   parameter - The token in the line that proceeds the datetime value in the log
+	//   keep_first_occurance - True if the function should not overwrite the result if the result 
+	//                          already contains a value
+	// 
+	// Return value:
+	//   If the parameter is found, then the result is updated with the parameter's value as a 
+	//   std:string formatted for SQL (yyyy-mm-dd hh:mm:ss) and the function returns TRUE.  Else 
+	//   the function returns FALSE.
+	//
+	// Remarks:
+	//   This implimentation is crude and not flexable.  It assumes that the date and time in the 
+	//   logfile are stored as "mm/dd/yy, hh:mm:ss".  The function should be rewritten to take into 
+	//   account other formats that the date and time could appear in the logfile.
+	//

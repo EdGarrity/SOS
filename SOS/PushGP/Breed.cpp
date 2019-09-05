@@ -120,7 +120,7 @@ namespace pushGP
 			alternation(globals::population_agents[first_parent], globals::population_agents[other_parent], child);
 		}
 
-		else if (prob < domain::argmap::probability_of_mutation)
+		else if ((prob >= domain::argmap::probability_of_alternation) && (prob < domain::argmap::probability_of_alternation + domain::argmap::probability_of_mutation))
 		{
 //			std::cout << "M";
 

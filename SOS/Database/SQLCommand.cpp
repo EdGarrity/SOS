@@ -47,6 +47,7 @@ namespace database
 
 		delete[] pDBBindings_;
 		delete[] pDBBindStatus_;
+		delete[] pRowValues_;  // May fix memory leak
 
 		g_pIMalloc->Free(pColumnsInfo_);
 		g_pIMalloc->Free(pColumnStrings_);
@@ -162,7 +163,7 @@ namespace database
 		unsigned int n = parm_no - 1;
 
 		if (dwOffset_ > MAX_ROW_LENGTH)
-			abort();
+			throw MyException("dwOffset_ > MAX_ROW_LENGTH");
 
 		// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms725393(v=vs.85)"
 		ParamBindInfo_[n].pwszDataSourceType = wszDBTYPE_STR;
@@ -196,7 +197,7 @@ namespace database
 		dwOffset_ = ROUNDUP(dwOffset_);
 
 		if (dwOffset_ > MAX_ROW_LENGTH)
-			abort();
+			throw MyException("dwOffset_ > MAX_ROW_LENGTH");
 	}
 
 	wchar_t wszDBTYPE_I4[] = L"DBTYPE_I4";
@@ -316,7 +317,7 @@ namespace database
 		DBBINDING*  pDBBindings;
 		char*       pRowValues;
 
-		pDBBindings = new DBBINDING[nCols];
+		pDBBindings = new DBBINDING[nCols]; // Potential Memory Leak
 
 		for (nCol = 0; nCol < nCols; nCol++)
 		{
@@ -339,7 +340,7 @@ namespace database
 			cbRow += pDBBindings[nCol].cbMaxLen;
 		}
 
-		pRowValues = new char[cbRow];
+		pRowValues = new char[cbRow];	// Potential Memory Leak
 
 		*ppDBBindings = pDBBindings;
 		*ppRowValues = pRowValues;

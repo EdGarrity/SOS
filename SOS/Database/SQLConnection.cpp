@@ -51,7 +51,7 @@ namespace database
 			// See DBPROP structure for more information on InitProperties  
 			InitProperties[0].dwPropertyID = DBPROP_INIT_DATASOURCE;
 			InitProperties[0].vValue.vt = VT_BSTR;
-			InitProperties[0].vValue.bstrVal = SysAllocString(server);
+			InitProperties[0].vValue.bstrVal = SysAllocString(server);  // Potential Memory Leak
 			InitProperties[0].dwOptions = DBPROPOPTIONS_REQUIRED;
 			InitProperties[0].colid = DB_NULLID;
 
@@ -60,7 +60,7 @@ namespace database
 			// Database.  
 			InitProperties[1].dwPropertyID = DBPROP_INIT_CATALOG;
 			InitProperties[1].vValue.vt = VT_BSTR;
-			InitProperties[1].vValue.bstrVal = SysAllocString(dbString);
+			InitProperties[1].vValue.bstrVal = SysAllocString(dbString);  // Potential Memory Leak
 			InitProperties[1].dwOptions = DBPROPOPTIONS_REQUIRED;
 			InitProperties[1].colid = DB_NULLID;
 
@@ -74,14 +74,14 @@ namespace database
 			// Username (login).  
 			InitProperties[2].dwPropertyID = DBPROP_AUTH_USERID;
 			InitProperties[2].vValue.vt = VT_BSTR;
-			InitProperties[2].vValue.bstrVal = SysAllocString(userID);
+			InitProperties[2].vValue.bstrVal = SysAllocString(userID);  // Potential Memory Leak
 			InitProperties[2].dwOptions = DBPROPOPTIONS_REQUIRED;
 			InitProperties[2].colid = DB_NULLID;
 
 			// Password (login)
 			InitProperties[3].dwPropertyID = DBPROP_AUTH_PASSWORD;
 			InitProperties[3].vValue.vt = VT_BSTR;
-			InitProperties[3].vValue.bstrVal = SysAllocString(password);
+			InitProperties[3].vValue.bstrVal = SysAllocString(password);  // Potential Memory Leak
 			InitProperties[3].dwOptions = DBPROPOPTIONS_REQUIRED;
 			InitProperties[3].colid = DB_NULLID;
 

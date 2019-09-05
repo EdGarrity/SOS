@@ -27,7 +27,7 @@ namespace database
 		ULONG           iRow_;                  // Row count
 		DBCOUNTITEM     cRowsObtained_;         // Number of rows obtained
 		IAccessor*      pIAccessor_;            // Pointer to the accessor
-		char*           pRowValues_;
+		char*           pRowValues_ = NULL;
 		HACCESSOR       hAccessor_;             // Accessor handle
 		HROW            rghRows_[NUMROWS_CHUNK];// Row handles
 

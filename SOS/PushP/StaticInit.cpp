@@ -82,7 +82,7 @@ namespace Push
 			function_names.insert(function_names.begin() + location, name);
 
 			//instruction_table.push_back(code);			
-			(*instructions_ptr) = new CodeList(instruction_table); //
+			(*instructions_ptr) = new CodeList(instruction_table); // Potential Memory Leak
 
 			(*str2code_map_ptr)[name] = code;
 			(*str2parentheses_map_ptr)[name] = code->instruction_paren_groups();

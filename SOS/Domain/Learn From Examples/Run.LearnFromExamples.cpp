@@ -473,6 +473,55 @@ namespace domain
 			delete sqlcmd_insert_new_individual;
 		}
 
+		unsigned int verify_pop_agents()
+		{
+			unsigned int n = 0;
+
+			database::SQLCommand* sqlcmd_get_individuals;
+
+			sqlcmd_get_individuals = new database::SQLCommand(&con, sqlstmt_sqlcmd_get_individuals);
+
+			try
+			{
+				std::cout << "verify_pop_agents()" << std::endl;
+
+				sqlcmd_get_individuals->execute();
+
+				if (sqlcmd_get_individuals->is_result_set())
+				{
+					while ((sqlcmd_get_individuals->fetch_next()) && (n < argmap::population_size))
+					{
+						std::string genome_from_db = sqlcmd_get_individuals->get_field_as_string(1);
+
+						std::string genome = pushGP::globals::population_agents[n].get_genome_as_string();
+
+						if (genome_from_db != genome)
+						{
+							std::cout << "Genome mismatch." << std::endl;
+							std::cout << "  n = " << n << std::endl;
+							std::cout << "  Genome = " << genome << std::endl;
+							std::cout << "  Loaded = " << genome_from_db << std::endl;
+							std::cout << std::endl;
+						}
+						n++;
+					}
+				}
+
+				else
+					throw MyException("verify_pop_agents() - No result set");
+			}
+			catch (...)
+			{
+				delete sqlcmd_get_individuals;
+
+				return n;
+			}
+
+			delete sqlcmd_get_individuals;
+
+			return n;
+		}
+
 		int compute_errors(std::function<double(static unsigned int _individual_index, static std::forward_list<int>& _input_list, static std::forward_list<int>& _output_list)> _run_individual_program,
 			int _number_of_example_cases) //,
 			//std::forward_list<int> _example_cases_problem[],
@@ -719,6 +768,7 @@ namespace domain
 					std::cout << "Generation " << generation_number << std::endl;
 					std::cout << "Session " << generations_completed_this_session << std::endl;
 					save_generation();
+					verify_pop_agents();
 
 					std::cout << "Run Programs with Training Cases" << std::endl;
 					int best_individual = compute_errors(run_individual,
