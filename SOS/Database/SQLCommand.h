@@ -66,6 +66,7 @@ namespace database
 	public:
 		SQLCommand();
 		SQLCommand(SQLConnection * _connection);
+//		SQLCommand(SQLConnection *connection, std::string command, unsigned int _number_of_parameters_in_command);
 		SQLCommand(SQLConnection *connection, std::string command);
 		~SQLCommand();
 
@@ -76,6 +77,7 @@ namespace database
 		void commit_transaction();
 
 		void set_command(std::string _command);
+//		void set_command(std::string _command, unsigned int _number_of_parameters_in_command);
 
 		// Sets value as character string data
 		void set_as_string(unsigned int parm_no, std::string parameter);

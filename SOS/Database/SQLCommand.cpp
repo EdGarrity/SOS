@@ -26,6 +26,12 @@ namespace database
 		setup();
 	}
 
+	//SQLCommand::SQLCommand(SQLConnection * _connection, std::string _command, unsigned int _number_of_parameters_in_command) : SQLCommand(_connection)
+	//{
+	//	number_of_parameters_in_command_ = _number_of_parameters_in_command;
+	//	set_command(_command);
+	//}
+
 	SQLCommand::SQLCommand(SQLConnection * _connection, std::string _command) : SQLCommand(_connection)
 	{
 		set_command(_command);
@@ -115,10 +121,10 @@ namespace database
 
 	void SQLCommand::set_command(std::string _command)
 	{
-		command_ = _command;
-
 		// Get count of parameters
 		number_of_parameters_in_command_ = std::count(_command.begin(), _command.end(), '?');
+
+		command_ = _command;
 
 		if (rgBindings_ != NULL)
 			CoTaskMemFree(rgBindings_);

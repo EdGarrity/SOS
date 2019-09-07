@@ -19,7 +19,7 @@ namespace pushGP
 	std::tuple<double, unsigned int> mad(std::vector<double> x);
 
 	// Calculates the epsilon values for epsilon lexicase selection. Only runs once per generation.
-	void calculate_epsilons_for_epsilon_lexicase();
+//	void calculate_epsilons_for_epsilon_lexicase();
 
 	// Returns an individual that does within epsilon of the best on the fitness cases when 
 	// considered one at a time in random order.  Returns a selected parent.

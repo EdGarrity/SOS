@@ -131,7 +131,7 @@ namespace pushGP
 
 		else
 		{
-			globals::child_agents[_individual_index].set(globals::population_agents[_individual_index]);
+			globals::child_agents[_individual_index].copy(globals::population_agents[_individual_index]);
 		}
 
 		// Check if child too big

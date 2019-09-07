@@ -72,24 +72,6 @@ namespace pushGP
 		};
 	};
 
-	//enum order_types
-	//{
-	//	buy = 1,
-	//	hold = 0,
-	//	sell = -1,
-	//	not_available = -2
-	//};
-
-	//struct Transaction
-	//{
-	//	int test_case;
-	//	unsigned long row;
-	//	double adj_close;
-	//	order_types order;
-	//	int number_of_shares;
-	//	double cash_balance;
-	//};
-
 	class Individual
 	{
 		// Push program
@@ -100,16 +82,16 @@ namespace pushGP
 		std::string genome_string_;
 
 		// Error for all training data
-		double error_for_all_training_data_;
+//		double error_for_all_training_data_;
 
 		// Vector of errors
-		std::vector<double> errors_;
+//		std::vector<double> errors_;
 
 		// Is this an elite individual
-		bool is_elite_;
+//		bool is_elite_;
 
 		// Set of test cases this individual is an elite member of
-		std::set<unsigned int> elite_test_cases_;
+//		std::set<unsigned int> elite_test_cases_;
 
 		//// Collection of stock transactions
 		//std::vector<Transaction> transactions_;
@@ -131,8 +113,11 @@ namespace pushGP
 		Individual(const Individual & other) = delete;
 		Individual& operator = (const Individual &other) = delete;
 		
+		static std::string translate_plush_genome_to_push_program(std::vector<struct Atom> _genome);
+		static std::string translate_plush_genome_to_push_program(std::string _genome_string);
 		void translate_plush_genome_to_push_program();
-		void parse_string_to_plush_genome(std::string genome);
+
+//		void parse_string_to_plush_genome(std::string genome);
 
 		const std::string get_program()
 		{
@@ -148,33 +133,33 @@ namespace pushGP
 		void set_genome(std::vector<struct Atom> _genome);
 		void clear_genome();
 
-		void set(Individual & other);
+		void copy(Individual & other);
 
-		void set_error_for_all_training_data(double error)
-		{
-			error_for_all_training_data_ = error;
-		}
+		//void set_error_for_all_training_data(double error)
+		//{
+		//	error_for_all_training_data_ = error;
+		//}
 
-		double get_error_for_all_training_data()
-		{
-			return error_for_all_training_data_;
-		}
+		//double get_error_for_all_training_data()
+		//{
+		//	return error_for_all_training_data_;
+		//}
 
-		const std::vector<double> & get_errors()
-		{
-			return errors_;
-		}
+		//const std::vector<double> & get_errors()
+		//{
+		//	return errors_;
+		//}
 
 		void record_family_tree(Individual& parent);
 		void record_family_tree(Individual& parent1, Individual& parent2);
 
-		void log_error(double error);
+//		void log_error(double error);
 
-		void log_elite_test_case(unsigned int test_case_index);
+//		void log_elite_test_case(unsigned int test_case_index);
 
-		void clear_elite_test_cases();
+//		void clear_elite_test_cases();
 
-		unsigned int count_elite_test_cases();
+//		unsigned int count_elite_test_cases();
 
 		std::string get_genome_as_string();
 
@@ -184,15 +169,15 @@ namespace pushGP
 			return get_genome_as_string();
 		}
 
-		bool is_elite()
-		{
-			return is_elite_;
-		}
+		//bool is_elite()
+		//{
+		//	return is_elite_;
+		//}
 
-		void make_elite()
-		{
-			is_elite_ = true;
-		}
+		//void make_elite()
+		//{
+		//	is_elite_ = true;
+		//}
 
 		//void log_transaction(int _test_case, unsigned long _row, double _adj_close, order_types _order, int _number_of_shares, double _cash_balance);
 		//void dump_transactions();
@@ -221,5 +206,5 @@ namespace pushGP
 	std::ostream& operator<<(std::ostream& os, Individual& individual);
 
 	// Helper functions
-	std::vector<struct Atom> String_to_plush_genome(std::string _genome_str);
+	static std::vector<struct Atom> string_to_plush_genome(std::string _genome_str);
 }

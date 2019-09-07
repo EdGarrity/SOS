@@ -6,6 +6,26 @@
 #include "..\PushP\Literal.h"
 
 
+// Purpose: 
+//   Overload less-than relational operator for comparison of two GUID values.
+//
+// Parameters:
+//   guid1 - Reference to left-hand GUID operand.
+//   guid2 - Reference to right-hand GUID operand.
+// 
+// Return value:
+//   True if guid1 is less than guid 2.
+//   False if guid1 is not less than guid 2
+//
+// Side Effects:
+//   None
+//
+// Thread Safe:
+//   Yes
+//
+// Remarks:
+//   This function will do a relational comparison of each data element of the provide GUID values.
+//
 bool operator < (const GUID &guid1, const GUID &guid2) {
 	if (guid1.Data1 != guid2.Data1) {
 		return guid1.Data1 < guid2.Data1;
@@ -24,25 +44,41 @@ bool operator < (const GUID &guid1, const GUID &guid2) {
 	return false;
 }
 
-
-
-
 // Returns the number of points in tree, where each atom and each pair of parentheses 
 // counts as a point.
+
+
 namespace pushGP
 {
 	using namespace Push;
 
+	// Purpose: 
+	//   Erase individual's genome, PUSH program, and all member fields
+	//
+	// Parameters:
+	//   None
+	// 
+	// Return value:
+	//   None
+	//
+	// Side Effects:
+	//   The individual's mamber fields are reset
+	//
+	// Thread Safe:
+	//   No.  Lock individual to prevent access to member fields during initializtion
+	//
+	// Remarks:
+	//   This function must be called whenever a new individual is contructed
+	//
 	void Individual::init()
 	{
 		program_.clear();
 		genome_.clear();
-		error_for_all_training_data_ = 0.0;
-		errors_.clear();
-		is_elite_ = false;
+		//error_for_all_training_data_ = 0.0;
+		//errors_.clear();
+//		is_elite_ = false;
 		genome_string_.clear();
-		elite_test_cases_.clear();
-//		transactions_.clear();
+//		elite_test_cases_.clear();
 
 		// Uniquely identify the indivudal to track genealogy
 		::UuidCreate(&id_);
@@ -52,11 +88,49 @@ namespace pushGP
 		greatgrandparents_.clear();
 	}
 
+	// Purpose: 
+	//   Default Constructor
+	//
+	// Parameters:
+	//   None
+	// 
+	// Return value:
+	//   None
+	//
+	// Side Effects:
+	//   The individual's mamber variables are reset
+	//
+	// Thread Safe:
+	//   Yes.  Although this function calls unsafe functions to initialize the individual, 
+	//   this function is safe because no other thread can access the fields of this indivudal 
+	//   until the constructor terminates.
+	//
+	// Remarks:
+	//   This function calls the init() member function to initialize the member variables
+	//
 	Individual::Individual()
 	{
 		init();
 	}
 
+	// Purpose: 
+	//   Records individual's ancestry for single parent individuals
+	//
+	// Parameters:
+	//   parent - Referenceto the parent
+	// 
+	// Return value:
+	//   None
+	//
+	// Side Effects:
+	//   The ancestry fields are updated
+	//
+	// Thread Safe:
+	//   No.  Lock individual to prevent access to member fields during update
+	//
+	// Remarks:
+	//   This function is used to track an individual's ancestory to help ensure population divdersity.
+	//
 	void Individual::record_family_tree(Individual & parent)
 	{
 		parents_.clear();
@@ -68,6 +142,25 @@ namespace pushGP
 		greatgrandparents_.insert(parent.get_grandparents().begin(), parent.get_grandparents().end());
 	}
 
+	// Purpose: 
+	//   Records individual's ancestry for dual parent individuals
+	//
+	// Parameters:
+	//   parent1 - Referenceto the parent 1
+	//   parent2 - Referenceto the parent 2
+	// 
+	// Return value:
+	//   None
+	//
+	// Side Effects:
+	//   The ancestry fields are updated
+	//
+	// Thread Safe:
+	//   No.  Lock individual to prevent access to member fields during update
+	//
+	// Remarks:
+	//   This function is used to track an individual's ancestory to help ensure population divdersity.
+	//
 	void Individual::record_family_tree(Individual & parent1, Individual & parent2)
 	{
 		parents_.clear();
@@ -83,35 +176,77 @@ namespace pushGP
 		greatgrandparents_.insert(parent2.get_grandparents().begin(), parent2.get_grandparents().end());
 	}
 
-	void Individual::log_error(double error)
-	{
-		errors_.push_back(error);
-	}
+	//void Individual::log_error(double error)
+	//{
+	//	errors_.push_back(error);
+	//}
 
-	void Individual::log_elite_test_case(unsigned int test_case_index)
-	{
-		elite_test_cases_.insert(test_case_index);
-	}
+	//void Individual::log_elite_test_case(unsigned int test_case_index)
+	//{
+	//	elite_test_cases_.insert(test_case_index);
+	//}
 
-	void Individual::clear_elite_test_cases()
-	{
-		elite_test_cases_.clear();
-	}
+	//void Individual::clear_elite_test_cases()
+	//{
+	//	elite_test_cases_.clear();
+	//}
 
-	unsigned int Individual::count_elite_test_cases()
-	{
-		return elite_test_cases_.size();
-	}
+	//unsigned int Individual::count_elite_test_cases()
+	//{
+	//	return elite_test_cases_.size();
+	//}
 
+	// Purpose: 
+	//   Set individual's genome to provided string and update individual's program
+	//
+	// Parameters:
+	//   genome_string - String containing new genome
+	// 
+	// Return value:
+	//   None
+	//
+	// Side Effects:
+	//   The individual's genome is set to the provided string, and the individual's PUSH program is 
+	//   updated with the PUSH translation of the provided genome string.
+	//
+	// Thread Safe:
+	//   No.  Lock individual to prevent access to member fields during initializtion
+	//   Depends on parse_string_to_plush_genome() and translate_plush_genome_to_push_program
+	//
+	// Remarks:
+	//
 	void Individual::set_genome(std::string _genome_string)
 	{
 		init();
 
 		genome_string_ = _genome_string;
-		parse_string_to_plush_genome(_genome_string);
+//		parse_string_to_plush_genome(_genome_string);
+
+		genome_ = string_to_plush_genome(_genome_string);
+		genome_string_.clear();
+
 		translate_plush_genome_to_push_program();
 	}
 
+	// Purpose: 
+	//   Set individual's genome to provided vector of Atoms and update individual's program
+	//
+	// Parameters:
+	//   genome - Vector of Atoms representing the new genome
+	// 
+	// Return value:
+	//   None
+	//
+	// Side Effects:
+	//   The individual's genome is set using the provided Atom vector, and the individual's PUSH program is 
+	//   updated with the PUSH translation of the provided genome.
+	//
+	// Thread Safe:
+	//   No.  Lock individual to prevent access to member fields during initializtion
+	//   Depends on translate_plush_genome_to_push_program
+	//
+	// Remarks:
+	//
 	void Individual::set_genome(std::vector<struct Atom> _genome)
 	{
 		init();
@@ -119,27 +254,83 @@ namespace pushGP
 		translate_plush_genome_to_push_program();
 	}
 
+	// Purpose: 
+	//   Erase individual's genome, PUSH program, and all member fields
+	//
+	// Parameters:
+	//   genome - Vector of Atoms representing the new genome
+	// 
+	// Return value:
+	//   None
+	//
+	// Side Effects:
+	//   The individual's mamber fields are cleared
+	//
+	// Thread Safe:
+	//   No.  Lock individual to prevent access to member fields during initializtion
+	//
+	// Remarks:
+	//   Calls the init() function to clear the individual
+	//
 	void Individual::clear_genome()
 	{
 		init();
 	}
 
-	void Individual::set(Individual & other)
+	// Purpose: 
+	//   Make a copy of another individual
+	//
+	// Parameters:
+	//   other - Reference to the other individual to copy
+	// 
+	// Return value:
+	//   None
+	//
+	// Side Effects:
+	//   The individual's data is set to the data of the other individual.
+	//
+	// Thread Safe:
+	//   No.  Lock individual to prevent access to member fields during initializtion
+	//
+	// Remarks:
+	//   Sets individual's member fields to the values of the other individual
+	//
+	void Individual::copy(Individual & other)
 	{
 		init();
 
 		program_ = other.program_;
 		genome_ = other.genome_;
-		errors_ = other.errors_;
+//		errors_ = other.errors_;
 	
 		genome_string_ = other.genome_string_;
-		is_elite_ = other.is_elite_;
+//		is_elite_ = other.is_elite_;
 
 		id_ = other.id_;
 
 		record_family_tree(other);
 	}
 
+	// Purpose: 
+	//   Get a string representation of the individual's genome
+	//
+	// Parameters:
+	//   None
+	// 
+	// Return value:
+	//   The individul's genome as a string
+	//
+	// Side Effects:
+	//   None
+	//
+	// Thread Safe:
+	//   Yes
+	//
+	// Remarks:
+	//   The string representation of the individual's genome is cached so that it does not need to be 
+	//   resconstructed each time this function is called if the genome did not change since the last 
+	//   time this function was called. 
+	//
 	std::string Individual::get_genome_as_string()
 	{
 		if (genome_string_.empty())
@@ -262,14 +453,14 @@ namespace pushGP
 	// the paren - stack), parens are added until the paren - stack is empty.
 	// Instruction maps that have : silence set to true will be ignored entirely.
 
-	void pushGP::Individual::translate_plush_genome_to_push_program()
+	std::string pushGP::Individual::translate_plush_genome_to_push_program(std::vector<struct Atom> _genome)
 	{
-		program_ = "(";
+		std::string program = "(";
 
 		std::vector<struct Atom> genome;
 
-		for (int n = genome_.size() - 1; n >= 0; n--)
-			genome.push_back(genome_[n]);
+		for (int n = _genome.size() - 1; n >= 0; n--)
+			genome.push_back(_genome[n]);
 
 		// The number of parens that still need to be added at this location.
 		unsigned int num_parens_here = 0;
@@ -297,12 +488,12 @@ namespace pushGP
 			if (0 < num_parens_here)
 			{
 				if ((paren_stack.empty() == false) && (paren_stack.top() == paren_stack_type::close))
-					program_ += ")";
+					program += ")";
 
 				else if ((paren_stack.empty() == false) && (paren_stack.top() == paren_stack_type::close_open))
 				{
-					program_ += ")";
-					program_ += "(";
+					program += ")";
+					program += "(";
 				}
 
 				num_parens_here--;
@@ -347,15 +538,15 @@ namespace pushGP
 				}
 
 				if (genome.back().instruction == "NOOP_OPEN_PAREN")
-					program_ += "(";
+					program += "(";
 
 				else
 				{
-					program_ += genome.back().instruction;
-					program_ += " ";
+					program += genome.back().instruction;
+					program += " ";
 
 					if (number_paren_groups > 0)
-						program_ += "(";
+						program += "(";
 				}
 
 				num_parens_here = genome.back().parentheses;
@@ -363,26 +554,32 @@ namespace pushGP
 			}
 		} while (!done);
 
-		program_ += ")";
+		program += ")";
 
-		if (count_points(program_) > Push::global_parameters.max_points_in_program)
-			program_ = "";
+		if (count_points(program) > Push::global_parameters.max_points_in_program)
+			program = "";
+
+		return program;
+	}
+
+	std::string pushGP::Individual::translate_plush_genome_to_push_program(std::string _genome_string)
+	{
+		return translate_plush_genome_to_push_program(string_to_plush_genome(_genome_string));
+	}
+
+	void pushGP::Individual::translate_plush_genome_to_push_program()
+	{
+		program_ = translate_plush_genome_to_push_program(genome_);
 	}
 
 	// genome ::= { :instruction atom :close n :slient true }
-	void pushGP::Individual::parse_string_to_plush_genome(std::string _genome_string)
-	{
-		genome_ = String_to_plush_genome(_genome_string);
-	}
-
-	std::vector<struct Atom> String_to_plush_genome(std::string _genome_str)
+	std::vector<struct Atom> string_to_plush_genome(std::string _genome_str)
 	{
 		// Plush genome
 		std::vector<struct Atom> genome;
 
 		genome.clear();
 
-//		std::string genome_str = _genome;
 		std::string gene;
 		std::size_t index, start_of_optional_tokens, start_of_optional_value, end_of_optional_value;
 		struct Atom atom;
@@ -449,11 +646,4 @@ namespace pushGP
 		os << individual.get_genome_as_string();
 		return os;
 	}
-
-	//template <typename T>
-	//void Append(std::vector<T>& a, const std::vector<T>& b)
-	//{
-	//	a.reserve(a.size() + b.size());
-	//	a.insert(a.end(), b.begin(), b.end());
-	//}
 }

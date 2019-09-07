@@ -36,9 +36,9 @@ namespace domain
 		const std::string sqlstmt_sqlcmd_load_example_cases = "SELECT [Problem], [Solution] FROM [dbo].[ExampleCases];";
 		const std::string sqlstmt_delete_all_example_cases("DELETE FROM [SOS].[dbo].[ExampleCases];");
 		const std::string sqlstmt_insert_new_example_case("INSERT INTO [dbo].[ExampleCases] ([Problem], [Solution]) VALUES (?,?);");
-		const std::string sqlstmt_sqlcmd_get_individuals = "SELECT [Genome] FROM [dbo].[Individuals];";
+		const std::string sqlstmt_sqlcmd_get_individuals = "SELECT [Individual_ID], [Genome] FROM [dbo].[Individuals] ORDER BY [Individual_ID];";
 		const std::string sqlstmt_delete_individual("DELETE FROM [SOS].[dbo].[Individuals];");
-		const std::string sqlstmt_insert_new_individual("INSERT INTO [dbo].[Individuals] ([Genome]) VALUES (?);");
+		const std::string sqlstmt_insert_new_individual("INSERT INTO [dbo].[Individuals] ([Individual_ID], [Genome]) VALUES (?, ?);");
 
 		unsigned long get_last_saved_generation_number()
 		{
@@ -385,7 +385,7 @@ namespace domain
 					{
 						std::cout << "n = " << n << std::endl;
 
-						std::string genome = sqlcmd_get_individuals->get_field_as_string(1);
+						std::string genome = sqlcmd_get_individuals->get_field_as_string(2);
 
 						//std::string genome = "{:instruction EXEC.DO*RANGE :close  0}{:instruction FLOAT.FROMINTEGER :close  0}{:instruction EXEC.DO*RANGE :close  0}{:instruction INTEGER.> :close  0}{:instruction INTEGER.YANK :close  0}{:instruction BOOLEAN.NOR :close  0}{:instruction FLOAT.YANK :close  0}{:instruction INTEGER.FROMFLOAT :close  0}{:instruction FLOAT./ :close  4}{:instruction FLOAT.FLUSH :close  0}{:instruction EXEC.IF :close  0}";
 
@@ -462,7 +462,8 @@ namespace domain
 
 			for (int n = 0; n < argmap::population_size; n++)
 			{
-				sqlcmd_insert_new_individual->set_as_string(1, pushGP::globals::population_agents[n]);
+				sqlcmd_insert_new_individual->set_as_integer(1, n + 1);
+				sqlcmd_insert_new_individual->set_as_string(2, pushGP::globals::population_agents[n]);
 				sqlcmd_insert_new_individual->execute();
 			}
 
@@ -491,7 +492,9 @@ namespace domain
 				{
 					while ((sqlcmd_get_individuals->fetch_next()) && (n < argmap::population_size))
 					{
-						std::string genome_from_db = sqlcmd_get_individuals->get_field_as_string(1);
+						// Check Plush Genome
+						long individual_id = sqlcmd_get_individuals->get_field_as_long(1);
+						std::string genome_from_db = sqlcmd_get_individuals->get_field_as_string(2);
 
 						std::string genome = pushGP::globals::population_agents[n].get_genome_as_string();
 
@@ -499,10 +502,30 @@ namespace domain
 						{
 							std::cout << "Genome mismatch." << std::endl;
 							std::cout << "  n = " << n << std::endl;
+							std::cout << "  individual_id = " << n << std::endl;
 							std::cout << "  Genome = " << genome << std::endl;
 							std::cout << "  Loaded = " << genome_from_db << std::endl;
 							std::cout << std::endl;
 						}
+
+						// Check Push Program
+						std::string program_from_db = pushGP::Individual::translate_plush_genome_to_push_program
+						(
+							pushGP::string_to_plush_genome(genome_from_db)
+						);
+
+						std::string program = pushGP::globals::population_agents[n].get_program();
+
+						if (program_from_db != program)
+						{
+							std::cout << "Program mismatch." << std::endl;
+							std::cout << "  n = " << n << std::endl;
+							std::cout << "  individual_id = " << n << std::endl;
+							std::cout << "  Program = " << program << std::endl;
+							std::cout << "  Loaded = " << program_from_db << std::endl;
+							std::cout << std::endl;
+						}
+
 						n++;
 					}
 				}
@@ -668,7 +691,7 @@ namespace domain
 			}
 
 			// Keep the best individual
-			pushGP::globals::child_agents[_best_individual].set(pushGP::globals::population_agents[_best_individual]);
+			pushGP::globals::child_agents[_best_individual].copy(pushGP::globals::population_agents[_best_individual]);
 
 			std::cout << std::endl;
 		}
@@ -676,7 +699,7 @@ namespace domain
 		void install_next_generation()
 		{
 			for (unsigned int n = 0; n < argmap::population_size; n++)
-				pushGP::globals::population_agents[n].set(pushGP::globals::child_agents[n]);
+				pushGP::globals::population_agents[n].copy(pushGP::globals::child_agents[n]);
 		}
 
 		const std::string sqlstmt_save_status_report("INSERT INTO [dbo].[ProgressLog]"

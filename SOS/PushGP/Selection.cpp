@@ -73,28 +73,28 @@ namespace pushGP
 		return std::make_tuple(m, n);
 	}
 
-	void calculate_epsilons_for_epsilon_lexicase()
-	{
-		double median_absolute_deviation = 0.0;
-		unsigned int non_zero_count = 0;
+	//void calculate_epsilons_for_epsilon_lexicase()
+	//{
+	//	double median_absolute_deviation = 0.0;
+	//	unsigned int non_zero_count = 0;
 
-		std::vector<double> test_case_errors;
+	//	std::vector<double> test_case_errors;
 
-		globals::epsilons.clear();
-		globals::non_zero_epsilons.clear();
+	//	globals::epsilons.clear();
+	//	globals::non_zero_epsilons.clear();
 
-		for (int test_case = 0; test_case < Number_Of_Test_Cases; test_case++)
-		{
-			test_case_errors.clear();
+	//	for (int test_case = 0; test_case < Number_Of_Test_Cases; test_case++)
+	//	{
+	//		test_case_errors.clear();
 
-			for (int ind = 0; ind < domain::argmap::population_size; ind++)
-				test_case_errors.push_back(globals::population_agents[ind].get_errors()[test_case]);
+	//		for (int ind = 0; ind < domain::argmap::population_size; ind++)
+	//			test_case_errors.push_back(globals::population_agents[ind].get_errors()[test_case]);
 
-			std::tie(median_absolute_deviation, non_zero_count) = mad(test_case_errors);
-			globals::epsilons.push_back(median_absolute_deviation);
-			globals::non_zero_epsilons.push_back(non_zero_count);
-		}
-	}
+	//		std::tie(median_absolute_deviation, non_zero_count) = mad(test_case_errors);
+	//		globals::epsilons.push_back(median_absolute_deviation);
+	//		globals::non_zero_epsilons.push_back(non_zero_count);
+	//	}
+	//}
 
 	// Returns an individual that does within epsilon of the best on the fitness cases when considered one at a time in random order.
 	//unsigned int pushGP::epsilon_lexicase_selection_for_stock_forecaster(int _exclude)
