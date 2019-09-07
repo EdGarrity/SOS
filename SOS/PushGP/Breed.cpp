@@ -3,11 +3,13 @@
 #include "Selection.h"
 #include "GeneticOperators.h"
 #include "Globals.h"
+#include "Utilities.h"
+#include "../Utilities/MyException.h"
 
 namespace pushGP
 {
 	// Returns an empty individual with just the genome defined.
-	Individual& breed(Individual& child, 
+	Individual& breed(Individual& _child, 
 		unsigned int _individual_index,
 		int _number_of_test_cases,
 		double _error_matrix[][domain::argmap::population_size])
@@ -35,8 +37,8 @@ namespace pushGP
 
 					if (count_down < 0)
 					{
-						child.set_genome(random_plush_genome());
-						return child;
+						_child.set_genome(random_plush_genome());
+						return _child;
 					}
 				}
 
@@ -117,7 +119,7 @@ namespace pushGP
 				}
 			};
 
-			alternation(globals::population_agents[first_parent], globals::population_agents[other_parent], child);
+			alternation(globals::population_agents[first_parent], globals::population_agents[other_parent], _child);
 		}
 
 		else if ((prob >= domain::argmap::probability_of_alternation) && (prob < domain::argmap::probability_of_alternation + domain::argmap::probability_of_mutation))
@@ -126,7 +128,7 @@ namespace pushGP
 
 			first_parent = epsilon_lexicase_selection(_number_of_test_cases, -1, _error_matrix);
 
-			uniform_mutation(globals::population_agents[first_parent], child);
+			uniform_mutation(globals::population_agents[first_parent], _child);
 		}
 
 		else
@@ -134,13 +136,28 @@ namespace pushGP
 			globals::child_agents[_individual_index].copy(globals::population_agents[_individual_index]);
 		}
 
+
 		// Check if child too big
-		if (child.get_genome().size() > (domain::argmap::max_points))
+//		if (child.get_genome().size() > (domain::argmap::max_points))
+//		{
+////			std::cout << "B";
+//			child.set_genome(random_plush_genome());
+//		}
+
+		if (_child.get_genome_size() != (_child.get_program_points()))
 		{
-//			std::cout << "B";
-			child.set_genome(random_plush_genome());
+			std::cout << "child.get_genome().size() != count_points(program)" << std::endl;
+			std::cout << "child.get_genome().size() " << _child.get_genome().size() << std::endl;
+			std::cout << "child.get_genome() " << _child.get_genome() << std::endl;
+			std::cout << "count_points(child.get_program()) " << _child.get_program_points() << std::endl;
+			std::cout << "child.get_program() " << _child.get_program() << std::endl;
+
+			throw MyException("breed() - _genome.size() != count_points(program)");
 		}
 
-		return child;
+		if ((_child.get_program_points()) > domain::argmap::max_points) //   Push::global_parameters.max_points_in_program)
+			_child.set_genome(random_plush_genome());
+
+		return _child;
 	}
 }

@@ -6,15 +6,15 @@
 #include <vector>
 #include <stack> 
 #include <unordered_set>
-
 #include "..\PushP\Code.h"
+#include "..\Plush\Genome.h"
 
 // For UUID
 #include <Rpc.h>
 #pragma comment(lib, "Rpcrt4.lib")
 
 // See https://stackoverflow.com/questions/24113864/what-is-the-right-way-to-use-a-guid-as-the-key-in-stdhash-map
-bool operator < (const GUID &guid1, const GUID &guid2);
+//bool operator < (const GUID &guid1, const GUID &guid2);
 
 // Ensure it has 128 bits
 static_assert(sizeof(_GUID) == 128 / CHAR_BIT, "GUID");
@@ -36,50 +36,17 @@ namespace std {
 	};
 }
 
-
-
-
-
 namespace pushGP
 {
-	struct Atom
-	{
-		enum AtomType
-		{
-			empty = 0,
-			
-			ins,
-			integer,
-			floating_point,
-			boolean,
-
-			// This instruction will be replaced by exec_noop, but will still have effects like :close count
-			no_op,
-
-			// This instruction will be ignored
-			silent
-		};
-
-		std::string instruction;
-		unsigned int parentheses;
-		AtomType type;
-
-		Atom() 
-		{ 
-			instruction = ""; 
-			parentheses = 0;
-			type = AtomType::empty;
-		};
-	};
-
 	class Individual
 	{
-		// Push program
-		std::string program_;
+		//// Push program
+		//std::string program_;
 
 		// Plush genome
-		std::vector<struct Atom> genome_;
-		std::string genome_string_;
+		//std::vector<struct Atom> genome_;
+		//std::string genome_string_;
+		Genome::Genome genome_;
 
 		// Error for all training data
 //		double error_for_all_training_data_;
@@ -113,24 +80,37 @@ namespace pushGP
 		Individual(const Individual & other) = delete;
 		Individual& operator = (const Individual &other) = delete;
 		
-		static std::string translate_plush_genome_to_push_program(std::vector<struct Atom> _genome);
-		static std::string translate_plush_genome_to_push_program(std::string _genome_string);
-		void translate_plush_genome_to_push_program();
+//		void translate_plush_genome_to_push_program();
 
 //		void parse_string_to_plush_genome(std::string genome);
 
 		const std::string get_program()
 		{
-			return program_;
+			return genome_.get_program();
 		}
 
-		const std::vector<struct Atom> get_genome()
+		const std::string get_genome()
 		{
-			return genome_;
+			return genome_.to_string();
+		}
+
+		const unsigned int get_genome_size()
+		{
+			return genome_.size();
+		}
+
+		const std::vector<struct Genome::Atom> get_genome_atoms()
+		{
+			return genome_.get_atoms();
+		}
+
+		const unsigned int get_program_points()
+		{
+			return genome_.get_points();
 		}
 
 		void set_genome(std::string _genome);
-		void set_genome(std::vector<struct Atom> _genome);
+		void set_genome(std::vector<struct Genome::Atom> _genome);
 		void clear_genome();
 
 		void copy(Individual & other);
@@ -203,8 +183,6 @@ namespace pushGP
 		}
 	};
 
-	std::ostream& operator<<(std::ostream& os, Individual& individual);
-
 	// Helper functions
-	static std::vector<struct Atom> string_to_plush_genome(std::string _genome_str);
+	std::ostream& operator<<(std::ostream& os, Individual& individual);
 }

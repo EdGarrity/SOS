@@ -3,7 +3,7 @@
 
 namespace Push
 {
-	namespace detail
+	namespace detail	// Should this be Thread Global?
 	{
 		Code* nil_ptr;
 		Code* instructions_ptr;
@@ -113,7 +113,7 @@ namespace Push
 
 	int init_push(std::function<void(void)> _init_push_application_specific_functions = nullptr)
 	{
-		static bool initialized = false;
+		static bool initialized = false;	// Should this be a thread global?
 
 		if (!initialized)
 		{

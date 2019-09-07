@@ -50,9 +50,9 @@ namespace pushGP
 		return n;
 	}
 
-	struct Atom random_atom()
+	struct Genome::Atom random_atom()
 	{
-		struct Atom gene;
+		struct Genome::Atom gene;
 
 		if (random_double() < domain::argmap::probability_of_generating_a_constant_Plush_atom)
 		{
@@ -62,13 +62,13 @@ namespace pushGP
 				case 0:
 				{
 					gene.instruction = toString(rng.uniform(std::numeric_limits<double>::max()));
-					gene.type = Atom::AtomType::floating_point;
+					gene.type = Genome::Atom::AtomType::floating_point;
 					break;
 				}
 				case 1:
 				{
 					gene.instruction = toString(rng.random(std::numeric_limits<int>::max()));
-					gene.type = Atom::AtomType::integer;
+					gene.type = Genome::Atom::AtomType::integer;
 					break;
 				}
 				case 2:
@@ -78,7 +78,7 @@ namespace pushGP
 					else
 						gene.instruction = "False";
 
-					gene.type = Atom::AtomType::boolean;
+					gene.type = Genome::Atom::AtomType::boolean;
 					break;
 				}
 				default:
@@ -91,24 +91,24 @@ namespace pushGP
 		else
 		{
 			gene.instruction = make_terminal();	// gets a random instruction.
-			gene.type = Atom::ins;
+			gene.type = Genome::Atom::ins;
 		}
 
 		return gene;
 	}
 
-	void append_genome(std::vector<struct Atom>& a, const std::vector<struct Atom>& b)
+	void append_genome(std::vector<struct Genome::Atom>& a, const std::vector<struct Genome::Atom>& b)
 	{
 		a.reserve(a.size() + b.size());
 		a.insert(a.end(), b.begin(), b.end());  // std::move(b.begin(), b.end(), std::back_inserter(a));
 	}
 
-	std::vector<struct Atom> random_plush_genome_with_size(unsigned int genome_size)
+	std::vector<struct Genome::Atom> random_plush_genome_with_size(unsigned int genome_size)
 	{
 		int n = genome_size;	
-		struct Atom atom;
+		struct Genome::Atom atom;
 
-		std::vector<struct Atom> genome;
+		std::vector<struct Genome::Atom> genome;
 
 		while (--n > 0)
 		{
@@ -135,7 +135,7 @@ namespace pushGP
 		return genome;
 	}
 
-	std::vector<struct Atom> random_plush_genome()
+	std::vector<struct Genome::Atom> random_plush_genome()
 	{
 		return random_plush_genome_with_size(rng.random(domain::argmap::max_genome_size_in_initial_program) + 1);
 	}

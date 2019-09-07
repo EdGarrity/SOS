@@ -114,27 +114,20 @@ namespace domain
 		{
 			double error = 0.0;
 
-			// Create thread factories
-			Push::intLiteralFactory = new Push::LiteralFactory<int>();
-			Push::floatLiteralFactory = new Push::LiteralFactory<double>();
-			Push::boolLiteralFactory = new Push::LiteralFactory<bool>();
-			Push::codeListFactory = new Push::CodeListFactory();
-			Push::doRangeClassFactory = new Push::DoRangeClassFactory();
+			// Setup
+			Push::init_push();
 
+			// Run program
 			error = run_push(_program, _example_problem, _example_solution);
 
 			// Cleanup thread factories
 			Push::env.clear_stacks();
 
-			delete Push::intLiteralFactory;
-			delete Push::floatLiteralFactory;
-			delete Push::boolLiteralFactory;
-			delete Push::codeListFactory;
-			delete Push::doRangeClassFactory;
-
 			return error;
 		}
 
+		// Remarks:
+		//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
 		double run_genome(std::string _genome,
 			static std::forward_list<int>& _example_problem,
 			static std::forward_list<int>& _example_solution)

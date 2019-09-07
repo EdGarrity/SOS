@@ -165,7 +165,7 @@ namespace Push
 
 	void initGenerics()
 	{
-		static bool initialized = false;
+		static bool initialized = false;	// Should this be a Thread Global
 
 		if (initialized) return;
 

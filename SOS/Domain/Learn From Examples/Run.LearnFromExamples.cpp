@@ -8,7 +8,8 @@
 #include "../../PushGP/Breed.h"
 #include "../../PushP/ExecInstruction.h"
 #include "../../Utilities/CSVIterator.h"
-
+#include "../../PushGP/Utilities.h"
+#include "../../Plush/Genome.h"
 #include <functional>
 #include <limits>
 #include <sstream>
@@ -367,6 +368,8 @@ namespace domain
 			delete sqlcmd_insert_new_example_case;
 		}
 
+		// Remarks:
+		//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
 		unsigned int load_pop_agents()
 		{
 			unsigned int n = 0;
@@ -387,11 +390,6 @@ namespace domain
 
 						std::string genome = sqlcmd_get_individuals->get_field_as_string(2);
 
-						//std::string genome = "{:instruction EXEC.DO*RANGE :close  0}{:instruction FLOAT.FROMINTEGER :close  0}{:instruction EXEC.DO*RANGE :close  0}{:instruction INTEGER.> :close  0}{:instruction INTEGER.YANK :close  0}{:instruction BOOLEAN.NOR :close  0}{:instruction FLOAT.YANK :close  0}{:instruction INTEGER.FROMFLOAT :close  0}{:instruction FLOAT./ :close  4}{:instruction FLOAT.FLUSH :close  0}{:instruction EXEC.IF :close  0}";
-
-
-
-
 						pushGP::globals::population_agents[n].set_genome(genome);
 
 						n++;
@@ -410,19 +408,11 @@ namespace domain
 			return n;
 		}
 
+		// Remarks:
+		//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
 		unsigned int make_pop_agents(int _start)
 		{
 			unsigned int agents_created = 0;
-
-			// Create thread factories
-			Push::intLiteralFactory = new Push::LiteralFactory<int>();
-			Push::floatLiteralFactory = new Push::LiteralFactory<double>();
-			Push::boolLiteralFactory = new Push::LiteralFactory<bool>();
-			Push::codeListFactory = new Push::CodeListFactory();
-			Push::doRangeClassFactory = new Push::DoRangeClassFactory();
-
-			// Setup
-			Push::init_push();
 
 			for (int n = _start; n < argmap::population_size; n++)
 			{
@@ -433,12 +423,6 @@ namespace domain
 
 			// Cleanup thread factories
 			Push::env.clear_stacks();
-
-			delete Push::intLiteralFactory;
-			delete Push::floatLiteralFactory;
-			delete Push::boolLiteralFactory;
-			delete Push::codeListFactory;
-			delete Push::doRangeClassFactory;
 
 			return agents_created;
 		}
@@ -474,10 +458,13 @@ namespace domain
 			delete sqlcmd_insert_new_individual;
 		}
 
+		// Remarks:
+		//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
 		unsigned int verify_pop_agents()
 		{
 			unsigned int n = 0;
 
+			// Setup
 			database::SQLCommand* sqlcmd_get_individuals;
 
 			sqlcmd_get_individuals = new database::SQLCommand(&con, sqlstmt_sqlcmd_get_individuals);
@@ -486,7 +473,7 @@ namespace domain
 			{
 				std::cout << "verify_pop_agents()" << std::endl;
 
-				sqlcmd_get_individuals->execute();
+				sqlcmd_get_individuals->execute();			// Create thread factories
 
 				if (sqlcmd_get_individuals->is_result_set())
 				{
@@ -494,35 +481,32 @@ namespace domain
 					{
 						// Check Plush Genome
 						long individual_id = sqlcmd_get_individuals->get_field_as_long(1);
-						std::string genome_from_db = sqlcmd_get_individuals->get_field_as_string(2);
+						std::string genome_string_from_db = sqlcmd_get_individuals->get_field_as_string(2);
 
-						std::string genome = pushGP::globals::population_agents[n].get_genome_as_string();
+						std::string genome_string_from_individual = pushGP::globals::population_agents[n].get_genome_as_string();
 
-						if (genome_from_db != genome)
+						if (genome_string_from_db != genome_string_from_individual)
 						{
 							std::cout << "Genome mismatch." << std::endl;
 							std::cout << "  n = " << n << std::endl;
 							std::cout << "  individual_id = " << n << std::endl;
-							std::cout << "  Genome = " << genome << std::endl;
-							std::cout << "  Loaded = " << genome_from_db << std::endl;
+							std::cout << "  Genome = " << genome_string_from_individual << std::endl;
+							std::cout << "  Loaded = " << genome_string_from_db << std::endl;
 							std::cout << std::endl;
 						}
 
 						// Check Push Program
-						std::string program_from_db = pushGP::Individual::translate_plush_genome_to_push_program
-						(
-							pushGP::string_to_plush_genome(genome_from_db)
-						);
+						Genome::Genome genome(genome_string_from_db);
+						std::string program_string_from_db = genome.get_program();
+						std::string program_string_from_individual = pushGP::globals::population_agents[n].get_program();
 
-						std::string program = pushGP::globals::population_agents[n].get_program();
-
-						if (program_from_db != program)
+						if (program_string_from_db != program_string_from_individual)
 						{
 							std::cout << "Program mismatch." << std::endl;
 							std::cout << "  n = " << n << std::endl;
 							std::cout << "  individual_id = " << n << std::endl;
-							std::cout << "  Program = " << program << std::endl;
-							std::cout << "  Loaded = " << program_from_db << std::endl;
+							std::cout << "  Program = " << program_string_from_individual << std::endl;
+							std::cout << "  Loaded = " << program_string_from_db << std::endl;
 							std::cout << std::endl;
 						}
 
@@ -678,16 +662,13 @@ namespace domain
 			// Breed new generation
 			for (unsigned int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 			{
-				if (pushGP::globals::child_agents[individual_index].get_genome().empty())
-				{
-					pushGP::breed(pushGP::globals::child_agents[individual_index], individual_index, _number_of_example_cases, _error_matrix);
+				pushGP::breed(pushGP::globals::child_agents[individual_index], individual_index, _number_of_example_cases, _error_matrix);
 
-					ret = set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string());
+				ret = set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string());
 
-					// If a child with the same genome already exists, create a new random child.
-					if (ret.second == false)
-						pushGP::globals::child_agents[individual_index].set_genome(pushGP::random_plush_genome());
-				}
+				// If a child with the same genome already exists, create a new random child.
+				if (ret.second == false)
+					pushGP::globals::child_agents[individual_index].set_genome(pushGP::random_plush_genome());
 			}
 
 			// Keep the best individual
@@ -761,6 +742,16 @@ namespace domain
 //		int run(int argc, char** argv)
 		int run()
 		{
+			// Create thread factories
+			Push::intLiteralFactory = new Push::LiteralFactory<int>();
+			Push::floatLiteralFactory = new Push::LiteralFactory<double>();
+			Push::boolLiteralFactory = new Push::LiteralFactory<bool>();
+			Push::codeListFactory = new Push::CodeListFactory();
+			Push::doRangeClassFactory = new Push::DoRangeClassFactory();
+
+			// Setup
+			Push::init_push();
+
 			try
 			{
 				unsigned int generation_number = 1;
@@ -863,14 +854,38 @@ namespace domain
 			}
 			catch (const std::exception& e)
 			{
+				// Cleanup thread factories
+				Push::env.clear_stacks();
+
+				delete Push::intLiteralFactory;
+				delete Push::floatLiteralFactory;
+				delete Push::boolLiteralFactory;
+				delete Push::codeListFactory;
+				delete Push::doRangeClassFactory;
+
 				std::cout << "Standard exception: " << e.what() << std::endl;
 				throw;
 			}
 			catch (...)
 			{
+				// Cleanup thread factories
+				Push::env.clear_stacks();
+
+				delete Push::intLiteralFactory;
+				delete Push::floatLiteralFactory;
+				delete Push::boolLiteralFactory;
+				delete Push::codeListFactory;
+				delete Push::doRangeClassFactory;
+
 				std::cout << "Exception occurred" << std::endl;
 				throw;
 			}
+
+			delete Push::intLiteralFactory;
+			delete Push::floatLiteralFactory;
+			delete Push::boolLiteralFactory;
+			delete Push::codeListFactory;
+			delete Push::doRangeClassFactory;
 
 			return 0;
 		}
