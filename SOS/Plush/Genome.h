@@ -20,6 +20,7 @@ namespace Genome
 		void ingest_plush_genome(std::string _genome_str);
 		void translate_plush_genome_to_push_program();
 		unsigned int count_points();
+		void convert_genome_to_string();
 
 	public:
 		Genome();

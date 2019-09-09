@@ -10,6 +10,7 @@
 #include "../../Utilities/CSVIterator.h"
 #include "../../PushGP/Utilities.h"
 #include "../../Plush/Genome.h"
+#include "../../Utilities/Conversion.h"
 #include <functional>
 #include <limits>
 #include <sstream>
@@ -481,9 +482,8 @@ namespace domain
 					{
 						// Check Plush Genome
 						long individual_id = sqlcmd_get_individuals->get_field_as_long(1);
-						std::string genome_string_from_db = sqlcmd_get_individuals->get_field_as_string(2);
-
-						std::string genome_string_from_individual = pushGP::globals::population_agents[n].get_genome_as_string();
+						std::string genome_string_from_db = trim_copy(sqlcmd_get_individuals->get_field_as_string(2));
+						std::string genome_string_from_individual = trim_copy(pushGP::globals::population_agents[n].get_genome_as_string());
 
 						if (genome_string_from_db != genome_string_from_individual)
 						{
@@ -497,8 +497,8 @@ namespace domain
 
 						// Check Push Program
 						Genome::Genome genome(genome_string_from_db);
-						std::string program_string_from_db = genome.get_program();
-						std::string program_string_from_individual = pushGP::globals::population_agents[n].get_program();
+						std::string program_string_from_db = trim_copy(genome.get_program());
+						std::string program_string_from_individual = trim_copy(pushGP::globals::population_agents[n].get_program());
 
 						if (program_string_from_db != program_string_from_individual)
 						{
@@ -553,6 +553,12 @@ namespace domain
 
 				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
 				{
+					Push::intLiteralFactory->clean_up();
+					Push::floatLiteralFactory->clean_up();
+					Push::boolLiteralFactory->clean_up();
+					Push::codeListFactory->clean_up();
+					Push::doRangeClassFactory->clean_up();
+
 					std::forward_list<int> example_problem = training_cases_problem[example_case];
 					std::forward_list<int> example_solution = training_cases_solution[example_case];
 
@@ -779,10 +785,18 @@ namespace domain
 
 				while ((!done) && (generations_completed_this_session < argmap::max_generations_in_one_session))
 				{
+					std::cout << "Clean up memory" << std::endl;
+
+					Push::intLiteralFactory->clean_up();
+					Push::floatLiteralFactory->clean_up();
+					Push::boolLiteralFactory->clean_up();
+					Push::codeListFactory->clean_up();
+					Push::doRangeClassFactory->clean_up();
+
 					std::cout << "Generation " << generation_number << std::endl;
 					std::cout << "Session " << generations_completed_this_session << std::endl;
 					save_generation();
-					verify_pop_agents();
+//					verify_pop_agents();
 
 					std::cout << "Run Programs with Training Cases" << std::endl;
 					int best_individual = compute_errors(run_individual,

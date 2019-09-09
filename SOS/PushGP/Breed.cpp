@@ -144,16 +144,16 @@ namespace pushGP
 //			child.set_genome(random_plush_genome());
 //		}
 
-		if (_child.get_genome_size() != (_child.get_program_points()))
-		{
-			std::cout << "child.get_genome().size() != count_points(program)" << std::endl;
-			std::cout << "child.get_genome().size() " << _child.get_genome().size() << std::endl;
-			std::cout << "child.get_genome() " << _child.get_genome() << std::endl;
-			std::cout << "count_points(child.get_program()) " << _child.get_program_points() << std::endl;
-			std::cout << "child.get_program() " << _child.get_program() << std::endl;
+		//if (_child.get_genome_size() != (_child.get_program_points()))
+		//{
+		//	std::cout << "child.get_genome_size() != _child.get_program_points()" << std::endl;
+		//	std::cout << "child.get_genome_size() " << _child.get_genome_size() << std::endl;
+		//	std::cout << "child.get_genome() " << _child.get_genome() << std::endl;
+		//	std::cout << "child.get_program_points() " << _child.get_program_points() << std::endl;
+		//	std::cout << "child.get_program() " << _child.get_program() << std::endl;
 
-			throw MyException("breed() - _genome.size() != count_points(program)");
-		}
+		//	throw MyException("breed() - _genome.size() != count_points(program)");
+		//}
 
 		if ((_child.get_program_points()) > domain::argmap::max_points) //   Push::global_parameters.max_points_in_program)
 			_child.set_genome(random_plush_genome());

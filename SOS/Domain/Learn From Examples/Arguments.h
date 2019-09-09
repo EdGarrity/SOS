@@ -138,8 +138,8 @@ namespace domain
 			//	;; ----------------------------------------
 
 		// Genetic Operator Probabilities (must add up to 100%)
-		const double probability_of_alternation = 0.80;
-		const double probability_of_mutation = 0.10;
+		const double probability_of_alternation = 0.90;
+		const double probability_of_mutation = 0.00;
 		const double probability_of_cloaning = 0.10;
 
 		// The probability of generating a constant Plush atom

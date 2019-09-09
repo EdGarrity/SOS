@@ -115,7 +115,7 @@ namespace domain
 			double error = 0.0;
 
 			// Setup
-			Push::init_push();
+//			Push::init_push();  // Will be done by run_push()
 
 			// Run program
 			error = run_push(_program, _example_problem, _example_solution);

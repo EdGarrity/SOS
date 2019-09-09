@@ -41,3 +41,5 @@ std::wstring strtowstr(const std::string &str)
 	std::wstring wstrTo(str.begin(), str.end());
 	return wstrTo;
 }
+
+

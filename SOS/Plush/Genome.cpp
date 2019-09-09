@@ -100,6 +100,7 @@ namespace Genome
 	{
 		ingest_plush_genome(_genome_string);
 		translate_plush_genome_to_push_program();
+		convert_genome_to_string();
 	}
 
 	// Purpose: 
@@ -123,6 +124,7 @@ namespace Genome
 	{
 		genome_atoms_ = _genome_atoms;
 		translate_plush_genome_to_push_program();
+		convert_genome_to_string();
 	}
 
 	// Purpose: 
@@ -347,16 +349,16 @@ namespace Genome
 
 		program_ += ")";
 
-		if (genome_atoms_.size() != count_points())
-		{
-			std::cout << "_genome.size() != count_points(program)" << std::endl;
-			std::cout << "_genome.size() " << genome_atoms_.size() << std::endl;
-			std::cout << "_genome " << to_string() << std::endl;
-			std::cout << "count_points(program) " << count_points() << std::endl;
-			std::cout << "program " << program_ << std::endl;
+		//if (genome_atoms_.size() != count_points())
+		//{
+		//	std::cout << "_genome.size() != count_points(program)" << std::endl;
+		//	std::cout << "_genome.size() " << genome_atoms_.size() << std::endl;
+		//	std::cout << "_genome " << to_string() << std::endl;
+		//	std::cout << "count_points(program) " << count_points() << std::endl;
+		//	std::cout << "program " << program_ << std::endl;
 
-			throw MyException("translate_plush_genome_to_push_program() - _genome.size() != count_points(program_)");
-		}
+		//	throw MyException("translate_plush_genome_to_push_program() - _genome.size() != count_points(program_)");
+		//}
 
 		if (count_points() > domain::argmap::max_points) //   Push::global_parameters.max_points_in_program)
 			program_ = "";
@@ -411,4 +413,37 @@ namespace Genome
 
 		return total;
 	}
+
+	// Purpose: 
+	//   Return a string representation of a genome
+	//
+	// Parameters:
+	//   genome = The gemone to translate to a string
+	// 
+	// Return value:
+	//   The genome as a string
+	//
+	// Side Effects:
+	//   None
+	//
+	// Thread Safe:
+	//   Yes
+	//
+	// Remarks:
+	//
+	void Genome::convert_genome_to_string()
+	{
+		genome_string_.clear();
+
+		for (int n = 0; n < genome_atoms_.size(); n++)
+		{
+			genome_string_ += "{";
+			genome_string_ += ":instruction ";
+			genome_string_ += genome_atoms_[n].instruction;
+			genome_string_ += " :close  ";
+			genome_string_ += std::to_string(genome_atoms_[n].parentheses);
+			genome_string_ += "}";
+		}
+	}
+
 }
