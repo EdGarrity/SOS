@@ -12,7 +12,32 @@ namespace domain
 {
 	namespace learn_from_examples
 	{
-		double run_push(std::string _program,
+		// Purpose: 
+		//   Run a Push prgram and calculate error result
+		//
+		// Parameters:
+		//   program - The Push program to run
+		//   example_problem - The problem we are attempting to solve
+		//   example_solution - The solution to the problem the program is suppose to find
+		//
+		// Return value:
+		//   The vector difference between the program's result and the expected result.
+		//
+		// Side Effects:
+		//   The Push environment is initialized and the Push stacks are manipulated.
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//   Examples are expected to be a list of integers in the following form:
+		//     N X
+		//
+		//     Where:
+		//       N = number of integers in the example
+		//       X = 0 or more integers.  The number of integers must be equal to N
+		//
+		double run_program(std::string _program,
 			static std::forward_list<int>& _example_problem,
 			static std::forward_list<int>& _example_solution)
 		{
@@ -46,36 +71,14 @@ namespace domain
 				actual_solution_length = Push::pop<int>(Push::env);
 
 			else
-				//				return (std::numeric_limits<int>::max)();  // Returning a very large number that can be squared.
 				actual_solution_length = 0;
 
 			// Calculate error
 			int expected_solution_length = _example_solution.front();
 			_example_solution.pop_front();
 
-			//double sum_or_error_squared = ((double)actual_solution_length - (double)expected_solution_length) 
-			//					        * ((double)actual_solution_length - (double)expected_solution_length);
-
 			double sum_of_error_squared = (double)expected_solution_length - (double)actual_solution_length;
 			sum_of_error_squared = sum_of_error_squared * sum_of_error_squared;
-
-			//int result_size = Push::env.get_stack_size(Push::INTEGER_STACK);
-
-			//if (result_size > 0)
-			//{
-			//	int n = std::min(expected_solution_length, result_size);
-
-			//	while (n > 0)
-			//	{
-			//		int expected_solution = _example_solution.front();
-			//		_example_solution.pop_front();
-
-			//		int result = Push::pop<int>(Push::env);
-
-			//		sum_or_error_squared += ((double)expected_solution - (double)result) * ((double)expected_solution - (double)result);
-			//		n = n - 1;
-			//	}
-			//}
 
 			if (expected_solution_length > 0)
 			{
@@ -92,9 +95,6 @@ namespace domain
 
 					if (n < actual_solution_length)
 					{
-						//sum_of_error_squared += ((double)expected_solution - (double)result)
-						//	                    * ((double)expected_solution - (double)result);
-
 						double distance = ((double)expected_solution - (double)result);
 						sum_of_error_squared += distance * distance;
 					}
@@ -105,29 +105,40 @@ namespace domain
 
 			error = std::sqrt(sum_of_error_squared);
 
-			return error;
-		}
-
-		double run_program(std::string _program,
-			static std::forward_list<int>& _example_problem,
-			static std::forward_list<int>& _example_solution)
-		{
-			double error = 0.0;
-
-			// Setup
-//			Push::init_push();  // Will be done by run_push()
-
-			// Run program
-			error = run_push(_program, _example_problem, _example_solution);
-
-			// Cleanup thread factories
+			// Cleanup Push Stacks to release memory
 			Push::env.clear_stacks();
 
 			return error;
 		}
 
+		// Purpose: 
+		//   Run a Plush program and calculate error result
+		//
+		// Parameters:
+		//   program - The Plush program to run
+		//   example_problem - The problem we are attempting to solve
+		//   example_solution - The solution to the problem the program is suppose to find
+		//
+		// Return value:
+		//   The vector difference between the program's result and the expected result.
+		//
+		// Side Effects:
+		//   The Push environment is initialized and the Push stacks are manipulated.
+		//
+		// Thread Safe:
+		//   No
+		//
 		// Remarks:
-		//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
+		//   Examples are expected to be a list of integers in the following form:
+		//     N X
+		//
+		//     Where:
+		//       N = number of integers in the example
+		//       X = 0 or more integers.  The number of integers must be equal to N
+		//
+		//   Must call Push::init_push() prior to this function call to register the Push functions and 
+		//   populate str2parentheses_map_ptr
+		//
 		double run_genome(std::string _genome,
 			static std::forward_list<int>& _example_problem,
 			static std::forward_list<int>& _example_solution)
@@ -144,6 +155,31 @@ namespace domain
 			return error;
 		}
 
+		// Purpose: 
+		//   Run an Individual's Push program and calculate error result
+		//
+		// Parameters:
+		//   individual_index - Index of individual whose program we are to run
+		//   example_problem - The problem we are attempting to solve
+		//   example_solution - The solution to the problem the program is suppose to find
+		//
+		// Return value:
+		//   The vector difference between the program's result and the expected result.
+		//
+		// Side Effects:
+		//   The Push environment is initialized and the Push stacks are manipulated.
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//   Examples are expected to be a list of integers in the following form:
+		//     N X
+		//
+		//     Where:
+		//       N = number of integers in the example
+		//       X = 0 or more integers.  The number of integers must be equal to N
+		//
 		double run_individual(static unsigned int _individual_index,
 			static std::forward_list<int>& _example_problem,
 			static std::forward_list<int>& _example_solution)

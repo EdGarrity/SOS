@@ -13,8 +13,8 @@ namespace domain
 
 		//	:use - single - thread false
 		//	;; When true, will only use a single thread.
-		const bool use_single_thread = true;
-		const unsigned int number_of_cores_to_reserve = 12;
+		const bool use_single_thread = false;
+		const unsigned int number_of_cores_to_reserve = 4;
 
 		//	:random - seed(random / generate - mersennetwister - seed)
 		//	;; The seed for the random number generator.
@@ -62,7 +62,7 @@ namespace domain
 		// that genome lengths will otherwise be limited by 1 / 4 of :max - points.
 		const unsigned int max_genome_size_in_initial_program = max_points / 4;
 
-		// Number of Available Test Cases
+		// Number of Available Training Cases
 		const long int number_of_training_cases = 10;
 
 		// Number of Available Test Cases

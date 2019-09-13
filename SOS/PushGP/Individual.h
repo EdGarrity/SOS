@@ -131,7 +131,9 @@ namespace pushGP
 		//}
 
 		void record_family_tree(Individual& parent);
+		void record_family_tree(unsigned int parent);
 		void record_family_tree(Individual& parent1, Individual& parent2);
+		void record_family_tree(unsigned int parent1, unsigned int parent2);
 
 //		void log_error(double error);
 

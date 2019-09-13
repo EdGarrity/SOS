@@ -161,12 +161,12 @@
     <ClInclude Include="Database\SQLField.h" />
     <ClInclude Include="Domain\Arguments.h" />
     <ClInclude Include="Domain\Learn From Examples\Arguments.h" />
-    <ClInclude Include="Domain\Learn From Examples\AsyncErrorFunction.LearnFromExample.h" />
     <ClInclude Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.h" />
     <ClInclude Include="Domain\Learn From Examples\Run.LearnFromExamples.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Plush\Atom.h" />
     <ClInclude Include="Plush\Genome.h" />
+    <ClInclude Include="PushGP\AsyncBreed.h" />
     <ClInclude Include="PushGP\Breed.h" />
     <ClInclude Include="PushGP\GeneticOperators.h" />
     <ClInclude Include="PushGP\Globals.h" />
@@ -201,7 +201,6 @@
     <ClCompile Include="Database\SQLCommand.cpp" />
     <ClCompile Include="Database\SQLConnection.cpp" />
     <ClCompile Include="Database\SQLField.cpp" />
-    <ClCompile Include="Domain\Learn From Examples\AsyncErrorFunction.LearnFromExample.cpp" />
     <ClCompile Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.cpp" />
     <ClCompile Include="Domain\Learn From Examples\Run.LearnFromExamples.cpp" />
     <ClCompile Include="pch.cpp">
@@ -213,6 +212,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Plush\Atom.cpp" />
     <ClCompile Include="Plush\Genome.cpp" />
+    <ClCompile Include="PushGP\AsyncBreed.cpp" />
     <ClCompile Include="PushGP\Breed.cpp" />
     <ClCompile Include="PushGP\GeneticOperators.cpp" />
     <ClCompile Include="PushGP\Globals.cpp" />

@@ -19,3 +19,16 @@
 	//   logfile are stored as "mm/dd/yy, hh:mm:ss".  The function should be rewritten to take into 
 	//   account other formats that the date and time could appear in the logfile.
 	//
+
+	// Purpose: 
+	//
+	// Parameters:
+	// 
+	// Return value:
+	//
+	// Side Effects:
+	//
+	// Thread Safe:
+	//
+	// Remarks:
+	//

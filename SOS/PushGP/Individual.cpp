@@ -5,6 +5,7 @@
 #include "..\PushP\Env.h"
 #include "..\PushP\Literal.h"
 #include "Utilities.h"
+#include "Globals.h"
 
 // Purpose: 
 //   Overload less-than relational operator for comparison of two GUID values.
@@ -143,6 +144,39 @@ namespace pushGP
 	}
 
 	// Purpose: 
+	//   Records individual's ancestry for single parent individuals
+	//
+	// Parameters:
+	//   parent - Index of parent
+	// 
+	// Return value:
+	//   None
+	//
+	// Side Effects:
+	//   The ancestry fields are updated
+	//
+	// Thread Safe:
+	//   No.  Lock individual to prevent access to member fields during update
+	//
+	// Remarks:
+	//   This function is used to track an individual's ancestory to help ensure population divdersity.
+	//
+	void Individual::record_family_tree(unsigned int parent)
+	{
+		parents_.clear();
+		grandparents_.clear();
+		greatgrandparents_.clear();
+
+		parents_.insert(globals::population_agents[parent].get_id());
+
+		grandparents_.insert(globals::population_agents[parent].get_parents().begin(), 
+			globals::population_agents[parent].get_parents().end());
+
+		greatgrandparents_.insert(globals::population_agents[parent].get_grandparents().begin(), 
+			globals::population_agents[parent].get_grandparents().end());
+	}
+
+	// Purpose: 
 	//   Records individual's ancestry for dual parent individuals
 	//
 	// Parameters:
@@ -177,6 +211,40 @@ namespace pushGP
 	}
 
 	// Purpose: 
+	//   Records individual's ancestry for dual parent individuals
+	//
+	// Parameters:
+	//   parent1 - Index of parent 1
+	//   parent2 - Index of parent 2
+	// 
+	// Return value:
+	//   None
+	//
+	// Side Effects:
+	//   The ancestry fields are updated
+	//
+	// Thread Safe:
+	//   No.  Lock individual to prevent access to member fields during update
+	//
+	// Remarks:
+	//   This function is used to track an individual's ancestory to help ensure population divdersity.
+	//
+	void Individual::record_family_tree(unsigned int parent1, unsigned int parent2)
+	{
+		parents_.clear();
+		grandparents_.clear();
+		greatgrandparents_.clear();
+
+		parents_.insert(globals::population_agents[parent1].get_id());
+		grandparents_.insert(globals::population_agents[parent1].get_parents().begin(), globals::population_agents[parent1].get_parents().end());
+		greatgrandparents_.insert(globals::population_agents[parent1].get_grandparents().begin(), globals::population_agents[parent1].get_grandparents().end());
+
+		parents_.insert(globals::population_agents[parent2].get_id());
+		grandparents_.insert(globals::population_agents[parent2].get_parents().begin(), globals::population_agents[parent2].get_parents().end());
+		greatgrandparents_.insert(globals::population_agents[parent2].get_grandparents().begin(), globals::population_agents[parent2].get_grandparents().end());
+	}
+
+	// Purpose: 
 	//   Set individual's genome to provided string and update individual's program
 	//
 	// Parameters:
@@ -191,7 +259,6 @@ namespace pushGP
 	//
 	// Thread Safe:
 	//   No.  Lock individual to prevent access to member fields during initializtion
-	//   Depends on parse_string_to_plush_genome() and translate_plush_genome_to_push_program
 	//
 	// Remarks:
 	//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
@@ -199,15 +266,6 @@ namespace pushGP
 	void Individual::set_genome(std::string _genome_string)
 	{
 		init();
-
-//		genome_string_ = _genome_string;
-//		parse_string_to_plush_genome(_genome_string);
-
-//		genome_ = string_to_plush_genome(_genome_string);
-//		genome_string_.clear();
-
-//		translate_plush_genome_to_push_program();
-
 		genome_.set(_genome_string);
 	}
 
@@ -226,7 +284,6 @@ namespace pushGP
 	//
 	// Thread Safe:
 	//   No.  Lock individual to prevent access to member fields during initializtion
-	//   Depends on translate_plush_genome_to_push_program
 	//
 	// Remarks:
 	//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
@@ -235,7 +292,6 @@ namespace pushGP
 	{
 		init();
 		genome_.set(_genome);
-//		translate_plush_genome_to_push_program();
 	}
 
 	// Purpose: 

@@ -159,9 +159,6 @@
     <ClInclude Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.h">
       <Filter>Header Files\Domain\Learn From Examples</Filter>
     </ClInclude>
-    <ClInclude Include="Domain\Learn From Examples\AsyncErrorFunction.LearnFromExample.h">
-      <Filter>Header Files\Domain\Learn From Examples</Filter>
-    </ClInclude>
     <ClInclude Include="Domain\Learn From Examples\Arguments.h">
       <Filter>Header Files\Domain\Learn From Examples</Filter>
     </ClInclude>
@@ -176,6 +173,9 @@
     </ClInclude>
     <ClInclude Include="Plush\Atom.h">
       <Filter>Header Files\Plush</Filter>
+    </ClInclude>
+    <ClInclude Include="PushGP\AsyncBreed.h">
+      <Filter>Header Files\PushGP</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -266,9 +266,6 @@
     <ClCompile Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.cpp">
       <Filter>Source Files\Domain\Learn From Examples</Filter>
     </ClCompile>
-    <ClCompile Include="Domain\Learn From Examples\AsyncErrorFunction.LearnFromExample.cpp">
-      <Filter>Source Files\Domain\Learn From Examples</Filter>
-    </ClCompile>
     <ClCompile Include="PushGP\Utilities.cpp">
       <Filter>Source Files\PushGP</Filter>
     </ClCompile>
@@ -277,6 +274,9 @@
     </ClCompile>
     <ClCompile Include="Plush\Atom.cpp">
       <Filter>Source Files\Plush</Filter>
+    </ClCompile>
+    <ClCompile Include="PushGP\AsyncBreed.cpp">
+      <Filter>Source Files\PushGP</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

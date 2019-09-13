@@ -74,6 +74,8 @@ namespace Genome
 	// Remarks:
 	//   Calls the set() method
 	//
+	//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
+	//
 	Genome::Genome(std::string _genome_string)
 	{
 		set(_genome_string);
@@ -95,6 +97,8 @@ namespace Genome
 	//   Yes.  
 	//
 	// Remarks:
+	//
+	//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
 	//
 	void Genome::set(std::string _genome_string)
 	{
@@ -119,6 +123,8 @@ namespace Genome
 	//   Yes.  
 	//
 	// Remarks:
+	//
+	//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
 	//
 	void Genome::set(std::vector<struct Atom> & _genome_atoms)
 	{
@@ -299,7 +305,7 @@ namespace Genome
 			else if ((genome.empty()) && (paren_stack.empty() == false))
 				num_parens_here = paren_stack.size();
 
-			//Check if done
+			// Check if done
 			else if ((genome.empty()) && (paren_stack.empty()))
 				done = true;
 

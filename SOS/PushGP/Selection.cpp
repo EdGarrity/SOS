@@ -7,11 +7,28 @@
 
 namespace pushGP
 {
-	std::vector<unsigned int> lshuffle(const unsigned int end)
+	// Purpose: 
+	//   Create a shuffled desk of N integers from 0 to N-1
+	//
+	// Parameters:
+	//    end - Number of elements to create in the deck
+	//
+	// Return value:
+	//   Vector of shufftled integers
+	//
+	// Side Effects:
+	//   None
+	//
+	// Thread Safe:
+	//   Yes
+	//
+	// Remarks:
+	//
+	std::vector<unsigned int> lshuffle(const unsigned int _end)
 	{
 		std::vector<unsigned int> deck;
 
-		for (unsigned int n = 0; n < end; n++)
+		for (unsigned int n = 0; n < _end; n++)
 			deck.push_back(n);
 
 		// obtain a time-based seed:
@@ -22,29 +39,46 @@ namespace pushGP
 		return deck;
 	}
 
-	double median(std::vector<double> x)
+	// Purpose: 
+	//   Get the Median value of a vector of doubles
+	//
+	// Parameters:
+	//   x - Vector of doubles
+	//
+	// Return value:
+	//   Median value
+	//
+	// Side Effects:
+	//   None
+	//
+	// Thread Safe:
+	//   Yes
+	//
+	// Remarks:
+	//
+	double median(std::vector<double> _x)
 	{
-		std::sort(x.begin(), x.end());
+		std::sort(_x.begin(), _x.end());
 		std::vector<double>::size_type middle;
 		double median_x;
 
-		switch (x.size() % 2)
+		switch (_x.size() % 2)
 		{
 		case 0: // even
-			middle = x.size() / 2;
+			middle = _x.size() / 2;
 
 			// Check for overflow
-			if ((x[middle] >= std::numeric_limits<double>::max() / 2.0) or (x[middle - 1] >= std::numeric_limits<double>::max() / 2.0))
-				median_x = x[middle];
+			if ((_x[middle] >= std::numeric_limits<double>::max() / 2.0) or (_x[middle - 1] >= std::numeric_limits<double>::max() / 2.0))
+				median_x = _x[middle];
 
 			else
-				median_x = (x[middle] + x[middle - 1]) / 2.0;
+				median_x = (_x[middle] + _x[middle - 1]) / 2.0;
 
 			break;
 
 		case 1: // odd
-			middle = x.size() / 2;
-			median_x = x[middle];
+			middle = _x.size() / 2;
+			median_x = _x[middle];
 
 			break;
 		}
@@ -52,14 +86,31 @@ namespace pushGP
 		return median_x;
 	}
 
-	std::tuple<double, unsigned int> mad(std::vector<double> x)
+	// Purpose: 
+	//   Get the median absolute deviation (MAD) of a vector of doubles
+	//
+	// Parameters:
+	//   x - Vector of doubles
+	// 
+	// Return value:
+	//   The median absolute deviation
+	//
+	// Side Effects:
+	//   None
+	//
+	// Thread Safe:
+	//   Yes
+	//
+	// Remarks:
+	//
+	std::tuple<double, unsigned int> mad(std::vector<double> _x)
 	{
 		unsigned int n = 0;
-		double median_x = median(x);
+		double median_x = median(_x);
 
 		std::vector<double> dev;
 
-		for (double y : x)
+		for (double y : _x)
 		{
 			double a = std::fabs(y - median_x);
 			dev.push_back(a);
@@ -73,131 +124,27 @@ namespace pushGP
 		return std::make_tuple(m, n);
 	}
 
-	//void calculate_epsilons_for_epsilon_lexicase()
-	//{
-	//	double median_absolute_deviation = 0.0;
-	//	unsigned int non_zero_count = 0;
 
-	//	std::vector<double> test_case_errors;
-
-	//	globals::epsilons.clear();
-	//	globals::non_zero_epsilons.clear();
-
-	//	for (int test_case = 0; test_case < Number_Of_Test_Cases; test_case++)
-	//	{
-	//		test_case_errors.clear();
-
-	//		for (int ind = 0; ind < domain::argmap::population_size; ind++)
-	//			test_case_errors.push_back(globals::population_agents[ind].get_errors()[test_case]);
-
-	//		std::tie(median_absolute_deviation, non_zero_count) = mad(test_case_errors);
-	//		globals::epsilons.push_back(median_absolute_deviation);
-	//		globals::non_zero_epsilons.push_back(non_zero_count);
-	//	}
-	//}
-
-	// Returns an individual that does within epsilon of the best on the fitness cases when considered one at a time in random order.
-	//unsigned int pushGP::epsilon_lexicase_selection_for_stock_forecaster(int _exclude)
-	//{
-	//	unsigned individual_index = 0;
-	//	unsigned number_of_survivors = domain::argmap::population_size;
-
-	//	// Set survivors to be a copy of the population
-	//	std::forward_list<unsigned int> survivors_index;
-
-	//	for (int n = 0; n < domain::argmap::population_size; n++)
-	//		survivors_index.push_front(n);
-
-	//	// Get a randomized deck of test cases
-	//	std::vector<unsigned int> test_cases = lshuffle(Number_Of_Test_Cases); //randomized_training_cases_deck_;
-
-	//	while ((!test_cases.empty()) && (number_of_survivors > 1))
-	//	{
-	//		double elite = std::numeric_limits<double>::max();
-
-	//		// Select a random training case
-	//		unsigned int training_case = test_cases.back();
-
-	//		// Reduce remaining cases
-	//		test_cases.pop_back();
-
-	//		// Set elite to the minimum error
-	//		for (unsigned int it : survivors_index)
-	//		{
-	//			std::vector<double> errors = globals::population_agents[it].get_errors();
-	//			elite = (errors[training_case] < elite) ? errors[training_case] : elite;
-	//		}
-
-	//		// Reduce selection pool
-	//		auto before_it = survivors_index.before_begin();
-	//		auto it = survivors_index.begin();
-	//		while (it != survivors_index.end())
-	//		{
-	//			std::vector<double> errors = globals::population_agents[*it].get_errors();
-
-	//			if (errors[training_case] > (elite + globals::epsilons[training_case]))
-	//			{
-	//				if (it == survivors_index.begin())
-	//				{
-	//					survivors_index.pop_front();
-	//					it = survivors_index.begin();
-	//				}
-
-	//				else
-	//					it = survivors_index.erase_after(before_it);
-	//			}
-
-	//			else
-	//			{
-	//				before_it = it;
-	//				it++;
-	//			}
-	//		}
-
-	//		number_of_survivors--;  // Should this be set to survivors_index.size() ?
-	//	}
-
-	//	// Return a parent from remaining survivors 
-	//	number_of_survivors = 0;
-
-	//	if (!survivors_index.empty())
-	//		for (auto it : survivors_index)
-	//			number_of_survivors++;
-
-	//	auto it = survivors_index.begin();
-	//	auto before_it = survivors_index.begin();
-
-	//	if ((number_of_survivors == 1) && (*before_it == _exclude))
-	//		number_of_survivors = 0;
-
-	//	else if (number_of_survivors > 1)
-	//	{
-	//		std::default_random_engine generator;
-	//		std::uniform_int_distribution<int> distribution(1, number_of_survivors);
-
-	//		for (int count_down = distribution(generator);
-	//			it != survivors_index.end(), count_down > 0;
-	//			it++, count_down--)
-	//		{
-	//			if (*it != _exclude)
-	//				before_it = it;
-	//		}
-	//	}
-
-	//	if (number_of_survivors > 0)
-	//		return *before_it;
-
-	//	else
-	//	{
-	//		int n = (int)(random_double() * domain::argmap::population_size);
-	//		return n;
-	//	}
-	//}
-
-	// Returns an individual that does within epsilon of the best on the fitness cases when considered one at a time in random order.
-	unsigned int epsilon_lexicase_selection(int _number_of_test_cases,
-		int _index_of_other_parent,
-		double _error_matrix[][domain::argmap::population_size])
+	// Purpose: 
+	//   Returns an individual that does within epsilon of the best on the fitness cases when 
+	//   considered one at a time in random order.
+	//
+	// Parameters:
+	//   numer_of_example_cases - Number of examples
+	//   index_of_other_parent - Index of other selected parent
+	// 
+	// Return value:
+	//   Index of parent selected
+	//
+	// Side Effects:
+	//   None
+	//
+	// Thread Safe:
+	//   Yes
+	//
+	// Remarks:
+	//
+	unsigned int epsilon_lexicase_selection(int _number_of_example_cases, int _index_of_other_parent)
 	{
 		unsigned int chosen = 0;
 		unsigned individual_index = 0;
@@ -206,37 +153,21 @@ namespace pushGP
 		// Set survivors to be a copy of the population
 		std::forward_list<unsigned int> survivors_index;
 
-		//std::cout << std::endl;
-		//std::cout << "epsilon_lexicase_selection()";
-		//std::cout << std::endl;
-		//std::cout << std::endl;
-
 		for (int n = 0; n < domain::argmap::population_size; n++)
 			survivors_index.push_front(n);
 
-		//for (unsigned int survivor_index : survivors_index)
-		//{
-		//	std::cout << ",I";
-		//	std::cout << survivor_index;
-		//}
-
-		//std::cout << ",E";
-		//std::cout << std::endl;
-
 		// Get a randomized deck of test cases
-		std::vector<unsigned int> test_cases = lshuffle(_number_of_test_cases); 
+		std::vector<unsigned int> example_cases = lshuffle(_number_of_example_cases); 
 
-		while ((!test_cases.empty()) && (number_of_survivors > 1))
+		while ((!example_cases.empty()) && (number_of_survivors > 1))
 		{
-			double min_error = std::numeric_limits<double>::max();
+			double min_error_for_this_example_case = std::numeric_limits<double>::max();
 
 			// Select a random training case
-			unsigned int training_case = test_cases.back();
-			//std::cout << "T";
-			//std::cout << training_case;
+			unsigned int example_case = example_cases.back();
 
 			// Reduce remaining cases
-			test_cases.pop_back();
+			example_cases.pop_back();
 
 			// Calculate epsilon for each survivor and remember the minimum error
 			std::vector<double> test_case_errors;
@@ -244,16 +175,20 @@ namespace pushGP
 
 			for (unsigned int survivor_index : survivors_index)
 			{
-				double error = _error_matrix[training_case][survivor_index];
-
-				min_error = error < min_error ? error : min_error;
+				double error = pushGP::globals::error_matrix[example_case][survivor_index];
 
 				test_case_errors.push_back(error);
 
 				survivor_to_error_map[survivor_index] = error;
 
-				//std::cout << ",";
-				//std::cout << error;
+				// Record minimum error for this test case and the individual who achived the minimum error
+				min_error_for_this_example_case = error < min_error_for_this_example_case ? error : min_error_for_this_example_case;
+
+				if (pushGP::globals::minimum_error_array_by_example_case[example_case] > min_error_for_this_example_case)
+				{
+					pushGP::globals::minimum_error_array_by_example_case[example_case] = min_error_for_this_example_case;
+					pushGP::globals::individual_with_minimum_error_for_training_case[example_case] = survivor_index;
+				}
 			}
 
 			// Calculate epsilon
@@ -262,10 +197,6 @@ namespace pushGP
 
 			std::tie(median_absolute_deviation, non_zero_count) = mad(test_case_errors);
 
-			//std::cout << ",E:";
-			//std::cout << median_absolute_deviation;
-			//std::cout << std::endl;
-
 			// Reduce selection pool
 			auto before_it = survivors_index.before_begin();
 			auto it = survivors_index.begin();
@@ -273,7 +204,7 @@ namespace pushGP
 			{
 				double error = survivor_to_error_map[*it];
 
-				if (error > (min_error + median_absolute_deviation))
+				if (error > (min_error_for_this_example_case + median_absolute_deviation))
 				{
 					if (it == survivors_index.begin())
 					{
@@ -330,12 +261,6 @@ namespace pushGP
 			int n = (int)(random_double() * domain::argmap::population_size);
 			chosen = n;
 		}
-
-		//std::cout << "Chosen = ";
-		//std::cout << chosen;
-		//std::cout << std::endl;
-		//std::cout << std::endl;
-		//std::cout << std::endl;
 
 		return chosen;
 	}
