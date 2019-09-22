@@ -44,31 +44,31 @@ namespace pushGP
 		//notify all waiting threads.
 	}
 
-	void AsyncBreed::breed(unsigned int _individual_index, int _number_of_example_cases)
-	{
-		struct WorkOrder work_order;
-
-		while (true)
-		{
-			{
-				std::unique_lock<std::mutex> lock(lock_);
-				data_condition_.wait(lock, [this]() {return !work_order_queue_.empty() || !accept_functions_; });
-				if (!accept_functions_ && work_order_queue_.empty())
-				{
-					//lock will be release automatically.
-					//finish the thread loop and let it join in the main thread.
-					return;
-				}
-				work_order = work_order_queue_.front();
-				work_order_queue_.pop();
-				//release the lock
-			}
-
-			std::cout << ".";
-			pushGP::breed(_individual_index, _number_of_example_cases);
-			std::cout << "X";
-		}
-	}
+//	void AsyncBreed::breed(unsigned int _individual_index, int _number_of_example_cases)
+//	{
+//		struct WorkOrder work_order;
+//
+//		while (true)
+//		{
+//			{
+//				std::unique_lock<std::mutex> lock(lock_);
+//				data_condition_.wait(lock, [this]() {return !work_order_queue_.empty() || !accept_functions_; });
+//				if (!accept_functions_ && work_order_queue_.empty())
+//				{
+//					//lock will be release automatically.
+//					//finish the thread loop and let it join in the main thread.
+//					return;
+//				}
+//				work_order = work_order_queue_.front();
+//				work_order_queue_.pop();
+//				//release the lock
+//			}
+//
+////			std::cout << ".";
+//			pushGP::breed(_individual_index, _number_of_example_cases);
+////			std::cout << "X";
+//		}
+//	}
 
 	void AsyncBreed::breed_function_thread_pool()
 	{
@@ -94,9 +94,9 @@ namespace pushGP
 				//release the lock
 			}
 
-			std::cout << ".";
-			breed(work_order.individual_index, work_order.number_of_example_cases);
-			std::cout << "X";
+//			std::cout << ".";
+			pushGP::breed(work_order.individual_index, work_order.number_of_example_cases);
+//			std::cout << "X";
 		}
 	}
 }
