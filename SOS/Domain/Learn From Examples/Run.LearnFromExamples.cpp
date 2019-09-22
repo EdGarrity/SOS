@@ -1,5 +1,4 @@
 #include "Run.LearnFromExamples.h"
-#include "AsyncErrorFunction.LearnFromExample.h"
 #include "ErrorFunction.LearnFromExample.h"
 #include "../../Database/SQLCommand.h"
 #include "../../Database/SQLField.h"
@@ -8,7 +7,10 @@
 #include "../../PushGP/Breed.h"
 #include "../../PushP/ExecInstruction.h"
 #include "../../Utilities/CSVIterator.h"
-
+#include "../../PushGP/Utilities.h"
+#include "../../Plush/Genome.h"
+#include "../../Utilities/Conversion.h"
+#include "../../PushGP/AsyncBreed.h"
 #include <functional>
 #include <limits>
 #include <sstream>
@@ -19,15 +21,26 @@ namespace domain
 {
 	namespace learn_from_examples
 	{
+//		double error_matrix[argmap::number_of_training_cases][argmap::population_size];
+//		double individual_minimum_error_array[argmap::population_size];
+		double score_array[argmap::population_size];
+
+		std::forward_list<int> training_cases_problem[argmap::number_of_training_cases];
+		std::forward_list<int> training_cases_solution[argmap::number_of_training_cases];
+		std::forward_list<int> test_cases_problem[argmap::number_of_test_cases];
+		std::forward_list<int> test_cases_solution[argmap::number_of_test_cases];
+		std::deque<std::string> fitness_cases_problem;
+		std::deque<std::string> fitness_cases_solution;
+
 		database::SQLConnection con;
 
 		const std::string sqlstmt_get_last_saved_generation_number = "SELECT TOP 1 [Generation] FROM [SOS].[dbo].[ProgressLog] ORDER BY[Created_DTS] DESC;";
 		const std::string sqlstmt_sqlcmd_load_example_cases = "SELECT [Problem], [Solution] FROM [dbo].[ExampleCases];";
 		const std::string sqlstmt_delete_all_example_cases("DELETE FROM [SOS].[dbo].[ExampleCases];");
 		const std::string sqlstmt_insert_new_example_case("INSERT INTO [dbo].[ExampleCases] ([Problem], [Solution]) VALUES (?,?);");
-		const std::string sqlstmt_sqlcmd_get_individuals = "SELECT [Genome] FROM [dbo].[Individuals];";
+		const std::string sqlstmt_sqlcmd_get_individuals = "SELECT [Individual_ID], [Genome] FROM [dbo].[Individuals] ORDER BY [Individual_ID];";
 		const std::string sqlstmt_delete_individual("DELETE FROM [SOS].[dbo].[Individuals];");
-		const std::string sqlstmt_insert_new_individual("INSERT INTO [dbo].[Individuals] ([Genome]) VALUES (?);");
+		const std::string sqlstmt_insert_new_individual("INSERT INTO [dbo].[Individuals] ([Individual_ID], [Genome]) VALUES (?, ?);");
 
 		unsigned long get_last_saved_generation_number()
 		{
@@ -46,13 +59,6 @@ namespace domain
 
 			return n;
 		}
-
-		std::forward_list<int> training_cases_problem[argmap::number_of_training_cases];
-		std::forward_list<int> training_cases_solution[argmap::number_of_training_cases];
-		std::forward_list<int> test_cases_problem[argmap::number_of_test_cases];
-		std::forward_list<int> test_cases_solution[argmap::number_of_test_cases];
-		std::deque<std::string> fitness_cases_problem;
-		std::deque<std::string> fitness_cases_solution;
 
 		unsigned int load_example_cases()
 		{
@@ -363,6 +369,8 @@ namespace domain
 			delete sqlcmd_insert_new_example_case;
 		}
 
+		// Remarks:
+		//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
 		unsigned int load_pop_agents()
 		{
 			unsigned int n = 0;
@@ -381,12 +389,7 @@ namespace domain
 					{
 						std::cout << "n = " << n << std::endl;
 
-						std::string genome = sqlcmd_get_individuals->get_field_as_string(1);
-
-						//std::string genome = "{:instruction EXEC.DO*RANGE :close  0}{:instruction FLOAT.FROMINTEGER :close  0}{:instruction EXEC.DO*RANGE :close  0}{:instruction INTEGER.> :close  0}{:instruction INTEGER.YANK :close  0}{:instruction BOOLEAN.NOR :close  0}{:instruction FLOAT.YANK :close  0}{:instruction INTEGER.FROMFLOAT :close  0}{:instruction FLOAT./ :close  4}{:instruction FLOAT.FLUSH :close  0}{:instruction EXEC.IF :close  0}";
-
-
-
+						std::string genome = sqlcmd_get_individuals->get_field_as_string(2);
 
 						pushGP::globals::population_agents[n].set_genome(genome);
 
@@ -406,19 +409,11 @@ namespace domain
 			return n;
 		}
 
+		// Remarks:
+		//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
 		unsigned int make_pop_agents(int _start)
 		{
 			unsigned int agents_created = 0;
-
-			// Create thread factories
-			Push::intLiteralFactory = new Push::LiteralFactory<int>();
-			Push::floatLiteralFactory = new Push::LiteralFactory<double>();
-			Push::boolLiteralFactory = new Push::LiteralFactory<bool>();
-			Push::codeListFactory = new Push::CodeListFactory();
-			Push::doRangeClassFactory = new Push::DoRangeClassFactory();
-
-			// Setup
-			Push::init_push();
 
 			for (int n = _start; n < argmap::population_size; n++)
 			{
@@ -429,12 +424,6 @@ namespace domain
 
 			// Cleanup thread factories
 			Push::env.clear_stacks();
-
-			delete Push::intLiteralFactory;
-			delete Push::floatLiteralFactory;
-			delete Push::boolLiteralFactory;
-			delete Push::codeListFactory;
-			delete Push::doRangeClassFactory;
 
 			return agents_created;
 		}
@@ -458,7 +447,8 @@ namespace domain
 
 			for (int n = 0; n < argmap::population_size; n++)
 			{
-				sqlcmd_insert_new_individual->set_as_string(1, pushGP::globals::population_agents[n]);
+				sqlcmd_insert_new_individual->set_as_integer(1, n + 1);
+				sqlcmd_insert_new_individual->set_as_string(2, pushGP::globals::population_agents[n]);
 				sqlcmd_insert_new_individual->execute();
 			}
 
@@ -469,13 +459,78 @@ namespace domain
 			delete sqlcmd_insert_new_individual;
 		}
 
+		// Remarks:
+		//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
+		unsigned int verify_pop_agents()
+		{
+			unsigned int n = 0;
+
+			// Setup
+			database::SQLCommand* sqlcmd_get_individuals;
+
+			sqlcmd_get_individuals = new database::SQLCommand(&con, sqlstmt_sqlcmd_get_individuals);
+
+			try
+			{
+				std::cout << "verify_pop_agents()" << std::endl;
+
+				sqlcmd_get_individuals->execute();			// Create thread factories
+
+				if (sqlcmd_get_individuals->is_result_set())
+				{
+					while ((sqlcmd_get_individuals->fetch_next()) && (n < argmap::population_size))
+					{
+						// Check Plush Genome
+						long individual_id = sqlcmd_get_individuals->get_field_as_long(1);
+						std::string genome_string_from_db = trim_copy(sqlcmd_get_individuals->get_field_as_string(2));
+						std::string genome_string_from_individual = trim_copy(pushGP::globals::population_agents[n].get_genome_as_string());
+
+						if (genome_string_from_db != genome_string_from_individual)
+						{
+							std::cout << "Genome mismatch." << std::endl;
+							std::cout << "  n = " << n << std::endl;
+							std::cout << "  individual_id = " << n << std::endl;
+							std::cout << "  Genome = " << genome_string_from_individual << std::endl;
+							std::cout << "  Loaded = " << genome_string_from_db << std::endl;
+							std::cout << std::endl;
+						}
+
+						// Check Push Program
+						Genome::Genome genome(genome_string_from_db);
+						std::string program_string_from_db = trim_copy(genome.get_program());
+						std::string program_string_from_individual = trim_copy(pushGP::globals::population_agents[n].get_program());
+
+						if (program_string_from_db != program_string_from_individual)
+						{
+							std::cout << "Program mismatch." << std::endl;
+							std::cout << "  n = " << n << std::endl;
+							std::cout << "  individual_id = " << n << std::endl;
+							std::cout << "  Program = " << program_string_from_individual << std::endl;
+							std::cout << "  Loaded = " << program_string_from_db << std::endl;
+							std::cout << std::endl;
+						}
+
+						n++;
+					}
+				}
+
+				else
+					throw MyException("verify_pop_agents() - No result set");
+			}
+			catch (...)
+			{
+				delete sqlcmd_get_individuals;
+
+				return n;
+			}
+
+			delete sqlcmd_get_individuals;
+
+			return n;
+		}
+
 		int compute_errors(std::function<double(static unsigned int _individual_index, static std::forward_list<int>& _input_list, static std::forward_list<int>& _output_list)> _run_individual_program,
-			int _number_of_example_cases,
-			std::forward_list<int> _example_cases_problem[],
-			std::forward_list<int> _example_cases_solution[],
-			double _error_matrix[][domain::argmap::population_size],
-			double _error_array[],
-			double _score_array[])
+			int _number_of_example_cases) 
 		{
 			int individual_with_least_error = -1;
 			int individual_with_best_score = -1;
@@ -489,34 +544,40 @@ namespace domain
 				if ((individual_index % 100) == 0)
 					std::cout << individual_index;
 
-				_error_array[individual_index] = (std::numeric_limits<double>::max)();
+				pushGP::globals::minimum_error_array_by_individual[individual_index] = (std::numeric_limits<double>::max)();
 
 				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
 				{
-					std::forward_list<int> example_problem = _example_cases_problem[example_case];
-					std::forward_list<int> example_solution = _example_cases_solution[example_case];
+					Push::intLiteralFactory->clean_up();
+					Push::floatLiteralFactory->clean_up();
+					Push::boolLiteralFactory->clean_up();
+					Push::codeListFactory->clean_up();
+					Push::doRangeClassFactory->clean_up();
 
-					_error_matrix[example_case][individual_index] = _run_individual_program(individual_index, example_problem, example_solution);
+					std::forward_list<int> example_problem = training_cases_problem[example_case];
+					std::forward_list<int> example_solution = training_cases_solution[example_case];
 
-					if (_error_matrix[example_case][individual_index] > 0.0)
+					pushGP::globals::error_matrix[example_case][individual_index] = _run_individual_program(individual_index, example_problem, example_solution);
+
+					if (pushGP::globals::error_matrix[example_case][individual_index] > 0.0)
 						error_count++;
 
 					// Set error array to the minimum error for all example cases
-					if (_error_array[individual_index] > _error_matrix[example_case][individual_index])
-						_error_array[individual_index] = _error_matrix[example_case][individual_index];
+					if (pushGP::globals::minimum_error_array_by_individual[individual_index] > pushGP::globals::error_matrix[example_case][individual_index])
+						pushGP::globals::minimum_error_array_by_individual[individual_index] = pushGP::globals::error_matrix[example_case][individual_index];
 				}
 
-				_score_array[individual_index] = (double)error_count / (double)_number_of_example_cases;
+				score_array[individual_index] = (double)error_count / (double)_number_of_example_cases;
 
-				if ((_score_array[individual_index] < 1.0) && (_score_array[individual_index] < min_score))
+				if ((score_array[individual_index] < 1.0) && (score_array[individual_index] < min_score))
 				{
-					min_score = _score_array[individual_index];
+					min_score = score_array[individual_index];
 					individual_with_best_score = individual_index;
 				}
 
-				if (_error_array[individual_index] < min_error)
+				if (pushGP::globals::minimum_error_array_by_individual[individual_index] < min_error)
 				{
-					min_error = _error_array[individual_index];
+					min_error = pushGP::globals::minimum_error_array_by_individual[individual_index];
 					individual_with_least_error = individual_index;
 				}
 
@@ -590,27 +651,84 @@ namespace domain
 			return error;
 		}
 
-		void produce_new_offspring(int _number_of_example_cases, double _error_matrix[][domain::argmap::population_size])
+		pushGP::AsyncBreed async_breed;
+
+		//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
+		//
+		void produce_new_offspring(int _number_of_example_cases, unsigned int _best_individual)
 		{
 			std::set<std::string> set_of_gnomes;
 			std::pair<std::set<std::string>::iterator, bool> ret;
 
 			// Reset children.
+			std::cout << "  Reset children" << std::endl;
 			for (unsigned int n = 0; n < argmap::population_size; n++)
 				pushGP::globals::child_agents[n].clear_genome();
 
-			for (unsigned int n = 0; n < argmap::population_size; n++)
-			{
-				if (pushGP::globals::child_agents[n].get_genome().empty())
-				{
-					pushGP::breed(pushGP::globals::child_agents[n],	_number_of_example_cases, _error_matrix);
+			// Breed new generation
+			std::cout << "  Breed new generation" << std::endl;
 
-					ret = set_of_gnomes.insert(pushGP::globals::child_agents[n].get_genome_as_string());
+			if (argmap::use_single_thread)
+			{
+				for (unsigned int individual_index = 0; individual_index < argmap::population_size; individual_index++)
+				{
+					pushGP::breed(individual_index, _number_of_example_cases);
+
+					ret = set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string());
 
 					// If a child with the same genome already exists, create a new random child.
 					if (ret.second == false)
-						pushGP::globals::child_agents[n].set_genome(pushGP::random_plush_genome());
+						pushGP::globals::child_agents[individual_index].set_genome(pushGP::random_plush_genome());
 				}
+			}
+
+			else
+			{
+				int num_threads = std::thread::hardware_concurrency() - argmap::number_of_cores_to_reserve;
+				std::vector<std::thread> thread_pool;
+
+				std::cout << "  Number of threads = " << num_threads << std::endl;
+
+				// See https://www.justsoftwaresolutions.co.uk/threading/multithreading-in-c++0x-part-3.html
+				for (int i = 0; i < num_threads - 1; i++)
+					thread_pool.push_back(std::thread(&pushGP::AsyncBreed::breed_function_thread_pool, &async_breed));
+
+				std::cout << "  Evaluate Individuals";
+
+				for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
+					async_breed.push(individual_index, _number_of_example_cases);
+
+				async_breed.done();
+
+				for (unsigned int i = 0; i < thread_pool.size(); i++)
+				{
+					thread_pool.at(i).join();
+				}
+
+				std::cout << std::endl;
+
+				std::cout << "  Remove duplicates" << std::endl;
+				for (unsigned int individual_index = 0; individual_index < argmap::population_size; individual_index++)
+				{
+					ret = set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string());
+
+					// If a child with the same genome already exists, create a new random child.
+					if (ret.second == false)
+						pushGP::globals::child_agents[individual_index].set_genome(pushGP::random_plush_genome());
+				}
+			}
+
+			// Keep the best individuals
+			pushGP::globals::child_agents[_best_individual].copy(pushGP::globals::population_agents[_best_individual]);
+
+//			unsigned int individual_with_minimum_error_for_training_case[domain::argmap::number_of_training_cases];
+
+			for (unsigned int training_case = 0; training_case < domain::argmap::number_of_training_cases; training_case++)
+			{
+				unsigned int best_individual_for_training_case = pushGP::globals::individual_with_minimum_error_for_training_case[training_case];
+
+				if (best_individual_for_training_case < (std::numeric_limits<unsigned int>::max)())
+					pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);
 			}
 
 			std::cout << std::endl;
@@ -619,7 +737,7 @@ namespace domain
 		void install_next_generation()
 		{
 			for (unsigned int n = 0; n < argmap::population_size; n++)
-				pushGP::globals::population_agents[n].set(pushGP::globals::child_agents[n]);
+				pushGP::globals::population_agents[n].copy(pushGP::globals::child_agents[n]);
 		}
 
 		const std::string sqlstmt_save_status_report("INSERT INTO [dbo].[ProgressLog]"
@@ -678,13 +796,19 @@ namespace domain
 			delete sqlcmd_save_status_report;
 		}
 
-		double error_matrix[argmap::number_of_training_cases][argmap::population_size];
-		double error_array[argmap::population_size];
-		double score_array[argmap::population_size];
-
 //		int run(int argc, char** argv)
 		int run()
 		{
+			// Create memory management factories
+			Push::intLiteralFactory = new Push::LiteralFactory<int>();
+			Push::floatLiteralFactory = new Push::LiteralFactory<double>();
+			Push::boolLiteralFactory = new Push::LiteralFactory<bool>();
+			Push::codeListFactory = new Push::CodeListFactory();
+			Push::doRangeClassFactory = new Push::DoRangeClassFactory();
+
+			// Setup
+			Push::init_push();
+
 			try
 			{
 				unsigned int generation_number = 1;
@@ -712,21 +836,33 @@ namespace domain
 
 				while ((!done) && (generations_completed_this_session < argmap::max_generations_in_one_session))
 				{
+					// Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+					std::cout << "Reset variables which track the minimum error for this test case and the individual who achived the minimum error " << std::endl;
+
+					for (unsigned int example_case = 0; example_case < argmap::number_of_training_cases; example_case++)
+					{
+						pushGP::globals::minimum_error_array_by_example_case[example_case] = (std::numeric_limits<double>::max)();
+						pushGP::globals::individual_with_minimum_error_for_training_case[example_case] = (std::numeric_limits<unsigned int>::max)();
+					}
+
+					std::cout << "Clean up memory" << std::endl;
+
+					Push::intLiteralFactory->clean_up();
+					Push::floatLiteralFactory->clean_up();
+					Push::boolLiteralFactory->clean_up();
+					Push::codeListFactory->clean_up();
+					Push::doRangeClassFactory->clean_up();
+
 					std::cout << "Generation " << generation_number << std::endl;
 					std::cout << "Session " << generations_completed_this_session << std::endl;
 					save_generation();
+//					verify_pop_agents();
 
 					std::cout << "Run Programs with Training Cases" << std::endl;
-					int best_individual = compute_errors(run_individual,
-						argmap::number_of_training_cases,
-						training_cases_problem,
-						training_cases_solution,
-						error_matrix,
-						error_array,
-						score_array);
+					int best_individual = compute_errors(run_individual, argmap::number_of_training_cases);
 
 					std::cout << "Produce New Offspring" << std::endl;
-					produce_new_offspring(argmap::number_of_training_cases,	error_matrix);
+					produce_new_offspring(argmap::number_of_training_cases,	best_individual);
 
 					std::cout << "Run Best Individual's Program with Test Cases" << std::endl;
 					
@@ -765,7 +901,7 @@ namespace domain
 					for (int ind = 0; ind < argmap::population_size; ind++)
 					{
 						for (int training_case_index = 0; training_case_index < argmap::number_of_training_cases; training_case_index++)
-							average_traiing_error += error_matrix[training_case_index][ind];
+							average_traiing_error += pushGP::globals::error_matrix[training_case_index][ind];
 					}
 					average_traiing_error /= (double)(domain::argmap::population_size * argmap::number_of_training_cases);
 
@@ -773,7 +909,7 @@ namespace domain
 						generations_completed_this_session, 
 						best_individual, 
 						score_array[best_individual],
-						error_array[best_individual],
+						pushGP::globals::minimum_error_array_by_individual[best_individual],
 						average_traiing_error,
 						test_case_score, 
 						pushGP::globals::population_agents[best_individual]);
@@ -786,14 +922,38 @@ namespace domain
 			}
 			catch (const std::exception& e)
 			{
+				// Cleanup thread factories
+				Push::env.clear_stacks();
+
+				delete Push::intLiteralFactory;
+				delete Push::floatLiteralFactory;
+				delete Push::boolLiteralFactory;
+				delete Push::codeListFactory;
+				delete Push::doRangeClassFactory;
+
 				std::cout << "Standard exception: " << e.what() << std::endl;
 				throw;
 			}
 			catch (...)
 			{
+				// Cleanup thread factories
+				Push::env.clear_stacks();
+
+				delete Push::intLiteralFactory;
+				delete Push::floatLiteralFactory;
+				delete Push::boolLiteralFactory;
+				delete Push::codeListFactory;
+				delete Push::doRangeClassFactory;
+
 				std::cout << "Exception occurred" << std::endl;
 				throw;
 			}
+
+			delete Push::intLiteralFactory;
+			delete Push::floatLiteralFactory;
+			delete Push::boolLiteralFactory;
+			delete Push::codeListFactory;
+			delete Push::doRangeClassFactory;
 
 			return 0;
 		}

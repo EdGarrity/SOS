@@ -49,6 +49,12 @@
     <Filter Include="Source Files\Domain\Learn From Examples">
       <UniqueIdentifier>{4295dce2-1b14-45d3-8644-6cc6fb95d2fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Plush">
+      <UniqueIdentifier>{0c70efad-225b-421e-b49c-9a4007498e52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Plush">
+      <UniqueIdentifier>{e21770da-3700-4b3b-ba8b-86fceb7f5d94}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -153,14 +159,23 @@
     <ClInclude Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.h">
       <Filter>Header Files\Domain\Learn From Examples</Filter>
     </ClInclude>
-    <ClInclude Include="Domain\Learn From Examples\AsyncErrorFunction.LearnFromExample.h">
-      <Filter>Header Files\Domain\Learn From Examples</Filter>
-    </ClInclude>
     <ClInclude Include="Domain\Learn From Examples\Arguments.h">
       <Filter>Header Files\Domain\Learn From Examples</Filter>
     </ClInclude>
     <ClInclude Include="Utilities\CSVIterator.h">
       <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="PushGP\Utilities.h">
+      <Filter>Header Files\PushGP</Filter>
+    </ClInclude>
+    <ClInclude Include="Plush\Genome.h">
+      <Filter>Header Files\Plush</Filter>
+    </ClInclude>
+    <ClInclude Include="Plush\Atom.h">
+      <Filter>Header Files\Plush</Filter>
+    </ClInclude>
+    <ClInclude Include="PushGP\AsyncBreed.h">
+      <Filter>Header Files\PushGP</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -251,8 +266,17 @@
     <ClCompile Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.cpp">
       <Filter>Source Files\Domain\Learn From Examples</Filter>
     </ClCompile>
-    <ClCompile Include="Domain\Learn From Examples\AsyncErrorFunction.LearnFromExample.cpp">
-      <Filter>Source Files\Domain\Learn From Examples</Filter>
+    <ClCompile Include="PushGP\Utilities.cpp">
+      <Filter>Source Files\PushGP</Filter>
+    </ClCompile>
+    <ClCompile Include="Plush\Genome.cpp">
+      <Filter>Source Files\Plush</Filter>
+    </ClCompile>
+    <ClCompile Include="Plush\Atom.cpp">
+      <Filter>Source Files\Plush</Filter>
+    </ClCompile>
+    <ClCompile Include="PushGP\AsyncBreed.cpp">
+      <Filter>Source Files\PushGP</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

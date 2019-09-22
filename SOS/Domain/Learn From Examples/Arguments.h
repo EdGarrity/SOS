@@ -13,8 +13,8 @@ namespace domain
 
 		//	:use - single - thread false
 		//	;; When true, will only use a single thread.
-		const bool use_single_thread = true;
-		const unsigned int number_of_cores_to_reserve = 12;
+		const bool use_single_thread = false;
+		const unsigned int number_of_cores_to_reserve = 4;
 
 		//	:random - seed(random / generate - mersennetwister - seed)
 		//	;; The seed for the random number generator.
@@ -62,7 +62,7 @@ namespace domain
 		// that genome lengths will otherwise be limited by 1 / 4 of :max - points.
 		const unsigned int max_genome_size_in_initial_program = max_points / 4;
 
-		// Number of Available Test Cases
+		// Number of Available Training Cases
 		const long int number_of_training_cases = 10;
 
 		// Number of Available Test Cases
@@ -136,6 +136,11 @@ namespace domain
 			//	;; ----------------------------------------
 			//	;; Arguments related to genetic operators
 			//	;; ----------------------------------------
+
+		// Genetic Operator Probabilities (must add up to 100%)
+		const double probability_of_alternation = 0.90;
+		const double probability_of_mutation = 0.00;
+		const double probability_of_cloaning = 0.10;
 
 		// The probability of generating a constant Plush atom
 		const double probability_of_generating_a_constant_Plush_atom = 0.1;
@@ -326,7 +331,7 @@ namespace domain
 		const double probability_of_second_cousin_incest = 0.30;
 
 		// Which parents have a chance to survive to the next generation.
-		const unsigned int error_ratio_cap_for_retaining_parents = 0.2;
+		//const unsigned int error_ratio_cap_for_retaining_parents = 0.2;
 
 		//	:parent - selection : lexicase
 		//	;; The parent selection method.Options include : tournament, : lexicase, : epsilon - lexicase,

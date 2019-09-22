@@ -6,15 +6,15 @@
 #include <vector>
 #include <stack> 
 #include <unordered_set>
-
 #include "..\PushP\Code.h"
+#include "..\Plush\Genome.h"
 
 // For UUID
 #include <Rpc.h>
 #pragma comment(lib, "Rpcrt4.lib")
 
 // See https://stackoverflow.com/questions/24113864/what-is-the-right-way-to-use-a-guid-as-the-key-in-stdhash-map
-bool operator < (const GUID &guid1, const GUID &guid2);
+//bool operator < (const GUID &guid1, const GUID &guid2);
 
 // Ensure it has 128 bits
 static_assert(sizeof(_GUID) == 128 / CHAR_BIT, "GUID");
@@ -36,80 +36,29 @@ namespace std {
 	};
 }
 
-
-
-
-
 namespace pushGP
 {
-	struct Atom
-	{
-		enum AtomType
-		{
-			empty = 0,
-			
-			ins,
-			integer,
-			floating_point,
-			boolean,
-
-			// This instruction will be replaced by exec_noop, but will still have effects like :close count
-			no_op,
-
-			// This instruction will be ignored
-			silent
-		};
-
-		std::string instruction;
-		unsigned int parentheses;
-		AtomType type;
-
-		Atom() 
-		{ 
-			instruction = ""; 
-			parentheses = 0;
-			type = AtomType::empty;
-		};
-	};
-
-	//enum order_types
-	//{
-	//	buy = 1,
-	//	hold = 0,
-	//	sell = -1,
-	//	not_available = -2
-	//};
-
-	//struct Transaction
-	//{
-	//	int test_case;
-	//	unsigned long row;
-	//	double adj_close;
-	//	order_types order;
-	//	int number_of_shares;
-	//	double cash_balance;
-	//};
-
 	class Individual
 	{
-		// Push program
-		std::string program_;
+		//// Push program
+		//std::string program_;
 
 		// Plush genome
-		std::vector<struct Atom> genome_;
-		std::string genome_string_;
+		//std::vector<struct Atom> genome_;
+		//std::string genome_string_;
+		Genome::Genome genome_;
 
 		// Error for all training data
-		double error_for_all_training_data_;
+//		double error_for_all_training_data_;
 
 		// Vector of errors
-		std::vector<double> errors_;
+//		std::vector<double> errors_;
 
 		// Is this an elite individual
-		bool is_elite_;
+//		bool is_elite_;
 
 		// Set of test cases this individual is an elite member of
-		std::set<unsigned int> elite_test_cases_;
+//		std::set<unsigned int> elite_test_cases_;
 
 		//// Collection of stock transactions
 		//std::vector<Transaction> transactions_;
@@ -131,50 +80,68 @@ namespace pushGP
 		Individual(const Individual & other) = delete;
 		Individual& operator = (const Individual &other) = delete;
 		
-		void translate_plush_genome_to_push_program();
-		void parse_string_to_plush_genome(std::string genome);
+//		void translate_plush_genome_to_push_program();
+
+//		void parse_string_to_plush_genome(std::string genome);
 
 		const std::string get_program()
 		{
-			return program_;
+			return genome_.get_program();
 		}
 
-		const std::vector<struct Atom> get_genome()
+		const std::string get_genome()
 		{
-			return genome_;
+			return genome_.to_string();
+		}
+
+		const unsigned int get_genome_size()
+		{
+			return genome_.size();
+		}
+
+		const std::vector<struct Genome::Atom> get_genome_atoms()
+		{
+			return genome_.get_atoms();
+		}
+
+		const unsigned int get_program_points()
+		{
+			return genome_.get_points();
 		}
 
 		void set_genome(std::string _genome);
-		void set_genome(std::vector<struct Atom> _genome);
+		void set_genome(std::vector<struct Genome::Atom> _genome);
 		void clear_genome();
 
-		void set(Individual & other);
+		void copy(Individual & other);
 
-		void set_error_for_all_training_data(double error)
-		{
-			error_for_all_training_data_ = error;
-		}
+		//void set_error_for_all_training_data(double error)
+		//{
+		//	error_for_all_training_data_ = error;
+		//}
 
-		double get_error_for_all_training_data()
-		{
-			return error_for_all_training_data_;
-		}
+		//double get_error_for_all_training_data()
+		//{
+		//	return error_for_all_training_data_;
+		//}
 
-		const std::vector<double> & get_errors()
-		{
-			return errors_;
-		}
+		//const std::vector<double> & get_errors()
+		//{
+		//	return errors_;
+		//}
 
 		void record_family_tree(Individual& parent);
+		void record_family_tree(unsigned int parent);
 		void record_family_tree(Individual& parent1, Individual& parent2);
+		void record_family_tree(unsigned int parent1, unsigned int parent2);
 
-		void log_error(double error);
+//		void log_error(double error);
 
-		void log_elite_test_case(unsigned int test_case_index);
+//		void log_elite_test_case(unsigned int test_case_index);
 
-		void clear_elite_test_cases();
+//		void clear_elite_test_cases();
 
-		unsigned int count_elite_test_cases();
+//		unsigned int count_elite_test_cases();
 
 		std::string get_genome_as_string();
 
@@ -184,15 +151,15 @@ namespace pushGP
 			return get_genome_as_string();
 		}
 
-		bool is_elite()
-		{
-			return is_elite_;
-		}
+		//bool is_elite()
+		//{
+		//	return is_elite_;
+		//}
 
-		void make_elite()
-		{
-			is_elite_ = true;
-		}
+		//void make_elite()
+		//{
+		//	is_elite_ = true;
+		//}
 
 		//void log_transaction(int _test_case, unsigned long _row, double _adj_close, order_types _order, int _number_of_shares, double _cash_balance);
 		//void dump_transactions();
@@ -218,8 +185,6 @@ namespace pushGP
 		}
 	};
 
-	std::ostream& operator<<(std::ostream& os, Individual& individual);
-
 	// Helper functions
-	std::vector<struct Atom> String_to_plush_genome(std::string _genome_str);
+	std::ostream& operator<<(std::ostream& os, Individual& individual);
 }

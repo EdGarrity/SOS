@@ -3,7 +3,7 @@
 
 namespace Push
 {
-	namespace detail
+	namespace detail	// Should this be Thread Global?
 	{
 		Code* nil_ptr;
 		Code* instructions_ptr;
@@ -82,7 +82,7 @@ namespace Push
 			function_names.insert(function_names.begin() + location, name);
 
 			//instruction_table.push_back(code);			
-			(*instructions_ptr) = new CodeList(instruction_table); //
+			(*instructions_ptr) = new CodeList(instruction_table); // Potential Memory Leak
 
 			(*str2code_map_ptr)[name] = code;
 			(*str2parentheses_map_ptr)[name] = code->instruction_paren_groups();
@@ -113,7 +113,7 @@ namespace Push
 
 	int init_push(std::function<void(void)> _init_push_application_specific_functions = nullptr)
 	{
-		static bool initialized = false;
+		static bool initialized = false;	// Should this be a thread global?
 
 		if (!initialized)
 		{

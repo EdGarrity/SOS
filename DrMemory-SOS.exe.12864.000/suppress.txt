@@ -1,0 +1,4446 @@
+# File for suppressing errors found in pid 12864: "SOS.exe"
+
+# Suppression for Error #1
+UNINITIALIZED READ
+name=Error #1 (update to meaningful name)
+system call NtUserCreateWindowEx parameter value #14
+USER32.dll!VerNtUserCreateWindowEx
+USER32.dll!CreateWindowInternal
+USER32.dll!CreateWindowExA
+MsgHook64.dll!*
+KERNEL32.dll!BaseThreadInitThunk
+
+## Mod+offs-style suppression for Error #1:
+UNINITIALIZED READ
+name=Error #1 (update to meaningful name)
+system call NtUserCreateWindowEx parameter value #14
+<USER32.dll+0x115df>
+<USER32.dll+0x111d4>
+<USER32.dll+0x2c772>
+<MsgHook64.dll+0x1126>
+<KERNEL32.dll+0x17974>
+
+# Suppression for Error #2
+UNINITIALIZED READ
+name=Error #2 (update to meaningful name)
+system call NtDeviceIoControlFile InputBuffer
+bcrypt.dll!BCryptOpenAlgorithmProvider
+bcrypt.dll!BCryptOpenAlgorithmProvider
+bcrypt.dll!BCryptResolveProviders
+drmemorylib.dll!reg_shadow_addr
+ncrypt.dll!SslOpenProvider
+SCHANNEL.dll!*
+SCHANNEL.dll!*
+SCHANNEL.dll!*
+SCHANNEL.dll!*
+SCHANNEL.dll!*
+SCHANNEL.dll!*
+SspiCli.dll!GetUserNameExA
+SspiCli.dll!GetUserNameExA
+SspiCli.dll!InitializeSecurityContextA
+SspiCli.dll!InitializeSecurityContextW
+msoledbsql.dll!OpenSqlFilestream
+msoledbsql.dll!OpenSqlFilestream
+msoledbsql.dll!OpenSqlFilestream
+msoledbsql.dll!OpenSqlFilestream
+
+## Mod+offs-style suppression for Error #2:
+UNINITIALIZED READ
+name=Error #2 (update to meaningful name)
+system call NtDeviceIoControlFile InputBuffer
+<bcrypt.dll+0x5fb6>
+<bcrypt.dll+0x5e6e>
+<bcrypt.dll+0x496e>
+<drmemorylib.dll+0x213c8>
+<ncrypt.dll+0x2cb2>
+<SCHANNEL.dll+0x1345a>
+<SCHANNEL.dll+0xda35>
+<SCHANNEL.dll+0xaf8f>
+<SCHANNEL.dll+0xac96>
+<SCHANNEL.dll+0xaae5>
+<SCHANNEL.dll+0xa9f6>
+<SspiCli.dll+0x52ba>
+<SspiCli.dll+0x4408>
+<SspiCli.dll+0x93e7>
+<SspiCli.dll+0x911e>
+<msoledbsql.dll+0x15ef73>
+<msoledbsql.dll+0x15fd5c>
+<msoledbsql.dll+0x137e97>
+<msoledbsql.dll+0x135e46>
+
+# Suppression for Error #3
+LEAK
+name=Error #3 (update to meaningful name)
+drmemorylib.dll!replace_RtlAllocateHeap
+OLEAUT32.dll!SysAllocString
+OLEAUT32.dll!SysAllocString
+SOS.exe!database::SQLConnection::initialize_and_establish_connection
+SOS.exe!std::_String_alloc<>::_Myproxy
+SOS.exe!database::SQLConnection::connect
+SOS.exe!std::_Get_size_of_n<>
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #3:
+LEAK
+name=Error #3 (update to meaningful name)
+<drmemorylib.dll+0x36330>
+<OLEAUT32.dll+0xb38e>
+<OLEAUT32.dll+0xb2be>
+<SOS.exe+0x796cb>
+<SOS.exe+0x7414d>
+<SOS.exe+0x7911d>
+<SOS.exe+0x714eb>
+<SOS.exe+0xb3c37>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #4
+LEAK
+name=Error #4 (update to meaningful name)
+drmemorylib.dll!replace_RtlAllocateHeap
+OLEAUT32.dll!SysAllocString
+OLEAUT32.dll!SysAllocString
+SOS.exe!database::SQLConnection::initialize_and_establish_connection
+SOS.exe!database::SQLConnection::connect
+SOS.exe!std::_Get_size_of_n<>
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #4:
+LEAK
+name=Error #4 (update to meaningful name)
+<drmemorylib.dll+0x36330>
+<OLEAUT32.dll+0xb38e>
+<OLEAUT32.dll+0xb2be>
+<SOS.exe+0x7973a>
+<SOS.exe+0x7911d>
+<SOS.exe+0x714eb>
+<SOS.exe+0xb3c37>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #5
+LEAK
+name=Error #5 (update to meaningful name)
+drmemorylib.dll!replace_RtlAllocateHeap
+OLEAUT32.dll!SysAllocString
+OLEAUT32.dll!SysAllocString
+SOS.exe!database::SQLConnection::initialize_and_establish_connection
+SOS.exe!database::SQLConnection::connect
+SOS.exe!std::_Get_size_of_n<>
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #5:
+LEAK
+name=Error #5 (update to meaningful name)
+<drmemorylib.dll+0x36330>
+<OLEAUT32.dll+0xb38e>
+<OLEAUT32.dll+0xb2be>
+<SOS.exe+0x797a9>
+<SOS.exe+0x7911d>
+<SOS.exe+0x714eb>
+<SOS.exe+0xb3c37>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #6
+LEAK
+name=Error #6 (update to meaningful name)
+drmemorylib.dll!replace_RtlAllocateHeap
+OLEAUT32.dll!SysAllocString
+OLEAUT32.dll!SysAllocString
+SOS.exe!database::SQLConnection::initialize_and_establish_connection
+SOS.exe!database::SQLConnection::connect
+SOS.exe!std::_Get_size_of_n<>
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #6:
+LEAK
+name=Error #6 (update to meaningful name)
+<drmemorylib.dll+0x36330>
+<OLEAUT32.dll+0xb38e>
+<OLEAUT32.dll+0xb2be>
+<SOS.exe+0x79818>
+<SOS.exe+0x7911d>
+<SOS.exe+0x714eb>
+<SOS.exe+0xb3c37>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #7
+POSSIBLE LEAK
+name=Error #7 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::StaticInit
+SOS.exe!`dynamic initializer for 'static_initializer''
+ucrtbased.dll!initterm
+KERNEL32.dll!BaseThreadInitThunk
+
+## Mod+offs-style suppression for Error #7:
+POSSIBLE LEAK
+name=Error #7 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x8855b>
+<SOS.exe+0x6b5a3>
+<ucrtbased.dll+0x74219>
+<KERNEL32.dll+0x17974>
+
+# Suppression for Error #8
+LEAK
+name=Error #8 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::_Container_base12::_Container_base12
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::_Vector_val<>::_Vector_val<>
+SOS.exe!std::_Allocate<>
+SOS.exe!std::_Vector_alloc<>::_Alloc_proxy
+SOS.exe!std::_Compressed_pair<>::_Compressed_pair<><>
+SOS.exe!std::_Unfancy<>
+SOS.exe!std::_Vector_alloc<>::_Vector_alloc<><>
+SOS.exe!std::_Tree_comp_alloc<>::_Alloc_proxy
+
+## Mod+offs-style suppression for Error #8:
+LEAK
+name=Error #8 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x7271b>
+<SOS.exe+0x74c81>
+<SOS.exe+0xddf84>
+<SOS.exe+0x71220>
+<SOS.exe+0xded92>
+<SOS.exe+0xe1e99>
+<SOS.exe+0x7197b>
+<SOS.exe+0xe1f02>
+<SOS.exe+0x8c7d7>
+
+# Suppression for Error #9
+LEAK
+name=Error #9 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::_Unfancy<>
+SOS.exe!std::vector<>::_Buy
+SOS.exe!std::_Tree_comp_alloc<>::_Alloc_proxy
+SOS.exe!std::forward<>
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::Type::Type
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::detail::init_types
+
+## Mod+offs-style suppression for Error #9:
+LEAK
+name=Error #9 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x97fd1>
+<SOS.exe+0x7197b>
+<SOS.exe+0xdeee7>
+<SOS.exe+0x8c7d7>
+<SOS.exe+0x864e3>
+<SOS.exe+0xe2e88>
+<SOS.exe+0xe32fb>
+<SOS.exe+0xe2f5e>
+<SOS.exe+0x116021>
+
+# Suppression for Error #10
+LEAK
+name=Error #10 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::_Container_base12::_Container_base12
+SOS.exe!std::allocator<>::allocator<><>
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::_Vector_val<>::_Vector_val<>
+SOS.exe!std::_Vector_alloc<>::_Alloc_proxy
+SOS.exe!std::_Compressed_pair<>::_Compressed_pair<><>
+SOS.exe!std::_Unfancy<>
+SOS.exe!std::_Vector_alloc<>::_Vector_alloc<><>
+SOS.exe!std::_Tree_comp_alloc<>::_Alloc_proxy
+
+## Mod+offs-style suppression for Error #10:
+LEAK
+name=Error #10 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x7271b>
+<SOS.exe+0xdc4c8>
+<SOS.exe+0x74c81>
+<SOS.exe+0xddf84>
+<SOS.exe+0xded92>
+<SOS.exe+0xe1e99>
+<SOS.exe+0x7197b>
+<SOS.exe+0xe1f02>
+<SOS.exe+0x8c7d7>
+
+# Suppression for Error #11
+LEAK
+name=Error #11 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::_Unfancy<>
+SOS.exe!std::vector<>::_Buy
+SOS.exe!std::_Tree_comp_alloc<>::_Alloc_proxy
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::Type::Type
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::detail::init_types
+SOS.exe!Push::detail::StaticInit::StaticInit
+
+## Mod+offs-style suppression for Error #11:
+LEAK
+name=Error #11 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x97fd1>
+<SOS.exe+0x7197b>
+<SOS.exe+0xdeee7>
+<SOS.exe+0x8c7d7>
+<SOS.exe+0xe2e88>
+<SOS.exe+0xe32fb>
+<SOS.exe+0xe2f5e>
+<SOS.exe+0x11605e>
+<SOS.exe+0x887d0>
+
+# Suppression for Error #12
+LEAK
+name=Error #12 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::_Unfancy<>
+SOS.exe!std::vector<>::_Buy
+SOS.exe!std::_Tree_comp_alloc<>::_Alloc_proxy
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::Type::Type
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::detail::init_types
+SOS.exe!Push::detail::StaticInit::StaticInit
+
+## Mod+offs-style suppression for Error #12:
+LEAK
+name=Error #12 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x97fd1>
+<SOS.exe+0x7197b>
+<SOS.exe+0xdeee7>
+<SOS.exe+0x8c7d7>
+<SOS.exe+0xe2e88>
+<SOS.exe+0xe32fb>
+<SOS.exe+0xe2f5e>
+<SOS.exe+0x11609e>
+<SOS.exe+0x887d0>
+
+# Suppression for Error #13
+LEAK
+name=Error #13 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::_Unfancy<>
+SOS.exe!std::vector<>::_Buy
+SOS.exe!std::_Tree_comp_alloc<>::_Alloc_proxy
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::Type::Type
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::detail::init_types
+SOS.exe!Push::detail::StaticInit::StaticInit
+
+## Mod+offs-style suppression for Error #13:
+LEAK
+name=Error #13 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x97fd1>
+<SOS.exe+0x7197b>
+<SOS.exe+0xdeee7>
+<SOS.exe+0x8c7d7>
+<SOS.exe+0xe2e88>
+<SOS.exe+0xe32fb>
+<SOS.exe+0xe2f5e>
+<SOS.exe+0x1160e1>
+<SOS.exe+0x887d0>
+
+# Suppression for Error #14
+LEAK
+name=Error #14 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::_Unfancy<>
+SOS.exe!std::vector<>::_Buy
+SOS.exe!std::_Tree_comp_alloc<>::_Alloc_proxy
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::Type::Type
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::detail::init_types
+SOS.exe!Push::detail::StaticInit::StaticInit
+
+## Mod+offs-style suppression for Error #14:
+LEAK
+name=Error #14 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x97fd1>
+<SOS.exe+0x7197b>
+<SOS.exe+0xdeee7>
+<SOS.exe+0x8c7d7>
+<SOS.exe+0xe2e88>
+<SOS.exe+0xe32fb>
+<SOS.exe+0xe2f5e>
+<SOS.exe+0x116124>
+<SOS.exe+0x887d0>
+
+# Suppression for Error #15
+LEAK
+name=Error #15 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::_Container_base12::_Container_base12
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::_Vector_val<>::_Vector_val<>
+SOS.exe!std::_Vector_alloc<>::_Alloc_proxy
+SOS.exe!std::_Compressed_pair<>::_Compressed_pair<><>
+SOS.exe!std::char_traits<>::copy
+SOS.exe!std::_String_alloc<>::_Alloc_proxy
+SOS.exe!std::_Vector_alloc<>::_Vector_alloc<><>
+SOS.exe!std::vector<>::vector<>
+
+## Mod+offs-style suppression for Error #15:
+LEAK
+name=Error #15 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x7271b>
+<SOS.exe+0x74c81>
+<SOS.exe+0xddf84>
+<SOS.exe+0xded92>
+<SOS.exe+0xdc519>
+<SOS.exe+0x7523f>
+<SOS.exe+0x73547>
+<SOS.exe+0xdc582>
+<SOS.exe+0xde0d2>
+
+# Suppression for Error #16
+LEAK
+name=Error #16 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::_String_val<>::_Bxty::_Bxty
+SOS.exe!std::allocator<>::allocator<><>
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::_String_val<>::_String_val<>
+SOS.exe!std::_Default_allocator_traits<>::construct<>
+SOS.exe!std::_String_alloc<>::_Alloc_proxy
+SOS.exe!std::_Compressed_pair<>::_Compressed_pair<><>
+SOS.exe!std::_String_alloc<>::_String_alloc<><>
+SOS.exe!std::basic_string<>::_Construct_lv_contents
+
+## Mod+offs-style suppression for Error #16:
+LEAK
+name=Error #16 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x726eb>
+<SOS.exe+0x71008>
+<SOS.exe+0x74c81>
+<SOS.exe+0x71fe4>
+<SOS.exe+0x71b75>
+<SOS.exe+0x734c2>
+<SOS.exe+0x71059>
+<SOS.exe+0x710cb>
+<SOS.exe+0x7395c>
+
+# Suppression for Error #17
+LEAK
+name=Error #17 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::_Container_base12::_Container_base12
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::_Vector_val<>::_Vector_val<>
+SOS.exe!std::_Vector_alloc<>::_Alloc_proxy
+SOS.exe!std::_Compressed_pair<>::_Compressed_pair<><>
+SOS.exe!std::char_traits<>::copy
+SOS.exe!std::_String_alloc<>::_Alloc_proxy
+SOS.exe!std::_Vector_alloc<>::_Vector_alloc<><>
+SOS.exe!std::_String_val<>::_String_val<>
+
+## Mod+offs-style suppression for Error #17:
+LEAK
+name=Error #17 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x7271b>
+<SOS.exe+0x74c81>
+<SOS.exe+0xddf84>
+<SOS.exe+0xded92>
+<SOS.exe+0xdc519>
+<SOS.exe+0x7523f>
+<SOS.exe+0x73547>
+<SOS.exe+0xdc582>
+<SOS.exe+0x71fe4>
+
+# Suppression for Error #18
+LEAK
+name=Error #18 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::_Container_base12::_Container_base12
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::_Vector_val<>::_Vector_val<>
+SOS.exe!std::_Vector_alloc<>::_Alloc_proxy
+SOS.exe!std::_Compressed_pair<>::_Compressed_pair<><>
+SOS.exe!std::char_traits<>::copy
+SOS.exe!std::_String_alloc<>::_Alloc_proxy
+SOS.exe!std::_Vector_alloc<>::_Vector_alloc<><>
+SOS.exe!std::basic_string<>::_Assign_rv_contents_with_alloc_always_equal
+
+## Mod+offs-style suppression for Error #18:
+LEAK
+name=Error #18 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x7271b>
+<SOS.exe+0x74c81>
+<SOS.exe+0xddf84>
+<SOS.exe+0xded92>
+<SOS.exe+0xdc519>
+<SOS.exe+0x7523f>
+<SOS.exe+0x73547>
+<SOS.exe+0xdc582>
+<SOS.exe+0x73684>
+
+# Suppression for Error #19
+LEAK
+name=Error #19 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::_Container_base12::_Container_base12
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::_Vector_val<>::_Vector_val<>
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Vector_alloc<>::_Alloc_proxy
+SOS.exe!std::_Compressed_pair<>::_Compressed_pair<><>
+SOS.exe!std::_Compressed_pair<>::_Get_second
+SOS.exe!std::_Vector_alloc<>::_Vector_alloc<>
+SOS.exe!std::_String_alloc<>::_Get_data
+
+## Mod+offs-style suppression for Error #19:
+LEAK
+name=Error #19 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x7271b>
+<SOS.exe+0x74c81>
+<SOS.exe+0x87fb4>
+<SOS.exe+0x735b4>
+<SOS.exe+0x8c992>
+<SOS.exe+0x80f84>
+<SOS.exe+0x916b3>
+<SOS.exe+0x87d64>
+<SOS.exe+0x73c00>
+
+# Suppression for Error #20
+POSSIBLE LEAK
+name=Error #20 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #20:
+POSSIBLE LEAK
+name=Error #20 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10cd0d>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #21
+LEAK
+name=Error #21 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::char_traits<>::copy
+SOS.exe!std::_String_alloc<>::_Alloc_proxy
+SOS.exe!std::vector<>::_Buy
+SOS.exe!std::_String_val<>::_String_val<>
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::CodeAtom::CodeAtom
+SOS.exe!Push::Type::Type
+SOS.exe!Push::Instruction::Instruction
+
+## Mod+offs-style suppression for Error #21:
+LEAK
+name=Error #21 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x97fd1>
+<SOS.exe+0x7523f>
+<SOS.exe+0x73547>
+<SOS.exe+0xdeee7>
+<SOS.exe+0x71fe4>
+<SOS.exe+0xde0ee>
+<SOS.exe+0xde1b8>
+<SOS.exe+0xde364>
+<SOS.exe+0xde25f>
+
+# Suppression for Error #22
+LEAK
+name=Error #22 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::_String_val<>::_Bxty::_Bxty
+SOS.exe!std::allocator<>::allocator<><>
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::_String_val<>::_String_val<>
+SOS.exe!std::_String_alloc<>::_Alloc_proxy
+SOS.exe!std::_String_alloc<>::_Alloc_proxy
+SOS.exe!std::_Compressed_pair<>::_Compressed_pair<><>
+SOS.exe!std::_String_alloc<>::_String_alloc<><>
+SOS.exe!std::basic_string<>::basic_string<>
+
+## Mod+offs-style suppression for Error #22:
+LEAK
+name=Error #22 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x726eb>
+<SOS.exe+0x71008>
+<SOS.exe+0x74c81>
+<SOS.exe+0x71fe4>
+<SOS.exe+0x73547>
+<SOS.exe+0x734c2>
+<SOS.exe+0x71059>
+<SOS.exe+0x710cb>
+<SOS.exe+0x72159>
+
+# Suppression for Error #23
+LEAK
+name=Error #23 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::char_traits<>::copy
+SOS.exe!std::_String_alloc<>::_Alloc_proxy
+SOS.exe!std::vector<>::_Buy
+SOS.exe!std::basic_string<>::_Assign_rv_contents_with_alloc_always_equal
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::CodeAtom::CodeAtom
+SOS.exe!Push::Type::Type
+SOS.exe!std::operator+<>
+
+## Mod+offs-style suppression for Error #23:
+LEAK
+name=Error #23 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x97fd1>
+<SOS.exe+0x7523f>
+<SOS.exe+0x73547>
+<SOS.exe+0xdeee7>
+<SOS.exe+0x73684>
+<SOS.exe+0xde0ee>
+<SOS.exe+0xde1b8>
+<SOS.exe+0xde364>
+<SOS.exe+0xfa094>
+
+# Suppression for Error #24
+POSSIBLE LEAK
+name=Error #24 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #24:
+POSSIBLE LEAK
+name=Error #24 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10d028>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #25
+POSSIBLE LEAK
+name=Error #25 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #25:
+POSSIBLE LEAK
+name=Error #25 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10c8a2>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #26
+POSSIBLE LEAK
+name=Error #26 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #26:
+POSSIBLE LEAK
+name=Error #26 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10bf39>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #27
+LEAK
+name=Error #27 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::_String_val<>::_Bxty::_Bxty
+SOS.exe!std::allocator<>::allocator<><>
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::_String_val<>::_String_val<>
+SOS.exe!std::_Allocate<>
+SOS.exe!std::_String_alloc<>::_Alloc_proxy
+SOS.exe!std::_Compressed_pair<>::_Compressed_pair<><>
+SOS.exe!std::_String_alloc<>::_String_alloc<><>
+SOS.exe!std::basic_string<>::_Construct_lv_contents
+
+## Mod+offs-style suppression for Error #27:
+LEAK
+name=Error #27 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x726eb>
+<SOS.exe+0x71008>
+<SOS.exe+0x74c81>
+<SOS.exe+0x71fe4>
+<SOS.exe+0x71220>
+<SOS.exe+0x734c2>
+<SOS.exe+0x71059>
+<SOS.exe+0x710cb>
+<SOS.exe+0x7395c>
+
+# Suppression for Error #28
+POSSIBLE LEAK
+name=Error #28 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #28:
+POSSIBLE LEAK
+name=Error #28 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10c799>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #29
+POSSIBLE LEAK
+name=Error #29 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initFloat
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #29:
+POSSIBLE LEAK
+name=Error #29 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xf8c48>
+<SOS.exe+0x115ef3>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #30
+POSSIBLE LEAK
+name=Error #30 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #30:
+POSSIBLE LEAK
+name=Error #30 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xebf00>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #31
+LEAK
+name=Error #31 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::char_traits<>::copy
+SOS.exe!std::_String_alloc<>::_Alloc_proxy
+SOS.exe!std::vector<>::_Buy
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::CodeAtom::CodeAtom
+SOS.exe!Push::Type::Type
+SOS.exe!Push::Instruction::Instruction
+SOS.exe!Push::make_instruction
+
+## Mod+offs-style suppression for Error #31:
+LEAK
+name=Error #31 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x97fd1>
+<SOS.exe+0x7523f>
+<SOS.exe+0x73547>
+<SOS.exe+0xdeee7>
+<SOS.exe+0xde0ee>
+<SOS.exe+0xde1b8>
+<SOS.exe+0xde364>
+<SOS.exe+0xde279>
+<SOS.exe+0xe1626>
+
+# Suppression for Error #32
+POSSIBLE LEAK
+name=Error #32 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #32:
+POSSIBLE LEAK
+name=Error #32 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10c32e>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #33
+POSSIBLE LEAK
+name=Error #33 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initFloat
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #33:
+POSSIBLE LEAK
+name=Error #33 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xf9635>
+<SOS.exe+0x115ef3>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #34
+POSSIBLE LEAK
+name=Error #34 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #34:
+POSSIBLE LEAK
+name=Error #34 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xeb38b>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #35
+POSSIBLE LEAK
+name=Error #35 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #35:
+POSSIBLE LEAK
+name=Error #35 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10b319>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #36
+POSSIBLE LEAK
+name=Error #36 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #36:
+POSSIBLE LEAK
+name=Error #36 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10d92d>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #37
+POSSIBLE LEAK
+name=Error #37 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #37:
+POSSIBLE LEAK
+name=Error #37 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10c11c>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #38
+POSSIBLE LEAK
+name=Error #38 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #38:
+POSSIBLE LEAK
+name=Error #38 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xeb857>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #39
+POSSIBLE LEAK
+name=Error #39 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initInt
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #39:
+POSSIBLE LEAK
+name=Error #39 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0x111e74>
+<SOS.exe+0x115eee>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #40
+POSSIBLE LEAK
+name=Error #40 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #40:
+POSSIBLE LEAK
+name=Error #40 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xeba01>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #41
+POSSIBLE LEAK
+name=Error #41 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::make_instruction
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::initExec
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #41:
+POSSIBLE LEAK
+name=Error #41 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xed061>
+<SOS.exe+0xde14e>
+<SOS.exe+0xf6d31>
+<SOS.exe+0x115ee9>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #42
+LEAK
+name=Error #42 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::_Container_base12::_Container_base12
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::_Vector_val<>::_Vector_val<>
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Vector_alloc<>::_Alloc_proxy
+SOS.exe!std::_Compressed_pair<>::_Compressed_pair<><>
+SOS.exe!std::_Compressed_pair<>::_Get_second
+SOS.exe!std::_Vector_alloc<>::_Vector_alloc<>
+SOS.exe!std::_Default_allocate_traits::_Allocate
+
+## Mod+offs-style suppression for Error #42:
+LEAK
+name=Error #42 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x7271b>
+<SOS.exe+0x74c81>
+<SOS.exe+0x87fb4>
+<SOS.exe+0x735b4>
+<SOS.exe+0x8c992>
+<SOS.exe+0x80f84>
+<SOS.exe+0x916b3>
+<SOS.exe+0x87d64>
+<SOS.exe+0x735b4>
+
+# Suppression for Error #43
+POSSIBLE LEAK
+name=Error #43 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::make_instruction
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::initExec
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #43:
+POSSIBLE LEAK
+name=Error #43 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xed061>
+<SOS.exe+0xde14e>
+<SOS.exe+0xf6dd7>
+<SOS.exe+0x115ee9>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #44
+POSSIBLE LEAK
+name=Error #44 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!std::_Compressed_pair<>::_Get_second
+SOS.exe!Push::make_instruction
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::initExec
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #44:
+POSSIBLE LEAK
+name=Error #44 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0x916b3>
+<SOS.exe+0xed061>
+<SOS.exe+0xde14e>
+<SOS.exe+0xf6e76>
+<SOS.exe+0x115ee9>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #45
+POSSIBLE LEAK
+name=Error #45 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #45:
+POSSIBLE LEAK
+name=Error #45 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xeb92c>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #46
+POSSIBLE LEAK
+name=Error #46 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initFloat
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #46:
+POSSIBLE LEAK
+name=Error #46 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xf9560>
+<SOS.exe+0x115ef3>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #47
+POSSIBLE LEAK
+name=Error #47 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #47:
+POSSIBLE LEAK
+name=Error #47 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10dc19>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #48
+LEAK
+name=Error #48 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::char_traits<>::copy
+SOS.exe!std::_String_alloc<>::_Alloc_proxy
+SOS.exe!std::vector<>::_Buy
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::CodeAtom::CodeAtom
+SOS.exe!Push::Type::Type
+SOS.exe!std::operator+<>
+SOS.exe!Push::Instruction::Instruction
+
+## Mod+offs-style suppression for Error #48:
+LEAK
+name=Error #48 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x97fd1>
+<SOS.exe+0x7523f>
+<SOS.exe+0x73547>
+<SOS.exe+0xdeee7>
+<SOS.exe+0xde0ee>
+<SOS.exe+0xde1b8>
+<SOS.exe+0xde364>
+<SOS.exe+0xfa094>
+<SOS.exe+0xde279>
+
+# Suppression for Error #49
+POSSIBLE LEAK
+name=Error #49 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #49:
+POSSIBLE LEAK
+name=Error #49 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10e296>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #50
+LEAK
+name=Error #50 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::_Container_base12::_Container_base12
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::_Vector_val<>::_Vector_val<>
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Vector_alloc<>::_Alloc_proxy
+SOS.exe!std::_Compressed_pair<>::_Compressed_pair<><>
+SOS.exe!std::_Compressed_pair<>::_Get_second
+SOS.exe!std::_Vector_alloc<>::_Vector_alloc<>
+SOS.exe!std::char_traits<>::assign
+
+## Mod+offs-style suppression for Error #50:
+LEAK
+name=Error #50 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x7271b>
+<SOS.exe+0x74c81>
+<SOS.exe+0x87fb4>
+<SOS.exe+0x735b4>
+<SOS.exe+0x8c992>
+<SOS.exe+0x80f84>
+<SOS.exe+0x73df3>
+<SOS.exe+0x87d64>
+<SOS.exe+0x74e98>
+
+# Suppression for Error #51
+POSSIBLE LEAK
+name=Error #51 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initFloat
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #51:
+POSSIBLE LEAK
+name=Error #51 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xf8aa4>
+<SOS.exe+0x115ef3>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #52
+POSSIBLE LEAK
+name=Error #52 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initBool
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #52:
+POSSIBLE LEAK
+name=Error #52 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xe0ceb>
+<SOS.exe+0x115ef8>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #53
+LEAK
+name=Error #53 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::_Container_base12::_Container_base12
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::_Vector_val<>::_Vector_val<>
+SOS.exe!std::_Unfancy<>
+SOS.exe!std::_Vector_alloc<>::_Alloc_proxy
+SOS.exe!std::_Compressed_pair<>::_Compressed_pair<><>
+SOS.exe!std::char_traits<>::copy
+SOS.exe!std::_Vector_alloc<>::_Vector_alloc<><>
+SOS.exe!std::_Min_value<>
+
+## Mod+offs-style suppression for Error #53:
+LEAK
+name=Error #53 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x7271b>
+<SOS.exe+0x74c81>
+<SOS.exe+0xddf84>
+<SOS.exe+0x7194b>
+<SOS.exe+0xded92>
+<SOS.exe+0xdc519>
+<SOS.exe+0x7523f>
+<SOS.exe+0xdc582>
+<SOS.exe+0x7162b>
+
+# Suppression for Error #54
+POSSIBLE LEAK
+name=Error #54 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #54:
+POSSIBLE LEAK
+name=Error #54 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10c690>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #55
+POSSIBLE LEAK
+name=Error #55 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initInt
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #55:
+POSSIBLE LEAK
+name=Error #55 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0x111f46>
+<SOS.exe+0x115eee>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #56
+POSSIBLE LEAK
+name=Error #56 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #56:
+POSSIBLE LEAK
+name=Error #56 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xeb2b6>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #57
+POSSIBLE LEAK
+name=Error #57 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initInt
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #57:
+POSSIBLE LEAK
+name=Error #57 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0x112018>
+<SOS.exe+0x115eee>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #58
+LEAK
+name=Error #58 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::basic_string<>::max_size
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::basic_string<>::_Construct_lv_contents
+SOS.exe!std::basic_string<>::basic_string<>
+SOS.exe!Push::Instruction::Instruction
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initFloat
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+
+## Mod+offs-style suppression for Error #58:
+LEAK
+name=Error #58 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x7626e>
+<SOS.exe+0x74c31>
+<SOS.exe+0x738e4>
+<SOS.exe+0x72167>
+<SOS.exe+0xde24a>
+<SOS.exe+0xe1626>
+<SOS.exe+0xf8d1d>
+<SOS.exe+0x115ef3>
+<SOS.exe+0x115fc6>
+
+# Suppression for Error #59
+LEAK
+name=Error #59 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::char_traits<>::copy
+SOS.exe!std::vector<>::_Buy
+SOS.exe!std::_Min_value<>
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::CodeAtom::CodeAtom
+SOS.exe!Push::Type::Type
+SOS.exe!Push::Instruction::Instruction
+SOS.exe!Push::make_instruction
+
+## Mod+offs-style suppression for Error #59:
+LEAK
+name=Error #59 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x97fd1>
+<SOS.exe+0x7523f>
+<SOS.exe+0xdeee7>
+<SOS.exe+0x7162b>
+<SOS.exe+0xde0ee>
+<SOS.exe+0xde1b8>
+<SOS.exe+0xde364>
+<SOS.exe+0xde25f>
+<SOS.exe+0xe1626>
+
+# Suppression for Error #60
+LEAK
+name=Error #60 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::_Container_base12::_Container_base12
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::_Vector_val<>::_Vector_val<>
+SOS.exe!std::_Vector_alloc<>::_Alloc_proxy
+SOS.exe!std::_Compressed_pair<>::_Compressed_pair<><>
+SOS.exe!std::char_traits<>::copy
+SOS.exe!std::_Vector_alloc<>::_Vector_alloc<><>
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::CodeAtom::CodeAtom
+
+## Mod+offs-style suppression for Error #60:
+LEAK
+name=Error #60 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x7271b>
+<SOS.exe+0x74c81>
+<SOS.exe+0xddf84>
+<SOS.exe+0xded92>
+<SOS.exe+0xdc519>
+<SOS.exe+0x7523f>
+<SOS.exe+0xdc582>
+<SOS.exe+0xde0d2>
+<SOS.exe+0xde1b8>
+
+# Suppression for Error #61
+LEAK
+name=Error #61 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::char_traits<>::copy
+SOS.exe!std::vector<>::_Buy
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::CodeAtom::CodeAtom
+SOS.exe!Push::Type::Type
+SOS.exe!Push::Instruction::Instruction
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initFloat
+
+## Mod+offs-style suppression for Error #61:
+LEAK
+name=Error #61 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x97fd1>
+<SOS.exe+0x7523f>
+<SOS.exe+0xdeee7>
+<SOS.exe+0xde0ee>
+<SOS.exe+0xde1b8>
+<SOS.exe+0xde364>
+<SOS.exe+0xde279>
+<SOS.exe+0xe1626>
+<SOS.exe+0xf8d1d>
+
+# Suppression for Error #62
+POSSIBLE LEAK
+name=Error #62 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initFloat
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #62:
+POSSIBLE LEAK
+name=Error #62 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xf8d1d>
+<SOS.exe+0x115ef3>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #63
+POSSIBLE LEAK
+name=Error #63 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #63:
+POSSIBLE LEAK
+name=Error #63 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10d2b0>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #64
+POSSIBLE LEAK
+name=Error #64 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initFloat
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #64:
+POSSIBLE LEAK
+name=Error #64 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xf89d2>
+<SOS.exe+0x115ef3>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #65
+LEAK
+name=Error #65 (update to meaningful name)
+drmemorylib.dll!replace_operator_new_array
+SOS.exe!database::SQLCommand::myCreateDBBindings
+SOS.exe!database::SQLCommand::execute
+SOS.exe!std::_String_alloc<>::_Myproxy
+SOS.exe!std::char_traits<>::copy
+SOS.exe!domain::learn_from_examples::load_example_cases
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #65:
+LEAK
+name=Error #65 (update to meaningful name)
+<drmemorylib.dll+0x395e0>
+<SOS.exe+0x76526>
+<SOS.exe+0x75967>
+<SOS.exe+0x740fd>
+<SOS.exe+0x7523f>
+<SOS.exe+0xb0ae9>
+<SOS.exe+0xb3c6a>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #66
+POSSIBLE LEAK
+name=Error #66 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #66:
+POSSIBLE LEAK
+name=Error #66 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xebc7d>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #67
+POSSIBLE LEAK
+name=Error #67 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #67:
+POSSIBLE LEAK
+name=Error #67 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10ee87>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #68
+POSSIBLE LEAK
+name=Error #68 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #68:
+POSSIBLE LEAK
+name=Error #68 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xebba8>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #69
+POSSIBLE LEAK
+name=Error #69 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #69:
+POSSIBLE LEAK
+name=Error #69 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xebad3>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #70
+POSSIBLE LEAK
+name=Error #70 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #70:
+POSSIBLE LEAK
+name=Error #70 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10b422>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #71
+POSSIBLE LEAK
+name=Error #71 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #71:
+POSSIBLE LEAK
+name=Error #71 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xeb782>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #72
+POSSIBLE LEAK
+name=Error #72 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #72:
+POSSIBLE LEAK
+name=Error #72 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xebfd9>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #73
+POSSIBLE LEAK
+name=Error #73 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #73:
+POSSIBLE LEAK
+name=Error #73 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10ed7e>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #74
+POSSIBLE LEAK
+name=Error #74 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #74:
+POSSIBLE LEAK
+name=Error #74 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10eca4>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #75
+POSSIBLE LEAK
+name=Error #75 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #75:
+POSSIBLE LEAK
+name=Error #75 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10c5b6>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #76
+POSSIBLE LEAK
+name=Error #76 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #76:
+POSSIBLE LEAK
+name=Error #76 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10ce16>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #77
+POSSIBLE LEAK
+name=Error #77 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #77:
+POSSIBLE LEAK
+name=Error #77 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10e18d>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #78
+POSSIBLE LEAK
+name=Error #78 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #78:
+POSSIBLE LEAK
+name=Error #78 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10bba8>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #79
+POSSIBLE LEAK
+name=Error #79 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #79:
+POSSIBLE LEAK
+name=Error #79 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xec25c>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #80
+POSSIBLE LEAK
+name=Error #80 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #80:
+POSSIBLE LEAK
+name=Error #80 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10b52b>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #81
+POSSIBLE LEAK
+name=Error #81 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!std::_Compressed_pair<>::_Get_second
+SOS.exe!Push::make_instruction
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::initExec
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #81:
+POSSIBLE LEAK
+name=Error #81 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0x916b3>
+<SOS.exe+0xed061>
+<SOS.exe+0xde14e>
+<SOS.exe+0xf6a21>
+<SOS.exe+0x115ee9>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #82
+POSSIBLE LEAK
+name=Error #82 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #82:
+POSSIBLE LEAK
+name=Error #82 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10e80a>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #83
+POSSIBLE LEAK
+name=Error #83 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #83:
+POSSIBLE LEAK
+name=Error #83 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xec6da>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #84
+POSSIBLE LEAK
+name=Error #84 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #84:
+POSSIBLE LEAK
+name=Error #84 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10d38a>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #85
+POSSIBLE LEAK
+name=Error #85 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #85:
+POSSIBLE LEAK
+name=Error #85 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10ea1c>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #86
+POSSIBLE LEAK
+name=Error #86 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #86:
+POSSIBLE LEAK
+name=Error #86 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10bcb1>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #87
+POSSIBLE LEAK
+name=Error #87 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #87:
+POSSIBLE LEAK
+name=Error #87 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10b8bc>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #88
+LEAK
+name=Error #88 (update to meaningful name)
+drmemorylib.dll!replace_operator_new_array
+SOS.exe!database::SQLCommand::myCreateDBBindings
+SOS.exe!database::SQLCommand::execute
+SOS.exe!std::_String_alloc<>::_Myproxy
+SOS.exe!std::char_traits<>::copy
+SOS.exe!domain::learn_from_examples::get_last_saved_generation_number
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #88:
+LEAK
+name=Error #88 (update to meaningful name)
+<drmemorylib.dll+0x395e0>
+<SOS.exe+0x76526>
+<SOS.exe+0x75967>
+<SOS.exe+0x740fd>
+<SOS.exe+0x7523f>
+<SOS.exe+0xb087b>
+<SOS.exe+0xb3cc8>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #89
+POSSIBLE LEAK
+name=Error #89 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #89:
+POSSIBLE LEAK
+name=Error #89 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xec40d>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #90
+POSSIBLE LEAK
+name=Error #90 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #90:
+POSSIBLE LEAK
+name=Error #90 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xec338>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #91
+POSSIBLE LEAK
+name=Error #91 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #91:
+POSSIBLE LEAK
+name=Error #91 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10dd22>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #92
+POSSIBLE LEAK
+name=Error #92 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #92:
+POSSIBLE LEAK
+name=Error #92 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10ba9f>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #93
+POSSIBLE LEAK
+name=Error #93 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initInt
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #93:
+POSSIBLE LEAK
+name=Error #93 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0x1120ea>
+<SOS.exe+0x115eee>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #94
+POSSIBLE LEAK
+name=Error #94 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #94:
+POSSIBLE LEAK
+name=Error #94 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10cc33>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #95
+LEAK
+name=Error #95 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::char_traits<>::copy
+SOS.exe!std::_String_alloc<>::_Alloc_proxy
+SOS.exe!std::vector<>::_Buy
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::CodeAtom::CodeAtom
+SOS.exe!Push::Type::Type
+SOS.exe!Push::Instruction::Instruction
+SOS.exe!std::vector<>::vector<>
+
+## Mod+offs-style suppression for Error #95:
+LEAK
+name=Error #95 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x97fd1>
+<SOS.exe+0x7523f>
+<SOS.exe+0x73547>
+<SOS.exe+0xdeee7>
+<SOS.exe+0xde0ee>
+<SOS.exe+0xde1b8>
+<SOS.exe+0xde364>
+<SOS.exe+0xde279>
+<SOS.exe+0xde14e>
+
+# Suppression for Error #96
+POSSIBLE LEAK
+name=Error #96 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #96:
+POSSIBLE LEAK
+name=Error #96 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10b634>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #97
+POSSIBLE LEAK
+name=Error #97 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initFloat
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #97:
+POSSIBLE LEAK
+name=Error #97 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xf8df2>
+<SOS.exe+0x115ef3>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #98
+POSSIBLE LEAK
+name=Error #98 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::make_instruction
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::initExec
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #98:
+POSSIBLE LEAK
+name=Error #98 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xed061>
+<SOS.exe+0xde14e>
+<SOS.exe+0xf6f1c>
+<SOS.exe+0x115ee9>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #99
+POSSIBLE LEAK
+name=Error #99 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #99:
+POSSIBLE LEAK
+name=Error #99 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xec7b6>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #100
+POSSIBLE LEAK
+name=Error #100 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #100:
+POSSIBLE LEAK
+name=Error #100 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10b23f>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #101
+POSSIBLE LEAK
+name=Error #101 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #101:
+POSSIBLE LEAK
+name=Error #101 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10c225>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #102
+POSSIBLE LEAK
+name=Error #102 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #102:
+POSSIBLE LEAK
+name=Error #102 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10c013>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #103
+POSSIBLE LEAK
+name=Error #103 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initFloat
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #103:
+POSSIBLE LEAK
+name=Error #103 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xf8b76>
+<SOS.exe+0x115ef3>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #104
+POSSIBLE LEAK
+name=Error #104 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initInt
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #104:
+POSSIBLE LEAK
+name=Error #104 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0x111bf8>
+<SOS.exe+0x115eee>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #105
+POSSIBLE LEAK
+name=Error #105 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initFloat
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #105:
+POSSIBLE LEAK
+name=Error #105 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xf920c>
+<SOS.exe+0x115ef3>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #106
+POSSIBLE LEAK
+name=Error #106 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initInt
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #106:
+POSSIBLE LEAK
+name=Error #106 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0x1121bc>
+<SOS.exe+0x115eee>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #107
+POSSIBLE LEAK
+name=Error #107 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::make_instruction
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::initExec
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #107:
+POSSIBLE LEAK
+name=Error #107 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xed061>
+<SOS.exe+0xde14e>
+<SOS.exe+0xf6961>
+<SOS.exe+0x115ee9>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #108
+POSSIBLE LEAK
+name=Error #108 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #108:
+POSSIBLE LEAK
+name=Error #108 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10dfaa>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #109
+POSSIBLE LEAK
+name=Error #109 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initFloat
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #109:
+POSSIBLE LEAK
+name=Error #109 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xf913a>
+<SOS.exe+0x115ef3>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #110
+POSSIBLE LEAK
+name=Error #110 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #110:
+POSSIBLE LEAK
+name=Error #110 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10d6a5>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #111
+POSSIBLE LEAK
+name=Error #111 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initFloat
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #111:
+POSSIBLE LEAK
+name=Error #111 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xf8f96>
+<SOS.exe+0x115ef3>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #112
+POSSIBLE LEAK
+name=Error #112 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #112:
+POSSIBLE LEAK
+name=Error #112 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10e39f>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #113
+LEAK
+name=Error #113 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::char_traits<>::copy
+SOS.exe!std::_String_alloc<>::_Alloc_proxy
+SOS.exe!std::vector<>::_Buy
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::CodeAtom::CodeAtom
+SOS.exe!Push::Type::Type
+SOS.exe!Push::Instruction::Instruction
+SOS.exe!std::_Deallocate_plain<>
+
+## Mod+offs-style suppression for Error #113:
+LEAK
+name=Error #113 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x97fd1>
+<SOS.exe+0x7523f>
+<SOS.exe+0x73547>
+<SOS.exe+0xdeee7>
+<SOS.exe+0xde0ee>
+<SOS.exe+0xde1b8>
+<SOS.exe+0xde364>
+<SOS.exe+0xde279>
+<SOS.exe+0x71483>
+
+# Suppression for Error #114
+POSSIBLE LEAK
+name=Error #114 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initFloat
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #114:
+POSSIBLE LEAK
+name=Error #114 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xf8ec4>
+<SOS.exe+0x115ef3>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #115
+LEAK
+name=Error #115 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::basic_string<>::max_size
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::basic_string<>::_Construct_lv_contents
+SOS.exe!std::basic_string<>::basic_string<>
+SOS.exe!Push::Instruction::Instruction
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initInt
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+
+## Mod+offs-style suppression for Error #115:
+LEAK
+name=Error #115 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x7626e>
+<SOS.exe+0x74c31>
+<SOS.exe+0x738e4>
+<SOS.exe+0x72167>
+<SOS.exe+0xde24a>
+<SOS.exe+0xe1626>
+<SOS.exe+0x111da2>
+<SOS.exe+0x115eee>
+<SOS.exe+0x115fc6>
+
+# Suppression for Error #116
+LEAK
+name=Error #116 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::char_traits<>::copy
+SOS.exe!std::vector<>::_Buy
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::CodeAtom::CodeAtom
+SOS.exe!Push::Type::Type
+SOS.exe!Push::Instruction::Instruction
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initInt
+
+## Mod+offs-style suppression for Error #116:
+LEAK
+name=Error #116 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x97fd1>
+<SOS.exe+0x7523f>
+<SOS.exe+0xdeee7>
+<SOS.exe+0xde0ee>
+<SOS.exe+0xde1b8>
+<SOS.exe+0xde364>
+<SOS.exe+0xde279>
+<SOS.exe+0xe1626>
+<SOS.exe+0x111da2>
+
+# Suppression for Error #117
+POSSIBLE LEAK
+name=Error #117 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #117:
+POSSIBLE LEAK
+name=Error #117 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10d59c>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #118
+POSSIBLE LEAK
+name=Error #118 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #118:
+POSSIBLE LEAK
+name=Error #118 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10db10>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #119
+POSSIBLE LEAK
+name=Error #119 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::make_instruction
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::initExec
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #119:
+POSSIBLE LEAK
+name=Error #119 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xed061>
+<SOS.exe+0xde14e>
+<SOS.exe+0xf6af6>
+<SOS.exe+0x115ee9>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #120
+POSSIBLE LEAK
+name=Error #120 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #120:
+POSSIBLE LEAK
+name=Error #120 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10e084>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #121
+POSSIBLE LEAK
+name=Error #121 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::make_instruction
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::initExec
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #121:
+POSSIBLE LEAK
+name=Error #121 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xed061>
+<SOS.exe+0xde14e>
+<SOS.exe+0xf6c8b>
+<SOS.exe+0x115ee9>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #122
+POSSIBLE LEAK
+name=Error #122 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initInt
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #122:
+POSSIBLE LEAK
+name=Error #122 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0x111982>
+<SOS.exe+0x115eee>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #123
+POSSIBLE LEAK
+name=Error #123 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initFloat
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #123:
+POSSIBLE LEAK
+name=Error #123 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xf92e1>
+<SOS.exe+0x115ef3>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #124
+POSSIBLE LEAK
+name=Error #124 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initFloat
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #124:
+POSSIBLE LEAK
+name=Error #124 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xf9068>
+<SOS.exe+0x115ef3>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #125
+POSSIBLE LEAK
+name=Error #125 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #125:
+POSSIBLE LEAK
+name=Error #125 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xeb6ad>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #126
+LEAK
+name=Error #126 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::char_traits<>::copy
+SOS.exe!std::vector<>::_Buy
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::CodeAtom::CodeAtom
+SOS.exe!Push::Type::Type
+SOS.exe!Push::Instruction::Instruction
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+
+## Mod+offs-style suppression for Error #126:
+LEAK
+name=Error #126 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x97fd1>
+<SOS.exe+0x7523f>
+<SOS.exe+0xdeee7>
+<SOS.exe+0xde0ee>
+<SOS.exe+0xde1b8>
+<SOS.exe+0xde364>
+<SOS.exe+0xde279>
+<SOS.exe+0xe1626>
+<SOS.exe+0xeb782>
+
+# Suppression for Error #127
+POSSIBLE LEAK
+name=Error #127 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!std::_Compressed_pair<>::_Get_second
+SOS.exe!Push::make_instruction
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #127:
+POSSIBLE LEAK
+name=Error #127 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0x916b3>
+<SOS.exe+0xed061>
+<SOS.exe+0xde14e>
+<SOS.exe+0xeb42a>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #128
+POSSIBLE LEAK
+name=Error #128 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #128:
+POSSIBLE LEAK
+name=Error #128 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10da07>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #129
+POSSIBLE LEAK
+name=Error #129 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initFloat
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #129:
+POSSIBLE LEAK
+name=Error #129 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xf948b>
+<SOS.exe+0x115ef3>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #130
+POSSIBLE LEAK
+name=Error #130 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #130:
+POSSIBLE LEAK
+name=Error #130 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xec0ab>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #131
+POSSIBLE LEAK
+name=Error #131 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #131:
+POSSIBLE LEAK
+name=Error #131 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xec4df>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #132
+POSSIBLE LEAK
+name=Error #132 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #132:
+POSSIBLE LEAK
+name=Error #132 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10c9ab>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #133
+POSSIBLE LEAK
+name=Error #133 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #133:
+POSSIBLE LEAK
+name=Error #133 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xeb1e1>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #134
+POSSIBLE LEAK
+name=Error #134 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initBool
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #134:
+POSSIBLE LEAK
+name=Error #134 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xe0c19>
+<SOS.exe+0x115ef8>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #135
+POSSIBLE LEAK
+name=Error #135 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #135:
+POSSIBLE LEAK
+name=Error #135 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xebe24>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #136
+POSSIBLE LEAK
+name=Error #136 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #136:
+POSSIBLE LEAK
+name=Error #136 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10f099>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #137
+POSSIBLE LEAK
+name=Error #137 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::make_instruction
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::initExec
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #137:
+POSSIBLE LEAK
+name=Error #137 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xed061>
+<SOS.exe+0xde14e>
+<SOS.exe+0xf6bd8>
+<SOS.exe+0x115ee9>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #138
+POSSIBLE LEAK
+name=Error #138 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #138:
+POSSIBLE LEAK
+name=Error #138 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xec180>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #139
+POSSIBLE LEAK
+name=Error #139 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #139:
+POSSIBLE LEAK
+name=Error #139 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10b996>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #140
+POSSIBLE LEAK
+name=Error #140 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #140:
+POSSIBLE LEAK
+name=Error #140 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xeb10f>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #141
+POSSIBLE LEAK
+name=Error #141 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #141:
+POSSIBLE LEAK
+name=Error #141 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10e701>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #142
+POSSIBLE LEAK
+name=Error #142 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initInt
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #142:
+POSSIBLE LEAK
+name=Error #142 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0x111da2>
+<SOS.exe+0x115eee>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #143
+POSSIBLE LEAK
+name=Error #143 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #143:
+POSSIBLE LEAK
+name=Error #143 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xec5f1>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #144
+POSSIBLE LEAK
+name=Error #144 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initFloat
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #144:
+POSSIBLE LEAK
+name=Error #144 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xf93b6>
+<SOS.exe+0x115ef3>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #145
+POSSIBLE LEAK
+name=Error #145 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #145:
+POSSIBLE LEAK
+name=Error #145 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10cf1f>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #146
+POSSIBLE LEAK
+name=Error #146 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #146:
+POSSIBLE LEAK
+name=Error #146 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10e913>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #147
+POSSIBLE LEAK
+name=Error #147 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initInt
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #147:
+POSSIBLE LEAK
+name=Error #147 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0x111ccd>
+<SOS.exe+0x115eee>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #148
+POSSIBLE LEAK
+name=Error #148 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #148:
+POSSIBLE LEAK
+name=Error #148 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10d493>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #149
+POSSIBLE LEAK
+name=Error #149 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #149:
+POSSIBLE LEAK
+name=Error #149 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xebd52>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #150
+LEAK
+name=Error #150 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!std::_Default_allocate_traits::_Allocate
+SOS.exe!std::_Allocate<>
+SOS.exe!std::basic_string<>::max_size
+SOS.exe!std::allocator<>::allocate
+SOS.exe!std::basic_string<>::_Construct_lv_contents
+SOS.exe!std::basic_string<>::basic_string<>
+SOS.exe!Push::Instruction::Instruction
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+
+## Mod+offs-style suppression for Error #150:
+LEAK
+name=Error #150 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x735b4>
+<SOS.exe+0x71220>
+<SOS.exe+0x7626e>
+<SOS.exe+0x74c31>
+<SOS.exe+0x738e4>
+<SOS.exe+0x72167>
+<SOS.exe+0xde24a>
+<SOS.exe+0xe1626>
+<SOS.exe+0xeb782>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+
+# Suppression for Error #151
+POSSIBLE LEAK
+name=Error #151 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initBool
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #151:
+POSSIBLE LEAK
+name=Error #151 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xe0a72>
+<SOS.exe+0x115ef8>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #152
+POSSIBLE LEAK
+name=Error #152 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initBool
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #152:
+POSSIBLE LEAK
+name=Error #152 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xe0b44>
+<SOS.exe+0x115ef8>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #153
+POSSIBLE LEAK
+name=Error #153 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #153:
+POSSIBLE LEAK
+name=Error #153 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xeb5d8>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #154
+POSSIBLE LEAK
+name=Error #154 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initCode
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #154:
+POSSIBLE LEAK
+name=Error #154 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xeb503>
+<SOS.exe+0x115ee4>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #155
+POSSIBLE LEAK
+name=Error #155 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::make_instruction
+SOS.exe!std::vector<>::vector<>
+SOS.exe!Push::initExec
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #155:
+POSSIBLE LEAK
+name=Error #155 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xed061>
+<SOS.exe+0xde14e>
+<SOS.exe+0xf6856>
+<SOS.exe+0x115ee9>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #156
+POSSIBLE LEAK
+name=Error #156 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initInt
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #156:
+POSSIBLE LEAK
+name=Error #156 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0x111b26>
+<SOS.exe+0x115eee>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #157
+POSSIBLE LEAK
+name=Error #157 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initInt
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #157:
+POSSIBLE LEAK
+name=Error #157 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0x111a54>
+<SOS.exe+0x115eee>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #158
+POSSIBLE LEAK
+name=Error #158 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initBool
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #158:
+POSSIBLE LEAK
+name=Error #158 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xe0dbd>
+<SOS.exe+0x115ef8>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #159
+POSSIBLE LEAK
+name=Error #159 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initBool
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #159:
+POSSIBLE LEAK
+name=Error #159 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0xe1673>
+<SOS.exe+0xe0e92>
+<SOS.exe+0x115ef8>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #160
+POSSIBLE LEAK
+name=Error #160 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #160:
+POSSIBLE LEAK
+name=Error #160 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10e627>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #161
+LEAK
+name=Error #161 (update to meaningful name)
+drmemorylib.dll!replace_operator_new_array
+SOS.exe!database::SQLCommand::myCreateDBBindings
+SOS.exe!database::SQLCommand::execute
+SOS.exe!std::_String_alloc<>::_Myproxy
+SOS.exe!std::char_traits<>::copy
+SOS.exe!domain::learn_from_examples::load_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #161:
+LEAK
+name=Error #161 (update to meaningful name)
+<drmemorylib.dll+0x395e0>
+<SOS.exe+0x76526>
+<SOS.exe+0x75967>
+<SOS.exe+0x740fd>
+<SOS.exe+0x7523f>
+<SOS.exe+0xb1a2b>
+<SOS.exe+0xb3cde>
+<SOS.exe+0xb622d>
+
+# Suppression for Error #162
+POSSIBLE LEAK
+name=Error #162 (update to meaningful name)
+drmemorylib.dll!replace_operator_new
+SOS.exe!Push::detail::StaticInit::register_pushfunc
+SOS.exe!Push::make_instruction
+SOS.exe!Push::initGenerics
+SOS.exe!Push::init_push
+SOS.exe!Push::init_push
+SOS.exe!domain::learn_from_examples::make_pop_agents
+SOS.exe!domain::learn_from_examples::run
+SOS.exe!main
+
+## Mod+offs-style suppression for Error #162:
+POSSIBLE LEAK
+name=Error #162 (update to meaningful name)
+<drmemorylib.dll+0x39500>
+<SOS.exe+0x116708>
+<SOS.exe+0x1109a1>
+<SOS.exe+0x10ef90>
+<SOS.exe+0x115edf>
+<SOS.exe+0x115fc6>
+<SOS.exe+0xb229b>
+<SOS.exe+0xb3cef>
+<SOS.exe+0xb622d>
+

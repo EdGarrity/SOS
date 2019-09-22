@@ -103,7 +103,7 @@ namespace Push
 		
 		
 		//return static_initializer.register_pushfunc(Code(new Instruction(op, type + "." + name, in, out, static_)));
-		Instruction* ins = new Instruction(op, type + "." + name, in, out, parentheses);
+		Instruction* ins = new Instruction(op, type + "." + name, in, out, parentheses); // Potential Memory Leak
 		Code code1 = Code(ins);
 		Code code2 = static_initializer.register_pushfunc(code1);
 		return code2;

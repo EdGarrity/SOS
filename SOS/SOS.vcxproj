@@ -161,16 +161,19 @@
     <ClInclude Include="Database\SQLField.h" />
     <ClInclude Include="Domain\Arguments.h" />
     <ClInclude Include="Domain\Learn From Examples\Arguments.h" />
-    <ClInclude Include="Domain\Learn From Examples\AsyncErrorFunction.LearnFromExample.h" />
     <ClInclude Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.h" />
     <ClInclude Include="Domain\Learn From Examples\Run.LearnFromExamples.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Plush\Atom.h" />
+    <ClInclude Include="Plush\Genome.h" />
+    <ClInclude Include="PushGP\AsyncBreed.h" />
     <ClInclude Include="PushGP\Breed.h" />
     <ClInclude Include="PushGP\GeneticOperators.h" />
     <ClInclude Include="PushGP\Globals.h" />
     <ClInclude Include="PushGP\Individual.h" />
     <ClInclude Include="PushGP\Random.h" />
     <ClInclude Include="PushGP\Selection.h" />
+    <ClInclude Include="PushGP\Utilities.h" />
     <ClInclude Include="PushP\BoolOps.h" />
     <ClInclude Include="PushP\Code.h" />
     <ClInclude Include="PushP\CodeBasePtr.h" />
@@ -198,7 +201,6 @@
     <ClCompile Include="Database\SQLCommand.cpp" />
     <ClCompile Include="Database\SQLConnection.cpp" />
     <ClCompile Include="Database\SQLField.cpp" />
-    <ClCompile Include="Domain\Learn From Examples\AsyncErrorFunction.LearnFromExample.cpp" />
     <ClCompile Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.cpp" />
     <ClCompile Include="Domain\Learn From Examples\Run.LearnFromExamples.cpp" />
     <ClCompile Include="pch.cpp">
@@ -208,12 +210,16 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Plush\Atom.cpp" />
+    <ClCompile Include="Plush\Genome.cpp" />
+    <ClCompile Include="PushGP\AsyncBreed.cpp" />
     <ClCompile Include="PushGP\Breed.cpp" />
     <ClCompile Include="PushGP\GeneticOperators.cpp" />
     <ClCompile Include="PushGP\Globals.cpp" />
     <ClCompile Include="PushGP\Individual.cpp" />
     <ClCompile Include="PushGP\Random.cpp" />
     <ClCompile Include="PushGP\Selection.cpp" />
+    <ClCompile Include="PushGP\Utilities.cpp" />
     <ClCompile Include="PushP\BooleanInstructions.cpp" />
     <ClCompile Include="PushP\Code.cpp" />
     <ClCompile Include="PushP\CodeInstructions.cpp" />

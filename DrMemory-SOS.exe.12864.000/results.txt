@@ -1,0 +1,3513 @@
+Dr. Memory version 2.2.0 build 1 built on Jul  1 2019 00:40:18
+Windows version: WinVer=105;Rel=1809;Build=17763;Edition=Professional
+Dr. Memory results for pid 12864: "SOS.exe"
+Application cmdline: "C:\Users\edgar\OneDrive\Projects\Source\Repos\EdGarrity\SOS\x64\Debug\SOS.exe"
+Recorded 117 suppression(s) from default C:\Program Files (x86)\Dr. Memory\bin64\suppress-default.txt
+
+Error #1: UNINITIALIZED READ: reading 4 byte(s)
+system call NtUserCreateWindowEx parameter value #14
+    <system call>
+USER32.dll!VerNtUserCreateWindowEx
+    ??:0
+USER32.dll!CreateWindowInternal
+    ??:0
+USER32.dll!CreateWindowExA
+    ??:0
+MsgHook64.dll!?            
+    ??:0
+KERNEL32.dll!BaseThreadInitThunk
+    ??:0
+
+Error #2: UNINITIALIZED READ: reading 4 byte(s)
+system call NtDeviceIoControlFile InputBuffer
+    <system call>
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+bcrypt.dll!BCryptResolveProviders
+    ??:0
+reg_shadow_addr
+    d:\drmemory_package\drmemory\shadow.c(1797):
+ncrypt.dll!SslOpenProvider
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!InitializeSecurityContextA
+    ??:0
+SspiCli.dll!InitializeSecurityContextW
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+
+Error #3: LEAK 32 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!SysAllocString
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(54):
+std::_String_alloc<>::_Myproxy
+    ??:0
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #4: LEAK 16 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!SysAllocString
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(63):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #5: LEAK 32 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!SysAllocString
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(77):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #6: LEAK 32 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!SysAllocString
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(84):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #7: POSSIBLE LEAK 56 direct bytes + 16 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::StaticInit
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.h(37):
+`dynamic initializer for 'static_initializer''
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.h(65):
+ucrtbased.dll!initterm     
+    ??:0
+KERNEL32.dll!BaseThreadInitThunk
+    ??:0
+
+Error #8: LEAK 16 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::_Container_base12::_Container_base12
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::_Vector_val<>::_Vector_val<>
+    ??:0
+std::_Allocate<>
+    ??:0
+std::_Vector_alloc<>::_Alloc_proxy
+    ??:0
+std::_Compressed_pair<>::_Compressed_pair<><>
+    ??:0
+std::_Unfancy<>
+    ??:0
+std::_Vector_alloc<>::_Vector_alloc<><>
+    ??:0
+std::_Tree_comp_alloc<>::_Alloc_proxy
+    ??:0
+
+Error #9: LEAK 4 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::_Unfancy<>
+    ??:0
+std::vector<>::_Buy
+    ??:0
+std::_Tree_comp_alloc<>::_Alloc_proxy
+    ??:0
+std::forward<>
+    ??:0
+std::vector<>::vector<>
+    ??:0
+Push::Type::Type
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\type.h(23):
+std::vector<>::vector<>
+    ??:0
+Push::detail::init_types
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(37):
+
+Error #10: LEAK 16 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::_Container_base12::_Container_base12
+    ??:0
+std::allocator<>::allocator<><>
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::_Vector_val<>::_Vector_val<>
+    ??:0
+std::_Vector_alloc<>::_Alloc_proxy
+    ??:0
+std::_Compressed_pair<>::_Compressed_pair<><>
+    ??:0
+std::_Unfancy<>
+    ??:0
+std::_Vector_alloc<>::_Vector_alloc<><>
+    ??:0
+std::_Tree_comp_alloc<>::_Alloc_proxy
+    ??:0
+
+Error #11: LEAK 8 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::_Unfancy<>
+    ??:0
+std::vector<>::_Buy
+    ??:0
+std::_Tree_comp_alloc<>::_Alloc_proxy
+    ??:0
+std::vector<>::vector<>
+    ??:0
+Push::Type::Type
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\type.h(23):
+std::vector<>::vector<>
+    ??:0
+Push::detail::init_types
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(38):
+Push::detail::StaticInit::StaticInit
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.h(42):
+
+Error #12: LEAK 12 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::_Unfancy<>
+    ??:0
+std::vector<>::_Buy
+    ??:0
+std::_Tree_comp_alloc<>::_Alloc_proxy
+    ??:0
+std::vector<>::vector<>
+    ??:0
+Push::Type::Type
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\type.h(23):
+std::vector<>::vector<>
+    ??:0
+Push::detail::init_types
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(39):
+Push::detail::StaticInit::StaticInit
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.h(42):
+
+Error #13: LEAK 16 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::_Unfancy<>
+    ??:0
+std::vector<>::_Buy
+    ??:0
+std::_Tree_comp_alloc<>::_Alloc_proxy
+    ??:0
+std::vector<>::vector<>
+    ??:0
+Push::Type::Type
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\type.h(23):
+std::vector<>::vector<>
+    ??:0
+Push::detail::init_types
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(40):
+Push::detail::StaticInit::StaticInit
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.h(42):
+
+Error #14: LEAK 20 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::_Unfancy<>
+    ??:0
+std::vector<>::_Buy
+    ??:0
+std::_Tree_comp_alloc<>::_Alloc_proxy
+    ??:0
+std::vector<>::vector<>
+    ??:0
+Push::Type::Type
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\type.h(23):
+std::vector<>::vector<>
+    ??:0
+Push::detail::init_types
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(41):
+Push::detail::StaticInit::StaticInit
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.h(42):
+
+Error #15: LEAK 16 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::_Container_base12::_Container_base12
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::_Vector_val<>::_Vector_val<>
+    ??:0
+std::_Vector_alloc<>::_Alloc_proxy
+    ??:0
+std::_Compressed_pair<>::_Compressed_pair<><>
+    ??:0
+std::char_traits<>::copy
+    ??:0
+std::_String_alloc<>::_Alloc_proxy
+    ??:0
+std::_Vector_alloc<>::_Vector_alloc<><>
+    ??:0
+std::vector<>::vector<>
+    ??:0
+
+Error #16: LEAK 16 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::_String_val<>::_Bxty::_Bxty
+    ??:0
+std::allocator<>::allocator<><>
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::_String_val<>::_String_val<>
+    ??:0
+std::_Default_allocator_traits<>::construct<>
+    ??:0
+std::_String_alloc<>::_Alloc_proxy
+    ??:0
+std::_Compressed_pair<>::_Compressed_pair<><>
+    ??:0
+std::_String_alloc<>::_String_alloc<><>
+    ??:0
+std::basic_string<>::_Construct_lv_contents
+    ??:0
+
+Error #17: LEAK 16 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::_Container_base12::_Container_base12
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::_Vector_val<>::_Vector_val<>
+    ??:0
+std::_Vector_alloc<>::_Alloc_proxy
+    ??:0
+std::_Compressed_pair<>::_Compressed_pair<><>
+    ??:0
+std::char_traits<>::copy
+    ??:0
+std::_String_alloc<>::_Alloc_proxy
+    ??:0
+std::_Vector_alloc<>::_Vector_alloc<><>
+    ??:0
+std::_String_val<>::_String_val<>
+    ??:0
+
+Error #18: LEAK 16 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::_Container_base12::_Container_base12
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::_Vector_val<>::_Vector_val<>
+    ??:0
+std::_Vector_alloc<>::_Alloc_proxy
+    ??:0
+std::_Compressed_pair<>::_Compressed_pair<><>
+    ??:0
+std::char_traits<>::copy
+    ??:0
+std::_String_alloc<>::_Alloc_proxy
+    ??:0
+std::_Vector_alloc<>::_Vector_alloc<><>
+    ??:0
+std::basic_string<>::_Assign_rv_contents_with_alloc_always_equal
+    ??:0
+
+Error #19: LEAK 16 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::_Container_base12::_Container_base12
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::_Vector_val<>::_Vector_val<>
+    ??:0
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Vector_alloc<>::_Alloc_proxy
+    ??:0
+std::_Compressed_pair<>::_Compressed_pair<><>
+    ??:0
+std::_Compressed_pair<>::_Get_second
+    ??:0
+std::_Vector_alloc<>::_Vector_alloc<>
+    ??:0
+std::_String_alloc<>::_Get_data
+    ??:0
+
+Error #20: POSSIBLE LEAK 56 direct bytes + 5664 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(178):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #21: LEAK 8 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::char_traits<>::copy
+    ??:0
+std::_String_alloc<>::_Alloc_proxy
+    ??:0
+std::vector<>::_Buy
+    ??:0
+std::_String_val<>::_String_val<>
+    ??:0
+std::vector<>::vector<>
+    ??:0
+Push::CodeAtom::CodeAtom
+    ??:0
+Push::Type::Type
+    ??:0
+Push::Instruction::Instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(26):
+
+Error #22: LEAK 16 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::_String_val<>::_Bxty::_Bxty
+    ??:0
+std::allocator<>::allocator<><>
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::_String_val<>::_String_val<>
+    ??:0
+std::_String_alloc<>::_Alloc_proxy
+    ??:0
+std::_String_alloc<>::_Alloc_proxy
+    ??:0
+std::_Compressed_pair<>::_Compressed_pair<><>
+    ??:0
+std::_String_alloc<>::_String_alloc<><>
+    ??:0
+std::basic_string<>::basic_string<>
+    ??:0
+
+Error #23: LEAK 4 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::char_traits<>::copy
+    ??:0
+std::_String_alloc<>::_Alloc_proxy
+    ??:0
+std::vector<>::_Buy
+    ??:0
+std::basic_string<>::_Assign_rv_contents_with_alloc_always_equal
+    ??:0
+std::vector<>::vector<>
+    ??:0
+Push::CodeAtom::CodeAtom
+    ??:0
+Push::Type::Type
+    ??:0
+std::operator+<>
+    ??:0
+
+Error #24: POSSIBLE LEAK 56 direct bytes + 216 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(178):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #25: POSSIBLE LEAK 56 direct bytes + 168 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(177):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #26: POSSIBLE LEAK 56 direct bytes + 104 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(176):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #27: LEAK 16 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::_String_val<>::_Bxty::_Bxty
+    ??:0
+std::allocator<>::allocator<><>
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::_String_val<>::_String_val<>
+    ??:0
+std::_Allocate<>
+    ??:0
+std::_String_alloc<>::_Alloc_proxy
+    ??:0
+std::_Compressed_pair<>::_Compressed_pair<><>
+    ??:0
+std::_String_alloc<>::_String_alloc<><>
+    ??:0
+std::basic_string<>::_Construct_lv_contents
+    ??:0
+
+Error #28: POSSIBLE LEAK 56 direct bytes + 160 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(177):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #29: POSSIBLE LEAK 56 direct bytes + 840 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initFloat
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\floatinstructions.cpp(19):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(129):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #30: POSSIBLE LEAK 56 direct bytes + 560 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(119):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #31: LEAK 16 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::char_traits<>::copy
+    ??:0
+std::_String_alloc<>::_Alloc_proxy
+    ??:0
+std::vector<>::_Buy
+    ??:0
+std::vector<>::vector<>
+    ??:0
+Push::CodeAtom::CodeAtom
+    ??:0
+Push::Type::Type
+    ??:0
+Push::Instruction::Instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(26):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+
+Error #32: POSSIBLE LEAK 56 direct bytes + 136 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(176):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #33: POSSIBLE LEAK 56 direct bytes + 936 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initFloat
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\floatinstructions.cpp(35):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(129):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #34: POSSIBLE LEAK 56 direct bytes + 448 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(104):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #35: POSSIBLE LEAK 56 direct bytes + 32 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(174):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #36: POSSIBLE LEAK 56 direct bytes + 264 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(181):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #37: POSSIBLE LEAK 56 direct bytes + 120 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(176):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #38: POSSIBLE LEAK 56 direct bytes + 496 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(110):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #39: POSSIBLE LEAK 56 direct bytes + 776 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initInt
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\integerinstructions.cpp(16):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(128):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #40: POSSIBLE LEAK 56 direct bytes + 512 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(113):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #41: POSSIBLE LEAK 56 direct bytes + 696 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(122):
+std::vector<>::vector<>
+    ??:0
+Push::initExec
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\execinstructions.cpp(220):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(127):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #42: LEAK 16 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::_Container_base12::_Container_base12
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::_Vector_val<>::_Vector_val<>
+    ??:0
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Vector_alloc<>::_Alloc_proxy
+    ??:0
+std::_Compressed_pair<>::_Compressed_pair<><>
+    ??:0
+std::_Compressed_pair<>::_Get_second
+    ??:0
+std::_Vector_alloc<>::_Vector_alloc<>
+    ??:0
+std::_Default_allocate_traits::_Allocate
+    ??:0
+
+Error #43: POSSIBLE LEAK 56 direct bytes + 704 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(122):
+std::vector<>::vector<>
+    ??:0
+Push::initExec
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\execinstructions.cpp(221):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(127):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #44: POSSIBLE LEAK 56 direct bytes + 712 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+std::_Compressed_pair<>::_Get_second
+    ??:0
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(122):
+std::vector<>::vector<>
+    ??:0
+Push::initExec
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\execinstructions.cpp(222):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(127):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #45: POSSIBLE LEAK 56 direct bytes + 504 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(111):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #46: POSSIBLE LEAK 56 direct bytes + 928 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initFloat
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\floatinstructions.cpp(34):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(129):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #47: POSSIBLE LEAK 56 direct bytes + 288 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(181):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #48: LEAK 12 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::char_traits<>::copy
+    ??:0
+std::_String_alloc<>::_Alloc_proxy
+    ??:0
+std::vector<>::_Buy
+    ??:0
+std::vector<>::vector<>
+    ??:0
+Push::CodeAtom::CodeAtom
+    ??:0
+Push::Type::Type
+    ??:0
+std::operator+<>
+    ??:0
+Push::Instruction::Instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(26):
+
+Error #49: POSSIBLE LEAK 56 direct bytes + 328 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(182):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #50: LEAK 16 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::_Container_base12::_Container_base12
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::_Vector_val<>::_Vector_val<>
+    ??:0
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Vector_alloc<>::_Alloc_proxy
+    ??:0
+std::_Compressed_pair<>::_Compressed_pair<><>
+    ??:0
+std::_Compressed_pair<>::_Get_second
+    ??:0
+std::_Vector_alloc<>::_Vector_alloc<>
+    ??:0
+std::char_traits<>::assign
+    ??:0
+
+Error #51: POSSIBLE LEAK 56 direct bytes + 824 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initFloat
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\floatinstructions.cpp(17):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(129):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #52: POSSIBLE LEAK 56 direct bytes + 1144 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initBool
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\booleaninstructions.cpp(19):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(130):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #53: LEAK 16 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::_Container_base12::_Container_base12
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::_Vector_val<>::_Vector_val<>
+    ??:0
+std::_Unfancy<>
+    ??:0
+std::_Vector_alloc<>::_Alloc_proxy
+    ??:0
+std::_Compressed_pair<>::_Compressed_pair<><>
+    ??:0
+std::char_traits<>::copy
+    ??:0
+std::_Vector_alloc<>::_Vector_alloc<><>
+    ??:0
+std::_Min_value<>
+    ??:0
+
+Error #54: POSSIBLE LEAK 56 direct bytes + 152 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(177):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #55: POSSIBLE LEAK 56 direct bytes + 784 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initInt
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\integerinstructions.cpp(17):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(128):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #56: POSSIBLE LEAK 56 direct bytes + 440 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(103):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #57: POSSIBLE LEAK 56 direct bytes + 792 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initInt
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\integerinstructions.cpp(18):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(128):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #58: LEAK 32 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::basic_string<>::max_size
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::basic_string<>::_Construct_lv_contents
+    ??:0
+std::basic_string<>::basic_string<>
+    ??:0
+Push::Instruction::Instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(26):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initFloat
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\floatinstructions.cpp(20):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(129):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+
+Error #59: LEAK 16 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::char_traits<>::copy
+    ??:0
+std::vector<>::_Buy
+    ??:0
+std::_Min_value<>
+    ??:0
+std::vector<>::vector<>
+    ??:0
+Push::CodeAtom::CodeAtom
+    ??:0
+Push::Type::Type
+    ??:0
+Push::Instruction::Instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(26):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+
+Error #60: LEAK 16 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::_Container_base12::_Container_base12
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::_Vector_val<>::_Vector_val<>
+    ??:0
+std::_Vector_alloc<>::_Alloc_proxy
+    ??:0
+std::_Compressed_pair<>::_Compressed_pair<><>
+    ??:0
+std::char_traits<>::copy
+    ??:0
+std::_Vector_alloc<>::_Vector_alloc<><>
+    ??:0
+std::vector<>::vector<>
+    ??:0
+Push::CodeAtom::CodeAtom
+    ??:0
+
+Error #61: LEAK 20 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::char_traits<>::copy
+    ??:0
+std::vector<>::_Buy
+    ??:0
+std::vector<>::vector<>
+    ??:0
+Push::CodeAtom::CodeAtom
+    ??:0
+Push::Type::Type
+    ??:0
+Push::Instruction::Instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(26):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initFloat
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\floatinstructions.cpp(20):
+
+Error #62: POSSIBLE LEAK 56 direct bytes + 848 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initFloat
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\floatinstructions.cpp(20):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(129):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #63: POSSIBLE LEAK 56 direct bytes + 224 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(180):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #64: POSSIBLE LEAK 56 direct bytes + 816 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initFloat
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\floatinstructions.cpp(16):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(129):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #65: LEAK 6000 bytes 
+replace_operator_new_array
+    d:\drmemory_package\common\alloc_replace.c(2929):
+database::SQLCommand::myCreateDBBindings
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(342):
+database::SQLCommand::execute
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(422):
+std::_String_alloc<>::_Myproxy
+    ??:0
+std::char_traits<>::copy
+    ??:0
+domain::learn_from_examples::load_example_cases
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(77):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(704):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #66: POSSIBLE LEAK 56 direct bytes + 536 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(116):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #67: POSSIBLE LEAK 56 direct bytes + 400 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(184):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #68: POSSIBLE LEAK 56 direct bytes + 528 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(115):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #69: POSSIBLE LEAK 56 direct bytes + 2240 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(114):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #70: POSSIBLE LEAK 56 direct bytes + 40 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(174):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #71: POSSIBLE LEAK 56 direct bytes + 488 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(109):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #72: POSSIBLE LEAK 56 direct bytes + 568 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(120):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #73: POSSIBLE LEAK 56 direct bytes + 392 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(184):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #74: POSSIBLE LEAK 56 direct bytes + 384 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(184):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #75: POSSIBLE LEAK 56 direct bytes + 144 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(177):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #76: POSSIBLE LEAK 56 direct bytes + 200 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(178):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #77: POSSIBLE LEAK 56 direct bytes + 320 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(182):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #78: POSSIBLE LEAK 56 direct bytes + 88 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(175):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #79: POSSIBLE LEAK 56 direct bytes + 592 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(123):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #80: POSSIBLE LEAK 56 direct bytes + 48 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(174):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #81: POSSIBLE LEAK 56 direct bytes + 664 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+std::_Compressed_pair<>::_Get_second
+    ??:0
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(122):
+std::vector<>::vector<>
+    ??:0
+Push::initExec
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\execinstructions.cpp(216):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(127):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #82: POSSIBLE LEAK 56 direct bytes + 360 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(183):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #83: POSSIBLE LEAK 56 direct bytes + 632 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(130):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #84: POSSIBLE LEAK 56 direct bytes + 232 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(180):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #85: POSSIBLE LEAK 56 direct bytes + 376 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(183):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #86: POSSIBLE LEAK 56 direct bytes + 96 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(175):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #87: POSSIBLE LEAK 56 direct bytes + 64 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(175):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #88: LEAK 4 bytes 
+replace_operator_new_array
+    d:\drmemory_package\common\alloc_replace.c(2929):
+database::SQLCommand::myCreateDBBindings
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(342):
+database::SQLCommand::execute
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(422):
+std::_String_alloc<>::_Myproxy
+    ??:0
+std::char_traits<>::copy
+    ??:0
+domain::learn_from_examples::get_last_saved_generation_number
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(51):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(711):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #89: POSSIBLE LEAK 56 direct bytes + 608 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #90: POSSIBLE LEAK 56 direct bytes + 600 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(124):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #91: POSSIBLE LEAK 56 direct bytes + 296 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(181):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #92: POSSIBLE LEAK 56 direct bytes + 80 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(175):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #93: POSSIBLE LEAK 56 direct bytes + 800 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initInt
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\integerinstructions.cpp(19):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(128):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #94: POSSIBLE LEAK 56 direct bytes + 184 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(178):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #95: LEAK 12 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::char_traits<>::copy
+    ??:0
+std::_String_alloc<>::_Alloc_proxy
+    ??:0
+std::vector<>::_Buy
+    ??:0
+std::vector<>::vector<>
+    ??:0
+Push::CodeAtom::CodeAtom
+    ??:0
+Push::Type::Type
+    ??:0
+Push::Instruction::Instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(26):
+std::vector<>::vector<>
+    ??:0
+
+Error #96: POSSIBLE LEAK 56 direct bytes + 56 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(174):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #97: POSSIBLE LEAK 56 direct bytes + 856 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initFloat
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\floatinstructions.cpp(21):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(129):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #98: POSSIBLE LEAK 56 direct bytes + 720 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(122):
+std::vector<>::vector<>
+    ??:0
+Push::initExec
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\execinstructions.cpp(223):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(127):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #99: POSSIBLE LEAK 56 direct bytes + 640 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(131):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #100: POSSIBLE LEAK 56 direct bytes + 24 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(174):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #101: POSSIBLE LEAK 56 direct bytes + 128 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(176):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #102: POSSIBLE LEAK 56 direct bytes + 112 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(176):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #103: POSSIBLE LEAK 56 direct bytes + 832 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initFloat
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\floatinstructions.cpp(18):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(129):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #104: POSSIBLE LEAK 56 direct bytes + 752 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initInt
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\integerinstructions.cpp(13):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(128):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #105: POSSIBLE LEAK 56 direct bytes + 896 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initFloat
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\floatinstructions.cpp(26):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(129):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #106: POSSIBLE LEAK 56 direct bytes + 4120 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initInt
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\integerinstructions.cpp(20):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(128):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #107: POSSIBLE LEAK 56 direct bytes + 656 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(122):
+std::vector<>::vector<>
+    ??:0
+Push::initExec
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\execinstructions.cpp(215):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(127):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #108: POSSIBLE LEAK 56 direct bytes + 304 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(182):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #109: POSSIBLE LEAK 56 direct bytes + 1064 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initFloat
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\floatinstructions.cpp(25):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(129):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #110: POSSIBLE LEAK 56 direct bytes + 256 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(180):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #111: POSSIBLE LEAK 56 direct bytes + 1148 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initFloat
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\floatinstructions.cpp(23):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(129):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #112: POSSIBLE LEAK 56 direct bytes + 336 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(182):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #113: LEAK 4 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::char_traits<>::copy
+    ??:0
+std::_String_alloc<>::_Alloc_proxy
+    ??:0
+std::vector<>::_Buy
+    ??:0
+std::vector<>::vector<>
+    ??:0
+Push::CodeAtom::CodeAtom
+    ??:0
+Push::Type::Type
+    ??:0
+Push::Instruction::Instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(26):
+std::_Deallocate_plain<>
+    ??:0
+
+Error #114: POSSIBLE LEAK 56 direct bytes + 2428 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initFloat
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\floatinstructions.cpp(22):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(129):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #115: LEAK 32 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::basic_string<>::max_size
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::basic_string<>::_Construct_lv_contents
+    ??:0
+std::basic_string<>::basic_string<>
+    ??:0
+Push::Instruction::Instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(26):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initInt
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\integerinstructions.cpp(15):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(128):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+
+Error #116: LEAK 8 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::char_traits<>::copy
+    ??:0
+std::vector<>::_Buy
+    ??:0
+std::vector<>::vector<>
+    ??:0
+Push::CodeAtom::CodeAtom
+    ??:0
+Push::Type::Type
+    ??:0
+Push::Instruction::Instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(26):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initInt
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\integerinstructions.cpp(15):
+
+Error #117: POSSIBLE LEAK 56 direct bytes + 248 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(180):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #118: POSSIBLE LEAK 56 direct bytes + 280 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(181):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #119: POSSIBLE LEAK 56 direct bytes + 672 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(122):
+std::vector<>::vector<>
+    ??:0
+Push::initExec
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\execinstructions.cpp(217):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(127):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #120: POSSIBLE LEAK 56 direct bytes + 312 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(182):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #121: POSSIBLE LEAK 56 direct bytes + 1364 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(122):
+std::vector<>::vector<>
+    ??:0
+Push::initExec
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\execinstructions.cpp(219):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(127):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #122: POSSIBLE LEAK 56 direct bytes + 728 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initInt
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\integerinstructions.cpp(10):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(128):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #123: POSSIBLE LEAK 56 direct bytes + 1464 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initFloat
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\floatinstructions.cpp(27):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(129):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #124: POSSIBLE LEAK 56 direct bytes + 1056 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initFloat
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\floatinstructions.cpp(24):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(129):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #125: POSSIBLE LEAK 56 direct bytes + 480 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(108):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #126: LEAK 12 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::char_traits<>::copy
+    ??:0
+std::vector<>::_Buy
+    ??:0
+std::vector<>::vector<>
+    ??:0
+Push::CodeAtom::CodeAtom
+    ??:0
+Push::Type::Type
+    ??:0
+Push::Instruction::Instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(26):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(109):
+
+Error #127: POSSIBLE LEAK 56 direct bytes + 456 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+std::_Compressed_pair<>::_Get_second
+    ??:0
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(122):
+std::vector<>::vector<>
+    ??:0
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(105):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #128: POSSIBLE LEAK 56 direct bytes + 272 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(181):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #129: POSSIBLE LEAK 56 direct bytes + 920 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initFloat
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\floatinstructions.cpp(29):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(129):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #130: POSSIBLE LEAK 56 direct bytes + 576 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(121):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #131: POSSIBLE LEAK 56 direct bytes + 616 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #132: POSSIBLE LEAK 56 direct bytes + 176 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(177):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #133: POSSIBLE LEAK 56 direct bytes + 432 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(102):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #134: POSSIBLE LEAK 56 direct bytes + 1232 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initBool
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\booleaninstructions.cpp(18):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(130):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #135: POSSIBLE LEAK 56 direct bytes + 552 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(118):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #136: POSSIBLE LEAK 56 direct bytes + 416 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(184):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #137: POSSIBLE LEAK 56 direct bytes + 680 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(122):
+std::vector<>::vector<>
+    ??:0
+Push::initExec
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\execinstructions.cpp(218):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(127):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #138: POSSIBLE LEAK 56 direct bytes + 584 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(122):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #139: POSSIBLE LEAK 56 direct bytes + 72 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(175):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #140: POSSIBLE LEAK 56 direct bytes + 424 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(101):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #141: POSSIBLE LEAK 56 direct bytes + 352 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(183):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #142: POSSIBLE LEAK 56 direct bytes + 768 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initInt
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\integerinstructions.cpp(15):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(128):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #143: POSSIBLE LEAK 56 direct bytes + 624 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(129):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #144: POSSIBLE LEAK 56 direct bytes + 1192 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initFloat
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\floatinstructions.cpp(28):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(129):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #145: POSSIBLE LEAK 56 direct bytes + 208 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(178):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #146: POSSIBLE LEAK 56 direct bytes + 368 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(183):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #147: POSSIBLE LEAK 56 direct bytes + 760 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initInt
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\integerinstructions.cpp(14):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(128):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #148: POSSIBLE LEAK 56 direct bytes + 240 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(180):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #149: POSSIBLE LEAK 56 direct bytes + 544 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(117):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #150: LEAK 32 bytes 
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+std::_Default_allocate_traits::_Allocate
+    ??:0
+std::_Allocate<>
+    ??:0
+std::basic_string<>::max_size
+    ??:0
+std::allocator<>::allocate
+    ??:0
+std::basic_string<>::_Construct_lv_contents
+    ??:0
+std::basic_string<>::basic_string<>
+    ??:0
+Push::Instruction::Instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(26):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(109):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+
+Error #151: POSSIBLE LEAK 56 direct bytes + 944 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initBool
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\booleaninstructions.cpp(16):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(130):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #152: POSSIBLE LEAK 56 direct bytes + 2336 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initBool
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\booleaninstructions.cpp(17):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(130):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #153: POSSIBLE LEAK 56 direct bytes + 472 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(107):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #154: POSSIBLE LEAK 56 direct bytes + 8704 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initCode
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\codeinstructions.cpp(106):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(126):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #155: POSSIBLE LEAK 56 direct bytes + 4248 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(122):
+std::vector<>::vector<>
+    ??:0
+Push::initExec
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\execinstructions.cpp(214):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(127):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #156: POSSIBLE LEAK 56 direct bytes + 744 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initInt
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\integerinstructions.cpp(12):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(128):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #157: POSSIBLE LEAK 56 direct bytes + 736 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initInt
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\integerinstructions.cpp(11):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(128):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #158: POSSIBLE LEAK 56 direct bytes + 1152 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initBool
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\booleaninstructions.cpp(20):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(130):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #159: POSSIBLE LEAK 56 direct bytes + 1292 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(116):
+Push::initBool
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\booleaninstructions.cpp(21):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(130):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #160: POSSIBLE LEAK 56 direct bytes + 344 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(183):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #161: LEAK 2147483647 bytes 
+replace_operator_new_array
+    d:\drmemory_package\common\alloc_replace.c(2929):
+database::SQLCommand::myCreateDBBindings
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(342):
+database::SQLCommand::execute
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(422):
+std::_String_alloc<>::_Myproxy
+    ??:0
+std::char_traits<>::copy
+    ??:0
+domain::learn_from_examples::load_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(380):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Error #162: POSSIBLE LEAK 56 direct bytes + 408 indirect bytes
+replace_operator_new
+    d:\drmemory_package\common\alloc_replace.c(2900):
+Push::detail::StaticInit::register_pushfunc
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(85):
+Push::make_instruction
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.h(108):
+Push::initGenerics
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\instruction.cpp(184):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(125):
+Push::init_push
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\pushp\staticinit.cpp(111):
+domain::learn_from_examples::make_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(425):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+===========================================================================
+FINAL SUMMARY:
+
+DUPLICATE ERROR COUNTS:
+	Error #  10:      4
+	Error #  15:     23
+	Error #  16:     22
+	Error #  17:     23
+	Error #  18:      2
+	Error #  19:     22
+	Error #  21:     21
+	Error #  22:      2
+	Error #  23:      2
+	Error #  27:      3
+	Error #  31:     15
+	Error #  42:      3
+	Error #  50:      2
+	Error #  53:      3
+	Error #  59:      3
+	Error #  60:      3
+	Error #  95:      3
+	Error # 113:      3
+
+SUPPRESSIONS USED:
+
+ERRORS FOUND:
+      0 unique,     0 total unaddressable access(es)
+      2 unique,     2 total uninitialized access(es)
+      0 unique,     0 total invalid heap argument(s)
+      0 unique,     0 total GDI usage error(s)
+      0 unique,     0 total handle leak(s)
+      0 unique,     0 total warning(s)
+     38 unique,   179 total, -2147474909 byte(s) of leak(s)
+    122 unique,   122 total,  96200 byte(s) of possible leak(s)
+Details: C:\Users\edgar\AppData\Roaming\Dr. Memory\DrMemory-SOS.exe.12864.000\results.txt
