@@ -2,9 +2,10 @@
 #include <random>
 #include <chrono>
 
-#include "Globals.h"
 #include "Random.h"
 #include "Individual.h"
+//#include "..\Domain\Stock Forecaster\Globals.StockForecaster.h"
+#include "..\Domain\Arguments.h"
 #include "..\PushP\Code.h"
 #include "..\PushP\CodeUtils.h"
 #include "..\PushP\RNG.h"
@@ -25,14 +26,14 @@ namespace pushGP
 		return rng.uniform(m);
 	}
 
-	unsigned long random_integer()
+	unsigned long random_integer(unsigned long m = std::numeric_limits<unsigned long>::max())
 	{
 		//std::default_random_engine generator;
 		//std::uniform_real_distribution<double> distribution(0.0, 1.0);
 
 		//return distribution(generator);
 
-		return rng.random();
+		return rng.random(m);
 	}
 
 	static unsigned int random_closes()
@@ -40,20 +41,20 @@ namespace pushGP
 		int n = 0;
 		double probability = rng.uniform(1.0);
 
-		for (n = 0; n < argmap::close_parens_probabilities.size(); n++)
+		for (n = 0; n < domain::argmap::close_parens_probabilities.size(); n++)
 		{
-			if (probability <= argmap::close_parens_probabilities[n])
+			if (probability <= domain::argmap::close_parens_probabilities[n])
 				return n;
 		}
 		
 		return n;
 	}
 
-	struct Atom random_atom()
+	struct Genome::Atom random_atom()
 	{
-		struct Atom gene;
+		struct Genome::Atom gene;
 
-		if (random_double() < argmap::probability_of_generating_a_constant_Plush_atom)
+		if (random_double() < domain::argmap::probability_of_generating_a_constant_Plush_atom)
 		{
 			uint32 r = rng.random(3);
 			switch (r)
@@ -61,13 +62,13 @@ namespace pushGP
 				case 0:
 				{
 					gene.instruction = toString(rng.uniform(std::numeric_limits<double>::max()));
-					gene.type = Atom::AtomType::floating_point;
+					gene.type = Genome::Atom::AtomType::floating_point;
 					break;
 				}
 				case 1:
 				{
 					gene.instruction = toString(rng.random(std::numeric_limits<int>::max()));
-					gene.type = Atom::AtomType::integer;
+					gene.type = Genome::Atom::AtomType::integer;
 					break;
 				}
 				case 2:
@@ -77,7 +78,7 @@ namespace pushGP
 					else
 						gene.instruction = "False";
 
-					gene.type = Atom::AtomType::boolean;
+					gene.type = Genome::Atom::AtomType::boolean;
 					break;
 				}
 				default:
@@ -90,53 +91,52 @@ namespace pushGP
 		else
 		{
 			gene.instruction = make_terminal();	// gets a random instruction.
-			gene.type = Atom::ins;
+			gene.type = Genome::Atom::ins;
 		}
 
 		return gene;
 	}
 
-	void append_genome(std::vector<struct Atom>& a, const std::vector<struct Atom>& b)
+	void append_genome(std::vector<struct Genome::Atom>& a, const std::vector<struct Genome::Atom>& b)
 	{
 		a.reserve(a.size() + b.size());
 		a.insert(a.end(), b.begin(), b.end());  // std::move(b.begin(), b.end(), std::back_inserter(a));
 	}
 
-	std::vector<struct Atom> random_plush_genome_with_size(unsigned int genome_size)
+	std::vector<struct Genome::Atom> random_plush_genome_with_size(unsigned int genome_size)
 	{
 		int n = genome_size;	
-		struct Atom atom;
+		struct Genome::Atom atom;
 
-		std::vector<struct Atom> genome;
+		std::vector<struct Genome::Atom> genome;
 
 		while (--n > 0)
 		{
-			if (random_double() < argmap::seed_with_data_rate)
-			{
-				char random_integer_string[sizeof(long) * 8 + 1];
-				std::string load_data_genome = "{:instruction ";
-				_ltoa_s(random_integer(), random_integer_string, _countof(random_integer_string), 10);
-				load_data_genome += random_integer_string;
-				load_data_genome += " :close  0}{:instruction FLOAT.FROMDATA :close  0}";
+			//if (random_double() < domain::argmap::seed_with_data_rate)
+			//{
+			//	char random_integer_string[sizeof(long) * 8 + 1];
+			//	std::string load_data_genome = "{:instruction ";
+			//	_ltoa_s(random_integer(), random_integer_string, _countof(random_integer_string), 10);
+			//	load_data_genome += random_integer_string;
+			//	load_data_genome += " :close  0}{:instruction FLOAT.FROMDATA :close  0}";
 
-//				append_genome(genome, globals::load_data_genome);
-				append_genome(genome, String_to_plush_genome(load_data_genome));
-			}
+			//	append_genome(genome, String_to_plush_genome(load_data_genome));
+			//}
 
-			else
-			{
+			//else
+			//{
 				atom = random_atom();
 				atom.parentheses = random_closes();
 
 				genome.push_back(atom);
-			}
+			//}
 		}
 
 		return genome;
 	}
 
-	std::vector<struct Atom> random_plush_genome()
+	std::vector<struct Genome::Atom> random_plush_genome()
 	{
-		return random_plush_genome_with_size(rng.random(argmap::max_genome_size_in_initial_program) + 1);
+		return random_plush_genome_with_size(rng.random(domain::argmap::max_genome_size_in_initial_program) + 1);
 	}
 }

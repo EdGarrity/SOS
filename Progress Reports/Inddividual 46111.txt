@@ -1,0 +1,28 @@
+Individual 46111.  Score on Training Case #0 is 0.
+
+{:instruction INTEGER.YANK :close  0}
+{:instruction INTEGER.STACKDEPTH :close  4}
+{:instruction CODE.FLUSH :close  0}
+{:instruction BOOLEAN.ROT :close  4}
+{:instruction EXEC.FLUSH :close  0}
+{:instruction FLOAT.DUP :close  0}
+{:instruction CODE.DO* :close  0}
+{:instruction BOOLEAN.YANKDUP :close  0}
+{:instruction BOOLEAN.STACKDEPTH :close  0}
+{:instruction FLOAT.ROT :close  0}
+{:instruction BOOLEAN.FROMFLOAT :close  0}
+{:instruction BOOLEAN.OR :close  4}
+{:instruction FLOAT.% :close  4}
+{:instruction FLOAT.MAX :close  0}
+{:instruction BOOLEAN.FLUSH :close  0}
+{:instruction INTEGER.< :close  4}
+{:instruction CODE.APPEND :close  0}
+{:instruction FLOAT.FROMBOOLEAN :close  0}
+{:instruction CODE.IF :close  0}
+{:instruction CODE.LENGTH :close  0}
+{:instruction CODE.EXTRACT :close  0}
+{:instruction EXEC.DO*TIMES :close  0}
+{:instruction inf :close  4}
+{:instruction INTEGER.MAX :close  0}
+{:instruction INTEGER.STACKDEPTH :close  4}
+

@@ -7,6 +7,8 @@ using namespace std;
 
 namespace Push
 {
+	bool code_initialized = false;
+
 	Code MyDoRange;
 	Code zero;
 	Code quote;
@@ -15,20 +17,24 @@ namespace Push
 	Code rnd;
 	Code ycode;
 
-	int init_push();
+//	int init_push();
 
 	void init_static_PushP_instructions()
 	{
-		init_push();
+//		init_push();	Must be called prior to calling this funtion.
 
-		MyDoRange = parse("EXEC.DO*RANGE");
-		zero = Code(intLiteralFactory->createLiteral(0));
-//		zero = Code(new Literal<int>(0));
-		quote = parse("CODE.QUOTE");
-		int_pop = parse("INTEGER.POP");
-		code_pop = parse("CODE.POP");
-		rnd = parse("CODE.RAND");
-		ycode = parse("EXEC.Y");
+		//if (code_initialized == false)
+		//{
+			MyDoRange = parse("EXEC.DO*RANGE");
+			zero = Code(intLiteralFactory->createLiteral(0));
+			quote = parse("CODE.QUOTE");
+			int_pop = parse("INTEGER.POP");
+			code_pop = parse("CODE.POP");
+			rnd = parse("CODE.RAND");
+			ycode = parse("EXEC.Y");
+
+			code_initialized = true;
+		//}
 	}
 
 	CodeBase::CodeBase()

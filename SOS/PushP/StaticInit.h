@@ -1,11 +1,13 @@
 #pragma once
 
+#include <functional>
 #include "Code.h"
 
 namespace Push
 {
 	int init_push();
-	
+	int init_push(std::function<void(void)> _init_push_application_specific_functions);
+
 	namespace detail
 	{
 		typedef std::vector<std::string> Names;
@@ -32,7 +34,7 @@ namespace Push
 			{
 				if (init_count++ == 0)
 				{
-					nil_ptr = new Code(new CodeList(CodeArray()));
+					nil_ptr = new Code(new CodeList(CodeArray()));  // Potential Memory Leak  Look to free the memory allocated for the CodeList
 					instructions_ptr = new Code(*nil_ptr);
 					str2code_map_ptr = new String2CodeMap();
 					str2parentheses_map_ptr = new String2ParenthesesMap();

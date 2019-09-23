@@ -31,12 +31,6 @@
     <Filter Include="Source Files\PushGP">
       <UniqueIdentifier>{0e981989-40c9-4cc0-b795-234e64b2e861}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Finance">
-      <UniqueIdentifier>{454eeece-9f93-434a-a82b-aace958775ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Finance">
-      <UniqueIdentifier>{5394fb34-2435-4635-bba8-263625ba54b5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Domain">
       <UniqueIdentifier>{48b827ef-e4f3-4798-805d-a6eb923b2590}</UniqueIdentifier>
     </Filter>
@@ -48,6 +42,18 @@
     </Filter>
     <Filter Include="Source Files\Database">
       <UniqueIdentifier>{42d0b88d-e49c-4578-a887-607943b1ce32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Domain\Learn From Examples">
+      <UniqueIdentifier>{97223f07-4b29-4883-b114-a17af862e61a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Domain\Learn From Examples">
+      <UniqueIdentifier>{4295dce2-1b14-45d3-8644-6cc6fb95d2fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Plush">
+      <UniqueIdentifier>{0c70efad-225b-421e-b49c-9a4007498e52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Plush">
+      <UniqueIdentifier>{e21770da-3700-4b3b-ba8b-86fceb7f5d94}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -108,19 +114,10 @@
     <ClInclude Include="PushGP\Individual.h">
       <Filter>Header Files\PushGP</Filter>
     </ClInclude>
-    <ClInclude Include="Finance\Broker.h">
-      <Filter>Header Files\Finance</Filter>
-    </ClInclude>
     <ClInclude Include="PushGP\Random.h">
       <Filter>Header Files\PushGP</Filter>
     </ClInclude>
-    <ClInclude Include="PushGP\PushGP.h">
-      <Filter>Header Files\PushGP</Filter>
-    </ClInclude>
     <ClInclude Include="PushGP\Selection.h">
-      <Filter>Header Files\PushGP</Filter>
-    </ClInclude>
-    <ClInclude Include="PushGP\Arguments.h">
       <Filter>Header Files\PushGP</Filter>
     </ClInclude>
     <ClInclude Include="PushGP\GeneticOperators.h">
@@ -129,14 +126,8 @@
     <ClInclude Include="PushGP\Breed.h">
       <Filter>Header Files\PushGP</Filter>
     </ClInclude>
-    <ClInclude Include="PushGP\Globals.h">
-      <Filter>Header Files\PushGP</Filter>
-    </ClInclude>
     <ClInclude Include="PushP\BoolOps.h">
       <Filter>Header Files\PushP</Filter>
-    </ClInclude>
-    <ClInclude Include="Domain\ErrorFunction.h">
-      <Filter>Header Files\Domain</Filter>
     </ClInclude>
     <ClInclude Include="PushP\ExecInstruction.h">
       <Filter>Header Files\PushP</Filter>
@@ -153,11 +144,38 @@
     <ClInclude Include="Database\SQLField.h">
       <Filter>Header Files\Database</Filter>
     </ClInclude>
-    <ClInclude Include="PushGP\AsyncErrorFunction.h">
-      <Filter>Header Files\PushGP</Filter>
-    </ClInclude>
     <ClInclude Include="Utilities\AtomicFunctions.h">
       <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Arguments.h">
+      <Filter>Header Files\Domain</Filter>
+    </ClInclude>
+    <ClInclude Include="PushGP\Globals.h">
+      <Filter>Header Files\PushGP</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Learn From Examples\Run.LearnFromExamples.h">
+      <Filter>Header Files\Domain\Learn From Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.h">
+      <Filter>Header Files\Domain\Learn From Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Learn From Examples\Arguments.h">
+      <Filter>Header Files\Domain\Learn From Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\CSVIterator.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="PushGP\Utilities.h">
+      <Filter>Header Files\PushGP</Filter>
+    </ClInclude>
+    <ClInclude Include="Plush\Genome.h">
+      <Filter>Header Files\Plush</Filter>
+    </ClInclude>
+    <ClInclude Include="Plush\Atom.h">
+      <Filter>Header Files\Plush</Filter>
+    </ClInclude>
+    <ClInclude Include="PushGP\AsyncBreed.h">
+      <Filter>Header Files\PushGP</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -212,9 +230,6 @@
     <ClCompile Include="PushGP\Individual.cpp">
       <Filter>Source Files\PushGP</Filter>
     </ClCompile>
-    <ClCompile Include="Finance\Broker.cpp">
-      <Filter>Source Files\Finance</Filter>
-    </ClCompile>
     <ClCompile Include="PushGP\Random.cpp">
       <Filter>Source Files\PushGP</Filter>
     </ClCompile>
@@ -224,17 +239,8 @@
     <ClCompile Include="PushGP\GeneticOperators.cpp">
       <Filter>Source Files\PushGP</Filter>
     </ClCompile>
-    <ClCompile Include="PushGP\PushGP.cpp">
-      <Filter>Source Files\PushGP</Filter>
-    </ClCompile>
     <ClCompile Include="PushGP\Breed.cpp">
       <Filter>Source Files\PushGP</Filter>
-    </ClCompile>
-    <ClCompile Include="PushGP\Globals.cpp">
-      <Filter>Source Files\PushGP</Filter>
-    </ClCompile>
-    <ClCompile Include="Domain\ErrorFunction.cpp">
-      <Filter>Source Files\Domain</Filter>
     </ClCompile>
     <ClCompile Include="Utilities\Conversion.cpp">
       <Filter>Source Files\Utilities</Filter>
@@ -248,11 +254,29 @@
     <ClCompile Include="Database\SQLField.cpp">
       <Filter>Source Files\Database</Filter>
     </ClCompile>
-    <ClCompile Include="PushGP\AsyncErrorFunction.cpp">
-      <Filter>Source Files\PushGP</Filter>
-    </ClCompile>
     <ClCompile Include="Utilities\AtomicFunctions.cpp">
       <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="PushGP\Globals.cpp">
+      <Filter>Source Files\PushGP</Filter>
+    </ClCompile>
+    <ClCompile Include="Domain\Learn From Examples\Run.LearnFromExamples.cpp">
+      <Filter>Source Files\Domain\Learn From Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.cpp">
+      <Filter>Source Files\Domain\Learn From Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="PushGP\Utilities.cpp">
+      <Filter>Source Files\PushGP</Filter>
+    </ClCompile>
+    <ClCompile Include="Plush\Genome.cpp">
+      <Filter>Source Files\Plush</Filter>
+    </ClCompile>
+    <ClCompile Include="Plush\Atom.cpp">
+      <Filter>Source Files\Plush</Filter>
+    </ClCompile>
+    <ClCompile Include="PushGP\AsyncBreed.cpp">
+      <Filter>Source Files\PushGP</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

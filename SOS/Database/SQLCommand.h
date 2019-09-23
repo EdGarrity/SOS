@@ -7,7 +7,7 @@ namespace database
 {
 	const unsigned int NUMROWS_CHUNK = 1000;
 	const unsigned int MAX_PARAMETERS = 100;
-	const unsigned int MAX_ROW_LENGTH = 8000;
+	const unsigned int MAX_ROW_LENGTH = 1024 * 32; // 8000;  This field was changed from VARCHAR(8000) to TEXT.  SQL should support genomes larger than 8000 bytes
 
 	class SQLCommand
 	{
@@ -27,7 +27,7 @@ namespace database
 		ULONG           iRow_;                  // Row count
 		DBCOUNTITEM     cRowsObtained_;         // Number of rows obtained
 		IAccessor*      pIAccessor_;            // Pointer to the accessor
-		char*           pRowValues_;
+		char*           pRowValues_ = NULL;
 		HACCESSOR       hAccessor_;             // Accessor handle
 		HROW            rghRows_[NUMROWS_CHUNK];// Row handles
 
@@ -66,6 +66,7 @@ namespace database
 	public:
 		SQLCommand();
 		SQLCommand(SQLConnection * _connection);
+//		SQLCommand(SQLConnection *connection, std::string command, unsigned int _number_of_parameters_in_command);
 		SQLCommand(SQLConnection *connection, std::string command);
 		~SQLCommand();
 
@@ -76,6 +77,7 @@ namespace database
 		void commit_transaction();
 
 		void set_command(std::string _command);
+//		void set_command(std::string _command, unsigned int _number_of_parameters_in_command);
 
 		// Sets value as character string data
 		void set_as_string(unsigned int parm_no, std::string parameter);

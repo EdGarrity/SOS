@@ -26,6 +26,12 @@ namespace database
 		setup();
 	}
 
+	//SQLCommand::SQLCommand(SQLConnection * _connection, std::string _command, unsigned int _number_of_parameters_in_command) : SQLCommand(_connection)
+	//{
+	//	number_of_parameters_in_command_ = _number_of_parameters_in_command;
+	//	set_command(_command);
+	//}
+
 	SQLCommand::SQLCommand(SQLConnection * _connection, std::string _command) : SQLCommand(_connection)
 	{
 		set_command(_command);
@@ -47,6 +53,7 @@ namespace database
 
 		delete[] pDBBindings_;
 		delete[] pDBBindStatus_;
+		delete[] pRowValues_;  // May fix memory leak
 
 		g_pIMalloc->Free(pColumnsInfo_);
 		g_pIMalloc->Free(pColumnStrings_);
@@ -114,10 +121,10 @@ namespace database
 
 	void SQLCommand::set_command(std::string _command)
 	{
-		command_ = _command;
-
 		// Get count of parameters
 		number_of_parameters_in_command_ = std::count(_command.begin(), _command.end(), '?');
+
+		command_ = _command;
 
 		if (rgBindings_ != NULL)
 			CoTaskMemFree(rgBindings_);
@@ -161,6 +168,9 @@ namespace database
 	{
 		unsigned int n = parm_no - 1;
 
+		if (dwOffset_ > MAX_ROW_LENGTH)
+			throw MyException("dwOffset_ > MAX_ROW_LENGTH");
+
 		// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms725393(v=vs.85)"
 		ParamBindInfo_[n].pwszDataSourceType = wszDBTYPE_STR;
 		ParamBindInfo_[n].pwszName = NULL;
@@ -191,6 +201,9 @@ namespace database
 		// that if we allocate space for multiple rows that the data
 		// for every row is correctly aligned
 		dwOffset_ = ROUNDUP(dwOffset_);
+
+		if (dwOffset_ > MAX_ROW_LENGTH)
+			throw MyException("dwOffset_ > MAX_ROW_LENGTH");
 	}
 
 	wchar_t wszDBTYPE_I4[] = L"DBTYPE_I4";
@@ -310,7 +323,7 @@ namespace database
 		DBBINDING*  pDBBindings;
 		char*       pRowValues;
 
-		pDBBindings = new DBBINDING[nCols];
+		pDBBindings = new DBBINDING[nCols]; // Potential Memory Leak
 
 		for (nCol = 0; nCol < nCols; nCol++)
 		{
@@ -333,7 +346,7 @@ namespace database
 			cbRow += pDBBindings[nCol].cbMaxLen;
 		}
 
-		pRowValues = new char[cbRow];
+		pRowValues = new char[cbRow];	// Potential Memory Leak
 
 		*ppDBBindings = pDBBindings;
 		*ppRowValues = pRowValues;

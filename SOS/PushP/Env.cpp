@@ -13,6 +13,7 @@
 
 namespace Push
 {
+	// These should be moved to the Arguments section
 	const Parameters global_parameters =
 	{
 		1.0, -1.0, // max-min float
@@ -20,7 +21,7 @@ namespace Push
 		100,		// dataload_limit
 		1000,      // eval_limit
 		0.0001,    // new_erc_name
-		50, 200,   // max points (init/total)
+		50, 200,   // max points executed (init/total)
 		time(0)* GetCurrentProcessId() //getpid()    // seed
 	};
 

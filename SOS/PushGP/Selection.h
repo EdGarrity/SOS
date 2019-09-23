@@ -2,11 +2,13 @@
 
 #include <forward_list>
 #include <vector>
+#include <functional>
 #include "Individual.h"
+#include "..\Domain\Arguments.h"
 
 namespace pushGP
 {
-	#define Number_Of_Test_Cases (globals::population_agents[0].get_errors().size())
+	#define Number_Of_Test_Cases (pushGP::globals::population_agents[0].get_errors().size())
 
 	// Return a random permutation of a sequential range from [0 to n).
 	std::vector<unsigned int> lshuffle(unsigned int end);
@@ -17,9 +19,9 @@ namespace pushGP
 	std::tuple<double, unsigned int> mad(std::vector<double> x);
 
 	// Calculates the epsilon values for epsilon lexicase selection. Only runs once per generation.
-	void calculate_epsilons_for_epsilon_lexicase();
+//	void calculate_epsilons_for_epsilon_lexicase();
 
 	// Returns an individual that does within epsilon of the best on the fitness cases when 
 	// considered one at a time in random order.  Returns a selected parent.
-	unsigned int epsilon_lexicase_selection(int exclude);
+	unsigned int epsilon_lexicase_selection(int _number_of_test_cases, int _index_of_other_parent);
 }

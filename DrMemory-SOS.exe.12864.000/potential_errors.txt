@@ -1,0 +1,6446 @@
+Dr. Memory version 2.2.0 build 1 built on Jul  1 2019 00:40:18
+Dr. Memory errors that are likely to be false positives, for pid 12864: "SOS.exe"
+These errors matched the blacklist 'C:\WINDOWS*.d??' for 4 frames.
+Run with -lib_blacklist_frames 0 to treat these as regular errors.
+If these are all false positives and your focus is unaddressable errors, consider running with -light to skip all uninitialized reads and leaks for higher performance.
+
+Potential Error #1: UNINITIALIZED READ: reading 2 byte(s)
+system call NtUserRegisterClassExWOW parameter value #4
+    <system call>
+USER32.dll!RegisterClassExWOWW
+    ??:0
+USER32.dll!RegisterIMEClass
+    ??:0
+USER32.dll!VerNtUserCreateWindowEx
+    ??:0
+USER32.dll!CreateWindowInternal
+    ??:0
+USER32.dll!CreateWindowExW
+    ??:0
+combase.dll!CoGetModuleArchitecture
+    ??:0
+combase.dll!CoWaitForMultipleHandles
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(168):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #2: UNINITIALIZED READ: reading 4 byte(s)
+system call NtUserCreateWindowEx parameter value #14
+    <system call>
+USER32.dll!VerNtUserCreateWindowEx
+    ??:0
+USER32.dll!CreateWindowInternal
+    ??:0
+USER32.dll!CreateWindowExW
+    ??:0
+combase.dll!CoGetModuleArchitecture
+    ??:0
+combase.dll!CoWaitForMultipleHandles
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(168):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #3: UNINITIALIZED READ: reading register eax
+KERNELBASE.dll!RegGetValueW  
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoUnmarshalInterface
+    ??:0
+combase.dll!CoUnmarshalInterface
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(25):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #4: UNINITIALIZED READ: reading register eax
+KERNELBASE.dll!RegGetValueW  
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoUnmarshalInterface
+    ??:0
+combase.dll!CoUnmarshalInterface
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(25):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #5: UNINITIALIZED READ: reading register eax
+KERNELBASE.dll!RegGetValueW  
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoUnmarshalInterface
+    ??:0
+combase.dll!CoUnmarshalInterface
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(25):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #6: UNINITIALIZED READ: reading register eax
+KERNELBASE.dll!RegGetValueW  
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoUnmarshalInterface
+    ??:0
+combase.dll!CoUnmarshalInterface
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(25):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #7: UNINITIALIZED READ: reading register eax
+KERNELBASE.dll!RegGetValueW  
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoUnmarshalInterface
+    ??:0
+combase.dll!CoUnmarshalInterface
+    ??:0
+combase.dll!CLSIDFromString
+    ??:0
+combase.dll!CoGetTreatAsClass
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!RoGetActivationFactory
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoSetProxyBlanket
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!WindowsDeleteStringBuffer
+    ??:0
+combase.dll!IsErrorPropagationEnabled
+    ??:0
+combase.dll!CoTaskMemRealloc
+    ??:0
+combase.dll!Ordinal87  
+    ??:0
+combase.dll!CoSetProxyBlanket
+    ??:0
+
+Potential Error #8: UNINITIALIZED READ: reading register eax
+KERNELBASE.dll!RegGetValueW  
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoUnmarshalInterface
+    ??:0
+combase.dll!CoUnmarshalInterface
+    ??:0
+combase.dll!CLSIDFromString
+    ??:0
+combase.dll!CoGetTreatAsClass
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!RoGetActivationFactory
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoSetProxyBlanket
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!WindowsDeleteStringBuffer
+    ??:0
+combase.dll!IsErrorPropagationEnabled
+    ??:0
+combase.dll!CoTaskMemRealloc
+    ??:0
+combase.dll!Ordinal87  
+    ??:0
+combase.dll!CoSetProxyBlanket
+    ??:0
+
+Potential Error #9: UNINITIALIZED READ: reading register eax
+KERNELBASE.dll!RegGetValueW  
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoUnmarshalInterface
+    ??:0
+combase.dll!CoUnmarshalInterface
+    ??:0
+combase.dll!CLSIDFromString
+    ??:0
+combase.dll!CoGetTreatAsClass
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!RoGetActivationFactory
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoSetProxyBlanket
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!WindowsDeleteStringBuffer
+    ??:0
+combase.dll!IsErrorPropagationEnabled
+    ??:0
+combase.dll!CoTaskMemRealloc
+    ??:0
+combase.dll!Ordinal87  
+    ??:0
+
+Potential Error #10: UNINITIALIZED READ: reading register eax
+KERNELBASE.dll!RegGetValueW  
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoUnmarshalInterface
+    ??:0
+combase.dll!CoUnmarshalInterface
+    ??:0
+combase.dll!CLSIDFromString
+    ??:0
+combase.dll!CoGetTreatAsClass
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!RoGetActivationFactory
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoSetProxyBlanket
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!WindowsDeleteStringBuffer
+    ??:0
+combase.dll!IsErrorPropagationEnabled
+    ??:0
+combase.dll!CoTaskMemRealloc
+    ??:0
+combase.dll!Ordinal87  
+    ??:0
+
+Potential Error #11: UNINITIALIZED READ: reading 2 byte(s)
+system call NtDeviceIoControlFile InputBuffer
+    <system call>
+CRYPTBASE.dll!SystemFunction040
+    ??:0
+DPAPI.dll!CryptProtectMemory
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(100):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #12: UNINITIALIZED READ: reading 276 byte(s)
+system call NtDeviceIoControlFile InputBuffer
+    <system call>
+CRYPTBASE.dll!SystemFunction040
+    ??:0
+DPAPI.dll!CryptProtectMemory
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #13: UNINITIALIZED READ: reading 4 byte(s)
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!QuerySecurityPackageInfoA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #14: UNINITIALIZED READ: reading register eax
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!QuerySecurityPackageInfoA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #15: UNINITIALIZED READ: reading register r15d
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExW
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!QuerySecurityPackageInfoA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+
+Potential Error #16: UNINITIALIZED READ: reading 4 byte(s)
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExW
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!QuerySecurityPackageInfoA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+
+Potential Error #17: UNINITIALIZED READ: reading register rax
+replace_memmove
+    d:\drmemory_package\drmemory\replace.c(748):
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!QuerySecurityPackageInfoA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+
+Potential Error #18: UNINITIALIZED READ: reading register rax
+replace_memmove
+    d:\drmemory_package\drmemory\replace.c(763):
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!QuerySecurityPackageInfoA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+
+Potential Error #19: UNINITIALIZED READ: reading register rcx
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!QuerySecurityPackageInfoA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+
+Potential Error #20: UNINITIALIZED READ: reading register r10
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!QuerySecurityPackageInfoA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+
+Potential Error #21: UNINITIALIZED READ: reading 4 byte(s)
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!QuerySecurityPackageInfoA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+
+Potential Error #22: UNINITIALIZED READ: reading register r15d
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExW
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!QuerySecurityPackageInfoA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+
+Potential Error #23: UNINITIALIZED READ: reading 4 byte(s)
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExW
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!QuerySecurityPackageInfoA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+
+Potential Error #24: UNINITIALIZED READ: reading 4 byte(s)
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!QuerySecurityPackageInfoA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+
+Potential Error #25: UNINITIALIZED READ: reading register r15d
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExW
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!QuerySecurityPackageInfoA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+
+Potential Error #26: UNINITIALIZED READ: reading 4 byte(s)
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExW
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!QuerySecurityPackageInfoA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+
+Potential Error #27: UNINITIALIZED READ: reading 1 byte(s)
+CLUSAPI.dll!CluRemoveFaultDomainObject
+    ??:0
+CLUSAPI.dll!CluRemoveFaultDomainObject
+    ??:0
+CLUSAPI.dll!CluRemoveFaultDomainObject
+    ??:0
+CLUSAPI.dll!CluRemoveFaultDomainObject
+    ??:0
+CLUSAPI.dll!CluRemoveFaultDomainObject
+    ??:0
+CLUSAPI.dll!CluRemoveFaultDomainObject
+    ??:0
+CLUSAPI.dll!CluRemoveFaultDomainObject
+    ??:0
+CLUSAPI.dll!CluRemoveFaultDomainObject
+    ??:0
+CLUSAPI.dll!CluRemoveFaultDomainObject
+    ??:0
+CLUSAPI.dll!CluRemoveFaultDomainObject
+    ??:0
+CLUSAPI.dll!CluRemoveFaultDomainObject
+    ??:0
+ntdll.dll!LdrpCallInitRoutine
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+ntdll.dll!LdrpPrepareModuleForExecution
+    ??:0
+ntdll.dll!LdrpLoadDllInternal
+    ??:0
+ntdll.dll!LdrpLoadDll
+    ??:0
+ntdll.dll!LdrLoadDll
+    ??:0
+KERNELBASE.dll!LoadLibraryExW
+    ??:0
+
+Potential Error #28: UNINITIALIZED READ: reading 1 byte(s)
+RESUTILS.dll!CreateClusterStorageSpacesClustering
+    ??:0
+RESUTILS.dll!CreateClusterStorageSpacesClustering
+    ??:0
+RESUTILS.dll!CreateClusterStorageSpacesClustering
+    ??:0
+RESUTILS.dll!CreateClusterStorageSpacesClustering
+    ??:0
+RESUTILS.dll!CreateClusterStorageSpacesClustering
+    ??:0
+RESUTILS.dll!CreateClusterStorageSpacesClustering
+    ??:0
+RESUTILS.dll!CreateClusterStorageSpacesClustering
+    ??:0
+RESUTILS.dll!CreateClusterStorageSpacesClustering
+    ??:0
+RESUTILS.dll!CreateClusterStorageSpacesClustering
+    ??:0
+RESUTILS.dll!CreateClusterStorageSpacesClustering
+    ??:0
+RESUTILS.dll!CreateClusterStorageSpacesClustering
+    ??:0
+ntdll.dll!LdrpCallInitRoutine
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+ntdll.dll!LdrpPrepareModuleForExecution
+    ??:0
+ntdll.dll!LdrpLoadDllInternal
+    ??:0
+ntdll.dll!LdrpLoadDll
+    ??:0
+ntdll.dll!LdrLoadDll
+    ??:0
+KERNELBASE.dll!LoadLibraryExW
+    ??:0
+
+Potential Error #29: UNINITIALIZED READ: reading register eax
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSAStartup
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+
+Potential Error #30: UNINITIALIZED READ: reading register eax
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSAStartup
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+
+Potential Error #31: UNINITIALIZED READ: reading register r15d
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSAStartup
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+
+Potential Error #32: UNINITIALIZED READ: reading 4 byte(s)
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSAStartup
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+
+Potential Error #33: UNINITIALIZED READ: reading register ecx
+ntdll.dll!RtlUnicodeToMultiByteN
+    ??:0
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSAStartup
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+
+Potential Error #34: UNINITIALIZED READ: reading register eax
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSAStartup
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #35: UNINITIALIZED READ: reading register eflags
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSAStartup
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #36: UNINITIALIZED READ: reading 4 byte(s)
+replace_memset 
+    d:\drmemory_package\drmemory\replace.c(200):
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSAStartup
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #37: UNINITIALIZED READ: reading register r15d
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExW
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSAStartup
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+
+Potential Error #38: UNINITIALIZED READ: reading 4 byte(s)
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExW
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSAStartup
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+
+Potential Error #39: UNINITIALIZED READ: reading register eax
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSAStartup
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+
+Potential Error #40: UNINITIALIZED READ: reading 4 byte(s)
+system call NtQueryValueKey parameter value #4
+    <system call>
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSAStartup
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+
+Potential Error #41: UNINITIALIZED READ: reading register eax
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSAStartup
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+
+Potential Error #42: UNINITIALIZED READ: reading register r15d
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSAStartup
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+
+Potential Error #43: UNINITIALIZED READ: reading 4 byte(s)
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSAStartup
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+
+Potential Error #44: UNINITIALIZED READ: reading register eax
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #45: UNINITIALIZED READ: reading register ecx
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #46: UNINITIALIZED READ: reading register r15d
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+
+Potential Error #47: UNINITIALIZED READ: reading 4 byte(s)
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+
+Potential Error #48: UNINITIALIZED READ: reading register eax
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+
+Potential Error #49: UNINITIALIZED READ: reading register eax
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #50: UNINITIALIZED READ: reading register ecx
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #51: UNINITIALIZED READ: reading register r15d
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+
+Potential Error #52: UNINITIALIZED READ: reading 4 byte(s)
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+
+Potential Error #53: UNINITIALIZED READ: reading register ecx
+ntdll.dll!RtlUnicodeToMultiByteN
+    ??:0
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+
+Potential Error #54: UNINITIALIZED READ: reading 4 byte(s)
+system call NtDeviceIoControlFile InputBuffer
+    <system call>
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+bcrypt.dll!BCryptResolveProviders
+    ??:0
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+ncryptsslp.dll!?             
+    ??:0
+ncryptsslp.dll!?             
+    ??:0
+ncryptsslp.dll!?             
+    ??:0
+ncrypt.dll!SslOpenProvider
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!SpLsaModeInitialize
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!InitializeSecurityContextA
+    ??:0
+
+Potential Error #55: UNINITIALIZED READ: reading 4 byte(s)
+system call NtDeviceIoControlFile InputBuffer
+    <system call>
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+bcrypt.dll!BCryptResolveProviders
+    ??:0
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+ncryptsslp.dll!?             
+    ??:0
+ncryptsslp.dll!?             
+    ??:0
+ncryptsslp.dll!?             
+    ??:0
+ncrypt.dll!SslOpenProvider
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!SpLsaModeInitialize
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!InitializeSecurityContextA
+    ??:0
+
+Potential Error #56: UNINITIALIZED READ: reading 4 byte(s)
+system call NtDeviceIoControlFile InputBuffer
+    <system call>
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+bcrypt.dll!BCryptResolveProviders
+    ??:0
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+ncryptsslp.dll!?             
+    ??:0
+ncryptsslp.dll!?             
+    ??:0
+ncryptsslp.dll!?             
+    ??:0
+ncrypt.dll!SslImportKey
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!InitializeSecurityContextA
+    ??:0
+SspiCli.dll!InitializeSecurityContextW
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+
+Potential Error #57: UNINITIALIZED READ: reading register ecx
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+bcrypt.dll!BCryptResolveProviders
+    ??:0
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+ncryptsslp.dll!?             
+    ??:0
+ncryptsslp.dll!?             
+    ??:0
+ncryptsslp.dll!?             
+    ??:0
+ncrypt.dll!SslImportKey
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!InitializeSecurityContextA
+    ??:0
+SspiCli.dll!InitializeSecurityContextW
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+
+Potential Error #58: UNINITIALIZED READ: reading register edx
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+bcrypt.dll!BCryptResolveProviders
+    ??:0
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+ncryptsslp.dll!?             
+    ??:0
+ncryptsslp.dll!?             
+    ??:0
+ncryptsslp.dll!?             
+    ??:0
+ncrypt.dll!SslImportKey
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!InitializeSecurityContextA
+    ??:0
+SspiCli.dll!InitializeSecurityContextW
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+
+Potential Error #59: UNINITIALIZED READ: reading register edi
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+bcrypt.dll!BCryptResolveProviders
+    ??:0
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+ncryptsslp.dll!?             
+    ??:0
+ncryptsslp.dll!?             
+    ??:0
+ncryptsslp.dll!?             
+    ??:0
+ncrypt.dll!SslImportKey
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!InitializeSecurityContextA
+    ??:0
+SspiCli.dll!InitializeSecurityContextW
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+
+Potential Error #60: UNINITIALIZED READ: reading 4 byte(s)
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+bcrypt.dll!BCryptResolveProviders
+    ??:0
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+ncryptsslp.dll!?             
+    ??:0
+ncryptsslp.dll!?             
+    ??:0
+ncryptsslp.dll!?             
+    ??:0
+ncrypt.dll!SslImportKey
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SCHANNEL.dll!?           
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!InitializeSecurityContextA
+    ??:0
+SspiCli.dll!InitializeSecurityContextW
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+
+Potential Error #61: UNINITIALIZED READ: reading 4 byte(s)
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #62: UNINITIALIZED READ: reading 2 byte(s)
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::execute
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(407):
+domain::learn_from_examples::load_example_cases
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(77):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(704):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #63: UNINITIALIZED READ: reading register eax
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(89):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+std::basic_string<>::_Construct_lv_contents
+    ??:0
+
+Potential Error #64: UNINITIALIZED READ: reading register ecx
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(89):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+std::basic_string<>::_Construct_lv_contents
+    ??:0
+
+Potential Error #65: UNINITIALIZED READ: reading register r15d
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(89):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+
+Potential Error #66: UNINITIALIZED READ: reading 4 byte(s)
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(89):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+
+Potential Error #67: UNINITIALIZED READ: reading register eax
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(89):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+
+Potential Error #68: UNINITIALIZED READ: reading register eax
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(89):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+std::basic_string<>::_Construct_lv_contents
+    ??:0
+
+Potential Error #69: UNINITIALIZED READ: reading register ecx
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(89):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+std::basic_string<>::_Construct_lv_contents
+    ??:0
+
+Potential Error #70: UNINITIALIZED READ: reading register r15d
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(89):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+
+Potential Error #71: UNINITIALIZED READ: reading 4 byte(s)
+KERNELBASE.dll!LocalBaseRegQueryValue
+    ??:0
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(89):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+
+Potential Error #72: UNINITIALIZED READ: reading register ecx
+ntdll.dll!RtlUnicodeToMultiByteN
+    ??:0
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(89):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+
+Potential Error #73: UNINITIALIZED READ: reading 4 byte(s)
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(89):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+std::basic_string<>::_Construct_lv_contents
+    ??:0
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(29):
+std::basic_string<>::basic_string<>
+    ??:0
+domain::learn_from_examples::get_last_saved_generation_number
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(49):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(711):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #74: UNINITIALIZED READ: reading 2 byte(s)
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::execute
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(407):
+domain::learn_from_examples::get_last_saved_generation_number
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(51):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(711):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #75: UNINITIALIZED READ: reading 4 byte(s)
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(89):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+std::basic_string<>::_Construct_lv_contents
+    ??:0
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(29):
+std::basic_string<>::basic_string<>
+    ??:0
+domain::learn_from_examples::load_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(376):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #76: UNINITIALIZED READ: reading 2 byte(s)
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::execute
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(407):
+domain::learn_from_examples::load_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(380):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #77: UNINITIALIZED READ: reading 4 byte(s)
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(89):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+std::basic_string<>::_Construct_lv_contents
+    ??:0
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(29):
+std::basic_string<>::basic_string<>
+    ??:0
+domain::learn_from_examples::save_generation
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(451):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(721):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #78: UNINITIALIZED READ: reading register eax
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(89):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+domain::learn_from_examples::save_generation
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(452):
+
+Potential Error #79: UNINITIALIZED READ: reading register ecx
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(89):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+domain::learn_from_examples::save_generation
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(452):
+
+Potential Error #80: UNINITIALIZED READ: reading register eax
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(89):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+domain::learn_from_examples::save_generation
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(452):
+
+Potential Error #81: UNINITIALIZED READ: reading register ecx
+KERNELBASE.dll!RegQueryValueExA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(89):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+domain::learn_from_examples::save_generation
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(452):
+
+Potential Error #82: UNINITIALIZED READ: reading 4 byte(s)
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(89):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+domain::learn_from_examples::save_generation
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(452):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(721):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #83: UNINITIALIZED READ: reading 2 byte(s)
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::execute
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(407):
+database::SQLCommand::execute
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(487):
+std::basic_string<>::basic_string<>
+    ??:0
+domain::learn_from_examples::save_generation
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(458):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(721):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #84: UNINITIALIZED READ: reading 2 byte(s)
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::execute
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(400):
+domain::learn_from_examples::save_generation
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(466):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(721):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #85: UNINITIALIZED READ: reading 4 byte(s)
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(89):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+std::basic_string<>::_Construct_lv_contents
+    ??:0
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(29):
+std::basic_string<>::basic_string<>
+    ??:0
+domain::learn_from_examples::generate_status_report
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(666):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(776):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #86: UNINITIALIZED READ: reading 2 byte(s)
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::execute
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(400):
+domain::learn_from_examples::generate_status_report
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(684):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(776):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #87: LEAK 528 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+combase.dll!Ordinal112 
+    ??:0
+combase.dll!Ordinal112 
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(168):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #88: POSSIBLE LEAK 48 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+combase.dll!Ordinal112 
+    ??:0
+combase.dll!Ordinal112 
+    ??:0
+combase.dll!Ordinal112 
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(168):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #89: POSSIBLE LEAK 24 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+ntdll.dll!LdrpHandleTlsData
+    ??:0
+ntdll.dll!LdrpDoPostSnapWork
+    ??:0
+ntdll.dll!LdrpSnapModule
+    ??:0
+ntdll.dll!LdrpMapAndSnapDependency
+    ??:0
+ntdll.dll!LdrpMapDllWithSectionHandle
+    ??:0
+ntdll.dll!LdrpMapDllNtFileName
+    ??:0
+ntdll.dll!LdrpMapDllFullPath
+    ??:0
+ntdll.dll!LdrpProcessWork
+    ??:0
+ntdll.dll!LdrpLoadDllInternal
+    ??:0
+ntdll.dll!LdrpLoadDll
+    ??:0
+ntdll.dll!LdrLoadDll
+    ??:0
+
+Potential Error #90: POSSIBLE LEAK 28 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+ntdll.dll!LdrpHandleTlsData
+    ??:0
+ntdll.dll!LdrpDoPostSnapWork
+    ??:0
+ntdll.dll!LdrpSnapModule
+    ??:0
+ntdll.dll!LdrpProcessWork
+    ??:0
+ntdll.dll!LdrpDrainWorkQueue
+    ??:0
+ntdll.dll!LdrpLoadDllInternal
+    ??:0
+ntdll.dll!LdrpLoadDll
+    ??:0
+ntdll.dll!LdrLoadDll
+    ??:0
+KERNELBASE.dll!LoadLibraryExW
+    ??:0
+combase.dll!NdrExtStubInitialize
+    ??:0
+combase.dll!NdrExtStubInitialize
+    ??:0
+
+Potential Error #91: POSSIBLE LEAK 152 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+ntdll.dll!LdrpGetNewTlsVector
+    ??:0
+ntdll.dll!LdrpHandleTlsData
+    ??:0
+ntdll.dll!LdrpDoPostSnapWork
+    ??:0
+ntdll.dll!LdrpSnapModule
+    ??:0
+ntdll.dll!LdrpProcessWork
+    ??:0
+ntdll.dll!LdrpDrainWorkQueue
+    ??:0
+ntdll.dll!LdrpLoadDllInternal
+    ??:0
+ntdll.dll!LdrpLoadDll
+    ??:0
+ntdll.dll!LdrLoadDll
+    ??:0
+KERNELBASE.dll!LoadLibraryExW
+    ??:0
+combase.dll!NdrExtStubInitialize
+    ??:0
+
+Potential Error #92: LEAK 152 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+ntdll.dll!LdrpGetNewTlsVector
+    ??:0
+ntdll.dll!LdrpHandleTlsData
+    ??:0
+ntdll.dll!LdrpDoPostSnapWork
+    ??:0
+ntdll.dll!LdrpSnapModule
+    ??:0
+ntdll.dll!LdrpProcessWork
+    ??:0
+ntdll.dll!LdrpDrainWorkQueue
+    ??:0
+ntdll.dll!LdrpLoadDllInternal
+    ??:0
+ntdll.dll!LdrpLoadDll
+    ??:0
+ntdll.dll!LdrLoadDll
+    ??:0
+KERNELBASE.dll!LoadLibraryExW
+    ??:0
+combase.dll!NdrExtStubInitialize
+    ??:0
+
+Potential Error #93: POSSIBLE LEAK 24 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+ntdll.dll!LdrpHandleTlsData
+    ??:0
+ntdll.dll!LdrpDoPostSnapWork
+    ??:0
+ntdll.dll!LdrpSnapModule
+    ??:0
+ntdll.dll!LdrpMapAndSnapDependency
+    ??:0
+ntdll.dll!LdrpMapDllWithSectionHandle
+    ??:0
+ntdll.dll!LdrpLoadKnownDll
+    ??:0
+ntdll.dll!LdrpFindOrPrepareLoadingModule
+    ??:0
+ntdll.dll!LdrpLoadDllInternal
+    ??:0
+ntdll.dll!LdrpInitializeDllPath
+    ??:0
+ntdll.dll!LdrLoadDll
+    ??:0
+KERNELBASE.dll!LoadLibraryExW
+    ??:0
+
+Potential Error #94: LEAK 256 direct bytes + 768 indirect bytes
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+ntdll.dll!EtwpAllocateRegistration
+    ??:0
+ntdll.dll!EtwNotificationRegister
+    ??:0
+ntdll.dll!EtwEventRegister
+    ??:0
+ntdll.dll!TraceLoggingRegisterEx
+    ??:0
+ntdll.dll!LdrpLogRelativePathWithAlteredSearchError
+    ??:0
+ntdll.dll!LdrpGetDllPath
+    ??:0
+ntdll.dll!LdrpComputeLazyDllPath
+    ??:0
+ntdll.dll!LdrpSearchPath
+    ??:0
+ntdll.dll!LdrpMapDllSearchPath
+    ??:0
+ntdll.dll!LdrpProcessWork
+    ??:0
+ntdll.dll!LdrpLoadDllInternal
+    ??:0
+
+Potential Error #95: LEAK 32 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!SysAllocString
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoSetProxyBlanket
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!WindowsDeleteStringBuffer
+    ??:0
+combase.dll!IsErrorPropagationEnabled
+    ??:0
+
+Potential Error #96: LEAK 32 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!SysAllocString
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoSetProxyBlanket
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!WindowsDeleteStringBuffer
+    ??:0
+combase.dll!IsErrorPropagationEnabled
+    ??:0
+
+Potential Error #97: LEAK 32 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!VariantCopy 
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(100):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #98: LEAK 32 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!SysAllocStringByteLen
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(100):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #99: LEAK 32 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!SysAllocStringByteLen
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #100: LEAK 32 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!SysAllocStringByteLen
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #101: LEAK 256 direct bytes + 512 indirect bytes
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+ntdll.dll!EtwpAllocateRegistration
+    ??:0
+ntdll.dll!EtwNotificationRegister
+    ??:0
+ntdll.dll!EtwEventRegister
+    ??:0
+RPCRT4.dll!RpcServerUnregisterIf
+    ??:0
+RPCRT4.dll!RpcStringBindingComposeW
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!GetUserNameExW
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+
+Potential Error #102: LEAK 32 direct bytes + 1464 indirect bytes
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+RPCRT4.dll!RpcBindingVectorFree
+    ??:0
+RPCRT4.dll!NdrServerCallAll
+    ??:0
+RPCRT4.dll!NdrMesSimpleTypeEncodeAll
+    ??:0
+RPCRT4.dll!NdrClientCall3
+    ??:0
+RPCRT4.dll!NdrClientCall3
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!GetUserNameExW
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+
+Potential Error #103: POSSIBLE LEAK 360 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+ntdll.dll!TpAllocTimer
+    ??:0
+KERNELBASE.dll!CreateThreadpoolTimer
+    ??:0
+Kerberos.dll!Kerberos    
+    ??:0
+Kerberos.dll!KerbMakeKdcCall
+    ??:0
+Kerberos.dll!DllMain     
+    ??:0
+Kerberos.dll!SpInstanceInit
+    ??:0
+ntdll.dll!LdrpCallInitRoutine
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+ntdll.dll!LdrpPrepareModuleForExecution
+    ??:0
+
+Potential Error #104: POSSIBLE LEAK 360 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+ntdll.dll!TpAllocTimer
+    ??:0
+KERNELBASE.dll!CreateThreadpoolTimer
+    ??:0
+msv1_0.dll!SpInstanceInit
+    ??:0
+msv1_0.dll!MsvIsIpAddressLocal
+    ??:0
+msv1_0.dll!DllMain   
+    ??:0
+msv1_0.dll!LsaApInitializePackage
+    ??:0
+ntdll.dll!LdrpCallInitRoutine
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+ntdll.dll!LdrpPrepareModuleForExecution
+    ??:0
+
+Potential Error #105: POSSIBLE LEAK 24 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+ntdll.dll!LdrpHandleTlsData
+    ??:0
+ntdll.dll!LdrpDoPostSnapWork
+    ??:0
+ntdll.dll!LdrpSnapModule
+    ??:0
+ntdll.dll!LdrpProcessWork
+    ??:0
+ntdll.dll!LdrpDrainWorkQueue
+    ??:0
+ntdll.dll!LdrpLoadDllInternal
+    ??:0
+ntdll.dll!RtlpLocateActivationContextSection
+    ??:0
+ntdll.dll!LdrpGetDelayloadExportDll
+    ??:0
+ntdll.dll!LdrpHandleProtectedDelayload
+    ??:0
+ntdll.dll!LdrResolveDelayLoadedAPI
+    ??:0
+UxTheme.dll!SetWindowThemeAttribute
+    ??:0
+
+Potential Error #106: POSSIBLE LEAK 24 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+ntdll.dll!LdrpHandleTlsData
+    ??:0
+ntdll.dll!LdrpDoPostSnapWork
+    ??:0
+ntdll.dll!LdrpSnapModule
+    ??:0
+ntdll.dll!LdrpProcessWork
+    ??:0
+ntdll.dll!LdrpDrainWorkQueue
+    ??:0
+ntdll.dll!LdrpLoadDllInternal
+    ??:0
+ntdll.dll!LdrpLoadDll
+    ??:0
+ntdll.dll!LdrLoadDll
+    ??:0
+KERNELBASE.dll!LoadLibraryExW
+    ??:0
+KERNELBASE.dll!LoadLibraryExA
+    ??:0
+KERNELBASE.dll!LoadLibraryA  
+    ??:0
+
+Potential Error #107: LEAK 32 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!VariantCopy 
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::execute
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(407):
+domain::learn_from_examples::load_example_cases
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(77):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(704):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #108: LEAK 32 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!SysAllocString
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(89):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+std::basic_string<>::_Construct_lv_contents
+    ??:0
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(29):
+
+Potential Error #109: LEAK 16 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!SysAllocString
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(95):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+std::basic_string<>::_Construct_lv_contents
+    ??:0
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(29):
+std::basic_string<>::basic_string<>
+    ??:0
+domain::learn_from_examples::get_last_saved_generation_number
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(49):
+
+Potential Error #110: LEAK 16 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!SysAllocString
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(95):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+std::basic_string<>::_Construct_lv_contents
+    ??:0
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(29):
+std::basic_string<>::basic_string<>
+    ??:0
+domain::learn_from_examples::get_last_saved_generation_number
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(49):
+
+Potential Error #111: LEAK 32 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!SysAllocString
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(95):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+std::basic_string<>::_Construct_lv_contents
+    ??:0
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(29):
+std::basic_string<>::basic_string<>
+    ??:0
+domain::learn_from_examples::get_last_saved_generation_number
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(49):
+
+Potential Error #112: LEAK 16 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!VariantCopy 
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::execute
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(407):
+domain::learn_from_examples::get_last_saved_generation_number
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(51):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(711):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #113: LEAK 16 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!SysAllocString
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(95):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+std::basic_string<>::_Construct_lv_contents
+    ??:0
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(29):
+std::basic_string<>::basic_string<>
+    ??:0
+domain::learn_from_examples::load_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(376):
+
+Potential Error #114: LEAK 16 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!SysAllocString
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(95):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+std::basic_string<>::_Construct_lv_contents
+    ??:0
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(29):
+std::basic_string<>::basic_string<>
+    ??:0
+domain::learn_from_examples::load_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(376):
+
+Potential Error #115: LEAK 32 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!SysAllocString
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(95):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+std::basic_string<>::_Construct_lv_contents
+    ??:0
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(29):
+std::basic_string<>::basic_string<>
+    ??:0
+domain::learn_from_examples::load_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(376):
+
+Potential Error #116: LEAK 16 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!VariantCopy 
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::execute
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(407):
+domain::learn_from_examples::load_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(380):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(712):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #117: LEAK 32 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!SysAllocString
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(95):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+std::basic_string<>::_Construct_lv_contents
+    ??:0
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(29):
+std::basic_string<>::basic_string<>
+    ??:0
+domain::learn_from_examples::save_generation
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(451):
+
+Potential Error #118: LEAK 32 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!SysAllocString
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(89):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+domain::learn_from_examples::save_generation
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(452):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(721):
+
+Potential Error #119: LEAK 16 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!SysAllocString
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(95):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+domain::learn_from_examples::save_generation
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(452):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(721):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #120: LEAK 16 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!SysAllocString
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(95):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+domain::learn_from_examples::save_generation
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(452):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(721):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #121: LEAK 32 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!SysAllocString
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(95):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+domain::learn_from_examples::save_generation
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(452):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(721):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #122: LEAK 16 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+OLEAUT32.dll!SysAllocString
+    ??:0
+OLEAUT32.dll!VariantCopy 
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::execute
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(407):
+database::SQLCommand::execute
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(487):
+std::basic_string<>::basic_string<>
+    ??:0
+domain::learn_from_examples::save_generation
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(458):
+
+Potential Error #123: LEAK 160 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3771):
+UxTheme.dll!BufferedPaintUnInit
+    ??:0
+UxTheme.dll!BufferedPaintUnInit
+    ??:0
+UxTheme.dll!GetThemeAppProperties
+    ??:0
+USER32.dll!SystemParametersInfoW
+    ??:0
+COMCTL32.dll!CreateMappedBitmap
+    ??:0
+COMCTL32.dll!GetEffectiveClientRect
+    ??:0
+COMCTL32.dll!GetEffectiveClientRect
+    ??:0
+COMCTL32.dll!ImageList_GetFlags
+    ??:0
+ntdll.dll!LdrpCallInitRoutine
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+
+Potential Error #124: HANDLE LEAK: KERNEL handle 0x0000000000000110 and 0 similar handle(s) were opened but not closed:
+system call NtUserGetProcessWindowStation
+    <system call>
+UxTheme.dll!GetThemeTextExtent
+    ??:0
+UxTheme.dll!Ordinal119 
+    ??:0
+UxTheme.dll!ThemeInitApiHook
+    ??:0
+USER32.dll!InitUserApiHook
+    ??:0
+USER32.dll!_ClientLoadLibrary
+    ??:0
+USER32.dll!VerNtUserCreateWindowEx
+    ??:0
+USER32.dll!CreateWindowInternal
+    ??:0
+USER32.dll!CreateWindowExW
+    ??:0
+combase.dll!CoGetModuleArchitecture
+    ??:0
+combase.dll!CoWaitForMultipleHandles
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(168):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #125: HANDLE LEAK: KERNEL handle 0x0000000000000198 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+KERNELBASE.dll!CreateEventW  
+    ??:0
+combase.dll!Ordinal112 
+    ??:0
+combase.dll!Ordinal112 
+    ??:0
+combase.dll!Ordinal112 
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(168):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #126: HANDLE LEAK: KERNEL handle 0x000000000000019c and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+KERNELBASE.dll!CreateEventW  
+    ??:0
+combase.dll!Ordinal112 
+    ??:0
+combase.dll!Ordinal112 
+    ??:0
+combase.dll!Ordinal112 
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(168):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #127: HANDLE LEAK: KERNEL handle 0x00000000000001bc and 0 similar handle(s) were opened but not closed:
+system call NtCreateThreadEx
+    <system call>
+KERNELBASE.dll!CreateRemoteThreadEx
+    ??:0
+KERNEL32.dll!CreateThreadStub
+    ??:0
+MsgHook64.dll!?            
+    ??:0
+MsgHook64.dll!MsgRetHookProc
+    ??:0
+USER32.dll!DispatchHookA
+    ??:0
+USER32.dll!fnHkINLPCWPRETSTRUCTA
+    ??:0
+USER32.dll!__fnINLPCREATESTRUCT
+    ??:0
+USER32.dll!VerNtUserCreateWindowEx
+    ??:0
+USER32.dll!CreateWindowInternal
+    ??:0
+USER32.dll!CreateWindowExW
+    ??:0
+combase.dll!CoGetModuleArchitecture
+    ??:0
+combase.dll!CoWaitForMultipleHandles
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(168):
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #128: HANDLE LEAK: KERNEL handle 0x00000000000001e8 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+KERNELBASE.dll!CreateEventW  
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoUnmarshalInterface
+    ??:0
+combase.dll!CoUnmarshalInterface
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(25):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #129: HANDLE LEAK: KERNEL handle 0x00000000000001ec and 0 similar handle(s) were opened but not closed:
+system call NtOpenKeyEx
+    <system call>
+KERNELBASE.dll!LocalBaseRegOpenKey
+    ??:0
+KERNELBASE.dll!RegOpenKeyExInternalW
+    ??:0
+KERNELBASE.dll!RegOpenKeyExW 
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoUnmarshalInterface
+    ??:0
+combase.dll!CoUnmarshalInterface
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(25):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #130: HANDLE LEAK: KERNEL handle 0x00000000000001f4 and 0 similar handle(s) were opened but not closed:
+system call NtCreateMutant
+    <system call>
+KERNELBASE.dll!CreateMutexExW
+    ??:0
+combase.dll!CStdStubBuffer_AddRef
+    ??:0
+combase.dll!WindowsPreallocateStringBuffer
+    ??:0
+combase.dll!CoGetInterfaceAndReleaseStream
+    ??:0
+combase.dll!WindowsPreallocateStringBuffer
+    ??:0
+combase.dll!CLSIDFromString
+    ??:0
+combase.dll!CLSIDFromString
+    ??:0
+combase.dll!CLSIDFromString
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+combase.dll!CoUnmarshalInterface
+    ??:0
+combase.dll!CoUnmarshalInterface
+    ??:0
+combase.dll!CLSIDFromString
+    ??:0
+combase.dll!CoGetTreatAsClass
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!RoGetActivationFactory
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+
+Potential Error #131: HANDLE LEAK: KERNEL handle 0x0000000000000200 and 0 similar handle(s) were opened but not closed:
+system call NtOpenKey
+    <system call>
+KERNELBASE.dll!RegOpenUserClassesRoot
+    ??:0
+combase.dll!StringFromGUID2
+    ??:0
+combase.dll!CoGetTreatAsClass
+    ??:0
+combase.dll!CoGetTreatAsClass
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!RoGetActivationFactory
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoSetProxyBlanket
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!WindowsDeleteStringBuffer
+    ??:0
+combase.dll!IsErrorPropagationEnabled
+    ??:0
+combase.dll!CoTaskMemRealloc
+    ??:0
+combase.dll!Ordinal87  
+    ??:0
+combase.dll!CoSetProxyBlanket
+    ??:0
+combase.dll!Ordinal87  
+    ??:0
+combase.dll!CoSetProxyBlanket
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+
+Potential Error #132: HANDLE LEAK: KERNEL handle 0x0000000000000218 and 0 similar handle(s) were opened but not closed:
+system call NtOpenFile
+    <system call>
+ntdll.dll!RtlpProbeAssemblyStorageRootForAssembly
+    ??:0
+ntdll.dll!RtlpResolveAssemblyStorageMapEntry
+    ??:0
+ntdll.dll!RtlGetAssemblyStorageRoot
+    ??:0
+ntdll.dll!sxsisol_SearchActCtxForDllName
+    ??:0
+ntdll.dll!RtlDosApplyFileIsolationRedirection_Ustr
+    ??:0
+ntdll.dll!LdrpLoadDependentModule
+    ??:0
+ntdll.dll!LdrpMapAndSnapDependency
+    ??:0
+ntdll.dll!LdrpMapAndSnapDependency
+    ??:0
+ntdll.dll!LdrpMapDllWithSectionHandle
+    ??:0
+ntdll.dll!LdrpLoadKnownDll
+    ??:0
+ntdll.dll!LdrpLoadDependentModule
+    ??:0
+ntdll.dll!LdrpMapAndSnapDependency
+    ??:0
+ntdll.dll!LdrpMapAndSnapDependency
+    ??:0
+ntdll.dll!LdrpMapDllWithSectionHandle
+    ??:0
+ntdll.dll!LdrpMapDllNtFileName
+    ??:0
+ntdll.dll!LdrpMapDllFullPath
+    ??:0
+ntdll.dll!LdrpProcessWork
+    ??:0
+ntdll.dll!LdrpLoadDllInternal
+    ??:0
+ntdll.dll!LdrpLoadDll
+    ??:0
+
+Potential Error #133: HANDLE LEAK: KERNEL handle 0x0000000000000240 and 0 similar handle(s) were opened but not closed:
+system call NtOpenSection
+    <system call>
+UxTheme.dll!Ordinal119 
+    ??:0
+UxTheme.dll!Ordinal119 
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+UxTheme.dll!Ordinal126 
+    ??:0
+UxTheme.dll!EndBufferedPaint
+    ??:0
+UxTheme.dll!BufferedPaintUnInit
+    ??:0
+UxTheme.dll!GetThemeAppProperties
+    ??:0
+USER32.dll!SystemParametersInfoW
+    ??:0
+COMCTL32.dll!CreateMappedBitmap
+    ??:0
+COMCTL32.dll!GetEffectiveClientRect
+    ??:0
+COMCTL32.dll!GetEffectiveClientRect
+    ??:0
+COMCTL32.dll!ImageList_GetFlags
+    ??:0
+ntdll.dll!LdrpCallInitRoutine
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+
+Potential Error #134: HANDLE LEAK: KERNEL handle 0x0000000000000244 and 0 similar handle(s) were opened but not closed:
+system call NtOpenSection
+    <system call>
+UxTheme.dll!Ordinal119 
+    ??:0
+UxTheme.dll!Ordinal119 
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+UxTheme.dll!Ordinal126 
+    ??:0
+UxTheme.dll!EndBufferedPaint
+    ??:0
+UxTheme.dll!BufferedPaintUnInit
+    ??:0
+UxTheme.dll!GetThemeAppProperties
+    ??:0
+USER32.dll!SystemParametersInfoW
+    ??:0
+COMCTL32.dll!CreateMappedBitmap
+    ??:0
+COMCTL32.dll!GetEffectiveClientRect
+    ??:0
+COMCTL32.dll!GetEffectiveClientRect
+    ??:0
+COMCTL32.dll!ImageList_GetFlags
+    ??:0
+ntdll.dll!LdrpCallInitRoutine
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+
+Potential Error #135: HANDLE LEAK: KERNEL handle 0x00000000000002c0 and 0 similar handle(s) were opened but not closed:
+system call NtOpenKey
+    <system call>
+KERNEL32.dll!OpenSortIdKey
+    ??:0
+KERNEL32.dll!FindSortId  
+    ??:0
+KERNEL32.dll!InternalSortGetHandle
+    ??:0
+KERNEL32.dll!SortGetHandle
+    ??:0
+KERNELBASE.dll!GetSortVersionHandle
+    ??:0
+KERNELBASE.dll!MakeSortHashNode
+    ??:0
+KERNELBASE.dll!CompareStringW
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+MSVCR100.dll!initterm    
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+ntdll.dll!LdrpCallInitRoutine
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+ntdll.dll!LdrpPrepareModuleForExecution
+    ??:0
+ntdll.dll!LdrpLoadDllInternal
+    ??:0
+
+Potential Error #136: HANDLE LEAK: KERNEL handle 0x00000000000002c4 and 0 similar handle(s) were opened but not closed:
+system call NtCreateFile
+    <system call>
+netbios.dll!?          
+    ??:0
+netbios.dll!Netbios    
+    ??:0
+NETAPI32.dll!Netbios     
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllGetClassObject
+    ??:0
+combase.dll!RoGetServerActivatableClasses
+    ??:0
+combase.dll!RoGetServerActivatableClasses
+    ??:0
+combase.dll!RoGetServerActivatableClasses
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoSetProxyBlanket
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!WindowsDeleteStringBuffer
+    ??:0
+combase.dll!IsErrorPropagationEnabled
+    ??:0
+combase.dll!CoTaskMemRealloc
+    ??:0
+
+Potential Error #137: HANDLE LEAK: KERNEL handle 0x00000000000002c8 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+netbios.dll!Netbios    
+    ??:0
+NETAPI32.dll!Netbios     
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllGetClassObject
+    ??:0
+combase.dll!RoGetServerActivatableClasses
+    ??:0
+combase.dll!RoGetServerActivatableClasses
+    ??:0
+combase.dll!RoGetServerActivatableClasses
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoSetProxyBlanket
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!WindowsDeleteStringBuffer
+    ??:0
+combase.dll!IsErrorPropagationEnabled
+    ??:0
+combase.dll!CoTaskMemRealloc
+    ??:0
+combase.dll!Ordinal87  
+    ??:0
+
+Potential Error #138: HANDLE LEAK: KERNEL handle 0x00000000000002d4 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+netbios.dll!Netbios    
+    ??:0
+NETAPI32.dll!Netbios     
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllGetClassObject
+    ??:0
+combase.dll!RoGetServerActivatableClasses
+    ??:0
+combase.dll!RoGetServerActivatableClasses
+    ??:0
+combase.dll!RoGetServerActivatableClasses
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoSetProxyBlanket
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!WindowsDeleteStringBuffer
+    ??:0
+combase.dll!IsErrorPropagationEnabled
+    ??:0
+combase.dll!CoTaskMemRealloc
+    ??:0
+combase.dll!Ordinal87  
+    ??:0
+
+Potential Error #139: HANDLE LEAK: KERNEL handle 0x00000000000002d8 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+netbios.dll!Netbios    
+    ??:0
+NETAPI32.dll!Netbios     
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllGetClassObject
+    ??:0
+combase.dll!RoGetServerActivatableClasses
+    ??:0
+combase.dll!RoGetServerActivatableClasses
+    ??:0
+combase.dll!RoGetServerActivatableClasses
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoSetProxyBlanket
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!WindowsDeleteStringBuffer
+    ??:0
+combase.dll!IsErrorPropagationEnabled
+    ??:0
+combase.dll!CoTaskMemRealloc
+    ??:0
+combase.dll!Ordinal87  
+    ??:0
+
+Potential Error #140: HANDLE LEAK: KERNEL handle 0x00000000000002dc and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+netbios.dll!Netbios    
+    ??:0
+NETAPI32.dll!Netbios     
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllGetClassObject
+    ??:0
+combase.dll!RoGetServerActivatableClasses
+    ??:0
+combase.dll!RoGetServerActivatableClasses
+    ??:0
+combase.dll!RoGetServerActivatableClasses
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoSetProxyBlanket
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!WindowsDeleteStringBuffer
+    ??:0
+combase.dll!IsErrorPropagationEnabled
+    ??:0
+combase.dll!CoTaskMemRealloc
+    ??:0
+combase.dll!Ordinal87  
+    ??:0
+
+Potential Error #141: HANDLE LEAK: KERNEL handle 0x00000000000002e0 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+netbios.dll!Netbios    
+    ??:0
+NETAPI32.dll!Netbios     
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllGetClassObject
+    ??:0
+combase.dll!RoGetServerActivatableClasses
+    ??:0
+combase.dll!RoGetServerActivatableClasses
+    ??:0
+combase.dll!RoGetServerActivatableClasses
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoSetProxyBlanket
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!WindowsDeleteStringBuffer
+    ??:0
+combase.dll!IsErrorPropagationEnabled
+    ??:0
+combase.dll!CoTaskMemRealloc
+    ??:0
+combase.dll!Ordinal87  
+    ??:0
+
+Potential Error #142: HANDLE LEAK: KERNEL handle 0x00000000000002e4 and 0 similar handle(s) were opened but not closed:
+system call NtCreateThreadEx
+    <system call>
+KERNELBASE.dll!CreateRemoteThreadEx
+    ??:0
+KERNEL32.dll!CreateThreadStub
+    ??:0
+netbios.dll!Netbios    
+    ??:0
+NETAPI32.dll!Netbios     
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllGetClassObject
+    ??:0
+combase.dll!RoGetServerActivatableClasses
+    ??:0
+combase.dll!RoGetServerActivatableClasses
+    ??:0
+combase.dll!RoGetServerActivatableClasses
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoSetProxyBlanket
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!WindowsDeleteStringBuffer
+    ??:0
+combase.dll!IsErrorPropagationEnabled
+    ??:0
+
+Potential Error #143: HANDLE LEAK: KERNEL handle 0x00000000000002e8 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+KERNELBASE.dll!CreateEventW  
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!CoSetProxyBlanket
+    ??:0
+combase.dll!CoGetCurrentLogicalThreadId
+    ??:0
+combase.dll!WindowsDeleteStringBuffer
+    ??:0
+combase.dll!IsErrorPropagationEnabled
+    ??:0
+combase.dll!CoTaskMemRealloc
+    ??:0
+combase.dll!Ordinal87  
+    ??:0
+combase.dll!CoSetProxyBlanket
+    ??:0
+combase.dll!Ordinal87  
+    ??:0
+combase.dll!CoSetProxyBlanket
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(25):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+
+Potential Error #144: HANDLE LEAK: KERNEL handle 0x00000000000002fc and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+KERNELBASE.dll!CreateEventW  
+    ??:0
+RPCRT4.dll!RpcServerSubscribeForNotification
+    ??:0
+RPCRT4.dll!RpcServerSubscribeForNotification
+    ??:0
+RPCRT4.dll!RpcServerUnregisterIf
+    ??:0
+RPCRT4.dll!RpcServerUnregisterIf
+    ??:0
+RPCRT4.dll!RpcStringBindingComposeW
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!GetUserNameExW
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!QuerySecurityPackageInfoA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+
+Potential Error #145: HANDLE LEAK: KERNEL handle 0x000000000000030c and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+KERNELBASE.dll!CreateEventW  
+    ??:0
+RPCRT4.dll!RpcServerSubscribeForNotification
+    ??:0
+RPCRT4.dll!RpcServerSubscribeForNotification
+    ??:0
+RPCRT4.dll!RpcServerSubscribeForNotification
+    ??:0
+RPCRT4.dll!RpcBindingFromStringBindingW
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!GetUserNameExW
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!QuerySecurityPackageInfoA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+
+Potential Error #146: HANDLE LEAK: KERNEL handle 0x0000000000000310 and 0 similar handle(s) were opened but not closed:
+system call NtDuplicateObject
+    <system call>
+KERNELBASE.dll!DuplicateHandle
+    ??:0
+RPCRT4.dll!RpcServerSubscribeForNotification
+    ??:0
+RPCRT4.dll!RpcServerSubscribeForNotification
+    ??:0
+RPCRT4.dll!RpcBindingFromStringBindingW
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!GetUserNameExW
+    ??:0
+SspiCli.dll!GetUserNameExA
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!QuerySecurityPackageInfoA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+
+Potential Error #147: HANDLE LEAK: KERNEL handle 0x0000000000000328 and 0 similar handle(s) were opened but not closed:
+system call NtCreateThreadEx
+    <system call>
+KERNELBASE.dll!CreateRemoteThreadEx
+    ??:0
+KERNEL32.dll!CreateThreadStub
+    ??:0
+MsgHook64.dll!?            
+    ??:0
+KERNEL32.dll!BaseThreadInitThunk
+    ??:0
+
+Potential Error #148: HANDLE LEAK: KERNEL handle 0x000000000000035c and 0 similar handle(s) were opened but not closed:
+system call NtCreateSemaphore
+    <system call>
+ntdll.dll!RtlInitializeResource
+    ??:0
+bcrypt.dll!BCryptDestroyKey
+    ??:0
+bcrypt.dll!BCryptDestroyKey
+    ??:0
+bcrypt.dll!BCryptRegisterConfigChangeNotify
+    ??:0
+ntdll.dll!LdrpCallInitRoutine
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+ntdll.dll!LdrpPrepareModuleForExecution
+    ??:0
+ntdll.dll!LdrpLoadDllInternal
+    ??:0
+ntdll.dll!LdrpLoadDll
+    ??:0
+ntdll.dll!LdrLoadDll
+    ??:0
+KERNELBASE.dll!LoadLibraryExW
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!QuerySecurityPackageInfoA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+
+Potential Error #149: HANDLE LEAK: KERNEL handle 0x0000000000000360 and 0 similar handle(s) were opened but not closed:
+system call NtCreateSemaphore
+    <system call>
+ntdll.dll!RtlInitializeResource
+    ??:0
+bcrypt.dll!BCryptDestroyKey
+    ??:0
+bcrypt.dll!BCryptDestroyKey
+    ??:0
+bcrypt.dll!BCryptRegisterConfigChangeNotify
+    ??:0
+ntdll.dll!LdrpCallInitRoutine
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+ntdll.dll!LdrpPrepareModuleForExecution
+    ??:0
+ntdll.dll!LdrpLoadDllInternal
+    ??:0
+ntdll.dll!LdrpLoadDll
+    ??:0
+ntdll.dll!LdrLoadDll
+    ??:0
+KERNELBASE.dll!LoadLibraryExW
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!QuerySecurityPackageInfoA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+
+Potential Error #150: HANDLE LEAK: KERNEL handle 0x0000000000000364 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+KERNELBASE.dll!CreateEventW  
+    ??:0
+bcrypt.dll!BCryptDestroyKey
+    ??:0
+bcrypt.dll!BCryptDestroyKey
+    ??:0
+bcrypt.dll!BCryptDestroyKey
+    ??:0
+bcrypt.dll!BCryptRegisterConfigChangeNotify
+    ??:0
+ntdll.dll!LdrpCallInitRoutine
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+ntdll.dll!LdrpPrepareModuleForExecution
+    ??:0
+ntdll.dll!LdrpLoadDllInternal
+    ??:0
+ntdll.dll!LdrpLoadDll
+    ??:0
+ntdll.dll!LdrLoadDll
+    ??:0
+KERNELBASE.dll!LoadLibraryExW
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!QuerySecurityPackageInfoA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+
+Potential Error #151: HANDLE LEAK: KERNEL handle 0x0000000000000368 and 0 similar handle(s) were opened but not closed:
+system call NtOpenFile
+    <system call>
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+bcrypt.dll!BCryptOpenAlgorithmProvider
+    ??:0
+bcrypt.dll!BCryptDestroyKey
+    ??:0
+bcrypt.dll!BCryptDestroyKey
+    ??:0
+bcrypt.dll!BCryptDestroyKey
+    ??:0
+bcrypt.dll!BCryptRegisterConfigChangeNotify
+    ??:0
+ntdll.dll!LdrpCallInitRoutine
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+ntdll.dll!LdrpPrepareModuleForExecution
+    ??:0
+ntdll.dll!LdrpLoadDllInternal
+    ??:0
+ntdll.dll!LdrpLoadDll
+    ??:0
+ntdll.dll!LdrLoadDll
+    ??:0
+KERNELBASE.dll!LoadLibraryExW
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!QuerySecurityPackageInfoA
+    ??:0
+
+Potential Error #152: HANDLE LEAK: KERNEL handle 0x0000000000000388 and 0 similar handle(s) were opened but not closed:
+system call NtCreateSemaphore
+    <system call>
+ntdll.dll!RtlInitializeResource
+    ??:0
+msv1_0.dll!SpInstanceInit
+    ??:0
+SspiCli.dll!AcquireCredentialsHandleW
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!QuerySecurityPackageInfoA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+
+Potential Error #153: HANDLE LEAK: KERNEL handle 0x000000000000038c and 0 similar handle(s) were opened but not closed:
+system call NtCreateSemaphore
+    <system call>
+ntdll.dll!RtlInitializeResource
+    ??:0
+msv1_0.dll!SpInstanceInit
+    ??:0
+SspiCli.dll!AcquireCredentialsHandleW
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!QuerySecurityPackageInfoA
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+
+Potential Error #154: HANDLE LEAK: KERNEL handle 0x00000000000003a0 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+KERNELBASE.dll!CreateEventA  
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #155: HANDLE LEAK: KERNEL handle 0x00000000000003b0 and 0 similar handle(s) were opened but not closed:
+system call NtCreateIoCompletion
+    <system call>
+KERNELBASE.dll!CreateIoCompletionPort
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #156: HANDLE LEAK: KERNEL handle 0x00000000000003b4 and 0 similar handle(s) were opened but not closed:
+system call NtCreateThreadEx
+    <system call>
+KERNELBASE.dll!CreateRemoteThreadEx
+    ??:0
+KERNEL32.dll!CreateThreadStub
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #157: HANDLE LEAK: KERNEL handle 0x00000000000003c8 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+KERNELBASE.dll!CreateEventA  
+    ??:0
+DNSAPI.dll!Reg_GetValueEx
+    ??:0
+DNSAPI.dll!Reg_GetValueEx
+    ??:0
+DNSAPI.dll!Reg_GetValueEx
+    ??:0
+DNSAPI.dll!DnsNotifyResolverClusterIp
+    ??:0
+DNSAPI.dll!DnsAsyncRegisterTerm
+    ??:0
+ntdll.dll!LdrpCallInitRoutine
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+ntdll.dll!LdrpPrepareModuleForExecution
+    ??:0
+ntdll.dll!LdrpLoadDllInternal
+    ??:0
+ntdll.dll!LdrpLoadDll
+    ??:0
+ntdll.dll!LdrLoadDll
+    ??:0
+KERNELBASE.dll!LoadLibraryExW
+    ??:0
+KERNELBASE.dll!LoadLibraryExA
+    ??:0
+KERNELBASE.dll!LoadLibraryA  
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+
+Potential Error #158: HANDLE LEAK: KERNEL handle 0x00000000000003d8 and 0 similar handle(s) were opened but not closed:
+system call NtOpenKeyEx
+    <system call>
+KERNELBASE.dll!LocalBaseRegOpenKey
+    ??:0
+KERNELBASE.dll!RegOpenKeyExInternalW
+    ??:0
+KERNELBASE.dll!RegOpenKeyExW 
+    ??:0
+DNSAPI.dll!Reg_GetValueEx
+    ??:0
+DNSAPI.dll!Reg_GetValueEx
+    ??:0
+DNSAPI.dll!Reg_GetValueEx
+    ??:0
+DNSAPI.dll!DnsNotifyResolverClusterIp
+    ??:0
+DNSAPI.dll!DnsAsyncRegisterTerm
+    ??:0
+ntdll.dll!LdrpCallInitRoutine
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+ntdll.dll!LdrpPrepareModuleForExecution
+    ??:0
+ntdll.dll!LdrpLoadDllInternal
+    ??:0
+ntdll.dll!LdrpLoadDll
+    ??:0
+ntdll.dll!LdrLoadDll
+    ??:0
+KERNELBASE.dll!LoadLibraryExW
+    ??:0
+KERNELBASE.dll!LoadLibraryExA
+    ??:0
+
+Potential Error #159: HANDLE LEAK: KERNEL handle 0x00000000000003dc and 0 similar handle(s) were opened but not closed:
+system call NtOpenKeyEx
+    <system call>
+KERNELBASE.dll!LocalBaseRegOpenKey
+    ??:0
+KERNELBASE.dll!RegOpenKeyExInternalW
+    ??:0
+KERNELBASE.dll!RegOpenKeyExW 
+    ??:0
+DNSAPI.dll!Reg_GetValueEx
+    ??:0
+DNSAPI.dll!Reg_GetValueEx
+    ??:0
+DNSAPI.dll!Reg_GetValueEx
+    ??:0
+DNSAPI.dll!DnsNotifyResolverClusterIp
+    ??:0
+DNSAPI.dll!DnsAsyncRegisterTerm
+    ??:0
+ntdll.dll!LdrpCallInitRoutine
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeNode
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+ntdll.dll!LdrpInitializeGraphRecurse
+    ??:0
+ntdll.dll!LdrpPrepareModuleForExecution
+    ??:0
+ntdll.dll!LdrpLoadDllInternal
+    ??:0
+ntdll.dll!LdrpLoadDll
+    ??:0
+ntdll.dll!LdrLoadDll
+    ??:0
+KERNELBASE.dll!LoadLibraryExW
+    ??:0
+KERNELBASE.dll!LoadLibraryExA
+    ??:0
+
+Potential Error #160: HANDLE LEAK: KERNEL handle 0x00000000000003f4 and 0 similar handle(s) were opened but not closed:
+system call NtDuplicateObject
+    <system call>
+KERNELBASE.dll!DuplicateHandle
+    ??:0
+WS2_32.dll!WahOpenCurrentThread
+    ??:0
+WS2_32.dll!WSAStartup
+    ??:0
+WS2_32.dll!WSAStartup
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+
+Potential Error #161: HANDLE LEAK: KERNEL handle 0x00000000000003f8 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+KERNELBASE.dll!CreateEventA  
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSAStartup
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+
+Potential Error #162: HANDLE LEAK: KERNEL handle 0x00000000000003fc and 0 similar handle(s) were opened but not closed:
+system call NtOpenKeyEx
+    <system call>
+KERNELBASE.dll!LocalBaseRegOpenKey
+    ??:0
+KERNELBASE.dll!RegOpenKeyExInternalA
+    ??:0
+KERNELBASE.dll!RegOpenKeyExA 
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSAStartup
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+
+Potential Error #163: HANDLE LEAK: KERNEL handle 0x0000000000000404 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+KERNELBASE.dll!CreateEventA  
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSAStartup
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+
+Potential Error #164: HANDLE LEAK: KERNEL handle 0x0000000000000408 and 0 similar handle(s) were opened but not closed:
+system call NtOpenKeyEx
+    <system call>
+KERNELBASE.dll!LocalBaseRegOpenKey
+    ??:0
+KERNELBASE.dll!RegOpenKeyExInternalA
+    ??:0
+KERNELBASE.dll!RegOpenKeyExA 
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSALookupServiceEnd
+    ??:0
+WS2_32.dll!WSAStartup
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+
+Potential Error #165: HANDLE LEAK: KERNEL handle 0x000000000000041c and 7 similar handle(s) were opened but not closed:
+system call NtCreateSemaphore
+    <system call>
+ntdll.dll!RtlInitializeResource
+    ??:0
+SCHANNEL.dll!SpUserModeInitialize
+    ??:0
+SCHANNEL.dll!SpUserModeInitialize
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaConnectUntrusted
+    ??:0
+SspiCli.dll!AcquireCredentialsHandleW
+    ??:0
+SspiCli.dll!AcquireCredentialsHandleW
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+
+Potential Error #166: HANDLE LEAK: KERNEL handle 0x0000000000000420 and 7 similar handle(s) were opened but not closed:
+system call NtCreateSemaphore
+    <system call>
+ntdll.dll!RtlInitializeResource
+    ??:0
+SCHANNEL.dll!SpUserModeInitialize
+    ??:0
+SCHANNEL.dll!SpUserModeInitialize
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaFreeReturnBuffer
+    ??:0
+SspiCli.dll!LsaConnectUntrusted
+    ??:0
+SspiCli.dll!AcquireCredentialsHandleW
+    ??:0
+SspiCli.dll!AcquireCredentialsHandleW
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+
+Potential Error #167: HANDLE LEAK: KERNEL handle 0x0000000000000464 and 0 similar handle(s) were opened but not closed:
+system call NtCreateFile
+    <system call>
+KERNELBASE.dll!CreateFileInternal
+    ??:0
+KERNELBASE.dll!CreateFileA   
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+
+Potential Error #168: HANDLE LEAK: KERNEL handle 0x0000000000000468 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+KERNELBASE.dll!CreateEventA  
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #169: HANDLE LEAK: KERNEL handle 0x000000000000046c and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+KERNELBASE.dll!CreateEventA  
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+
+Potential Error #170: HANDLE LEAK: KERNEL handle 0x00000000000004a0 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+KERNELBASE.dll!CreateEventA  
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLConnection::initialize_and_establish_connection
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(105):
+database::SQLConnection::connect
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlconnection.cpp(172):
+std::_Get_size_of_n<>
+    ??:0
+domain::learn_from_examples::run
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(700):
+main   
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\main.cpp(40):
+
+Potential Error #171: HANDLE LEAK: KERNEL handle 0x00000000000004a4 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+KERNELBASE.dll!CreateEventA  
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::fetch_next
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(531):
+database::SQLCommand::is_result_set
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(15732480):
+domain::learn_from_examples::load_pop_agents
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(384):
+
+Potential Error #172: HANDLE LEAK: KERNEL handle 0x00000000000004b4 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+KERNELBASE.dll!CreateEventA  
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::fetch_next
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(531):
+database::SQLCommand::is_result_set
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(15732480):
+domain::learn_from_examples::load_example_cases
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(86):
+
+Potential Error #173: HANDLE LEAK: KERNEL handle 0x00000000000004b8 and 3 similar handle(s) were opened but not closed:
+system call NtCreateFile
+    <system call>
+KERNELBASE.dll!CreateFileInternal
+    ??:0
+KERNELBASE.dll!CreateFileA   
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+Note: handles created with the same callstack are closed here:
+           system call NtClose
+    <system call>
+           KERNELBASE.dll!CloseHandle   
+    ??:0
+           msoledbsql.dll!OpenSqlFilestream
+    ??:0
+           msoledbsql.dll!OpenSqlFilestream
+    ??:0
+           msoledbsql.dll!OpenSqlFilestream
+    ??:0
+           msoledbsql.dll!OpenSqlFilestream
+    ??:0
+           msoledbsql.dll!OpenSqlFilestream
+    ??:0
+           msoledbsql.dll!OpenSqlFilestream
+    ??:0
+           msoledbsql.dll!DllCanUnloadNow
+    ??:0
+           msoledbsql.dll!DllCanUnloadNow
+    ??:0
+           msoledbsql.dll!DllCanUnloadNow
+    ??:0
+           msoledbsql.dll!DllCanUnloadNow
+    ??:0
+           msoledbsql.dll!DllCanUnloadNow
+    ??:0
+           msoledbsql.dll!DllCanUnloadNow
+    ??:0
+           msoledbsql.dll!DllCanUnloadNow
+    ??:0
+           msoledbsql.dll!DllCanUnloadNow
+    ??:0
+           msoledbsql.dll!DllCanUnloadNow
+    ??:0
+           database::SQLCommand::~SQLCommand
+               c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(43):
+           database::SQLCommand::`scalar deleting destructor'
+    ??:0
+           domain::learn_from_examples::save_generation
+               c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\domain\learn from examples\run.learnfromexamples.cpp(472):
+
+Potential Error #174: HANDLE LEAK: KERNEL handle 0x00000000000004c0 and 1 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+KERNELBASE.dll!CreateEventA  
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!OpenSqlFilestream
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+msoledbsql.dll!DllCanUnloadNow
+    ??:0
+database::SQLCommand::setup
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(89):
+database::SQLCommand::SQLCommand
+    c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\database\sqlcommand.cpp(26):
+
+Potential Error #175: HANDLE LEAK: KERNEL handle 0x00000000000004dc and 0 similar handle(s) were opened but not closed:
+system call NtOpenKeyEx
+    <system call>
+KERNELBASE.dll!LocalBaseRegOpenKey
+    ??:0
+KERNELBASE.dll!RegOpenKeyExInternalA
+    ??:0
+KERNELBASE.dll!RegOpenKeyExA 
+    ??:0
+ADVAPI32.dll!RegOpenKeyA 
+    ??:0
+MsgHook64.dll!?            
+    ??:0
+KERNEL32.dll!BaseThreadInitThunk
+    ??:0
+
+Potential Error #176: HANDLE LEAK: KERNEL handle 0x00000000000004e0 and 0 similar handle(s) were opened but not closed:
+system call NtOpenKey
+    <system call>
+ntdll.dll!RtlOpenCurrentUser
+    ??:0
+KERNELBASE.dll!LocalOpenCurrentUser
+    ??:0
+KERNELBASE.dll!MapPredefinedHandleInternal
+    ??:0
+KERNELBASE.dll!RegOpenKeyExInternalA
+    ??:0
+KERNELBASE.dll!RegOpenKeyExA 
+    ??:0
+ADVAPI32.dll!RegOpenKeyA 
+    ??:0
+MsgHook64.dll!?            
+    ??:0
+KERNEL32.dll!BaseThreadInitThunk
+    ??:0
+
+Potential Error #177: HANDLE LEAK: USER handle 0x00000000001a093a and 0 similar handle(s) were opened but not closed:
+system call NtUserCreateWindowEx
+    <system call>
+USER32.dll!VerNtUserCreateWindowEx
+    ??:0
+USER32.dll!CreateWindowInternal
+    ??:0
+USER32.dll!CreateWindowExA
+    ??:0
+MsgHook64.dll!?            
+    ??:0
+KERNEL32.dll!BaseThreadInitThunk
+    ??:0
+
+DUPLICATE POTENTIAL ERROR COUNTS:
+	Potential Error #  18:      6
+	Potential Error #  39:     15
+	Potential Error #  40:     15
+	Potential Error #  41:      7
+	Potential Error #  42:      7
+	Potential Error #  43:      7
+	Potential Error #  54:      2
+	Potential Error #  62:      2
+	Potential Error #  63:      4
+	Potential Error #  64:      4
+	Potential Error #  65:      5
+	Potential Error #  66:      5
+	Potential Error #  67:      5
+	Potential Error #  68:      4
+	Potential Error #  69:      4
+	Potential Error #  70:      5
+	Potential Error #  71:      5
+	Potential Error #  72:      5
+	Potential Error #  74:      2
+	Potential Error #  76:      2
+	Potential Error #  83:      2
+	Potential Error #  84:     10
+	Potential Error #  86:      2
+	Potential Error #  89:     11
+	Potential Error #  90:     10
+	Potential Error #  93:      2
+	Potential Error #  97:      3
+	Potential Error # 105:      4
+	Potential Error # 106:      5
+	Potential Error # 108:      3
+	Potential Error # 112:      3
+	Potential Error # 116:      3
+	Potential Error # 122:      2
+	Potential Error # 165:      8
+	Potential Error # 166:      8
+	Potential Error # 173:      4
+	Potential Error # 174:      2
+
+POTENTIAL ERRORS FOUND:
+      0 unique,     0 total potential unaddressable access(es)
+     86 unique,   188 total potential uninitialized access(es)
+      0 unique,     0 total potential invalid heap argument(s)
+      0 unique,     0 total potential GDI usage error(s)
+     54 unique,    72 total potential handle leak(s)
+      0 unique,     0 total potential warning(s)
+     28 unique,    37 total,   4928 byte(s) of potential leak(s)
+      9 unique,    36 total,   1704 byte(s) of potential possible leak(s)
+Details: C:\Users\edgar\AppData\Roaming\Dr. Memory\DrMemory-SOS.exe.12864.000\potential_errors.txt
