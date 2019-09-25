@@ -82,8 +82,11 @@ namespace database
 		// Sets value as character string data
 		void set_as_string(unsigned int parm_no, std::string parameter);
 
+		// Sets value as GUID
+		void set_as_GUID(unsigned int parm_no, const UUID parameter);
+
 		// Sets value as integer
-		void set_as_integer(unsigned int parm_no, int parameter);
+		void set_as_integer(unsigned int parm_no, const int parameter);
 
 		// Sets value as float
 		void set_as_float(unsigned int parm_no, double parameter);

@@ -21,8 +21,6 @@ namespace domain
 {
 	namespace learn_from_examples
 	{
-//		double error_matrix[argmap::number_of_training_cases][argmap::population_size];
-//		double individual_minimum_error_array[argmap::population_size];
 		double score_array[argmap::population_size];
 
 		std::forward_list<int> training_cases_problem[argmap::number_of_training_cases];
@@ -34,13 +32,54 @@ namespace domain
 
 		database::SQLConnection con;
 
-		const std::string sqlstmt_get_last_saved_generation_number = "SELECT TOP 1 [Generation] FROM [SOS].[dbo].[ProgressLog] ORDER BY[Created_DTS] DESC;";
+		const std::string sqlstmt_get_last_saved_generation_number = "SELECT TOP 1 [Generation] FROM [SOS].[dbo].[ProgressLog] ORDER BY [Created_DTS] DESC;";
 		const std::string sqlstmt_sqlcmd_load_example_cases = "SELECT [Problem], [Solution] FROM [dbo].[ExampleCases];";
 		const std::string sqlstmt_delete_all_example_cases("DELETE FROM [SOS].[dbo].[ExampleCases];");
 		const std::string sqlstmt_insert_new_example_case("INSERT INTO [dbo].[ExampleCases] ([Problem], [Solution]) VALUES (?,?);");
-		const std::string sqlstmt_sqlcmd_get_individuals = "SELECT [Individual_ID], [Genome] FROM [dbo].[Individuals] ORDER BY [Individual_ID];";
+		const std::string sqlstmt_sqlcmd_get_individuals = "SELECT [Individual_ID],"
+																"[Genome], "
+																"[Parent_1],"
+																"[Parent_2],"
+																"[Parent_1_1],"
+																"[Parent_1_2],"
+																"[Parent_2_1],"
+																"[Parent_2_2],"
+																"[Parent_1_1_1],"
+																"[Parent_1_1_2],"
+																"[Parent_1_2_1],"
+																"[Parent_1_2_2],"
+																"[Parent_2_1_1],"
+																"[Parent_2_1_2],"
+																"[Parent_2_2_1],"
+																"[Parent_2_2_2] "
+																"FROM [dbo].[Individuals] ORDER BY [Individual_ID];";
 		const std::string sqlstmt_delete_individual("DELETE FROM [SOS].[dbo].[Individuals];");
-		const std::string sqlstmt_insert_new_individual("INSERT INTO [dbo].[Individuals] ([Individual_ID], [Genome]) VALUES (?, ?);");
+		const std::string sqlstmt_insert_new_individual("INSERT INTO [dbo].[Individuals] ([Individual_ID], [Genome], [Parent_1], [Parent_2], [Parent_1_1], [Parent_1_2], [Parent_2_1], [Parent_2_2], [Parent_1_1_1], [Parent_1_1_2], [Parent_1_2_1], [Parent_1_2_2], [Parent_2_1_1], [Parent_2_1_2], [Parent_2_2_1], [Parent_2_2_2]) VALUES	(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+		//                                                                     1  2  3  4  5  6  7  8  9  0  1  2  3  4  5  6
+		
+//		const std::string sqlstmt_insert_new_individual("INSERT INTO [dbo].[Individuals] ([Individual_ID], [Genome]) VALUES (?, ?);");
+
+		const std::string sqlstmt_save_status_report("INSERT INTO [dbo].[ProgressLog]"
+			"           ("
+			"            [Generation]"								// 1
+			"           ,[Generations_Completed_This_Session]"		// 2
+			"           ,[BestIndividual_ID]"						// 3
+			"           ,[BestIndividual_Training_Score]"			// 4
+			"           ,[BestIndividual_Training_Error]"			// 5
+			"           ,[Average_Training_Error]"					// 6
+			"           ,[BestIndividual_Test_Score]"				// 7
+			"           ,[Number_Of_Training_Cases]"				// 8
+			"           ,[Number_Of_Test_Cases]"					// 9
+			"           ,[Best_Genome]"								// 10
+			"           ,[Population_Size]"							// 11
+			"           ,[Alternation_Rate]"						// 12
+			"           ,[Uniform_Mutation_Rate]"					// 13
+			"           ,[Example_Case_Max_Length]"					// 14
+			"           ,[Example_Case_Upper_Range]"				// 15
+			"           )"
+			"     VALUES"
+			"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+		        //       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
 
 		unsigned long get_last_saved_generation_number()
 		{
@@ -390,8 +429,23 @@ namespace domain
 						std::cout << "n = " << n << std::endl;
 
 						std::string genome = sqlcmd_get_individuals->get_field_as_string(2);
-
 						pushGP::globals::population_agents[n].set_genome(genome);
+
+						pushGP::globals::population_agents[n].record_family_tree(
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(3)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(4)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(5)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(6)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(7)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(8)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(9)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(10)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(11)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(12)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(13)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(14)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(15)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(16)));
 
 						n++;
 					}
@@ -430,6 +484,11 @@ namespace domain
 
 		void save_generation()
 		{
+			UUID NilUuid;
+
+			// creates a nil-valued UUID
+			UuidCreateNil(&NilUuid);
+
 			database::SQLCommand* sqlcmd_delete_individuals;
 			database::SQLCommand* sqlcmd_insert_new_individual;
 
@@ -449,6 +508,86 @@ namespace domain
 			{
 				sqlcmd_insert_new_individual->set_as_integer(1, n + 1);
 				sqlcmd_insert_new_individual->set_as_string(2, pushGP::globals::population_agents[n]);
+
+				std::unordered_set<UUID> parents = pushGP::globals::population_agents[n].get_parents();
+				auto it = parents.begin();
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(3, *it++);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(3, NilUuid);
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(4, *it);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(4, NilUuid);
+
+				parents = pushGP::globals::population_agents[n].get_grandparents();
+				it = parents.begin();
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(5, *it++);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(5, NilUuid);
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(6, *it++);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(6, NilUuid);
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(7, *it++);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(7, NilUuid);
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(8, *it);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(8, NilUuid);
+
+				parents = pushGP::globals::population_agents[n].get_greatgrandparents();
+				it = parents.begin();
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(9, *it++);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(9, NilUuid);
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(10, *it++);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(10, NilUuid);
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(11, *it++);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(11, NilUuid);
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(12, *it++);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(12, NilUuid);
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(13, *it++);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(13, NilUuid);
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(14, *it++);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(14, NilUuid);
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(15, *it++);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(15, NilUuid);
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(16, *it);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(16, NilUuid);
+
 				sqlcmd_insert_new_individual->execute();
 			}
 
@@ -458,6 +597,7 @@ namespace domain
 			delete sqlcmd_delete_individuals;
 			delete sqlcmd_insert_new_individual;
 		}
+
 
 		// Remarks:
 		//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
@@ -721,8 +861,6 @@ namespace domain
 			// Keep the best individuals
 			pushGP::globals::child_agents[_best_individual].copy(pushGP::globals::population_agents[_best_individual]);
 
-//			unsigned int individual_with_minimum_error_for_training_case[domain::argmap::number_of_training_cases];
-
 			for (unsigned int training_case = 0; training_case < domain::argmap::number_of_training_cases; training_case++)
 			{
 				unsigned int best_individual_for_training_case = pushGP::globals::individual_with_minimum_error_for_training_case[training_case];
@@ -740,32 +878,45 @@ namespace domain
 				pushGP::globals::population_agents[n].copy(pushGP::globals::child_agents[n]);
 		}
 
-		const std::string sqlstmt_save_status_report("INSERT INTO [dbo].[ProgressLog]"
-			"           ("
-			"            [Generation]"								// 1
-			"           ,[Generations_Completed_This_Session]"		// 2
-			"           ,[BestIndividual_ID]"						// 3
-			"           ,[BestIndividual_Training_Score]"			// 4
-			"           ,[BestIndividual_Training_Error]"			// 5
-			"           ,[Average_Training_Error]"					// 6
-			"           ,[BestIndividual_Test_Score]"				// 7
-			"           ,[Number_Of_Training_Cases]"				// 8
-			"           ,[Number_Of_Test_Cases]"					// 9
-			"           ,[Best_Genome]"								// 10
-			"           ,[Population_Size]"							// 11
-			"           ,[Alternation_Rate]"						// 12
-			"           ,[Uniform_Mutation_Rate]"					// 13
-			"           ,[Example_Case_Max_Length]"					// 14
-			"           ,[Example_Case_Upper_Range]"				// 15
-			"           )"
-			"     VALUES"
-			"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-		        //       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+		//void generate_status_report(unsigned int _generation_number,
+		//	unsigned int _generations_completed_this_session, 
+		//	unsigned int _best_individual_id, 
+		//	double _best_individual_training_score, 
+		//	double _best_individual_training_error,
+		//	double _average_traiing_error,
+		//	double _best_individual_test_score,
+		//	std::string _best_gnome)
+		//{
+		//	database::SQLCommand* sqlcmd_save_status_report;
+
+		//	sqlcmd_save_status_report = new database::SQLCommand(&con, sqlstmt_save_status_report);
+
+		//	sqlcmd_save_status_report->set_as_integer(1, _generation_number);
+		//	sqlcmd_save_status_report->set_as_integer(2, _generations_completed_this_session);
+		//	sqlcmd_save_status_report->set_as_integer(3, _best_individual_id);
+		//	sqlcmd_save_status_report->set_as_float(4, _best_individual_training_score);
+		//	sqlcmd_save_status_report->set_as_float(5, _best_individual_training_error);
+		//	sqlcmd_save_status_report->set_as_float(6, _average_traiing_error);
+		//	sqlcmd_save_status_report->set_as_float(7, _best_individual_test_score);
+		//	sqlcmd_save_status_report->set_as_integer(8, argmap::number_of_training_cases);
+		//	sqlcmd_save_status_report->set_as_integer(9, argmap::number_of_test_cases);
+		//	sqlcmd_save_status_report->set_as_string(10, _best_gnome);
+		//	sqlcmd_save_status_report->set_as_integer(11, argmap::population_size);
+		//	sqlcmd_save_status_report->set_as_float(12, argmap::alternation_rate);
+		//	sqlcmd_save_status_report->set_as_float(13, argmap::uniform_mutation_rate);
+		//	sqlcmd_save_status_report->set_as_integer(14, argmap::example_case_max_length);
+		//	sqlcmd_save_status_report->set_as_integer(15, argmap::example_case_upper_range);
+
+		//	sqlcmd_save_status_report->execute();
+
+		//	delete sqlcmd_save_status_report;
+		//}
+
 
 		void generate_status_report(unsigned int _generation_number,
-			unsigned int _generations_completed_this_session, 
-			unsigned int _best_individual_id, 
-			double _best_individual_training_score, 
+			unsigned int _generations_completed_this_session,
+			unsigned int _best_individual_id,
+			double _best_individual_training_score,
 			double _best_individual_training_error,
 			double _average_traiing_error,
 			double _best_individual_test_score,
@@ -795,6 +946,8 @@ namespace domain
 
 			delete sqlcmd_save_status_report;
 		}
+
+
 
 //		int run(int argc, char** argv)
 		int run()

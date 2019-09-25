@@ -40,28 +40,8 @@ namespace pushGP
 {
 	class Individual
 	{
-		//// Push program
-		//std::string program_;
-
-		// Plush genome
-		//std::vector<struct Atom> genome_;
-		//std::string genome_string_;
+		// Genome
 		Genome::Genome genome_;
-
-		// Error for all training data
-//		double error_for_all_training_data_;
-
-		// Vector of errors
-//		std::vector<double> errors_;
-
-		// Is this an elite individual
-//		bool is_elite_;
-
-		// Set of test cases this individual is an elite member of
-//		std::set<unsigned int> elite_test_cases_;
-
-		//// Collection of stock transactions
-		//std::vector<Transaction> transactions_;
 
 		// Uniquely identify the indivudal to track genealogy
 		// See (https://stackoverflow.com/questions/1327157/whats-the-c-version-of-guid-newguid)
@@ -80,10 +60,6 @@ namespace pushGP
 		Individual(const Individual & other) = delete;
 		Individual& operator = (const Individual &other) = delete;
 		
-//		void translate_plush_genome_to_push_program();
-
-//		void parse_string_to_plush_genome(std::string genome);
-
 		const std::string get_program()
 		{
 			return genome_.get_program();
@@ -115,33 +91,11 @@ namespace pushGP
 
 		void copy(Individual & other);
 
-		//void set_error_for_all_training_data(double error)
-		//{
-		//	error_for_all_training_data_ = error;
-		//}
-
-		//double get_error_for_all_training_data()
-		//{
-		//	return error_for_all_training_data_;
-		//}
-
-		//const std::vector<double> & get_errors()
-		//{
-		//	return errors_;
-		//}
-
 		void record_family_tree(Individual& parent);
 		void record_family_tree(unsigned int parent);
 		void record_family_tree(Individual& parent1, Individual& parent2);
 		void record_family_tree(unsigned int parent1, unsigned int parent2);
-
-//		void log_error(double error);
-
-//		void log_elite_test_case(unsigned int test_case_index);
-
-//		void clear_elite_test_cases();
-
-//		unsigned int count_elite_test_cases();
+		void record_family_tree(const GUID Parent_1, const GUID Parent_2, const GUID Parent_1_1, const GUID Parent_1_2, const GUID Parent_2_1, const GUID Parent_2_2, const GUID Parent_1_1_1, const GUID Parent_1_1_2, const GUID Parent_1_2_1, const GUID Parent_1_2_2, const GUID Parent_2_1_1, const GUID Parent_2_1_2, const GUID Parent_2_2_1, const GUID Parent_2_2_2);
 
 		std::string get_genome_as_string();
 
@@ -150,19 +104,6 @@ namespace pushGP
 		{
 			return get_genome_as_string();
 		}
-
-		//bool is_elite()
-		//{
-		//	return is_elite_;
-		//}
-
-		//void make_elite()
-		//{
-		//	is_elite_ = true;
-		//}
-
-		//void log_transaction(int _test_case, unsigned long _row, double _adj_close, order_types _order, int _number_of_shares, double _cash_balance);
-		//void dump_transactions();
 
 		UUID get_id()
 		{
