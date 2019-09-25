@@ -73,13 +73,7 @@ namespace pushGP
 	//
 	void Individual::init()
 	{
-//		program_.clear();
 		genome_.clear();
-		//error_for_all_training_data_ = 0.0;
-		//errors_.clear();
-//		is_elite_ = false;
-//		genome_string_.clear();
-//		elite_test_cases_.clear();
 
 		// Uniquely identify the indivudal to track genealogy
 		::UuidCreate(&id_);
@@ -245,6 +239,93 @@ namespace pushGP
 	}
 
 	// Purpose: 
+	//   Records individual's ancestry for dual parent individuals
+	//
+	// Parameters:
+	//   parent1 - Index of parent 1
+	//   parent2 - Index of parent 2
+	// 
+	// Return value:
+	//   None
+	//
+	// Side Effects:
+	//   The ancestry fields are updated
+	//
+	// Thread Safe:
+	//   No.  Lock individual to prevent access to member fields during update
+	//
+	// Remarks:
+	//   This function is used to track an individual's ancestory to help ensure population divdersity.
+	//
+	void Individual::record_family_tree(const GUID Parent_1,
+										const GUID Parent_2,
+										const GUID Parent_1_1,
+										const GUID Parent_1_2,
+										const GUID Parent_2_1,
+										const GUID Parent_2_2,
+										const GUID Parent_1_1_1,
+										const GUID Parent_1_1_2,
+										const GUID Parent_1_2_1,
+										const GUID Parent_1_2_2,
+										const GUID Parent_2_1_1,
+										const GUID Parent_2_1_2,
+										const GUID Parent_2_2_1,
+										const GUID Parent_2_2_2
+										)
+	{
+		UUID NilUuid;
+
+		// creates a nil-valued UUID
+		UuidCreateNil(&NilUuid);
+
+		parents_.clear();
+		grandparents_.clear();
+		greatgrandparents_.clear();
+
+		if (Parent_1 != NilUuid)
+			parents_.insert(Parent_1);
+
+		if (Parent_2 != NilUuid)
+			parents_.insert(Parent_2);
+
+		if (Parent_1_1 != NilUuid)
+			grandparents_.insert(Parent_1_1);
+
+		if (Parent_1_2 != NilUuid)
+			grandparents_.insert(Parent_1_2);
+
+		if (Parent_2_1 != NilUuid)
+			grandparents_.insert(Parent_2_1);
+
+		if (Parent_2_2 != NilUuid)
+			grandparents_.insert(Parent_2_2);
+
+		if (Parent_1_1_1 != NilUuid)
+			greatgrandparents_.insert(Parent_1_1_1);
+
+		if (Parent_1_1_2 != NilUuid)
+			greatgrandparents_.insert(Parent_1_1_2);
+
+		if (Parent_1_2_1 != NilUuid)
+			greatgrandparents_.insert(Parent_1_2_1);
+
+		if (Parent_1_2_2 != NilUuid)
+			greatgrandparents_.insert(Parent_1_2_2);
+
+		if (Parent_2_1_1 != NilUuid)
+			greatgrandparents_.insert(Parent_2_1_1);
+
+		if (Parent_2_1_2 != NilUuid)
+			greatgrandparents_.insert(Parent_2_1_2);
+
+		if (Parent_2_2_1 != NilUuid)
+			greatgrandparents_.insert(Parent_2_2_1);
+
+		if (Parent_2_2_2 != NilUuid)
+			greatgrandparents_.insert(Parent_2_2_2);
+	}
+
+	// Purpose: 
 	//   Set individual's genome to provided string and update individual's program
 	//
 	// Parameters:
@@ -339,16 +420,12 @@ namespace pushGP
 	{
 		init();
 
-//		program_ = other.program_;
 		genome_ = other.genome_;
-//		errors_ = other.errors_;
-	
-//		genome_string_ = other.genome_string_;
-//		is_elite_ = other.is_elite_;
-
 		id_ = other.id_;
 
-		record_family_tree(other);
+		parents_.insert(other.get_parents().begin(), other.get_parents().end());
+		grandparents_.insert(other.get_grandparents().begin(), other.get_grandparents().end());
+		greatgrandparents_.insert(other.get_greatgrandparents().begin(), other.get_greatgrandparents().end());
 	}
 
 	// Purpose: 

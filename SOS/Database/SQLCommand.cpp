@@ -208,7 +208,12 @@ namespace database
 
 	wchar_t wszDBTYPE_I4[] = L"DBTYPE_I4";
 
-	void SQLCommand::set_as_integer(unsigned int parm_no, int parameter)
+	void SQLCommand::set_as_GUID(unsigned int parm_no, const UUID _parameter)
+	{
+		set_as_string(parm_no, GuidToString(_parameter));
+	}
+
+	void SQLCommand::set_as_integer(unsigned int parm_no, const int parameter)
 	{
 		unsigned int n = parm_no - 1;
 
