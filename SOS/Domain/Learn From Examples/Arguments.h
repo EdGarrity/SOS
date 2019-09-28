@@ -40,7 +40,7 @@ namespace domain
 		//		;; The instructions that pushgp will use in random code.
 
 		// Number of individuals in the population.
-		const unsigned int population_size = 50000;
+		const unsigned int population_size = 500;
 
 		// The maximum number of generations to run GP.
 		const unsigned int max_generations_in_one_session = 10000;
@@ -143,10 +143,10 @@ namespace domain
 		const double probability_of_cloaning = 0.09;
 
 		// The probability of generating a constant Plush atom
-		const double probability_of_generating_a_constant_Plush_atom = 0.1;
+		const double probability_of_generating_a_constant_Plush_atom = 0.10;
 
 		// The probability of generating an input Plush atom
-		const double probability_of_generating_a_io_atom = 0.2;
+		const double probability_of_generating_a_io_atom = 0.20;
 
 		// When using alternation, the probability of alternating between the parents when moving
 		// to the next gene.
@@ -161,7 +161,7 @@ namespace domain
 
 		//	The probability of mutating a constant instead of simply replacing the token
 		//	with a random instruction during uniform mutation.
-		const double uniform_mutation_constant_tweak_rate = 0.5;
+		const double uniform_mutation_constant_tweak_rate = 0.50;
 
 		//	The standard deviation used when tweaking float/int constants with Gaussian noise.
 		const double uniform_mutation_float_int_gaussian_standard_deviation = 1.0;
@@ -170,7 +170,7 @@ namespace domain
 		//	;; The standard deviation used when tweaking integer constants with Gaussian noise.
 
 		//	The probability of each character being changed when doing string constant tweaking.
-		const double uniform_mutation_string_char_change_rate = 0.1;
+		const double uniform_mutation_string_char_change_rate = 0.10;
 
 		//	:uniform - mutation - tag - gaussian - standard - deviation 100
 		//	;; The standard deviation used when tweaking tag locations with Gaussian noise.
