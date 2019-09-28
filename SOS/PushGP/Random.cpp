@@ -123,13 +123,87 @@ namespace pushGP
 			//	append_genome(genome, String_to_plush_genome(load_data_genome));
 			//}
 
-			//else
-			//{
+			if (random_double() < domain::argmap::probability_of_generating_a_io_atom)
+			{
+				uint32 r = rng.random(6);
+				switch (r)
+				{
+				case 0:
+					atom.instruction = toString(rng.random(std::numeric_limits<int>::max()));
+					atom.type = Genome::Atom::AtomType::integer;
+					genome.push_back(atom);
+
+					atom.instruction = "INTEGER.IN";
+					atom.type = Genome::Atom::AtomType::ins;
+					genome.push_back(atom);
+
+					break;
+
+				case 1:
+					atom.instruction = toString(rng.random(std::numeric_limits<int>::max()));
+					atom.type = Genome::Atom::AtomType::integer;
+					genome.push_back(atom);
+
+					atom.instruction = "FLOAT.IN";
+					atom.type = Genome::Atom::AtomType::ins;
+					genome.push_back(atom);
+
+					break;
+
+				case 2:
+					atom.instruction = toString(rng.random(std::numeric_limits<int>::max()));
+					atom.type = Genome::Atom::AtomType::integer;
+					genome.push_back(atom);
+
+					atom.instruction = "BOOLEAN.IN";
+					atom.type = Genome::Atom::AtomType::ins;
+					genome.push_back(atom);
+
+					break;
+
+				case 3:
+					atom.instruction = toString(rng.random(std::numeric_limits<int>::max()));
+					atom.type = Genome::Atom::AtomType::integer;
+					genome.push_back(atom);
+
+					atom.instruction = "INTEGER.OUT";
+					atom.type = Genome::Atom::AtomType::ins;
+					genome.push_back(atom);
+
+					break;
+
+				case 4:
+					atom.instruction = toString(rng.random(std::numeric_limits<int>::max()));
+					atom.type = Genome::Atom::AtomType::integer;
+					genome.push_back(atom);
+
+					atom.instruction = "FLOAT.OUT";
+					atom.type = Genome::Atom::AtomType::ins;
+					genome.push_back(atom);
+
+					break;
+
+				case 5:
+					atom.instruction = toString(rng.random(std::numeric_limits<int>::max()));
+					atom.type = Genome::Atom::AtomType::integer;
+					genome.push_back(atom);
+
+					atom.instruction = "BOOLEAN.OUT";
+					atom.type = Genome::Atom::AtomType::ins;
+					genome.push_back(atom);
+
+					break;
+
+				}
+			}
+
+			else
+			{
 				atom = random_atom();
 				atom.parentheses = random_closes();
 
 				genome.push_back(atom);
-			//}
+			}
 		}
 
 		return genome;

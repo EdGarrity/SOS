@@ -29,6 +29,8 @@ namespace Push
 
 	extern const Parameters global_parameters;
 
+	extern std::vector<double> null_input;
+
 	class Env
 	{
 	public:
@@ -37,7 +39,11 @@ namespace Push
 		Parameters parameters;
 
 		// data record pointer
-		int data_record_index;
+//		int data_record_index;
+
+		// Pointer to input & output data
+		std::vector<double> & input = null_input;
+		std::vector<double> output;
 
 		void push_code_to_exec_stack(const Code &code)
 		{
@@ -53,14 +59,25 @@ namespace Push
 		std::vector<double>	double_stack;
 
 //		Env(unsigned _reserve = 1000) : function_set(instructions), parameters(global_parameters)
-		Env(unsigned _reserve = 1000) : parameters(global_parameters)
+		Env() : parameters(global_parameters)
+		{
+			reserve(1000);
+			clear_stacks();
+//			data_record_index = 0;
+			null_input.clear();
+			input = null_input;
+			output.clear();
+		}
+
+		Env(std::vector<double> & _input, unsigned _reserve = 1000) : parameters(global_parameters)
 		{
 			reserve(_reserve);
 			clear_stacks();
-			data_record_index = 0;
+			input = _input;
+			output.clear();
 		}
 
-		virtual ~Env() 
+		virtual ~Env()
 		{ 
 			clear_stacks(); 
 		} // virtual ~Env(){ delete next_env; }  // EG: Added clear();
@@ -71,11 +88,13 @@ namespace Push
 		//	return newenv;
 		//}
 
-		virtual void initialize(unsigned _reserve = 1000) 
+		virtual void initialize(std::vector<double> & _input, unsigned _reserve = 1000)
 		{
 			function_set = Code(instructions);
 			reserve(_reserve);
 			clear_stacks();
+			input = _input;
+			output.clear();
 		}
 
 		virtual void reserve(unsigned _reserve)

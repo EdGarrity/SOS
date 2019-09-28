@@ -69,7 +69,7 @@ namespace domain
 		const long int number_of_test_cases = 10;
 
 		// Maximum length of an example case
-		const long int example_case_max_length = 100;
+		const long int example_case_max_length = 1;
 
 		// Upper range of numbers in the example case
 		const long int example_case_upper_range = 100;
@@ -139,11 +139,14 @@ namespace domain
 
 		// Genetic Operator Probabilities (must add up to 100%)
 		const double probability_of_alternation = 0.90;
-		const double probability_of_mutation = 0.00;
-		const double probability_of_cloaning = 0.10;
+		const double probability_of_mutation = 0.01;
+		const double probability_of_cloaning = 0.09;
 
 		// The probability of generating a constant Plush atom
 		const double probability_of_generating_a_constant_Plush_atom = 0.1;
+
+		// The probability of generating an input Plush atom
+		const double probability_of_generating_a_io_atom = 0.2;
 
 		// When using alternation, the probability of alternating between the parents when moving
 		// to the next gene.
