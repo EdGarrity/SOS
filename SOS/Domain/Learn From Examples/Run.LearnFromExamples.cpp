@@ -680,6 +680,9 @@ namespace domain
 					std::vector<double> example_problem = training_cases_problem[example_case];
 					std::vector<double> example_solution = training_cases_solution[example_case];
 
+					if ((individual_index == 48) && (example_case == 0))
+						individual_index = 48;
+
 					pushGP::globals::error_matrix[example_case][individual_index] = _run_individual_program(individual_index, example_problem, example_solution);
 
 					if (pushGP::globals::error_matrix[example_case][individual_index] > 0.0)

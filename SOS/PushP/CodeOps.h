@@ -114,7 +114,7 @@ namespace Push
 	//   N is popped from the Integer stack first. If N < 0, or if N >= size of input array, or the Integer 
 	//	 stack is empty then a NO-OP is executed instead.
 	//
-	inline unsigned input2code()
+	inline unsigned in2code()
 	{
 		int index = pop<int>(env);
 
@@ -132,8 +132,71 @@ namespace Push
 		return 1;
 	}
 
+	// Purpose: 
+	//   Push all elements from the input array onto a stack.
+	//
+	// Parameters:
+	//   None
+	//
+	// Return value:
+	//   1
+	//
+	// Side Effects:
+	//   If successful, all numbers are pushed to the a stack
+	//
+	// Thread Safe:
+	//   Yes
+	//
+	// Remarks:
+	//   if input array is empty, NO-OP is executed.
+	//
+	inline unsigned inall2code()
+	{
+		if (env.input.size() > 0)
+		{
+			for (int index = 0; index < env.input.size(); index++)
+			{
+				double value = env.input[index];
+				push<Code>(Code(floatLiteralFactory->createLiteral(value)));
+			}
+		}
 
-	inline unsigned _instructions() 
+		return 1;
+	}
+
+	// Purpose: 
+	//   Push all elements from the input array onto a stack in reverse order.
+	//
+	// Parameters:
+	//   None
+	//
+	// Return value:
+	//   1
+	//
+	// Side Effects:
+	//   If successful, all numbers are pushed to a stack
+	//
+	// Thread Safe:
+	//   Yes
+	//
+	// Remarks:
+	//   if input array is empty, NO-OP is executed.
+	//
+	inline unsigned inallrev2code()
+	{
+		if (env.input.size() > 0)
+		{
+			for (int index = env.input.size() - 1; index >= 0; index--)
+			{
+				double value = env.input[index];
+				push<Code>(Code(floatLiteralFactory->createLiteral(value)));
+			}
+		}
+
+		return 1;
+	}
+
+	inline unsigned _instructions()
 	{ 
 		push(env.function_set); 
 		return 1; 

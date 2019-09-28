@@ -125,7 +125,7 @@ namespace pushGP
 
 			if (random_double() < domain::argmap::probability_of_generating_a_io_atom)
 			{
-				uint32 r = rng.random(6);
+				uint32 r = rng.random(12);
 				switch (r)
 				{
 				case 0:
@@ -162,6 +162,48 @@ namespace pushGP
 					break;
 
 				case 3:
+					atom.instruction = "INTEGER.INALL";
+					atom.type = Genome::Atom::AtomType::ins;
+					genome.push_back(atom);
+
+					break;
+
+				case 4:
+					atom.instruction = "FLOAT.INALL";
+					atom.type = Genome::Atom::AtomType::ins;
+					genome.push_back(atom);
+
+					break;
+
+				case 5:
+					atom.instruction = "BOOLEAN.INALL";
+					atom.type = Genome::Atom::AtomType::ins;
+					genome.push_back(atom);
+
+					break;
+
+				case 6:
+					atom.instruction = "INTEGER.INALLREV";
+					atom.type = Genome::Atom::AtomType::ins;
+					genome.push_back(atom);
+
+					break;
+
+				case 7:
+					atom.instruction = "FLOAT.INALLREV";
+					atom.type = Genome::Atom::AtomType::ins;
+					genome.push_back(atom);
+
+					break;
+
+				case 8:
+					atom.instruction = "BOOLEAN.INALLREV";
+					atom.type = Genome::Atom::AtomType::ins;
+					genome.push_back(atom);
+
+					break;
+
+				case 9:
 					atom.instruction = toString(rng.random(std::numeric_limits<int>::max()));
 					atom.type = Genome::Atom::AtomType::integer;
 					genome.push_back(atom);
@@ -172,7 +214,7 @@ namespace pushGP
 
 					break;
 
-				case 4:
+				case 10:
 					atom.instruction = toString(rng.random(std::numeric_limits<int>::max()));
 					atom.type = Genome::Atom::AtomType::integer;
 					genome.push_back(atom);
@@ -183,7 +225,7 @@ namespace pushGP
 
 					break;
 
-				case 5:
+				case 11:
 					atom.instruction = toString(rng.random(std::numeric_limits<int>::max()));
 					atom.type = Genome::Atom::AtomType::integer;
 					genome.push_back(atom);

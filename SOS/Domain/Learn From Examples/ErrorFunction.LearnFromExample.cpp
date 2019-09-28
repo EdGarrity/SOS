@@ -65,7 +65,7 @@ namespace domain
 				{
 					double distance = 0.0;
 
-					distance = fabs(_example_solution[n] - Push::env.output[n]);
+					distance = fabs(_example_solution[n] - (isnan(Push::env.output[n]) ? 0.0 : Push::env.output[n]));
 
 					if (distance < (std::numeric_limits<double>::epsilon() + std::numeric_limits<double>::epsilon()))
 						distance = 0.0;
@@ -89,6 +89,10 @@ namespace domain
 			// Cap error
 			if (error > 10000000.0)
 				error = 10000000.0;
+
+			// Check for NAN error
+			if (isnan(error))
+				error = std::numeric_limits<double>::max();
 
 			return error;
 		}

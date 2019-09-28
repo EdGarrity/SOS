@@ -129,6 +129,8 @@ namespace Push
 		make_instruction((Operator)code_do_range, "CODE.DO*RANGE", integerType + integerType + codeType, execType + execType);
 		make_instruction((Operator)do_count, "CODE.DO*COUNT", integerType + codeType, execType);
 		make_instruction((Operator)do_times, "CODE.DO*TIMES", integerType + codeType, execType);
-		make_instruction((Operator)input2code, "CODE.IN", integerType, codeType);
+		make_instruction((Operator)in2code, "CODE.IN", integerType, codeType);
+		make_instruction((Operator)inall2code, "CODE.INALL", nullType, codeType);
+		make_instruction((Operator)inallrev2code, "CODE.INALLREV", nullType, codeType);
 	}
 }
