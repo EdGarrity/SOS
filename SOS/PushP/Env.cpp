@@ -25,6 +25,8 @@ namespace Push
 		time(0)* GetCurrentProcessId() //getpid()    // seed
 	};
 
+	std::vector<double> null_input;
+
 	////Env::Env()
 	////{
 	////	_boolLiteralFactory = new LiteralFactory<bool>();

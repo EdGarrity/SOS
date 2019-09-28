@@ -95,6 +95,43 @@ namespace Push
 		return 1;
 	}
 
+	// Purpose: 
+	//   Push the Nth element from the input array onto the Code stack.
+	//
+	// Parameters:
+	//   None
+	//
+	// Return value:
+	//   1
+	//
+	// Side Effects:
+	//   If successful, a number is pushed to the Code stack
+	//
+	// Thread Safe:
+	//   Yes
+	//
+	// Remarks:
+	//   N is popped from the Integer stack first. If N < 0, or if N >= size of input array, or the Integer 
+	//	 stack is empty then a NO-OP is executed instead.
+	//
+	inline unsigned input2code()
+	{
+		int index = pop<int>(env);
+
+		//if ((index >= 0) && (index < env.input.size()))
+		//{
+		//	double value = env.input[index];
+
+		//	push<Code>(Code(floatLiteralFactory->createLiteral(value)));
+		//}
+
+		index = std::abs((int)(index % env.input.size()));
+		double value = env.input[index];
+		push<Code>(Code(floatLiteralFactory->createLiteral(value)));
+
+		return 1;
+	}
+
 
 	inline unsigned _instructions() 
 	{ 

@@ -154,7 +154,11 @@ namespace pushGP
 		std::forward_list<unsigned int> survivors_index;
 
 		for (int n = 0; n < domain::argmap::population_size; n++)
-			survivors_index.push_front(n);
+		{
+			// Skip the other parent
+			if (n != _index_of_other_parent)
+				survivors_index.push_front(n);
+		}
 
 		// Get a randomized deck of test cases
 		std::vector<unsigned int> example_cases = lshuffle(_number_of_example_cases); 
@@ -241,16 +245,30 @@ namespace pushGP
 
 		else if (number_of_survivors > 1)
 		{
-			std::default_random_engine generator;
-			std::uniform_int_distribution<int> distribution(1, number_of_survivors);
+			// I don't know why I did this this way.  It does not seem to be working.
+			//std::default_random_engine generator;
+			//std::uniform_int_distribution<int> distribution(1, number_of_survivors);
 
-			for (int count_down = distribution(generator);
-				it != survivors_index.end(), count_down > 0;
-				it++, count_down--)
-			{
-				if (*it != _index_of_other_parent)
-					before_it = it;
-			}
+			//for (int count_down = distribution(generator);
+			//	it != survivors_index.end(), count_down > 0;
+			//	it++, count_down--)
+			//{
+			//	if (*it != _index_of_other_parent)
+			//		before_it = it;
+			//}
+
+			// Pick the first survivor
+			before_it = survivors_index.begin();
+
+			// Advance to a random survivor
+			int n = (int)(random_double() * number_of_survivors);
+
+			if (n > 0)
+				while (n > 0)
+				{
+					before_it++;
+					n--;
+				}
 		}
 
 		if (number_of_survivors > 0)

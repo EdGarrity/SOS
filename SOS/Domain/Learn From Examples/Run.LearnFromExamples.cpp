@@ -23,10 +23,10 @@ namespace domain
 	{
 		double score_array[argmap::population_size];
 
-		std::forward_list<int> training_cases_problem[argmap::number_of_training_cases];
-		std::forward_list<int> training_cases_solution[argmap::number_of_training_cases];
-		std::forward_list<int> test_cases_problem[argmap::number_of_test_cases];
-		std::forward_list<int> test_cases_solution[argmap::number_of_test_cases];
+		std::vector<double> training_cases_problem[argmap::number_of_training_cases];
+		std::vector<double> training_cases_solution[argmap::number_of_training_cases];
+		std::vector<double> test_cases_problem[argmap::number_of_test_cases];
+		std::vector<double> test_cases_solution[argmap::number_of_test_cases];
 		std::deque<std::string> fitness_cases_problem;
 		std::deque<std::string> fitness_cases_solution;
 
@@ -139,8 +139,8 @@ namespace domain
 
  					while ((training_case_index < argmap::number_of_training_cases) && (fitness_case_count > 0))
 					{
-						std::forward_list<int> training_case_problem;
-						std::forward_list<int> training_case_solution;
+						std::vector<double> training_case_problem;
+						std::vector<double> training_case_solution;
 						CSVRow row;
 
 						std::cout << "training case n = " << training_case_index << std::endl;
@@ -154,12 +154,8 @@ namespace domain
 
 						while (training_case_problem_stream >> row)
 						{
-							int problem_length = std::stoi(row[0]);
-
-							for (int n = 1; n <= problem_length; n++)
-								training_case_problem.push_front(std::stoi(row[n]));
-
-							training_case_problem.push_front(problem_length);
+							for (int n = 0; n < row.size(); n++)
+								training_case_problem.push_back(std::stod(row[n]));
 						}
 
 						training_cases_problem[training_case_index] = training_case_problem;
@@ -172,12 +168,8 @@ namespace domain
 
 						while (training_case_solution_stream >> row)
 						{
-							int solution_length = std::stoi(row[0]);
-
-							for (int n = 1; n <= solution_length; n++)
-								training_case_solution.push_front(std::stoi(row[n]));
-
-							training_case_solution.push_front(solution_length);
+							for (int n = 0; n < row.size(); n++)
+								training_case_solution.push_back(std::stod(row[n]));
 						}
 
 						training_cases_solution[training_case_index] = training_case_solution;
@@ -188,8 +180,8 @@ namespace domain
 
 					while ((test_case_index < argmap::number_of_test_cases) && (fitness_case_count > 0))
 					{
-						std::forward_list<int> test_case_problem;
-						std::forward_list<int> test_case_solution;
+						std::vector<double> test_case_problem;
+						std::vector<double> test_case_solution;
 						CSVRow row;
 
 						std::cout << "test case n = " << test_case_index << std::endl;
@@ -202,12 +194,8 @@ namespace domain
 
 						while (test_case_problem_stream >> row)
 						{
-							int problem_length = std::stoi(row[0]);
-
-							for (int n = 1; n <= problem_length; n++)
-								test_case_problem.push_front(std::stoi(row[n]));
-
-							test_case_problem.push_front(problem_length);
+							for (int n = 0; n < row.size(); n++)
+								test_case_problem.push_back(std::stod(row[n]));
 						}
 
 						test_cases_problem[test_case_index] = test_case_problem;
@@ -220,12 +208,8 @@ namespace domain
 
 						while (test_case_solution_stream >> row)
 						{
-							int solution_length = std::stoi(row[0]);
-
-							for (int n = 1; n <= solution_length; n++)
-								test_case_solution.push_front(std::stoi(row[n]));
-
-							test_case_solution.push_front(solution_length);
+							for (int n = 0; n < row.size(); n++)
+								test_case_solution.push_back(std::stod(row[n]));
 						}
 
 						test_cases_solution[test_case_index] = test_case_solution;
@@ -256,22 +240,19 @@ namespace domain
 			{
 				for (int i = _example_cases_loaded; i < argmap::number_of_training_cases; i++)
 				{
-					std::forward_list<int> training_case_input;
-					std::forward_list<int> training_case_output;
+					std::vector<double> training_case_input;
+					std::vector<double> training_case_output;
 
-					int training_case_length = pushGP::random_integer(argmap::example_case_max_length);
+					int training_case_length = pushGP::random_integer(argmap::example_case_max_length - 1) + 1;
 
 					for (int j = 0; j < training_case_length; j++)
 					{
 						int n = pushGP::random_integer(argmap::example_case_upper_range);
-						training_case_input.push_front(n);
-						training_case_output.push_front(n);
+						training_case_input.push_back(n);
+						training_case_output.push_back(n);
 					}
 
-					training_case_output.sort(std::greater<int>());
-
-					training_case_input.push_front(training_case_length);
-					training_case_output.push_front(training_case_length);
+					std::sort(training_case_output.begin(), training_case_output.end());
 
 					training_cases_problem[i] = training_case_input;
 					training_cases_solution[i] = training_case_output;
@@ -284,22 +265,19 @@ namespace domain
 			{
 				for (int i = _example_cases_loaded + training_cases_created - argmap::number_of_training_cases; i < argmap::number_of_test_cases; i++)
 				{
-					std::forward_list<int> test_case_input;
-					std::forward_list<int> test_case_output;
+					std::vector<double> test_case_input;
+					std::vector<double> test_case_output;
 
-					int test_case_length = pushGP::random_integer(argmap::example_case_max_length);
+					int test_case_length = pushGP::random_integer(argmap::example_case_max_length - 1) + 1;
 
 					for (int j = 0; j < test_case_length; j++)
 					{
 						int n = pushGP::random_integer(argmap::example_case_upper_range);
-						test_case_input.push_front(n);
-						test_case_output.push_front(n);
+						test_case_input.push_back(n);
+						test_case_output.push_back(n);
 					}
 
-					test_case_output.sort(std::greater<int>());
-
-					test_case_input.push_front(test_case_length);
-					test_case_output.push_front(test_case_length);
+					std::sort(test_case_output.begin(), test_case_output.end());
 
 					test_cases_problem[i] = test_case_input;
 					test_cases_solution[i] = test_case_output;
@@ -330,8 +308,8 @@ namespace domain
 
 			for (int i = 0; i < argmap::number_of_training_cases; i++)
 			{
-				std::forward_list<int> training_case_input;
-				std::forward_list<int> training_case_output;
+				std::vector<double> training_case_input;
+				std::vector<double> training_case_output;
 
 				training_case_input = training_cases_problem[i];
 				training_case_output = training_cases_solution[i];
@@ -367,8 +345,8 @@ namespace domain
 
 			for (int i = 0; i < argmap::number_of_test_cases; i++)
 			{
-				std::forward_list<int> test_case_input;
-				std::forward_list<int> test_case_output;
+				std::vector<double> test_case_input;
+				std::vector<double> test_case_output;
 
 				test_case_input = test_cases_problem[i];
 				test_case_output = test_cases_solution[i];
@@ -669,7 +647,9 @@ namespace domain
 			return n;
 		}
 
-		int compute_errors(std::function<double(static unsigned int _individual_index, static std::forward_list<int>& _input_list, static std::forward_list<int>& _output_list)> _run_individual_program,
+		int compute_errors(std::function<double(static unsigned int _individual_index, 
+									static std::vector<double>& _input_list, 
+									static std::vector<double>& _output_list)> _run_individual_program,
 			int _number_of_example_cases) 
 		{
 			int individual_with_least_error = -1;
@@ -680,6 +660,9 @@ namespace domain
 			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			{
 				int error_count= 0;
+
+				if (individual_index == 48)
+					error_count = 0;
 
 				if ((individual_index % 100) == 0)
 					std::cout << individual_index;
@@ -694,8 +677,8 @@ namespace domain
 					Push::codeListFactory->clean_up();
 					Push::doRangeClassFactory->clean_up();
 
-					std::forward_list<int> example_problem = training_cases_problem[example_case];
-					std::forward_list<int> example_solution = training_cases_solution[example_case];
+					std::vector<double> example_problem = training_cases_problem[example_case];
+					std::vector<double> example_solution = training_cases_solution[example_case];
 
 					pushGP::globals::error_matrix[example_case][individual_index] = _run_individual_program(individual_index, example_problem, example_solution);
 
@@ -731,10 +714,12 @@ namespace domain
 			return (individual_with_best_score == -1) ? individual_with_least_error : individual_with_best_score;
 		}
 
-		double compute_errors(std::function<double(static unsigned int _individual_index, static std::forward_list<int>& _input_list, static std::forward_list<int>& _output_list)> _run_individual_program,
+		double compute_errors(std::function<double(static unsigned int _individual_index,
+								static std::vector<double>& _example_problem, 
+			                    static std::vector<double>& _example_solution)> _run_individual_program,
 			int _number_of_example_cases,
-			std::forward_list<int> _example_cases_problem[],
-			std::forward_list<int> _example_cases_solution[],
+			static std::vector<double> _example_cases_problem[],
+			static std::vector<double> _example_cases_solution[],
 			int _individual_index)
 		{
 			double error = (std::numeric_limits<double>::max)();
@@ -744,8 +729,8 @@ namespace domain
 			{
 				std::cout << ".";
 
-				std::forward_list<int> example_problem = _example_cases_problem[example_case];
-				std::forward_list<int> example_solution = _example_cases_solution[example_case];
+				std::vector<double> example_problem = _example_cases_problem[example_case];
+				std::vector<double> example_solution = _example_cases_solution[example_case];
 
 				double example_case_error = _run_individual_program(_individual_index, example_problem, example_solution);
 
@@ -761,10 +746,10 @@ namespace domain
 			return error;
 		}
 
-		double compute_errors(std::function<double(std::string _genome, static std::forward_list<int>& _example_problem, static std::forward_list<int>& _example_solution)> _run_genome,
+		double compute_errors(std::function<double(std::string _genome, static std::vector<double>& _example_problem, static std::vector<double>& _example_solution)> _run_genome,
 			int _number_of_example_cases,
-			std::forward_list<int> _example_cases_problem[],
-			std::forward_list<int> _example_cases_solution[],
+			static std::vector<double> _example_cases_problem[],
+			static std::vector<double> _example_cases_solution[],
 			std::string _genome)
 		{
 			double error = (std::numeric_limits<double>::max)();
@@ -774,8 +759,8 @@ namespace domain
 			{
 				std::cout << ".";
 
-				std::forward_list<int> example_problem = _example_cases_problem[example_case];
-				std::forward_list<int> example_solution = _example_cases_solution[example_case];
+				std::vector<double> example_problem = _example_cases_problem[example_case];
+				std::vector<double> example_solution = _example_cases_solution[example_case];
 
 				double example_case_error = _run_genome(_genome, example_problem, example_solution);
 
@@ -996,6 +981,12 @@ namespace domain
 					{
 						pushGP::globals::minimum_error_array_by_example_case[example_case] = (std::numeric_limits<double>::max)();
 						pushGP::globals::individual_with_minimum_error_for_training_case[example_case] = (std::numeric_limits<unsigned int>::max)();
+					}
+
+					for (int ind = 0; ind < argmap::population_size; ind++)
+					{
+						for (int training_case_index = 0; training_case_index < argmap::number_of_training_cases; training_case_index++)
+							pushGP::globals::error_matrix[training_case_index][ind] = 0.0;
 					}
 
 					std::cout << "Clean up memory" << std::endl;

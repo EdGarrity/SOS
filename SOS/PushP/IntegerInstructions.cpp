@@ -7,6 +7,7 @@ namespace Push
 	void initInt()
 	{
 		Type binaryInt = integerType + integerType;
+
 		make_instruction((Operator)plus<int>, "INTEGER.+", binaryInt, integerType);
 		make_instruction((Operator)minus<int>, "INTEGER.-", binaryInt, integerType);
 		make_instruction((Operator)multiplies<int>, "INTEGER.*", binaryInt, integerType);
@@ -20,5 +21,7 @@ namespace Push
 		make_instruction((Operator)_min<int>, "INTEGER.MIN", binaryInt, integerType);
 //		make_instruction((Operator)rand_int, "INTEGER.RAND", nullType, integerType);
 //		make_instruction((Operator)rand_int, "INTEGER.ERC", nullType, integerType);
+		make_instruction((Operator)input2int, "INTEGER.IN", integerType, integerType);
+		make_instruction((Operator)int2output, "INTEGER.OUT", binaryInt, nullType);
 	}
 } // namespace push

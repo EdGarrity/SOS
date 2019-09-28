@@ -13,6 +13,8 @@ namespace Push
 	void initFloat()
 	{
 		Type binaryFloat = floatType + floatType;
+//		Type integerFloat = integerType + floatType;
+
 		make_instruction((Operator)plus<double>, "FLOAT.+", binaryFloat, floatType);
 		make_instruction((Operator)minus<double>, "FLOAT.-", binaryFloat, floatType);
 		make_instruction((Operator)multiplies<double>, "FLOAT.*", binaryFloat, floatType);
@@ -33,5 +35,7 @@ namespace Push
 //		make_instruction((Operator)data2float, "FLOAT.FROMDATA", integerType, floatType);
 		make_instruction((Operator)_exp, "FLOAT.EXP", floatType, floatType);
 		make_instruction((Operator)_log, "FLOAT.LOG", floatType, floatType);
+		make_instruction((Operator)input2float, "FLOAT.IN", integerType, floatType);
+		make_instruction((Operator)float2output, "FLOAT.OUT", floatType + integerType, nullType);
 	}
 }
