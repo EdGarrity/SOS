@@ -243,7 +243,7 @@ namespace domain
 					std::vector<double> training_case_input;
 					std::vector<double> training_case_output;
 
-					int training_case_length = pushGP::random_integer(argmap::example_case_max_length - 1) + 1;
+					int training_case_length = pushGP::random_integer(argmap::example_case_max_length) + 1;
 
 					for (int j = 0; j < training_case_length; j++)
 					{
@@ -268,7 +268,7 @@ namespace domain
 					std::vector<double> test_case_input;
 					std::vector<double> test_case_output;
 
-					int test_case_length = pushGP::random_integer(argmap::example_case_max_length - 1) + 1;
+					int test_case_length = pushGP::random_integer(argmap::example_case_max_length) + 1;
 
 					for (int j = 0; j < test_case_length; j++)
 					{
