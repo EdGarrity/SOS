@@ -243,7 +243,7 @@ namespace domain
 					std::vector<double> training_case_input;
 					std::vector<double> training_case_output;
 
-					int training_case_length = pushGP::random_integer(argmap::example_case_max_length - 1) + 1;
+					int training_case_length = pushGP::random_integer(argmap::example_case_max_length) + 1;
 
 					for (int j = 0; j < training_case_length; j++)
 					{
@@ -268,7 +268,7 @@ namespace domain
 					std::vector<double> test_case_input;
 					std::vector<double> test_case_output;
 
-					int test_case_length = pushGP::random_integer(argmap::example_case_max_length - 1) + 1;
+					int test_case_length = pushGP::random_integer(argmap::example_case_max_length) + 1;
 
 					for (int j = 0; j < test_case_length; j++)
 					{
@@ -679,6 +679,9 @@ namespace domain
 
 					std::vector<double> example_problem = training_cases_problem[example_case];
 					std::vector<double> example_solution = training_cases_solution[example_case];
+
+					if ((individual_index == 48) && (example_case == 0))
+						individual_index = 48;
 
 					pushGP::globals::error_matrix[example_case][individual_index] = _run_individual_program(individual_index, example_problem, example_solution);
 
