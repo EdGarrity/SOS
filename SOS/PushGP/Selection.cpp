@@ -4,6 +4,7 @@
 #include "Selection.h"
 #include "Random.h"
 #include "Globals.h"
+#include "..\Utilities\Random.Utilities.h"
 
 namespace pushGP
 {
@@ -261,8 +262,8 @@ namespace pushGP
 			before_it = survivors_index.begin();
 
 			// Advance to a random survivor
-			int n = (int)(random_double() * number_of_survivors);
-
+//			int n = (int)(random_double() * number_of_survivors);
+			int n = Utilities::random_integer(0, number_of_survivors - 1);
 			if (n > 0)
 				while (n > 0)
 				{
@@ -276,7 +277,8 @@ namespace pushGP
 
 		else
 		{
-			int n = (int)(random_double() * domain::argmap::population_size);
+//			int n = (int)(random_double() * domain::argmap::population_size);
+			int n = Utilities::random_integer(0, domain::argmap::population_size - 1);
 			chosen = n;
 		}
 

@@ -68,10 +68,13 @@ namespace domain
 		// Number of Available Test Cases
 		const long int number_of_test_cases = 10;
 
+		// Minimum length of an example case
+		const long int example_case_min_length = 2;
+
 		// Maximum length of an example case
 		const long int example_case_max_length = 2;
 
-		// Upper range of numbers in the example case
+		// Upper range of values in the example case
 		const long int example_case_upper_range = 100;
 
 		//// Date range for training
@@ -147,6 +150,12 @@ namespace domain
 
 		// The probability of generating an input Plush atom
 		const double probability_of_generating_a_io_atom = 0.20;
+
+		// When generating a constant, the range of possible values the constant can be
+		const double float_min = ((std::numeric_limits<double>::lowest)() / 2.0);
+		const double float_max = ((std::numeric_limits<double>::max)() / 2.0);
+		const int int_min = (std::numeric_limits<int>::lowest)();
+		const int int_max = (std::numeric_limits<int>::max)();
 
 		// When using alternation, the probability of alternating between the parents when moving
 		// to the next gene.

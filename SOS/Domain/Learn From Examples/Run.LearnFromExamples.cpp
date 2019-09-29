@@ -11,6 +11,7 @@
 #include "../../Plush/Genome.h"
 #include "../../Utilities/Conversion.h"
 #include "../../PushGP/AsyncBreed.h"
+#include "../../Utilities/Random.Utilities.h"
 #include <functional>
 #include <limits>
 #include <sstream>
@@ -243,11 +244,11 @@ namespace domain
 					std::vector<double> training_case_input;
 					std::vector<double> training_case_output;
 
-					int training_case_length = pushGP::random_integer(argmap::example_case_max_length) + 1;
+					int training_case_length = Utilities::random_integer(argmap::example_case_min_length, argmap::example_case_max_length);
 
 					for (int j = 0; j < training_case_length; j++)
 					{
-						int n = pushGP::random_integer(argmap::example_case_upper_range);
+						int n = Utilities::random_integer(argmap::example_case_upper_range);
 						training_case_input.push_back(n);
 						training_case_output.push_back(n);
 					}
@@ -268,11 +269,11 @@ namespace domain
 					std::vector<double> test_case_input;
 					std::vector<double> test_case_output;
 
-					int test_case_length = pushGP::random_integer(argmap::example_case_max_length) + 1;
+					int test_case_length = Utilities::random_integer(argmap::example_case_min_length, argmap::example_case_max_length);
 
 					for (int j = 0; j < test_case_length; j++)
 					{
-						int n = pushGP::random_integer(argmap::example_case_upper_range);
+						int n = Utilities::random_integer(argmap::example_case_upper_range);
 						test_case_input.push_back(n);
 						test_case_output.push_back(n);
 					}
@@ -647,7 +648,7 @@ namespace domain
 			return n;
 		}
 
-		int compute_errors(std::function<double(static unsigned int _individual_index, 
+		int compute_training_errors(std::function<double(static unsigned int _individual_index, 
 									static std::vector<double>& _input_list, 
 									static std::vector<double>& _output_list)> _run_individual_program,
 			int _number_of_example_cases) 
@@ -667,7 +668,8 @@ namespace domain
 				if ((individual_index % 100) == 0)
 					std::cout << individual_index;
 
-				pushGP::globals::minimum_error_array_by_individual[individual_index] = (std::numeric_limits<double>::max)();
+//				pushGP::globals::minimum_error_array_by_individual[individual_index] = (std::numeric_limits<double>::max)();
+				pushGP::globals::minimum_error_array_by_individual[individual_index] = 0.0;
 
 				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
 				{
@@ -689,9 +691,14 @@ namespace domain
 						error_count++;
 
 					// Set error array to the minimum error for all example cases
-					if (pushGP::globals::minimum_error_array_by_individual[individual_index] > pushGP::globals::error_matrix[example_case][individual_index])
-						pushGP::globals::minimum_error_array_by_individual[individual_index] = pushGP::globals::error_matrix[example_case][individual_index];
+					//if (pushGP::globals::minimum_error_array_by_individual[individual_index] > pushGP::globals::error_matrix[example_case][individual_index])
+					//	pushGP::globals::minimum_error_array_by_individual[individual_index] = pushGP::globals::error_matrix[example_case][individual_index];
+
+					pushGP::globals::minimum_error_array_by_individual[individual_index] += pushGP::globals::error_matrix[example_case][individual_index];
 				}
+
+				// Calculate the average error for all example cases
+				pushGP::globals::minimum_error_array_by_individual[individual_index] /= (double)_number_of_example_cases;
 
 				score_array[individual_index] = (double)error_count / (double)_number_of_example_cases;
 
@@ -717,23 +724,27 @@ namespace domain
 			return (individual_with_best_score == -1) ? individual_with_least_error : individual_with_best_score;
 		}
 
-		double compute_errors(std::function<double(static unsigned int _individual_index,
+		//argmap::number_of_test_cases,
+		//	test_cases_problem,
+		//	test_cases_solution,
+
+		double compute_test_errors(std::function<double(static unsigned int _individual_index,
 								static std::vector<double>& _example_problem, 
 			                    static std::vector<double>& _example_solution)> _run_individual_program,
-			int _number_of_example_cases,
-			static std::vector<double> _example_cases_problem[],
-			static std::vector<double> _example_cases_solution[],
+			//int _number_of_example_cases,
+			//static std::vector<double> _example_cases_problem[],
+			//static std::vector<double> _example_cases_solution[],
 			int _individual_index)
 		{
 			double error = (std::numeric_limits<double>::max)();
 			int error_count = 0;
 
-			for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
+			for (int example_case = 0; example_case < argmap::number_of_test_cases; ++example_case)
 			{
 				std::cout << ".";
 
-				std::vector<double> example_problem = _example_cases_problem[example_case];
-				std::vector<double> example_solution = _example_cases_solution[example_case];
+				std::vector<double> example_problem = test_cases_problem[example_case];
+				std::vector<double> example_solution = test_cases_solution[example_case];
 
 				double example_case_error = _run_individual_program(_individual_index, example_problem, example_solution);
 
@@ -741,7 +752,7 @@ namespace domain
 					error_count++;
 			}
 
-			error = (double)error_count / (double)_number_of_example_cases;
+			error = (double)error_count / (double)argmap::number_of_test_cases;
 
 			std::cout << std::endl;
 			std::cout << std::endl;
@@ -749,21 +760,25 @@ namespace domain
 			return error;
 		}
 
-		double compute_errors(std::function<double(std::string _genome, static std::vector<double>& _example_problem, static std::vector<double>& _example_solution)> _run_genome,
-			int _number_of_example_cases,
-			static std::vector<double> _example_cases_problem[],
-			static std::vector<double> _example_cases_solution[],
+		//argmap::number_of_test_cases,
+		//	test_cases_problem,
+		//	test_cases_solution,
+
+		double verify_test_errors(std::function<double(std::string _genome, static std::vector<double>& _example_problem, static std::vector<double>& _example_solution)> _run_genome,
+			//int _number_of_example_cases,
+			//static std::vector<double> _example_cases_problem[],
+			//static std::vector<double> _example_cases_solution[],
 			std::string _genome)
 		{
 			double error = (std::numeric_limits<double>::max)();
 			int error_count = 0;
 
-			for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
+			for (int example_case = 0; example_case < argmap::number_of_test_cases; example_case++)
 			{
 				std::cout << ".";
 
-				std::vector<double> example_problem = _example_cases_problem[example_case];
-				std::vector<double> example_solution = _example_cases_solution[example_case];
+				std::vector<double> example_problem = test_cases_problem[example_case];
+				std::vector<double> example_solution = test_cases_solution[example_case];
 
 				double example_case_error = _run_genome(_genome, example_problem, example_solution);
 
@@ -771,7 +786,7 @@ namespace domain
 					error_count++;
 			}
 
-			error = (double)error_count / (double)_number_of_example_cases;
+			error = (double)error_count / (double)argmap::number_of_test_cases;
 
 			std::cout << std::endl;
 			std::cout << std::endl;
@@ -1006,7 +1021,7 @@ namespace domain
 //					verify_pop_agents();
 
 					std::cout << "Run Programs with Training Cases" << std::endl;
-					int best_individual = compute_errors(run_individual, argmap::number_of_training_cases);
+					int best_individual = compute_training_errors(run_individual, argmap::number_of_training_cases);
 
 					std::cout << "Produce New Offspring" << std::endl;
 					produce_new_offspring(argmap::number_of_training_cases,	best_individual);
@@ -1020,10 +1035,10 @@ namespace domain
 					std::cout << "program = " << program << std::endl;
 					std::cout << "genome = " << genome << std::endl;
 
-					double test_case_score = compute_errors(run_individual,
-						argmap::number_of_test_cases,
-						test_cases_problem,
-						test_cases_solution,
+					double test_case_score = compute_test_errors(run_individual,
+						//argmap::number_of_test_cases,
+						//test_cases_problem,
+						//test_cases_solution,
 						best_individual);
 
 					std::cout << "test_case_error = " << test_case_score << std::endl;
@@ -1033,10 +1048,10 @@ namespace domain
 
 					//std::string genome = "{:instruction EXEC.DO*RANGE :close  0}{:instruction FLOAT.SWAP :close  0}{:instruction FLOAT.- :close  0}{:instruction FLOAT.FROMINTEGER :close  0}{:instruction INTEGER.FLUSH :close  0}{:instruction INTEGER.> :close  0}{:instruction CODE.DUP :close  0}{:instruction BOOLEAN.NOR :close  0}{:instruction FLOAT.YANK :close  0}{:instruction INTEGER.FROMFLOAT :close  0}{:instruction FLOAT./ :close  4}{:instruction FLOAT.FLUSH :close  0}{:instruction EXEC.IF :close  0}";
 
-					double verify_test_case_error = compute_errors(run_genome,
-						argmap::number_of_test_cases,
-						test_cases_problem,
-						test_cases_solution,
+					double verify_test_case_error = verify_test_errors(run_genome,
+						//argmap::number_of_test_cases,
+						//test_cases_problem,
+						//test_cases_solution,
 						genome);
 									   					 				  
 					std::cout << "verify_test_case_error = " << verify_test_case_error << std::endl;

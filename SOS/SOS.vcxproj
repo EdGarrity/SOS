@@ -195,6 +195,7 @@
     <ClInclude Include="Utilities\Conversion.h" />
     <ClInclude Include="Utilities\CSVIterator.h" />
     <ClInclude Include="Utilities\MyException.h" />
+    <ClInclude Include="Utilities\Random.Utilities.h" />
     <ClInclude Include="Utilities\Singleton.h" />
   </ItemGroup>
   <ItemGroup>
@@ -236,6 +237,7 @@
     <ClCompile Include="Utilities\AtomicFunctions.cpp" />
     <ClCompile Include="Utilities\Conversion.cpp" />
     <ClCompile Include="Utilities\MyException.cpp" />
+    <ClCompile Include="Utilities\Random.Utilities.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

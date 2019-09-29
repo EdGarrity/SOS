@@ -5,6 +5,7 @@
 #include "Globals.h"
 #include "Utilities.h"
 #include "../Utilities/MyException.h"
+#include "../Utilities/Random.Utilities.h"
 
 namespace pushGP
 {
@@ -29,7 +30,7 @@ namespace pushGP
 	//
 	void breed(unsigned int _individual_index, int _number_of_example_cases)
 	{
-		double prob = random_double();
+		double prob = Utilities::random_double(0.0, 1.0);
 		unsigned int first_parent_index = 0;
 		unsigned int other_parent_index = 0;
 		int count_down = 3;
@@ -38,11 +39,12 @@ namespace pushGP
 		{
 //			std::cout << "A";
 
-			double incest_prob = random_double();
+			double incest_prob = Utilities::random_double(0.0, 1.0);
 			bool done = false;
 			bool first = true;
+			int attempts_left = 3;
 
-			while (!done)
+			while ((!done) && (--attempts_left >= 0))
 			{
 				if (!first)
 				{
@@ -143,7 +145,11 @@ namespace pushGP
 				}
 			};
 			
-			alternation(first_parent_index, other_parent_index, _individual_index);
+			if (done)
+				alternation(first_parent_index, other_parent_index, _individual_index);
+
+			else
+				globals::child_agents[_individual_index].set_genome(random_plush_genome());
 		}
 		else if ((prob >= domain::argmap::probability_of_alternation) && (prob < domain::argmap::probability_of_alternation + domain::argmap::probability_of_mutation))
 		{
