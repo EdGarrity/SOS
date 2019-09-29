@@ -13,7 +13,7 @@ namespace domain
 	namespace learn_from_examples
 	{
 		// Purpose: 
-		//   Run a Push prgram and calculate error result
+		//   Run a Push prgram and calculates error result
 		//
 		// Parameters:
 		//   program - The Push program to run
@@ -30,83 +30,69 @@ namespace domain
 		//   No
 		//
 		// Remarks:
-		//   Examples are expected to be a list of integers in the following form:
-		//     N X
+		//   Examples are expected to be a vector of doubles in the following form:
+		//     X1 X2 X3 ...
 		//
 		//     Where:
-		//       N = number of integers in the example
-		//       X = 0 or more integers.  The number of integers must be equal to N
+		//       X = 0 or more doubles.
 		//
 		double run_program(std::string _program,
-			static std::forward_list<int>& _example_problem,
-			static std::forward_list<int>& _example_solution)
+			static std::vector<double>& _example_problem,
+			static std::vector<double>& _example_solution)
 		{
 			double error = 0.0;
 			int actual_solution_length = 0;
 
 			// Setup
-			Push::init_push();
+			Push::init_push(_example_problem);
 			Push::init_static_PushP_instructions();
 			Push::Code code = Push::parse(_program);
 			Push::push_call(code);
 
-			// Load data
-			int problem_length = _example_problem.front();
-			_example_problem.pop_front();
-
-			for (int n = 0; n < problem_length; n++)
-			{
-				int problem = _example_problem.front();
-				_example_problem.pop_front();
-				Push::push(problem);
-			}
-
-			Push::push(problem_length);
-
 			// Evaluate
 			Push::env.go(argmap::max_point_evaluations);
 
-			// Get result
-			if (Push::has_elements<int>(1))
-				actual_solution_length = Push::pop<int>(Push::env);
-
-			else
-				actual_solution_length = 0;
-
 			// Calculate error
-			int expected_solution_length = _example_solution.front();
-			_example_solution.pop_front();
+			double sum_of_error_squared = 0;
 
-			double sum_of_error_squared = (double)expected_solution_length - (double)actual_solution_length;
-			sum_of_error_squared = sum_of_error_squared * sum_of_error_squared;
+			int digits_imbalance = _example_solution.size() - Push::env.output.size();
 
-			if (expected_solution_length > 0)
+			int digits = std::min(_example_solution.size(), Push::env.output.size());
+
+			if (digits > 0)
 			{
-				int result_size = Push::env.get_stack_size(Push::INTEGER_STACK);
-
-				for (int n = 0; n < expected_solution_length; n++)
+				for (int n = 0; n < digits; n++)
 				{
-					int expected_solution = _example_solution.front();
-					_example_solution.pop_front();
+					double distance = 0.0;
 
-					int result = 0;
-					if (n < result_size)
-						result = Push::pop<int>(Push::env);
+					distance = fabs(_example_solution[n] - (isnan(Push::env.output[n]) ? 0.0 : Push::env.output[n]));
 
-					if (n < actual_solution_length)
-					{
-						double distance = ((double)expected_solution - (double)result);
-						sum_of_error_squared += distance * distance;
-					}
-					else
-						sum_of_error_squared += ((double)expected_solution) * ((double)expected_solution);
+					if (distance < (std::numeric_limits<double>::epsilon() + std::numeric_limits<double>::epsilon()))
+						distance = 0.0;
+
+					sum_of_error_squared += distance * distance;
 				}
 			}
 
+			// Calculate magnitude of sum of all vectors
 			error = std::sqrt(sum_of_error_squared);
+
+			// Convert to a number between [0 - 1)
+			error = (-1.0 / std::log10(error + 10.0)) + 1.0;
+
+			// Add number of wrong digits
+			error += std::abs(digits_imbalance);
 
 			// Cleanup Push Stacks to release memory
 			Push::env.clear_stacks();
+
+			// Cap error
+			if (error > 10000000.0)
+				error = 10000000.0;
+
+			// Check for NAN error
+			if (isnan(error))
+				error = std::numeric_limits<double>::max();
 
 			return error;
 		}
@@ -129,19 +115,18 @@ namespace domain
 		//   No
 		//
 		// Remarks:
-		//   Examples are expected to be a list of integers in the following form:
-		//     N X
+		//   Examples are expected to be a vector of doubles in the following form:
+		//     X1 X2 X3 ...
 		//
 		//     Where:
-		//       N = number of integers in the example
-		//       X = 0 or more integers.  The number of integers must be equal to N
+		//       X = 0 or more doubles.
 		//
 		//   Must call Push::init_push() prior to this function call to register the Push functions and 
 		//   populate str2parentheses_map_ptr
 		//
 		double run_genome(std::string _genome,
-			static std::forward_list<int>& _example_problem,
-			static std::forward_list<int>& _example_solution)
+			static std::vector<double>& _example_problem,
+			static std::vector<double>& _example_solution)
 		{
 			double error = 0.0;
 			pushGP::Individual individual;
@@ -181,8 +166,8 @@ namespace domain
 		//       X = 0 or more integers.  The number of integers must be equal to N
 		//
 		double run_individual(static unsigned int _individual_index,
-			static std::forward_list<int>& _example_problem,
-			static std::forward_list<int>& _example_solution)
+			static std::vector<double>& _example_problem,
+			static std::vector<double>& _example_solution)
 		{
 			double error = 0.0;
 

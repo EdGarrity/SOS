@@ -108,10 +108,15 @@ namespace Push
 
 	int init_push()
 	{
-		return init_push(nullptr);
+		return init_push(null_input, nullptr);
 	}
 
-	int init_push(std::function<void(void)> _init_push_application_specific_functions = nullptr)
+	int init_push(std::vector<double> & _input)
+	{
+		return init_push(_input, nullptr);
+	}
+
+	int init_push(std::vector<double> & _input, std::function<void(void)> _init_push_application_specific_functions)
 	{
 		static bool initialized = false;	// Should this be a thread global?
 
@@ -133,7 +138,7 @@ namespace Push
 				_init_push_application_specific_functions();
 		}
 
-		env.initialize();
+		env.initialize(_input);
 		return 0;
 	}
 }

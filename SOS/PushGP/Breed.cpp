@@ -5,6 +5,7 @@
 #include "Globals.h"
 #include "Utilities.h"
 #include "../Utilities/MyException.h"
+#include "../Utilities/Random.Utilities.h"
 
 namespace pushGP
 {
@@ -29,7 +30,7 @@ namespace pushGP
 	//
 	void breed(unsigned int _individual_index, int _number_of_example_cases)
 	{
-		double prob = random_double();
+		double prob = Utilities::random_double(0.0, 1.0);
 		unsigned int first_parent_index = 0;
 		unsigned int other_parent_index = 0;
 		int count_down = 3;
@@ -38,11 +39,12 @@ namespace pushGP
 		{
 //			std::cout << "A";
 
-			double incest_prob = random_double();
+			double incest_prob = Utilities::random_double(0.0, 1.0);
 			bool done = false;
 			bool first = true;
+			int attempts_left = 3;
 
-			while (!done)
+			while ((!done) && (--attempts_left >= 0))
 			{
 				if (!first)
 				{
@@ -51,9 +53,7 @@ namespace pushGP
 					count_down--;
 
 					if (count_down < 0)
-					{
 						globals::child_agents[_individual_index].set_genome(random_plush_genome());
-					}
 				}
 
 				first = false;
@@ -64,7 +64,10 @@ namespace pushGP
 
 				// Check that both parents are not the same individual
 				if (globals::population_agents[first_parent_index].get_id() == globals::population_agents[other_parent_index].get_id())
+				{
+//					std::cout << "Check that both parents are not the same individual.  first_parent_index = " << first_parent_index << " other_parent_index = " << other_parent_index << std::endl;
 					done = false;
+				}
 
 				// Check that the parents are not siblings
 				else if (incest_prob > domain::argmap::probability_of_sibling_incest)
@@ -83,7 +86,10 @@ namespace pushGP
 							}
 
 							if (!done)
+							{
+//								std::cout << "Check that the parents are not siblings" << std::endl;
 								break;
+							}
 						}
 					}
 				}
@@ -105,7 +111,10 @@ namespace pushGP
 							}
 
 							if (!done)
+							{
+//								std::cout << "Check that the parents are not cousins" << std::endl;
 								break;
+							}
 						}
 					}
 				}
@@ -127,15 +136,21 @@ namespace pushGP
 							}
 
 							if (!done)
+							{
+//								std::cout << "Check that the parents are not second cousins" << std::endl;
 								break;
+							}
 						}
 					}
 				}
 			};
+			
+			if (done)
+				alternation(first_parent_index, other_parent_index, _individual_index);
 
-			alternation(first_parent_index, other_parent_index, _individual_index);
+			else
+				globals::child_agents[_individual_index].set_genome(random_plush_genome());
 		}
-
 		else if ((prob >= domain::argmap::probability_of_alternation) && (prob < domain::argmap::probability_of_alternation + domain::argmap::probability_of_mutation))
 		{
 //			std::cout << "M";
@@ -147,6 +162,8 @@ namespace pushGP
 
 		else
 		{
+//			std::cout << "C";
+		
 			globals::child_agents[_individual_index].copy(globals::population_agents[_individual_index]);
 		}
 

@@ -8,6 +8,7 @@
 #include "Env.h"
 #include "Literal.h"
 #include "StaticInit.h"
+#include "..\Utilities\Random.Utilities.h"
 
 namespace Push
 {
@@ -126,7 +127,7 @@ namespace Push
 
 	std::string make_terminal()
 	{
-		uint32 r = rng.random(Push::detail::function_names.size());
+		unsigned int r = Utilities::random_integer(0, Push::detail::function_names.size() - 1);
 		return (Push::detail::function_names[r]);
 	}
 
@@ -140,7 +141,8 @@ namespace Push
 			return result;
 		}
 
-		unsigned this_part = rng.random(number - 1) + 1;
+//		unsigned this_part = rng.random(number - 1) + 1;
+		unsigned this_part = Utilities::random_integer(1, number - 1);
 		result.push_back(this_part);
 		std::vector<unsigned> sub = decompose(number - this_part, max_parts - 1);
 

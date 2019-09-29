@@ -95,8 +95,108 @@ namespace Push
 		return 1;
 	}
 
+	// Purpose: 
+	//   Push the Nth element from the input array onto the Code stack.
+	//
+	// Parameters:
+	//   None
+	//
+	// Return value:
+	//   1
+	//
+	// Side Effects:
+	//   If successful, a number is pushed to the Code stack
+	//
+	// Thread Safe:
+	//   Yes
+	//
+	// Remarks:
+	//   N is popped from the Integer stack first. If N < 0, or if N >= size of input array, or the Integer 
+	//	 stack is empty then a NO-OP is executed instead.
+	//
+	inline unsigned in2code()
+	{
+		int index = pop<int>(env);
 
-	inline unsigned _instructions() 
+		//if ((index >= 0) && (index < env.input.size()))
+		//{
+		//	double value = env.input[index];
+
+		//	push<Code>(Code(floatLiteralFactory->createLiteral(value)));
+		//}
+
+		index = std::abs((int)(index % env.input.size()));
+		double value = env.input[index];
+		push<Code>(Code(floatLiteralFactory->createLiteral(value)));
+
+		return 1;
+	}
+
+	// Purpose: 
+	//   Push all elements from the input array onto a stack.
+	//
+	// Parameters:
+	//   None
+	//
+	// Return value:
+	//   1
+	//
+	// Side Effects:
+	//   If successful, all numbers are pushed to the a stack
+	//
+	// Thread Safe:
+	//   Yes
+	//
+	// Remarks:
+	//   if input array is empty, NO-OP is executed.
+	//
+	inline unsigned inall2code()
+	{
+		if (env.input.size() > 0)
+		{
+			for (int index = 0; index < env.input.size(); index++)
+			{
+				double value = env.input[index];
+				push<Code>(Code(floatLiteralFactory->createLiteral(value)));
+			}
+		}
+
+		return 1;
+	}
+
+	// Purpose: 
+	//   Push all elements from the input array onto a stack in reverse order.
+	//
+	// Parameters:
+	//   None
+	//
+	// Return value:
+	//   1
+	//
+	// Side Effects:
+	//   If successful, all numbers are pushed to a stack
+	//
+	// Thread Safe:
+	//   Yes
+	//
+	// Remarks:
+	//   if input array is empty, NO-OP is executed.
+	//
+	inline unsigned inallrev2code()
+	{
+		if (env.input.size() > 0)
+		{
+			for (int index = env.input.size() - 1; index >= 0; index--)
+			{
+				double value = env.input[index];
+				push<Code>(Code(floatLiteralFactory->createLiteral(value)));
+			}
+		}
+
+		return 1;
+	}
+
+	inline unsigned _instructions()
 	{ 
 		push(env.function_set); 
 		return 1; 

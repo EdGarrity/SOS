@@ -40,7 +40,7 @@ namespace domain
 		//		;; The instructions that pushgp will use in random code.
 
 		// Number of individuals in the population.
-		const unsigned int population_size = 50000;
+		const unsigned int population_size = 500;
 
 		// The maximum number of generations to run GP.
 		const unsigned int max_generations_in_one_session = 10000;
@@ -68,10 +68,13 @@ namespace domain
 		// Number of Available Test Cases
 		const long int number_of_test_cases = 10;
 
-		// Maximum length of an example case
-		const long int example_case_max_length = 100;
+		// Minimum length of an example case
+		const long int example_case_min_length = 2;
 
-		// Upper range of numbers in the example case
+		// Maximum length of an example case
+		const long int example_case_max_length = 2;
+
+		// Upper range of values in the example case
 		const long int example_case_upper_range = 100;
 
 		//// Date range for training
@@ -139,11 +142,20 @@ namespace domain
 
 		// Genetic Operator Probabilities (must add up to 100%)
 		const double probability_of_alternation = 0.90;
-		const double probability_of_mutation = 0.00;
-		const double probability_of_cloaning = 0.10;
+		const double probability_of_mutation = 0.01;
+		const double probability_of_cloaning = 0.09;
 
 		// The probability of generating a constant Plush atom
-		const double probability_of_generating_a_constant_Plush_atom = 0.1;
+		const double probability_of_generating_a_constant_Plush_atom = 0.10;
+
+		// The probability of generating an input Plush atom
+		const double probability_of_generating_a_io_atom = 0.20;
+
+		// When generating a constant, the range of possible values the constant can be
+		const double float_min = ((std::numeric_limits<double>::lowest)() / 2.0);
+		const double float_max = ((std::numeric_limits<double>::max)() / 2.0);
+		const int int_min = (std::numeric_limits<int>::lowest)();
+		const int int_max = (std::numeric_limits<int>::max)();
 
 		// When using alternation, the probability of alternating between the parents when moving
 		// to the next gene.
@@ -158,7 +170,7 @@ namespace domain
 
 		//	The probability of mutating a constant instead of simply replacing the token
 		//	with a random instruction during uniform mutation.
-		const double uniform_mutation_constant_tweak_rate = 0.5;
+		const double uniform_mutation_constant_tweak_rate = 0.50;
 
 		//	The standard deviation used when tweaking float/int constants with Gaussian noise.
 		const double uniform_mutation_float_int_gaussian_standard_deviation = 1.0;
@@ -167,7 +179,7 @@ namespace domain
 		//	;; The standard deviation used when tweaking integer constants with Gaussian noise.
 
 		//	The probability of each character being changed when doing string constant tweaking.
-		const double uniform_mutation_string_char_change_rate = 0.1;
+		const double uniform_mutation_string_char_change_rate = 0.10;
 
 		//	:uniform - mutation - tag - gaussian - standard - deviation 100
 		//	;; The standard deviation used when tweaking tag locations with Gaussian noise.

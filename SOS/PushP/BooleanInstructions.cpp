@@ -12,6 +12,7 @@ namespace Push
 	{
 		/* BOOLEAN */
 		Type binaryBool = boolType + boolType;
+		Type integerBool = integerType + boolType;
 
 		make_instruction((Operator)_and, "BOOLEAN.AND", binaryBool, boolType);
 		make_instruction((Operator)_or, "BOOLEAN.OR", binaryBool, boolType);
@@ -22,5 +23,9 @@ namespace Push
 		make_instruction((Operator)int2bool, "BOOLEAN.FROMINTEGER", integerType, boolType);
 //		make_instruction((Operator)rand_bool, "BOOLEAN.RAND", nullType, boolType);
 //		make_instruction((Operator)rand_bool, "BOOLEAN.ERC", nullType, boolType);
+		make_instruction((Operator)in<bool>, "BOOLEAN.IN", integerType, boolType);
+		make_instruction((Operator)inall<bool>, "BOOLEAN.INALL", nullType, boolType);
+		make_instruction((Operator)inallrev<bool>, "BOOLEAN.INALLREV", nullType, boolType);
+		make_instruction((Operator)out<bool>, "BOOLEAN.OUT", integerBool, nullType);
 	}
 }

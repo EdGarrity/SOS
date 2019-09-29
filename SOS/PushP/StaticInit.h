@@ -6,7 +6,8 @@
 namespace Push
 {
 	int init_push();
-	int init_push(std::function<void(void)> _init_push_application_specific_functions);
+	int init_push(std::vector<double> & input);
+	int init_push(std::vector<double> & input, std::function<void(void)> _init_push_application_specific_functions);
 
 	namespace detail
 	{
