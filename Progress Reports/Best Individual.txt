@@ -1,10 +1,8 @@
 Best_Genome
+{:instruction 120923037 :close  0}
 {:instruction FLOAT.INALL :close  0}
-{:instruction FLOAT.MAX :close  0}
-{:instruction EXEC.SHOVE :close  0}
-{:instruction FLOAT.INALL :close  0}
-{:instruction FLOAT.MIN :close  0}
-{:instruction INTEGER.INALL :close  0}
-{:instruction INTEGER.INALL :close  0}
 {:instruction FLOAT.OUT :close  0}
+{:instruction -1980517770 :close  1}
 {:instruction FLOAT.OUT :close  0}
+{:instruction INTEGER.+ :close  0}
+{:instruction EXEC.DO*RANGE :close  1}
