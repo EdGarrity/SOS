@@ -69,10 +69,10 @@ namespace domain
 		const long int number_of_test_cases = 10;
 
 		// Minimum length of an example case
-		const long int example_case_min_length = 1;
+		const long int example_case_min_length = 3;
 
 		// Maximum length of an example case
-		const long int example_case_max_length = 2;
+		const long int example_case_max_length = 3;
 
 		// Upper range of values in the example case
 		const long int example_case_upper_range = 100;
