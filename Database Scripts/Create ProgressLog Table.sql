@@ -1,7 +1,7 @@
 USE [SOS]
 GO
 
-/****** Object:  Table [dbo].[ProgressLog]    Script Date: 8/31/2019 10:51:47 AM ******/
+/****** Object:  Table [dbo].[ProgressLog]    Script Date: 9/30/2019 8:45:56 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -10,13 +10,14 @@ GO
 
 CREATE TABLE [dbo].[ProgressLog](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
-	[Created_DTS] [datetime] NOT NULL CONSTRAINT [DF_ProgressLog_Created_DTS]  DEFAULT (getdate()),
+	[Created_DTS] [datetime] NOT NULL,
 	[Generation] [int] NOT NULL,
 	[Generations_Completed_This_Session] [int] NOT NULL,
 	[BestIndividual_ID] [int] NOT NULL,
 	[BestIndividual_Training_Score] [float] NOT NULL,
 	[BestIndividual_Training_Error] [float] NOT NULL,
 	[Average_Training_Error] [float] NOT NULL,
+	[Standard_Deviation] [float] NOT NULL,
 	[BestIndividual_Test_Score] [float] NOT NULL,
 	[Number_Of_Training_Cases] [int] NOT NULL,
 	[Number_Of_Test_Cases] [int] NOT NULL,
@@ -29,4 +30,8 @@ CREATE TABLE [dbo].[ProgressLog](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
+
+ALTER TABLE [dbo].[ProgressLog] ADD  CONSTRAINT [DF_ProgressLog_Created_DTS]  DEFAULT (getdate()) FOR [Created_DTS]
+GO
+
 
