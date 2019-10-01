@@ -56,7 +56,7 @@ namespace domain
 		// Maximum size of push programs and push code, as counted by points
 		// in the program. 1 / 4 this limit is used as the limit for sizes of
 		// Plush genomes.
-		const unsigned int max_points = 2000;
+		const unsigned int max_points = 2'000;
 
 		// Maximum size of initial Plush genomes in generation 0. Keep in mind
 		// that genome lengths will otherwise be limited by 1 / 4 of :max - points.
@@ -69,10 +69,10 @@ namespace domain
 		const long int number_of_test_cases = 100;
 
 		// Minimum length of an example case
-		const long int example_case_min_length = 3;
+		const long int example_case_min_length = 1;
 
 		// Maximum length of an example case
-		const long int example_case_max_length = 3;
+		const long int example_case_max_length = 2;
 
 		// Upper range of values in the example case
 		const long int example_case_upper_range = 1000;

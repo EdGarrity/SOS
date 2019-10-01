@@ -68,19 +68,20 @@ namespace domain
 			"           ,[BestIndividual_Training_Score]"			// 4
 			"           ,[BestIndividual_Training_Error]"			// 5
 			"           ,[Average_Training_Error]"					// 6
-			"           ,[BestIndividual_Test_Score]"				// 7
-			"           ,[Number_Of_Training_Cases]"				// 8
-			"           ,[Number_Of_Test_Cases]"					// 9
-			"           ,[Best_Genome]"								// 10
-			"           ,[Population_Size]"							// 11
-			"           ,[Alternation_Rate]"						// 12
-			"           ,[Uniform_Mutation_Rate]"					// 13
-			"           ,[Example_Case_Max_Length]"					// 14
-			"           ,[Example_Case_Upper_Range]"				// 15
+			"           ,[Standard_Deviation]"						// 7
+			"           ,[BestIndividual_Test_Score]"				// 8
+			"           ,[Number_Of_Training_Cases]"				// 9
+			"           ,[Number_Of_Test_Cases]"					// 10
+			"           ,[Best_Genome]"								// 11
+			"           ,[Population_Size]"							// 12
+			"           ,[Alternation_Rate]"						// 13
+			"           ,[Uniform_Mutation_Rate]"					// 14
+			"           ,[Example_Case_Max_Length]"					// 15
+			"           ,[Example_Case_Upper_Range]"				// 16
 			"           )"
 			"     VALUES"
-			"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-		        //       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+			"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+		        //       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6
 
 		unsigned long get_last_saved_generation_number()
 		{
@@ -922,6 +923,7 @@ namespace domain
 			double _best_individual_training_score,
 			double _best_individual_training_error,
 			double _average_traiing_error,
+			double _standard_deviation,
 			double _best_individual_test_score,
 			std::string _best_gnome)
 		{
@@ -935,15 +937,16 @@ namespace domain
 			sqlcmd_save_status_report->set_as_float(4, _best_individual_training_score);
 			sqlcmd_save_status_report->set_as_float(5, _best_individual_training_error);
 			sqlcmd_save_status_report->set_as_float(6, _average_traiing_error);
-			sqlcmd_save_status_report->set_as_float(7, _best_individual_test_score);
-			sqlcmd_save_status_report->set_as_integer(8, argmap::number_of_training_cases);
-			sqlcmd_save_status_report->set_as_integer(9, argmap::number_of_test_cases);
-			sqlcmd_save_status_report->set_as_string(10, _best_gnome);
-			sqlcmd_save_status_report->set_as_integer(11, argmap::population_size);
-			sqlcmd_save_status_report->set_as_float(12, argmap::alternation_rate);
-			sqlcmd_save_status_report->set_as_float(13, argmap::uniform_mutation_rate);
-			sqlcmd_save_status_report->set_as_integer(14, argmap::example_case_max_length);
-			sqlcmd_save_status_report->set_as_integer(15, argmap::example_case_upper_range);
+			sqlcmd_save_status_report->set_as_float(7, _standard_deviation);
+			sqlcmd_save_status_report->set_as_float(8, _best_individual_test_score);
+			sqlcmd_save_status_report->set_as_integer(9, argmap::number_of_training_cases);
+			sqlcmd_save_status_report->set_as_integer(10, argmap::number_of_test_cases);
+			sqlcmd_save_status_report->set_as_string(11, _best_gnome);
+			sqlcmd_save_status_report->set_as_integer(12, argmap::population_size);
+			sqlcmd_save_status_report->set_as_float(13, argmap::alternation_rate);
+			sqlcmd_save_status_report->set_as_float(14, argmap::uniform_mutation_rate);
+			sqlcmd_save_status_report->set_as_integer(15, argmap::example_case_max_length);
+			sqlcmd_save_status_report->set_as_integer(16, argmap::example_case_upper_range);
 
 			sqlcmd_save_status_report->execute();
 
@@ -1067,12 +1070,23 @@ namespace domain
 					}
 					average_traiing_error /= (double)(domain::argmap::population_size * argmap::number_of_training_cases);
 
+					double standard_deviation = 0.0;
+					for (int ind = 0; ind < argmap::population_size; ind++)
+					{
+						for (int training_case_index = 0; training_case_index < argmap::number_of_training_cases; training_case_index++)
+							standard_deviation += (pushGP::globals::error_matrix[training_case_index][ind] - average_traiing_error) 
+							                    * (pushGP::globals::error_matrix[training_case_index][ind] - average_traiing_error);
+					}
+					standard_deviation /= (double)(domain::argmap::population_size * argmap::number_of_training_cases);
+					standard_deviation = std::sqrt(standard_deviation);
+
 					generate_status_report(generation_number, 
 						generations_completed_this_session, 
 						best_individual, 
 						score_array[best_individual],
 						pushGP::globals::minimum_error_array_by_individual[best_individual],
 						average_traiing_error,
+						standard_deviation,
 						test_case_score, 
 						pushGP::globals::population_agents[best_individual]);
 
