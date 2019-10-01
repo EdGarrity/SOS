@@ -40,14 +40,14 @@ namespace domain
 		//		;; The instructions that pushgp will use in random code.
 
 		// Number of individuals in the population.
-		const unsigned int population_size = 50000;
+		const unsigned int population_size = 50'000;
 
 		// The maximum number of generations to run GP.
-		const unsigned int max_generations_in_one_session = 10000;
+		const unsigned int max_generations_in_one_session = 10'000;
 
 		//		;; The limit for the number of point(instruction) evaluations to
 		//		;; execute during the run.
-		const unsigned int max_point_evaluations = 10000;  //10,000,000; //INT_MAX; // 100000; // 10e100
+		const unsigned int max_point_evaluations = 10'000;  //10,000,000; //INT_MAX; // 100000; // 10e100
 
 			//		:genome - representation : plush
 			//		;; The representation for the genomes used for initialiation and inheritance.
@@ -63,10 +63,10 @@ namespace domain
 		const unsigned int max_genome_size_in_initial_program = max_points / 4;
 
 		// Number of Available Training Cases
-		const long int number_of_training_cases = 10;
+		const long int number_of_training_cases = 100;
 
 		// Number of Available Test Cases
-		const long int number_of_test_cases = 10;
+		const long int number_of_test_cases = 100;
 
 		// Minimum length of an example case
 		const long int example_case_min_length = 3;
@@ -75,7 +75,7 @@ namespace domain
 		const long int example_case_max_length = 3;
 
 		// Upper range of values in the example case
-		const long int example_case_upper_range = 100;
+		const long int example_case_upper_range = 1000;
 
 		//// Date range for training
 		//const long int training_start_index = 0;
