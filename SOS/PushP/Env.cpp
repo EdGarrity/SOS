@@ -83,25 +83,25 @@ namespace Push
 			exec_stack.pop_back();
 
 
-			if (env.double_stack.size() > 0)
-			{
-				for (int n = 0; n < env.double_stack.size(); n++)
-					if ((std::isnan(env.double_stack[n])) || (std::isinf(env.double_stack[n])))
-						int mn = 1;
-			}
+			//if (env.double_stack.size() > 0)
+			//{
+			//	for (int n = 0; n < env.double_stack.size(); n++)
+			//		if ((std::isnan(env.double_stack[n])) || (std::isinf(env.double_stack[n])))
+			//			int mn = 1;
+			//}
 
-			double orginial_first_double = 0.0;
-			double orginial_second_double = 0.0;
-			double orginial_int = 0;
+			//double orginial_first_double = 0.0;
+			//double orginial_second_double = 0.0;
+			//double orginial_int = 0;
 
-			if (env.double_stack.size() > 0)
-				orginial_first_double = get_stack<double>().back();
+			//if (env.double_stack.size() > 0)
+			//	orginial_first_double = get_stack<double>().back();
 
-			if (env.double_stack.size() > 1)
-				orginial_second_double = get_stack<double>()[get_stack<double>().size() - 2];
+			//if (env.double_stack.size() > 1)
+			//	orginial_second_double = get_stack<double>()[get_stack<double>().size() - 2];
 
-			if (env.int_stack.size() > 0)
-				orginial_int = get_stack<int>().back();
+			//if (env.int_stack.size() > 0)
+			//	orginial_int = get_stack<int>().back();
 
 
 
@@ -111,12 +111,12 @@ namespace Push
 
 
 
-			if (env.double_stack.size() > 0)
-			{
-				for (int n = 0; n < env.double_stack.size(); n++)
-					if ((std::isnan(env.double_stack[n])) || (std::isinf(env.double_stack[n])))
-						int mn = 1;
-			}
+			//if (env.double_stack.size() > 0)
+			//{
+			//	for (int n = 0; n < env.double_stack.size(); n++)
+			//		if ((std::isnan(env.double_stack[n])) || (std::isinf(env.double_stack[n])))
+			//			int mn = 1;
+			//}
 
 
 

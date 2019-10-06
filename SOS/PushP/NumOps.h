@@ -44,13 +44,13 @@ namespace Push
 
 
 
-		if (typeid(T) == typeid(double))
-		{
-			double val = get_stack<double>().back();
+		//if (typeid(T) == typeid(double))
+		//{
+		//	double val = get_stack<double>().back();
 
-			if (std::isnan(val))
-				val = 0.0;
-		}
+		//	if (std::isnan(val))
+		//		val = 0.0;
+		//}
 
 
 
@@ -62,13 +62,13 @@ namespace Push
 	template <class T>
 	inline unsigned minus()
 	{
-		if (typeid(T) == typeid(double))
-		{
-			for (int n = 0; n < env.double_stack.size(); n++)
-				if ((std::isnan(env.double_stack[n])) || (std::isinf(env.double_stack[n])))
-					int mn = 1;
+		//if (typeid(T) == typeid(double))
+		//{
+		//	for (int n = 0; n < env.double_stack.size(); n++)
+		//		if ((std::isnan(env.double_stack[n])) || (std::isinf(env.double_stack[n])))
+		//			int mn = 1;
 
-		}
+		//}
 
 
 		//if (not has_elements<T>(env,2)) return 1;
@@ -105,13 +105,13 @@ namespace Push
 
 
 
-		if (typeid(T) == typeid(double))
-		{
-			double val = get_stack<double>().back();
+		//if (typeid(T) == typeid(double))
+		//{
+		//	double val = get_stack<double>().back();
 
-			if ((std::isnan(val)) || (std::isinf(val)))
-				val = 0.0;
-		}
+		//	if ((std::isnan(val)) || (std::isinf(val)))
+		//		val = 0.0;
+		//}
 
 
 
@@ -157,13 +157,13 @@ namespace Push
 
 
 
-		if (typeid(T) == typeid(double))
-		{
-			double val = get_stack<double>().back();
+		//if (typeid(T) == typeid(double))
+		//{
+		//	double val = get_stack<double>().back();
 
-			if (std::isnan(val))
-				val = 0.0;
-		}
+		//	if (std::isnan(val))
+		//		val = 0.0;
+		//}
 
 
 
@@ -230,25 +230,25 @@ namespace Push
 			}
 		}
 
-		if (typeid(a) == typeid(double))
-		{
-			double val = get_stack<double>().back();
+		//if (typeid(a) == typeid(double))
+		//{
+		//	double val = get_stack<double>().back();
 
-			if ((std::isnan(val)) || (first == 0.0) || (std::isinf(val)))
-				val = 0.0;
-		}
+		//	if ((std::isnan(val)) || (first == 0.0) || (std::isinf(val)))
+		//		val = 0.0;
+		//}
 
 		get_stack<T>().back() /= first;
 
 
 
-		if (typeid(a) == typeid(double))
-		{
-			double val = get_stack<double>().back();
+		//if (typeid(a) == typeid(double))
+		//{
+		//	double val = get_stack<double>().back();
 
-			if ((std::isnan(val)) || (first == 0) || (std::isinf(val)))
-				val = 0.0;
-		}
+		//	if ((std::isnan(val)) || (first == 0) || (std::isinf(val)))
+		//		val = 0.0;
+		//}
 
 
 
@@ -265,13 +265,13 @@ namespace Push
 
 
 
-		if (typeid(To) == typeid(double))
-		{
-			double val = get_stack<double>().back();
+		//if (typeid(To) == typeid(double))
+		//{
+		//	double val = get_stack<double>().back();
 
-			if (std::isnan(val))
-				val = 0.0;
-		}
+		//	if (std::isnan(val))
+		//		val = 0.0;
+		//}
 
 
 
@@ -287,19 +287,19 @@ namespace Push
 
 	inline unsigned int2float()
 	{
-//		return push_cast<int, double>();
+		return push_cast<int, double>();
 
 
-		unsigned r = push_cast<int, double>();
+		//unsigned r = push_cast<int, double>();
 
 
-			double val = get_stack<double>().back();
+		//	double val = get_stack<double>().back();
 
-			if (std::isnan(val))
-				val = 0.0;
+		//	if (std::isnan(val))
+		//		val = 0.0;
 
 
-		return r;
+		//return r;
 
 
 	}
@@ -311,19 +311,19 @@ namespace Push
 
 	inline unsigned bool2float()
 	{
-//		return push_cast<bool, double>();
+		return push_cast<bool, double>();
 
 
-		unsigned r = push_cast<bool, double>();
+		//unsigned r = push_cast<bool, double>();
 
 
-		double val = get_stack<double>().back();
+		//double val = get_stack<double>().back();
 
-		if (std::isnan(val))
-			val = 0.0;
+		//if (std::isnan(val))
+		//	val = 0.0;
 
 
-		return r;
+		//return r;
 
 
 
@@ -391,13 +391,13 @@ namespace Push
 
 
 
-			if (typeid(T) == typeid(double))
-			{
-				double val = get_stack<double>().back();
+			//if (typeid(T) == typeid(double))
+			//{
+			//	double val = get_stack<double>().back();
 
-				if (std::isnan(val))
-					val = 0.0;
-			}
+			//	if (std::isnan(val))
+			//		val = 0.0;
+			//}
 
 
 
@@ -506,13 +506,13 @@ namespace Push
 				push<T>(value);
 
 
-				if (typeid(T) == typeid(double))
-				{
-					double val = get_stack<double>().back();
+				//if (typeid(T) == typeid(double))
+				//{
+				//	double val = get_stack<double>().back();
 
-					if (std::isnan(val))
-						val = 0.0;
-				}
+				//	if (std::isnan(val))
+				//		val = 0.0;
+				//}
 
 
 
@@ -556,13 +556,13 @@ namespace Push
 				push<T>(value);
 
 
-				if (typeid(T) == typeid(double))
-				{
-					double val = get_stack<double>().back();
+				//if (typeid(T) == typeid(double))
+				//{
+				//	double val = get_stack<double>().back();
 
-					if (std::isnan(val))
-						val = 0.0;
-				}
+				//	if (std::isnan(val))
+				//		val = 0.0;
+				//}
 
 
 
@@ -690,10 +690,10 @@ namespace Push
 
 
 
-			double val = get_stack<double>().back();
+			//double val = get_stack<double>().back();
 
-			if (std::isnan(val))
-				val = 0.0;
+			//if (std::isnan(val))
+			//	val = 0.0;
 
 
 
@@ -715,10 +715,10 @@ namespace Push
 
 
 
-		val = get_stack<double>().back();
+		//val = get_stack<double>().back();
 
-		if (std::isnan(val))
-			val = 0.0;
+		//if (std::isnan(val))
+		//	val = 0.0;
 
 
 
@@ -743,10 +743,10 @@ namespace Push
 
 
 
-		double val = get_stack<double>().back();
+		//double val = get_stack<double>().back();
 
-		if (std::isnan(val))
-			val = 0.0;
+		//if (std::isnan(val))
+		//	val = 0.0;
 
 
 
@@ -805,13 +805,13 @@ namespace Push
 
 
 
-		if (typeid(T) == typeid(double))
-		{
-			double val = get_stack<double>().back();
+		//if (typeid(T) == typeid(double))
+		//{
+		//	double val = get_stack<double>().back();
 
-			if (std::isnan(val))
-				val = 0.0;
-		}
+		//	if (std::isnan(val))
+		//		val = 0.0;
+		//}
 
 
 
@@ -832,13 +832,13 @@ namespace Push
 
 
 
-		if (typeid(T) == typeid(double))
-		{
-			double val = get_stack<double>().back();
+		//if (typeid(T) == typeid(double))
+		//{
+		//	double val = get_stack<double>().back();
 
-			if (std::isnan(val))
-				val = 0.0;
-		}
+		//	if (std::isnan(val))
+		//		val = 0.0;
+		//}
 
 
 
@@ -850,30 +850,31 @@ namespace Push
 	{
 		//if (not has_elements<double>(env,1)) return 1;
 		std::vector<double> &stack = get_stack<double>();
+		stack.back() = cos(stack.back());
 
 
-		double val = stack.back();
+		//double val = stack.back();
 
-		if (std::isnan(val))
-			val = 0.0;
-
-
-		val = cos(val);
+		//if (std::isnan(val))
+		//	val = 0.0;
 
 
-		if (std::isnan(val))
-			val = 0.0;
+		//val = cos(val);
 
 
-
-		stack.back() = val;
+		//if (std::isnan(val))
+		//	val = 0.0;
 
 
 
-		val = get_stack<double>().back();
+		//stack.back() = val;
 
-		if (std::isnan(val))
-			val = 0.0;
+
+
+		//val = get_stack<double>().back();
+
+		//if (std::isnan(val))
+		//	val = 0.0;
 
 
 
@@ -885,26 +886,30 @@ namespace Push
 	{
 		//if (not has_elements<double>(env,1)) return 1;
 		std::vector<double> &stack = get_stack<double>();
-
-		double val = stack.back();
-
-		if (std::isnan(val))
-			val = 0.0;
+		stack.back() = sin(stack.back());
 
 
-		val = sin(val);
 
 
-		if (std::isnan(val))
-			val = 0.0;
+		//double val = stack.back();
 
-		stack.back() = val;
+		//if (std::isnan(val))
+		//	val = 0.0;
 
 
-			val = get_stack<double>().back();
+		//val = sin(val);
 
-			if (std::isnan(val))
-				val = 0.0;
+
+		//if (std::isnan(val))
+		//	val = 0.0;
+
+		//stack.back() = val;
+
+
+		//	val = get_stack<double>().back();
+
+		//	if (std::isnan(val))
+		//		val = 0.0;
 
 
 
@@ -912,6 +917,7 @@ namespace Push
 
 		return 1;
 	}
+
 	inline unsigned _tan()
 	{
 		//if (not has_elements<double>(env,1)) return 1;
@@ -922,24 +928,29 @@ namespace Push
 
 		if (val != 0.0)
 		{
-			if (std::isnan(val))
-				val = 0.0;
-
-			val = tan(val);
-
-			if (std::isnan(val))
-				val = 0.0;
+			stack.back() = tan(val);
 
 
 
-			stack.back() = val; // hmm, can go wrong, math error
+
+			//if (std::isnan(val))
+			//	val = 0.0;
+
+			//val = tan(val);
+
+			//if (std::isnan(val))
+			//	val = 0.0;
 
 
 
-			val = get_stack<double>().back();
+			//stack.back() = val; // hmm, can go wrong, math error
 
-			if (std::isnan(val))
-				val = 0.0;
+
+
+			//val = get_stack<double>().back();
+
+			//if (std::isnan(val))
+			//	val = 0.0;
 
 		}
 
