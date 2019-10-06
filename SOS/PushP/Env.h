@@ -172,6 +172,13 @@ namespace Push
 	}
 	template <> inline std::vector<double> &get_stack()
 	{
+//		return env.double_stack;
+
+
+		for (int n = 0; n < env.double_stack.size(); n++)
+			if (std::isnan(env.double_stack[n]))
+				return env.double_stack;
+
 		return env.double_stack;
 	}
 	template <> inline std::vector<bool>   &get_stack()
@@ -192,7 +199,17 @@ namespace Push
 	template <typename T> inline void push(T value)
 	{
 		get_stack<T>().push_back(value);
+
+		T a;
+		if (typeid(a) == typeid(double))
+		{
+			double val = get_stack<double>().back();
+
+			if (std::isnan(val))
+				val = 0.0;
+		}
 	}
+
 	template <typename T> inline T pop(Env &env)
 	{
 		T val = get_stack<T>().back();
@@ -204,10 +221,12 @@ namespace Push
 	{
 		return get_stack<T>().back();
 	}
+
 	template <class T> inline    T &first()
 	{
 		return top<T>();
 	}
+
 	template <class T> inline    T &second()
 	{
 		return get_stack<T>()[get_stack<T>().size() - 2];
@@ -238,6 +257,21 @@ namespace Push
 	{
 		//if (not has_elements<T>(env, 1)) return 1;
 		push<T>(get_stack<T>().back());
+
+
+		T a;
+		if (typeid(a) == typeid(double))
+		{
+			double val = get_stack<double>().back();
+
+			if (std::isnan(val))
+				val = 0.0;
+		}
+
+
+
+
+
 		return 1;
 	}
 
@@ -249,6 +283,26 @@ namespace Push
 		T tmp = stack.back();
 		stack.back() = stack[stack.size() - 2];
 		stack[stack.size() - 2] = tmp;
+
+		T a;
+		if (typeid(a) == typeid(double))
+		{
+			double val1 = get_stack<double>().back();
+
+			if (std::isnan(val1))
+				val1 = 0.0;
+
+			double val2 = get_stack<double>()[get_stack<double>().size() - 2];
+
+			if (std::isnan(val2))
+				val2 = 0.0;
+		}
+
+
+
+
+
+
 		return 1;
 	}
 
@@ -298,6 +352,21 @@ namespace Push
 		//if (index == -1) return 1; // -1 signals cannot obtain index for whatever reason
 		std::vector<T> &stack = get_stack<T>();
 		stack.push_back(stack[index]);
+
+
+		T a;
+		if (typeid(a) == typeid(double))
+		{
+			double val = get_stack<double>().back();
+
+			if (std::isnan(val))
+				val = 0.0;
+		}
+
+
+
+
+
 		return 1;
 	}
 
@@ -322,6 +391,19 @@ namespace Push
 		//if (index == -1) return 1;
 		std::vector<T> &stack = get_stack<T>();
 		stack.insert(stack.begin() + index, pop<T>(env));
+
+
+		T a;
+		if (typeid(a) == typeid(double))
+		{
+			for (int n = 0; n < env.double_stack.size(); n++)
+				if (std::isnan(env.double_stack[n]))
+					int n = 1;
+		}
+
+
+
+
 		return stack.size() - index + 1;
 	}
 
@@ -336,6 +418,20 @@ namespace Push
 		T value = stack[index];
 		stack.erase(stack.begin() + index);
 		stack.push_back(value);
+
+
+		T a;
+		if (typeid(a) == typeid(double))
+		{
+			for (int n = 0; n < env.double_stack.size(); n++)
+				if (std::isnan(env.double_stack[n]))
+					int n = 1;
+		}
+
+
+
+
+
 		return stack.size() - index + 1;
 	}
 
@@ -350,6 +446,20 @@ namespace Push
 		push<T>(y);
 		push<T>(x);
 		push<T>(z);
+
+
+		T a;
+		if (typeid(a) == typeid(double))
+		{
+			for (int n = 0; n < env.double_stack.size(); n++)
+				if (std::isnan(env.double_stack[n]))
+					int n = 1;
+		}
+
+
+
+
+
 		return 1;
 	}
 
