@@ -72,53 +72,18 @@ namespace Push
 //	}
 
 	/* The engine */
-	int Env::go(long n)
+	unsigned Env::go(unsigned _max_effort)
 	{
-		long effort = 0;
+		unsigned effort = 0;
 
 		// The basic pop-exec cycle
-		while ((!exec_stack.empty()) && (effort < n))
+		while ((!exec_stack.empty()) && (effort < _max_effort))
 		{
 			Exec top = exec_stack.back();
 			exec_stack.pop_back();
 
-
-			//if (env.double_stack.size() > 0)
-			//{
-			//	for (int n = 0; n < env.double_stack.size(); n++)
-			//		if ((std::isnan(env.double_stack[n])) || (std::isinf(env.double_stack[n])))
-			//			int mn = 1;
-			//}
-
-			//double orginial_first_double = 0.0;
-			//double orginial_second_double = 0.0;
-			//double orginial_int = 0;
-
-			//if (env.double_stack.size() > 0)
-			//	orginial_first_double = get_stack<double>().back();
-
-			//if (env.double_stack.size() > 1)
-			//	orginial_second_double = get_stack<double>()[get_stack<double>().size() - 2];
-
-			//if (env.int_stack.size() > 0)
-			//	orginial_int = get_stack<int>().back();
-
-
-
-
-			long unit = (*top)();
+			unsigned unit = (*top)();
 			effort += (1u) > (unit) ? (1u) : (unit);
-
-
-
-			//if (env.double_stack.size() > 0)
-			//{
-			//	for (int n = 0; n < env.double_stack.size(); n++)
-			//		if ((std::isnan(env.double_stack[n])) || (std::isinf(env.double_stack[n])))
-			//			int mn = 1;
-			//}
-
-
 
 			if ((effort % 10000000L) == 0)
 				std::cout << ".";
@@ -127,6 +92,47 @@ namespace Push
 		return effort;
 	}
 
+	// Thread #, Time, Instruction, Instruction_Ran, EXEC_STACK, CODE_STACK, INTEGER_STACK, BOOL_STACK, FLOAT_STACK, OUTPUT_STACK
+
+//	unsigned Env::go_trace(unsigned _max_effort, std::string & trace_line)
+//	{
+//		unsigned effort = 0;
+//
+//		while ((!exec_stack.empty()) && (effort < _max_effort))
+//		{
+//			Exec top = exec_stack.back();
+//			exec_stack.pop_back();
+//
+//			bool instruction_ran = false;
+//			
+//			if (top->len() == 1)
+//			{
+//				const Instruction* ins = dynamic_cast<const Instruction*>(top.get());
+//			
+//				if (ins && ins->can_run()) // check if it's a noop for reasons of stack contents
+//					instruction_ran = true;
+//			}
+//
+//			unsigned unit = (*top)();
+//			effort += (1u) > (unit) ? (1u) : (unit);
+//
+//			if ((effort % 10000000L) == 0)
+//				std::cout << ".";
+//
+////			if (instruction_ran)
+////			{
+////				trace.push_back(make_type());
+////
+////				if (ins_ptr)
+////					ins_ptr->push_back(top.lock());
+////			}
+//
+//
+//
+//		}
+//
+//		return effort;
+//	}
 
 
 
