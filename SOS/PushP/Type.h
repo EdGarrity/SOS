@@ -12,7 +12,7 @@ namespace Push
 	class Type
 	{
 		std::vector<int> type;
-		unsigned _start;		//EJG needs to be initialized.
+		unsigned start_;		//EJG needs to be initialized.
 
 	public:
 
@@ -111,9 +111,9 @@ namespace Push
 
 		void postc()
 		{
-			for (_start = 0; _start < type.size(); ++_start)
+			for (start_ = 0; start_ < type.size(); ++start_)
 			{
-				if (type[_start] > 0) break;
+				if (type[start_] > 0) break;
 			}
 		}
 	};
