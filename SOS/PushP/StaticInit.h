@@ -63,4 +63,4 @@ namespace Push
 } // namespace detail / push
 
 // the object that does the initialization
-static Push::detail::StaticInit static_initializer;
+extern Push::detail::StaticInit static_initializer;

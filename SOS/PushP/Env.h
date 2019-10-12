@@ -69,13 +69,13 @@ namespace Push
 			output.clear();
 		}
 
-		Env(std::vector<double> & _input, unsigned _reserve = 1000) : parameters(global_parameters)
-		{
-			reserve(_reserve);
-			clear_stacks();
-			input = _input;
-			output.clear();
-		}
+		//Env(std::vector<double> & _input, unsigned _reserve = 1000) : parameters(global_parameters)
+		//{
+		//	reserve(_reserve);
+		//	clear_stacks();
+		//	input = _input;
+		//	output.clear();
+		//}
 
 		virtual ~Env()
 		{ 
@@ -151,7 +151,7 @@ namespace Push
 		virtual Code pop_stack_from_id(int id);
 
 		unsigned go(unsigned n = 50);
-//		unsigned go_trace(unsigned _max_effort, std::string & trace_line);
+		unsigned go_trace(unsigned _max_effort, std::string & trace_line);
 	};
 
 	extern std::string print(const Env &env);

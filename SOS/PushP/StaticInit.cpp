@@ -1,6 +1,8 @@
 #include "StaticInit.h"
 #include "Env.h"
 
+Push::detail::StaticInit static_initializer;
+
 namespace Push
 {
 	namespace detail	// Should this be Thread Global?

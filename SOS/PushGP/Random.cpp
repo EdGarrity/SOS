@@ -120,17 +120,6 @@ namespace pushGP
 
 		while (--n > 0)
 		{
-			//if (random_double() < domain::argmap::seed_with_data_rate)
-			//{
-			//	char random_integer_string[sizeof(long) * 8 + 1];
-			//	std::string load_data_genome = "{:instruction ";
-			//	_ltoa_s(random_integer(), random_integer_string, _countof(random_integer_string), 10);
-			//	load_data_genome += random_integer_string;
-			//	load_data_genome += " :close  0}{:instruction FLOAT.FROMDATA :close  0}";
-
-			//	append_genome(genome, String_to_plush_genome(load_data_genome));
-			//}
-
 			if (Utilities::random_double(0.0, 1.0) < domain::argmap::probability_of_generating_a_io_atom)
 			{
 				int r = Utilities::random_integer(0, std::numeric_limits<int>::max());

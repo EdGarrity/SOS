@@ -581,77 +581,77 @@ namespace domain
 
 		// Remarks:
 		//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
-		unsigned int verify_pop_agents()
-		{
-			unsigned int n = 0;
+		//unsigned int verify_pop_agents()
+		//{
+		//	unsigned int n = 0;
 
-			// Setup
-			database::SQLCommand* sqlcmd_get_individuals;
+		//	// Setup
+		//	database::SQLCommand* sqlcmd_get_individuals;
 
-			sqlcmd_get_individuals = new database::SQLCommand(&con, sqlstmt_sqlcmd_get_individuals);
+		//	sqlcmd_get_individuals = new database::SQLCommand(&con, sqlstmt_sqlcmd_get_individuals);
 
-			try
-			{
-				std::cout << "verify_pop_agents()" << std::endl;
+		//	try
+		//	{
+		//		std::cout << "verify_pop_agents()" << std::endl;
 
-				sqlcmd_get_individuals->execute();			// Create thread factories
+		//		sqlcmd_get_individuals->execute();			// Create thread factories
 
-				if (sqlcmd_get_individuals->is_result_set())
-				{
-					while ((sqlcmd_get_individuals->fetch_next()) && (n < argmap::population_size))
-					{
-						// Check Plush Genome
-						long individual_id = sqlcmd_get_individuals->get_field_as_long(1);
-						std::string genome_string_from_db = trim_copy(sqlcmd_get_individuals->get_field_as_string(2));
-						std::string genome_string_from_individual = trim_copy(pushGP::globals::population_agents[n].get_genome_as_string());
+		//		if (sqlcmd_get_individuals->is_result_set())
+		//		{
+		//			while ((sqlcmd_get_individuals->fetch_next()) && (n < argmap::population_size))
+		//			{
+		//				// Check Plush Genome
+		//				long individual_id = sqlcmd_get_individuals->get_field_as_long(1);
+		//				std::string genome_string_from_db = trim_copy(sqlcmd_get_individuals->get_field_as_string(2));
+		//				std::string genome_string_from_individual = trim_copy(pushGP::globals::population_agents[n].get_genome_as_string());
 
-						if (genome_string_from_db != genome_string_from_individual)
-						{
-							std::cout << "Genome mismatch." << std::endl;
-							std::cout << "  n = " << n << std::endl;
-							std::cout << "  individual_id = " << n << std::endl;
-							std::cout << "  Genome = " << genome_string_from_individual << std::endl;
-							std::cout << "  Loaded = " << genome_string_from_db << std::endl;
-							std::cout << std::endl;
-						}
+		//				if (genome_string_from_db != genome_string_from_individual)
+		//				{
+		//					std::cout << "Genome mismatch." << std::endl;
+		//					std::cout << "  n = " << n << std::endl;
+		//					std::cout << "  individual_id = " << n << std::endl;
+		//					std::cout << "  Genome = " << genome_string_from_individual << std::endl;
+		//					std::cout << "  Loaded = " << genome_string_from_db << std::endl;
+		//					std::cout << std::endl;
+		//				}
 
-						// Check Push Program
-						Genome::Genome genome(genome_string_from_db);
-						std::string program_string_from_db = trim_copy(genome.get_program());
-						std::string program_string_from_individual = trim_copy(pushGP::globals::population_agents[n].get_program());
+		//				// Check Push Program
+		//				Genome::Genome genome(genome_string_from_db);
+		//				std::string program_string_from_db = trim_copy(genome.get_program());
+		//				std::string program_string_from_individual = trim_copy(pushGP::globals::population_agents[n].get_program());
 
-						if (program_string_from_db != program_string_from_individual)
-						{
-							std::cout << "Program mismatch." << std::endl;
-							std::cout << "  n = " << n << std::endl;
-							std::cout << "  individual_id = " << n << std::endl;
-							std::cout << "  Program = " << program_string_from_individual << std::endl;
-							std::cout << "  Loaded = " << program_string_from_db << std::endl;
-							std::cout << std::endl;
-						}
+		//				if (program_string_from_db != program_string_from_individual)
+		//				{
+		//					std::cout << "Program mismatch." << std::endl;
+		//					std::cout << "  n = " << n << std::endl;
+		//					std::cout << "  individual_id = " << n << std::endl;
+		//					std::cout << "  Program = " << program_string_from_individual << std::endl;
+		//					std::cout << "  Loaded = " << program_string_from_db << std::endl;
+		//					std::cout << std::endl;
+		//				}
 
-						n++;
-					}
-				}
+		//				n++;
+		//			}
+		//		}
 
-				else
-					throw MyException("verify_pop_agents() - No result set");
-			}
-			catch (...)
-			{
-				delete sqlcmd_get_individuals;
+		//		else
+		//			throw MyException("verify_pop_agents() - No result set");
+		//	}
+		//	catch (...)
+		//	{
+		//		delete sqlcmd_get_individuals;
 
-				return n;
-			}
+		//		return n;
+		//	}
 
-			delete sqlcmd_get_individuals;
+		//	delete sqlcmd_get_individuals;
 
-			return n;
-		}
+		//	return n;
+		//}
 
-		int compute_training_errors(std::function<double(static unsigned int _individual_index, 
-									static std::vector<double>& _input_list, 
-									static std::vector<double>& _output_list)> _run_individual_program,
+		int compute_training_errors(std::function<double(unsigned int _individual_index, 
+									std::vector<double>& _input_list, 
+									std::vector<double>& _output_list)> _run_individual_program,
 			int _number_of_example_cases) 
 		{
 			int individual_with_least_error = -1;
@@ -662,9 +662,6 @@ namespace domain
 			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			{
 				int error_count= 0;
-
-				if (individual_index == 48)
-					error_count = 0;
 
 				if ((individual_index % 100) == 0)
 					std::cout << individual_index;
@@ -683,6 +680,9 @@ namespace domain
 					std::vector<double> example_problem = training_cases_problem[example_case];
 					std::vector<double> example_solution = training_cases_solution[example_case];
 
+					// Compile genome
+
+					// Run program
 					pushGP::globals::error_matrix[example_case][individual_index] = _run_individual_program(individual_index, example_problem, example_solution);
 
 					if (pushGP::globals::error_matrix[example_case][individual_index] > 0.0)
@@ -726,9 +726,9 @@ namespace domain
 		//	test_cases_problem,
 		//	test_cases_solution,
 
-		double compute_test_errors(std::function<double(static unsigned int _individual_index,
-								static std::vector<double>& _example_problem, 
-			                    static std::vector<double>& _example_solution)> _run_individual_program,
+		double compute_test_errors(std::function<double(unsigned int _individual_index,
+								std::vector<double>& _example_problem, 
+			                    std::vector<double>& _example_solution)> _run_individual_program,
 			//int _number_of_example_cases,
 			//static std::vector<double> _example_cases_problem[],
 			//static std::vector<double> _example_cases_solution[],
@@ -762,10 +762,9 @@ namespace domain
 		//	test_cases_problem,
 		//	test_cases_solution,
 
-		double verify_test_errors(std::function<double(std::string _genome, static std::vector<double>& _example_problem, static std::vector<double>& _example_solution)> _run_genome,
-			//int _number_of_example_cases,
-			//static std::vector<double> _example_cases_problem[],
-			//static std::vector<double> _example_cases_solution[],
+		double verify_test_errors(std::function<double(std::string _genome, 
+													std::vector<double>& _example_problem, 
+													std::vector<double>& _example_solution)> _run_genome,
 			std::string _genome)
 		{
 			double error = (std::numeric_limits<double>::max)();
@@ -877,6 +876,8 @@ namespace domain
 		{
 			for (unsigned int n = 0; n < argmap::population_size; n++)
 				pushGP::globals::population_agents[n].copy(pushGP::globals::child_agents[n]);
+
+			// Possibly this is where we should compile the genomes
 		}
 
 		//void generate_status_report(unsigned int _generation_number,
@@ -1044,18 +1045,18 @@ namespace domain
 					std::cout << "test_case_error = " << test_case_score << std::endl;
 					std::cout << std::endl;
 
-					std::cout << "Verify Best Individual's Program with Test Cases" << std::endl;
+					//std::cout << "Verify Best Individual's Program with Test Cases" << std::endl;
 
-					//std::string genome = "{:instruction EXEC.DO*RANGE :close  0}{:instruction FLOAT.SWAP :close  0}{:instruction FLOAT.- :close  0}{:instruction FLOAT.FROMINTEGER :close  0}{:instruction INTEGER.FLUSH :close  0}{:instruction INTEGER.> :close  0}{:instruction CODE.DUP :close  0}{:instruction BOOLEAN.NOR :close  0}{:instruction FLOAT.YANK :close  0}{:instruction INTEGER.FROMFLOAT :close  0}{:instruction FLOAT./ :close  4}{:instruction FLOAT.FLUSH :close  0}{:instruction EXEC.IF :close  0}";
+					////std::string genome = "{:instruction EXEC.DO*RANGE :close  0}{:instruction FLOAT.SWAP :close  0}{:instruction FLOAT.- :close  0}{:instruction FLOAT.FROMINTEGER :close  0}{:instruction INTEGER.FLUSH :close  0}{:instruction INTEGER.> :close  0}{:instruction CODE.DUP :close  0}{:instruction BOOLEAN.NOR :close  0}{:instruction FLOAT.YANK :close  0}{:instruction INTEGER.FROMFLOAT :close  0}{:instruction FLOAT./ :close  4}{:instruction FLOAT.FLUSH :close  0}{:instruction EXEC.IF :close  0}";
 
-					double verify_test_case_error = verify_test_errors(run_genome,
-						//argmap::number_of_test_cases,
-						//test_cases_problem,
-						//test_cases_solution,
-						genome);
-									   					 				  
-					std::cout << "verify_test_case_error = " << verify_test_case_error << std::endl;
-					std::cout << std::endl;
+					//double verify_test_case_error = verify_test_errors(run_genome,
+					//	//argmap::number_of_test_cases,
+					//	//test_cases_problem,
+					//	//test_cases_solution,
+					//	genome);
+					//				   					 				  
+					//std::cout << "verify_test_case_error = " << verify_test_case_error << std::endl;
+					//std::cout << std::endl;
 
 					std::cout << "Generate Status Report" << std::endl;
 

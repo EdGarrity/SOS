@@ -94,45 +94,45 @@ namespace Push
 
 	// Thread #, Time, Instruction, Instruction_Ran, EXEC_STACK, CODE_STACK, INTEGER_STACK, BOOL_STACK, FLOAT_STACK, OUTPUT_STACK
 
-//	unsigned Env::go_trace(unsigned _max_effort, std::string & trace_line)
-//	{
-//		unsigned effort = 0;
-//
-//		while ((!exec_stack.empty()) && (effort < _max_effort))
-//		{
-//			Exec top = exec_stack.back();
-//			exec_stack.pop_back();
-//
-//			bool instruction_ran = false;
-//			
-//			if (top->len() == 1)
+	unsigned Env::go_trace(unsigned _max_effort, std::string & trace_line)
+	{
+		unsigned effort = 0;
+
+		while ((!exec_stack.empty()) && (effort < _max_effort))
+		{
+			Exec top = exec_stack.back();
+			exec_stack.pop_back();
+
+			bool instruction_ran = false;
+			
+			if (top->len() == 1)
+			{
+				const Instruction* ins = dynamic_cast<const Instruction*>(top.get());
+			
+				if (ins && ins->can_run()) // check if it's a noop for reasons of stack contents
+					instruction_ran = true;
+			}
+
+			unsigned unit = (*top)();
+			effort += (1u) > (unit) ? (1u) : (unit);
+
+			if ((effort % 10000000L) == 0)
+				std::cout << ".";
+
+//			if (instruction_ran)
 //			{
-//				const Instruction* ins = dynamic_cast<const Instruction*>(top.get());
-//			
-//				if (ins && ins->can_run()) // check if it's a noop for reasons of stack contents
-//					instruction_ran = true;
+//				trace.push_back(make_type());
+//
+//				if (ins_ptr)
+//					ins_ptr->push_back(top.lock());
 //			}
-//
-//			unsigned unit = (*top)();
-//			effort += (1u) > (unit) ? (1u) : (unit);
-//
-//			if ((effort % 10000000L) == 0)
-//				std::cout << ".";
-//
-////			if (instruction_ran)
-////			{
-////				trace.push_back(make_type());
-////
-////				if (ins_ptr)
-////					ins_ptr->push_back(top.lock());
-////			}
-//
-//
-//
-//		}
-//
-//		return effort;
-//	}
+
+
+
+		}
+
+		return effort;
+	}
 
 
 

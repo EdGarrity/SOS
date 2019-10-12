@@ -32,11 +32,9 @@ namespace pushGP
 		AsyncBreed();
 		~AsyncBreed();
 
-		void push(unsigned int _individual_index,
-			int _number_of_example_cases);
+		void push(unsigned int _individual_index, int _number_of_example_cases);
 		void done();
-		void breed(unsigned int _individual_index,
-			int _number_of_example_cases);
+//		void breed(unsigned int _individual_index, int _number_of_example_cases);
 		void breed_function_thread_pool();
 	};
 }

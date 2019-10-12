@@ -1,10 +1,10 @@
 #include "Random.Utilities.h"
 
-#if defined (_MSC_VER)  // Visual studio
-#define thread_local __declspec( thread )
-#elif defined (__GCC__) // GCC
-#define thread_local __thread
-#endif
+//#if defined (_MSC_VER)  // Visual studio
+//#define thread_local __declspec( thread )
+//#elif defined (__GCC__) // GCC
+//#define thread_local __thread
+//#endif
 
 #include <time.h>
 #include <thread>
