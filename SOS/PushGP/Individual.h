@@ -80,10 +80,15 @@ namespace pushGP
 			return genome_.get_atoms();
 		}
 
-		const unsigned int get_program_points()
-		{
-			return genome_.get_points();
-		}
+		//const unsigned int get_program_points()
+		//{
+		//	return genome_.get_points();
+		//}
+
+		//const unsigned int get_genome_size()
+		//{
+		//	return genome_.size();
+		//}
 
 		void set_genome(std::string _genome);
 		void set_genome(std::vector<struct Genome::Atom> _genome);

@@ -13,7 +13,7 @@ namespace domain
 
 		//	:use - single - thread false
 		//	;; When true, will only use a single thread.
-		const bool use_single_thread = true;
+		const bool use_single_thread = false;
 		const unsigned int number_of_cores_to_reserve = 4;
 
 		//	:random - seed(random / generate - mersennetwister - seed)
