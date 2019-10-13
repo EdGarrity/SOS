@@ -40,9 +40,6 @@ namespace Genome
 
 		const std::string to_string()
 		{
-			if (genome_string_.empty())
-				convert_genome_to_string();
-
 			return genome_string_;
 		}
 
@@ -58,15 +55,12 @@ namespace Genome
 
 		const std::string get_program()
 		{
-			if (program_.empty())
-				translate_plush_genome_to_push_program();
-
 			return program_;
 		}
 
-		//const unsigned int get_points()
-		//{
-		//	return points_;
-		//}
+		const unsigned int get_points()
+		{
+			return points_;
+		}
 	};
 }

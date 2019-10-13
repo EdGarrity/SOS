@@ -167,9 +167,7 @@ namespace pushGP
 			globals::child_agents[_individual_index].copy(globals::population_agents[_individual_index]);
 		}
 
-		//if ((globals::child_agents[_individual_index].get_program_points()) > domain::argmap::max_points) //   Push::global_parameters.max_points_in_program)
-		//	globals::child_agents[_individual_index].set_genome(random_plush_genome());
-		if ((globals::child_agents[_individual_index].get_genome_size()) > domain::argmap::max_points) //   Push::global_parameters.max_points_in_program)
+		if ((globals::child_agents[_individual_index].get_program_points()) > domain::argmap::max_points) //   Push::global_parameters.max_points_in_program)
 			globals::child_agents[_individual_index].set_genome(random_plush_genome());
 	}
 }

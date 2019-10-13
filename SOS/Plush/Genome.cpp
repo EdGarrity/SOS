@@ -131,10 +131,6 @@ namespace Genome
 		genome_atoms_ = _genome_atoms;
 		translate_plush_genome_to_push_program();
 		convert_genome_to_string();
-
-		//genome_string_.clear();
-		//program_.clear();
-		//points_ = 0;
 	}
 
 	// Purpose: 
