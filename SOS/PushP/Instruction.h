@@ -44,10 +44,10 @@ namespace Push
 			return name_;
 		}
 
-		std::string to_code(const std::string& _name) const
-		{
-			return name_;
-		}
+		//std::string to_code(const std::string& _name) const
+		//{
+		//	return name_;
+		//}
 
 		virtual bool can_run() const
 		{

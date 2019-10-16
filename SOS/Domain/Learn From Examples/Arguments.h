@@ -40,7 +40,7 @@ namespace domain
 		//		;; The instructions that pushgp will use in random code.
 
 		// Number of individuals in the population.
-		const unsigned int population_size = 50'000;
+		const unsigned int population_size = 50000;
 
 		// The maximum number of generations to run GP.
 		const unsigned int max_generations_in_one_session = 10'000;
@@ -73,9 +73,9 @@ namespace domain
 
 		// Maximum length of an example case
 		const long int example_case_max_length = 2;
-
+		
 		// Upper range of values in the example case
-		const long int example_case_upper_range = 1000;
+		const long int example_case_upper_range = 1'000;
 
 		//// Date range for training
 		//const long int training_start_index = 0;

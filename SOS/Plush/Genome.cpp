@@ -373,7 +373,7 @@ namespace Genome
 	}
 
 	// Purpose: 
-	//   Counts the number of pints in the Push program
+	//   Counts the number of points in the Push program
 	//
 	// Parameters:
 	//   None

@@ -19,7 +19,7 @@ namespace Push
 
 	bool Type::can_pop_from(/*const Env &env*/) const
 	{
-		for (unsigned i = _start; i < type.size(); ++i)
+		for (unsigned i = start_; i < type.size(); ++i)
 		{
 			if ((type[i] > 0) && (env.get_stack_size(i) < static_cast<unsigned>(type[i])))
 			{

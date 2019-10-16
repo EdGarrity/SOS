@@ -87,10 +87,10 @@ namespace Push
 		return make_type<T1, T2, T3>() + make_type<T4, T5, T6>();
 	}
 
-	template <typename T> inline
-		const Type &get_type()
-	{
-		static Type static_type = make_type<T>();
-		return static_type;
-	}
+	//template <typename T> inline
+	//	const Type &get_type()
+	//{
+	//	static Type static_type = make_type<T>(); // Should this be thread_local ?
+	//	return static_type;
+	//}
 }

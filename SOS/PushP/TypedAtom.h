@@ -8,7 +8,7 @@ namespace Push
 	class TypedAtom : public CodeAtom 
 	{
 	public:
-		virtual const Type& get_precondition() const = 0;
-		virtual const Type& get_postcondition() const = 0;
+//		virtual const Type& get_precondition() const = 0;
+//		virtual const Type& get_postcondition() const = 0;
 	};
 }

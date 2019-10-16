@@ -26,14 +26,14 @@ namespace Push
 		T value;
 	public:
 
-		const Type & get_precondition() const
-		{
-			return nullType;
-		}
-		const Type & get_postcondition() const
-		{
-			return get_type<T>();
-		}
+		//const Type & get_precondition() const
+		//{
+		//	return nullType;
+		//}
+		//const Type & get_postcondition() const
+		//{
+		//	return get_type<T>();
+		//}
 
 		Literal(T val) : value(val) {}
 

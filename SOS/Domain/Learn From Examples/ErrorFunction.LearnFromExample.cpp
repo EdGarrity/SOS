@@ -37,8 +37,8 @@ namespace domain
 		//       X = 0 or more doubles.
 		//
 		double run_program(std::string _program,
-			static std::vector<double>& _example_problem,
-			static std::vector<double>& _example_solution)
+			std::vector<double>& _example_problem,
+			std::vector<double>& _example_solution)
 		{
 			double error = 0.0;
 			int actual_solution_length = 0;
@@ -124,21 +124,21 @@ namespace domain
 		//   Must call Push::init_push() prior to this function call to register the Push functions and 
 		//   populate str2parentheses_map_ptr
 		//
-		double run_genome(std::string _genome,
-			static std::vector<double>& _example_problem,
-			static std::vector<double>& _example_solution)
-		{
-			double error = 0.0;
-			pushGP::Individual individual;
+		//double run_genome(std::string _genome,
+		//	static std::vector<double>& _example_problem,
+		//	static std::vector<double>& _example_solution)
+		//{
+		//	double error = 0.0;
+		//	pushGP::Individual individual;
 
-			individual.set_genome(_genome);
+		//	individual.set_genome(_genome);
 
-			std::string program = individual.get_program();
+		//	std::string program = individual.get_program();
 
-			error = run_program(program, _example_problem, _example_solution);
+		//	error = run_program(program, _example_problem, _example_solution);
 
-			return error;
-		}
+		//	return error;
+		//}
 
 		// Purpose: 
 		//   Run an Individual's Push program and calculate error result
@@ -165,9 +165,9 @@ namespace domain
 		//       N = number of integers in the example
 		//       X = 0 or more integers.  The number of integers must be equal to N
 		//
-		double run_individual(static unsigned int _individual_index,
-			static std::vector<double>& _example_problem,
-			static std::vector<double>& _example_solution)
+		double run_individual(unsigned int _individual_index,
+			std::vector<double>& _example_problem,
+			std::vector<double>& _example_solution)
 		{
 			double error = 0.0;
 

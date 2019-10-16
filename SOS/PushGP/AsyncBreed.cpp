@@ -15,8 +15,7 @@ namespace pushGP
 	{
 	}
 
-	void AsyncBreed::push(unsigned int _individual_index,
-		int _number_of_example_cases)
+	void AsyncBreed::push(unsigned int _individual_index, int _number_of_example_cases)
 	{
 		WorkOrder work_order;
 
