@@ -22,7 +22,7 @@ namespace domain
 {
 	namespace learn_from_examples
 	{
-		double score_array[argmap::population_size];
+//		double score_array[argmap::population_size];
 
 		std::vector<double> training_cases_problem[argmap::number_of_training_cases];
 		std::vector<double> training_cases_solution[argmap::number_of_training_cases];
@@ -649,9 +649,9 @@ namespace domain
 		//	return n;
 		//}
 
-		int compute_training_errors(std::function<double(unsigned int _individual_index, 
-									std::vector<double>& _input_list, 
-									std::vector<double>& _output_list)> _run_individual_program,
+		std::tuple<int, double, double> compute_training_errors(std::function<double(unsigned int _individual_index, 
+									                                         std::vector<double>& _input_list, 
+									                                         std::vector<double>& _output_list)> _run_individual_program,
 			int _number_of_example_cases) 
 		{
 			int individual_with_least_error = -1;
@@ -661,13 +661,13 @@ namespace domain
 
 			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			{
-				int error_count= 0;
+				int error_count_for_individual= 0;
+				double avg_error_for_individual = 0.0;
 
 				if ((individual_index % 100) == 0)
 					std::cout << individual_index;
 
-//				pushGP::globals::minimum_error_array_by_individual[individual_index] = (std::numeric_limits<double>::max)();
-				pushGP::globals::minimum_error_array_by_individual[individual_index] = 0.0;
+//				pushGP::globals::minimum_error_array_by_individual[individual_index] = 0.0;
 
 				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
 				{
@@ -680,46 +680,62 @@ namespace domain
 					std::vector<double> example_problem = training_cases_problem[example_case];
 					std::vector<double> example_solution = training_cases_solution[example_case];
 
-					// Compile genome
-
 					// Run program
-					pushGP::globals::error_matrix[example_case][individual_index] = _run_individual_program(individual_index, example_problem, example_solution);
+//					pushGP::globals::error_matrix[example_case][individual_index] = _run_individual_program(individual_index, example_problem, example_solution);
+					double error = _run_individual_program(individual_index, example_problem, example_solution);
 
-					if (pushGP::globals::error_matrix[example_case][individual_index] > 0.0)
-						error_count++;
+					if (error > 0.0)
+						error_count_for_individual++;
 
-					// Set error array to the minimum error for all example cases
-					//if (pushGP::globals::minimum_error_array_by_individual[individual_index] > pushGP::globals::error_matrix[example_case][individual_index])
-					//	pushGP::globals::minimum_error_array_by_individual[individual_index] = pushGP::globals::error_matrix[example_case][individual_index];
+//					pushGP::globals::minimum_error_array_by_individual[individual_index] += pushGP::globals::error_matrix[example_case][individual_index];
+					avg_error_for_individual += error;
 
-					pushGP::globals::minimum_error_array_by_individual[individual_index] += pushGP::globals::error_matrix[example_case][individual_index];
+					pushGP::globals::error_matrix[example_case][individual_index] = error;
 				}
 
 				// Calculate the average error for all example cases
-				pushGP::globals::minimum_error_array_by_individual[individual_index] /= (double)_number_of_example_cases;
+//				pushGP::globals::minimum_error_array_by_individual[individual_index] /= (double)_number_of_example_cases;
+				avg_error_for_individual                                             /= (double)_number_of_example_cases;
 
-				score_array[individual_index] = (double)error_count / (double)_number_of_example_cases;
+//				score_array[individual_index] = (double)error_count / (double)_number_of_example_cases;
+				double score = (double)error_count_for_individual / (double)_number_of_example_cases;
 
-				if ((score_array[individual_index] < 1.0) && (score_array[individual_index] < min_score))
+//				if ((score_array[individual_index] < 1.0) && (score_array[individual_index] < min_score))
+				if ((score < 1.0) && (score < min_score))
 				{
-					min_score = score_array[individual_index];
+//					min_score = score_array[individual_index];
+					min_score = score;
 					individual_with_best_score = individual_index;
 				}
 
-				if (pushGP::globals::minimum_error_array_by_individual[individual_index] < min_error)
+				//if (pushGP::globals::minimum_error_array_by_individual[individual_index] < min_error)
+				//{
+				//	min_error = pushGP::globals::minimum_error_array_by_individual[individual_index];
+				//	individual_with_least_error = individual_index;
+				//}
+				if (avg_error_for_individual < min_error)
 				{
-					min_error = pushGP::globals::minimum_error_array_by_individual[individual_index];
+					min_error = avg_error_for_individual;
 					individual_with_least_error = individual_index;
 				}
 
 				if ((individual_index % 100) == 0)
 					std::cout << std::endl;
+
+//				pushGP::globals::minimum_error_array_by_individual[individual_index] = avg_error_for_individual;
 			}
 
 
 			std::cout << std::endl;
 
-			return (individual_with_best_score == -1) ? individual_with_least_error : individual_with_best_score;
+//			return (individual_with_best_score == -1) ? individual_with_least_error : individual_with_best_score;
+
+			return std::make_tuple
+			(
+				(individual_with_best_score == -1) ? individual_with_least_error : individual_with_best_score, 
+				min_score, 
+				min_error
+			);
 		}
 
 		//argmap::number_of_test_cases,
@@ -808,7 +824,7 @@ namespace domain
 			// Breed new generation
 			std::cout << "  Breed new generation" << std::endl;
 
-			if (argmap::use_single_thread)
+			if (!argmap::use_multithreading)
 			{
 				for (unsigned int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 				{
@@ -1022,7 +1038,11 @@ namespace domain
 //					verify_pop_agents();
 
 					std::cout << "Run Programs with Training Cases" << std::endl;
-					int best_individual = compute_training_errors(run_individual, argmap::number_of_training_cases);
+//					int best_individual = compute_training_errors(run_individual, argmap::number_of_training_cases);
+					auto best_individual_min_score = compute_training_errors(run_individual, argmap::number_of_training_cases);
+					int best_individual = std::get<0>(best_individual_min_score);
+					double best_individual_score = std::get<1>(best_individual_min_score);
+					double best_individual_error = std::get<2>(best_individual_min_score);
 
 					std::cout << "Produce New Offspring" << std::endl;
 					produce_new_offspring(argmap::number_of_training_cases,	best_individual);
@@ -1081,8 +1101,8 @@ namespace domain
 					generate_status_report(generation_number, 
 						generations_completed_this_session, 
 						best_individual, 
-						score_array[best_individual],
-						pushGP::globals::minimum_error_array_by_individual[best_individual],
+						best_individual_score,//						score_array[best_individual],
+						best_individual_error,//						pushGP::globals::minimum_error_array_by_individual[best_individual],
 						average_traiing_error,
 						standard_deviation,
 						test_case_score, 

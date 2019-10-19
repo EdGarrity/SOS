@@ -19,7 +19,7 @@ namespace pushGP
 		//*******************************************************
 		// Globals for Elite Lexicase Selection
 		double error_matrix[domain::argmap::number_of_training_cases][domain::argmap::population_size];
-		double minimum_error_array_by_individual[domain::argmap::population_size];
+//		double minimum_error_array_by_individual[domain::argmap::population_size];
 		double minimum_error_array_by_example_case[domain::argmap::number_of_training_cases];
 		unsigned int individual_with_minimum_error_for_training_case[domain::argmap::number_of_training_cases];
 
