@@ -604,6 +604,12 @@ namespace domain
 					//Push::codeListFactory->clean_up();
 					//Push::doRangeClassFactory->clean_up();
 
+					Push::parallel_intLiteralFactory.local().clean_up();
+					Push::parallel_floatLiteralFactory.local().clean_up();
+					Push::parallel_boolLiteralFactory.local().clean_up();
+					Push::parallel_codeListFactory.local().clean_up();
+					Push::parallel_doRangeClassFactory.local().clean_up();
+
 					std::vector<double> example_problem = training_cases_problem[example_case];
 					std::vector<double> example_solution = training_cases_solution[example_case];
 
@@ -966,6 +972,12 @@ namespace domain
 					//Push::boolLiteralFactory->clean_up();
 					//Push::codeListFactory->clean_up();
 					//Push::doRangeClassFactory->clean_up();
+
+					Push::parallel_intLiteralFactory.local().clean_up();
+					Push::parallel_floatLiteralFactory.local().clean_up();
+					Push::parallel_boolLiteralFactory.local().clean_up();
+					Push::parallel_codeListFactory.local().clean_up();
+					Push::parallel_doRangeClassFactory.local().clean_up();
 
 					std::cout << "Generation " << generation_number << std::endl;
 					std::cout << "Session " << generations_completed_this_session << std::endl;
