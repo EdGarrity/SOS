@@ -28,8 +28,8 @@ namespace Push
 
 			if (i != n)
 			{
-				vec[3] = Code(intLiteralFactory->createLiteral(i + direction));
-				Code ranger = Code(codeListFactory->createCodeList(vec));  // new CodeList(vec));  //CodeList::adopt(vec);
+				vec[3] = Code(parallel_intLiteralFactory.local().createLiteral(i + direction));
+				Code ranger = Code(parallel_codeListFactory.local().createCodeList(vec));  // new CodeList(vec));  //CodeList::adopt(vec);
 				env.push_code_to_exec_stack(ranger);
 			}
 
@@ -115,5 +115,6 @@ namespace Push
 		return lp;
 	}
 
-	extern thread_local DoRangeClassFactory *doRangeClassFactory;
+//	extern thread_local DoRangeClassFactory *doRangeClassFactory;
+	extern combinable<DoRangeClassFactory> parallel_doRangeClassFactory;
 }

@@ -84,13 +84,13 @@ namespace Push
 		T a = pop<T>(env);
 
 		if (typeid(a) == typeid(int))
-			push<Code>(Code(intLiteralFactory->createLiteral(a)));  
+			push<Code>(Code(parallel_intLiteralFactory.local().createLiteral(a)));  
 		
 		else if (typeid(a) == typeid(double))
-			push<Code>(Code(floatLiteralFactory->createLiteral(a)));
+			push<Code>(Code(parallel_floatLiteralFactory.local().createLiteral(a)));
 		
 		else if (typeid(a) == typeid(bool))
-			push<Code>(Code(boolLiteralFactory->createLiteral(a))); 
+			push<Code>(Code(parallel_boolLiteralFactory.local().createLiteral(a)));
 		
 		return 1;
 	}
@@ -127,7 +127,7 @@ namespace Push
 
 		index = std::abs((int)(index % env.input.size()));
 		double value = env.input[index];
-		push<Code>(Code(floatLiteralFactory->createLiteral(value)));
+		push<Code>(Code(parallel_floatLiteralFactory.local().createLiteral(value)));
 
 		return 1;
 	}
@@ -157,7 +157,7 @@ namespace Push
 			for (int index = 0; index < env.input.size(); index++)
 			{
 				double value = env.input[index];
-				push<Code>(Code(floatLiteralFactory->createLiteral(value)));
+				push<Code>(Code(parallel_floatLiteralFactory.local().createLiteral(value)));
 			}
 		}
 
@@ -189,7 +189,7 @@ namespace Push
 			for (int index = env.input.size() - 1; index >= 0; index--)
 			{
 				double value = env.input[index];
-				push<Code>(Code(floatLiteralFactory->createLiteral(value)));
+				push<Code>(Code(parallel_floatLiteralFactory.local().createLiteral(value)));
 			}
 		}
 
@@ -221,7 +221,7 @@ namespace Push
 		second_stack.reserve(second_stack.size() + first_stack.size());
 		std::copy(first_stack.begin(), first_stack.end(), std::back_inserter(second_stack));
 
-		push<Code>(Code(codeListFactory->createCodeList(second_stack)));  // new CodeList(second_stack))); //CodeList::adopt(second_stack)); //push<Code>(new CodeList(second_stack)); // push<Code>(CodeList::adopt(second_stack)); //Code(new CodeList(second_stack)));
+		push<Code>(Code(parallel_codeListFactory.local().createCodeList(second_stack)));  // new CodeList(second_stack))); //CodeList::adopt(second_stack)); //push<Code>(new CodeList(second_stack)); // push<Code>(CodeList::adopt(second_stack)); //Code(new CodeList(second_stack)));
 		return first_stack.size();
 	}
 
@@ -249,7 +249,7 @@ namespace Push
 		{
 			CodeArray stack = pop<Code>(env)->get_stack();
 			stack.pop_back();
-			push<Code>(Code(codeListFactory->createCodeList(stack)));  // new CodeList(stack)));  //CodeList::adopt(stack)); //Code(new CodeList(stack)));
+			push<Code>(Code(parallel_codeListFactory.local().createCodeList(stack)));  // new CodeList(stack)));  //CodeList::adopt(stack)); //Code(new CodeList(stack)));
 		}
 
 		return 1;

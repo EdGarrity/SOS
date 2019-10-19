@@ -59,13 +59,10 @@ namespace Push
 
 	Code insert(Code code, unsigned val, Code subcode)
 	{
-//		assert(val < code->size());
-
 		if (val == 0) return subcode;
 
 		val -= 1;
 		CodeArray stack = code->get_stack();
-//		assert(stack.size());
 
 		for (int i = stack.size() - 1; i >= 0; --i)
 		{
@@ -73,7 +70,7 @@ namespace Push
 			{
 				Code newcode = insert(stack[i], val, subcode);
 				stack[i] = newcode;
-				return Code(codeListFactory->createCodeList(stack));  // new CodeList(stack));  //CodeList::adopt(stack); //Code( new CodeList(stack) );
+				return Code(parallel_codeListFactory.local().createCodeList(stack));  // new CodeList(stack));  //CodeList::adopt(stack); //Code( new CodeList(stack) );
 			}
 
 			val -= stack[i]->size();
@@ -119,10 +116,10 @@ namespace Push
 			}
 
 			if (codevec.size())
-				resultvec.push_back(codeListFactory->createCodeList(codevec));  // new CodeList(codevec)/*CodeList::adopt(codevec)*/); //Code(new CodeList(codevec)));
+				resultvec.push_back(parallel_codeListFactory.local().createCodeList(codevec));  // new CodeList(codevec)/*CodeList::adopt(codevec)*/); //Code(new CodeList(codevec)));
 		}
 
-		return Code(codeListFactory->createCodeList(resultvec));  // new CodeList(resultvec));  //CodeList::adopt(resultvec); //new CodeList(resultvec); // CodeList::adopt(resultvec); //Code(new CodeList(resultvec));
+		return Code(parallel_codeListFactory.local().createCodeList(resultvec));  // new CodeList(resultvec));  //CodeList::adopt(resultvec); //new CodeList(resultvec); // CodeList::adopt(resultvec); //Code(new CodeList(resultvec));
 	}
 
 	std::string make_terminal()
@@ -234,8 +231,7 @@ namespace Push
 			// check BOOLEAN
 			if (atom == "TRUE" || atom == "FALSE")
 			{
-//				Code value = Code(new Literal<bool>(atom == "TRUE" ? true : false));
-				Code value = Code(boolLiteralFactory->createLiteral(atom == "TRUE" ? true : false));
+				Code value = Code(parallel_boolLiteralFactory.local().createLiteral(atom == "TRUE" ? true : false));
 				stack.push_back(value);
 				continue;
 			}
@@ -254,8 +250,7 @@ namespace Push
 
 			if (end == atom.c_str() + atom.size()) // it's an int
 			{
-//				Code v = Code(new Literal<int>(val));
-				Code v = Code(intLiteralFactory->createLiteral(val));
+				Code v = Code(parallel_intLiteralFactory.local().createLiteral(val));
 				stack.push_back(v);
 				continue;
 			}
@@ -264,8 +259,7 @@ namespace Push
 
 			if (end == atom.c_str() + atom.size()) // it's a double
 			{
-//				Code v = Code(new Literal<double>(dbl));
-				Code v = Code(floatLiteralFactory->createLiteral(dbl));
+				Code v = Code(parallel_floatLiteralFactory.local().createLiteral(dbl));
 				stack.push_back(v);
 				continue;
 			}
@@ -284,7 +278,7 @@ namespace Push
 		for (CodeArray::const_reverse_iterator it = stack.rbegin(); it != stack.rend(); ++it)
 			stack1.push_back(*it);
 
-		CodeList* lp = codeListFactory->createCodeList(stack1);  // new CodeList(stack1);
+		CodeList* lp = parallel_codeListFactory.local().createCodeList(stack1);  // new CodeList(stack1);
 		return lp;
 	}
 }

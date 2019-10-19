@@ -578,77 +578,6 @@ namespace domain
 			delete sqlcmd_insert_new_individual;
 		}
 
-
-		// Remarks:
-		//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
-		//unsigned int verify_pop_agents()
-		//{
-		//	unsigned int n = 0;
-
-		//	// Setup
-		//	database::SQLCommand* sqlcmd_get_individuals;
-
-		//	sqlcmd_get_individuals = new database::SQLCommand(&con, sqlstmt_sqlcmd_get_individuals);
-
-		//	try
-		//	{
-		//		std::cout << "verify_pop_agents()" << std::endl;
-
-		//		sqlcmd_get_individuals->execute();			// Create thread factories
-
-		//		if (sqlcmd_get_individuals->is_result_set())
-		//		{
-		//			while ((sqlcmd_get_individuals->fetch_next()) && (n < argmap::population_size))
-		//			{
-		//				// Check Plush Genome
-		//				long individual_id = sqlcmd_get_individuals->get_field_as_long(1);
-		//				std::string genome_string_from_db = trim_copy(sqlcmd_get_individuals->get_field_as_string(2));
-		//				std::string genome_string_from_individual = trim_copy(pushGP::globals::population_agents[n].get_genome_as_string());
-
-		//				if (genome_string_from_db != genome_string_from_individual)
-		//				{
-		//					std::cout << "Genome mismatch." << std::endl;
-		//					std::cout << "  n = " << n << std::endl;
-		//					std::cout << "  individual_id = " << n << std::endl;
-		//					std::cout << "  Genome = " << genome_string_from_individual << std::endl;
-		//					std::cout << "  Loaded = " << genome_string_from_db << std::endl;
-		//					std::cout << std::endl;
-		//				}
-
-		//				// Check Push Program
-		//				Genome::Genome genome(genome_string_from_db);
-		//				std::string program_string_from_db = trim_copy(genome.get_program());
-		//				std::string program_string_from_individual = trim_copy(pushGP::globals::population_agents[n].get_program());
-
-		//				if (program_string_from_db != program_string_from_individual)
-		//				{
-		//					std::cout << "Program mismatch." << std::endl;
-		//					std::cout << "  n = " << n << std::endl;
-		//					std::cout << "  individual_id = " << n << std::endl;
-		//					std::cout << "  Program = " << program_string_from_individual << std::endl;
-		//					std::cout << "  Loaded = " << program_string_from_db << std::endl;
-		//					std::cout << std::endl;
-		//				}
-
-		//				n++;
-		//			}
-		//		}
-
-		//		else
-		//			throw MyException("verify_pop_agents() - No result set");
-		//	}
-		//	catch (...)
-		//	{
-		//		delete sqlcmd_get_individuals;
-
-		//		return n;
-		//	}
-
-		//	delete sqlcmd_get_individuals;
-
-		//	return n;
-		//}
-
 		std::tuple<int, double, double> compute_training_errors(std::function<double(unsigned int _individual_index, 
 									                                         std::vector<double>& _input_list, 
 									                                         std::vector<double>& _output_list)> _run_individual_program,
@@ -667,52 +596,39 @@ namespace domain
 				if ((individual_index % 100) == 0)
 					std::cout << individual_index;
 
-//				pushGP::globals::minimum_error_array_by_individual[individual_index] = 0.0;
-
 				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
 				{
-					Push::intLiteralFactory->clean_up();
-					Push::floatLiteralFactory->clean_up();
-					Push::boolLiteralFactory->clean_up();
-					Push::codeListFactory->clean_up();
-					Push::doRangeClassFactory->clean_up();
+					//Push::intLiteralFactory->clean_up();
+					//Push::floatLiteralFactory->clean_up();
+					//Push::boolLiteralFactory->clean_up();
+					//Push::codeListFactory->clean_up();
+					//Push::doRangeClassFactory->clean_up();
 
 					std::vector<double> example_problem = training_cases_problem[example_case];
 					std::vector<double> example_solution = training_cases_solution[example_case];
 
 					// Run program
-//					pushGP::globals::error_matrix[example_case][individual_index] = _run_individual_program(individual_index, example_problem, example_solution);
 					double error = _run_individual_program(individual_index, example_problem, example_solution);
 
 					if (error > 0.0)
 						error_count_for_individual++;
 
-//					pushGP::globals::minimum_error_array_by_individual[individual_index] += pushGP::globals::error_matrix[example_case][individual_index];
 					avg_error_for_individual += error;
 
 					pushGP::globals::error_matrix[example_case][individual_index] = error;
 				}
 
 				// Calculate the average error for all example cases
-//				pushGP::globals::minimum_error_array_by_individual[individual_index] /= (double)_number_of_example_cases;
-				avg_error_for_individual                                             /= (double)_number_of_example_cases;
+				avg_error_for_individual /= (double)_number_of_example_cases;
 
-//				score_array[individual_index] = (double)error_count / (double)_number_of_example_cases;
 				double score = (double)error_count_for_individual / (double)_number_of_example_cases;
 
-//				if ((score_array[individual_index] < 1.0) && (score_array[individual_index] < min_score))
 				if ((score < 1.0) && (score < min_score))
 				{
-//					min_score = score_array[individual_index];
 					min_score = score;
 					individual_with_best_score = individual_index;
 				}
 
-				//if (pushGP::globals::minimum_error_array_by_individual[individual_index] < min_error)
-				//{
-				//	min_error = pushGP::globals::minimum_error_array_by_individual[individual_index];
-				//	individual_with_least_error = individual_index;
-				//}
 				if (avg_error_for_individual < min_error)
 				{
 					min_error = avg_error_for_individual;
@@ -721,14 +637,10 @@ namespace domain
 
 				if ((individual_index % 100) == 0)
 					std::cout << std::endl;
-
-//				pushGP::globals::minimum_error_array_by_individual[individual_index] = avg_error_for_individual;
 			}
 
 
 			std::cout << std::endl;
-
-//			return (individual_with_best_score == -1) ? individual_with_least_error : individual_with_best_score;
 
 			return std::make_tuple
 			(
@@ -738,16 +650,81 @@ namespace domain
 			);
 		}
 
-		//argmap::number_of_test_cases,
-		//	test_cases_problem,
-		//	test_cases_solution,
+		std::tuple<int, double, double> parallel_compute_training_errors(std::function<double(unsigned int _individual_index,
+			std::vector<double>& _input_list,
+			std::vector<double>& _output_list)> _run_individual_program,
+			int _number_of_example_cases)
+		{
+			int individual_with_least_error = -1;
+			int individual_with_best_score = -1;
+			double min_error = (std::numeric_limits<double>::max)();
+			double min_score = (std::numeric_limits<double>::max)();
+
+			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
+			{
+				int error_count_for_individual = 0;
+				double avg_error_for_individual = 0.0;
+
+				if ((individual_index % 100) == 0)
+					std::cout << individual_index;
+
+				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
+				{
+					//Push::intLiteralFactory->clean_up();
+					//Push::floatLiteralFactory->clean_up();
+					//Push::boolLiteralFactory->clean_up();
+					//Push::codeListFactory->clean_up();
+					//Push::doRangeClassFactory->clean_up();
+
+					std::vector<double> example_problem = training_cases_problem[example_case];
+					std::vector<double> example_solution = training_cases_solution[example_case];
+
+					// Run program
+					double error = _run_individual_program(individual_index, example_problem, example_solution);
+
+					if (error > 0.0)
+						error_count_for_individual++;
+
+					avg_error_for_individual += error;
+
+					pushGP::globals::error_matrix[example_case][individual_index] = error;
+				}
+
+				// Calculate the average error for all example cases
+				avg_error_for_individual /= (double)_number_of_example_cases;
+
+				double score = (double)error_count_for_individual / (double)_number_of_example_cases;
+
+				if ((score < 1.0) && (score < min_score))
+				{
+					min_score = score;
+					individual_with_best_score = individual_index;
+				}
+
+				if (avg_error_for_individual < min_error)
+				{
+					min_error = avg_error_for_individual;
+					individual_with_least_error = individual_index;
+				}
+
+				if ((individual_index % 100) == 0)
+					std::cout << std::endl;
+			}
+
+
+			std::cout << std::endl;
+
+			return std::make_tuple
+			(
+				(individual_with_best_score == -1) ? individual_with_least_error : individual_with_best_score,
+				min_score,
+				min_error
+			);
+		}
 
 		double compute_test_errors(std::function<double(unsigned int _individual_index,
 								std::vector<double>& _example_problem, 
 			                    std::vector<double>& _example_solution)> _run_individual_program,
-			//int _number_of_example_cases,
-			//static std::vector<double> _example_cases_problem[],
-			//static std::vector<double> _example_cases_solution[],
 			int _individual_index)
 		{
 			double error = (std::numeric_limits<double>::max)();
@@ -773,10 +750,6 @@ namespace domain
 
 			return error;
 		}
-
-		//argmap::number_of_test_cases,
-		//	test_cases_problem,
-		//	test_cases_solution,
 
 		double verify_test_errors(std::function<double(std::string _genome, 
 													std::vector<double>& _example_problem, 
@@ -896,41 +869,6 @@ namespace domain
 			// Possibly this is where we should compile the genomes
 		}
 
-		//void generate_status_report(unsigned int _generation_number,
-		//	unsigned int _generations_completed_this_session, 
-		//	unsigned int _best_individual_id, 
-		//	double _best_individual_training_score, 
-		//	double _best_individual_training_error,
-		//	double _average_traiing_error,
-		//	double _best_individual_test_score,
-		//	std::string _best_gnome)
-		//{
-		//	database::SQLCommand* sqlcmd_save_status_report;
-
-		//	sqlcmd_save_status_report = new database::SQLCommand(&con, sqlstmt_save_status_report);
-
-		//	sqlcmd_save_status_report->set_as_integer(1, _generation_number);
-		//	sqlcmd_save_status_report->set_as_integer(2, _generations_completed_this_session);
-		//	sqlcmd_save_status_report->set_as_integer(3, _best_individual_id);
-		//	sqlcmd_save_status_report->set_as_float(4, _best_individual_training_score);
-		//	sqlcmd_save_status_report->set_as_float(5, _best_individual_training_error);
-		//	sqlcmd_save_status_report->set_as_float(6, _average_traiing_error);
-		//	sqlcmd_save_status_report->set_as_float(7, _best_individual_test_score);
-		//	sqlcmd_save_status_report->set_as_integer(8, argmap::number_of_training_cases);
-		//	sqlcmd_save_status_report->set_as_integer(9, argmap::number_of_test_cases);
-		//	sqlcmd_save_status_report->set_as_string(10, _best_gnome);
-		//	sqlcmd_save_status_report->set_as_integer(11, argmap::population_size);
-		//	sqlcmd_save_status_report->set_as_float(12, argmap::alternation_rate);
-		//	sqlcmd_save_status_report->set_as_float(13, argmap::uniform_mutation_rate);
-		//	sqlcmd_save_status_report->set_as_integer(14, argmap::example_case_max_length);
-		//	sqlcmd_save_status_report->set_as_integer(15, argmap::example_case_upper_range);
-
-		//	sqlcmd_save_status_report->execute();
-
-		//	delete sqlcmd_save_status_report;
-		//}
-
-
 		void generate_status_report(unsigned int _generation_number,
 			unsigned int _generations_completed_this_session,
 			unsigned int _best_individual_id,
@@ -967,17 +905,14 @@ namespace domain
 			delete sqlcmd_save_status_report;
 		}
 
-
-
-//		int run(int argc, char** argv)
 		int run()
 		{
 			// Create memory management factories
-			Push::intLiteralFactory = new Push::LiteralFactory<int>();
-			Push::floatLiteralFactory = new Push::LiteralFactory<double>();
-			Push::boolLiteralFactory = new Push::LiteralFactory<bool>();
-			Push::codeListFactory = new Push::CodeListFactory();
-			Push::doRangeClassFactory = new Push::DoRangeClassFactory();
+			//Push::intLiteralFactory = new Push::LiteralFactory<int>();
+			//Push::floatLiteralFactory = new Push::LiteralFactory<double>();
+			//Push::boolLiteralFactory = new Push::LiteralFactory<bool>();
+			//Push::codeListFactory = new Push::CodeListFactory();
+			//Push::doRangeClassFactory = new Push::DoRangeClassFactory();
 
 			// Setup
 			Push::init_push();
@@ -1026,19 +961,17 @@ namespace domain
 
 					std::cout << "Clean up memory" << std::endl;
 
-					Push::intLiteralFactory->clean_up();
-					Push::floatLiteralFactory->clean_up();
-					Push::boolLiteralFactory->clean_up();
-					Push::codeListFactory->clean_up();
-					Push::doRangeClassFactory->clean_up();
+					//Push::intLiteralFactory->clean_up();
+					//Push::floatLiteralFactory->clean_up();
+					//Push::boolLiteralFactory->clean_up();
+					//Push::codeListFactory->clean_up();
+					//Push::doRangeClassFactory->clean_up();
 
 					std::cout << "Generation " << generation_number << std::endl;
 					std::cout << "Session " << generations_completed_this_session << std::endl;
 					save_generation();
-//					verify_pop_agents();
 
 					std::cout << "Run Programs with Training Cases" << std::endl;
-//					int best_individual = compute_training_errors(run_individual, argmap::number_of_training_cases);
 					auto best_individual_min_score = compute_training_errors(run_individual, argmap::number_of_training_cases);
 					int best_individual = std::get<0>(best_individual_min_score);
 					double best_individual_score = std::get<1>(best_individual_min_score);
@@ -1057,26 +990,10 @@ namespace domain
 					std::cout << "genome = " << genome << std::endl;
 
 					double test_case_score = compute_test_errors(run_individual,
-						//argmap::number_of_test_cases,
-						//test_cases_problem,
-						//test_cases_solution,
 						best_individual);
 
 					std::cout << "test_case_error = " << test_case_score << std::endl;
 					std::cout << std::endl;
-
-					//std::cout << "Verify Best Individual's Program with Test Cases" << std::endl;
-
-					////std::string genome = "{:instruction EXEC.DO*RANGE :close  0}{:instruction FLOAT.SWAP :close  0}{:instruction FLOAT.- :close  0}{:instruction FLOAT.FROMINTEGER :close  0}{:instruction INTEGER.FLUSH :close  0}{:instruction INTEGER.> :close  0}{:instruction CODE.DUP :close  0}{:instruction BOOLEAN.NOR :close  0}{:instruction FLOAT.YANK :close  0}{:instruction INTEGER.FROMFLOAT :close  0}{:instruction FLOAT./ :close  4}{:instruction FLOAT.FLUSH :close  0}{:instruction EXEC.IF :close  0}";
-
-					//double verify_test_case_error = verify_test_errors(run_genome,
-					//	//argmap::number_of_test_cases,
-					//	//test_cases_problem,
-					//	//test_cases_solution,
-					//	genome);
-					//				   					 				  
-					//std::cout << "verify_test_case_error = " << verify_test_case_error << std::endl;
-					//std::cout << std::endl;
 
 					std::cout << "Generate Status Report" << std::endl;
 
@@ -1101,8 +1018,8 @@ namespace domain
 					generate_status_report(generation_number, 
 						generations_completed_this_session, 
 						best_individual, 
-						best_individual_score,//						score_array[best_individual],
-						best_individual_error,//						pushGP::globals::minimum_error_array_by_individual[best_individual],
+						best_individual_score,
+						best_individual_error,
 						average_traiing_error,
 						standard_deviation,
 						test_case_score, 
@@ -1119,11 +1036,11 @@ namespace domain
 				// Cleanup thread factories
 				Push::env.clear_stacks();
 
-				delete Push::intLiteralFactory;
-				delete Push::floatLiteralFactory;
-				delete Push::boolLiteralFactory;
-				delete Push::codeListFactory;
-				delete Push::doRangeClassFactory;
+				//delete Push::intLiteralFactory;
+				//delete Push::floatLiteralFactory;
+				//delete Push::boolLiteralFactory;
+				//delete Push::codeListFactory;
+				//delete Push::doRangeClassFactory;
 
 				std::cout << "Standard exception: " << e.what() << std::endl;
 				throw;
@@ -1133,21 +1050,21 @@ namespace domain
 				// Cleanup thread factories
 				Push::env.clear_stacks();
 
-				delete Push::intLiteralFactory;
-				delete Push::floatLiteralFactory;
-				delete Push::boolLiteralFactory;
-				delete Push::codeListFactory;
-				delete Push::doRangeClassFactory;
+				//delete Push::intLiteralFactory;
+				//delete Push::floatLiteralFactory;
+				//delete Push::boolLiteralFactory;
+				//delete Push::codeListFactory;
+				//delete Push::doRangeClassFactory;
 
 				std::cout << "Exception occurred" << std::endl;
 				throw;
 			}
 
-			delete Push::intLiteralFactory;
-			delete Push::floatLiteralFactory;
-			delete Push::boolLiteralFactory;
-			delete Push::codeListFactory;
-			delete Push::doRangeClassFactory;
+			//delete Push::intLiteralFactory;
+			//delete Push::floatLiteralFactory;
+			//delete Push::boolLiteralFactory;
+			//delete Push::codeListFactory;
+			//delete Push::doRangeClassFactory;
 
 			return 0;
 		}

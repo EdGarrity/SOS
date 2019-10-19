@@ -23,7 +23,7 @@ namespace Push
 			stack[1] = a;
 		}
 
-		return Code(codeListFactory->createCodeList(stack));  // new CodeList(stack)); //CodeList::adopt(stack); //*new CodeList(stack); // CodeList::adopt(stack); //Code( new CodeList(stack) );
+		return Code(parallel_codeListFactory.local().createCodeList(stack));  // new CodeList(stack)); //CodeList::adopt(stack); //*new CodeList(stack); // CodeList::adopt(stack); //Code( new CodeList(stack) );
 	}
 
 	inline Code list(Code a, Code b)
@@ -32,7 +32,7 @@ namespace Push
 		stack[0] = b;
 		stack[1] = a;
 
-		return Code(codeListFactory->createCodeList(stack));  // new CodeList(stack)); //CodeList::adopt(stack); //return *new CodeList(stack); // return CodeList::adopt(stack); //Code( new CodeList(stack) );
+		return Code(parallel_codeListFactory.local().createCodeList(stack));  // new CodeList(stack)); //CodeList::adopt(stack); //return *new CodeList(stack); // return CodeList::adopt(stack); //Code( new CodeList(stack) );
 	}
 
 	inline Code car(Code a)
@@ -52,7 +52,7 @@ namespace Push
 			return nil;
 
 		stack.pop_back();
-		return Code(codeListFactory->createCodeList(stack));  // new CodeList(stack)); //CodeList::adopt(stack); //Code( new CodeList(stack));
+		return Code(parallel_codeListFactory.local().createCodeList(stack));  // new CodeList(stack)); //CodeList::adopt(stack); //Code( new CodeList(stack));
 	}
 
 //	extern Code random_code(unsigned maxpoints);

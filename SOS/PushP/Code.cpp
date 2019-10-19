@@ -26,7 +26,7 @@ namespace Push
 		//if (code_initialized == false)
 		//{
 			MyDoRange = parse("EXEC.DO*RANGE");
-			zero = Code(intLiteralFactory->createLiteral(0));
+			zero = Code(parallel_intLiteralFactory.local().createLiteral(0));
 			quote = parse("CODE.QUOTE");
 			int_pop = parse("INTEGER.POP");
 			code_pop = parse("CODE.POP");

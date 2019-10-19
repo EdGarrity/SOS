@@ -1,9 +1,15 @@
 #pragma once
 
 #include "TypedAtom.h"
-//#include "Word.h"
 #include "Env.h"
 #include "..\Utilities\MyException.h"
+#include <windows.h>
+#include <ppl.h>
+#include <array>
+#include <numeric>
+#include <iostream>
+
+using namespace concurrency;
 
 namespace Push
 {
@@ -110,6 +116,9 @@ namespace Push
 		return value ? "TRUE" : "FALSE";
 	}
 
+
+
+
 	//
 	// Literal memory manager
 	//
@@ -135,6 +144,13 @@ namespace Push
 	{
 		LiteralRegisterNode<T>* _head;
 
+		//if (typeid(T) == typeid(double))
+		//	LiteralRegisterNode<double>* _head;
+
+		//else
+		//	LiteralRegisterNode<T>* _head;
+
+
 	public:
 		LiteralRegister() : _head(nullptr) {}
 
@@ -148,11 +164,6 @@ namespace Push
 			LiteralRegisterNode<T>* node = new LiteralRegisterNode<T>(p, _head);
 			_head = node;
 		}
-
-		//void reset()
-		//{
-		//	_head = nullptr;
-		//}
 
 		void clean_up()
 		{
@@ -183,11 +194,6 @@ namespace Push
 	public:
 		Literal<T>* createLiteral(T val);
 
-		//void reset()
-		//{
-		//	literalRegister.reset();
-		//}
-
 		void clean_up()
 		{
 			literalRegister.clean_up();
@@ -204,9 +210,13 @@ namespace Push
 
 	template <class T>
 	extern thread_local LiteralFactory<T> *literalFactory;
-	extern thread_local LiteralFactory<int> *intLiteralFactory;
-	extern thread_local LiteralFactory<double> *floatLiteralFactory;
-	extern thread_local LiteralFactory<bool> *boolLiteralFactory;
+//	extern thread_local LiteralFactory<int> *intLiteralFactory;
+//	extern thread_local LiteralFactory<double> *floatLiteralFactory;
+//	extern thread_local LiteralFactory<bool> *boolLiteralFactory;
+
+	extern combinable<LiteralFactory<int>> parallel_intLiteralFactory;
+	extern combinable<LiteralFactory<double>> parallel_floatLiteralFactory;
+	extern combinable<LiteralFactory<bool>> parallel_boolLiteralFactory;
 
 	/* Packs a single type in a piece of code */
 	template <class T>
@@ -223,13 +233,13 @@ namespace Push
 		T a = pop<T>(env);
 
 		if (typeid(a) == typeid(int))
-			return Code(intLiteralFactory.createLiteral(a));
+			return Code(parallel_intLiteralFactory.local().createLiteral(a));
 
 		else if (typeid(a) == typeid(double))
-			return Code(floatLiteralFactory.createLiteral(a));
+			return Code(parallel_floatLiteralFactory.local().createLiteral(a));
 
 		else if (typeid(a) == typeid(bool))
-			return Code(boolLiteralFactory.createLiteral(a));
+			return Code(parallel_boolLiteralFactory.local().createLiteral(a));
 
 		return Code();
 	}

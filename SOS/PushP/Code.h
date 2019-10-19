@@ -11,6 +11,13 @@
 #include <iostream>
 #include <exception>
 #include "CodeBasePtr.h"
+#include <windows.h>
+#include <ppl.h>
+#include <array>
+#include <numeric>
+#include <iostream>
+
+using namespace concurrency;
 
 namespace Push
 {
@@ -45,14 +52,20 @@ namespace Push
 	// Code/Exec memory manager
 	//
 
+	// typedef Pair<int,int> IntIntPair;
+
 	template <class T>
 	class LiteralFactory;
 
 	template <class T>
 	extern thread_local LiteralFactory<T> *literalFactory;
-	extern thread_local LiteralFactory<int> *intLiteralFactory;
-	extern thread_local LiteralFactory<double> *floatLiteralFactory;
-	extern thread_local LiteralFactory<bool> *boolLiteralFactory;
+//	extern thread_local LiteralFactory<int> *intLiteralFactory;
+//	extern thread_local LiteralFactory<double> *floatLiteralFactory;
+//	extern thread_local LiteralFactory<bool> *boolLiteralFactory;
+
+	extern combinable<LiteralFactory<int>> parallel_intLiteralFactory;
+	extern combinable<LiteralFactory<double>> parallel_floatLiteralFactory;
+	extern combinable<LiteralFactory<bool>> parallel_boolLiteralFactory;
 
 	//
 	// Static Push instructions
@@ -300,7 +313,8 @@ namespace Push
 		return lp;
 	}
 
-	extern thread_local CodeListFactory *codeListFactory;
+//	extern thread_local CodeListFactory *codeListFactory;
+	extern combinable<CodeListFactory> parallel_codeListFactory;
 
 
 	inline std::string str(Code code)
