@@ -5,6 +5,7 @@
 #include "../../PushGP/Globals.h"
 #include "../../PushGP/Random.h"
 #include "../../PushGP/Breed.h"
+#include "../../PushP/Env.h"
 #include "../../PushP/ExecInstruction.h"
 #include "../../Utilities/CSVIterator.h"
 #include "../../PushGP/Utilities.h"
@@ -464,7 +465,7 @@ namespace domain
 
 		// Remarks:
 		//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
-		unsigned int make_pop_agents(int _start)
+		unsigned int make_pop_agents(Push::Env & _env, int _start)
 		{
 			unsigned int agents_created = 0;
 
@@ -476,7 +477,7 @@ namespace domain
 			}
 
 			// Cleanup thread factories
-			Push::env.clear_stacks();
+			_env.local().clear_stacks();
 
 			return agents_created;
 		}
@@ -597,9 +598,11 @@ namespace domain
 			delete sqlcmd_insert_new_individual;
 		}
 
-		std::tuple<int, double, double> compute_training_errors(std::function<double(unsigned int _individual_index, 
-									                                         std::vector<double>& _input_list, 
-									                                         std::vector<double>& _output_list)> _run_individual_program,
+		std::tuple<int, double, double> compute_training_errors(Push::Env & _env,
+			std::function<double(Push::Env & _env,
+			                     unsigned int _individual_index,
+			                     std::vector<double>& _input_list, 
+			                     std::vector<double>& _output_list)> _run_individual_program,
 			int _number_of_example_cases) 
 		{
 			int individual_with_least_error = -1;
@@ -629,7 +632,7 @@ namespace domain
 					std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
 
 					// Run program
-					double error = _run_individual_program(individual_index, example_problem, example_solution);
+					double error = _run_individual_program(_env, individual_index, example_problem, example_solution);
 
 					if (error > 0.0)
 						error_count_for_individual++;
@@ -671,9 +674,11 @@ namespace domain
 			);
 		}
 
-		std::tuple<int, double, double> parallel_compute_training_errors(std::function<double(unsigned int _individual_index,
-			std::vector<double>& _input_list,
-			std::vector<double>& _output_list)> _run_individual_program,
+		std::tuple<int, double, double> parallel_compute_training_errors(Push::Env & _env,
+			std::function<double(Push::Env & _env,
+			                     unsigned int _individual_index,
+			                     std::vector<double>& _input_list,
+			                     std::vector<double>& _output_list)> _run_individual_program,
 			int _number_of_example_cases)
 		{
 			int individual_with_least_error = -1;
@@ -702,7 +707,7 @@ namespace domain
 					std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
 
 					// Run program
-					double error = _run_individual_program(individual_index, example_problem, example_solution);
+					double error = _run_individual_program(_env, individual_index, example_problem, example_solution);
 
 					if (error > 0.0)
 						error_count_for_individual++;
@@ -738,7 +743,9 @@ namespace domain
 			);
 		}
 
-		double compute_test_errors(std::function<double(unsigned int _individual_index,
+		double compute_test_errors(Push::Env & _env, 
+			std::function<double(Push::Env & _env,
+			                    unsigned int _individual_index,
 								std::vector<double>& _example_problem, 
 			                    std::vector<double>& _example_solution)> _run_individual_program,
 			int _individual_index)
@@ -755,7 +762,7 @@ namespace domain
 				std::vector<double> example_problem(test_cases_problem[example_case].begin(), test_cases_problem[example_case].end());
 				std::vector<double> example_solution(test_cases_solution[example_case].begin(), test_cases_solution[example_case].end());
 
-				double example_case_error = _run_individual_program(_individual_index, example_problem, example_solution);
+				double example_case_error = _run_individual_program(_env, _individual_index, example_problem, example_solution);
 
 				if (example_case_error > 0.0)
 					error_count++;
@@ -933,7 +940,9 @@ namespace domain
 			//Push::doRangeClassFactory = new Push::DoRangeClassFactory();
 
 			// Setup
-			Push::init_push();
+			Push::Env env;
+
+			Push::init_push(env);
 
 			try
 			{
@@ -955,7 +964,7 @@ namespace domain
 				// Load population.  Create more if not enough loaded.
 				std::cout << "Create Population Agents" << std::endl;
 				generation_number = get_last_saved_generation_number() + 1;
-				agents_created = make_pop_agents(load_pop_agents());
+				agents_created = make_pop_agents(env, load_pop_agents());
 
 				if (agents_created > 0)
 					generation_number = 0;
@@ -994,9 +1003,9 @@ namespace domain
 					std::tuple<int, double, double> best_individual_score_error;
 
 					if (argmap::use_PPL)
-						best_individual_score_error = parallel_compute_training_errors(run_individual, argmap::number_of_training_cases);
+						best_individual_score_error = parallel_compute_training_errors(env, run_individual, argmap::number_of_training_cases);
 					else
-						best_individual_score_error = compute_training_errors(run_individual, argmap::number_of_training_cases);
+						best_individual_score_error = compute_training_errors(env, run_individual, argmap::number_of_training_cases);
 
 					int best_individual = std::get<0>(best_individual_score_error);
 					double best_individual_score = std::get<1>(best_individual_score_error);
@@ -1014,8 +1023,7 @@ namespace domain
 					std::cout << "program = " << program << std::endl;
 					std::cout << "genome = " << genome << std::endl;
 
-					double test_case_score = compute_test_errors(run_individual,
-						best_individual);
+					double test_case_score = compute_test_errors(env, run_individual, best_individual);
 
 					std::cout << "test_case_error = " << test_case_score << std::endl;
 					std::cout << std::endl;
@@ -1058,14 +1066,14 @@ namespace domain
 			}
 			catch (const std::exception& e)
 			{
-				Push::env.clear_stacks();
+				env.local().clear_stacks();
 
 				std::cout << "Standard exception: " << e.what() << std::endl;
 				throw;
 			}
 			catch (...)
 			{
-				Push::env.clear_stacks();
+				env.local().clear_stacks();
 
 				std::cout << "Exception occurred" << std::endl;
 				throw;

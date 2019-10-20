@@ -5,47 +5,42 @@
 namespace Push
 {
 
-	inline unsigned _and()
+	inline unsigned _and(Env & _env)
 	{
-		//if (not has_elements<bool>(env,2)) return 1;
-		bool first = pop<bool>(env);
-		bool second = pop<bool>(env);
-		push<bool>(first && second);
+		bool first = pop<bool>(_env);
+		bool second = pop<bool>(_env);
+		push<bool>(_env, first && second);
 		return 1;
 	}
 
-	inline unsigned _or()
+	inline unsigned _or(Env & _env)
 	{
-		//if (not has_elements<bool>(env,2)) return 1;
-		bool first = pop<bool>(env);
-		bool second = pop<bool>(env);
-		push<bool>(first || second);
+		bool first = pop<bool>(_env);
+		bool second = pop<bool>(_env);
+		push<bool>(_env, first || second);
 		return 1;
 	}
 
-	inline unsigned _not()
+	inline unsigned _not(Env & _env)
 	{
-		//if (not has_elements<bool>(env,1)) return 1;
-		bool first = pop<bool>(env);
-		push<bool>(!first);
+		bool first = pop<bool>(_env);
+		push<bool>(_env, !first);
 		return 1;
 	}
 
-	inline unsigned _nor()
+	inline unsigned _nor(Env & _env)
 	{
-		//if (not has_elements<bool>(env,2)) return 1;
-		bool first = pop<bool>(env);
-		bool second = pop<bool>(env);
-		push<bool>(!(first || second));
+		bool first = pop<bool>(_env);
+		bool second = pop<bool>(_env);
+		push<bool>(_env, !(first || second));
 		return 1;
 	}
 
-	inline unsigned _nand()
+	inline unsigned _nand(Env & _env)
 	{
-		//if (not has_elements<bool>(env,2)) return 1;
-		bool first = pop<bool>(env);
-		bool second = pop<bool>(env);
-		push<bool>(!(first && second));
+		bool first = pop<bool>(_env);
+		bool second = pop<bool>(_env);
+		push<bool>(_env, !(first && second));
 		return 1;
 	}
 } // namespace push

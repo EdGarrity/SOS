@@ -5,7 +5,10 @@
 namespace Push
 {
 	// This needs to be initialize in Push Initialze and stored in Thread Local Storage
-	class Env;
+//	class Env;
+
+	class Env_detail;
+	typedef combinable<Push::Env_detail> Env;
 
 	std::ostream &operator<<(std::ostream &os, const Type &tp)
 	{
@@ -17,11 +20,11 @@ namespace Push
 		return os;
 	}
 
-	bool Type::can_pop_from(/*const Env &env*/) const
+	bool Type::can_pop_from(Env & _env) const
 	{
 		for (unsigned i = start_; i < type.size(); ++i)
 		{
-			if ((type[i] > 0) && (env.get_stack_size(i) < static_cast<unsigned>(type[i])))
+			if ((type[i] > 0) && (_env.local().get_stack_size(i) < static_cast<unsigned>(type[i])))
 			{
 				//std::cerr << "Fail on " << i << ' ' << env.get_stack_size(i) << std::endl;
 				return false;

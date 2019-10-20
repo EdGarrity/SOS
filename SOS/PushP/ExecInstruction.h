@@ -14,7 +14,7 @@ namespace Push
 			//			assert(vec.size() == 4);
 		}
 
-		unsigned operator()() const
+		unsigned operator()(Env & _env) const
 		{
 			CodeArray vec = get_stack();
 			int i = static_cast<Literal<int>*>(vec[3].get())->get();
@@ -23,17 +23,17 @@ namespace Push
 
 			if (i > n) direction = -1;
 
-			push(i);
+			push(_env, i);
 			Exec code = Exec(vec[0]);
 
 			if (i != n)
 			{
 				vec[3] = Code(parallel_intLiteralFactory.local().createLiteral(i + direction));
 				Code ranger = Code(parallel_codeListFactory.local().createCodeList(vec));  // new CodeList(vec));  //CodeList::adopt(vec);
-				env.push_code_to_exec_stack(ranger);
+				_env.local().push_code_to_exec_stack(ranger);
 			}
 
-			push(code);
+			push(_env, code);
 			return 1;
 		}
 	};

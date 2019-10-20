@@ -215,10 +215,10 @@ namespace Push
 		return r;
 	}
 
-	unsigned CodeList::operator()() const
+	unsigned CodeList::operator()(Env & _env) const
 	{
 		for (CodeArray::const_iterator it = _stack.begin(); it != _stack.end(); ++it)
-			env.exec_stack.push_back(Exec(*it));
+			_env.local().exec_stack.push_back(Exec(*it));
 
 		return 1;
 	}

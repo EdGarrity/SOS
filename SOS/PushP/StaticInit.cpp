@@ -108,17 +108,17 @@ namespace Push
 	extern void initFloat();
 	extern void initBool();
 
-	int init_push()
+	int init_push(Env & _env)
 	{
-		return init_push(null_input, nullptr);
+		return init_push(_env, null_input, nullptr);
 	}
 
-	int init_push(std::vector<double> & _input)
+	int init_push(Env & _env, std::vector<double> & _input)
 	{
-		return init_push(_input, nullptr);
+		return init_push(_env, _input, nullptr);
 	}
 
-	int init_push(std::vector<double> & _input, std::function<void(void)> _init_push_application_specific_functions)
+	int init_push(Env & _env, std::vector<double> & _input, std::function<void(void)> _init_push_application_specific_functions)
 	{
 		static bool initialized = false;	// Should this be a thread global?
 
@@ -140,7 +140,7 @@ namespace Push
 				_init_push_application_specific_functions();
 		}
 
-		env.initialize(_input);
+		_env.local().initialize(_input);
 		return 0;
 	}
 }

@@ -7,19 +7,16 @@
 
 namespace Push
 {
-	unsigned code_do_range()
+	unsigned code_do_range(Env & _env)
 	{
-		int n = pop<int>(env);
-		int i = pop<int>(env);
-		Code code = pop<Code>(env);
+		int n = pop<int>(_env);
+		int i = pop<int>(_env);
+		Code code = pop<Code>(_env);
 		int direction = 1;
 
 		if (i > n) direction = -1;
 
-		push(i);
-
-		//quote = parse("CODE.QUOTE");
-		//DoRange = parse("CODE.DO*RANGE");
+		push(_env, i);
 
 		if (i != n)
 		{
@@ -30,17 +27,18 @@ namespace Push
 			vec[2] = quote;
 			vec[3] = Code(parallel_intLiteralFactory.local().createLiteral(n));
 			vec[4] = Code(parallel_intLiteralFactory.local().createLiteral(i));
-			env.push_code_to_exec_stack(Code(parallel_codeListFactory.local().createCodeList(vec)));  // new CodeList(vec)));  //CodeList::adopt(vec)); //env.exec_stack.push_back(*new CodeList(vec));  //env.push_guarded(CodeList::adopt(vec)); //Code(new CodeList(vec)));
+			_env.local().push_code_to_exec_stack(Code(parallel_codeListFactory.local().createCodeList(vec)));  // new CodeList(vec)));  //CodeList::adopt(vec)); //env.exec_stack.push_back(*new CodeList(vec));  //env.push_guarded(CodeList::adopt(vec)); //Code(new CodeList(vec)));
 		}
 
-		env.push_code_to_exec_stack(code);
+		_env.local().push_code_to_exec_stack(code);
+
 		return 1;
 	}
 
-	unsigned do_count()
+	unsigned do_count(Env & _env)
 	{
-		int n = pop<int>(env);
-		Code code = pop<Code>(env);
+		int n = pop<int>(_env);
+		Code code = pop<Code>(_env);
 
 		if (n <= 0)
 			return 1;
@@ -51,14 +49,15 @@ namespace Push
 		vec[2] = code;
 		vec[3] = Code(parallel_intLiteralFactory.local().createLiteral(n - 1));
 		vec[4] = zero;
-		env.push_code_to_exec_stack(Code(parallel_codeListFactory.local().createCodeList(vec)));  // new CodeList(vec)));  //CodeList::adopt(vec)); //Code(new CodeList(vec)));
+		_env.local().push_code_to_exec_stack(Code(parallel_codeListFactory.local().createCodeList(vec)));  // new CodeList(vec)));  //CodeList::adopt(vec)); //Code(new CodeList(vec)));
+
 		return 1;
 	}
 
-	unsigned do_times()
+	unsigned do_times(Env & _env)
 	{
-		int n = pop<int>(env);
-		Code code = pop<Code>(env);
+		int n = pop<int>(_env);
+		Code code = pop<Code>(_env);
 
 		if (n <= 0)
 			return 1;
@@ -69,7 +68,8 @@ namespace Push
 		vec[2] = cons(int_pop, code);
 		vec[3] = Code(parallel_intLiteralFactory.local().createLiteral(n - 1));
 		vec[4] = zero;
-		env.push_code_to_exec_stack(Code(parallel_codeListFactory.local().createCodeList(vec)));  // new CodeList(vec)));  //CodeList::adopt(vec)); //Code(new CodeList(vec)));
+		_env.local().push_code_to_exec_stack(Code(parallel_codeListFactory.local().createCodeList(vec)));  // new CodeList(vec)));  //CodeList::adopt(vec)); //Code(new CodeList(vec)));
+
 		return 1;
 	}
 

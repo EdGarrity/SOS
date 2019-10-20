@@ -1,14 +1,18 @@
 #pragma once
 
+#include <ppl.h>
 #include "Code.h"
 #include "Type.h"
 #include "TypeDef.h"
 #include "CodeUtils.h" // for cdr
 
+using namespace concurrency;
+
 namespace Push
 {
 	// This needs to be initialize in Push Initialze and stored in Thread Local Storage
-	extern thread_local Env env;
+//	extern thread_local Env env;
+//	extern combinable<Env> env;
 
 //	typedef std::map<std::string, unsigned int> String2parenthesesMap;
 //	extern const String2parenthesesMap &str2parentheses_map;
@@ -31,15 +35,12 @@ namespace Push
 
 	extern std::vector<double> null_input;
 
-	class Env
+	class Env_detail
 	{
 	public:
 		/* instructions */
 		Code function_set;
 		Parameters parameters;
-
-		// data record pointer
-//		int data_record_index;
 
 		// Pointer to input & output data
 		std::vector<double> & input = null_input;
@@ -47,7 +48,6 @@ namespace Push
 
 		void push_code_to_exec_stack(const Code &code)
 		{
-//			guard.push_back(code);
 			exec_stack.push_back(Exec(code));
 		}
 
@@ -59,11 +59,10 @@ namespace Push
 		std::vector<double>	double_stack;
 
 //		Env(unsigned _reserve = 1000) : function_set(instructions), parameters(global_parameters)
-		Env() : parameters(global_parameters)
+		Env_detail() : parameters(global_parameters)
 		{
 			reserve(1000);
 			clear_stacks();
-//			data_record_index = 0;
 			null_input.clear();
 			input = null_input;
 			output.clear();
@@ -77,16 +76,10 @@ namespace Push
 		//	output.clear();
 		//}
 
-		virtual ~Env()
+		virtual ~Env_detail()
 		{ 
 			clear_stacks(); 
 		} // virtual ~Env(){ delete next_env; }  // EG: Added clear();
-
-		//virtual Env* clone() const
-		//{
-		//	Env* newenv = new Env(*this);
-		//	return newenv;
-		//}
 
 		virtual void initialize(std::vector<double> & _input, unsigned _reserve = 1000)
 		{
@@ -150,106 +143,103 @@ namespace Push
 		/* Needed for type based packing */
 		virtual Code pop_stack_from_id(int id);
 
-		unsigned go(unsigned n = 50);
-		unsigned go_trace(unsigned _max_effort, std::string & trace_line);
+		unsigned go(Env & _env, unsigned n = 50);
+		unsigned go_trace(Env & _env, unsigned _max_effort, std::string & trace_line);
 	};
 
-	extern std::string print(const Env &env);
-	inline std::ostream &operator<<(std::ostream &os, const Env &env)
-	{
-		os << print(env);
-		return os;
-	}
+	typedef combinable<Push::Env_detail> Env;
+
+	//extern std::string print(Env & _env);
+	//inline std::ostream &operator<<(std::ostream &os, Env & _env)
+	//{
+	//	os << print(_env);
+	//	return os;
+	//}
 
 	/* Operations */
-	template <typename T> inline std::vector<T> &get_stack() { }
-	template <> inline std::vector<Exec>   &get_stack()
+	template <typename T> inline std::vector<T> &get_stack(Env & _env) { }
+	template <> inline std::vector<Exec>   &get_stack(Env & _env)
 	{
-		return env.exec_stack;
+		return _env.local().exec_stack;
 	}
-	template <> inline std::vector<int> &get_stack()
+	template <> inline std::vector<int> &get_stack(Env & _env)
 	{
-		return env.int_stack;
+		return _env.local().int_stack;
 	}
-	template <> inline std::vector<double> &get_stack()
+	template <> inline std::vector<double> &get_stack(Env & _env)
 	{
-		return env.double_stack;
+		return _env.local().double_stack;
 	}
-	template <> inline std::vector<bool>   &get_stack()
+	template <> inline std::vector<bool>   &get_stack(Env & _env)
 	{
-		return env.bool_stack;
+		return _env.local().bool_stack;
 	}
-	template <> inline std::vector<Code>   &get_stack()
+	template <> inline std::vector<Code>   &get_stack(Env & _env)
 	{
-		return env.code_stack;
+		return _env.local().code_stack;
 	}
 
-	template <typename T> inline bool is_empty()
+	template <typename T> inline bool is_empty(Env & _env)
 	{
-		return (get_stack<T>().empty());
+		return (get_stack<T>(_env).empty());
 	}
 
 	/* pushing and popping */
-	template <typename T> inline void push(T value)
+	template <typename T> inline void push(Env & _env, T value)
 	{
-		get_stack<T>().push_back(value);
+		get_stack<T>(_env).push_back(value);
 	}
 
-	template <typename T> inline T pop(Env &env)
+	template <typename T> inline T pop(Env & _env)
 	{
-		T val = get_stack<T>().back();
-		get_stack<T>().pop_back();
+		T val = get_stack<T>(_env).back();
+		get_stack<T>(_env).pop_back();
 		return val;
 	}
 
-	template <typename T> inline T &top()
+	template <typename T> inline T &top(Env & _env)
 	{
-		return get_stack<T>().back();
+		return get_stack<T>(_env).back();
 	}
 
-	template <class T> inline    T &first()
+	template <class T> inline    T &first(Env & _env)
 	{
-		return top<T>();
+		return top<T>(_env);
 	}
 
-	template <class T> inline    T &second()
+	template <class T> inline    T &second(Env & _env)
 	{
-		return get_stack<T>()[get_stack<T>().size() - 2];
+		return get_stack<T>(_env)[get_stack<T>(_env).size() - 2];
 	}
 
 	/* Push calling convention */
-	inline void push_call(Code code)
+	inline void push_call(Env & _env, Code code)
 	{
-		env.push_code_to_exec_stack(code);
-		push(code);
+		_env.local().push_code_to_exec_stack(code);
+		push(_env, code);
 	}
 
 	template <typename T>
-	inline bool has_elements(unsigned sz)
+	inline bool has_elements(Env & _env, unsigned sz)
 	{
-		if (get_stack<T>().size() < sz)
-		{
-//			env.error();
+		if (get_stack<T>(_env).size() < sz)
 			return false;
-		}
-
-		return true;
+		else
+			return true;
 	}
 
 	/* generic functions */
 	template <typename T>
-	inline unsigned dup()
+	inline unsigned dup(Env & _env)
 	{
-		//if (not has_elements<T>(env, 1)) return 1;
-		push<T>(get_stack<T>().back());
+		push<T>(_env, get_stack<T>(_env).back());
 		return 1;
 	}
 
 	template <typename T>
-	inline unsigned swap()
+	inline unsigned swap(Env & _env)
 	{
-		//if (not has_elements<T>(env,2)) return 1;
-		std::vector<T> &stack = get_stack<T>();
+		std::vector<T> &stack = get_stack<T>(_env);
 		T tmp = stack.back();
 		stack.back() = stack[stack.size() - 2];
 		stack[stack.size() - 2] = tmp;
@@ -258,88 +248,79 @@ namespace Push
 	}
 
 	template <typename T>
-	inline unsigned equals()
+	inline unsigned equals(Env & _env)
 	{
-		push(pop<T>(env) == pop<T>(env));
+		push(_env, pop<T>(_env) == pop<T>(_env));
 		return 1;
 	}
 
 	template <>
-	inline unsigned equals<Code>()
+	inline unsigned equals<Code>(Env & _env)
 	{
 		int effort = 0;
 
-		push(equal_to(pop<Code>(env), pop<Code>(env), effort));
+		push(_env, equal_to(pop<Code>(_env), pop<Code>(_env), effort));
 		return effort;
 	}
 
 	template <>
-	inline unsigned equals<Exec>()
+	inline unsigned equals<Exec>(Env & _env)
 	{
 		int effort = 0;
 
-		push(equal_to(pop<Exec>(env).to_CodeBase(), pop<Exec>(env).to_CodeBase(), effort));
+		push(_env, equal_to(pop<Exec>(_env).to_CodeBase(), pop<Exec>(_env).to_CodeBase(), effort));
 		return effort;
 	}
 
-	//template <class T> inline bool safe_stack(Env& env) { return get_stack<T>(env).size() > 0; }
-	//template <> inline bool safe_stack<int>(Env& env) { return get_stack<int>(env).size() > 1; } // as we need to pop from this
-
 	template <class T>
-	inline int safe_index()
+	inline int safe_index(Env & _env)
 	{
-		//if (not safe_stack<T>(env)) return -1;
-		//if (get_stack<int>(env).size() == 0) return -1;
-		int index = pop<int>(env);
-		int stacksize = get_stack<T>().size();
+		int index = pop<int>(_env);
+		int stacksize = get_stack<T>(_env).size();
 		index = (index < 0) ? 0 : (index >= stacksize ? stacksize - 1 : index);
 		return stacksize - 1 - index;
 	}
 
 	template <typename T>
-	inline unsigned yankdup()
+	inline unsigned yankdup(Env & _env)
 	{
-		int index = safe_index<T>();
-		//if (index == -1) return 1; // -1 signals cannot obtain index for whatever reason
-		std::vector<T> &stack = get_stack<T>();
+		int index = safe_index<T>(_env);
+		std::vector<T> &stack = get_stack<T>(_env);
 		stack.push_back(stack[index]);
 
 		return 1;
 	}
 
 	template <class T>
-	inline unsigned protected_pop()
+	inline unsigned protected_pop(Env & _env)
 	{
-		pop<T>(env);
+		pop<T>(_env);
 		return 1;
 	}
 
 	template <class T>
-	inline unsigned stackdepth()
+	inline unsigned stackdepth(Env & _env)
 	{
-		push<int>(get_stack<T>().size());
+		push<int>(_env, get_stack<T>(_env).size());
 		return 1;
 	}
 
 	template <class T>
-	inline unsigned shove()
+	inline unsigned shove(Env & _env)
 	{
-		int index = safe_index<T>();
-		//if (index == -1) return 1;
-		std::vector<T> &stack = get_stack<T>();
-		stack.insert(stack.begin() + index, pop<T>(env));
+		int index = safe_index<T>(_env);
+
+		std::vector<T> &stack = get_stack<T>(_env);
+		stack.insert(stack.begin() + index, pop<T>(_env));
 
 		return stack.size() - index + 1;
 	}
 
 	template <class T>
-	inline unsigned yank()
+	inline unsigned yank(Env & _env)
 	{
-		int index = safe_index<T>();
-		//if (index == -1) return 1;
-		std::vector<T> &stack = get_stack<T>();
-//		assert(index < (int)stack.size());
-//		assert(index >= 0);
+		int index = safe_index<T>(_env);
+		std::vector<T> &stack = get_stack<T>(_env);
 		T value = stack[index];
 		stack.erase(stack.begin() + index);
 		stack.push_back(value);
@@ -347,17 +328,15 @@ namespace Push
 		return stack.size() - index + 1;
 	}
 
-
 	template <class T>
-	unsigned rot()
+	unsigned rot(Env & _env)
 	{
-		//if (!has_elements<T>(env,3)) return 1;
-		T x = pop<T>(env);
-		T y = pop<T>(env);
-		T z = pop<T>(env);
-		push<T>(y);
-		push<T>(x);
-		push<T>(z);
+		T x = pop<T>(_env);
+		T y = pop<T>(_env);
+		T z = pop<T>(_env);
+		push<T>(_env, y);
+		push<T>(_env, x);
+		push<T>(_env, z);
 
 		return 1;
 	}

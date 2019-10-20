@@ -8,11 +8,14 @@
 
 #include <time.h>
 #include <thread>
+#include <ppl.h>
+
+using namespace concurrency;
 
 namespace Utilities
 {
-	thread_local std::random_device rd;  //Will be used to obtain a seed for the random number engine
-	thread_local std::mt19937 generator(rd()); //Standard mersenne_twister_engine seeded with rd()
+	std::random_device rd;  //Will be used to obtain a seed for the random number engine
+	std::mt19937 generator(rd()); //Standard mersenne_twister_engine seeded with rd()
 
 	// Purpose: 
 	//   Random number distribution that produces integer values according to a uniform discrete distribution.

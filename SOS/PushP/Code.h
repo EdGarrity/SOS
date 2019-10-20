@@ -26,16 +26,21 @@ namespace Push
 	 *
 	 */
 
-	class Env;
+//	class Env;
+
+	class Env_detail;
+	typedef combinable<Push::Env_detail> Env;
+
 	class CodeBase;
 
 	// This needs to be initialize in Push Initialze and stored in Thread Local Storage
-	extern thread_local Env env;
+//	extern thread_local Env env;
+//	extern combinable<Env> env;
 
 	typedef Push::detail::CodeBase_prt<CodeBase> Code;
 	typedef Push::detail::ExecBase_ptr<CodeBase> Exec;
 	typedef std::vector<Code> CodeArray;
-	typedef unsigned(*Operator)();
+	typedef unsigned(*Operator)(Env & _env);
 
 	typedef std::map<std::string, Push::Code> String2CodeMap;
 	typedef std::map<std::string, unsigned int> String2ParenthesesMap;
@@ -84,11 +89,11 @@ namespace Push
 		CodeArray _stack;
 
 	public:
-
 		CodeBase();
 		CodeBase(const CodeArray &stack);
 		CodeBase(const CodeBase &code);
 		CodeBase(const CodeBase *code);
+
 		const CodeArray &get_stack() const
 		{
 			return _stack;
@@ -96,9 +101,9 @@ namespace Push
 
 		virtual ~CodeBase() {}
 
-	//	/* virtual functions */
-		virtual unsigned operator()() const //virtual unsigned operator()(Env &env) const
-//		virtual unsigned operator()(Env &env) const
+		/* virtual functions */
+//		virtual unsigned operator()() const //virtual unsigned operator()(Env &env) const
+		virtual unsigned operator()(Env &env) const
 		{
 			return 1;
 		}
@@ -208,7 +213,7 @@ namespace Push
 
 		std::string to_string() const;
 
-		unsigned operator()() const;
+		unsigned operator()(Env & _env) const;
 
 		// no equal_to overload, equality checked in parent
 

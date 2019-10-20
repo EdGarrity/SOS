@@ -23,9 +23,9 @@ namespace Push
 
 		Literal(T val) : value(val) {}
 
-		unsigned operator()() const
+		unsigned operator()(Env & _env) const
 		{
-			push<T>(value);
+			push<T>(_env, value);
 			return 1;
 		}
 
@@ -184,9 +184,9 @@ namespace Push
 
 	/* Packs a single type in a piece of code */
 	template <class T>
-	inline Code pack()
+	inline Code pack(Env & _env)
 	{
-		T a = pop<T>(env);
+		T a = pop<T>(_env);
 
 		if (typeid(a) == typeid(int))
 			return Code(parallel_intLiteralFactory.local().createLiteral(a));
@@ -202,16 +202,16 @@ namespace Push
 
 	/* Specialization for Code, just return it */
 	template <>
-	inline Code pack<Code>()
+	inline Code pack<Code>(Env & _env)
 	{
-		return pop<Code>(env);
+		return pop<Code>(_env);
 	}
 
 	/* Specialization for Exec, return the code */
 	template <>
-	inline Code pack<Exec>()
+	inline Code pack<Exec>(Env & _env)
 	{
-		return pop<Exec>(env).to_CodeBase();
+		return pop<Exec>(_env).to_CodeBase();
 	}
 
 	/* new untyped version of Set, called DEFINE: NAME.DEFINE, INTEGER.DEFINE, etc.*/
@@ -236,5 +236,5 @@ namespace Push
 	//}
 
 	/* Typed version */
-	Code pack(const Type & type);
+	Code pack(Env & _env, const Type & type);
 }

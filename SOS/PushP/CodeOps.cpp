@@ -4,31 +4,32 @@ using namespace std;
 
 namespace Push
 {
-	unsigned _nth()
+	unsigned _nth(Env & _env)
 	{
-		Code first = pop<Code>(env);
-		int val = pop<int>(env);
+		Code first = pop<Code>(_env);
+		int val = pop<int>(_env);
 
 		if (first->get_stack().size() == 0) // nil or atom
 		{
-			push(first);
+			push(_env, first);
 			return 1;
 		}
 
 		const CodeArray & stack = first->get_stack();
 		val = std::abs(val) % stack.size();
-		push(stack[stack.size() - val - 1]);
+		push(_env, stack[stack.size() - val - 1]);
+
 		return first->len();
 	}
 
-	unsigned _nthcdr()
+	unsigned _nthcdr(Env & _env)
 	{
-		Code first = pop<Code>(env);
-		int val = pop<int>(env);
+		Code first = pop<Code>(_env);
+		int val = pop<int>(_env);
 
 		if (first->get_stack().size() == 0) // nil or atom
 		{
-			push(first);
+			push(_env, first);
 			return 1;
 		}
 
@@ -38,30 +39,30 @@ namespace Push
 		while (--val >= 0) 
 			stack.pop_back();
 
-		push(Code(parallel_codeListFactory.local().createCodeList(stack)));  // new CodeList(stack)));
+		push(_env, Code(parallel_codeListFactory.local().createCodeList(stack)));  // new CodeList(stack)));
 
 		return first->len();
 	}
 
-	unsigned _null()
+	unsigned _null(Env & _env)
 	{
-		Code first = pop<Code>(env);
-		push(equal_to(nil, first));
+		Code first = pop<Code>(_env);
+		push(_env, equal_to(nil, first));
 		return 1;
 	}
 
-	unsigned _position()
+	unsigned _position(Env & _env)
 	{
-		Code first = pop<Code>(env);
-		Code second = pop<Code>(env);
+		Code first = pop<Code>(_env);
+		Code second = pop<Code>(_env);
 
 		if (first->get_stack().size() == 0)
 		{
 			if (equal_to(first, second))
-				push(0);
+				push(_env, 0);
 
 			else
-				push(-1);
+				push(_env, -1);
 
 			return 1;
 		}
@@ -72,12 +73,12 @@ namespace Push
 		{
 			if (equal_to(stack[i], second))
 			{
-				push<int>(stack.size() - i - 1);
+				push<int>(_env, stack.size() - i - 1);
 				return stack.size() * second->len();
 			}
 		}
 
-		push<int>(-1);
+		push<int>(_env, -1);
 		return stack.size() * second->len();
 	}
 }

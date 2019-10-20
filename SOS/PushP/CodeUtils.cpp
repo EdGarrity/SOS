@@ -96,11 +96,11 @@ namespace Push
 	}
 
 	/* packs things from a stack in a piece of code  */
-	Code pack(const Type & _tp)
+	Code pack(Env & _env, const Type & _tp)
 	{
 		Type type = abs(_tp);
 
-		if (!type.can_pop_from()) return nil;
+		if (!type.can_pop_from(_env)) return nil;
 
 		std::vector<int> tp = type.get();
 		CodeArray resultvec;
@@ -111,7 +111,7 @@ namespace Push
 
 			for (unsigned j = 0; j < unsigned(tp[i]); ++j)
 			{
-				Code code = env.pop_stack_from_id(i);
+				Code code = _env.local().pop_stack_from_id(i);
 				codevec.push_back(code);
 			}
 

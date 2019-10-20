@@ -165,9 +165,9 @@ namespace Push
 	}
 
 	template <class T>
-	unsigned flush(Env &env)
+	unsigned flush(Env & _env)
 	{
-		get_stack<T>().clear();
+		get_stack<T>(_env).clear();
 		return 1;
 	}
 

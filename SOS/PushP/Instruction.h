@@ -5,7 +5,10 @@
 
 namespace Push
 {
-	class Env;
+//	class Env;
+
+	class Env_detail;
+	typedef combinable<Push::Env_detail> Env;
 
 	unsigned int lookup_instruction_paren_groups(std::string name);
 	void set_parentheses(std::string name, unsigned int _parentheses);
@@ -44,20 +47,15 @@ namespace Push
 			return name_;
 		}
 
-		//std::string to_code(const std::string& _name) const
-		//{
-		//	return name_;
-		//}
-
-		virtual bool can_run() const
+		virtual bool can_run(Env & _env) const
 		{
-			return intype_.can_pop_from();
+			return intype_.can_pop_from(_env);
 		}
 
-		virtual unsigned operator()() const
+		virtual unsigned operator()(Env & _env) const
 		{
-			if (can_run()) 
-				op_(); // Remove env?
+			if (can_run(_env)) 
+				op_(_env); // Remove env?
 
 			return 1;
 		} // currently ignores 'effort'
@@ -121,102 +119,4 @@ namespace Push
 	{
 		return make_instruction(op, std::string(type_name), intype, outtype, parentheses);
 	}
-
-	//class InstructionFactory
-	//{
-	//	std::forward_list <Instruction*> _list;
-
-	//public:
-	//	Instruction* newInstruction(Operator op, std::string name);
-	//	Instruction* newInstruction(Operator op, std::string name, Type intype, Type outtype, bool static_ = true);
-	//};
-
-	//
-	// Literal memory manager
-	//
-	//class InstructionRegisterNode
-	//{
-	//	Instruction* _p;
-	//	InstructionRegisterNode* _next;
-
-	//	friend class InstructionRegister;
-
-	//public:
-	//	InstructionRegisterNode(Instruction *p_, InstructionRegisterNode* next_)
-	//	{
-	//		_p = p_;
-	//		_next = next_;
-	//	}
-	//};
-
-	//class InstructionRegister
-	//{
-	//	InstructionRegisterNode* _head;
-
-	//public:
-	//	InstructionRegister() : _head(nullptr) {}
-
-	//	~InstructionRegister()
-	//	{
-	//		clean_up();
-	//	}
-
-	//	void record(Instruction* p)
-	//	{
-	//		InstructionRegisterNode* node = new InstructionRegisterNode(p, _head);
-	//		_head = node;
-	//	}
-
-	//	void reset()
-	//	{
-	//		_head = nullptr;
-	//	}
-
-	//	void clean_up()
-	//	{
-	//		InstructionRegisterNode* current_node = _head;
-
-	//		while (current_node != nullptr)
-	//		{
-	//			InstructionRegisterNode* next_node = current_node->_next;
-
-	//			delete current_node->_p;
-	//			current_node->_p = nullptr;
-
-	//			delete current_node;
-	//			current_node = nullptr;
-
-	//			current_node = next_node;
-	//		}
-
-	//		_head = nullptr;
-	//	}
-	//};
-
-	//class InstructionFactory
-	//{
-	//	InstructionRegister instructionRegister;
-
-	//public:
-	//	Instruction* createInstruction(Instruction val);
-
-	//	void reset()
-	//	{
-	//		instructionRegister.reset();
-	//	}
-
-	//	void clean_up()
-	//	{
-	//		instructionRegister.clean_up();
-	//	}
-	//};
-
-	//inline Instruction* InstructionFactory::createInstruction(Instruction val)
-	//{
-	//	Instruction* lp = new Instruction(val);
-	//	instructionRegister.record(lp);
-	//	return lp;
-	//}
-
-	//extern thread_local InstructionFactory instructionFactory;
 }
