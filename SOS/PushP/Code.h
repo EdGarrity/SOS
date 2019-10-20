@@ -11,11 +11,11 @@
 #include <iostream>
 #include <exception>
 #include "CodeBasePtr.h"
-#include <windows.h>
+//#include <windows.h>
 #include <ppl.h>
-#include <array>
-#include <numeric>
-#include <iostream>
+//#include <array>
+//#include <numeric>
+//#include <iostream>
 
 using namespace concurrency;
 
@@ -35,7 +35,6 @@ namespace Push
 	typedef Push::detail::CodeBase_prt<CodeBase> Code;
 	typedef Push::detail::ExecBase_ptr<CodeBase> Exec;
 	typedef std::vector<Code> CodeArray;
-//	typedef unsigned(*Operator)(Env &);
 	typedef unsigned(*Operator)();
 
 	typedef std::map<std::string, Push::Code> String2CodeMap;
@@ -52,16 +51,8 @@ namespace Push
 	// Code/Exec memory manager
 	//
 
-	// typedef Pair<int,int> IntIntPair;
-
 	template <class T>
 	class LiteralFactory;
-
-	template <class T>
-	extern thread_local LiteralFactory<T> *literalFactory;
-//	extern thread_local LiteralFactory<int> *intLiteralFactory;
-//	extern thread_local LiteralFactory<double> *floatLiteralFactory;
-//	extern thread_local LiteralFactory<bool> *boolLiteralFactory;
 
 	extern combinable<LiteralFactory<int>> parallel_intLiteralFactory;
 	extern combinable<LiteralFactory<double>> parallel_floatLiteralFactory;

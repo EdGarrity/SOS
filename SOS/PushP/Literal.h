@@ -3,23 +3,12 @@
 #include "TypedAtom.h"
 #include "Env.h"
 #include "..\Utilities\MyException.h"
-#include <windows.h>
 #include <ppl.h>
-#include <array>
-#include <numeric>
-#include <iostream>
 
 using namespace concurrency;
 
 namespace Push
 {
-	//class Env;
-
-	//extern Type nullType;
-
-	//template <typename T> inline
-	//	const Type &get_type();
-
 	template <class T>
 	inline bool does_equal(const T & a, const T & b)
 	{
@@ -31,15 +20,6 @@ namespace Push
 	{
 		T value;
 	public:
-
-		//const Type & get_precondition() const
-		//{
-		//	return nullType;
-		//}
-		//const Type & get_postcondition() const
-		//{
-		//	return get_type<T>();
-		//}
 
 		Literal(T val) : value(val) {}
 
@@ -116,9 +96,6 @@ namespace Push
 		return value ? "TRUE" : "FALSE";
 	}
 
-
-
-
 	//
 	// Literal memory manager
 	//
@@ -143,13 +120,6 @@ namespace Push
 	class LiteralRegister
 	{
 		LiteralRegisterNode<T>* _head;
-
-		//if (typeid(T) == typeid(double))
-		//	LiteralRegisterNode<double>* _head;
-
-		//else
-		//	LiteralRegisterNode<T>* _head;
-
 
 	public:
 		LiteralRegister() : _head(nullptr) {}
@@ -208,12 +178,6 @@ namespace Push
 		return lp;
 	}
 
-	template <class T>
-	extern thread_local LiteralFactory<T> *literalFactory;
-//	extern thread_local LiteralFactory<int> *intLiteralFactory;
-//	extern thread_local LiteralFactory<double> *floatLiteralFactory;
-//	extern thread_local LiteralFactory<bool> *boolLiteralFactory;
-
 	extern combinable<LiteralFactory<int>> parallel_intLiteralFactory;
 	extern combinable<LiteralFactory<double>> parallel_floatLiteralFactory;
 	extern combinable<LiteralFactory<bool>> parallel_boolLiteralFactory;
@@ -222,14 +186,6 @@ namespace Push
 	template <class T>
 	inline Code pack()
 	{
-		//return Code
-		//(
-		//	new Literal<T>
-		//	(
-		//		pop<T>(env)
-		//	)
-		//);
-
 		T a = pop<T>(env);
 
 		if (typeid(a) == typeid(int))

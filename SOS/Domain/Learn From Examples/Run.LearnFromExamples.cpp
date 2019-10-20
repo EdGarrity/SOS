@@ -17,6 +17,10 @@
 #include <sstream>
 #include <string>
 #include <deque>
+#include <ppl.h>
+#include <concurrent_vector.h>
+
+using namespace concurrency;
 
 namespace domain
 {
@@ -24,12 +28,10 @@ namespace domain
 	{
 //		double score_array[argmap::population_size];
 
-		std::vector<double> training_cases_problem[argmap::number_of_training_cases];
-		std::vector<double> training_cases_solution[argmap::number_of_training_cases];
-		std::vector<double> test_cases_problem[argmap::number_of_test_cases];
-		std::vector<double> test_cases_solution[argmap::number_of_test_cases];
-		std::deque<std::string> fitness_cases_problem;
-		std::deque<std::string> fitness_cases_solution;
+		concurrent_vector<double> training_cases_problem[argmap::number_of_training_cases];
+		concurrent_vector<double> training_cases_solution[argmap::number_of_training_cases];
+		concurrent_vector<double> test_cases_problem[argmap::number_of_test_cases];
+		concurrent_vector<double> test_cases_solution[argmap::number_of_test_cases];
 
 		database::SQLConnection con;
 
@@ -111,6 +113,9 @@ namespace domain
 			std::string test_case_problem_str;
 			std::string test_case_solution_str;
 
+			std::deque<std::string> fitness_cases_problem;
+			std::deque<std::string> fitness_cases_solution;
+
 			database::SQLCommand* sqlcmd_get_example_cases;
 
 			sqlcmd_get_example_cases = new database::SQLCommand(&con, sqlstmt_sqlcmd_load_example_cases);
@@ -141,8 +146,8 @@ namespace domain
 
  					while ((training_case_index < argmap::number_of_training_cases) && (fitness_case_count > 0))
 					{
-						std::vector<double> training_case_problem;
-						std::vector<double> training_case_solution;
+						//std::vector<double> training_case_problem;
+						//std::vector<double> training_case_solution;
 						CSVRow row;
 
 						std::cout << "training case n = " << training_case_index << std::endl;
@@ -156,11 +161,13 @@ namespace domain
 
 						while (training_case_problem_stream >> row)
 						{
+							//for (int n = 0; n < row.size(); n++)
+							//	training_case_problem.push_back(std::stod(row[n]));
 							for (int n = 0; n < row.size(); n++)
-								training_case_problem.push_back(std::stod(row[n]));
+								training_cases_problem[training_case_index].push_back(std::stod(row[n]));
 						}
 
-						training_cases_problem[training_case_index] = training_case_problem;
+//						training_cases_problem[training_case_index] = training_case_problem;
 
 						// Get solution
 						training_case_solution_str = fitness_cases_solution.back();
@@ -170,11 +177,13 @@ namespace domain
 
 						while (training_case_solution_stream >> row)
 						{
+							//for (int n = 0; n < row.size(); n++)
+							//	training_case_solution.push_back(std::stod(row[n]));
 							for (int n = 0; n < row.size(); n++)
-								training_case_solution.push_back(std::stod(row[n]));
+								training_cases_solution[training_case_index].push_back(std::stod(row[n]));
 						}
 
-						training_cases_solution[training_case_index] = training_case_solution;
+//						training_cases_solution[training_case_index] = training_case_solution;
 
 						training_case_index++;
 						fitness_case_count--;
@@ -182,8 +191,8 @@ namespace domain
 
 					while ((test_case_index < argmap::number_of_test_cases) && (fitness_case_count > 0))
 					{
-						std::vector<double> test_case_problem;
-						std::vector<double> test_case_solution;
+						//std::vector<double> test_case_problem;
+						//std::vector<double> test_case_solution;
 						CSVRow row;
 
 						std::cout << "test case n = " << test_case_index << std::endl;
@@ -196,11 +205,13 @@ namespace domain
 
 						while (test_case_problem_stream >> row)
 						{
+							//for (int n = 0; n < row.size(); n++)
+							//	test_case_problem.push_back(std::stod(row[n]));
 							for (int n = 0; n < row.size(); n++)
-								test_case_problem.push_back(std::stod(row[n]));
+								test_cases_problem[test_case_index].push_back(std::stod(row[n]));
 						}
 
-						test_cases_problem[test_case_index] = test_case_problem;
+//						test_cases_problem[test_case_index] = test_case_problem;
 
 						// Get solution
 						test_case_solution_str = fitness_cases_solution.back();
@@ -210,11 +221,13 @@ namespace domain
 
 						while (test_case_solution_stream >> row)
 						{
+							//for (int n = 0; n < row.size(); n++)
+							//	test_case_solution.push_back(std::stod(row[n]));
 							for (int n = 0; n < row.size(); n++)
-								test_case_solution.push_back(std::stod(row[n]));
+								test_cases_solution[test_case_index].push_back(std::stod(row[n]));
 						}
 
-						test_cases_solution[test_case_index] = test_case_solution;
+//						test_cases_solution[test_case_index] = test_case_solution;
 
 						test_case_index++;
 						fitness_case_count--;
@@ -242,22 +255,25 @@ namespace domain
 			{
 				for (int i = _example_cases_loaded; i < argmap::number_of_training_cases; i++)
 				{
-					std::vector<double> training_case_input;
-					std::vector<double> training_case_output;
+					//std::vector<double> training_case_input;
+					//std::vector<double> training_case_output;
 
 					int training_case_length = Utilities::random_integer(argmap::example_case_min_length, argmap::example_case_max_length);
 
 					for (int j = 0; j < training_case_length; j++)
 					{
 						int n = Utilities::random_integer(argmap::example_case_upper_range);
-						training_case_input.push_back(n);
-						training_case_output.push_back(n);
+						//training_case_input.push_back(n);
+						//training_case_output.push_back(n);
+						training_cases_problem[i].push_back(n);
+						training_cases_solution[i].push_back(n);
 					}
 
-					std::sort(training_case_output.begin(), training_case_output.end());
+//					std::sort(training_case_output.begin(), training_case_output.end());
+					std::sort(training_cases_solution[i].begin(), training_cases_solution[i].end());
 
-					training_cases_problem[i] = training_case_input;
-					training_cases_solution[i] = training_case_output;
+					//training_cases_problem[i] = training_case_input;
+					//training_cases_solution[i] = training_case_output;
 
 					training_cases_created++;
 				}
@@ -267,22 +283,25 @@ namespace domain
 			{
 				for (int i = _example_cases_loaded + training_cases_created - argmap::number_of_training_cases; i < argmap::number_of_test_cases; i++)
 				{
-					std::vector<double> test_case_input;
-					std::vector<double> test_case_output;
+					//std::vector<double> test_case_input;
+					//std::vector<double> test_case_output;
 
 					int test_case_length = Utilities::random_integer(argmap::example_case_min_length, argmap::example_case_max_length);
 
 					for (int j = 0; j < test_case_length; j++)
 					{
 						int n = Utilities::random_integer(argmap::example_case_upper_range);
-						test_case_input.push_back(n);
-						test_case_output.push_back(n);
+						//test_case_input.push_back(n);
+						//test_case_output.push_back(n);
+						test_cases_problem[i].push_back(n);
+						test_cases_solution[i].push_back(n);
 					}
 
-					std::sort(test_case_output.begin(), test_case_output.end());
+//					std::sort(test_case_output.begin(), test_case_output.end());
+					std::sort(test_cases_solution[i].begin(), test_cases_solution[i].end());
 
-					test_cases_problem[i] = test_case_input;
-					test_cases_solution[i] = test_case_output;
+					//test_cases_problem[i] = test_case_input;
+					//test_cases_solution[i] = test_case_output;
 
 					test_cases_created++;
 				}
@@ -310,16 +329,16 @@ namespace domain
 
 			for (int i = 0; i < argmap::number_of_training_cases; i++)
 			{
-				std::vector<double> training_case_input;
-				std::vector<double> training_case_output;
+				//std::vector<double> training_case_input;
+				//std::vector<double> training_case_output;
 
-				training_case_input = training_cases_problem[i];
-				training_case_output = training_cases_solution[i];
+				//training_case_input = training_cases_problem[i];
+				//training_case_output = training_cases_solution[i];
 
 				std::string training_case_input_str = "";
 				std::string training_case_element = "";
 
-				for (int training_case_data : training_case_input)
+				for (int training_case_data : training_cases_problem[i])
 				{
 					if (training_case_input_str.length() > 0)
 						training_case_input_str += ",";
@@ -331,7 +350,7 @@ namespace domain
 				std::string training_case_output_str = "";
 				training_case_element = "";
 				
-				for (int training_case_data : training_case_output)
+				for (int training_case_data : training_cases_solution[i])
 				{
 					if (training_case_output_str.length() > 0)
 						training_case_output_str += ",";
@@ -347,16 +366,16 @@ namespace domain
 
 			for (int i = 0; i < argmap::number_of_test_cases; i++)
 			{
-				std::vector<double> test_case_input;
-				std::vector<double> test_case_output;
+				//std::vector<double> test_case_input;
+				//std::vector<double> test_case_output;
 
-				test_case_input = test_cases_problem[i];
-				test_case_output = test_cases_solution[i];
+				//test_case_input = test_cases_problem[i];
+				//test_case_output = test_cases_solution[i];
 
 				std::string test_case_input_str = "";
 				std::string test_case_element = "";
 
-				for (int test_case_data : test_case_input)
+				for (int test_case_data : test_cases_problem[i])
 				{
 					if (test_case_input_str.length() > 0)
 						test_case_input_str += ",";
@@ -368,7 +387,7 @@ namespace domain
 				std::string test_case_output_str = "";
 				test_case_element = "";
 
-				for (int test_case_data : test_case_output)
+				for (int test_case_data : test_cases_solution[i])
 				{
 					if (test_case_output_str.length() > 0)
 						test_case_output_str += ",";
@@ -598,20 +617,16 @@ namespace domain
 
 				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
 				{
-					//Push::intLiteralFactory->clean_up();
-					//Push::floatLiteralFactory->clean_up();
-					//Push::boolLiteralFactory->clean_up();
-					//Push::codeListFactory->clean_up();
-					//Push::doRangeClassFactory->clean_up();
-
 					Push::parallel_intLiteralFactory.local().clean_up();
 					Push::parallel_floatLiteralFactory.local().clean_up();
 					Push::parallel_boolLiteralFactory.local().clean_up();
 					Push::parallel_codeListFactory.local().clean_up();
 					Push::parallel_doRangeClassFactory.local().clean_up();
 
-					std::vector<double> example_problem = training_cases_problem[example_case];
-					std::vector<double> example_solution = training_cases_solution[example_case];
+					//std::vector<double> example_problem = training_cases_problem[example_case];
+					//std::vector<double> example_solution = training_cases_solution[example_case];
+					std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
+					std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
 
 					// Run program
 					double error = _run_individual_program(individual_index, example_problem, example_solution);
@@ -666,24 +681,25 @@ namespace domain
 			double min_error = (std::numeric_limits<double>::max)();
 			double min_score = (std::numeric_limits<double>::max)();
 
-			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
+//			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
+			const unsigned int zero = 0;
+			parallel_for (zero, domain::argmap::population_size, [&, _number_of_example_cases](const unsigned int individual_index)
 			{
 				int error_count_for_individual = 0;
 				double avg_error_for_individual = 0.0;
 
-				if ((individual_index % 100) == 0)
-					std::cout << individual_index;
-
 				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
 				{
-					//Push::intLiteralFactory->clean_up();
-					//Push::floatLiteralFactory->clean_up();
-					//Push::boolLiteralFactory->clean_up();
-					//Push::codeListFactory->clean_up();
-					//Push::doRangeClassFactory->clean_up();
+					Push::parallel_intLiteralFactory.local().clean_up();
+					Push::parallel_floatLiteralFactory.local().clean_up();
+					Push::parallel_boolLiteralFactory.local().clean_up();
+					Push::parallel_codeListFactory.local().clean_up();
+					Push::parallel_doRangeClassFactory.local().clean_up();
 
-					std::vector<double> example_problem = training_cases_problem[example_case];
-					std::vector<double> example_solution = training_cases_solution[example_case];
+					//std::vector<double> example_problem = training_cases_problem[example_case];
+					//std::vector<double> example_solution = training_cases_solution[example_case];
+					std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
+					std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
 
 					// Run program
 					double error = _run_individual_program(individual_index, example_problem, example_solution);
@@ -712,13 +728,7 @@ namespace domain
 					min_error = avg_error_for_individual;
 					individual_with_least_error = individual_index;
 				}
-
-				if ((individual_index % 100) == 0)
-					std::cout << std::endl;
-			}
-
-
-			std::cout << std::endl;
+			});
 
 			return std::make_tuple
 			(
@@ -740,8 +750,10 @@ namespace domain
 			{
 				std::cout << ".";
 
-				std::vector<double> example_problem = test_cases_problem[example_case];
-				std::vector<double> example_solution = test_cases_solution[example_case];
+				//std::vector<double> example_problem = test_cases_problem[example_case];
+				//std::vector<double> example_solution = test_cases_solution[example_case];
+				std::vector<double> example_problem(test_cases_problem[example_case].begin(), test_cases_problem[example_case].end());
+				std::vector<double> example_solution(test_cases_solution[example_case].begin(), test_cases_solution[example_case].end());
 
 				double example_case_error = _run_individual_program(_individual_index, example_problem, example_solution);
 
@@ -757,34 +769,34 @@ namespace domain
 			return error;
 		}
 
-		double verify_test_errors(std::function<double(std::string _genome, 
-													std::vector<double>& _example_problem, 
-													std::vector<double>& _example_solution)> _run_genome,
-			std::string _genome)
-		{
-			double error = (std::numeric_limits<double>::max)();
-			int error_count = 0;
+		//double verify_test_errors(std::function<double(std::string _genome, 
+		//											std::vector<double>& _example_problem, 
+		//											std::vector<double>& _example_solution)> _run_genome,
+		//	std::string _genome)
+		//{
+		//	double error = (std::numeric_limits<double>::max)();
+		//	int error_count = 0;
 
-			for (int example_case = 0; example_case < argmap::number_of_test_cases; example_case++)
-			{
-				std::cout << ".";
+		//	for (int example_case = 0; example_case < argmap::number_of_test_cases; example_case++)
+		//	{
+		//		std::cout << ".";
 
-				std::vector<double> example_problem = test_cases_problem[example_case];
-				std::vector<double> example_solution = test_cases_solution[example_case];
+		//		std::vector<double> example_problem = test_cases_problem[example_case];
+		//		std::vector<double> example_solution = test_cases_solution[example_case];
 
-				double example_case_error = _run_genome(_genome, example_problem, example_solution);
+		//		double example_case_error = _run_genome(_genome, example_problem, example_solution);
 
-				if (example_case_error > 0.0)
-					error_count++;
-			}
+		//		if (example_case_error > 0.0)
+		//			error_count++;
+		//	}
 
-			error = (double)error_count / (double)argmap::number_of_test_cases;
+		//	error = (double)error_count / (double)argmap::number_of_test_cases;
 
-			std::cout << std::endl;
-			std::cout << std::endl;
+		//	std::cout << std::endl;
+		//	std::cout << std::endl;
 
-			return error;
-		}
+		//	return error;
+		//}
 
 		pushGP::AsyncBreed async_breed;
 
@@ -967,12 +979,6 @@ namespace domain
 
 					std::cout << "Clean up memory" << std::endl;
 
-					//Push::intLiteralFactory->clean_up();
-					//Push::floatLiteralFactory->clean_up();
-					//Push::boolLiteralFactory->clean_up();
-					//Push::codeListFactory->clean_up();
-					//Push::doRangeClassFactory->clean_up();
-
 					Push::parallel_intLiteralFactory.local().clean_up();
 					Push::parallel_floatLiteralFactory.local().clean_up();
 					Push::parallel_boolLiteralFactory.local().clean_up();
@@ -984,10 +990,17 @@ namespace domain
 					save_generation();
 
 					std::cout << "Run Programs with Training Cases" << std::endl;
-					auto best_individual_min_score = compute_training_errors(run_individual, argmap::number_of_training_cases);
-					int best_individual = std::get<0>(best_individual_min_score);
-					double best_individual_score = std::get<1>(best_individual_min_score);
-					double best_individual_error = std::get<2>(best_individual_min_score);
+
+					std::tuple<int, double, double> best_individual_score_error;
+
+					if (argmap::use_PPL)
+						best_individual_score_error = parallel_compute_training_errors(run_individual, argmap::number_of_training_cases);
+					else
+						best_individual_score_error = compute_training_errors(run_individual, argmap::number_of_training_cases);
+
+					int best_individual = std::get<0>(best_individual_score_error);
+					double best_individual_score = std::get<1>(best_individual_score_error);
+					double best_individual_error = std::get<2>(best_individual_score_error);
 
 					std::cout << "Produce New Offspring" << std::endl;
 					produce_new_offspring(argmap::number_of_training_cases,	best_individual);
@@ -1045,38 +1058,18 @@ namespace domain
 			}
 			catch (const std::exception& e)
 			{
-				// Cleanup thread factories
 				Push::env.clear_stacks();
-
-				//delete Push::intLiteralFactory;
-				//delete Push::floatLiteralFactory;
-				//delete Push::boolLiteralFactory;
-				//delete Push::codeListFactory;
-				//delete Push::doRangeClassFactory;
 
 				std::cout << "Standard exception: " << e.what() << std::endl;
 				throw;
 			}
 			catch (...)
 			{
-				// Cleanup thread factories
 				Push::env.clear_stacks();
-
-				//delete Push::intLiteralFactory;
-				//delete Push::floatLiteralFactory;
-				//delete Push::boolLiteralFactory;
-				//delete Push::codeListFactory;
-				//delete Push::doRangeClassFactory;
 
 				std::cout << "Exception occurred" << std::endl;
 				throw;
 			}
-
-			//delete Push::intLiteralFactory;
-			//delete Push::floatLiteralFactory;
-			//delete Push::boolLiteralFactory;
-			//delete Push::codeListFactory;
-			//delete Push::doRangeClassFactory;
 
 			return 0;
 		}
