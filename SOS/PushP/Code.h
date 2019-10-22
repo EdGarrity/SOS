@@ -66,13 +66,21 @@ namespace Push
 	//
 	// Static Push instructions
 	//
-	extern Code MyDoRange;
-	extern Code zero;
-	extern Code quote;
-	extern Code int_pop;
-	extern Code code_pop;
-	extern Code rnd;
-	extern Code ycode;
+	//extern Code MyDoRange;
+	//extern Code zero;
+	//extern Code quote;
+	//extern Code int_pop;
+	//extern Code code_pop;
+	//extern Code rnd;
+	//extern Code ycode;
+
+	extern combinable<Code> MyDoRange;
+	extern combinable<Code> zero;
+	extern combinable<Code> quote;
+	extern combinable<Code> int_pop;
+	extern combinable<Code> code_pop;
+	//extern combinable<Code> rnd;
+	extern combinable<Code> ycode;
 
 	Code parse(std::string s);
 

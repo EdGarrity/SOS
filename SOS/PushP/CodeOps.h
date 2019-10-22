@@ -48,7 +48,7 @@ namespace Push
 
 	inline unsigned _do(Env & _env)
 	{
-		_env.local().push_code_to_exec_stack(code_pop);
+		_env.local().push_code_to_exec_stack(code_pop.local());
 		_env.local().push_code_to_exec_stack(top<Code>(_env));
 		return 1;
 	}

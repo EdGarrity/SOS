@@ -145,7 +145,7 @@ namespace Push
 			break;
 
 		case CODE_STACK:
-			result = list(quote, code_stack.back());
+			result = list(quote.local(), code_stack.back());
 			code_stack.pop_back();
 			break;
 

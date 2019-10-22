@@ -22,9 +22,9 @@ namespace Push
 		{
 			i += direction;
 			CodeArray vec(5);
-			vec[0] = MyDoRange;
+			vec[0] = MyDoRange.local();
 			vec[1] = code;
-			vec[2] = quote;
+			vec[2] = quote.local();
 			vec[3] = Code(parallel_intLiteralFactory.local().createLiteral(n));
 			vec[4] = Code(parallel_intLiteralFactory.local().createLiteral(i));
 			_env.local().push_code_to_exec_stack(Code(parallel_codeListFactory.local().createCodeList(vec)));  // new CodeList(vec)));  //CodeList::adopt(vec)); //env.exec_stack.push_back(*new CodeList(vec));  //env.push_guarded(CodeList::adopt(vec)); //Code(new CodeList(vec)));
@@ -44,11 +44,11 @@ namespace Push
 			return 1;
 
 		CodeArray vec(5);
-		vec[0] = MyDoRange;
-		vec[1] = quote;
+		vec[0] = MyDoRange.local();
+		vec[1] = quote.local();
 		vec[2] = code;
 		vec[3] = Code(parallel_intLiteralFactory.local().createLiteral(n - 1));
-		vec[4] = zero;
+		vec[4] = zero.local();
 		_env.local().push_code_to_exec_stack(Code(parallel_codeListFactory.local().createCodeList(vec)));  // new CodeList(vec)));  //CodeList::adopt(vec)); //Code(new CodeList(vec)));
 
 		return 1;
@@ -63,11 +63,11 @@ namespace Push
 			return 1;
 
 		CodeArray vec(5);
-		vec[0] = MyDoRange;
-		vec[1] = quote;
-		vec[2] = cons(int_pop, code);
+		vec[0] = MyDoRange.local();
+		vec[1] = quote.local();
+		vec[2] = cons(int_pop.local(), code);
 		vec[3] = Code(parallel_intLiteralFactory.local().createLiteral(n - 1));
-		vec[4] = zero;
+		vec[4] = zero.local();
 		_env.local().push_code_to_exec_stack(Code(parallel_codeListFactory.local().createCodeList(vec)));  // new CodeList(vec)));  //CodeList::adopt(vec)); //Code(new CodeList(vec)));
 
 		return 1;

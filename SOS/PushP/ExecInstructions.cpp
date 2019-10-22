@@ -14,9 +14,9 @@ namespace Push
 //	thread_local DoRangeClassFactory *doRangeClassFactory;
 	combinable<DoRangeClassFactory> parallel_doRangeClassFactory;
 
-	extern Code quote;
-	extern Code zero;
-	extern Code int_pop;
+	extern combinable<Code> quote;
+	extern combinable<Code> zero;
+	extern combinable<Code> int_pop;
 	
 	unsigned s(Env & _env)
 	{
@@ -59,7 +59,7 @@ namespace Push
 			return 1;
 		}
 
-		_env.local().push_code_to_exec_stack(list(ycode, x.to_CodeBase()));
+		_env.local().push_code_to_exec_stack(list(ycode.local(), x.to_CodeBase()));
 		push(_env, x);
 
 		return 1;
@@ -89,7 +89,7 @@ namespace Push
 		
 		CodeArray vec(4);
 		vec[0] = code.to_CodeBase();
-		vec[1] = MyDoRange;
+		vec[1] = MyDoRange.local();
 		vec[2] = Code(parallel_intLiteralFactory.local().createLiteral(n));
 		vec[3] = Code(parallel_intLiteralFactory.local().createLiteral(i));
 		
@@ -109,9 +109,9 @@ namespace Push
 
 		CodeArray vec(4);
 		vec[0] = code.to_CodeBase();
-		vec[1] = MyDoRange;
+		vec[1] = MyDoRange.local();
 		vec[2] = Code(parallel_intLiteralFactory.local().createLiteral(n - 1));
-		vec[3] = zero;
+		vec[3] = zero.local();
 
 		Code result = Code(parallel_doRangeClassFactory.local().createDoRangeClass(vec));  //  new DoRangeClass(vec));
 		_env.local().push_code_to_exec_stack(result);
@@ -128,10 +128,10 @@ namespace Push
 			return 1;
 
 		CodeArray vec(4);
-		vec[0] = cons(int_pop, code.to_CodeBase());
-		vec[1] = MyDoRange;
+		vec[0] = cons(int_pop.local(), code.to_CodeBase());
+		vec[1] = MyDoRange.local();
 		vec[2] = Code(parallel_intLiteralFactory.local().createLiteral(n - 1));
-		vec[3] = zero;
+		vec[3] = zero.local();
 
 		Code result = Code(new DoRangeClass(vec)); // Potetial memory leak
 		_env.local().push_code_to_exec_stack(result);

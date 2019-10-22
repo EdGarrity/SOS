@@ -43,7 +43,7 @@ namespace Push
 		Parameters parameters;
 
 		// Pointer to input & output data
-		std::vector<double> & input = null_input;
+		std::vector<double> input = null_input;
 		std::vector<double> output;
 
 		void push_code_to_exec_stack(const Code &code)

@@ -2,20 +2,22 @@
 #include "Literal.h"
 #include "Env.h"
 #include "CodeUtils.h"
+#include <ppl.h>
 
+using namespace concurrency;
 using namespace std;
 
 namespace Push
 {
 	bool code_initialized = false;
 
-	Code MyDoRange;
-	Code zero;
-	Code quote;
-	Code int_pop;
-	Code code_pop;
-	Code rnd;
-	Code ycode;
+	combinable<Code> MyDoRange;
+	combinable<Code> zero;
+	combinable<Code> quote;
+	combinable<Code> int_pop;
+	combinable<Code> code_pop;
+//	combinable<Code> rnd;
+	combinable<Code> ycode;
 
 //	int init_push();
 
@@ -25,13 +27,13 @@ namespace Push
 
 		//if (code_initialized == false)
 		//{
-			MyDoRange = parse("EXEC.DO*RANGE");
-			zero = Code(parallel_intLiteralFactory.local().createLiteral(0));
-			quote = parse("CODE.QUOTE");
-			int_pop = parse("INTEGER.POP");
-			code_pop = parse("CODE.POP");
-			rnd = parse("CODE.RAND");
-			ycode = parse("EXEC.Y");
+			MyDoRange.local() = parse("EXEC.DO*RANGE");
+			zero.local() = Code(parallel_intLiteralFactory.local().createLiteral(0));
+			quote.local() = parse("CODE.QUOTE");
+			int_pop.local() = parse("INTEGER.POP");
+			code_pop.local() = parse("CODE.POP");
+//			rnd.local() = parse("CODE.RAND");
+			ycode.local() = parse("EXEC.Y");
 
 			code_initialized = true;
 		//}

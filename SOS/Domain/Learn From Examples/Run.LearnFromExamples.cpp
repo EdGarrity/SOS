@@ -939,6 +939,26 @@ namespace domain
 			//Push::codeListFactory = new Push::CodeListFactory();
 			//Push::doRangeClassFactory = new Push::DoRangeClassFactory();
 
+			SchedulerPolicy policy = CurrentScheduler::GetPolicy();
+
+			policy.SetPolicyValue(TargetOversubscriptionFactor, 1);
+
+			policy.SetConcurrencyLimits(1, 16);
+
+			CurrentScheduler::Create(policy);
+
+
+
+			//template <class Function>
+			//__int64 time_call(Function&& f)
+			//{
+			//	__int64 begin = GetTickCount();
+			//	f();
+			//	return GetTickCount() - begin;
+			//}
+
+
+
 			// Setup
 			Push::Env env;
 
@@ -1001,6 +1021,34 @@ namespace domain
 					std::cout << "Run Programs with Training Cases" << std::endl;
 
 					std::tuple<int, double, double> best_individual_score_error;
+
+
+
+
+					__int64 elapsed;
+
+					__int64 begin = GetTickCount();
+
+					best_individual_score_error = compute_training_errors(env, run_individual, argmap::number_of_training_cases);
+
+					__int64 end = GetTickCount() - begin;
+
+					elapsed = end - begin;
+					std::cout << "Serial time: " << elapsed << std::endl;
+
+					begin = GetTickCount();
+
+					best_individual_score_error = parallel_compute_training_errors(env, run_individual, argmap::number_of_training_cases);
+
+					end = GetTickCount() - begin;
+
+					elapsed = end - begin;
+					std::cout << "Parallel time: " << elapsed << std::endl;
+
+					break;
+
+
+
 
 					if (argmap::use_PPL)
 						best_individual_score_error = parallel_compute_training_errors(env, run_individual, argmap::number_of_training_cases);
