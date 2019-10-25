@@ -1,0 +1,10 @@
+8 Cores
+Parallel time: 952,031 = 0:16 H:M
+
+16 Cores
+Serial time:  4,917,719 = 1:22 H:M
+Parallel time:  992,172 = 0:17 H:M
+
+32 Cores
+Serial time:  4,918,360 = 1:22 H:M
+Parallel time:  860,953 = 0:14 H:M

@@ -1,19 +1,14 @@
 #pragma once
 
 #include "TypedAtom.h"
-//#include "Word.h"
 #include "Env.h"
 #include "..\Utilities\MyException.h"
+#include <ppl.h>
+
+using namespace concurrency;
 
 namespace Push
 {
-	//class Env;
-
-	//extern Type nullType;
-
-	//template <typename T> inline
-	//	const Type &get_type();
-
 	template <class T>
 	inline bool does_equal(const T & a, const T & b)
 	{
@@ -26,20 +21,11 @@ namespace Push
 		T value;
 	public:
 
-		//const Type & get_precondition() const
-		//{
-		//	return nullType;
-		//}
-		//const Type & get_postcondition() const
-		//{
-		//	return get_type<T>();
-		//}
-
 		Literal(T val) : value(val) {}
 
-		unsigned operator()() const
+		unsigned operator()(Env & _env) const
 		{
-			push<T>(value);
+			push<T>(_env, value);
 			return 1;
 		}
 
@@ -149,11 +135,6 @@ namespace Push
 			_head = node;
 		}
 
-		//void reset()
-		//{
-		//	_head = nullptr;
-		//}
-
 		void clean_up()
 		{
 			LiteralRegisterNode<T>* current_node = _head;
@@ -183,11 +164,6 @@ namespace Push
 	public:
 		Literal<T>* createLiteral(T val);
 
-		//void reset()
-		//{
-		//	literalRegister.reset();
-		//}
-
 		void clean_up()
 		{
 			literalRegister.clean_up();
@@ -202,50 +178,40 @@ namespace Push
 		return lp;
 	}
 
-	template <class T>
-	extern thread_local LiteralFactory<T> *literalFactory;
-	extern thread_local LiteralFactory<int> *intLiteralFactory;
-	extern thread_local LiteralFactory<double> *floatLiteralFactory;
-	extern thread_local LiteralFactory<bool> *boolLiteralFactory;
+	extern combinable<LiteralFactory<int>> parallel_intLiteralFactory;
+	extern combinable<LiteralFactory<double>> parallel_floatLiteralFactory;
+	extern combinable<LiteralFactory<bool>> parallel_boolLiteralFactory;
 
 	/* Packs a single type in a piece of code */
 	template <class T>
-	inline Code pack()
+	inline Code pack(Env & _env)
 	{
-		//return Code
-		//(
-		//	new Literal<T>
-		//	(
-		//		pop<T>(env)
-		//	)
-		//);
-
-		T a = pop<T>(env);
+		T a = pop<T>(_env);
 
 		if (typeid(a) == typeid(int))
-			return Code(intLiteralFactory.createLiteral(a));
+			return Code(parallel_intLiteralFactory.local().createLiteral(a));
 
 		else if (typeid(a) == typeid(double))
-			return Code(floatLiteralFactory.createLiteral(a));
+			return Code(parallel_floatLiteralFactory.local().createLiteral(a));
 
 		else if (typeid(a) == typeid(bool))
-			return Code(boolLiteralFactory.createLiteral(a));
+			return Code(parallel_boolLiteralFactory.local().createLiteral(a));
 
 		return Code();
 	}
 
 	/* Specialization for Code, just return it */
 	template <>
-	inline Code pack<Code>()
+	inline Code pack<Code>(Env & _env)
 	{
-		return pop<Code>(env);
+		return pop<Code>(_env);
 	}
 
 	/* Specialization for Exec, return the code */
 	template <>
-	inline Code pack<Exec>()
+	inline Code pack<Exec>(Env & _env)
 	{
-		return pop<Exec>(env).to_CodeBase();
+		return pop<Exec>(_env).to_CodeBase();
 	}
 
 	/* new untyped version of Set, called DEFINE: NAME.DEFINE, INTEGER.DEFINE, etc.*/
@@ -270,5 +236,5 @@ namespace Push
 	//}
 
 	/* Typed version */
-	Code pack(const Type & type);
+	Code pack(Env & _env, const Type & type);
 }

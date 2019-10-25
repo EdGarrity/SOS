@@ -2,17 +2,24 @@
 
 #include <vector>
 #include <algorithm>
+#include <ppl.h>
+
+using namespace concurrency;
 
 namespace Push
 {
 	class Type;
-	class Env;
+//	class Env;
+
+	class Env_detail;
+	typedef combinable<Push::Env_detail> Env;
+
 	std::ostream &operator<<(std::ostream &os, const Type &tp);
 
 	class Type
 	{
 		std::vector<int> type;
-		unsigned start_;		//EJG needs to be initialized.
+		unsigned start_ = 0;		//EJG needs to be initialized.
 
 	public:
 
@@ -56,7 +63,7 @@ namespace Push
 		}
 
 		bool operator==(const Type &other) const;
-		bool can_pop_from(/*const Env &env*/) const;
+		bool can_pop_from(Env & _env) const;
 
 		int operator[](unsigned i) const
 		{
@@ -88,7 +95,6 @@ namespace Push
 		{
 			if (type.size() == org.type.size()) return org;
 
-			//            size_t len = std::max( type.size(), org.type.size() );
 			size_t len = (type.size() > org.type.size()) ? (type.size()) : (org.type.size());
 			type.resize(len, 0);
 

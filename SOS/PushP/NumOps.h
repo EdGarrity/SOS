@@ -10,355 +10,156 @@ namespace Push
 {
 	// plus, minus, multiplies, divides
 	template <class T>
-	inline unsigned plus()
+	inline unsigned plus(Env & _env)
 	{
-		//if (not has_elements<T>(env,2)) return 1;
-		//T first = pop<T>(env);
-		//get_stack<T>().back() += first;
-
-
 		double first = 0.0;
 		double second = 0.0;
 		double result = 0.0;
 
 		if (typeid(T) == typeid(double))
 		{
-			first = get_stack<double>().back();
-			second = get_stack<double>()[get_stack<double>().size() - 2];
+			first = get_stack<double>(_env).back();
+			second = get_stack<double>(_env)[get_stack<double>(_env).size() - 2];
 
 			result = second + first;
 
 			if ((!std::isnan(result)) && (!std::isinf(result)))
 			{
-				T another_first = pop<T>(env);
-				get_stack<T>().back() += another_first;
+				T another_first = pop<T>(_env);
+				get_stack<T>(_env).back() += another_first;
 			}
 		}
 
 		else
 		{
-			T another_first = pop<T>(env);
-			get_stack<T>().back() += another_first;
+			T another_first = pop<T>(_env);
+			get_stack<T>(_env).back() += another_first;
 		}
-
-
-
-
-		//if (typeid(T) == typeid(double))
-		//{
-		//	double val = get_stack<double>().back();
-
-		//	if (std::isnan(val))
-		//		val = 0.0;
-		//}
-
-
-
-
 
 		return 1;
 	}
 
 	template <class T>
-	inline unsigned minus()
+	inline unsigned minus(Env & _env)
 	{
-		//if (typeid(T) == typeid(double))
-		//{
-		//	for (int n = 0; n < env.double_stack.size(); n++)
-		//		if ((std::isnan(env.double_stack[n])) || (std::isinf(env.double_stack[n])))
-		//			int mn = 1;
-
-		//}
-
-
-		//if (not has_elements<T>(env,2)) return 1;
-		//T first = pop<T>(env);
-		//get_stack<T>().back() -= first;
-
-
 		double first = 0.0;
 		double second = 0.0;
 		double result = 0.0;
 
 		if (typeid(T) == typeid(double))
 		{
-			first = get_stack<double>().back();
-			second = get_stack<double>()[get_stack<double>().size() - 2];
+			first = get_stack<double>(_env).back();
+			second = get_stack<double>(_env)[get_stack<double>(_env).size() - 2];
 
 			result = second - first;
 
 			if ((!std::isnan(result)) && (!std::isinf(result)))
 			{
-				T another_first = pop<T>(env);
-				get_stack<T>().back() -= another_first;
+				T another_first = pop<T>(_env);
+				get_stack<T>(_env).back() -= another_first;
 			}
 		}
 
 		else
 		{
-			T another_first = pop<T>(env);
-			get_stack<T>().back() -= another_first;
+			T another_first = pop<T>(_env);
+			get_stack<T>(_env).back() -= another_first;
 		}
-
-
-
-
-
-
-		//if (typeid(T) == typeid(double))
-		//{
-		//	double val = get_stack<double>().back();
-
-		//	if ((std::isnan(val)) || (std::isinf(val)))
-		//		val = 0.0;
-		//}
-
-
-
 
 		return 1;
 	}
 
 	template <class T>
-	inline unsigned multiplies()
+	inline unsigned multiplies(Env & _env)
 	{
-		//if (not has_elements<T>(env,2)) return 1;
-		//T first = pop<T>(env);
-		//get_stack<T>().back() *= first;
-
-
-
 		double first = 0.0;
 		double second = 0.0;
 		double result = 0.0;
 
 		if (typeid(T) == typeid(double))
 		{
-			first = get_stack<double>().back();
-			second = get_stack<double>()[get_stack<double>().size() - 2];
+			first = get_stack<double>(_env).back();
+			second = get_stack<double>(_env)[get_stack<double>(_env).size() - 2];
 
 			result = second * first;
 
 			if ((!std::isnan(result)) && (!std::isinf(result)))
 			{
-				T another_first = pop<T>(env);
-				get_stack<T>().back() *= another_first;
+				T another_first = pop<T>(_env);
+				get_stack<T>(_env).back() *= another_first;
 			}
 		}
 
 		else
 		{
-			T another_first = pop<T>(env);
-			get_stack<T>().back() *= another_first;
+			T another_first = pop<T>(_env);
+			get_stack<T>(_env).back() *= another_first;
 		}
-
-
-
-
-
-
-		//if (typeid(T) == typeid(double))
-		//{
-		//	double val = get_stack<double>().back();
-
-		//	if (std::isnan(val))
-		//		val = 0.0;
-		//}
-
-
-
 
 		return 1;
 	}
 
 	template <class T>
-	inline unsigned divides()
+	inline unsigned divides(Env & _env)
 	{
-		if ((has_elements<T>(2)) == false) return 1;	//Was commented out in original code.  I uncommented after encountering an exception which appeared to be caused by not having enough data on the stack.
+		if ((has_elements<T>(_env, 2)) == false) return 1;	//Was commented out in original code.  I uncommented after encountering an exception which appeared to be caused by not having enough data on the stack.
 		
-		//if ( get_stack<T>( env ).back() == T() )
-		//{
-		//	env.error();
-		//	return 1;
-		//}
-
-		//T first = pop<T>( env );
-		//get_stack<T>( env ).back() /= first;
-		//return 1;
-
-		//T a;
-		//if (typeid(a) == typeid(int))
-		//	int a = 0;
-
-		//bool hasTwo = has_elements<T>(2);
-
-		//if (hasTwo == false) 
-		//	return 1;	
-
-		//auto temp = get_stack<T>().back();
-		//auto temp2 = T();
-
-		//if (get_stack<T>().back() == T())
-		//{
-		//	env.error();
-		//	return 1;
-		//}
-
-		//T first = pop<T>();
-		//T second = get_stack<T>().back();
-
-		//get_stack<T>().back() /= first;
-		//return 1;
-
-
-		if (get_stack<T>().back() == T())
-		{
-//			env.error();
+		if (get_stack<T>(_env).back() == T())
 			return 1;
-		}
 
-		T first = pop<T>(env);
+		T first = pop<T>(_env);
 
 		T a;
 		if (typeid(a) == typeid(int))
 		{
-			T second = get_stack<T>().back();
+			T second = get_stack<T>(_env).back();
+
 			if (second == INT_MIN)
-			{
-//				env.error();
 				return 1;
-			}
 		}
 
-		//if (typeid(a) == typeid(double))
-		//{
-		//	double val = get_stack<double>().back();
-
-		//	if ((std::isnan(val)) || (first == 0.0) || (std::isinf(val)))
-		//		val = 0.0;
-		//}
-
-		get_stack<T>().back() /= first;
-
-
-
-		//if (typeid(a) == typeid(double))
-		//{
-		//	double val = get_stack<double>().back();
-
-		//	if ((std::isnan(val)) || (first == 0) || (std::isinf(val)))
-		//		val = 0.0;
-		//}
-
-
-
-
+		get_stack<T>(_env).back() /= first;
 
 		return 1;
 	}
 
 	template <class From, class To>
-	inline unsigned push_cast()
+	inline unsigned push_cast(Env & _env)
 	{
-		//if (not has_elements<From>(env,1)) return 1;
-		push<To>(static_cast<To>(pop<From>(env)));
-
-
-
-		//if (typeid(To) == typeid(double))
-		//{
-		//	double val = get_stack<double>().back();
-
-		//	if (std::isnan(val))
-		//		val = 0.0;
-		//}
-
-
-
-
+		push<To>(_env, static_cast<To>(pop<From>(_env)));
 
 		return 1;
 	}
 
-	inline unsigned int2bool()
+	inline unsigned int2bool(Env & _env)
 	{
-		return push_cast<int, bool>();
+		return push_cast<int, bool>(_env);
 	}
 
-	inline unsigned int2float()
+	inline unsigned int2float(Env & _env)
 	{
-		return push_cast<int, double>();
-
-
-		//unsigned r = push_cast<int, double>();
-
-
-		//	double val = get_stack<double>().back();
-
-		//	if (std::isnan(val))
-		//		val = 0.0;
-
-
-		//return r;
-
-
+		return push_cast<int, double>(_env);
 	}
 
-	inline unsigned bool2int()
+	inline unsigned bool2int(Env & _env)
 	{
-		return push_cast<bool, int>();
+		return push_cast<bool, int>(_env);
 	}
 
-	inline unsigned bool2float()
+	inline unsigned bool2float(Env & _env)
 	{
-		return push_cast<bool, double>();
-
-
-		//unsigned r = push_cast<bool, double>();
-
-
-		//double val = get_stack<double>().back();
-
-		//if (std::isnan(val))
-		//	val = 0.0;
-
-
-		//return r;
-
-
-
-
-
-
+		return push_cast<bool, double>(_env);
 	}
 
-	inline unsigned float2int()
+	inline unsigned float2int(Env & _env)
 	{
-		return push_cast<double, int>();
+		return push_cast<double, int>(_env);
 	}
 
-	inline unsigned float2bool()
+	inline unsigned float2bool(Env & _env)
 	{
-		return push_cast<double, bool>();
+		return push_cast<double, bool>(_env);
 	}
-
-	//// Pushes the data item from the current data record.  The data item is 
-	//// indexed by the top item of the INTEGER stack. The integer used as the index 
-	//// is taken modulo the number of data items in the current data record.  A 
-	//// positive index refers to the data value.  A negative index refers to the 
-	//// first derivative of the data item.
-	//inline unsigned data2float()
-	//{
-	//	double value = 0.0;
-
-	//	int column_index = pop<int>(env);
-
-	//	value = env.parameters.pBroker->get_value_from_datatable(env.data_record_index, column_index);
-	//	push<double>(value);
-
-	//	return 1;
-	//}
-
 
 	// Purpose: 
 	//   Push the Nth element from the input array onto a stack.
@@ -379,31 +180,15 @@ namespace Push
 	//   N is popped from the Integer stack. If N < 0, or if N >= size of input array, the mod of N is used.
 	//
 	template <class T>
-	inline unsigned in()
+	inline unsigned in(Env & _env)
 	{
-		if (env.input.size() > 0)
+		if (_env.local().input.size() > 0)
 		{
-			int index = pop<int>(env);
+			int index = pop<int>(_env);
 
-			index = std::abs((int)(index % env.input.size()));
-			T value = env.input[index];
-			push<T>(value);
-
-
-
-			//if (typeid(T) == typeid(double))
-			//{
-			//	double val = get_stack<double>().back();
-
-			//	if (std::isnan(val))
-			//		val = 0.0;
-			//}
-
-
-
-
-
-
+			index = std::abs((int)(index % _env.local().input.size()));
+			T value = _env.local().input[index];
+			push<T>(_env, value);
 		}
 
 		return 1;
@@ -496,31 +281,14 @@ namespace Push
 	//   if input array is empty, NO-OP is executed.
 	//
 	template <class T>
-	inline unsigned inall()
+	inline unsigned inall(Env & _env)
 	{
-		if (env.input.size() > 0)
+		if (_env.local().input.size() > 0)
 		{
-			for (int index = 0; index < env.input.size(); index++)
+			for (int index = 0; index < _env.local().input.size(); index++)
 			{
-				T value = env.input[index];
-				push<T>(value);
-
-
-				//if (typeid(T) == typeid(double))
-				//{
-				//	double val = get_stack<double>().back();
-
-				//	if (std::isnan(val))
-				//		val = 0.0;
-				//}
-
-
-
-
-
-
-
-
+				T value = _env.local().input[index];
+				push<T>(_env, value);
 			}
 		}
 
@@ -546,29 +314,14 @@ namespace Push
 	//   if input array is empty, NO-OP is executed.
 	//
 	template <class T>
-	inline unsigned inallrev()
+	inline unsigned inallrev(Env & _env)
 	{
-		if (env.input.size() > 0)
+		if (_env.local().input.size() > 0)
 		{
-			for (int index = env.input.size() - 1; index >= 0; index--)
+			for (int index = _env.local().input.size() - 1; index >= 0; index--)
 			{
-				T value = env.input[index];
-				push<T>(value);
-
-
-				//if (typeid(T) == typeid(double))
-				//{
-				//	double val = get_stack<double>().back();
-
-				//	if (std::isnan(val))
-				//		val = 0.0;
-				//}
-
-
-
-
-
-
+				T value = _env.local().input[index];
+				push<T>(_env, value);
 			}
 		}
 
@@ -597,16 +350,16 @@ namespace Push
 	//   copied to the element after the last element of the output array.
 	//
 	template <class T>
-	inline unsigned out()
+	inline unsigned out(Env & _env)
 	{
-		T value = pop<T>(env);
-		int index = std::abs((int)pop<int>(env));
+		T value = pop<T>(_env);
+		int index = std::abs((int)pop<int>(_env));
 
-		if (index < env.output.size())
-			env.output[index] = value;
+		if (index < _env.local().output.size())
+			_env.local().output[index] = value;
 
 		else
-			env.output.push_back(value);
+			_env.local().output.push_back(value);
 
 		return 1;
 	}
@@ -682,91 +435,44 @@ namespace Push
 	//	return 1;
 	//}
 
-	inline unsigned _exp()
+	inline unsigned _exp(Env & _env)
 	{
-		std::vector<double> &stack = get_stack<double>();
+		std::vector<double> &stack = get_stack<double>(_env);
 		stack.back() = std::exp(stack.back());
-
-
-
-
-			//double val = get_stack<double>().back();
-
-			//if (std::isnan(val))
-			//	val = 0.0;
-
-
-
-
-
 
 		return 1;
 	}
 
-	inline unsigned _log()
+	inline unsigned _log(Env & _env)
 	{
-		std::vector<double> &stack = get_stack<double>();
+		std::vector<double> &stack = get_stack<double>(_env);
 		double val = stack.back();
 
 		if (val > 0.0)
 			stack.back() = std::log(val);
 
+		return 1;
+	}
 
+	inline unsigned _fmod(Env & _env)
+	{
+		if (get_stack<double>(_env).back() == 0.0)
+			return 1;
 
-
-
-		//val = get_stack<double>().back();
-
-		//if (std::isnan(val))
-		//	val = 0.0;
-
-
-
-
+		double first = pop<double>(_env);
+		double second = pop<double>(_env);
+		push<double>(_env, fmod(second, first));
 
 		return 1;
 	}
 
-	inline unsigned _fmod()
+	inline unsigned int_mod(Env & _env)
 	{
-		//if (not has_elements<double>(env,2)) return 1;
-		if (get_stack<double>().back() == 0.0)
-		{
-//			env.error();
+		if (get_stack<int>(_env).back() == 0)
 			return 1;
-		}
 
-		double first = pop<double>(env);
-		double second = pop<double>(env);
-		push<double>(fmod(second, first));
-
-
-
-
-		//double val = get_stack<double>().back();
-
-		//if (std::isnan(val))
-		//	val = 0.0;
-
-
-
-
-
-
-		return 1;
-	}
-
-	inline unsigned int_mod()
-	{
-		//if (not has_elements<int>(env,2)) return 1;
-		if (get_stack<int>().back() == 0)
-		{
-//			env.error();
-			return 1;
-		}
-
-		int first = pop<int>(env);
-		int second = get_stack<int>().back();
+		int first = pop<int>(_env);
+		int second = get_stack<int>(_env).back();
 		
 		// Check for integer overflow
 		if ((first != -1) || (second != INT_MIN))
@@ -776,185 +482,67 @@ namespace Push
 	}
 
 	template <class T>
-	inline unsigned smaller()
+	inline unsigned smaller(Env & _env)
 	{
-		//if (not has_elements<T>(env,2)) return 1;
-		T first = pop<T>(env);
-		T second = pop<T>(env);
-		push<bool>(second < first);
-		return 1;
-	}
-
-	template <class T>
-	inline unsigned greater()
-	{
-		//if (not has_elements<T>(env,2)) return 1;
-		T first = pop<T>(env);
-		T second = pop<T>(env);
-		push<bool>(second > first);
-		return 1;
-	}
-
-	template <class T>
-	inline unsigned _max()
-	{
-		//if (not has_elements<T>(env,2)) return 1;
-		T first = pop<T>(env);
-		T second = pop<T>(env);
-		push<T>(std::max(first, second));
-
-
-
-		//if (typeid(T) == typeid(double))
-		//{
-		//	double val = get_stack<double>().back();
-
-		//	if (std::isnan(val))
-		//		val = 0.0;
-		//}
-
-
-
-
-
+		T first = pop<T>(_env);
+		T second = pop<T>(_env);
+		push<bool>(_env, second < first);
 
 		return 1;
 	}
 
 	template <class T>
-	inline unsigned _min()
+	inline unsigned greater(Env & _env)
 	{
-		//if (not has_elements<T>(env,2)) return 1;
-		T first = pop<T>(env);
-		T second = pop<T>(env);
-		push<T>(std::min(first, second));
+		T first = pop<T>(_env);
+		T second = pop<T>(_env);
+		push<bool>(_env, second > first);
+		return 1;
+	}
 
-
-
-
-		//if (typeid(T) == typeid(double))
-		//{
-		//	double val = get_stack<double>().back();
-
-		//	if (std::isnan(val))
-		//		val = 0.0;
-		//}
-
-
-
+	template <class T>
+	inline unsigned _max(Env & _env)
+	{
+		T first = pop<T>(_env);
+		T second = pop<T>(_env);
+		push<T>(_env, std::max(first, second));
 
 		return 1;
 	}
 
-	inline unsigned _cos()
+	template <class T>
+	inline unsigned _min(Env & _env)
 	{
-		//if (not has_elements<double>(env,1)) return 1;
-		std::vector<double> &stack = get_stack<double>();
+		T first = pop<T>(_env);
+		T second = pop<T>(_env);
+		push<T>(_env, std::min(first, second));
+
+		return 1;
+	}
+
+	inline unsigned _cos(Env & _env)
+	{
+		std::vector<double> &stack = get_stack<double>(_env);
 		stack.back() = cos(stack.back());
 
-
-		//double val = stack.back();
-
-		//if (std::isnan(val))
-		//	val = 0.0;
-
-
-		//val = cos(val);
-
-
-		//if (std::isnan(val))
-		//	val = 0.0;
-
-
-
-		//stack.back() = val;
-
-
-
-		//val = get_stack<double>().back();
-
-		//if (std::isnan(val))
-		//	val = 0.0;
-
-
-
-
-
 		return 1;
 	}
-	inline unsigned _sin()
+
+	inline unsigned _sin(Env & _env)
 	{
-		//if (not has_elements<double>(env,1)) return 1;
-		std::vector<double> &stack = get_stack<double>();
+		std::vector<double> &stack = get_stack<double>(_env);
 		stack.back() = sin(stack.back());
 
-
-
-
-		//double val = stack.back();
-
-		//if (std::isnan(val))
-		//	val = 0.0;
-
-
-		//val = sin(val);
-
-
-		//if (std::isnan(val))
-		//	val = 0.0;
-
-		//stack.back() = val;
-
-
-		//	val = get_stack<double>().back();
-
-		//	if (std::isnan(val))
-		//		val = 0.0;
-
-
-
-
-
 		return 1;
 	}
 
-	inline unsigned _tan()
+	inline unsigned _tan(Env & _env)
 	{
-		//if (not has_elements<double>(env,1)) return 1;
-		std::vector<double> &stack = get_stack<double>();
-
-
+		std::vector<double> &stack = get_stack<double>(_env);
 		double val = stack.back();
 
 		if (val != 0.0)
-		{
 			stack.back() = tan(val);
-
-
-
-
-			//if (std::isnan(val))
-			//	val = 0.0;
-
-			//val = tan(val);
-
-			//if (std::isnan(val))
-			//	val = 0.0;
-
-
-
-			//stack.back() = val; // hmm, can go wrong, math error
-
-
-
-			//val = get_stack<double>().back();
-
-			//if (std::isnan(val))
-			//	val = 0.0;
-
-		}
-
-
 
 		return 1;
 	}

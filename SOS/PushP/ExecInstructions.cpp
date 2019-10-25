@@ -1,205 +1,185 @@
 #include "ExecInstruction.h"
 
+#include <windows.h>
+#include <ppl.h>
+#include <array>
+#include <numeric>
+#include <iostream>
+
+using namespace concurrency;
 using namespace std;
 
 namespace Push
 {
-	thread_local DoRangeClassFactory *doRangeClassFactory;
+//	thread_local DoRangeClassFactory *doRangeClassFactory;
+	combinable<DoRangeClassFactory> parallel_doRangeClassFactory;
 
-	extern Code quote;
-//	extern Code DoRange;
-	extern Code zero;
-	extern Code int_pop;
+	extern combinable<Code> quote;
+	extern combinable<Code> zero;
+	extern combinable<Code> int_pop;
 	
-	unsigned s()
+	unsigned s(Env & _env)
 	{
-		Exec x = pop<Exec>(env);
-		Exec y = pop<Exec>(env);
-		Exec z = pop<Exec>(env);
+		Exec x = pop<Exec>(_env);
+		Exec y = pop<Exec>(_env);
+		Exec z = pop<Exec>(_env);
 
-		if (z->size() + y->size() + 1 >= env.parameters.max_points_in_program)
+		if (z->size() + y->size() + 1 >= _env.local().parameters.max_points_in_program)
 		{
-			push(z);
-			push(y);
-			push(x);
+			push(_env, z);
+			push(_env, y);
+			push(_env, x);
+
 			return 1;
 		}
 
-		env.push_code_to_exec_stack(list(y.to_CodeBase(), z.to_CodeBase()));
-		push(z);
-		push(x);
+		_env.local().push_code_to_exec_stack(list(y.to_CodeBase(), z.to_CodeBase()));
+		push(_env, z);
+		push(_env, x);
+
 		return 1;
 	}
 
-	unsigned k()
+	unsigned k(Env & _env)
 	{
-		Exec x = pop<Exec>(env);
-		pop<Exec>(env);
-		push(x);
+		Exec x = pop<Exec>(_env);
+		pop<Exec>(_env);
+		push(_env, x);
+
 		return 1;
 	}
 
-	unsigned y()
+	unsigned y(Env & _env)
 	{
-		Exec x = pop<Exec>(env);
-//		static Code ycode = parse("EXEC.Y");
+		Exec x = pop<Exec>(_env);
 
-		if (2 + x->size() >= env.parameters.max_points_in_program)
+		if (2 + x->size() >= _env.local().parameters.max_points_in_program)
 		{
-			push(x); // too big
+			push(_env, x); // too big
 			return 1;
 		}
 
-		env.push_code_to_exec_stack(list(ycode, x.to_CodeBase()));
-		push(x);
+		_env.local().push_code_to_exec_stack(list(ycode.local(), x.to_CodeBase()));
+		push(_env, x);
 
 		return 1;
 	}
 
-	unsigned exec_if()
+	unsigned exec_if(Env & _env)
 	{
-		bool val = pop<bool>(env);
-		Exec a = pop<Exec>(env);
-		Exec b = pop<Exec>(env);
+		bool val = pop<bool>(_env);
+		Exec a = pop<Exec>(_env);
+		Exec b = pop<Exec>(_env);
 
 		if (val)
-			push(a);
+			push(_env, a);
 
 		else
-			push(b);
+			push(_env, b);
 
 		return 1;
 	}
 
-	//class DoRangeClass : public CodeList
-	//{
-	//public:
-	//	DoRangeClass(const CodeArray & vec) : CodeList(vec)
-	//	{
-	//		//			assert(vec.size() == 4);
-	//	}
-
-	//	unsigned operator()() const
-	//	{
-	//		CodeArray vec = get_stack();
-	//		int i = static_cast<Literal<int>*>(vec[3].get())->get();
-	//		int n = static_cast<Literal<int>*>(vec[2].get())->get();
-	//		int direction = 1;
-
-	//		if (i > n) direction = -1;
-
-	//		push(i);
-	//		Exec code = Exec(vec[0]);
-
-	//		if (i != n)
-	//		{
-	//			vec[3] = Code(intLiteralFactory->createLiteral(i + direction));
-	//			Code ranger = Code(codeListFactory->createCodeList(vec));  // new CodeList(vec));  //CodeList::adopt(vec);
-	//			env.push_code_to_exec_stack(ranger);
-	//		}
-
-	//		push(code);
-	//		return 1;
-	//	}
-	//};
-
-	unsigned do_range()
+	unsigned do_range(Env & _env)
 	{
-		int n = pop<int>(env);
-		int i = pop<int>(env);
-		Exec code = pop<Exec>(env);
+		int n = pop<int>(_env);
+		int i = pop<int>(_env);
+
+		Exec code = pop<Exec>(_env);
+		
 		CodeArray vec(4);
 		vec[0] = code.to_CodeBase();
-		vec[1] = MyDoRange;
-		vec[2] = Code(intLiteralFactory->createLiteral(n));
-		vec[3] = Code(intLiteralFactory->createLiteral(i));
-		Code result = Code(doRangeClassFactory->createDoRangeClass(vec));  //  new DoRangeClass(vec));
-		env.push_code_to_exec_stack(result);
+		vec[1] = MyDoRange.local();
+		vec[2] = Code(parallel_intLiteralFactory.local().createLiteral(n));
+		vec[3] = Code(parallel_intLiteralFactory.local().createLiteral(i));
+		
+		Code result = Code(parallel_doRangeClassFactory.local().createDoRangeClass(vec));  //  new DoRangeClass(vec));
+		_env.local().push_code_to_exec_stack(result);
+		
 		return 1;
 	}
 
-	static unsigned do_count()
+	static unsigned do_count(Env & _env)
 	{
-		int n = pop<int>(env);
-		Exec code = pop<Exec>(env);
+		int n = pop<int>(_env);
+		Exec code = pop<Exec>(_env);
 
 		if (n < 0)
 			return 1;
 
 		CodeArray vec(4);
 		vec[0] = code.to_CodeBase();
-		vec[1] = MyDoRange;
-		vec[2] = Code(intLiteralFactory->createLiteral(n - 1));
-		vec[3] = zero;
+		vec[1] = MyDoRange.local();
+		vec[2] = Code(parallel_intLiteralFactory.local().createLiteral(n - 1));
+		vec[3] = zero.local();
 
-		Code result = Code(doRangeClassFactory->createDoRangeClass(vec));  //  new DoRangeClass(vec));
-		env.push_code_to_exec_stack(result);
+		Code result = Code(parallel_doRangeClassFactory.local().createDoRangeClass(vec));  //  new DoRangeClass(vec));
+		_env.local().push_code_to_exec_stack(result);
 
 		return 1;
 	}
 
-	static unsigned do_times()
+	static unsigned do_times(Env & _env)
 	{
-		int n = pop<int>(env);
-		Exec code = pop<Exec>(env);
+		int n = pop<int>(_env);
+		Exec code = pop<Exec>(_env);
 
 		if (n <= 0)
 			return 1;
 
 		CodeArray vec(4);
-		vec[0] = cons(int_pop, code.to_CodeBase());
-		vec[1] = MyDoRange;
-		vec[2] = Code(intLiteralFactory->createLiteral(n - 1));
-		vec[3] = zero;
+		vec[0] = cons(int_pop.local(), code.to_CodeBase());
+		vec[1] = MyDoRange.local();
+		vec[2] = Code(parallel_intLiteralFactory.local().createLiteral(n - 1));
+		vec[3] = zero.local();
 
 		Code result = Code(new DoRangeClass(vec)); // Potetial memory leak
-		env.push_code_to_exec_stack(result);
+		_env.local().push_code_to_exec_stack(result);
 
 		return 1;
 	}
 
-	unsigned exec_while()
+	unsigned exec_while(Env & _env)
 	{
-		if (is_empty<bool>())
-			pop<Exec>(env);
+		if (is_empty<bool>(_env))
+			pop<Exec>(_env);
 
 		//if (top<bool>() == false)
-		if (get_stack<bool>().back() == false)
+		if (get_stack<bool>(_env).back() == false)
 		{
-			pop<bool>(env);
-			pop<Exec>(env);
+			pop<bool>(_env);
+			pop<Exec>(_env);
 		}
 
 		else
 		{
-			Exec block = pop<Exec>(env);
+			Exec block = pop<Exec>(_env);
 
-			env.push_code_to_exec_stack(parse("EXEC.WHILE"));
-			push(block);
-			pop<bool>(env);
+			_env.local().push_code_to_exec_stack(parse("EXEC.WHILE"));
+			push(_env, block);
+			pop<bool>(_env);
 		}
 
 		return 1;
 	}
 
-	unsigned do_while()
+	unsigned do_while(Env & _env)
 	{
-		Exec block = pop<Exec>(env);
+		Exec block = pop<Exec>(_env);
 
-		env.push_code_to_exec_stack(parse("EXEC.WHILE"));
-		push(block);
+		_env.local().push_code_to_exec_stack(parse("EXEC.WHILE"));
+		push(_env, block);
 
 		return 1;
 	}
 
-	unsigned exec_when()
+	unsigned exec_when(Env & _env)
 	{
-		//bool cond = first<bool>();
-		bool cond = get_stack<bool>().back();
-		pop<bool>(env);
+		bool cond = get_stack<bool>(_env).back();
+		pop<bool>(_env);
 
 		if (!cond)
-			pop<Exec>(env);
+			pop<Exec>(_env);
 
 		return 1;
 	}

@@ -8,89 +8,90 @@
 namespace Push 
 {
 	inline
-		unsigned _cons() {
+		unsigned _cons(Env & _env)
+	{
 
-		if (first<Code>()->size() + second<Code>()->size() >= env.parameters.max_points_in_program) return 1;
+		if (first<Code>(_env)->size() + second<Code>(_env)->size() >= _env.local().parameters.max_points_in_program) return 1;
 
-		Code a = pop<Code>(env);
-		Code b = pop<Code>(env);
-		push(cons(b, a));
+		Code a = pop<Code>(_env);
+		Code b = pop<Code>(_env);
+		push(_env, cons(b, a));
 		return 1;
 	}
 
 	inline
-		unsigned _list() {
-		if (1 + first<Code>()->size() + second<Code>()->size() >= env.parameters.max_points_in_program) return 1;
+		unsigned _list(Env & _env)
+	{
+		if (1 + first<Code>(_env)->size() + second<Code>(_env)->size() >= _env.local().parameters.max_points_in_program) return 1;
 
-		Code a = pop<Code>(env);
-		Code b = pop<Code>(env);
-		push(list(b, a));
+		Code a = pop<Code>(_env);
+		Code b = pop<Code>(_env);
+		push(_env, list(b, a));
 		return 1;
 	}
 
-	inline unsigned _length() {
-		Code a = pop<Code>(env);
-		push<int>(a->len());
+	inline unsigned _length(Env & _env)
+	{
+		Code a = pop<Code>(_env);
+		push<int>(_env, a->len());
 		return 1;
 	}
 
-	inline unsigned _size() {
-		Code a = pop<Code>(env);
-		push<int>(a->size());
+	inline unsigned _size(Env & _env) 
+	{
+		Code a = pop<Code>(_env);
+		push<int>(_env, a->size());
 		return a->size();
 	}
 
 	/* Few Executable/quoting constructs */
 
-	inline unsigned _do() 
+	inline unsigned _do(Env & _env)
 	{
-//		static Code code_pop = parse("CODE.POP");
-		env.push_code_to_exec_stack(code_pop);
-		env.push_code_to_exec_stack(top<Code>());
+		_env.local().push_code_to_exec_stack(code_pop.local());
+		_env.local().push_code_to_exec_stack(top<Code>(_env));
 		return 1;
 	}
 
-	inline unsigned _do_star() {
-		env.push_code_to_exec_stack(pop<Code>(env));
-		return 1;
-	}
-
-	inline unsigned _quote() {
-		push<Code>(pop<Exec>(env).to_CodeBase());
-		return 1;
-	}
-
-	inline unsigned _if() 
+	inline unsigned _do_star(Env & _env) 
 	{
-		Code first = pop<Code>(env);
-		Code second = pop<Code>(env);
+		_env.local().push_code_to_exec_stack(pop<Code>(_env));
+		return 1;
+	}
 
-		if (pop<bool>(env))
-			env.push_code_to_exec_stack(second);
+	inline unsigned _quote(Env & _env) 
+	{
+		push<Code>(_env, pop<Exec>(_env).to_CodeBase());
+		return 1;
+	}
+
+	inline unsigned _if(Env & _env)
+	{
+		Code first = pop<Code>(_env);
+		Code second = pop<Code>(_env);
+
+		if (pop<bool>(_env))
+			_env.local().push_code_to_exec_stack(second);
 		else
-			env.push_code_to_exec_stack(first);
+			_env.local().push_code_to_exec_stack(first);
 
 		return 1;
 	}
 
-	///* From */
+	//* From */
 	template <class T>
-	inline unsigned _from_T() 
+	inline unsigned _from_T(Env & _env)
 	{
-//		T a = pop<T>(env);
-//		push<Code>(Code(new Literal<T>(a)));
-//		return 1;
-
-		T a = pop<T>(env);
+		T a = pop<T>(_env);
 
 		if (typeid(a) == typeid(int))
-			push<Code>(Code(intLiteralFactory->createLiteral(a)));  
+			push<Code>(_env, Code(parallel_intLiteralFactory.local().createLiteral(a)));  
 		
 		else if (typeid(a) == typeid(double))
-			push<Code>(Code(floatLiteralFactory->createLiteral(a)));
+			push<Code>(_env, Code(parallel_floatLiteralFactory.local().createLiteral(a)));
 		
 		else if (typeid(a) == typeid(bool))
-			push<Code>(Code(boolLiteralFactory->createLiteral(a))); 
+			push<Code>(_env, Code(parallel_boolLiteralFactory.local().createLiteral(a)));
 		
 		return 1;
 	}
@@ -114,20 +115,13 @@ namespace Push
 	//   N is popped from the Integer stack first. If N < 0, or if N >= size of input array, or the Integer 
 	//	 stack is empty then a NO-OP is executed instead.
 	//
-	inline unsigned in2code()
+	inline unsigned in2code(Env & _env)
 	{
-		int index = pop<int>(env);
+		int index = pop<int>(_env);
 
-		//if ((index >= 0) && (index < env.input.size()))
-		//{
-		//	double value = env.input[index];
-
-		//	push<Code>(Code(floatLiteralFactory->createLiteral(value)));
-		//}
-
-		index = std::abs((int)(index % env.input.size()));
-		double value = env.input[index];
-		push<Code>(Code(floatLiteralFactory->createLiteral(value)));
+		index = std::abs((int)(index % _env.local().input.size()));
+		double value = _env.local().input[index];
+		push<Code>(_env, Code(parallel_floatLiteralFactory.local().createLiteral(value)));
 
 		return 1;
 	}
@@ -150,14 +144,14 @@ namespace Push
 	// Remarks:
 	//   if input array is empty, NO-OP is executed.
 	//
-	inline unsigned inall2code()
+	inline unsigned inall2code(Env & _env)
 	{
-		if (env.input.size() > 0)
+		if (_env.local().input.size() > 0)
 		{
-			for (int index = 0; index < env.input.size(); index++)
+			for (int index = 0; index < _env.local().input.size(); index++)
 			{
-				double value = env.input[index];
-				push<Code>(Code(floatLiteralFactory->createLiteral(value)));
+				double value = _env.local().input[index];
+				push<Code>(_env, Code(parallel_floatLiteralFactory.local().createLiteral(value)));
 			}
 		}
 
@@ -182,33 +176,33 @@ namespace Push
 	// Remarks:
 	//   if input array is empty, NO-OP is executed.
 	//
-	inline unsigned inallrev2code()
+	inline unsigned inallrev2code(Env & _env)
 	{
-		if (env.input.size() > 0)
+		if (_env.local().input.size() > 0)
 		{
-			for (int index = env.input.size() - 1; index >= 0; index--)
+			for (int index = _env.local().input.size() - 1; index >= 0; index--)
 			{
-				double value = env.input[index];
-				push<Code>(Code(floatLiteralFactory->createLiteral(value)));
+				double value = _env.local().input[index];
+				push<Code>(_env, Code(parallel_floatLiteralFactory.local().createLiteral(value)));
 			}
 		}
 
 		return 1;
 	}
 
-	inline unsigned _instructions()
+	inline unsigned _instructions(Env & _env)
 	{ 
-		push(env.function_set); 
+		push(_env, _env.local().function_set);
 		return 1; 
 	}
 
-	inline size_t _append()
+	inline size_t _append(Env & _env)
 	{
-		if (1 + first<Code>()->size() + second<Code>()->size() >= env.parameters.max_points_in_program) 
+		if (1 + first<Code>(_env)->size() + second<Code>(_env)->size() >= _env.local().parameters.max_points_in_program)
 			return 1;
 
-		Code first = pop<Code>(env);
-		Code second = pop<Code>(env);
+		Code first = pop<Code>(_env);
+		Code second = pop<Code>(_env);
 
 		CodeArray first_stack = first->get_stack();
 		if (first_stack.empty()) 
@@ -221,102 +215,94 @@ namespace Push
 		second_stack.reserve(second_stack.size() + first_stack.size());
 		std::copy(first_stack.begin(), first_stack.end(), std::back_inserter(second_stack));
 
-		push<Code>(Code(codeListFactory->createCodeList(second_stack)));  // new CodeList(second_stack))); //CodeList::adopt(second_stack)); //push<Code>(new CodeList(second_stack)); // push<Code>(CodeList::adopt(second_stack)); //Code(new CodeList(second_stack)));
+		push<Code>(_env, Code(parallel_codeListFactory.local().createCodeList(second_stack)));  // new CodeList(second_stack))); //CodeList::adopt(second_stack)); //push<Code>(new CodeList(second_stack)); // push<Code>(CodeList::adopt(second_stack)); //Code(new CodeList(second_stack)));
 		return first_stack.size();
 	}
 
-	inline unsigned _atom() 
+	inline unsigned _atom(Env & _env)
 	{
-		if (pop<Code>(env)->get_stack().size())
-			push<bool>(false);
+		if (pop<Code>(_env)->get_stack().size())
+			push<bool>(_env, false);
 		else
-			push<bool>(true);
+			push<bool>(_env, true);
 
 		return 1;
 	}
 
-	inline unsigned _car() 
+	inline unsigned _car(Env & _env)
 	{
-		if (top<Code>()->get_stack().size())
-			push<Code>(pop<Code>(env)->get_stack().back());
+		if (top<Code>(_env)->get_stack().size())
+			push<Code>(_env, pop<Code>(_env)->get_stack().back());
 		
 		return 1;
 	}
 
-	inline unsigned _cdr() 
+	inline unsigned _cdr(Env & _env)
 	{
-		if (top<Code>()->get_stack().size()) 
+		if (top<Code>(_env)->get_stack().size()) 
 		{
-			CodeArray stack = pop<Code>(env)->get_stack();
+			CodeArray stack = pop<Code>(_env)->get_stack();
 			stack.pop_back();
-			push<Code>(Code(codeListFactory->createCodeList(stack)));  // new CodeList(stack)));  //CodeList::adopt(stack)); //Code(new CodeList(stack)));
+			push<Code>(_env, Code(parallel_codeListFactory.local().createCodeList(stack)));  // new CodeList(stack)));  //CodeList::adopt(stack)); //Code(new CodeList(stack)));
 		}
 
 		return 1;
 	}
 
-	inline unsigned _container() 
+	inline unsigned _container(Env & _env)
 	{
-		Code first = pop<Code>(env);
-		Code second = pop<Code>(env);
+		Code first = pop<Code>(_env);
+		Code second = pop<Code>(_env);
 
-		push(find_container(first, second));
+		push(_env, find_container(first, second));
 
 		return first->size() * second->size();
 	}
 
-	//inline unsigned _contains() {
-
-	//	Code first = pop<Code>();
-	//	Code second = pop<Code>();
-
-	//	push(contains(first, second));
-	//	return first.size() * second.size();
-	//}
-
-	inline unsigned _extract() {
-		Code code = pop<Code>(env);
-		int val = pop<int>(env);
+	inline unsigned _extract(Env & _env) 
+	{
+		Code code = pop<Code>(_env);
+		int val = pop<int>(_env);
 
 		if (code->size() == 0) 
 		{ // nil
-			push(code);
+			push(_env, code);
 			return 1;
 		}
 
 		val = std::abs(val) % code->size();
 
-		push(extract(code, val));
+		push(_env, extract(code, val));
 		return code->size(); // Complexity is O(n) 
 	}
 
-	inline unsigned _insert() {
-
-		Code one = first<Code>();
-		Code other = second<Code>();
-		int val = first<int>();
+	inline unsigned _insert(Env & _env) 
+	{
+		Code one = first<Code>(_env);
+		Code other = second<Code>(_env);
+		int val = first<int>(_env);
 
 		val = std::abs(val) % one->size();
 
 		Code result = insert(one, val, other);
-		if (result->size() > env.parameters.max_points_in_program) 
+		if (result->size() > _env.local().parameters.max_points_in_program)
 			return 1;
 
-		pop<Code>(env);
-		pop<Code>(env);
-		pop<int>(env);
+		pop<Code>(_env);
+		pop<Code>(_env);
+		pop<int>(_env);
 
-		push(result);
+		push(_env, result);
 
 		return 1;
 	}
 
-	inline unsigned _member() 
+	inline unsigned _member(Env & _env)
 	{
-		Code first = pop<Code>(env);
-		Code second = pop<Code>(env);
+		Code first = pop<Code>(_env);
+		Code second = pop<Code>(_env);
 
-		push(member(first, second));
+		push(_env, member(first, second));
 
 		return 1;
 	}
@@ -325,8 +311,8 @@ namespace Push
 
 	/* large parts of the stuff below should go to a sourc file */
 
-	unsigned _nth();
-	unsigned _nthcdr();
-	unsigned _null();
-	unsigned _position();
+	unsigned _nth(Env & _env);
+	unsigned _nthcdr(Env & _env);
+	unsigned _null(Env & _env);
+	unsigned _position(Env & _env);
 }

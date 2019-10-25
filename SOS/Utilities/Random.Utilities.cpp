@@ -7,12 +7,50 @@
 //#endif
 
 #include <time.h>
+#include <ppl.h>
+#include <time.h>
 #include <thread>
+using namespace std;
+using namespace concurrency;
 
 namespace Utilities
 {
-	thread_local std::random_device rd;  //Will be used to obtain a seed for the random number engine
-	thread_local std::mt19937 generator(rd()); //Standard mersenne_twister_engine seeded with rd()
+//	combinable < mt19937 > generator(std::random_device());
+
+//	static thread_local std::mt19937 generator(std::random_device());
+
+
+	//std::random_device rd;  //Will be used to obtain a seed for the random number engine
+	//std::mt19937 generator(rd()); //Standard mersenne_twister_engine seeded with rd()
+
+	//combinable<std::random_device> rd1;
+	//combinable<std::mt19937> generator(rd.local()());
+
+	// See https://gist.github.com/srivathsanmurali/6ca74bdf154b0f5447321be183ba28d1
+//	float randFloat(float low, float high) {
+//		thread_local static std::random_device rd;
+//		thread_local static std::mt19937 rng(rd());
+//		thread_local std::uniform_real_distribution<float> urd;
+//		return urd(rng, decltype(urd)::param_type{ low,high });
+//	}
+
+// See https://stackoverflow.com/questions/21237905/how-do-i-generate-thread-safe-uniform-random-numbers
+//	/* Thread-safe function that returns a random number between min and max (inclusive).
+//This function takes ~142% the time that calling rand() would take. For this extra
+//cost you get a better uniform distribution and thread-safety. */
+//	int intRand(const int & min, const int & max) {
+//		static thread_local mt19937* generator = nullptr;
+//		if (!generator) generator = new mt19937(clock() + this_thread::get_id().hash());
+//		uniform_int_distribution<int> distribution(min, max);
+//		return distribution(*generator);
+//	}
+
+
+
+
+
+
+
 
 	// Purpose: 
 	//   Random number distribution that produces integer values according to a uniform discrete distribution.
@@ -37,6 +75,11 @@ namespace Utilities
 	//
 	int random_integer(const int & min, const int & max)
 	{
+		std::hash<std::thread::id> hasher;
+
+		size_t t = hasher(this_thread::get_id()) + clock();
+
+		static thread_local std::mt19937 generator(t);
 		std::uniform_int_distribution<int> distribution(min, max);
 		return distribution(generator);
 	}
@@ -88,6 +131,11 @@ namespace Utilities
 	//
 	double random_double(double min, double max)
 	{
+		std::hash<std::thread::id> hasher;
+
+		size_t t = hasher(this_thread::get_id()) + clock();
+
+		static thread_local std::mt19937 generator(t);
 		std::uniform_real_distribution<double> distribution(min, max);
 		return distribution(generator);
 	}

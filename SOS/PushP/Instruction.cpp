@@ -4,6 +4,14 @@
 #include "CodeUtils.h"
 #include "Literal.h"
 
+#include <windows.h>
+#include <ppl.h>
+#include <array>
+#include <numeric>
+#include <iostream>
+
+using namespace concurrency;
+
 #define FULLGENERIC(name, func, parentheses)\
 	cons(\
 		make_instruction((Operator)func<Exec>, "EXEC", #name, func##_in<Exec>(), func##_out<Exec>(), parentheses),\
@@ -52,8 +60,8 @@ namespace Push
 	//	return static_initializer.register_pushfunc(*new Instruction(op, type + "." + name, Type(), Type(), true));
 	//}
 
-//	thread_local InstructionFactory instructionFactory;
-	thread_local CodeListFactory* codeListFactory;
+//	thread_local CodeListFactory* codeListFactory;
+	combinable<CodeListFactory> parallel_codeListFactory;
 
 	template <typename T> Type yankdup_in()
 	{
@@ -157,9 +165,9 @@ namespace Push
 	}
 
 	template <class T>
-	unsigned flush(Env &env)
+	unsigned flush(Env & _env)
 	{
-		get_stack<T>().clear();
+		get_stack<T>(_env).clear();
 		return 1;
 	}
 

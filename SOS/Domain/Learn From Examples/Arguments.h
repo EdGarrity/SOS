@@ -13,7 +13,8 @@ namespace domain
 
 		//	:use - single - thread false
 		//	;; When true, will only use a single thread.
-		const bool use_single_thread = false;
+		const bool use_multithreading = false;
+		const bool use_PPL = true;
 		const unsigned int number_of_cores_to_reserve = 4;
 
 		//	:random - seed(random / generate - mersennetwister - seed)
@@ -69,10 +70,10 @@ namespace domain
 		const long int number_of_test_cases = 100;
 
 		// Minimum length of an example case
-		const long int example_case_min_length = 1;
+		const long int example_case_min_length = 3;
 
 		// Maximum length of an example case
-		const long int example_case_max_length = 2;
+		const long int example_case_max_length = 3;
 		
 		// Upper range of values in the example case
 		const long int example_case_upper_range = 1'000;

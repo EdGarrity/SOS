@@ -11,6 +11,13 @@
 #include <iostream>
 #include <exception>
 #include "CodeBasePtr.h"
+//#include <windows.h>
+#include <ppl.h>
+//#include <array>
+//#include <numeric>
+//#include <iostream>
+
+using namespace concurrency;
 
 namespace Push
 {
@@ -19,17 +26,21 @@ namespace Push
 	 *
 	 */
 
-	class Env;
+//	class Env;
+
+	class Env_detail;
+	typedef combinable<Push::Env_detail> Env;
+
 	class CodeBase;
 
 	// This needs to be initialize in Push Initialze and stored in Thread Local Storage
-	extern thread_local Env env;
+//	extern thread_local Env env;
+//	extern combinable<Env> env;
 
 	typedef Push::detail::CodeBase_prt<CodeBase> Code;
 	typedef Push::detail::ExecBase_ptr<CodeBase> Exec;
 	typedef std::vector<Code> CodeArray;
-//	typedef unsigned(*Operator)(Env &);
-	typedef unsigned(*Operator)();
+	typedef unsigned(*Operator)(Env & _env);
 
 	typedef std::map<std::string, Push::Code> String2CodeMap;
 	typedef std::map<std::string, unsigned int> String2ParenthesesMap;
@@ -48,22 +59,28 @@ namespace Push
 	template <class T>
 	class LiteralFactory;
 
-	template <class T>
-	extern thread_local LiteralFactory<T> *literalFactory;
-	extern thread_local LiteralFactory<int> *intLiteralFactory;
-	extern thread_local LiteralFactory<double> *floatLiteralFactory;
-	extern thread_local LiteralFactory<bool> *boolLiteralFactory;
+	extern combinable<LiteralFactory<int>> parallel_intLiteralFactory;
+	extern combinable<LiteralFactory<double>> parallel_floatLiteralFactory;
+	extern combinable<LiteralFactory<bool>> parallel_boolLiteralFactory;
 
 	//
 	// Static Push instructions
 	//
-	extern Code MyDoRange;
-	extern Code zero;
-	extern Code quote;
-	extern Code int_pop;
-	extern Code code_pop;
-	extern Code rnd;
-	extern Code ycode;
+	//extern Code MyDoRange;
+	//extern Code zero;
+	//extern Code quote;
+	//extern Code int_pop;
+	//extern Code code_pop;
+	//extern Code rnd;
+	//extern Code ycode;
+
+	extern combinable<Code> MyDoRange;
+	extern combinable<Code> zero;
+	extern combinable<Code> quote;
+	extern combinable<Code> int_pop;
+	extern combinable<Code> code_pop;
+	//extern combinable<Code> rnd;
+	extern combinable<Code> ycode;
 
 	Code parse(std::string s);
 
@@ -80,11 +97,11 @@ namespace Push
 		CodeArray _stack;
 
 	public:
-
 		CodeBase();
 		CodeBase(const CodeArray &stack);
 		CodeBase(const CodeBase &code);
 		CodeBase(const CodeBase *code);
+
 		const CodeArray &get_stack() const
 		{
 			return _stack;
@@ -92,9 +109,9 @@ namespace Push
 
 		virtual ~CodeBase() {}
 
-	//	/* virtual functions */
-		virtual unsigned operator()() const //virtual unsigned operator()(Env &env) const
-//		virtual unsigned operator()(Env &env) const
+		/* virtual functions */
+//		virtual unsigned operator()() const //virtual unsigned operator()(Env &env) const
+		virtual unsigned operator()(Env &env) const
 		{
 			return 1;
 		}
@@ -204,7 +221,7 @@ namespace Push
 
 		std::string to_string() const;
 
-		unsigned operator()() const;
+		unsigned operator()(Env & _env) const;
 
 		// no equal_to overload, equality checked in parent
 
@@ -300,7 +317,8 @@ namespace Push
 		return lp;
 	}
 
-	extern thread_local CodeListFactory *codeListFactory;
+//	extern thread_local CodeListFactory *codeListFactory;
+	extern combinable<CodeListFactory> parallel_codeListFactory;
 
 
 	inline std::string str(Code code)

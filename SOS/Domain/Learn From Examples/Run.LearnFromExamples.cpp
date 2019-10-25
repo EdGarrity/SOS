@@ -5,6 +5,7 @@
 #include "../../PushGP/Globals.h"
 #include "../../PushGP/Random.h"
 #include "../../PushGP/Breed.h"
+#include "../../PushP/Env.h"
 #include "../../PushP/ExecInstruction.h"
 #include "../../Utilities/CSVIterator.h"
 #include "../../PushGP/Utilities.h"
@@ -17,19 +18,21 @@
 #include <sstream>
 #include <string>
 #include <deque>
+#include <ppl.h>
+#include <concurrent_vector.h>
+
+using namespace concurrency;
 
 namespace domain
 {
 	namespace learn_from_examples
 	{
-		double score_array[argmap::population_size];
+//		double score_array[argmap::population_size];
 
-		std::vector<double> training_cases_problem[argmap::number_of_training_cases];
-		std::vector<double> training_cases_solution[argmap::number_of_training_cases];
-		std::vector<double> test_cases_problem[argmap::number_of_test_cases];
-		std::vector<double> test_cases_solution[argmap::number_of_test_cases];
-		std::deque<std::string> fitness_cases_problem;
-		std::deque<std::string> fitness_cases_solution;
+		concurrent_vector<double> training_cases_problem[argmap::number_of_training_cases];
+		concurrent_vector<double> training_cases_solution[argmap::number_of_training_cases];
+		concurrent_vector<double> test_cases_problem[argmap::number_of_test_cases];
+		concurrent_vector<double> test_cases_solution[argmap::number_of_test_cases];
 
 		database::SQLConnection con;
 
@@ -111,6 +114,9 @@ namespace domain
 			std::string test_case_problem_str;
 			std::string test_case_solution_str;
 
+			std::deque<std::string> fitness_cases_problem;
+			std::deque<std::string> fitness_cases_solution;
+
 			database::SQLCommand* sqlcmd_get_example_cases;
 
 			sqlcmd_get_example_cases = new database::SQLCommand(&con, sqlstmt_sqlcmd_load_example_cases);
@@ -141,8 +147,8 @@ namespace domain
 
  					while ((training_case_index < argmap::number_of_training_cases) && (fitness_case_count > 0))
 					{
-						std::vector<double> training_case_problem;
-						std::vector<double> training_case_solution;
+						//std::vector<double> training_case_problem;
+						//std::vector<double> training_case_solution;
 						CSVRow row;
 
 						std::cout << "training case n = " << training_case_index << std::endl;
@@ -156,11 +162,13 @@ namespace domain
 
 						while (training_case_problem_stream >> row)
 						{
+							//for (int n = 0; n < row.size(); n++)
+							//	training_case_problem.push_back(std::stod(row[n]));
 							for (int n = 0; n < row.size(); n++)
-								training_case_problem.push_back(std::stod(row[n]));
+								training_cases_problem[training_case_index].push_back(std::stod(row[n]));
 						}
 
-						training_cases_problem[training_case_index] = training_case_problem;
+//						training_cases_problem[training_case_index] = training_case_problem;
 
 						// Get solution
 						training_case_solution_str = fitness_cases_solution.back();
@@ -170,11 +178,13 @@ namespace domain
 
 						while (training_case_solution_stream >> row)
 						{
+							//for (int n = 0; n < row.size(); n++)
+							//	training_case_solution.push_back(std::stod(row[n]));
 							for (int n = 0; n < row.size(); n++)
-								training_case_solution.push_back(std::stod(row[n]));
+								training_cases_solution[training_case_index].push_back(std::stod(row[n]));
 						}
 
-						training_cases_solution[training_case_index] = training_case_solution;
+//						training_cases_solution[training_case_index] = training_case_solution;
 
 						training_case_index++;
 						fitness_case_count--;
@@ -182,8 +192,8 @@ namespace domain
 
 					while ((test_case_index < argmap::number_of_test_cases) && (fitness_case_count > 0))
 					{
-						std::vector<double> test_case_problem;
-						std::vector<double> test_case_solution;
+						//std::vector<double> test_case_problem;
+						//std::vector<double> test_case_solution;
 						CSVRow row;
 
 						std::cout << "test case n = " << test_case_index << std::endl;
@@ -196,11 +206,13 @@ namespace domain
 
 						while (test_case_problem_stream >> row)
 						{
+							//for (int n = 0; n < row.size(); n++)
+							//	test_case_problem.push_back(std::stod(row[n]));
 							for (int n = 0; n < row.size(); n++)
-								test_case_problem.push_back(std::stod(row[n]));
+								test_cases_problem[test_case_index].push_back(std::stod(row[n]));
 						}
 
-						test_cases_problem[test_case_index] = test_case_problem;
+//						test_cases_problem[test_case_index] = test_case_problem;
 
 						// Get solution
 						test_case_solution_str = fitness_cases_solution.back();
@@ -210,11 +222,13 @@ namespace domain
 
 						while (test_case_solution_stream >> row)
 						{
+							//for (int n = 0; n < row.size(); n++)
+							//	test_case_solution.push_back(std::stod(row[n]));
 							for (int n = 0; n < row.size(); n++)
-								test_case_solution.push_back(std::stod(row[n]));
+								test_cases_solution[test_case_index].push_back(std::stod(row[n]));
 						}
 
-						test_cases_solution[test_case_index] = test_case_solution;
+//						test_cases_solution[test_case_index] = test_case_solution;
 
 						test_case_index++;
 						fitness_case_count--;
@@ -242,22 +256,25 @@ namespace domain
 			{
 				for (int i = _example_cases_loaded; i < argmap::number_of_training_cases; i++)
 				{
-					std::vector<double> training_case_input;
-					std::vector<double> training_case_output;
+					//std::vector<double> training_case_input;
+					//std::vector<double> training_case_output;
 
 					int training_case_length = Utilities::random_integer(argmap::example_case_min_length, argmap::example_case_max_length);
 
 					for (int j = 0; j < training_case_length; j++)
 					{
 						int n = Utilities::random_integer(argmap::example_case_upper_range);
-						training_case_input.push_back(n);
-						training_case_output.push_back(n);
+						//training_case_input.push_back(n);
+						//training_case_output.push_back(n);
+						training_cases_problem[i].push_back(n);
+						training_cases_solution[i].push_back(n);
 					}
 
-					std::sort(training_case_output.begin(), training_case_output.end());
+//					std::sort(training_case_output.begin(), training_case_output.end());
+					std::sort(training_cases_solution[i].begin(), training_cases_solution[i].end());
 
-					training_cases_problem[i] = training_case_input;
-					training_cases_solution[i] = training_case_output;
+					//training_cases_problem[i] = training_case_input;
+					//training_cases_solution[i] = training_case_output;
 
 					training_cases_created++;
 				}
@@ -267,22 +284,25 @@ namespace domain
 			{
 				for (int i = _example_cases_loaded + training_cases_created - argmap::number_of_training_cases; i < argmap::number_of_test_cases; i++)
 				{
-					std::vector<double> test_case_input;
-					std::vector<double> test_case_output;
+					//std::vector<double> test_case_input;
+					//std::vector<double> test_case_output;
 
 					int test_case_length = Utilities::random_integer(argmap::example_case_min_length, argmap::example_case_max_length);
 
 					for (int j = 0; j < test_case_length; j++)
 					{
 						int n = Utilities::random_integer(argmap::example_case_upper_range);
-						test_case_input.push_back(n);
-						test_case_output.push_back(n);
+						//test_case_input.push_back(n);
+						//test_case_output.push_back(n);
+						test_cases_problem[i].push_back(n);
+						test_cases_solution[i].push_back(n);
 					}
 
-					std::sort(test_case_output.begin(), test_case_output.end());
+//					std::sort(test_case_output.begin(), test_case_output.end());
+					std::sort(test_cases_solution[i].begin(), test_cases_solution[i].end());
 
-					test_cases_problem[i] = test_case_input;
-					test_cases_solution[i] = test_case_output;
+					//test_cases_problem[i] = test_case_input;
+					//test_cases_solution[i] = test_case_output;
 
 					test_cases_created++;
 				}
@@ -310,16 +330,16 @@ namespace domain
 
 			for (int i = 0; i < argmap::number_of_training_cases; i++)
 			{
-				std::vector<double> training_case_input;
-				std::vector<double> training_case_output;
+				//std::vector<double> training_case_input;
+				//std::vector<double> training_case_output;
 
-				training_case_input = training_cases_problem[i];
-				training_case_output = training_cases_solution[i];
+				//training_case_input = training_cases_problem[i];
+				//training_case_output = training_cases_solution[i];
 
 				std::string training_case_input_str = "";
 				std::string training_case_element = "";
 
-				for (int training_case_data : training_case_input)
+				for (int training_case_data : training_cases_problem[i])
 				{
 					if (training_case_input_str.length() > 0)
 						training_case_input_str += ",";
@@ -331,7 +351,7 @@ namespace domain
 				std::string training_case_output_str = "";
 				training_case_element = "";
 				
-				for (int training_case_data : training_case_output)
+				for (int training_case_data : training_cases_solution[i])
 				{
 					if (training_case_output_str.length() > 0)
 						training_case_output_str += ",";
@@ -347,16 +367,16 @@ namespace domain
 
 			for (int i = 0; i < argmap::number_of_test_cases; i++)
 			{
-				std::vector<double> test_case_input;
-				std::vector<double> test_case_output;
+				//std::vector<double> test_case_input;
+				//std::vector<double> test_case_output;
 
-				test_case_input = test_cases_problem[i];
-				test_case_output = test_cases_solution[i];
+				//test_case_input = test_cases_problem[i];
+				//test_case_output = test_cases_solution[i];
 
 				std::string test_case_input_str = "";
 				std::string test_case_element = "";
 
-				for (int test_case_data : test_case_input)
+				for (int test_case_data : test_cases_problem[i])
 				{
 					if (test_case_input_str.length() > 0)
 						test_case_input_str += ",";
@@ -368,7 +388,7 @@ namespace domain
 				std::string test_case_output_str = "";
 				test_case_element = "";
 
-				for (int test_case_data : test_case_output)
+				for (int test_case_data : test_cases_solution[i])
 				{
 					if (test_case_output_str.length() > 0)
 						test_case_output_str += ",";
@@ -445,7 +465,7 @@ namespace domain
 
 		// Remarks:
 		//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
-		unsigned int make_pop_agents(int _start)
+		unsigned int make_pop_agents(Push::Env & _env, int _start)
 		{
 			unsigned int agents_created = 0;
 
@@ -457,7 +477,7 @@ namespace domain
 			}
 
 			// Cleanup thread factories
-			Push::env.clear_stacks();
+			_env.local().clear_stacks();
 
 			return agents_created;
 		}
@@ -578,80 +598,11 @@ namespace domain
 			delete sqlcmd_insert_new_individual;
 		}
 
-
-		// Remarks:
-		//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
-		//unsigned int verify_pop_agents()
-		//{
-		//	unsigned int n = 0;
-
-		//	// Setup
-		//	database::SQLCommand* sqlcmd_get_individuals;
-
-		//	sqlcmd_get_individuals = new database::SQLCommand(&con, sqlstmt_sqlcmd_get_individuals);
-
-		//	try
-		//	{
-		//		std::cout << "verify_pop_agents()" << std::endl;
-
-		//		sqlcmd_get_individuals->execute();			// Create thread factories
-
-		//		if (sqlcmd_get_individuals->is_result_set())
-		//		{
-		//			while ((sqlcmd_get_individuals->fetch_next()) && (n < argmap::population_size))
-		//			{
-		//				// Check Plush Genome
-		//				long individual_id = sqlcmd_get_individuals->get_field_as_long(1);
-		//				std::string genome_string_from_db = trim_copy(sqlcmd_get_individuals->get_field_as_string(2));
-		//				std::string genome_string_from_individual = trim_copy(pushGP::globals::population_agents[n].get_genome_as_string());
-
-		//				if (genome_string_from_db != genome_string_from_individual)
-		//				{
-		//					std::cout << "Genome mismatch." << std::endl;
-		//					std::cout << "  n = " << n << std::endl;
-		//					std::cout << "  individual_id = " << n << std::endl;
-		//					std::cout << "  Genome = " << genome_string_from_individual << std::endl;
-		//					std::cout << "  Loaded = " << genome_string_from_db << std::endl;
-		//					std::cout << std::endl;
-		//				}
-
-		//				// Check Push Program
-		//				Genome::Genome genome(genome_string_from_db);
-		//				std::string program_string_from_db = trim_copy(genome.get_program());
-		//				std::string program_string_from_individual = trim_copy(pushGP::globals::population_agents[n].get_program());
-
-		//				if (program_string_from_db != program_string_from_individual)
-		//				{
-		//					std::cout << "Program mismatch." << std::endl;
-		//					std::cout << "  n = " << n << std::endl;
-		//					std::cout << "  individual_id = " << n << std::endl;
-		//					std::cout << "  Program = " << program_string_from_individual << std::endl;
-		//					std::cout << "  Loaded = " << program_string_from_db << std::endl;
-		//					std::cout << std::endl;
-		//				}
-
-		//				n++;
-		//			}
-		//		}
-
-		//		else
-		//			throw MyException("verify_pop_agents() - No result set");
-		//	}
-		//	catch (...)
-		//	{
-		//		delete sqlcmd_get_individuals;
-
-		//		return n;
-		//	}
-
-		//	delete sqlcmd_get_individuals;
-
-		//	return n;
-		//}
-
-		int compute_training_errors(std::function<double(unsigned int _individual_index, 
-									std::vector<double>& _input_list, 
-									std::vector<double>& _output_list)> _run_individual_program,
+		std::tuple<int, double, double> compute_training_errors(Push::Env & _env,
+			std::function<double(Push::Env & _env,
+			                     unsigned int _individual_index,
+			                     std::vector<double>& _input_list, 
+			                     std::vector<double>& _output_list)> _run_individual_program,
 			int _number_of_example_cases) 
 		{
 			int individual_with_least_error = -1;
@@ -661,54 +612,50 @@ namespace domain
 
 			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			{
-				int error_count= 0;
+				int error_count_for_individual= 0;
+				double avg_error_for_individual = 0.0;
 
 				if ((individual_index % 100) == 0)
 					std::cout << individual_index;
 
-//				pushGP::globals::minimum_error_array_by_individual[individual_index] = (std::numeric_limits<double>::max)();
-				pushGP::globals::minimum_error_array_by_individual[individual_index] = 0.0;
-
 				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
 				{
-					Push::intLiteralFactory->clean_up();
-					Push::floatLiteralFactory->clean_up();
-					Push::boolLiteralFactory->clean_up();
-					Push::codeListFactory->clean_up();
-					Push::doRangeClassFactory->clean_up();
+					Push::parallel_intLiteralFactory.local().clean_up();
+					Push::parallel_floatLiteralFactory.local().clean_up();
+					Push::parallel_boolLiteralFactory.local().clean_up();
+					Push::parallel_codeListFactory.local().clean_up();
+					Push::parallel_doRangeClassFactory.local().clean_up();
 
-					std::vector<double> example_problem = training_cases_problem[example_case];
-					std::vector<double> example_solution = training_cases_solution[example_case];
-
-					// Compile genome
+					//std::vector<double> example_problem = training_cases_problem[example_case];
+					//std::vector<double> example_solution = training_cases_solution[example_case];
+					std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
+					std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
 
 					// Run program
-					pushGP::globals::error_matrix[example_case][individual_index] = _run_individual_program(individual_index, example_problem, example_solution);
+					double error = _run_individual_program(_env, individual_index, example_problem, example_solution);
 
-					if (pushGP::globals::error_matrix[example_case][individual_index] > 0.0)
-						error_count++;
+					if (error > 0.0)
+						error_count_for_individual++;
 
-					// Set error array to the minimum error for all example cases
-					//if (pushGP::globals::minimum_error_array_by_individual[individual_index] > pushGP::globals::error_matrix[example_case][individual_index])
-					//	pushGP::globals::minimum_error_array_by_individual[individual_index] = pushGP::globals::error_matrix[example_case][individual_index];
+					avg_error_for_individual += error;
 
-					pushGP::globals::minimum_error_array_by_individual[individual_index] += pushGP::globals::error_matrix[example_case][individual_index];
+					pushGP::globals::error_matrix[example_case][individual_index] = error;
 				}
 
 				// Calculate the average error for all example cases
-				pushGP::globals::minimum_error_array_by_individual[individual_index] /= (double)_number_of_example_cases;
+				avg_error_for_individual /= (double)_number_of_example_cases;
 
-				score_array[individual_index] = (double)error_count / (double)_number_of_example_cases;
+				double score = (double)error_count_for_individual / (double)_number_of_example_cases;
 
-				if ((score_array[individual_index] < 1.0) && (score_array[individual_index] < min_score))
+				if ((score < 1.0) && (score < min_score))
 				{
-					min_score = score_array[individual_index];
+					min_score = score;
 					individual_with_best_score = individual_index;
 				}
 
-				if (pushGP::globals::minimum_error_array_by_individual[individual_index] < min_error)
+				if (avg_error_for_individual < min_error)
 				{
-					min_error = pushGP::globals::minimum_error_array_by_individual[individual_index];
+					min_error = avg_error_for_individual;
 					individual_with_least_error = individual_index;
 				}
 
@@ -719,19 +666,88 @@ namespace domain
 
 			std::cout << std::endl;
 
-			return (individual_with_best_score == -1) ? individual_with_least_error : individual_with_best_score;
+			return std::make_tuple
+			(
+				(individual_with_best_score == -1) ? individual_with_least_error : individual_with_best_score, 
+				min_score, 
+				min_error
+			);
 		}
 
-		//argmap::number_of_test_cases,
-		//	test_cases_problem,
-		//	test_cases_solution,
+		std::tuple<int, double, double> parallel_compute_training_errors(Push::Env & _env,
+			std::function<double(Push::Env & _env,
+			                     unsigned int _individual_index,
+			                     std::vector<double>& _input_list,
+			                     std::vector<double>& _output_list)> _run_individual_program,
+			int _number_of_example_cases)
+		{
+			int individual_with_least_error = -1;
+			int individual_with_best_score = -1;
+			double min_error = (std::numeric_limits<double>::max)();
+			double min_score = (std::numeric_limits<double>::max)();
 
-		double compute_test_errors(std::function<double(unsigned int _individual_index,
+//			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
+			const unsigned int zero = 0;
+			parallel_for (zero, domain::argmap::population_size, [&, _number_of_example_cases](const unsigned int individual_index)
+			{
+				int error_count_for_individual = 0;
+				double avg_error_for_individual = 0.0;
+
+				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
+				{
+					Push::parallel_intLiteralFactory.local().clean_up();
+					Push::parallel_floatLiteralFactory.local().clean_up();
+					Push::parallel_boolLiteralFactory.local().clean_up();
+					Push::parallel_codeListFactory.local().clean_up();
+					Push::parallel_doRangeClassFactory.local().clean_up();
+
+					//std::vector<double> example_problem = training_cases_problem[example_case];
+					//std::vector<double> example_solution = training_cases_solution[example_case];
+					std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
+					std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
+
+					// Run program
+					double error = _run_individual_program(_env, individual_index, example_problem, example_solution);
+
+					if (error > 0.0)
+						error_count_for_individual++;
+
+					avg_error_for_individual += error;
+
+					pushGP::globals::error_matrix[example_case][individual_index] = error;
+				}
+
+				// Calculate the average error for all example cases
+				avg_error_for_individual /= (double)_number_of_example_cases;
+
+				double score = (double)error_count_for_individual / (double)_number_of_example_cases;
+
+				if ((score < 1.0) && (score < min_score))
+				{
+					min_score = score;
+					individual_with_best_score = individual_index;
+				}
+
+				if (avg_error_for_individual < min_error)
+				{
+					min_error = avg_error_for_individual;
+					individual_with_least_error = individual_index;
+				}
+			});
+
+			return std::make_tuple
+			(
+				(individual_with_best_score == -1) ? individual_with_least_error : individual_with_best_score,
+				min_score,
+				min_error
+			);
+		}
+
+		double compute_test_errors(Push::Env & _env, 
+			std::function<double(Push::Env & _env,
+			                    unsigned int _individual_index,
 								std::vector<double>& _example_problem, 
 			                    std::vector<double>& _example_solution)> _run_individual_program,
-			//int _number_of_example_cases,
-			//static std::vector<double> _example_cases_problem[],
-			//static std::vector<double> _example_cases_solution[],
 			int _individual_index)
 		{
 			double error = (std::numeric_limits<double>::max)();
@@ -741,43 +757,12 @@ namespace domain
 			{
 				std::cout << ".";
 
-				std::vector<double> example_problem = test_cases_problem[example_case];
-				std::vector<double> example_solution = test_cases_solution[example_case];
+				//std::vector<double> example_problem = test_cases_problem[example_case];
+				//std::vector<double> example_solution = test_cases_solution[example_case];
+				std::vector<double> example_problem(test_cases_problem[example_case].begin(), test_cases_problem[example_case].end());
+				std::vector<double> example_solution(test_cases_solution[example_case].begin(), test_cases_solution[example_case].end());
 
-				double example_case_error = _run_individual_program(_individual_index, example_problem, example_solution);
-
-				if (example_case_error > 0.0)
-					error_count++;
-			}
-
-			error = (double)error_count / (double)argmap::number_of_test_cases;
-
-			std::cout << std::endl;
-			std::cout << std::endl;
-
-			return error;
-		}
-
-		//argmap::number_of_test_cases,
-		//	test_cases_problem,
-		//	test_cases_solution,
-
-		double verify_test_errors(std::function<double(std::string _genome, 
-													std::vector<double>& _example_problem, 
-													std::vector<double>& _example_solution)> _run_genome,
-			std::string _genome)
-		{
-			double error = (std::numeric_limits<double>::max)();
-			int error_count = 0;
-
-			for (int example_case = 0; example_case < argmap::number_of_test_cases; example_case++)
-			{
-				std::cout << ".";
-
-				std::vector<double> example_problem = test_cases_problem[example_case];
-				std::vector<double> example_solution = test_cases_solution[example_case];
-
-				double example_case_error = _run_genome(_genome, example_problem, example_solution);
+				double example_case_error = _run_individual_program(_env, _individual_index, example_problem, example_solution);
 
 				if (example_case_error > 0.0)
 					error_count++;
@@ -790,6 +775,35 @@ namespace domain
 
 			return error;
 		}
+
+		//double verify_test_errors(std::function<double(std::string _genome, 
+		//											std::vector<double>& _example_problem, 
+		//											std::vector<double>& _example_solution)> _run_genome,
+		//	std::string _genome)
+		//{
+		//	double error = (std::numeric_limits<double>::max)();
+		//	int error_count = 0;
+
+		//	for (int example_case = 0; example_case < argmap::number_of_test_cases; example_case++)
+		//	{
+		//		std::cout << ".";
+
+		//		std::vector<double> example_problem = test_cases_problem[example_case];
+		//		std::vector<double> example_solution = test_cases_solution[example_case];
+
+		//		double example_case_error = _run_genome(_genome, example_problem, example_solution);
+
+		//		if (example_case_error > 0.0)
+		//			error_count++;
+		//	}
+
+		//	error = (double)error_count / (double)argmap::number_of_test_cases;
+
+		//	std::cout << std::endl;
+		//	std::cout << std::endl;
+
+		//	return error;
+		//}
 
 		pushGP::AsyncBreed async_breed;
 
@@ -808,7 +822,7 @@ namespace domain
 			// Breed new generation
 			std::cout << "  Breed new generation" << std::endl;
 
-			if (argmap::use_single_thread)
+			if (!argmap::use_multithreading)
 			{
 				for (unsigned int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 				{
@@ -880,41 +894,6 @@ namespace domain
 			// Possibly this is where we should compile the genomes
 		}
 
-		//void generate_status_report(unsigned int _generation_number,
-		//	unsigned int _generations_completed_this_session, 
-		//	unsigned int _best_individual_id, 
-		//	double _best_individual_training_score, 
-		//	double _best_individual_training_error,
-		//	double _average_traiing_error,
-		//	double _best_individual_test_score,
-		//	std::string _best_gnome)
-		//{
-		//	database::SQLCommand* sqlcmd_save_status_report;
-
-		//	sqlcmd_save_status_report = new database::SQLCommand(&con, sqlstmt_save_status_report);
-
-		//	sqlcmd_save_status_report->set_as_integer(1, _generation_number);
-		//	sqlcmd_save_status_report->set_as_integer(2, _generations_completed_this_session);
-		//	sqlcmd_save_status_report->set_as_integer(3, _best_individual_id);
-		//	sqlcmd_save_status_report->set_as_float(4, _best_individual_training_score);
-		//	sqlcmd_save_status_report->set_as_float(5, _best_individual_training_error);
-		//	sqlcmd_save_status_report->set_as_float(6, _average_traiing_error);
-		//	sqlcmd_save_status_report->set_as_float(7, _best_individual_test_score);
-		//	sqlcmd_save_status_report->set_as_integer(8, argmap::number_of_training_cases);
-		//	sqlcmd_save_status_report->set_as_integer(9, argmap::number_of_test_cases);
-		//	sqlcmd_save_status_report->set_as_string(10, _best_gnome);
-		//	sqlcmd_save_status_report->set_as_integer(11, argmap::population_size);
-		//	sqlcmd_save_status_report->set_as_float(12, argmap::alternation_rate);
-		//	sqlcmd_save_status_report->set_as_float(13, argmap::uniform_mutation_rate);
-		//	sqlcmd_save_status_report->set_as_integer(14, argmap::example_case_max_length);
-		//	sqlcmd_save_status_report->set_as_integer(15, argmap::example_case_upper_range);
-
-		//	sqlcmd_save_status_report->execute();
-
-		//	delete sqlcmd_save_status_report;
-		//}
-
-
 		void generate_status_report(unsigned int _generation_number,
 			unsigned int _generations_completed_this_session,
 			unsigned int _best_individual_id,
@@ -951,20 +930,29 @@ namespace domain
 			delete sqlcmd_save_status_report;
 		}
 
-
-
-//		int run(int argc, char** argv)
 		int run()
 		{
 			// Create memory management factories
-			Push::intLiteralFactory = new Push::LiteralFactory<int>();
-			Push::floatLiteralFactory = new Push::LiteralFactory<double>();
-			Push::boolLiteralFactory = new Push::LiteralFactory<bool>();
-			Push::codeListFactory = new Push::CodeListFactory();
-			Push::doRangeClassFactory = new Push::DoRangeClassFactory();
+			//Push::intLiteralFactory = new Push::LiteralFactory<int>();
+			//Push::floatLiteralFactory = new Push::LiteralFactory<double>();
+			//Push::boolLiteralFactory = new Push::LiteralFactory<bool>();
+			//Push::codeListFactory = new Push::CodeListFactory();
+			//Push::doRangeClassFactory = new Push::DoRangeClassFactory();
+
+			//SchedulerPolicy policy = CurrentScheduler::GetPolicy();
+
+			//policy.SetPolicyValue(TargetOversubscriptionFactor, 1);
+
+			//policy.SetConcurrencyLimits(1, 8);
+
+			//CurrentScheduler::Create(policy);
+
+
 
 			// Setup
-			Push::init_push();
+			Push::Env env;
+
+			Push::init_push(env);
 
 			try
 			{
@@ -986,7 +974,7 @@ namespace domain
 				// Load population.  Create more if not enough loaded.
 				std::cout << "Create Population Agents" << std::endl;
 				generation_number = get_last_saved_generation_number() + 1;
-				agents_created = make_pop_agents(load_pop_agents());
+				agents_created = make_pop_agents(env, load_pop_agents());
 
 				if (agents_created > 0)
 					generation_number = 0;
@@ -1010,19 +998,52 @@ namespace domain
 
 					std::cout << "Clean up memory" << std::endl;
 
-					Push::intLiteralFactory->clean_up();
-					Push::floatLiteralFactory->clean_up();
-					Push::boolLiteralFactory->clean_up();
-					Push::codeListFactory->clean_up();
-					Push::doRangeClassFactory->clean_up();
+					Push::parallel_intLiteralFactory.local().clean_up();
+					Push::parallel_floatLiteralFactory.local().clean_up();
+					Push::parallel_boolLiteralFactory.local().clean_up();
+					Push::parallel_codeListFactory.local().clean_up();
+					Push::parallel_doRangeClassFactory.local().clean_up();
 
 					std::cout << "Generation " << generation_number << std::endl;
 					std::cout << "Session " << generations_completed_this_session << std::endl;
 					save_generation();
-//					verify_pop_agents();
 
 					std::cout << "Run Programs with Training Cases" << std::endl;
-					int best_individual = compute_training_errors(run_individual, argmap::number_of_training_cases);
+
+					std::tuple<int, double, double> best_individual_score_error;
+
+
+
+
+//					__int64 begin = GetTickCount();
+//
+////					best_individual_score_error = compute_training_errors(env, run_individual, argmap::number_of_training_cases);
+//
+//					__int64 end = GetTickCount() - begin;
+//
+////					std::cout << "Serial time:  " << end << std::endl;
+//
+//					begin = GetTickCount();
+//
+//					best_individual_score_error = parallel_compute_training_errors(env, run_individual, argmap::number_of_training_cases);
+//
+//					end = GetTickCount() - begin;
+//
+//					std::cout << "Parallel time: " << end << std::endl;
+//
+//					break;
+
+
+
+
+					if (argmap::use_PPL)
+						best_individual_score_error = parallel_compute_training_errors(env, run_individual, argmap::number_of_training_cases);
+					else
+						best_individual_score_error = compute_training_errors(env, run_individual, argmap::number_of_training_cases);
+
+					int best_individual = std::get<0>(best_individual_score_error);
+					double best_individual_score = std::get<1>(best_individual_score_error);
+					double best_individual_error = std::get<2>(best_individual_score_error);
 
 					std::cout << "Produce New Offspring" << std::endl;
 					produce_new_offspring(argmap::number_of_training_cases,	best_individual);
@@ -1036,27 +1057,10 @@ namespace domain
 					std::cout << "program = " << program << std::endl;
 					std::cout << "genome = " << genome << std::endl;
 
-					double test_case_score = compute_test_errors(run_individual,
-						//argmap::number_of_test_cases,
-						//test_cases_problem,
-						//test_cases_solution,
-						best_individual);
+					double test_case_score = compute_test_errors(env, run_individual, best_individual);
 
 					std::cout << "test_case_error = " << test_case_score << std::endl;
 					std::cout << std::endl;
-
-					//std::cout << "Verify Best Individual's Program with Test Cases" << std::endl;
-
-					////std::string genome = "{:instruction EXEC.DO*RANGE :close  0}{:instruction FLOAT.SWAP :close  0}{:instruction FLOAT.- :close  0}{:instruction FLOAT.FROMINTEGER :close  0}{:instruction INTEGER.FLUSH :close  0}{:instruction INTEGER.> :close  0}{:instruction CODE.DUP :close  0}{:instruction BOOLEAN.NOR :close  0}{:instruction FLOAT.YANK :close  0}{:instruction INTEGER.FROMFLOAT :close  0}{:instruction FLOAT./ :close  4}{:instruction FLOAT.FLUSH :close  0}{:instruction EXEC.IF :close  0}";
-
-					//double verify_test_case_error = verify_test_errors(run_genome,
-					//	//argmap::number_of_test_cases,
-					//	//test_cases_problem,
-					//	//test_cases_solution,
-					//	genome);
-					//				   					 				  
-					//std::cout << "verify_test_case_error = " << verify_test_case_error << std::endl;
-					//std::cout << std::endl;
 
 					std::cout << "Generate Status Report" << std::endl;
 
@@ -1081,8 +1085,8 @@ namespace domain
 					generate_status_report(generation_number, 
 						generations_completed_this_session, 
 						best_individual, 
-						score_array[best_individual],
-						pushGP::globals::minimum_error_array_by_individual[best_individual],
+						best_individual_score,
+						best_individual_error,
 						average_traiing_error,
 						standard_deviation,
 						test_case_score, 
@@ -1096,38 +1100,18 @@ namespace domain
 			}
 			catch (const std::exception& e)
 			{
-				// Cleanup thread factories
-				Push::env.clear_stacks();
-
-				delete Push::intLiteralFactory;
-				delete Push::floatLiteralFactory;
-				delete Push::boolLiteralFactory;
-				delete Push::codeListFactory;
-				delete Push::doRangeClassFactory;
+				env.local().clear_stacks();
 
 				std::cout << "Standard exception: " << e.what() << std::endl;
 				throw;
 			}
 			catch (...)
 			{
-				// Cleanup thread factories
-				Push::env.clear_stacks();
-
-				delete Push::intLiteralFactory;
-				delete Push::floatLiteralFactory;
-				delete Push::boolLiteralFactory;
-				delete Push::codeListFactory;
-				delete Push::doRangeClassFactory;
+				env.local().clear_stacks();
 
 				std::cout << "Exception occurred" << std::endl;
 				throw;
 			}
-
-			delete Push::intLiteralFactory;
-			delete Push::floatLiteralFactory;
-			delete Push::boolLiteralFactory;
-			delete Push::codeListFactory;
-			delete Push::doRangeClassFactory;
 
 			return 0;
 		}
