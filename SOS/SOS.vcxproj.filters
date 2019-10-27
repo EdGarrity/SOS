@@ -174,9 +174,6 @@
     <ClInclude Include="Plush\Atom.h">
       <Filter>Header Files\Plush</Filter>
     </ClInclude>
-    <ClInclude Include="PushGP\AsyncBreed.h">
-      <Filter>Header Files\PushGP</Filter>
-    </ClInclude>
     <ClInclude Include="Utilities\Random.Utilities.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
@@ -277,9 +274,6 @@
     </ClCompile>
     <ClCompile Include="Plush\Atom.cpp">
       <Filter>Source Files\Plush</Filter>
-    </ClCompile>
-    <ClCompile Include="PushGP\AsyncBreed.cpp">
-      <Filter>Source Files\PushGP</Filter>
     </ClCompile>
     <ClCompile Include="Utilities\Random.Utilities.cpp">
       <Filter>Source Files\Utilities</Filter>
