@@ -20,6 +20,7 @@
 #include <deque>
 #include <ppl.h>
 #include <concurrent_vector.h>
+#include <concurrent_unordered_set.h>
 
 using namespace concurrency;
 
@@ -701,8 +702,6 @@ namespace domain
 					Push::parallel_codeListFactory.local().clean_up();
 					Push::parallel_doRangeClassFactory.local().clean_up();
 
-					//std::vector<double> example_problem = training_cases_problem[example_case];
-					//std::vector<double> example_solution = training_cases_solution[example_case];
 					std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
 					std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
 
@@ -757,8 +756,6 @@ namespace domain
 			{
 				std::cout << ".";
 
-				//std::vector<double> example_problem = test_cases_problem[example_case];
-				//std::vector<double> example_solution = test_cases_solution[example_case];
 				std::vector<double> example_problem(test_cases_problem[example_case].begin(), test_cases_problem[example_case].end());
 				std::vector<double> example_solution(test_cases_solution[example_case].begin(), test_cases_solution[example_case].end());
 
@@ -776,43 +773,10 @@ namespace domain
 			return error;
 		}
 
-		//double verify_test_errors(std::function<double(std::string _genome, 
-		//											std::vector<double>& _example_problem, 
-		//											std::vector<double>& _example_solution)> _run_genome,
-		//	std::string _genome)
-		//{
-		//	double error = (std::numeric_limits<double>::max)();
-		//	int error_count = 0;
-
-		//	for (int example_case = 0; example_case < argmap::number_of_test_cases; example_case++)
-		//	{
-		//		std::cout << ".";
-
-		//		std::vector<double> example_problem = test_cases_problem[example_case];
-		//		std::vector<double> example_solution = test_cases_solution[example_case];
-
-		//		double example_case_error = _run_genome(_genome, example_problem, example_solution);
-
-		//		if (example_case_error > 0.0)
-		//			error_count++;
-		//	}
-
-		//	error = (double)error_count / (double)argmap::number_of_test_cases;
-
-		//	std::cout << std::endl;
-		//	std::cout << std::endl;
-
-		//	return error;
-		//}
-
-		pushGP::AsyncBreed async_breed;
-
-		//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
-		//
 		void produce_new_offspring(int _number_of_example_cases, unsigned int _best_individual)
 		{
 			std::set<std::string> set_of_gnomes;
-			std::pair<std::set<std::string>::iterator, bool> ret;
+			combinable<pushGP::globals::Training_case_min_error_type> training_case_min_error;
 
 			// Reset children.
 			std::cout << "  Reset children" << std::endl;
@@ -822,62 +786,83 @@ namespace domain
 			// Breed new generation
 			std::cout << "  Breed new generation" << std::endl;
 
-			if (!argmap::use_multithreading)
+			for (unsigned int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 			{
-				for (unsigned int individual_index = 0; individual_index < argmap::population_size; individual_index++)
-				{
-					pushGP::breed(individual_index, _number_of_example_cases);
+				// Keep the best individual
+				if (individual_index == _best_individual)
+					pushGP::globals::child_agents[individual_index].copy(pushGP::globals::population_agents[individual_index]);
 
-					ret = set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string());
+				else
+				{
+					pushGP::breed(individual_index, _number_of_example_cases, training_case_min_error);
 
 					// If a child with the same genome already exists, create a new random child.
-					if (ret.second == false)
+					if (set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string()).second == false)
 						pushGP::globals::child_agents[individual_index].set_genome(pushGP::random_plush_genome());
 				}
 			}
 
-			else
-			{
-				int num_threads = std::thread::hardware_concurrency() - argmap::number_of_cores_to_reserve;
-				std::vector<std::thread> thread_pool;
-
-				std::cout << "  Number of threads = " << num_threads << std::endl;
-
-				// See https://www.justsoftwaresolutions.co.uk/threading/multithreading-in-c++0x-part-3.html
-				for (int i = 0; i < num_threads - 1; i++)
-					thread_pool.push_back(std::thread(&pushGP::AsyncBreed::breed_function_thread_pool, &async_breed));
-
-				std::cout << "  Evaluate Individuals";
-
-				for (int individual_index = 0; individual_index < argmap::population_size; individual_index++)
-					async_breed.push(individual_index, _number_of_example_cases);
-
-				async_breed.done();
-
-				for (unsigned int i = 0; i < thread_pool.size(); i++)
-				{
-					thread_pool.at(i).join();
-				}
-
-				std::cout << std::endl;
-
-				std::cout << "  Remove duplicates" << std::endl;
-				for (unsigned int individual_index = 0; individual_index < argmap::population_size; individual_index++)
-				{
-					ret = set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string());
-
-					// If a child with the same genome already exists, create a new random child.
-					if (ret.second == false)
-						pushGP::globals::child_agents[individual_index].set_genome(pushGP::random_plush_genome());
-				}
-			}
-
-			// Keep the best individuals
-			pushGP::globals::child_agents[_best_individual].copy(pushGP::globals::population_agents[_best_individual]);
-
+			// Keep the best individuals for each test case
 			for (unsigned int training_case = 0; training_case < domain::argmap::number_of_training_cases; training_case++)
 			{
-				unsigned int best_individual_for_training_case = pushGP::globals::individual_with_minimum_error_for_training_case[training_case];
+				unsigned int best_individual_for_training_case = training_case_min_error.local().individual_with_minimum_error_for_training_case[training_case];
+
+				if (best_individual_for_training_case < (std::numeric_limits<unsigned int>::max)())
+					pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);
+			}
+
+			std::cout << std::endl;
+		}
+
+		void parallel_produce_new_offspring(int _number_of_example_cases, unsigned int _best_individual)
+		{
+			concurrent_unordered_set<std::string> set_of_gnomes;
+			combinable<pushGP::globals::Training_case_min_error_type> training_case_min_error_sub_computations;
+			pushGP::globals::Training_case_min_error_type training_case_min_error;
+
+			// Reset children.
+			std::cout << "  Reset children" << std::endl;
+			for (unsigned int n = 0; n < argmap::population_size; n++)
+				pushGP::globals::child_agents[n].clear_genome();
+
+			// Breed new generation
+			std::cout << "  Breed new generation" << std::endl;
+
+//			for (unsigned int individual_index = 0; individual_index < argmap::population_size; individual_index++)
+			const unsigned int zero = 0;
+			parallel_for(zero, domain::argmap::population_size, [&set_of_gnomes, &training_case_min_error_sub_computations, _best_individual, _number_of_example_cases](const unsigned int individual_index)
+			{
+				// Keep the best individual
+				if (individual_index == _best_individual)
+					pushGP::globals::child_agents[individual_index].copy(pushGP::globals::population_agents[individual_index]);
+
+				else
+				{
+					pushGP::breed(individual_index, _number_of_example_cases, training_case_min_error_sub_computations);
+
+					// If a child with the same genome already exists, create a new random child.
+					if (set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string()).second == false)
+						pushGP::globals::child_agents[individual_index].set_genome(pushGP::random_plush_genome());
+				}
+			});
+
+			// Combine the Training Case Minimum Errors
+			training_case_min_error_sub_computations.combine_each([&](pushGP::globals::Training_case_min_error_type &local)
+			{
+				for (unsigned int example_case = 0; example_case < domain::argmap::number_of_training_cases; example_case++)
+				{
+					if (training_case_min_error.minimum_error_array_by_example_case[example_case] > local.minimum_error_array_by_example_case[example_case])
+					{
+						training_case_min_error.minimum_error_array_by_example_case[example_case] = local.minimum_error_array_by_example_case[example_case];
+						training_case_min_error.individual_with_minimum_error_for_training_case[example_case] = local.individual_with_minimum_error_for_training_case[example_case];
+					}
+				}
+			});
+
+			// Keep the best individuals for each test case
+			for (unsigned int training_case = 0; training_case < domain::argmap::number_of_training_cases; training_case++)
+			{
+				unsigned int best_individual_for_training_case = training_case_min_error.individual_with_minimum_error_for_training_case[training_case];
 
 				if (best_individual_for_training_case < (std::numeric_limits<unsigned int>::max)())
 					pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);
@@ -984,11 +969,11 @@ namespace domain
 					// Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
 					std::cout << "Reset variables which track the minimum error for this test case and the individual who achived the minimum error " << std::endl;
 
-					for (unsigned int example_case = 0; example_case < argmap::number_of_training_cases; example_case++)
-					{
-						pushGP::globals::minimum_error_array_by_example_case[example_case] = (std::numeric_limits<double>::max)();
-						pushGP::globals::individual_with_minimum_error_for_training_case[example_case] = (std::numeric_limits<unsigned int>::max)();
-					}
+					//for (unsigned int example_case = 0; example_case < argmap::number_of_training_cases; example_case++)
+					//{
+					//	pushGP::globals::minimum_error_array_by_example_case[example_case] = (std::numeric_limits<double>::max)();
+					//	pushGP::globals::individual_with_minimum_error_for_training_case[example_case] = (std::numeric_limits<unsigned int>::max)();
+					//}
 
 					for (int ind = 0; ind < argmap::population_size; ind++)
 					{
@@ -1046,7 +1031,13 @@ namespace domain
 					double best_individual_error = std::get<2>(best_individual_score_error);
 
 					std::cout << "Produce New Offspring" << std::endl;
-					produce_new_offspring(argmap::number_of_training_cases,	best_individual);
+
+
+					if (argmap::use_PPL)
+						parallel_produce_new_offspring(argmap::number_of_training_cases, best_individual);
+
+					else
+						produce_new_offspring(argmap::number_of_training_cases, best_individual);
 
 					std::cout << "Run Best Individual's Program with Test Cases" << std::endl;
 					
