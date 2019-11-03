@@ -17,8 +17,10 @@ namespace domain
 		const bool use_PPL = true;
 		const unsigned int number_of_cores_to_reserve = 4;
 
+		const std::string GetCpuTemperatureCmd = "C:\\Users\\edgar\\OneDrive\\Projects\\Source\\Repos\\EdGarrity\\SOS\\Debug\\GetCpuTemperature.exe";
+
 		const double cool_temperature = 40;
-		const double hot_temperature = 70;
+		const double hot_temperature = 45;
 		const long cool_down_minutes = 1;
 
 		//	:random - seed(random / generate - mersennetwister - seed)

@@ -20,37 +20,37 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{3E53F5E5-FC5D-4A9D-B284-E786B594DA06}</ProjectGuid>
+    <ProjectGuid>{903A9A74-74AD-4965-9573-9EF763EEE0CD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>SOS</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <RootNamespace>GetCpuTemperature</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>NotSet</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>NotSet</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>NotSet</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>NotSet</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -70,13 +70,11 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\181\SDK\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\181\SDK\Lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -84,6 +82,21 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -97,24 +110,6 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
-      <OmitFramePointers>false</OmitFramePointers>
-      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -156,89 +151,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Database\SQLCommand.h" />
-    <ClInclude Include="Database\SQLConnection.h" />
-    <ClInclude Include="Database\SQLField.h" />
-    <ClInclude Include="Domain\Arguments.h" />
-    <ClInclude Include="Domain\Learn From Examples\Arguments.h" />
-    <ClInclude Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.h" />
-    <ClInclude Include="Domain\Learn From Examples\Run.LearnFromExamples.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Plush\Atom.h" />
-    <ClInclude Include="Plush\Genome.h" />
-    <ClInclude Include="PushGP\Breed.h" />
-    <ClInclude Include="PushGP\GeneticOperators.h" />
-    <ClInclude Include="PushGP\Globals.h" />
-    <ClInclude Include="PushGP\Individual.h" />
-    <ClInclude Include="PushGP\Random.h" />
-    <ClInclude Include="PushGP\Selection.h" />
-    <ClInclude Include="PushGP\Utilities.h" />
-    <ClInclude Include="PushP\BoolOps.h" />
-    <ClInclude Include="PushP\Code.h" />
-    <ClInclude Include="PushP\CodeBasePtr.h" />
-    <ClInclude Include="PushP\CodeOps.h" />
-    <ClInclude Include="PushP\CodeUtils.h" />
-    <ClInclude Include="PushP\Env.h" />
-    <ClInclude Include="PushP\ExecInstruction.h" />
-    <ClInclude Include="PushP\Instruction.h" />
-    <ClInclude Include="PushP\Literal.h" />
-    <ClInclude Include="PushP\NumOps.h" />
-    <ClInclude Include="PushP\RandOps.h" />
-    <ClInclude Include="PushP\RNG.h" />
-    <ClInclude Include="PushP\StaticInit.h" />
-    <ClInclude Include="PushP\StaticLibMacros.h" />
-    <ClInclude Include="PushP\Type.h" />
-    <ClInclude Include="PushP\TypedAtom.h" />
-    <ClInclude Include="PushP\TypeDef.h" />
-    <ClInclude Include="Utilities\AtomicFunctions.h" />
-    <ClInclude Include="Utilities\Conversion.h" />
-    <ClInclude Include="Utilities\CoreTemp\GetCoreTempInfo.h" />
-    <ClInclude Include="Utilities\CSVIterator.h" />
-    <ClInclude Include="Utilities\GetCpuTemperature.h" />
-    <ClInclude Include="Utilities\MyException.h" />
-    <ClInclude Include="Utilities\Random.Utilities.h" />
-    <ClInclude Include="Utilities\Singleton.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Database\SQLCommand.cpp" />
-    <ClCompile Include="Database\SQLConnection.cpp" />
-    <ClCompile Include="Database\SQLField.cpp" />
-    <ClCompile Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.cpp" />
-    <ClCompile Include="Domain\Learn From Examples\Run.LearnFromExamples.cpp" />
+    <ClCompile Include="GetCpuTemperature.cpp" />
     <ClCompile Include="pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Plush\Atom.cpp" />
-    <ClCompile Include="Plush\Genome.cpp" />
-    <ClCompile Include="PushGP\Breed.cpp" />
-    <ClCompile Include="PushGP\GeneticOperators.cpp" />
-    <ClCompile Include="PushGP\Globals.cpp" />
-    <ClCompile Include="PushGP\Individual.cpp" />
-    <ClCompile Include="PushGP\Random.cpp" />
-    <ClCompile Include="PushGP\Selection.cpp" />
-    <ClCompile Include="PushGP\Utilities.cpp" />
-    <ClCompile Include="PushP\BooleanInstructions.cpp" />
-    <ClCompile Include="PushP\Code.cpp" />
-    <ClCompile Include="PushP\CodeInstructions.cpp" />
-    <ClCompile Include="PushP\CodeOps.cpp" />
-    <ClCompile Include="PushP\CodeUtils.cpp" />
-    <ClCompile Include="PushP\Env.cpp" />
-    <ClCompile Include="PushP\ExecInstructions.cpp" />
-    <ClCompile Include="PushP\FloatInstructions.cpp" />
-    <ClCompile Include="PushP\Instruction.cpp" />
-    <ClCompile Include="PushP\IntegerInstructions.cpp" />
-    <ClCompile Include="PushP\Literal.cpp" />
-    <ClCompile Include="PushP\StaticInit.cpp" />
-    <ClCompile Include="PushP\Type.cpp" />
-    <ClCompile Include="Utilities\AtomicFunctions.cpp" />
-    <ClCompile Include="Utilities\Conversion.cpp" />
-    <ClCompile Include="Utilities\GetCpuTemperature.cpp" />
-    <ClCompile Include="Utilities\MyException.cpp" />
-    <ClCompile Include="Utilities\Random.Utilities.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="GetCoreTempInfo.lib" />
+    <Library Include="GetCoreTempInfox64.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

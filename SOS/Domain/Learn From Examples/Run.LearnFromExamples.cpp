@@ -919,6 +919,12 @@ namespace domain
 
 		int run()
 		{
+			// Check if CPU is too hot and if so, wait for it to cool down.
+			double temp = Utilities::GetCpuTemperature();
+
+			std::cout << "CPU Temperature is " << temp << std::endl;
+
+
 			// Create memory management factories
 			//Push::intLiteralFactory = new Push::LiteralFactory<int>();
 			//Push::floatLiteralFactory = new Push::LiteralFactory<double>();
@@ -971,7 +977,7 @@ namespace domain
 					// Check if CPU is too hot and if so, wait for it to cool down.
 					double temp = Utilities::GetCpuTemperature();
 
-					std::cout << "CPU Temperature is " << temp << std::endl;
+					std::cout << "CPU Temperature: Min = " << argmap::cool_temperature << " Max = " << argmap::hot_temperature << " Current Temp = " << temp << std::endl;
 
 					if (temp > argmap::hot_temperature)
 					{

@@ -1,16 +1,14 @@
 #include "GetCpuTemperature.h"
 
-#define _WIN32_DCOM
 #include <iostream>
-using namespace std;
-#include <comdef.h>
-#include <Wbemidl.h>
-#include <limits>
-#include <sstream>
-#include <iomanip> 
+#include <cstdio>
+#include <iostream>
+#include <memory>
+#include <stdexcept>
+#include <string>
+#include <array>
 #include "MyException.h"
-
-#pragma comment(lib, "wbemuuid.lib")
+#include "..\Domain\Arguments.h"
 
 namespace Utilities
 {
@@ -30,116 +28,33 @@ namespace Utilities
 	//   Unknown
 	//
 	// Remarks:
-	//   See http://www.cplusplus.com/forum/general/146576/
+	//   This function calls the GetCpuTemperature function
+	//
 	double GetCpuTemperature()
 	{
-		double Temperature = (std::numeric_limits<double>::min)();
+		double temperature = (std::numeric_limits<double>::max)();
+		
+		std::array<char, 128> buffer;
+		std::string result;
+		std::unique_ptr<FILE, decltype(&_pclose)> pipe(_popen(domain::argmap::GetCpuTemperatureCmd.c_str(), "r"), _pclose);
 
-		HRESULT ci = CoInitialize(NULL);
-		HRESULT hr = CoInitializeSecurity(NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_DEFAULT, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, EOAC_NONE, NULL);
-
-		if (FAILED(hr))
+		if (!pipe) 
 		{
 			std::stringstream error("GetCpuTemperature() - ");
-
-			error << "CoInitializeSecurity returned failure code ";
-			error << "0x" << std::uppercase << std::setfill('0') << std::setw(4) << std::hex << hr;
-
+			
+			error << "popen() failed";
+			
 			std::cerr << error.str() << std::endl;
 			throw MyException(error);
 		}
 
-		IWbemLocator *pLocator;
-		hr = CoCreateInstance(CLSID_WbemAdministrativeLocator, NULL, CLSCTX_INPROC_SERVER, IID_IWbemLocator, (LPVOID*)&pLocator);
-
-		if (FAILED(hr))
+		while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) 
 		{
-			std::stringstream error("GetCpuTemperature() - ");
-
-			error << "CoCreateInstance returned failure code ";
-			error << "0x" << std::uppercase << std::setfill('0') << std::setw(4) << std::hex << hr;
-
-			std::cerr << error.str() << std::endl;
-			throw MyException(error);
+			result += buffer.data();
 		}
 
-		IWbemServices *pServices;
-		BSTR ns = SysAllocString(L"root\\WMI");
-		hr = pLocator->ConnectServer(ns, NULL, NULL, NULL, 0, NULL, NULL, &pServices);
-		pLocator->Release();
-		SysFreeString(ns);
+		temperature = stod(result);
 
-		if (FAILED(hr))
-		{
-			if (ci == S_OK)
-				CoUninitialize();
-
-			std::stringstream error("GetCpuTemperature() - ");
-
-			error << "ConnectServer returned failure code ";
-			error << "0x" << std::uppercase << std::setfill('0') << std::setw(4) << std::hex << hr;
-
-			std::cerr << error.str() << std::endl;
-			throw MyException(error);
-		}
-
-		BSTR query = SysAllocString(L"SELECT * FROM MSAcpi_ThermalZoneTemperature");
-		BSTR wql = SysAllocString(L"WQL");
-		IEnumWbemClassObject *pEnum;
-		hr = pServices->ExecQuery(wql, query, WBEM_FLAG_RETURN_IMMEDIATELY | WBEM_FLAG_FORWARD_ONLY, NULL, &pEnum);
-		SysFreeString(wql);
-		SysFreeString(query);
-		pServices->Release();
-
-		// See https://docs.microsoft.com/en-us/dotnet/framework/unmanaged-api/wmi/execquerywmi for error codes
-		if (FAILED(hr))
-		{
-			if (ci == S_OK)
-				CoUninitialize();
-
-			std::stringstream error("GetCpuTemperature() - ");
-
-			error << "ExecQuery returned failure code ";
-			error << "0x" << std::uppercase << std::setfill('0') << std::setw(4) << std::hex << hr;
-
-			std::cerr << error.str() << std::endl;
-			throw MyException(error);
-		}
-
-		IWbemClassObject *pObject;
-		ULONG returned;
-		hr = pEnum->Next(WBEM_INFINITE, 1, &pObject, &returned);
-		pEnum->Release();
-
-		if (FAILED(hr))
-		{
-			if (ci == S_OK)
-				CoUninitialize();
-
-			std::stringstream error("GetCpuTemperature() - ");
-
-			error << "pEnum->Next returned failure code ";
-			error << "0x" << std::uppercase << std::setfill('0') << std::setw(4) << std::hex << hr;
-
-			std::cerr << error.str() << std::endl;
-			throw MyException(error);
-		}
-
-		BSTR temp = SysAllocString(L"CurrentTemperature");
-		VARIANT v;
-		VariantInit(&v);
-		hr = pObject->Get(temp, 0, &v, NULL, NULL);
-		pObject->Release();
-		SysFreeString(temp);
-
-		if (SUCCEEDED(hr))
-			Temperature = (double)V_I4(&v) / 10.0 - 273.15;
-
-		VariantClear(&v);
-
-		if (ci == S_OK)
-			CoUninitialize();
-
-		return Temperature;
+		return temperature;
 	}
 }
