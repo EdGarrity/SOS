@@ -13,6 +13,7 @@
 #include "../../Utilities/Conversion.h"
 #include "../../PushGP/AsyncBreed.h"
 #include "../../Utilities/Random.Utilities.h"
+#include "../../Utilities/GetCpuTemperature.h"
 #include <functional>
 #include <limits>
 #include <sstream>
@@ -21,6 +22,7 @@
 #include <ppl.h>
 #include <concurrent_vector.h>
 #include <concurrent_unordered_set.h>
+#include <thread>
 
 using namespace concurrency;
 
@@ -966,6 +968,27 @@ namespace domain
 
 				while ((!done) && (generations_completed_this_session < argmap::max_generations_in_one_session))
 				{
+					// Check if CPU is too hot and if so, wait for it to cool down.
+					double temp = Utilities::GetCpuTemperature();
+
+					std::cout << "CPU Temperature is " << temp << std::endl;
+
+					if (temp > argmap::hot_temperature)
+					{
+						std::cout << "CPU is too hot.  Waiting for it to cool down." << std::endl;
+
+						do
+						{
+							std::this_thread::sleep_for(std::chrono::minutes(argmap::cool_down_minutes));
+							temp = Utilities::GetCpuTemperature();
+
+							std::cout << "CPU Temperature is " << temp << std::endl;
+						} while (temp > argmap::cool_temperature);
+
+						std::cout << "CPU is now cool enough to continue." << std::endl;
+						std::cout << std::endl;
+					}
+
 					// Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
 					std::cout << "Reset variables which track the minimum error for this test case and the individual who achived the minimum error " << std::endl;
 
