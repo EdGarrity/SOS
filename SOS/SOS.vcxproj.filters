@@ -55,6 +55,9 @@
     <Filter Include="Source Files\Plush">
       <UniqueIdentifier>{e21770da-3700-4b3b-ba8b-86fceb7f5d94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Utilities\CoreTemp">
+      <UniqueIdentifier>{c5e3967d-3351-43de-8b08-38815b3663d9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -174,11 +177,14 @@
     <ClInclude Include="Plush\Atom.h">
       <Filter>Header Files\Plush</Filter>
     </ClInclude>
-    <ClInclude Include="PushGP\AsyncBreed.h">
-      <Filter>Header Files\PushGP</Filter>
-    </ClInclude>
     <ClInclude Include="Utilities\Random.Utilities.h">
       <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\GetCpuTemperature.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\CoreTemp\GetCoreTempInfo.h">
+      <Filter>Header Files\Utilities\CoreTemp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -278,10 +284,10 @@
     <ClCompile Include="Plush\Atom.cpp">
       <Filter>Source Files\Plush</Filter>
     </ClCompile>
-    <ClCompile Include="PushGP\AsyncBreed.cpp">
-      <Filter>Source Files\PushGP</Filter>
-    </ClCompile>
     <ClCompile Include="Utilities\Random.Utilities.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\GetCpuTemperature.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
   </ItemGroup>

@@ -12,9 +12,9 @@ public:
 	MyException(const char *);
 	MyException(const std::string& _exception);
 	MyException(const std::stringstream& _exception);
-	MyException(const char *, short _code);
-	MyException(const std::string& _exception, short _code);
-	MyException(const std::stringstream& _exception, short _code);
+	MyException(const char *, long _code);
+	MyException(const std::string& _exception, long _code);
+	MyException(const std::stringstream& _exception, long _code);
 	~MyException(void);
 
 	const char * what () const throw ();
@@ -22,6 +22,6 @@ public:
 
 private:
 	std::string exception_;
-	short code_;
+	long code_;
 };
 

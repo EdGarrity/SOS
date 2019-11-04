@@ -1,10 +1,13 @@
 #include <algorithm>
-#include <random>
 #include <chrono>
+#include <random>
+#include <ppl.h>
 #include "Selection.h"
 #include "Random.h"
 #include "Globals.h"
 #include "..\Utilities\Random.Utilities.h"
+
+using namespace concurrency;
 
 namespace pushGP
 {
@@ -36,6 +39,8 @@ namespace pushGP
 		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 
 		std::shuffle(deck.begin(), deck.end(), std::default_random_engine(seed));
+
+//		std::random_shuffle(deck.begin(), deck.end(), Utilities::random_integer);
 
 		return deck;
 	}
@@ -145,7 +150,8 @@ namespace pushGP
 	//
 	// Remarks:
 	//
-	unsigned int epsilon_lexicase_selection(int _number_of_example_cases, int _index_of_other_parent)
+
+	unsigned int epsilon_lexicase_selection(int _number_of_example_cases, int _index_of_other_parent, combinable<struct pushGP::globals::Training_case_min_error> & _training_case_min_error)
 	{
 		unsigned int chosen = 0;
 		unsigned individual_index = 0;
@@ -189,10 +195,15 @@ namespace pushGP
 				// Record minimum error for this test case and the individual who achived the minimum error
 				min_error_for_this_example_case = error < min_error_for_this_example_case ? error : min_error_for_this_example_case;
 
-				if (pushGP::globals::minimum_error_array_by_example_case[example_case] > min_error_for_this_example_case)
+				//if (pushGP::globals::minimum_error_array_by_example_case[example_case] > min_error_for_this_example_case)
+				//{
+				//	pushGP::globals::minimum_error_array_by_example_case[example_case] = min_error_for_this_example_case;
+				//	pushGP::globals::individual_with_minimum_error_for_training_case[example_case] = survivor_index;
+				//}
+				if (_training_case_min_error.local().minimum_error_array_by_example_case[example_case] > min_error_for_this_example_case)
 				{
-					pushGP::globals::minimum_error_array_by_example_case[example_case] = min_error_for_this_example_case;
-					pushGP::globals::individual_with_minimum_error_for_training_case[example_case] = survivor_index;
+					_training_case_min_error.local().minimum_error_array_by_example_case[example_case] = min_error_for_this_example_case;
+					_training_case_min_error.local().individual_with_minimum_error_for_training_case[example_case] = survivor_index;
 				}
 			}
 
@@ -246,24 +257,12 @@ namespace pushGP
 
 		else if (number_of_survivors > 1)
 		{
-			// I don't know why I did this this way.  It does not seem to be working.
-			//std::default_random_engine generator;
-			//std::uniform_int_distribution<int> distribution(1, number_of_survivors);
-
-			//for (int count_down = distribution(generator);
-			//	it != survivors_index.end(), count_down > 0;
-			//	it++, count_down--)
-			//{
-			//	if (*it != _index_of_other_parent)
-			//		before_it = it;
-			//}
-
 			// Pick the first survivor
 			before_it = survivors_index.begin();
 
 			// Advance to a random survivor
-//			int n = (int)(random_double() * number_of_survivors);
 			int n = Utilities::random_integer(0, number_of_survivors - 1);
+
 			if (n > 0)
 				while (n > 0)
 				{
@@ -277,7 +276,6 @@ namespace pushGP
 
 		else
 		{
-//			int n = (int)(random_double() * domain::argmap::population_size);
 			int n = Utilities::random_integer(0, domain::argmap::population_size - 1);
 			chosen = n;
 		}

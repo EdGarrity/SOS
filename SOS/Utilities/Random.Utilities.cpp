@@ -10,6 +10,8 @@
 #include <ppl.h>
 #include <time.h>
 #include <thread>
+#include <random>
+
 using namespace std;
 using namespace concurrency;
 
@@ -100,7 +102,7 @@ namespace Utilities
 	//   Yes
 	//
 	// Remarks:
-	//   This distribution produces random integers in a range [min, max] where each possible value 
+	//   This distribution produces random integers in a range [0, max) where each possible value 
 	//   has an equal likelihood of being produced. This is the distribution function that appears on 
 	//   many trivial random processes (like the result of rolling a die).
 	//

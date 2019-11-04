@@ -17,6 +17,12 @@ namespace domain
 		const bool use_PPL = true;
 		const unsigned int number_of_cores_to_reserve = 4;
 
+		const std::string GetCpuTemperatureCmd = "C:\\Users\\edgar\\OneDrive\\Projects\\Source\\Repos\\EdGarrity\\SOS\\Debug\\GetCpuTemperature.exe";
+
+		const double cool_temperature = 40;
+		const double hot_temperature = 60;
+		const long cool_down_minutes = 1;
+
 		//	:random - seed(random / generate - mersennetwister - seed)
 		//	;; The seed for the random number generator.
 
@@ -70,10 +76,10 @@ namespace domain
 		const long int number_of_test_cases = 100;
 
 		// Minimum length of an example case
-		const long int example_case_min_length = 4;
+		const long int example_case_min_length = 3;
 
 		// Maximum length of an example case
-		const long int example_case_max_length = 4;
+		const long int example_case_max_length = 3;
 		
 		// Upper range of values in the example case
 		const long int example_case_upper_range = 1'000;

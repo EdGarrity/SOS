@@ -28,46 +28,42 @@ namespace pushGP
 	// Remarks:
 	//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
 	//
-	void breed(unsigned int _individual_index, int _number_of_example_cases)
+	void breed(unsigned int _individual_index, int _number_of_example_cases, combinable<pushGP::globals::Training_case_min_error_type> & _training_case_min_error)
 	{
-		double prob = Utilities::random_double(0.0, 1.0);
 		unsigned int first_parent_index = 0;
 		unsigned int other_parent_index = 0;
-		int count_down = 3;
+		double prob = Utilities::random_double(0.0, 1.0);
 
 		if (prob < domain::argmap::probability_of_alternation)
 		{
-//			std::cout << "A";
-
-			double incest_prob = Utilities::random_double(0.0, 1.0);
 			bool done = false;
 			bool first = true;
+			int count_down = 3;
 			int attempts_left = 3;
+			double incest_prob = Utilities::random_double(0.0, 1.0);
 
 			while ((!done) && (--attempts_left >= 0))
 			{
 				if (!first)
 				{
-//					std::cout << "I";
-
 					count_down--;
 
 					if (count_down < 0)
-						globals::child_agents[_individual_index].set_genome(random_plush_genome());
+					{
+						done = false;
+						break;
+					}
 				}
 
 				first = false;
 				done = true;
 				
-				first_parent_index = epsilon_lexicase_selection(_number_of_example_cases, -1);
-				other_parent_index = epsilon_lexicase_selection(_number_of_example_cases, first_parent_index);
+				first_parent_index = epsilon_lexicase_selection(_number_of_example_cases, -1, _training_case_min_error);
+				other_parent_index = epsilon_lexicase_selection(_number_of_example_cases, first_parent_index, _training_case_min_error);
 
 				// Check that both parents are not the same individual
 				if (globals::population_agents[first_parent_index].get_id() == globals::population_agents[other_parent_index].get_id())
-				{
-//					std::cout << "Check that both parents are not the same individual.  first_parent_index = " << first_parent_index << " other_parent_index = " << other_parent_index << std::endl;
 					done = false;
-				}
 
 				// Check that the parents are not siblings
 				else if (incest_prob > domain::argmap::probability_of_sibling_incest)
@@ -86,10 +82,7 @@ namespace pushGP
 							}
 
 							if (!done)
-							{
-//								std::cout << "Check that the parents are not siblings" << std::endl;
 								break;
-							}
 						}
 					}
 				}
@@ -111,10 +104,7 @@ namespace pushGP
 							}
 
 							if (!done)
-							{
-//								std::cout << "Check that the parents are not cousins" << std::endl;
 								break;
-							}
 						}
 					}
 				}
@@ -136,10 +126,7 @@ namespace pushGP
 							}
 
 							if (!done)
-							{
-//								std::cout << "Check that the parents are not second cousins" << std::endl;
 								break;
-							}
 						}
 					}
 				}
@@ -151,25 +138,18 @@ namespace pushGP
 			else
 				globals::child_agents[_individual_index].set_genome(random_plush_genome());
 		}
+
 		else if ((prob >= domain::argmap::probability_of_alternation) && (prob < domain::argmap::probability_of_alternation + domain::argmap::probability_of_mutation))
 		{
-//			std::cout << "M";
-
-			first_parent_index = epsilon_lexicase_selection(_number_of_example_cases, -1);
+			first_parent_index = epsilon_lexicase_selection(_number_of_example_cases, -1, _training_case_min_error);
 
 			uniform_mutation(first_parent_index, _individual_index);
 		}
 
 		else
-		{
-//			std::cout << "C";
-		
 			globals::child_agents[_individual_index].copy(globals::population_agents[_individual_index]);
-		}
 
-		//if ((globals::child_agents[_individual_index].get_program_points()) > domain::argmap::max_points) //   Push::global_parameters.max_points_in_program)
-		//	globals::child_agents[_individual_index].set_genome(random_plush_genome());
-		if ((globals::child_agents[_individual_index].get_genome_size()) > domain::argmap::max_points) //   Push::global_parameters.max_points_in_program)
+		if ((globals::child_agents[_individual_index].get_genome_size()) > domain::argmap::max_points)
 			globals::child_agents[_individual_index].set_genome(random_plush_genome());
 	}
 }
