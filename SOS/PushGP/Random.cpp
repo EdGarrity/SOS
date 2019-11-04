@@ -60,8 +60,7 @@ namespace pushGP
 
 		if (Utilities::random_double(0.0, 1.0) < domain::argmap::probability_of_generating_a_constant_Plush_atom)
 		{
-//			uint32 r = rng.random(3);
-			unsigned int r = Utilities::random_integer(2);
+			unsigned int r = Utilities::random_integer(3);
 			switch (r)
 			{
 				case 0:
@@ -234,6 +233,9 @@ namespace pushGP
 					genome.push_back(atom);
 
 					break;
+
+				default:
+					throw MyException("random_plush_genome_with_size() - Invalid random number generated.");
 				}
 			}
 

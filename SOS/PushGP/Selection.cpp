@@ -1,6 +1,6 @@
 #include <algorithm>
-#include <random>
 #include <chrono>
+#include <random>
 #include <ppl.h>
 #include "Selection.h"
 #include "Random.h"
@@ -39,6 +39,8 @@ namespace pushGP
 		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 
 		std::shuffle(deck.begin(), deck.end(), std::default_random_engine(seed));
+
+//		std::random_shuffle(deck.begin(), deck.end(), Utilities::random_integer);
 
 		return deck;
 	}
