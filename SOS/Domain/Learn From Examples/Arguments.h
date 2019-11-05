@@ -23,6 +23,8 @@ namespace domain
 		const double hot_temperature = 60;
 		const long cool_down_minutes = 1;
 
+		const unsigned long percent_memory_cap = 90;
+
 		//	:random - seed(random / generate - mersennetwister - seed)
 		//	;; The seed for the random number generator.
 

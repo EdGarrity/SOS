@@ -3,4 +3,5 @@
 namespace Utilities
 {
 	double GetCpuTemperature();
+	unsigned long GetMemoryLoad();
 }

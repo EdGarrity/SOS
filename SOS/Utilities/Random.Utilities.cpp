@@ -108,7 +108,7 @@ namespace Utilities
 	//
 	unsigned int random_integer(unsigned int m)
 	{
-		return random_integer(0, m);
+		return random_integer(0, m - 1);
 	}
 
 	// Purpose: 

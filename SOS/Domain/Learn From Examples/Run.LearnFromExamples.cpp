@@ -13,7 +13,7 @@
 #include "../../Utilities/Conversion.h"
 #include "../../PushGP/AsyncBreed.h"
 #include "../../Utilities/Random.Utilities.h"
-#include "../../Utilities/GetCpuTemperature.h"
+#include "../../Utilities/SystemInfo.h"
 #include <functional>
 #include <limits>
 #include <sstream>
@@ -925,6 +925,19 @@ namespace domain
 			std::cout << "CPU Temperature is " << temp << std::endl;
 
 
+			// Check if there is enough memory to continue
+			unsigned long percent_memory_use = Utilities::GetMemoryLoad();
+
+			if (percent_memory_use > argmap::percent_memory_cap)
+			{
+				std::stringstream error;
+
+				error << "Not enough free memory to continue.  Percent used = " << percent_memory_use;
+
+				std::cerr << error.str() << std::endl;
+				throw MyException(error);
+			}
+
 			// Create memory management factories
 			//Push::intLiteralFactory = new Push::LiteralFactory<int>();
 			//Push::floatLiteralFactory = new Push::LiteralFactory<double>();
@@ -993,6 +1006,19 @@ namespace domain
 
 						std::cout << "CPU is now cool enough to continue." << std::endl;
 						std::cout << std::endl;
+					}
+
+					// Check if there is enough memory to continue
+					unsigned long percent_memory_use = Utilities::GetMemoryLoad();
+
+					if (percent_memory_use > argmap::percent_memory_cap)
+					{
+						std::stringstream error;
+
+						error << "Not enough free memory to continue.  Percent used = " << percent_memory_use;
+
+						std::cerr << error.str() << std::endl;
+						throw MyException(error);
 					}
 
 					// Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
@@ -1122,14 +1148,14 @@ namespace domain
 			{
 				env.local().clear_stacks();
 
-				std::cout << "Standard exception: " << e.what() << std::endl;
+				std::cerr << "Standard exception: " << e.what() << std::endl;
 				throw;
 			}
 			catch (...)
 			{
 				env.local().clear_stacks();
 
-				std::cout << "Exception occurred" << std::endl;
+				std::cerr << "Exception occurred" << std::endl;
 				throw;
 			}
 

@@ -1,4 +1,4 @@
-#include "GetCpuTemperature.h"
+#include "SystemInfo.h"
 
 #include <iostream>
 #include <cstdio>
@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include <string>
 #include <array>
+#include <windows.h>
 #include "MyException.h"
 #include "..\Domain\Arguments.h"
 
@@ -56,5 +57,34 @@ namespace Utilities
 		temperature = stod(result);
 
 		return temperature;
+	}
+
+	// Purpose: 
+	//   Return percent of memory in use
+	//
+	// Parameters:
+	//   None
+	// 
+	// Return value:
+	//   Returns the percent of system memory in use
+	//
+	// Side Effects:
+	//   None
+	//
+	// Thread Safe:
+	//   Unknown
+	//
+	// Remarks:
+	//   This function calls the Windows API
+	//
+	unsigned long  GetMemoryLoad()
+	{
+		MEMORYSTATUSEX statex;
+
+		statex.dwLength = sizeof(statex);
+
+		GlobalMemoryStatusEx(&statex);
+
+		return statex.dwMemoryLoad;
 	}
 }
