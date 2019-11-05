@@ -1,4 +1,4 @@
 :Loop
 x64\Release\SOS
-Timeout 300
+Timeout 1
 Goto Loop

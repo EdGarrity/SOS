@@ -180,11 +180,11 @@
     <ClInclude Include="Utilities\Random.Utilities.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities\GetCpuTemperature.h">
-      <Filter>Header Files\Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="Utilities\CoreTemp\GetCoreTempInfo.h">
       <Filter>Header Files\Utilities\CoreTemp</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\SystemInfo.h">
+      <Filter>Header Files\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -287,7 +287,7 @@
     <ClCompile Include="Utilities\Random.Utilities.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="Utilities\GetCpuTemperature.cpp">
+    <ClCompile Include="Utilities\SystemInfo.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
   </ItemGroup>
