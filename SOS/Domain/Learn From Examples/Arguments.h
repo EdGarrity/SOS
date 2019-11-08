@@ -23,7 +23,7 @@ namespace domain
 		const double hot_temperature = 60;
 		const long cool_down_minutes = 1;
 
-		const unsigned long percent_memory_cap = 90;
+		const unsigned long percent_memory_cap = 70;
 
 		//	:random - seed(random / generate - mersennetwister - seed)
 		//	;; The seed for the random number generator.
@@ -78,10 +78,10 @@ namespace domain
 		const long int number_of_test_cases = 100;
 
 		// Minimum length of an example case
-		const long int example_case_min_length = 3;
+		const long int example_case_min_length = 4;
 
 		// Maximum length of an example case
-		const long int example_case_max_length = 3;
+		const long int example_case_max_length = 4;
 		
 		// Upper range of values in the example case
 		const long int example_case_upper_range = 1'000;
