@@ -172,6 +172,7 @@
     <ClInclude Include="PushGP\Individual.h" />
     <ClInclude Include="PushGP\Random.h" />
     <ClInclude Include="PushGP\Selection.h" />
+    <ClInclude Include="PushGP\SimulatedAnnealing.h" />
     <ClInclude Include="PushGP\Utilities.h" />
     <ClInclude Include="PushP\BoolOps.h" />
     <ClInclude Include="PushP\Code.h" />
@@ -220,6 +221,7 @@
     <ClCompile Include="PushGP\Individual.cpp" />
     <ClCompile Include="PushGP\Random.cpp" />
     <ClCompile Include="PushGP\Selection.cpp" />
+    <ClCompile Include="PushGP\SimulatedAnnealing.cpp" />
     <ClCompile Include="PushGP\Utilities.cpp" />
     <ClCompile Include="PushP\BooleanInstructions.cpp" />
     <ClCompile Include="PushP\Code.cpp" />

@@ -28,13 +28,15 @@ namespace pushGP
 	// Remarks:
 	//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
 	//
-	void breed(unsigned int _individual_index, int _number_of_example_cases, combinable<pushGP::globals::Training_case_min_error_type> & _training_case_min_error)
+	void breed(unsigned int _individual_index, int _number_of_example_cases, combinable<pushGP::globals::Training_case_min_error_type> & _training_case_min_error, pushGP::SimulatedAnnealing & _sa)
 	{
 		unsigned int first_parent_index = 0;
 		unsigned int other_parent_index = 0;
-		double prob = Utilities::random_double(0.0, 1.0);
+		double random_variable = Utilities::random_double(0.0, 1.0);
 
-		if (prob < domain::argmap::probability_of_alternation)
+		pushGP::SimulatedAnnealing::States state = _sa.get_state(random_variable);
+
+		if (state == pushGP::SimulatedAnnealing::States::alternate)
 		{
 			bool done = false;
 			bool first = true;
@@ -139,15 +141,18 @@ namespace pushGP
 				globals::child_agents[_individual_index].set_genome(random_plush_genome());
 		}
 
-		else if ((prob >= domain::argmap::probability_of_alternation) && (prob < domain::argmap::probability_of_alternation + domain::argmap::probability_of_mutation))
+		else if (state == pushGP::SimulatedAnnealing::States::mutate)
 		{
 			first_parent_index = epsilon_lexicase_selection(_number_of_example_cases, -1, _training_case_min_error);
 
 			uniform_mutation(first_parent_index, _individual_index);
 		}
 
-		else
+		else if (state == pushGP::SimulatedAnnealing::States::cloan)
 			globals::child_agents[_individual_index].copy(globals::population_agents[_individual_index]);
+
+		else
+			globals::child_agents[_individual_index].set_genome(random_plush_genome());
 
 		if ((globals::child_agents[_individual_index].get_genome_size()) > domain::argmap::max_points)
 			globals::child_agents[_individual_index].set_genome(random_plush_genome());

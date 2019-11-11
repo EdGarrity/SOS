@@ -186,6 +186,9 @@
     <ClInclude Include="Utilities\SystemInfo.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="PushGP\SimulatedAnnealing.h">
+      <Filter>Header Files\PushGP</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -289,6 +292,9 @@
     </ClCompile>
     <ClCompile Include="Utilities\SystemInfo.cpp">
       <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="PushGP\SimulatedAnnealing.cpp">
+      <Filter>Source Files\PushGP</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

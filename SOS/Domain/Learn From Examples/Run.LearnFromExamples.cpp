@@ -14,6 +14,7 @@
 #include "../../PushGP/AsyncBreed.h"
 #include "../../Utilities/Random.Utilities.h"
 #include "../../Utilities/SystemInfo.h"
+#include "..\..\PushGP\SimulatedAnnealing.h"
 #include <functional>
 #include <limits>
 #include <sstream>
@@ -84,10 +85,11 @@ namespace domain
 			"           ,[Uniform_Mutation_Rate]"					// 14
 			"           ,[Example_Case_Max_Length]"					// 15
 			"           ,[Example_Case_Upper_Range]"				// 16
+			"           ,[Tempareture]"								// 17
 			"           )"
 			"     VALUES"
-			"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-		        //       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6
+			"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+		        //       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7
 
 		unsigned long get_last_saved_generation_number()
 		{
@@ -775,7 +777,7 @@ namespace domain
 			return error;
 		}
 
-		void produce_new_offspring(int _number_of_example_cases, unsigned int _best_individual)
+		void produce_new_offspring(int _number_of_example_cases, unsigned int _best_individual, pushGP::SimulatedAnnealing & sa)
 		{
 			std::set<std::string> set_of_gnomes;
 			combinable<pushGP::globals::Training_case_min_error_type> training_case_min_error;
@@ -796,7 +798,7 @@ namespace domain
 
 				else
 				{
-					pushGP::breed(individual_index, _number_of_example_cases, training_case_min_error);
+					pushGP::breed(individual_index, _number_of_example_cases, training_case_min_error, sa);
 
 					// If a child with the same genome already exists, create a new random child.
 					if (set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string()).second == false)
@@ -816,12 +818,12 @@ namespace domain
 			std::cout << std::endl;
 		}
 
-		void parallel_produce_new_offspring(int _number_of_example_cases, unsigned int _best_individual)
+		void parallel_produce_new_offspring(int _number_of_example_cases, unsigned int _best_individual, pushGP::SimulatedAnnealing & sa)
 		{
 			concurrent_unordered_set<std::string> set_of_gnomes;
 			combinable<pushGP::globals::Training_case_min_error_type> training_case_min_error_sub_computations;
 			pushGP::globals::Training_case_min_error_type training_case_min_error;
-
+			
 			// Reset children.
 			std::cout << "  Reset children" << std::endl;
 			for (unsigned int n = 0; n < argmap::population_size; n++)
@@ -832,7 +834,7 @@ namespace domain
 
 //			for (unsigned int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 			const unsigned int zero = 0;
-			parallel_for(zero, domain::argmap::population_size, [&set_of_gnomes, &training_case_min_error_sub_computations, _best_individual, _number_of_example_cases](const unsigned int individual_index)
+			parallel_for(zero, domain::argmap::population_size, [&set_of_gnomes, &training_case_min_error_sub_computations, &sa, _best_individual, _number_of_example_cases](const unsigned int individual_index)
 			{
 				// Keep the best individual
 				if (individual_index == _best_individual)
@@ -840,7 +842,7 @@ namespace domain
 
 				else
 				{
-					pushGP::breed(individual_index, _number_of_example_cases, training_case_min_error_sub_computations);
+					pushGP::breed(individual_index, _number_of_example_cases, training_case_min_error_sub_computations, sa);
 
 					// If a child with the same genome already exists, create a new random child.
 					if (set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string()).second == false)
@@ -889,6 +891,7 @@ namespace domain
 			double _average_traiing_error,
 			double _standard_deviation,
 			double _best_individual_test_score,
+			double _temperature,
 			std::string _best_gnome)
 		{
 			database::SQLCommand* sqlcmd_save_status_report;
@@ -911,6 +914,7 @@ namespace domain
 			sqlcmd_save_status_report->set_as_float(14, argmap::uniform_mutation_rate);
 			sqlcmd_save_status_report->set_as_integer(15, argmap::example_case_max_length);
 			sqlcmd_save_status_report->set_as_integer(16, argmap::example_case_upper_range);
+			sqlcmd_save_status_report->set_as_integer(17, _temperature);
 
 			sqlcmd_save_status_report->execute();
 
@@ -919,6 +923,8 @@ namespace domain
 
 		int run()
 		{
+			pushGP::SimulatedAnnealing sa;
+
 			// Check if CPU is too hot and if so, wait for it to cool down.
 			double temp = Utilities::GetCpuTemperature();
 
@@ -984,6 +990,9 @@ namespace domain
 
 				if (agents_created > 0)
 					generation_number = 0;
+
+				sa.set_hot();
+				double prev_best_individual_error = 0.0;
 
 				while ((!done) && (generations_completed_this_session < argmap::max_generations_in_one_session))
 				{
@@ -1089,10 +1098,10 @@ namespace domain
 
 
 					if (argmap::use_PPL)
-						parallel_produce_new_offspring(argmap::number_of_training_cases, best_individual);
+						parallel_produce_new_offspring(argmap::number_of_training_cases, best_individual, sa);
 
 					else
-						produce_new_offspring(argmap::number_of_training_cases, best_individual);
+						produce_new_offspring(argmap::number_of_training_cases, best_individual, sa);
 
 					std::cout << "Run Best Individual's Program with Test Cases" << std::endl;
 					
@@ -1136,12 +1145,22 @@ namespace domain
 						average_traiing_error,
 						standard_deviation,
 						test_case_score, 
-						pushGP::globals::population_agents[best_individual]);
+						sa.get_tempareture(),
+						pushGP::globals::population_agents[best_individual]
+					);
 
 					std::cout << "Install New Generation" << std::endl;
 					install_next_generation();
 					generation_number++;
 					generations_completed_this_session++;
+
+					if (std::fabs(best_individual_error - prev_best_individual_error) < argmap::stalled_delta)
+						sa.heat_up();
+
+					else
+						sa.cool_down();
+
+					prev_best_individual_error = best_individual_error;
 				}
 			}
 			catch (const std::exception& e)
