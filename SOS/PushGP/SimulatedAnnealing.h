@@ -33,7 +33,13 @@ namespace pushGP
 			return temperature_;
 		}
 
-		void set_hot() 
+		void set_tempareture(double _temperature)
+		{
+			temperature_ = _temperature;
+			calculate_state_probability_levels();
+		}
+
+		void set_hot()
 		{
 			temperature_ = 1.0;
 			calculate_state_probability_levels();
@@ -55,7 +61,7 @@ namespace pushGP
 
 		void cool_down()
 		{
-			temperature_ *= domain::argmap::heat_up_rate;
+			temperature_ *= (1.0 - domain::argmap::cool_down_rate);
 			temperature_ = (temperature_ < 0.0) ? 0.0 : temperature_;
 
 			calculate_state_probability_levels();

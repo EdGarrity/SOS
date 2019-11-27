@@ -3,6 +3,7 @@
 #include <forward_list>
 #include <vector>
 #include <functional>
+#include <unordered_set>
 #include "Individual.h"
 #include "..\Domain\Arguments.h"
 #include "..\PushGP\Globals.h"
@@ -24,5 +25,7 @@ namespace pushGP
 
 	// Returns an individual that does within epsilon of the best on the fitness cases when 
 	// considered one at a time in random order.  Returns a selected parent.
-	unsigned int epsilon_lexicase_selection(int _number_of_test_cases, int _index_of_other_parent, combinable<pushGP::globals::Training_case_min_error_type> & _training_case_min_error);
+	unsigned int epsilon_lexicase_selection(int _number_of_test_cases, 
+		std::unordered_set<int> _black_list,
+		combinable<pushGP::globals::Training_case_min_error_type> & _training_case_min_error);
 }

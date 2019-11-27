@@ -41,6 +41,12 @@ namespace domain
 		database::SQLConnection con;
 
 		const std::string sqlstmt_get_last_saved_generation_number = "SELECT TOP 1 [Generation] FROM [SOS].[dbo].[ProgressLog] ORDER BY [Created_DTS] DESC;";
+		const std::string sqlstmt_get_last_saved_temperature = "SELECT TOP 1 [Tempareture] FROM [SOS].[dbo].[ProgressLog] ORDER BY [Created_DTS] DESC;";
+		const std::string sqlstmt_get_last_best_individual_error = "SELECT TOP 1 [BestIndividual_Training_Error] FROM [SOS].[dbo].[ProgressLog] ORDER BY [Created_DTS] DESC;";
+		const std::string sqlstmt_get_last_prev_best_individual_error = "SELECT TOP 1 [BestIndividual_Prev_Training_Error] FROM [SOS].[dbo].[ProgressLog] ORDER BY [Created_DTS] DESC;";
+		const std::string sqlstmt_get_last_stalled_count = "SELECT TOP 1 [Stalled_Count] FROM [SOS].[dbo].[ProgressLog] ORDER BY [Created_DTS] DESC;";
+		const std::string sqlstmt_get_last_cool_down_count = "SELECT TOP 1 [Cool_Down_Count] FROM [SOS].[dbo].[ProgressLog] ORDER BY [Created_DTS] DESC;";
+		const std::string sqlstmt_get_include_best_individual_in_breeding_pool = "SELECT TOP 1 [Include_Best_Individual_In_Breeding_Pool] FROM [SOS].[dbo].[ProgressLog] ORDER BY [Created_DTS] DESC;";
 		const std::string sqlstmt_sqlcmd_load_example_cases = "SELECT [Problem], [Solution] FROM [dbo].[ExampleCases];";
 		const std::string sqlstmt_delete_all_example_cases("DELETE FROM [SOS].[dbo].[ExampleCases];");
 		const std::string sqlstmt_insert_new_example_case("INSERT INTO [dbo].[ExampleCases] ([Problem], [Solution]) VALUES (?,?);");
@@ -86,10 +92,14 @@ namespace domain
 			"           ,[Example_Case_Max_Length]"					// 15
 			"           ,[Example_Case_Upper_Range]"				// 16
 			"           ,[Tempareture]"								// 17
+			"           ,[BestIndividual_Prev_Training_Error]"		// 18
+			"           ,[Stalled_Count]"							// 19
+			"           ,[Cool_Down_Count]"							// 20
+			"           ,[Include_Best_Individual_In_Breeding_Pool]"// 21
 			"           )"
 			"     VALUES"
-			"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-		        //       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7
+			"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+		        //       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 
 		unsigned long get_last_saved_generation_number()
 		{
@@ -105,6 +115,115 @@ namespace domain
 				n = sqlcmd_get_last_saved_generation_number->get_field_as_long(1);
 
 			delete sqlcmd_get_last_saved_generation_number;
+
+			return n;
+		}
+
+		double get_last_saved_temperature(double _default_temperature)
+		{
+			double n = _default_temperature;
+
+			database::SQLCommand* sqlcmd_get_last_saved_temperature;
+
+			sqlcmd_get_last_saved_temperature = new database::SQLCommand(&con, sqlstmt_get_last_saved_temperature);
+
+			sqlcmd_get_last_saved_temperature->execute();
+
+			if (sqlcmd_get_last_saved_temperature->fetch_next())
+				n = sqlcmd_get_last_saved_temperature->get_field_as_double(1);
+
+			delete sqlcmd_get_last_saved_temperature;
+
+			return n;
+		}
+
+		double get_last_best_individual_error(double _default_error)
+		{
+			double n = _default_error;
+
+			database::SQLCommand* sqlcmd_get_last_best_individual_error;
+
+			sqlcmd_get_last_best_individual_error = new database::SQLCommand(&con, sqlstmt_get_last_best_individual_error);
+
+			sqlcmd_get_last_best_individual_error->execute();
+
+			if (sqlcmd_get_last_best_individual_error->fetch_next())
+				n = sqlcmd_get_last_best_individual_error->get_field_as_double(1);
+
+			delete sqlcmd_get_last_best_individual_error;
+
+			return n;
+		}
+
+		double get_last_prev_best_individual_error(double _default_error)
+		{
+			double n = _default_error;
+
+			database::SQLCommand* sqlcmd_get_last_prev_best_individual_error;
+
+			sqlcmd_get_last_prev_best_individual_error = new database::SQLCommand(&con, sqlstmt_get_last_prev_best_individual_error);
+
+			sqlcmd_get_last_prev_best_individual_error->execute();
+
+			if (sqlcmd_get_last_prev_best_individual_error->fetch_next())
+				n = sqlcmd_get_last_prev_best_individual_error->get_field_as_double(1);
+
+			delete sqlcmd_get_last_prev_best_individual_error;
+
+			return n;
+		}
+
+		unsigned long get_last_stalled_count(unsigned long _default_stalled_count)
+		{
+			unsigned long n = _default_stalled_count;
+
+			database::SQLCommand* sqlcmd_get_last_stalled_count;
+
+			sqlcmd_get_last_stalled_count = new database::SQLCommand(&con, sqlstmt_get_last_stalled_count);
+
+			sqlcmd_get_last_stalled_count->execute();
+
+			if (sqlcmd_get_last_stalled_count->fetch_next())
+				n = sqlcmd_get_last_stalled_count->get_field_as_long(1);
+
+			delete sqlcmd_get_last_stalled_count;
+
+			return n;
+		}
+
+		unsigned long get_last_cool_down_count(unsigned long _default_cool_down_count)
+		{
+			unsigned long n = _default_cool_down_count;
+
+			database::SQLCommand* sqlcmd_get_last_cool_down_count;
+
+			sqlcmd_get_last_cool_down_count = new database::SQLCommand(&con, sqlstmt_get_last_cool_down_count);
+
+			sqlcmd_get_last_cool_down_count->execute();
+
+			if (sqlcmd_get_last_cool_down_count->fetch_next())
+				n = sqlcmd_get_last_cool_down_count->get_field_as_long(1);
+
+			delete sqlcmd_get_last_cool_down_count;
+
+			return n;
+		}
+
+		
+		bool get_include_best_individual_in_breeding_pool(unsigned long _default_include_best_individual_in_breeding_pool)
+		{
+			bool n = _default_include_best_individual_in_breeding_pool;
+
+			database::SQLCommand* sqlcmd_get_include_best_individual_in_breeding_pool;
+
+			sqlcmd_get_include_best_individual_in_breeding_pool = new database::SQLCommand(&con, sqlstmt_get_include_best_individual_in_breeding_pool);
+
+			sqlcmd_get_include_best_individual_in_breeding_pool->execute();
+
+			if (sqlcmd_get_include_best_individual_in_breeding_pool->fetch_next())
+				n = sqlcmd_get_include_best_individual_in_breeding_pool->get_field_as_long(1);
+
+			delete sqlcmd_get_include_best_individual_in_breeding_pool;
 
 			return n;
 		}
@@ -431,7 +550,8 @@ namespace domain
 				{
 					while ((sqlcmd_get_individuals->fetch_next()) && (n < argmap::population_size))
 					{
-						std::cout << "n = " << n << std::endl;
+						if ((n % 1'000) == 0)
+							std::cout << "n = " << n << std::endl;
 
 						std::string genome = sqlcmd_get_individuals->get_field_as_string(2);
 						pushGP::globals::population_agents[n].set_genome(genome);
@@ -679,6 +799,18 @@ namespace domain
 			);
 		}
 
+		//struct Individual_with_least_error
+		//{
+		//	double min_error;
+		//	int individual;
+		//};
+
+		//struct Individual_with_best_score
+		//{
+		//	double min_score;
+		//	int individual;
+		//};
+
 		std::tuple<int, double, double> parallel_compute_training_errors(Push::Env & _env,
 			std::function<double(Push::Env & _env,
 			                     unsigned int _individual_index,
@@ -690,6 +822,19 @@ namespace domain
 			int individual_with_best_score = -1;
 			double min_error = (std::numeric_limits<double>::max)();
 			double min_score = (std::numeric_limits<double>::max)();
+			//combinable<struct Individual_with_least_error> individual_with_least_error;
+			//individual_with_least_error.local().individual = -1;
+			//individual_with_least_error.local().min_error = (std::numeric_limits<double>::max)();
+
+			//combinable<struct Individual_with_best_score> individual_with_best_score;
+			//individual_with_best_score.local().individual = -1;
+			//individual_with_best_score.local().min_score = (std::numeric_limits<double>::max)();
+
+
+			//int non_thread_individual_with_least_error = -1;
+			//int non_thread_individual_with_best_score = -1;
+			//double non_thread_min_error = (std::numeric_limits<double>::max)();
+			//double non_thread_min_score = (std::numeric_limits<double>::max)();
 
 //			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			const unsigned int zero = 0;
@@ -697,6 +842,12 @@ namespace domain
 			{
 				int error_count_for_individual = 0;
 				double avg_error_for_individual = 0.0;
+
+				//individual_with_least_error.local().individual = -1;
+				//individual_with_least_error.local().min_error = (std::numeric_limits<double>::max)();
+
+				//individual_with_best_score.local().individual = -1;
+				//individual_with_best_score.local().min_score = (std::numeric_limits<double>::max)();
 
 				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
 				{
@@ -744,6 +895,38 @@ namespace domain
 				min_score,
 				min_error
 			);
+			//		individual_with_best_score.local().min_score = score;
+			//	individual_with_best_score.local().individual = individual_index;
+			//	individual_with_least_error.local().min_error = avg_error_for_individual;
+			//	individual_with_least_error.local().individual = individual_index;
+			//});
+
+			//// Combine the individual_with_best_score
+			//individual_with_best_score.combine_each([&](struct Individual_with_best_score &local)
+			//{
+			//	if (non_thread_min_score > local.min_score)
+			//	{
+			//		non_thread_min_score = local.min_score;
+			//		non_thread_individual_with_best_score = local.individual;
+			//	}
+			//});
+
+			//// Combine the Individual_with_least_error
+			//individual_with_least_error.combine_each([&](struct Individual_with_least_error &local)
+			//{
+			//	if (non_thread_min_error > local.min_error)
+			//	{
+			//		non_thread_min_error = local.min_error;
+			//		non_thread_individual_with_least_error = local.individual;
+			//	}
+			//});
+
+			//return std::make_tuple
+			//(
+			//	(non_thread_individual_with_best_score == -1) ? non_thread_individual_with_least_error : non_thread_individual_with_best_score,
+			//	non_thread_min_score,
+			//	non_thread_min_error
+			//);
 		}
 
 		double compute_test_errors(Push::Env & _env, 
@@ -777,7 +960,10 @@ namespace domain
 			return error;
 		}
 
-		void produce_new_offspring(int _number_of_example_cases, unsigned int _best_individual, pushGP::SimulatedAnnealing & sa)
+		void produce_new_offspring(int _number_of_example_cases, 
+			unsigned int _best_individual, 
+			pushGP::SimulatedAnnealing & sa,
+			bool _include_best_individual_in_breeding_pool)
 		{
 			std::set<std::string> set_of_gnomes;
 			combinable<pushGP::globals::Training_case_min_error_type> training_case_min_error;
@@ -793,12 +979,17 @@ namespace domain
 			for (unsigned int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 			{
 				// Keep the best individual
-				if (individual_index == _best_individual)
+				if ((_include_best_individual_in_breeding_pool) && (individual_index == _best_individual))
 					pushGP::globals::child_agents[individual_index].copy(pushGP::globals::population_agents[individual_index]);
 
 				else
 				{
-					pushGP::breed(individual_index, _number_of_example_cases, training_case_min_error, sa);
+					pushGP::breed(individual_index, 
+						_number_of_example_cases, 
+						training_case_min_error, 
+						sa, 
+						_include_best_individual_in_breeding_pool, 
+						_best_individual);
 
 					// If a child with the same genome already exists, create a new random child.
 					if (set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string()).second == false)
@@ -807,18 +998,24 @@ namespace domain
 			}
 
 			// Keep the best individuals for each test case
-			for (unsigned int training_case = 0; training_case < domain::argmap::number_of_training_cases; training_case++)
+			if (_include_best_individual_in_breeding_pool)
 			{
-				unsigned int best_individual_for_training_case = training_case_min_error.local().individual_with_minimum_error_for_training_case[training_case];
+				for (unsigned int training_case = 0; training_case < domain::argmap::number_of_training_cases; training_case++)
+				{
+					unsigned int best_individual_for_training_case = training_case_min_error.local().individual_with_minimum_error_for_training_case[training_case];
 
-				if (best_individual_for_training_case < (std::numeric_limits<unsigned int>::max)())
-					pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);
+					if (best_individual_for_training_case < (std::numeric_limits<unsigned int>::max)())
+						pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);
+				}
 			}
 
 			std::cout << std::endl;
 		}
 
-		void parallel_produce_new_offspring(int _number_of_example_cases, unsigned int _best_individual, pushGP::SimulatedAnnealing & sa)
+		void parallel_produce_new_offspring(int _number_of_example_cases, 
+			unsigned int _best_individual, 
+			pushGP::SimulatedAnnealing & sa,
+			bool _include_best_individual_in_breeding_pool)
 		{
 			concurrent_unordered_set<std::string> set_of_gnomes;
 			combinable<pushGP::globals::Training_case_min_error_type> training_case_min_error_sub_computations;
@@ -834,15 +1031,20 @@ namespace domain
 
 //			for (unsigned int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 			const unsigned int zero = 0;
-			parallel_for(zero, domain::argmap::population_size, [&set_of_gnomes, &training_case_min_error_sub_computations, &sa, _best_individual, _number_of_example_cases](const unsigned int individual_index)
+			parallel_for(zero, domain::argmap::population_size, [&, _best_individual, _number_of_example_cases](const unsigned int individual_index)
 			{
 				// Keep the best individual
-				if (individual_index == _best_individual)
+				if ((_include_best_individual_in_breeding_pool) && (individual_index == _best_individual))
 					pushGP::globals::child_agents[individual_index].copy(pushGP::globals::population_agents[individual_index]);
 
 				else
 				{
-					pushGP::breed(individual_index, _number_of_example_cases, training_case_min_error_sub_computations, sa);
+					pushGP::breed(individual_index, 
+						_number_of_example_cases, 
+						training_case_min_error_sub_computations, 
+						sa, 
+						_include_best_individual_in_breeding_pool,
+						_best_individual);
 
 					// If a child with the same genome already exists, create a new random child.
 					if (set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string()).second == false)
@@ -864,12 +1066,15 @@ namespace domain
 			});
 
 			// Keep the best individuals for each test case
-			for (unsigned int training_case = 0; training_case < domain::argmap::number_of_training_cases; training_case++)
+			if (_include_best_individual_in_breeding_pool)
 			{
-				unsigned int best_individual_for_training_case = training_case_min_error.individual_with_minimum_error_for_training_case[training_case];
+				for (unsigned int training_case = 0; training_case < domain::argmap::number_of_training_cases; training_case++)
+				{
+					unsigned int best_individual_for_training_case = training_case_min_error.individual_with_minimum_error_for_training_case[training_case];
 
-				if (best_individual_for_training_case < (std::numeric_limits<unsigned int>::max)())
-					pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);
+					if (best_individual_for_training_case < (std::numeric_limits<unsigned int>::max)())
+						pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);
+				}
 			}
 
 			std::cout << std::endl;
@@ -888,10 +1093,14 @@ namespace domain
 			unsigned int _best_individual_id,
 			double _best_individual_training_score,
 			double _best_individual_training_error,
+			double _best_individual_prev_training_error,
 			double _average_traiing_error,
 			double _standard_deviation,
 			double _best_individual_test_score,
 			double _temperature,
+			unsigned long _stalled_count,
+			unsigned int _cool_down_count,
+			bool _include_best_individual_in_breeding_pool,
 			std::string _best_gnome)
 		{
 			database::SQLCommand* sqlcmd_save_status_report;
@@ -914,7 +1123,11 @@ namespace domain
 			sqlcmd_save_status_report->set_as_float(14, argmap::uniform_mutation_rate);
 			sqlcmd_save_status_report->set_as_integer(15, argmap::example_case_max_length);
 			sqlcmd_save_status_report->set_as_integer(16, argmap::example_case_upper_range);
-			sqlcmd_save_status_report->set_as_integer(17, _temperature);
+			sqlcmd_save_status_report->set_as_float(17, _temperature);
+			sqlcmd_save_status_report->set_as_float(18, _best_individual_prev_training_error);
+			sqlcmd_save_status_report->set_as_integer(19, _stalled_count);
+			sqlcmd_save_status_report->set_as_integer(20, _cool_down_count);
+			sqlcmd_save_status_report->set_as_integer(21, _include_best_individual_in_breeding_pool);
 
 			sqlcmd_save_status_report->execute();
 
@@ -988,14 +1201,47 @@ namespace domain
 				generation_number = get_last_saved_generation_number() + 1;
 				agents_created = make_pop_agents(env, load_pop_agents());
 
+				sa.set_hot();
+				sa.set_tempareture(get_last_saved_temperature(sa.get_tempareture()));
+
 				if (agents_created > 0)
 					generation_number = 0;
 
-				sa.set_hot();
-				double prev_best_individual_error = 0.0;
+
+				int best_individual = -1;
+				double best_individual_score = std::numeric_limits<double>::max();
+				double best_individual_error = get_last_best_individual_error(std::numeric_limits<double>::max());
+				double prev_best_individual_error = get_last_prev_best_individual_error(std::numeric_limits<double>::max());
+				int stalled_count = get_last_stalled_count(argmap::stalled_count_trigger);
+				int cool_down_count = get_last_cool_down_count(argmap::cool_down_period);
+				bool include_best_individual_in_breeding_pool = get_include_best_individual_in_breeding_pool(true);
 
 				while ((!done) && (generations_completed_this_session < argmap::max_generations_in_one_session))
 				{
+					if ((std::fabs(best_individual_error - prev_best_individual_error) < argmap::stalled_delta) && (cool_down_count <= 0))
+						stalled_count = (stalled_count < 0) ? 0 : stalled_count - 1;
+
+					else
+						stalled_count = argmap::stalled_count_trigger;
+
+					if (stalled_count <=0)
+					{
+						sa.set_hot();
+						cool_down_count = argmap::cool_down_period;
+						include_best_individual_in_breeding_pool = false;
+
+						std::cout << "Heat up " << sa.get_tempareture() << std::endl;
+					}
+					else
+					{
+						sa.cool_down();
+						cool_down_count = (cool_down_count < 0) ? 0 : cool_down_count - 1;
+
+						std::cout << "Cool down " << sa.get_tempareture() << std::endl;
+					}
+
+					prev_best_individual_error = best_individual_error;
+
 					// Check if CPU is too hot and if so, wait for it to cool down.
 					double temp = Utilities::GetCpuTemperature();
 
@@ -1090,18 +1336,24 @@ namespace domain
 					else
 						best_individual_score_error = compute_training_errors(env, run_individual, argmap::number_of_training_cases);
 
-					int best_individual = std::get<0>(best_individual_score_error);
-					double best_individual_score = std::get<1>(best_individual_score_error);
-					double best_individual_error = std::get<2>(best_individual_score_error);
+					best_individual = std::get<0>(best_individual_score_error);
+					best_individual_score = std::get<1>(best_individual_score_error);
+					best_individual_error = std::get<2>(best_individual_score_error);
 
 					std::cout << "Produce New Offspring" << std::endl;
 
 
 					if (argmap::use_PPL)
-						parallel_produce_new_offspring(argmap::number_of_training_cases, best_individual, sa);
+						parallel_produce_new_offspring(argmap::number_of_training_cases, 
+							best_individual, 
+							sa, 
+							include_best_individual_in_breeding_pool);
 
 					else
-						produce_new_offspring(argmap::number_of_training_cases, best_individual, sa);
+						produce_new_offspring(argmap::number_of_training_cases, 
+							best_individual, 
+							sa,
+							include_best_individual_in_breeding_pool);
 
 					std::cout << "Run Best Individual's Program with Test Cases" << std::endl;
 					
@@ -1142,25 +1394,21 @@ namespace domain
 						best_individual, 
 						best_individual_score,
 						best_individual_error,
+						prev_best_individual_error,
 						average_traiing_error,
 						standard_deviation,
 						test_case_score, 
 						sa.get_tempareture(),
+						stalled_count,
+						cool_down_count,
+						include_best_individual_in_breeding_pool,
 						pushGP::globals::population_agents[best_individual]
-					);
+						);
 
 					std::cout << "Install New Generation" << std::endl;
 					install_next_generation();
 					generation_number++;
 					generations_completed_this_session++;
-
-					if (std::fabs(best_individual_error - prev_best_individual_error) < argmap::stalled_delta)
-						sa.heat_up();
-
-					else
-						sa.cool_down();
-
-					prev_best_individual_error = best_individual_error;
 				}
 			}
 			catch (const std::exception& e)
