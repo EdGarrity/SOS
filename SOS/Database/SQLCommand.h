@@ -159,6 +159,22 @@ namespace database
 		//
 		// Parameters:
 		//		Field	A one-based field number in a result set.
+		double get_field_as_double(int _field);
+
+		// Returns the column specified by its position or name in the result set.
+		//
+		// Description:
+		//		Use Field method to access a field by its name or position in the result set.
+		//
+		//		Using field smaller than 1 and greater then the value returned by fieldCount 
+		//		method will result in a failed assertion.
+		//
+		//		A set of SQLField objects creates implicitly after the command execution if 
+		//		the result set exists.  SQLField object contains full information about a 
+		//		column : name, type, size, value.SAField object can also be gotten by operator [ ] .
+		//
+		// Parameters:
+		//		Field	A one-based field number in a result set.
 		std::string get_field_as_string(int _field);
 
 		// Returns the column specified by its position or name in the result set.

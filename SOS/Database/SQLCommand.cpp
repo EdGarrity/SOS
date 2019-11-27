@@ -514,6 +514,12 @@ namespace database
 		return *pl;
 	}
 
+	double SQLCommand::get_field_as_double(int _field)
+	{
+		double* pl = (double *)&pRowValues_[pDBBindings_[_field - 1].obValue];
+		return *pl;
+	}
+
 	std::string SQLCommand::get_field_as_string(int _field)
 	{
 		std::string field_value = &pRowValues_[pDBBindings_[_field - 1].obValue];

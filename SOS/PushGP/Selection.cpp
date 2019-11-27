@@ -151,7 +151,9 @@ namespace pushGP
 	// Remarks:
 	//
 
-	unsigned int epsilon_lexicase_selection(int _number_of_example_cases, int _index_of_other_parent, combinable<struct pushGP::globals::Training_case_min_error> & _training_case_min_error)
+	unsigned int epsilon_lexicase_selection(int _number_of_example_cases, 
+		std::unordered_set<int> _black_list,
+		combinable<struct pushGP::globals::Training_case_min_error> & _training_case_min_error)
 	{
 		unsigned int chosen = 0;
 		unsigned individual_index = 0;
@@ -163,7 +165,10 @@ namespace pushGP
 		for (int n = 0; n < domain::argmap::population_size; n++)
 		{
 			// Skip the other parent
-			if (n != _index_of_other_parent)
+			//if (n != _index_of_other_parent)
+			//	survivors_index.push_front(n);
+
+			if (_black_list.find(n) == _black_list.end())
 				survivors_index.push_front(n);
 		}
 
@@ -252,7 +257,8 @@ namespace pushGP
 		auto it = survivors_index.begin();
 		auto before_it = survivors_index.begin();
 
-		if ((number_of_survivors == 1) && (*before_it == _index_of_other_parent))
+//		if ((number_of_survivors == 1) && (*before_it == _index_of_other_parent))
+		if ((number_of_survivors == 1) && (_black_list.find(*before_it) != _black_list.end()))
 			number_of_survivors = 0;
 
 		else if (number_of_survivors > 1)
