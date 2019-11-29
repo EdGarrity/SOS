@@ -1154,7 +1154,9 @@ namespace domain
 				error << "Not enough free memory to continue.  Percent used = " << percent_memory_use;
 
 				std::cerr << error.str() << std::endl;
-				throw MyException(error);
+//				throw MyException(error);
+
+				return 1;
 			}
 
 			// Create memory management factories
@@ -1273,7 +1275,9 @@ namespace domain
 						error << "Not enough free memory to continue.  Percent used = " << percent_memory_use;
 
 						std::cerr << error.str() << std::endl;
-						throw MyException(error);
+//						throw MyException(error);
+
+						return 1;
 					}
 
 					// Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
