@@ -838,54 +838,57 @@ namespace domain
 
 //			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			const unsigned int zero = 0;
-			parallel_for (zero, domain::argmap::population_size, [&, _number_of_example_cases](const unsigned int individual_index)
+			parallel_for (zero, domain::argmap::population_size / domain::argmap::thread_chunk_size, [&, _number_of_example_cases](const unsigned int chunk_index)
 			{
-				int error_count_for_individual = 0;
-				double avg_error_for_individual = 0.0;
-
-				//individual_with_least_error.local().individual = -1;
-				//individual_with_least_error.local().min_error = (std::numeric_limits<double>::max)();
-
-				//individual_with_best_score.local().individual = -1;
-				//individual_with_best_score.local().min_score = (std::numeric_limits<double>::max)();
-
-				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
+				for (int individual_index = chunk_index * domain::argmap::thread_chunk_size; individual_index < (chunk_index + 1) * domain::argmap::thread_chunk_size; individual_index++)
 				{
-					Push::parallel_intLiteralFactory.local().clean_up();
-					Push::parallel_floatLiteralFactory.local().clean_up();
-					Push::parallel_boolLiteralFactory.local().clean_up();
-					Push::parallel_codeListFactory.local().clean_up();
-					Push::parallel_doRangeClassFactory.local().clean_up();
+					int error_count_for_individual = 0;
+					double avg_error_for_individual = 0.0;
 
-					std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
-					std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
+					//individual_with_least_error.local().individual = -1;
+					//individual_with_least_error.local().min_error = (std::numeric_limits<double>::max)();
 
-					// Run program
-					double error = _run_individual_program(_env, individual_index, example_problem, example_solution);
+					//individual_with_best_score.local().individual = -1;
+					//individual_with_best_score.local().min_score = (std::numeric_limits<double>::max)();
 
-					if (error > 0.0)
-						error_count_for_individual++;
+					for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
+					{
+						Push::parallel_intLiteralFactory.local().clean_up();
+						Push::parallel_floatLiteralFactory.local().clean_up();
+						Push::parallel_boolLiteralFactory.local().clean_up();
+						Push::parallel_codeListFactory.local().clean_up();
+						Push::parallel_doRangeClassFactory.local().clean_up();
 
-					avg_error_for_individual += error;
+						std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
+						std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
 
-					pushGP::globals::error_matrix[example_case][individual_index] = error;
-				}
+						// Run program
+						double error = _run_individual_program(_env, individual_index, example_problem, example_solution);
 
-				// Calculate the average error for all example cases
-				avg_error_for_individual /= (double)_number_of_example_cases;
+						if (error > 0.0)
+							error_count_for_individual++;
 
-				double score = (double)error_count_for_individual / (double)_number_of_example_cases;
+						avg_error_for_individual += error;
 
-				if ((score < 1.0) && (score < min_score))
-				{
-					min_score = score;
-					individual_with_best_score = individual_index;
-				}
+						pushGP::globals::error_matrix[example_case][individual_index] = error;
+					}
 
-				if (avg_error_for_individual < min_error)
-				{
-					min_error = avg_error_for_individual;
-					individual_with_least_error = individual_index;
+					// Calculate the average error for all example cases
+					avg_error_for_individual /= (double)_number_of_example_cases;
+
+					double score = (double)error_count_for_individual / (double)_number_of_example_cases;
+
+					if ((score < 1.0) && (score < min_score))
+					{
+						min_score = score;
+						individual_with_best_score = individual_index;
+					}
+
+					if (avg_error_for_individual < min_error)
+					{
+						min_error = avg_error_for_individual;
+						individual_with_least_error = individual_index;
+					}
 				}
 			});
 
@@ -1034,7 +1037,7 @@ namespace domain
 			parallel_for(zero, domain::argmap::population_size, [&, _best_individual, _number_of_example_cases](const unsigned int individual_index)
 			{
 				// Keep the best individual
-				if ((_include_best_individual_in_breeding_pool) && (individual_index == _best_individual))
+				if (individual_index == _best_individual)
 					pushGP::globals::child_agents[individual_index].copy(pushGP::globals::population_agents[individual_index]);
 
 				else
@@ -1045,8 +1048,14 @@ namespace domain
 						sa, 
 						_include_best_individual_in_breeding_pool,
 						_best_individual);
+				}
+			});
 
-					// If a child with the same genome already exists, create a new random child.
+			parallel_for(zero, domain::argmap::population_size, [&, _best_individual, _number_of_example_cases](const unsigned int individual_index)
+			{
+				// If a child with the same genome already exists, create a new random child.
+				if (individual_index != _best_individual)
+				{
 					if (set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string()).second == false)
 						pushGP::globals::child_agents[individual_index].set_genome(pushGP::random_plush_genome());
 				}
@@ -1203,7 +1212,7 @@ namespace domain
 				generation_number = get_last_saved_generation_number() + 1;
 				agents_created = make_pop_agents(env, load_pop_agents());
 
-				sa.set_hot();
+				sa.set_cold();
 				sa.set_tempareture(get_last_saved_temperature(sa.get_tempareture()));
 
 				if (agents_created > 0)

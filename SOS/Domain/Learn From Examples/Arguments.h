@@ -16,6 +16,7 @@ namespace domain
 		const bool use_multithreading = false;
 		const bool use_PPL = true;
 		const unsigned int number_of_cores_to_reserve = 4;
+		const unsigned thread_chunk_size = 100;  // Number of threads per chunk.
 
 		// CPU temperature monitoring
 		const std::string GetCpuTemperatureCmd = "C:\\Users\\edgar\\OneDrive\\Projects\\Source\\Repos\\EdGarrity\\SOS\\Debug\\GetCpuTemperature.exe";
@@ -24,7 +25,7 @@ namespace domain
 		const double hot_temperature = 60;
 		const long cool_down_minutes = 1;
 
-		const unsigned long percent_memory_cap = 70;
+		const unsigned long percent_memory_cap = 90;
 
 		//	:random - seed(random / generate - mersennetwister - seed)
 		//	;; The seed for the random number generator.
