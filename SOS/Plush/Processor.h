@@ -98,8 +98,6 @@ namespace Plush
 
 			else
 				throw;
-
-			return true;
 		}
 
 

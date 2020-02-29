@@ -80,7 +80,7 @@ namespace UnitTest
 	
 			for (size_t n = 0; n < exec_array.size(); n++)
 			{
-//				if (exec_array[n] != processor.peek<ExecAtom>(n))
+				if (exec_array[n] != processor.peek<ExecAtom>(n))
 					return false;
 			}
 	
@@ -96,26 +96,13 @@ namespace UnitTest
 			TEST_METHOD(PushingAndPopingSingleInt)
 			{
 				Processor processor;
+				Assert::IsTrue(IsStateState(processor, {}, {}, {}, {}, {}));
 
-				Assert::IsFalse(processor.has_elements<int>(1));
-				Assert::IsFalse(processor.has_elements<double>(1));
-				Assert::IsFalse(processor.has_elements<bool>(1));
-				Assert::IsFalse(processor.has_elements<ExecAtom>(1));
-				Assert::IsFalse(processor.has_elements<CodeAtom>(1));
-	
 				processor.push<int>(10);
-				Assert::IsTrue(processor.has_elements<int>(1));
-				Assert::IsFalse(processor.has_elements<double>(1));
-				Assert::IsFalse(processor.has_elements<bool>(1));
-				Assert::IsFalse(processor.has_elements<ExecAtom>(1));
-				Assert::IsFalse(processor.has_elements<CodeAtom>(1));
-	
+				Assert::IsTrue(IsStateState(processor, {10}, {}, {}, {}, {}));
+
 				Assert::AreEqual(processor.pop<int>(), 10);
-				Assert::IsFalse(processor.has_elements<int>(1));
-				Assert::IsFalse(processor.has_elements<double>(1));
-				Assert::IsFalse(processor.has_elements<bool>(1));
-				Assert::IsFalse(processor.has_elements<ExecAtom>(1));
-				Assert::IsFalse(processor.has_elements<CodeAtom>(1));
+				Assert::IsTrue(IsStateState(processor, {}, {}, {}, {}, {}));
 			}
 	//
 	//		TEST_METHOD(PushingAndPopingSingleDouble)
