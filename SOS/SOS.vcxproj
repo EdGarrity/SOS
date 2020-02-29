@@ -166,6 +166,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Plush\Atom.h" />
     <ClInclude Include="Plush\Genome.h" />
+    <ClInclude Include="Plush\Processor.h" />
     <ClInclude Include="PushGP\Breed.h" />
     <ClInclude Include="PushGP\GeneticOperators.h" />
     <ClInclude Include="PushGP\Globals.h" />
@@ -195,6 +196,7 @@
     <ClInclude Include="Utilities\Conversion.h" />
     <ClInclude Include="Utilities\CoreTemp\GetCoreTempInfo.h" />
     <ClInclude Include="Utilities\CSVIterator.h" />
+    <ClInclude Include="Utilities\FixedSizeStack.h" />
     <ClInclude Include="Utilities\SystemInfo.h" />
     <ClInclude Include="Utilities\MyException.h" />
     <ClInclude Include="Utilities\Random.Utilities.h" />
@@ -215,6 +217,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Plush\Atom.cpp" />
     <ClCompile Include="Plush\Genome.cpp" />
+    <ClCompile Include="Plush\Processor.cpp" />
     <ClCompile Include="PushGP\Breed.cpp" />
     <ClCompile Include="PushGP\GeneticOperators.cpp" />
     <ClCompile Include="PushGP\Globals.cpp" />
@@ -238,6 +241,7 @@
     <ClCompile Include="PushP\Type.cpp" />
     <ClCompile Include="Utilities\AtomicFunctions.cpp" />
     <ClCompile Include="Utilities\Conversion.cpp" />
+    <ClCompile Include="Utilities\FixedSizeStack.cpp" />
     <ClCompile Include="Utilities\SystemInfo.cpp" />
     <ClCompile Include="Utilities\MyException.cpp" />
     <ClCompile Include="Utilities\Random.Utilities.cpp" />

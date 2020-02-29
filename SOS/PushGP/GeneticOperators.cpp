@@ -84,8 +84,8 @@ namespace pushGP
 	//
 	void uniform_mutation(unsigned int _parent, unsigned int _child)
 	{
-		const std::vector<struct Genome::Atom> old_genome = globals::population_agents[_parent].get_genome_atoms();
-		std::vector<struct Genome::Atom> new_genome;
+		const std::vector<struct Plush::Atom> old_genome = globals::population_agents[_parent].get_genome_atoms();
+		std::vector<struct Plush::Atom> new_genome;
 
 		for (auto atom : old_genome)
 		{
@@ -168,12 +168,12 @@ namespace pushGP
 	//
 	void alternation(unsigned int _parent1, unsigned int _parent2, unsigned int _child)
 	{
-		const std::vector<struct Genome::Atom> s1 = globals::population_agents[_parent1].get_genome_atoms();
-		const std::vector<struct Genome::Atom> s2 = globals::population_agents[_parent2].get_genome_atoms();
+		const std::vector<struct Plush::Atom> s1 = globals::population_agents[_parent1].get_genome_atoms();
+		const std::vector<struct Plush::Atom> s2 = globals::population_agents[_parent2].get_genome_atoms();
 
 		unsigned int i = 0;
 		bool use_s1 = (Utilities::random_double(0.0, 1.0) > 0.5) ? true : false;
-		std::vector<struct Genome::Atom> result_genome;
+		std::vector<struct Plush::Atom> result_genome;
 		int iteration_budget = s1.size() + s2.size();
 
 		while ( (i < (use_s1 ? s1.size() : s2.size()))					// finished current program

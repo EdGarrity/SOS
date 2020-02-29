@@ -189,6 +189,12 @@
     <ClInclude Include="PushGP\SimulatedAnnealing.h">
       <Filter>Header Files\PushGP</Filter>
     </ClInclude>
+    <ClInclude Include="Plush\Processor.h">
+      <Filter>Header Files\Plush</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\FixedSizeStack.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -295,6 +301,12 @@
     </ClCompile>
     <ClCompile Include="PushGP\SimulatedAnnealing.cpp">
       <Filter>Source Files\PushGP</Filter>
+    </ClCompile>
+    <ClCompile Include="Plush\Processor.cpp">
+      <Filter>Source Files\Plush</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\FixedSizeStack.cpp">
+      <Filter>Source Files\Utilities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

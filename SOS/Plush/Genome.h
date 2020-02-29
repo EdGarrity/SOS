@@ -3,7 +3,7 @@
 #include <vector>
 #include "Atom.h"
 
-namespace Genome
+namespace Plush
 {
 	class Genome
 	{

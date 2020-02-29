@@ -1,7 +1,77 @@
 #include "Atom.h"
+#include <algorithm>
+#include <cctype>
+#include <string>
 
-namespace Genome
+namespace Plush
 {
+	void Atom::compile(std::string _atom_string) 
+	{
+		std::size_t index, start_of_optional_tokens, start_of_optional_value, end_of_optional_value;
+
+		// Convert to lower case
+		std::transform(_atom_string.begin(), _atom_string.end(), _atom_string.begin(),
+			[](unsigned char c) { return std::tolower(c); });
+
+		// Find token for the instruction
+		index = _atom_string.find(":instruction");
+
+		if (index == std::string::npos)
+			throw;
+
+		// Find start of instruction atom
+		index += strlen(":instruction");
+
+		while (_atom_string[index] == ' ')
+			index++;
+
+		start_of_optional_tokens = _atom_string.find_first_of(" :}", index);
+
+		instruction = _atom_string.substr(index, start_of_optional_tokens - index);
+
+		// Check for optional close token
+		index = _atom_string.find(":close", start_of_optional_tokens);
+
+		if (index != std::string::npos)
+		{
+			start_of_optional_value = index + strlen(":close");
+
+			while (_atom_string[start_of_optional_value] == ' ')
+				start_of_optional_value++;
+
+			parentheses = std::stoi(_atom_string.substr(start_of_optional_value, index));
+		}
+
+		// Check for optional silent tiken
+		index = _atom_string.find(":silent", start_of_optional_tokens);
+
+		if (index != std::string::npos)
+		{
+			start_of_optional_value = index + strlen(":silent");
+
+			while (_atom_string[start_of_optional_value] == ' ')
+				start_of_optional_value++;
+
+			if (_atom_string.find("true") != std::string::npos)
+				type = silent;
+		}
+
+		// Check for boolean
+		else if ((instruction == "true") || (instruction == "false"))
+			type = AtomType::boolean;
+
+		// Check for float
+		else if ([&]() { char* p; strtod(instruction.c_str(), &p); return *p == 0; }() == true)
+			type = AtomType::floating_point;
+
+		// Check for integer
+		else if ([&]() { char* p; strtol(instruction.c_str(), &p, 10); return *p == 0; }() == true)
+			type = AtomType::integer;
+
+		else
+			type = ins;
+	}
+
 	// Purpose: 
 	//   Returns first atom in genome
 	//

@@ -369,7 +369,7 @@ namespace pushGP
 	// Remarks:
 	//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
 	//
-	void Individual::set_genome(std::vector<struct Genome::Atom> _genome)
+	void Individual::set_genome(std::vector<struct Plush::Atom> _genome)
 	{
 		init();
 		genome_.set(_genome);

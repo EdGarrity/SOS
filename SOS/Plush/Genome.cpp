@@ -4,7 +4,7 @@
 #include "../Domain/Arguments.h"
 #include "../Utilities/MyException.h"
 
-namespace Genome
+namespace Plush
 {
 	// Purpose: 
 	//   Default Constructor
