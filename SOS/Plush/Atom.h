@@ -3,8 +3,9 @@
 
 namespace Plush
 {
-	struct Atom
+	class Atom
 	{
+	public:
 		enum AtomType
 		{
 			empty = 0,
@@ -32,6 +33,18 @@ namespace Plush
 			type = AtomType::empty;
 		};
 
+		Atom(std::string _program_statement)
+		{
+			compile(_program_statement);
+		};
+
+		Atom(const Atom &other)
+		{
+			instruction = other.instruction;
+			parentheses = other.parentheses;
+			type = other.type;
+		};
+
 		void clear()
 		{
 			instruction = "";
@@ -42,57 +55,71 @@ namespace Plush
 		void compile(std::string _program_statement);
 	};
 
-	class ExecAtom
+	class ExecAtom : public Atom
 	{
 	private:
-		Atom atom_;
+//		Atom atom_;
 
 	public:
-		ExecAtom()
+		ExecAtom() : Atom()
 		{
-			atom_.clear();
+//			atom_.clear();
 		};
 
-		ExecAtom(std::string _program_statement)
+		ExecAtom(std::string _program_statement) : Atom(_program_statement)
 		{
-			atom_.compile(_program_statement);
+//			atom_.compile(_program_statement);
+		};
+
+		ExecAtom(const Atom &atom) : Atom(atom)
+		{
 		};
 
 		~ExecAtom() {};
 
 		inline bool operator==(const ExecAtom& other) 
 		{ 
-			return ((atom_.instruction == other.atom_.instruction)
-				&& (atom_.parentheses != other.atom_.parentheses)
-				&& (atom_.type != other.atom_.type));
+			//return ((atom_.instruction == other.atom_.instruction)
+			//	&& (atom_.parentheses != other.atom_.parentheses)
+			//	&& (atom_.type != other.atom_.type));
+			return ((instruction == other.instruction)
+				&& (parentheses != other.parentheses)
+				&& (type != other.type));
 		};
 
 		inline bool operator!=(const ExecAtom& other) { return !(operator==(other)); };
 	};
 
-	class CodeAtom
+	class CodeAtom : public Atom
 	{
 	private:
-		Atom atom_;
+//		Atom atom_;
 
 	public:
-		CodeAtom()
+		CodeAtom() : Atom()
 		{
-			atom_.clear();
+//			atom_.clear();
 		};
 
-		CodeAtom(std::string _program_statement)
+		CodeAtom(std::string _program_statement) : Atom(_program_statement)
 		{
-			atom_.compile(_program_statement);
+//			atom_.compile(_program_statement);
+		};
+
+		CodeAtom(const Atom &atom) : Atom(atom)
+		{
 		};
 
 		~CodeAtom() {};
 
 		inline bool operator==(const CodeAtom& other)
 		{
-			return ((atom_.instruction == other.atom_.instruction)
-				&& (atom_.parentheses != other.atom_.parentheses)
-				&& (atom_.type != other.atom_.type));
+			//return ((atom_.instruction == other.atom_.instruction)
+			//	&& (atom_.parentheses != other.atom_.parentheses)
+			//	&& (atom_.type != other.atom_.type));
+			return ((instruction == other.instruction)
+				&& (parentheses == other.parentheses)
+				&& (type == other.type));
 		};
 
 		inline bool operator!=(const CodeAtom& other) { return !(operator==(other)); };

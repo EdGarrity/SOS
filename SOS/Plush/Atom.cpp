@@ -60,13 +60,13 @@ namespace Plush
 		else if ((instruction == "true") || (instruction == "false"))
 			type = AtomType::boolean;
 
-		// Check for float
-		else if ([&]() { char* p; strtod(instruction.c_str(), &p); return *p == 0; }() == true)
-			type = AtomType::floating_point;
-
 		// Check for integer
 		else if ([&]() { char* p; strtol(instruction.c_str(), &p, 10); return *p == 0; }() == true)
 			type = AtomType::integer;
+
+		// Check for float
+		else if ([&]() { char* p; strtod(instruction.c_str(), &p); return *p == 0; }() == true)
+			type = AtomType::floating_point;
 
 		else
 			type = ins;

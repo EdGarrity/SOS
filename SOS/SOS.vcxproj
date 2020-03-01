@@ -197,6 +197,7 @@
     <ClInclude Include="Utilities\CoreTemp\GetCoreTempInfo.h" />
     <ClInclude Include="Utilities\CSVIterator.h" />
     <ClInclude Include="Utilities\FixedSizeStack.h" />
+    <ClInclude Include="Utilities\String.h" />
     <ClInclude Include="Utilities\SystemInfo.h" />
     <ClInclude Include="Utilities\MyException.h" />
     <ClInclude Include="Utilities\Random.Utilities.h" />
@@ -242,6 +243,7 @@
     <ClCompile Include="Utilities\AtomicFunctions.cpp" />
     <ClCompile Include="Utilities\Conversion.cpp" />
     <ClCompile Include="Utilities\FixedSizeStack.cpp" />
+    <ClCompile Include="Utilities\String.cpp" />
     <ClCompile Include="Utilities\SystemInfo.cpp" />
     <ClCompile Include="Utilities\MyException.cpp" />
     <ClCompile Include="Utilities\Random.Utilities.cpp" />

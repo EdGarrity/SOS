@@ -10,7 +10,7 @@ namespace Plush
 	private:
 		Utilities::FixedSizeStack<class ExecAtom> exec_stack_;
 		Utilities::FixedSizeStack<class CodeAtom> code_stack_;
-		Utilities::FixedSizeStack<int> int_stack_;
+		Utilities::FixedSizeStack<long> int_stack_;
 		Utilities::FixedSizeStack<double> double_stack_;
 		Utilities::FixedSizeStack<bool> bool_stack_;
 
@@ -18,9 +18,6 @@ namespace Plush
 		Processor();
 		~Processor();
 
-		//Processor(const Processor&) = default;
-		//Processor& operator=(const Processor&) = default;
-		
 		virtual void clear_stacks()
 		{
 			exec_stack_.clear();
@@ -40,7 +37,7 @@ namespace Plush
 		{
 			return code_stack_;
 		}
-		template <> inline Utilities::FixedSizeStack<int> &get_stack()
+		template <> inline Utilities::FixedSizeStack<long> &get_stack()
 		{
 			return int_stack_;
 		}
