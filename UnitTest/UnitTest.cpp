@@ -358,5 +358,63 @@ namespace UnitTest
 				  CodeAtom("{:instruction 10.0 :close 0}")
 				}));
 		}
+
+		TEST_METHOD(EQUALS_WITH_NO_PARAMETERS)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "{:instruction FLOAT.= :close 0}");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+				  CodeAtom("{:instruction FLOAT.= :close 0}")
+				}));
+		}
+
+		TEST_METHOD(EQUALS_WITH_PARAMETERS)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "\
+                             {:instruction 10.0 :close 0}\
+                             {:instruction 20.0 :close 0}\
+                             {:instruction 30.0 :close 0}\
+                             {:instruction 1 :close 0}\
+					         {:instruction FLOAT.= :close 0}\
+			                ");
+
+			Assert::IsTrue(is_stack_state(env, {}, { 10.0, 20.0, 30.0 }, { false }, {},
+				{
+				  CodeAtom("{:instruction FLOAT.= :close 0}"),
+				  CodeAtom("{:instruction 1 :close 0}"),
+				  CodeAtom("{:instruction 30.0 :close 0}"),
+				  CodeAtom("{:instruction 20.0 :close 0}"),
+				  CodeAtom("{:instruction 10.0 :close 0}")
+				}));
+
+			env.clear_stacks();
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "\
+                             {:instruction 10.0 :close 0}\
+                             {:instruction 20.0 :close 0}\
+                             {:instruction 30.0 :close 0}\
+                             {:instruction 30.0 :close 0}\
+                             {:instruction 1 :close 0}\
+					         {:instruction FLOAT.= :close 0}\
+			                ");
+
+			Assert::IsTrue(is_stack_state(env, {}, { 10.0, 20.0, 30.0, 30.0 }, { true }, {},
+				{
+				  CodeAtom("{:instruction FLOAT.= :close 0}"),
+				  CodeAtom("{:instruction 1 :close 0}"),
+				  CodeAtom("{:instruction 30.0 :close 0}"),
+				  CodeAtom("{:instruction 30.0 :close 0}"),
+				  CodeAtom("{:instruction 20.0 :close 0}"),
+				  CodeAtom("{:instruction 10.0 :close 0}")
+				}));
+		}
 	};
 }

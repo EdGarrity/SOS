@@ -59,12 +59,15 @@ namespace Plush
 		}
 
 		/* pushing and popping */
+
+		// Need spcial cases for pushing an array of EXEC and CODE
 		template <typename T>
 		inline void push(T value)
 		{
 			get_stack<T>().push(value);
 		}
 
+		// Need spcial cases for EXEC and CODE
 		template <typename T>
 		inline T pop()
 		{
@@ -73,6 +76,7 @@ namespace Plush
 			return val;
 		}
 
+		// Need spcial cases for EXEC and CODE
 		template <typename T>
 		inline T top()
 		{
@@ -80,6 +84,7 @@ namespace Plush
 			return val;
 		}
 
+		// Need spcial cases for EXEC and CODE
 		template <typename T>
 		inline bool has_elements(unsigned sz)
 		{
@@ -89,6 +94,7 @@ namespace Plush
 				return true;
 		}
 
+		// Need spcial cases for EXEC and CODE
 		template <typename T>
 		inline T peek(unsigned index)
 		{

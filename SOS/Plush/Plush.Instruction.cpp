@@ -16,6 +16,7 @@ namespace Plush
 	{
 		GENERIC(YANKDUP, yankdup);
 		GENERIC(DUP, dup);
+		GENERIC(=, equals);
 	}
 
 }

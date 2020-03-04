@@ -7,6 +7,8 @@ namespace Plush
 	void initGenerics();
 
 	/* generic functions */
+
+	// Need spcial cases for EXEC and CODE
 	template <typename T>
 	inline unsigned dup(Environment & _env)
 	{
@@ -26,6 +28,7 @@ namespace Plush
 		return stacksize - 1 - index;
 	}
 
+	// Need spcial cases for EXEC and CODE
 	template <class T>
 	inline unsigned yankdup(Environment & _env)
 	{
@@ -37,6 +40,17 @@ namespace Plush
 			T v = _env.peek<T>(index);
 			_env.push<T>(v);
 		}
+
+		return 1;
+	}
+
+	// Need spcial cases for EXEC and CODE
+	template <typename T>
+	inline unsigned equals(Environment & _env)
+	{
+		// Check for valid parameters
+		if (_env.has_elements<T>(2))
+			_env.push<bool>(_env.pop<T>() == _env.pop<T>());
 
 		return 1;
 	}
