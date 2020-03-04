@@ -58,17 +58,14 @@ namespace Plush
 	class ExecAtom : public Atom
 	{
 	private:
-//		Atom atom_;
 
 	public:
 		ExecAtom() : Atom()
 		{
-//			atom_.clear();
 		};
 
 		ExecAtom(std::string _program_statement) : Atom(_program_statement)
 		{
-//			atom_.compile(_program_statement);
 		};
 
 		ExecAtom(const Atom &atom) : Atom(atom)
@@ -77,11 +74,8 @@ namespace Plush
 
 		~ExecAtom() {};
 
-		inline bool operator==(const ExecAtom& other) 
+		inline bool operator==(const ExecAtom& other)
 		{ 
-			//return ((atom_.instruction == other.atom_.instruction)
-			//	&& (atom_.parentheses != other.atom_.parentheses)
-			//	&& (atom_.type != other.atom_.type));
 			return ((instruction == other.instruction)
 				&& (parentheses != other.parentheses)
 				&& (type != other.type));
@@ -93,17 +87,14 @@ namespace Plush
 	class CodeAtom : public Atom
 	{
 	private:
-//		Atom atom_;
 
 	public:
 		CodeAtom() : Atom()
 		{
-//			atom_.clear();
 		};
 
 		CodeAtom(std::string _program_statement) : Atom(_program_statement)
 		{
-//			atom_.compile(_program_statement);
 		};
 
 		CodeAtom(const Atom &atom) : Atom(atom)
@@ -114,9 +105,6 @@ namespace Plush
 
 		inline bool operator==(const CodeAtom& other)
 		{
-			//return ((atom_.instruction == other.atom_.instruction)
-			//	&& (atom_.parentheses != other.atom_.parentheses)
-			//	&& (atom_.type != other.atom_.type));
 			return ((instruction == other.instruction)
 				&& (parentheses == other.parentheses)
 				&& (type == other.type));

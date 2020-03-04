@@ -165,7 +165,10 @@
     <ClInclude Include="Domain\Learn From Examples\Run.LearnFromExamples.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Plush\Atom.h" />
+    <ClInclude Include="Plush\Environment.h" />
     <ClInclude Include="Plush\Genome.h" />
+    <ClInclude Include="Plush\Plush.Instruction.h" />
+    <ClInclude Include="Plush\Plush.StaticInit.h" />
     <ClInclude Include="Plush\Processor.h" />
     <ClInclude Include="PushGP\Breed.h" />
     <ClInclude Include="PushGP\GeneticOperators.h" />
@@ -217,7 +220,10 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Plush\Atom.cpp" />
+    <ClCompile Include="Plush\Environment.cpp" />
     <ClCompile Include="Plush\Genome.cpp" />
+    <ClCompile Include="Plush\Plush.Instruction.cpp" />
+    <ClCompile Include="Plush\Plush.StaticInit.cpp" />
     <ClCompile Include="Plush\Processor.cpp" />
     <ClCompile Include="PushGP\Breed.cpp" />
     <ClCompile Include="PushGP\GeneticOperators.cpp" />

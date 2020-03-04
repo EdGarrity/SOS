@@ -105,7 +105,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>C:\Users\egarrity\OneDrive\Projects\Source\Repos\EdGarrity\SOS\SOS\x64\Debug;C:\Users\edgar\OneDrive\Projects\Source\Repos\EdGarrity\SOS\SOS\x64\Debug;$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Processor.obj;Atom.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Atom.obj;Environment.obj;Plush.Instruction.obj;Plush.StaticInit.obj;Processor.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -122,7 +122,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>C:\Users\egarrity\OneDrive\Projects\Source\Repos\EdGarrity\SOS\SOS\x64\Debug;C:\Users\edgar\OneDrive\Projects\Source\Repos\EdGarrity\SOS\SOS\x64\Debug;$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Processor.obj;Atom.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Atom.obj;Environment.obj;Plush.Instruction.obj;Plush.StaticInit.obj;Processor.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

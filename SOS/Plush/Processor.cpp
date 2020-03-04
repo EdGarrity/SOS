@@ -4,15 +4,12 @@
 
 namespace Plush
 {
-	Processor::Processor()
-	{
-	}
+	typedef unsigned(*Operator)(Environment &env);
+	typedef std::map<std::string, Operator> String2CodeMapType;
 
-	Processor::~Processor()
-	{
-	}
+	extern 	String2CodeMapType String2CodeMap;
 
-	void Processor::run(std::string _program)
+	void run(Environment& env, std::string _program)
 	{
 		std::string gene;
 		Utilities::FixedSizeStack<Atom> code_stack;
@@ -30,87 +27,47 @@ namespace Plush
 
 		while (!code_stack.empty())
 		{
-			code_stack_.push(CodeAtom(code_stack.top()));
-			exec_stack_.push(ExecAtom(code_stack.top()));
+			env.get_stack<CodeAtom>().push(CodeAtom(code_stack.top()));
+			env.get_stack<ExecAtom>().push(ExecAtom(code_stack.top()));
 			code_stack.pop();
 		}
 
 		// The basic pop-exec cycle
 		unsigned effort = 0;
 
-		while ((!exec_stack_.empty()) && (effort < domain::argmap::max_point_evaluations))
+		while ((!env.is_empty<ExecAtom>()) && (effort < domain::argmap::max_point_evaluations))
 		{
-			ExecAtom atom = exec_stack_.top();
-			exec_stack_.pop();
+			unsigned unit = 0;
+
+			ExecAtom atom = env.pop<ExecAtom>();
 
 			switch (atom.type)
 			{
 			case Atom::AtomType::integer:
-				int_stack_.push(std::stol(atom.instruction));
+				env.push<long>(std::stol(atom.instruction));
+				unit = 1;
 				break;
 			case Atom::AtomType::floating_point:
-				double_stack_.push(std::stod(atom.instruction));
+				env.push<double>(std::stol(atom.instruction));
+				unit = 1;
 				break;
 			case Atom::AtomType::boolean:
-				bool_stack_.push(atom.instruction=="true");
+				env.push<bool>(atom.instruction == "TRUE");
+				unit = 1;
+				break;
+			case Atom::AtomType::ins:
+				auto search = String2CodeMap.find(atom.instruction);
+				
+				if (search != String2CodeMap.end())
+				{
+					Operator op = String2CodeMap[atom.instruction];
+					op(env);
+				}
+
 				break;
 			}
+
+			effort += (1u) > (unit) ? (1u) : (unit);
 		}
-	}
-
-	// Purpose: 
-	//   Returns first atom in genome
-	//
-	// Parameters:
-	//   None
-	// 
-	// Return value:
-	//   The genome first atom as a sting
-	//
-	// Side Effects:
-	//   None
-	//
-	// Thread Safe:
-	//   Yes
-	//
-	// Remarks:
-	//
-	std::string Processor::first_atom(std::string _genome_instructions)
-	{
-		std::size_t found = _genome_instructions.find_first_of("}");
-
-		if (found == std::string::npos)
-			return "";
-
-		else
-			return _genome_instructions.substr(0, found + 1);
-	}
-
-	// Purpose: 
-	//   Returns rest of genome atoms after first atom
-	//
-	// Parameters:
-	//   None
-	// 
-	// Return value:
-	//   The remining genome atoms after the first atom as a sting
-	//
-	// Side Effects:
-	//   None
-	//
-	// Thread Safe:
-	//   Yes
-	//
-	// Remarks:
-	//
-	std::string Processor::rest_atom(std::string _genome_instructions)
-	{
-		std::size_t found = _genome_instructions.find_first_of("}");
-
-		if (found == std::string::npos)
-			return "";
-
-		else
-			return _genome_instructions.substr(found + 1);
 	}
 }

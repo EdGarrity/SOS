@@ -26,27 +26,27 @@ namespace UnitTest
 	TEST_CLASS(TestPlush)
 	{
 	private:
-		bool is_stack_state(Processor & processor, 
+		bool is_stack_state(Environment & env,
 			std::vector<long> int_array,
 			std::vector<double> double_array,
 			std::vector<bool> bool_array,
 			std::vector<ExecAtom> exec_array,
 			std::vector<CodeAtom> code_array)
 		{
-			if (processor.has_elements<long>(int_array.size()) == false)
+			if (env.has_elements<long>(int_array.size()) == false)
 				return false;
 	
 			if (!int_array.empty())
 			{
 				for (size_t n = 0; n < int_array.size(); n++)
 				{
-					if (int_array[n] != processor.peek<long>(n))
+					if (int_array[n] != env.peek<long>(n))
 						return false;
 				}
 			}
 
 	
-			if (processor.has_elements<double>(double_array.size()) == false)
+			if (env.has_elements<double>(double_array.size()) == false)
 				return false;
 	
 			if (!double_array.empty())
@@ -54,37 +54,37 @@ namespace UnitTest
 
 				for (size_t n = 0; n < double_array.size(); n++)
 				{
-					if (double_array[n] != processor.peek<double>(n))
+					if (double_array[n] != env.peek<double>(n))
 						return false;
 				}
 			}
 	
 
-			if (processor.has_elements<bool>(bool_array.size()) == false)
+			if (env.has_elements<bool>(bool_array.size()) == false)
 				return false;
 	
 			if (!bool_array.empty())
 			{
 				for (size_t n = 0; n < bool_array.size(); n++)
 				{
-					if (bool_array[n] != processor.peek<bool>(n))
+					if (bool_array[n] != env.peek<bool>(n))
 						return false;
 				}
 			}
 	
-			if (processor.has_elements<ExecAtom>(exec_array.size()) == false)
+			if (env.has_elements<ExecAtom>(exec_array.size()) == false)
 				return false;
 	
 			if (!exec_array.empty())
 			{
 				for (size_t n = 0; n < exec_array.size(); n++)
 				{
-					if (exec_array[n] != processor.peek<ExecAtom>(n))
+					if (exec_array[n] != env.peek<ExecAtom>(n))
 						return false;
 				}
 			}
 	
-			if (processor.has_elements<CodeAtom>(code_array.size()) == false)
+			if (env.has_elements<CodeAtom>(code_array.size()) == false)
 				return false;
 
 			if (!code_array.empty())
@@ -95,7 +95,7 @@ namespace UnitTest
 					//	return false;
 
 					CodeAtom atom1(code_array[n]);
-					CodeAtom atom2(processor.peek<CodeAtom>(n));
+					CodeAtom atom2(env.peek<CodeAtom>(n));
 
 					if (atom1 != atom2)
 						return false;
@@ -110,140 +110,140 @@ namespace UnitTest
 		// Test normal pushing and poping functionality		
 		TEST_METHOD(PushingAndPopingSingleInt)
 		{
-			Processor processor;
-			Assert::IsTrue(is_stack_state(processor, {}, {}, {}, {}, {}));
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
-			processor.push<long>(10);
-			Assert::IsTrue(is_stack_state(processor, {10}, {}, {}, {}, {}));
+			env.push<long>(10);
+			Assert::IsTrue(is_stack_state(env, {10}, {}, {}, {}, {}));
 
-			Assert::AreEqual<long>(processor.pop<long>(), 10);
-			Assert::IsTrue(is_stack_state(processor, {}, {}, {}, {}, {}));
+			Assert::AreEqual<long>(env.pop<long>(), 10);
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 		}
 	
 		TEST_METHOD(PushingAndPopingSingleDouble)
 		{
-			Processor processor;
-			Assert::IsTrue(is_stack_state(processor, {}, {}, {}, {}, {}));
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 	
-			processor.push<double>(10.0);
-			Assert::IsTrue(is_stack_state(processor, {}, {10.0}, {}, {}, {}));
+			env.push<double>(10.0);
+			Assert::IsTrue(is_stack_state(env, {}, {10.0}, {}, {}, {}));
 	
-			Assert::AreEqual(processor.pop<double>(), 10.0);
-			Assert::IsTrue(is_stack_state(processor, {}, {}, {}, {}, {}));
+			Assert::AreEqual(env.pop<double>(), 10.0);
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 		}
 	
 		TEST_METHOD(PushingAndPopingSingleBool)
 		{
-			Processor processor;
-			Assert::IsTrue(is_stack_state(processor, {}, {}, {}, {}, {}));
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
-			processor.push<bool>(true);
-			Assert::IsTrue(is_stack_state(processor, {}, {}, {true}, {}, {}));
+			env.push<bool>(true);
+			Assert::IsTrue(is_stack_state(env, {}, {}, {true}, {}, {}));
 	
-			Assert::AreEqual(processor.pop<bool>(), true);
-			Assert::IsTrue(is_stack_state(processor, {}, {}, {}, {}, {}));
+			Assert::AreEqual(env.pop<bool>(), true);
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 		}
 	
 		TEST_METHOD(PushingAndPopingMultipleInt)
 		{
-			Processor processor;
-			Assert::IsTrue(is_stack_state(processor, {}, {}, {}, {}, {}));
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
-			processor.push<long>(10);
-			Assert::IsTrue(is_stack_state(processor, { 10 }, {}, {}, {}, {}));
+			env.push<long>(10);
+			Assert::IsTrue(is_stack_state(env, { 10 }, {}, {}, {}, {}));
 
-			processor.push<long>(20);
-			Assert::IsTrue(is_stack_state(processor, { 10, 20 }, {}, {}, {}, {}));
+			env.push<long>(20);
+			Assert::IsTrue(is_stack_state(env, { 10, 20 }, {}, {}, {}, {}));
 
-			processor.push<long>(30);
-			Assert::IsTrue(is_stack_state(processor, { 10, 20, 30 }, {}, {}, {}, {}));
+			env.push<long>(30);
+			Assert::IsTrue(is_stack_state(env, { 10, 20, 30 }, {}, {}, {}, {}));
 
-			Assert::AreEqual<long>(processor.top<long>(), 30);
-			Assert::AreEqual<long>(processor.pop<long>(), 30);
-			Assert::IsTrue(is_stack_state(processor, { 10, 20 }, {}, {}, {}, {}));
+			Assert::AreEqual<long>(env.top<long>(), 30);
+			Assert::AreEqual<long>(env.pop<long>(), 30);
+			Assert::IsTrue(is_stack_state(env, { 10, 20 }, {}, {}, {}, {}));
 	
-			Assert::AreEqual<long>(processor.top<long>(), 20);
-			Assert::AreEqual<long>(processor.pop<long>(), 20);
-			Assert::IsTrue(is_stack_state(processor, { 10 }, {}, {}, {}, {}));
+			Assert::AreEqual<long>(env.top<long>(), 20);
+			Assert::AreEqual<long>(env.pop<long>(), 20);
+			Assert::IsTrue(is_stack_state(env, { 10 }, {}, {}, {}, {}));
 
-			Assert::AreEqual<long>(processor.top<long>(), 10);
-			Assert::AreEqual<long>(processor.pop<long>(), 10);
-			Assert::IsTrue(is_stack_state(processor, {}, {}, {}, {}, {}));
+			Assert::AreEqual<long>(env.top<long>(), 10);
+			Assert::AreEqual<long>(env.pop<long>(), 10);
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 		}
 	
 		TEST_METHOD(PushingAndPopingMultipleDouble)
 		{
-			Processor processor;
-			Assert::IsTrue(is_stack_state(processor, {}, {}, {}, {}, {}));
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
-			processor.push<double>(10.0);
-			Assert::IsTrue(is_stack_state(processor, {}, { 10.0 }, {}, {}, {}));
+			env.push<double>(10.0);
+			Assert::IsTrue(is_stack_state(env, {}, { 10.0 }, {}, {}, {}));
 
-			processor.push<double>(20.0);
-			Assert::IsTrue(is_stack_state(processor, {}, { 10.0, 20.0 }, {}, {}, {}));
+			env.push<double>(20.0);
+			Assert::IsTrue(is_stack_state(env, {}, { 10.0, 20.0 }, {}, {}, {}));
 
-			processor.push<double>(30.0);
-			Assert::IsTrue(is_stack_state(processor, {}, { 10.0, 20.0, 30.0 }, {}, {}, {}));
+			env.push<double>(30.0);
+			Assert::IsTrue(is_stack_state(env, {}, { 10.0, 20.0, 30.0 }, {}, {}, {}));
 
-			Assert::AreEqual(processor.top<double>(), 30.0);
-			Assert::AreEqual(processor.pop<double>(), 30.0);
-			Assert::IsTrue(is_stack_state(processor, {}, { 10.0, 20.0 }, {}, {}, {}));
+			Assert::AreEqual(env.top<double>(), 30.0);
+			Assert::AreEqual(env.pop<double>(), 30.0);
+			Assert::IsTrue(is_stack_state(env, {}, { 10.0, 20.0 }, {}, {}, {}));
 
-			Assert::AreEqual(processor.top<double>(), 20.0);
-			Assert::AreEqual(processor.pop<double>(), 20.0);
-			Assert::IsTrue(is_stack_state(processor, {}, { 10.0 }, {}, {}, {}));
+			Assert::AreEqual(env.top<double>(), 20.0);
+			Assert::AreEqual(env.pop<double>(), 20.0);
+			Assert::IsTrue(is_stack_state(env, {}, { 10.0 }, {}, {}, {}));
 
-			Assert::AreEqual(processor.top<double>(), 10.0);
-			Assert::AreEqual(processor.pop<double>(), 10.0);
-			Assert::IsTrue(is_stack_state(processor, {}, {}, {}, {}, {}));
+			Assert::AreEqual(env.top<double>(), 10.0);
+			Assert::AreEqual(env.pop<double>(), 10.0);
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 		}
 	
 		TEST_METHOD(PushingAndPopingMultipleBool)
 		{
-			Processor processor;
-			Assert::IsTrue(is_stack_state(processor, {}, {}, {}, {}, {}));
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
-			processor.push<bool>(true);
-			Assert::IsTrue(is_stack_state(processor, {}, {}, { true }, {}, {}));
+			env.push<bool>(true);
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {}, {}));
 
-			processor.push<bool>(false);
-			Assert::IsTrue(is_stack_state(processor, {}, {}, { true, false }, {}, {}));
+			env.push<bool>(false);
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true, false }, {}, {}));
 
-			processor.push<bool>(true);
-			Assert::IsTrue(is_stack_state(processor, {}, {}, { true, false, true }, {}, {}));
+			env.push<bool>(true);
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true, false, true }, {}, {}));
 
-			Assert::AreEqual(processor.top<bool>(), true);
-			Assert::AreEqual(processor.pop<bool>(), true);
-			Assert::IsTrue(is_stack_state(processor, {}, {}, { true, false }, {}, {}));
+			Assert::AreEqual(env.top<bool>(), true);
+			Assert::AreEqual(env.pop<bool>(), true);
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true, false }, {}, {}));
 
-			Assert::AreEqual(processor.top<bool>(), false);
-			Assert::AreEqual(processor.pop<bool>(), false);
-			Assert::IsTrue(is_stack_state(processor, {}, {}, { true }, {}, {}));
+			Assert::AreEqual(env.top<bool>(), false);
+			Assert::AreEqual(env.pop<bool>(), false);
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {}, {}));
 
-			Assert::AreEqual(processor.top<bool>(), true);
-			Assert::AreEqual(processor.pop<bool>(), true);
-			Assert::IsTrue(is_stack_state(processor, {}, {}, {}, {}, {}));
+			Assert::AreEqual(env.top<bool>(), true);
+			Assert::AreEqual(env.pop<bool>(), true);
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 		}
 	
 		TEST_METHOD(ProgramToPushOneConstant)
 		{
-			Processor processor;
-			Assert::IsTrue(is_stack_state(processor, {}, {}, {}, {}, {}));
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
-			processor.run("{:instruction 10 :close 0}");
-			Assert::IsTrue(is_stack_state(processor, {10}, {}, {}, {}, { CodeAtom("{:instruction 10 :close 0}")}));
+			Plush::run(env, "{:instruction 10 :close 0}");
+			Assert::IsTrue(is_stack_state(env, {10}, {}, {}, {}, { CodeAtom("{:instruction 10 :close 0}")}));
 
-			processor.pop<long>();
-			Assert::IsTrue(is_stack_state(processor, {}, {}, {}, {}, {}));
+			env.pop<long>();
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 		}
 
 		TEST_METHOD(ProgramToPushTwoConstants)
 		{
-			Processor processor;
-			Assert::IsTrue(is_stack_state(processor, {}, {}, {}, {}, {}));
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
-			processor.run("{:instruction 10 :close 0}{:instruction 20.0 :close 0}");
-			Assert::IsTrue(is_stack_state(processor, {10}, {20.0}, {}, {}, 
+			Plush::run(env, "{:instruction 10 :close 0}{:instruction 20.0 :close 0}");
+			Assert::IsTrue(is_stack_state(env, {10}, {20.0}, {}, {}, 
 				{
 					CodeAtom("{:instruction 20.0 :close 0}"),
 					CodeAtom("{:instruction 10 :close 0}")
@@ -252,10 +252,10 @@ namespace UnitTest
 
 		TEST_METHOD(ProgramToPushManyConstants)
 		{
-			Processor processor;
-			Assert::IsTrue(is_stack_state(processor, {}, {}, {}, {}, {}));
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
-			processor.run("{:instruction 10 :close 0}\
+			Plush::run(env, "{:instruction 10 :close 0}\
                            {:instruction 20.0 :close 0}\
                            {:instruction true :close 0}\
                            {:instruction 30.0 :close 1}\
@@ -263,14 +263,99 @@ namespace UnitTest
                            {:instruction 40 :close 0}\
                           ");
 
-			Assert::IsTrue(is_stack_state(processor, { 10, 40 }, { 20.0, 30.0 }, { true, false }, {}, 
+			Assert::IsTrue(is_stack_state(env, { 10, 40 }, { 20.0, 30.0 }, { true, false }, {}, 
 				{ 
 				  CodeAtom("{:instruction 40 :close 0}"),
-				  CodeAtom("{:instruction false :close 0}"),
+				  CodeAtom("{:instruction FALSE :close 0}"),
 				  CodeAtom("{:instruction 30.0 :close 1}"),
-				  CodeAtom("{:instruction true :close 0}"),
+				  CodeAtom("{:instruction TRUE :close 0}"),
 				  CodeAtom("{:instruction 20.0 :close 0}"),
 				  CodeAtom("{:instruction 10 :close 0}")
+				}));
+		}
+
+		TEST_METHOD(InvalidInstruction)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "{:instruction INVALID.INSTRUCTION :close 0}");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+				  CodeAtom("{:instruction INVALID.INSTRUCTION :close 0}")
+				}));
+		}
+
+		TEST_METHOD(FLOAT_YANKDUP_WITH_NO_PARAMETERS)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "{:instruction FLOAT.YANKDUP :close 0}");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+				  CodeAtom("{:instruction FLOAT.YANKDUP :close 0}")
+				}));
+		}
+
+		TEST_METHOD(FLOAT_YANKDUP_WITH_PARAMETERS)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "\
+                             {:instruction 10.0 :close 0}\
+                             {:instruction 20.0 :close 0}\
+                             {:instruction 30.0 :close 0}\
+                             {:instruction 1 :close 0}\
+					         {:instruction FLOAT.YANKDUP :close 0}\
+			                ");
+
+			Assert::IsTrue(is_stack_state(env, {}, {10.0, 20.0, 30.0, 20.0}, {}, {},
+				{
+				  CodeAtom("{:instruction FLOAT.YANKDUP :close 0}"),
+				  CodeAtom("{:instruction 1 :close 0}"),
+				  CodeAtom("{:instruction 30.0 :close 0}"),
+				  CodeAtom("{:instruction 20.0 :close 0}"),
+				  CodeAtom("{:instruction 10.0 :close 0}")
+				}));
+		}
+
+		TEST_METHOD(DUP_WITH_NO_PARAMETERS)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "{:instruction FLOAT.DUP :close 0}");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+				  CodeAtom("{:instruction FLOAT.DUP :close 0}")
+				}));
+		}
+
+		TEST_METHOD(DUP_WITH_PARAMETERS)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "\
+                             {:instruction 10.0 :close 0}\
+                             {:instruction 20.0 :close 0}\
+                             {:instruction 30.0 :close 0}\
+                             {:instruction 1 :close 0}\
+					         {:instruction FLOAT.DUP :close 0}\
+			                ");
+
+			Assert::IsTrue(is_stack_state(env, {}, { 10.0, 20.0, 30.0, 30.0 }, {}, {},
+				{
+				  CodeAtom("{:instruction FLOAT.DUP :close 0}"),
+				  CodeAtom("{:instruction 1 :close 0}"),
+				  CodeAtom("{:instruction 30.0 :close 0}"),
+				  CodeAtom("{:instruction 20.0 :close 0}"),
+				  CodeAtom("{:instruction 10.0 :close 0}")
 				}));
 		}
 	};

@@ -29,6 +29,10 @@ namespace Plush
 
 		instruction = _atom_string.substr(index, start_of_optional_tokens - index);
 
+		// Convert instruction to upper case
+		std::transform(instruction.begin(), instruction.end(), instruction.begin(),
+			[](unsigned char c) { return std::toupper(c); });
+
 		// Check for optional close token
 		index = _atom_string.find(":close", start_of_optional_tokens);
 
@@ -57,7 +61,7 @@ namespace Plush
 		}
 
 		// Check for boolean
-		else if ((instruction == "true") || (instruction == "false"))
+		else if ((instruction == "TRUE") || (instruction == "FALSE"))
 			type = AtomType::boolean;
 
 		// Check for integer
