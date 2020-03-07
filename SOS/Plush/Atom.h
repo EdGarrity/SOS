@@ -77,8 +77,8 @@ namespace Plush
 		inline bool operator==(const ExecAtom& other)
 		{ 
 			return ((instruction == other.instruction)
-				&& (parentheses != other.parentheses)
-				&& (type != other.type));
+				&& (parentheses == other.parentheses)
+				&& (type == other.type));
 		};
 
 		inline bool operator!=(const ExecAtom& other) { return !(operator==(other)); };
