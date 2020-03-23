@@ -2,19 +2,23 @@
 
 namespace Plush
 {
-	String2CodeMapType String2CodeMap;
+	Func2CodeMapType Func2CodeMap;
+	Func2BlockWantsMapType Func2BlockWantsMap;
 	StaticInit static_initializer;
 
 	void initGenerics();
+	void initExec();
 
 	StaticInit::StaticInit()
 	{
 		initGenerics();
+		initExec();
 	};
 
-	void StaticInit::register_pushfunc(Operator op, std::string type, std::string name)
+	void StaticInit::register_pushfunc(Operator op, std::string type, std::string name, unsigned int block_wants)
 	{
 		std::string func_name = type + "." + name;
-		String2CodeMap[func_name] = op;
+		Func2CodeMap[func_name] = op;
+		Func2BlockWantsMap[func_name] = block_wants;
 	};
 }

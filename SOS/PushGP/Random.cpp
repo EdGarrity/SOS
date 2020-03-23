@@ -242,7 +242,7 @@ namespace pushGP
 			else
 			{
 				atom = random_atom();
-				atom.parentheses = random_closes();
+				atom.close_parentheses = random_closes();
 
 				genome.push_back(atom);
 			}

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Atom.h"
+#include <vector>
 #include "..\Utilities\FixedSizeStack.h"
 
 namespace Plush
@@ -96,7 +97,7 @@ namespace Plush
 
 		// Need spcial cases for EXEC and CODE
 		template <typename T>
-		inline T peek(unsigned index)
+		inline T peek_index(unsigned index)
 		{
 			if (has_elements<T>(index + 1))
 				return get_stack<T>().container()[index];
@@ -104,5 +105,10 @@ namespace Plush
 			else
 				throw;
 		}
+
+		//inline void peek(unsigned index, std::vector<ExecAtom> & v)
+		//{
+
+		//}
 	};
 }

@@ -105,7 +105,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>C:\Users\egarrity\OneDrive\Projects\Source\Repos\EdGarrity\SOS\SOS\x64\Debug;C:\Users\edgar\OneDrive\Projects\Source\Repos\EdGarrity\SOS\SOS\x64\Debug;$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Atom.obj;Environment.obj;Plush.Instruction.obj;Plush.StaticInit.obj;Processor.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Atom.obj;Environment.obj;Plush.ExecInstruction.obj;Plush.Instruction.obj;Plush.StaticInit.obj;Processor.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -122,7 +122,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>C:\Users\egarrity\OneDrive\Projects\Source\Repos\EdGarrity\SOS\SOS\x64\Debug;C:\Users\edgar\OneDrive\Projects\Source\Repos\EdGarrity\SOS\SOS\x64\Debug;$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Atom.obj;Environment.obj;Plush.Instruction.obj;Plush.StaticInit.obj;Processor.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Atom.obj;Environment.obj;Plush.ExecInstruction.obj;Plush.Instruction.obj;Plush.StaticInit.obj;Processor.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -169,11 +169,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="UnitTest.cpp" />
+    <ClCompile Include="Utilities\HelperFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SOS\SOS.vcxproj">
       <Project>{3e53f5e5-fc5d-4a9d-b284-e786b594da06}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Utilities\HelperFunctions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

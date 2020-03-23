@@ -34,7 +34,7 @@ namespace Plush
 			[](unsigned char c) { return std::toupper(c); });
 
 		// Check for optional close token
-		index = _atom_string.find(":close", start_of_optional_tokens);
+		index = _atom_string.find(":close");
 
 		if (index != std::string::npos)
 		{
@@ -43,7 +43,7 @@ namespace Plush
 			while (_atom_string[start_of_optional_value] == ' ')
 				start_of_optional_value++;
 
-			parentheses = std::stoi(_atom_string.substr(start_of_optional_value, index));
+			close_parentheses = std::stoi(_atom_string.substr(start_of_optional_value, index));
 		}
 
 		// Check for optional silent tiken

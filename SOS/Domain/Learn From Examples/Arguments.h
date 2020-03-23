@@ -5,6 +5,11 @@ namespace domain
 {
 	namespace argmap
 	{
+		// Default maximum size of the stack buffer.
+		const unsigned int maximum_stack_size = 1000;
+
+		const unsigned int maximum_stack_dept = 100;
+
 		const double PI = 3.141592653589793238463;
 
 		//	;; ----------------------------------------

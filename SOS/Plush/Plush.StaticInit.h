@@ -6,8 +6,13 @@
 namespace Plush
 {
 	typedef unsigned(*Operator)(Environment &env);
-	typedef std::map<std::string, Operator> String2CodeMapType;
-	extern 	String2CodeMapType String2CodeMap;
+
+	typedef std::map<std::string, Operator> Func2CodeMapType;
+	extern 	Func2CodeMapType Func2CodeMap;
+
+	// Declared in Processor.h
+	//typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
+	//extern Func2BlockWantsMapType Func2BlockWantsMap;
 
 	class StaticInit
 	{
@@ -15,14 +20,14 @@ namespace Plush
 		StaticInit();
 
 		/* Registers a function and makes it globally available through the 'instructions' Code */
-		void register_pushfunc(Operator op, std::string type, std::string name);
+		void register_pushfunc(Operator op, std::string type, std::string name, unsigned int block_wants);
 	};
 
 	extern StaticInit static_initializer;
 
 	inline
-		void make_instruction(Operator op, std::string type, std::string name)
+		void make_instruction(Operator op, std::string type, std::string name, unsigned int block_wants)
 	{
-		static_initializer.register_pushfunc(op, type, name);
+		static_initializer.register_pushfunc(op, type, name, block_wants);
 	}
 }

@@ -194,7 +194,7 @@ namespace Plush
 				while (gene[start_of_optional_value] == ' ')
 					start_of_optional_value++;
 
-				atom.parentheses = std::stoi(gene.substr(start_of_optional_value, index));
+				atom.close_parentheses = std::stoi(gene.substr(start_of_optional_value, index));
 			}
 
 			// Check for optional silent tiken
@@ -316,7 +316,7 @@ namespace Plush
 			// by exec_noop, but will still have effects like :close count
 			else if (genome.back().type == Atom::AtomType::no_op)
 			{
-				num_parens_here = genome.back().parentheses;
+				num_parens_here = genome.back().close_parentheses;
 				genome.pop_back();
 			}
 
@@ -351,7 +351,7 @@ namespace Plush
 						program_ += "(";
 				}
 
-				num_parens_here = genome.back().parentheses;
+				num_parens_here = genome.back().close_parentheses;
 				genome.pop_back();
 			}
 		} while (!done);
@@ -450,7 +450,7 @@ namespace Plush
 			genome_string_ += ":instruction ";
 			genome_string_ += genome_atoms_[n].instruction;
 			genome_string_ += " :close  ";
-			genome_string_ += std::to_string(genome_atoms_[n].parentheses);
+			genome_string_ += std::to_string(genome_atoms_[n].close_parentheses);
 			genome_string_ += "}";
 		}
 	}

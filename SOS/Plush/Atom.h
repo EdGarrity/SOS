@@ -23,13 +23,13 @@ namespace Plush
 		};
 
 		std::string instruction;
-		unsigned int parentheses;
+		unsigned int close_parentheses;
 		AtomType type;
 
 		Atom()
 		{
 			instruction = "";
-			parentheses = 0;
+			close_parentheses = 0;
 			type = AtomType::empty;
 		};
 
@@ -41,14 +41,14 @@ namespace Plush
 		Atom(const Atom &other)
 		{
 			instruction = other.instruction;
-			parentheses = other.parentheses;
+			close_parentheses = other.close_parentheses;
 			type = other.type;
 		};
 
 		void clear()
 		{
 			instruction = "";
-			parentheses = 0;
+			close_parentheses = 0;
 			type = AtomType::empty;
 		};
 
@@ -77,7 +77,7 @@ namespace Plush
 		inline bool operator==(const ExecAtom& other)
 		{ 
 			return ((instruction == other.instruction)
-				&& (parentheses == other.parentheses)
+				&& (close_parentheses == other.close_parentheses)
 				&& (type == other.type));
 		};
 
@@ -106,7 +106,7 @@ namespace Plush
 		inline bool operator==(const CodeAtom& other)
 		{
 			return ((instruction == other.instruction)
-				&& (parentheses == other.parentheses)
+				&& (close_parentheses == other.close_parentheses)
 				&& (type == other.type));
 		};
 

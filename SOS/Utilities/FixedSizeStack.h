@@ -1,5 +1,6 @@
 #pragma once
 #include <array>
+#include "..\PushGP\Globals.h"
 
 // Purpose: 
 //   Impliments a fixed-sized stack (FIFO)
@@ -20,11 +21,8 @@
 
 namespace Utilities
 {
-	// Default maximum size of the stack buffer.
-	const int default_stack_size = 1000;
-
 	// Template class definition
-	template <class T, size_t N = default_stack_size>
+	template <class T, size_t N = domain::argmap::maximum_stack_size>
 	class FixedSizeStack
 	{
 	public:
