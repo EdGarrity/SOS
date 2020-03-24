@@ -17,6 +17,10 @@ namespace Plush
 		GENERIC(YANKDUP, yankdup, 0);
 		GENERIC(DUP, dup, 1);
 		GENERIC(=, equals, 0);
+		GENERIC(FLUSH, flush, 0);
+		GENERIC(POP, protected_pop, 0);
+		GENERIC(ROT, rot, 0);
+		GENERIC(SHOVE, shove, 0);
 	}
 
 }

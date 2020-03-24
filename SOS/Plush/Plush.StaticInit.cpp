@@ -7,11 +7,13 @@ namespace Plush
 	StaticInit static_initializer;
 
 	void initGenerics();
+	void initBool();
 	void initExec();
 
 	StaticInit::StaticInit()
 	{
 		initGenerics();
+		initBool();
 		initExec();
 	};
 

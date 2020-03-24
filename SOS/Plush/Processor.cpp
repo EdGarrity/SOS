@@ -189,7 +189,7 @@ namespace Plush
 				unit = 1;
 				break;
 			case Atom::AtomType::floating_point:
-				env.push<double>(std::stol(atom.instruction));
+				env.push<double>(std::stod(atom.instruction));
 				unit = 1;
 				break;
 			case Atom::AtomType::boolean:

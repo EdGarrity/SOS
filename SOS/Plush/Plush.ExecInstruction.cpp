@@ -1,5 +1,6 @@
 #include "Plush.ExecInstruction.h"
 #include "Processor.h"
+#include "Plush.StaticInit.h"
 
 namespace Plush
 {

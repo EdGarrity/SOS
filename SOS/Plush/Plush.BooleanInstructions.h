@@ -2,6 +2,5 @@
 
 namespace Plush
 {
-	void initExec();
-
+	void initBool();
 }

@@ -222,4 +222,72 @@ namespace Plush
 
 		return 1;
 	}
+
+	template <class T>
+	inline unsigned flush(Environment & _env)
+	{
+		_env.get_stack<T>().clear();
+		return 1;
+	}
+
+	template <class T>
+	inline unsigned protected_pop(Environment & _env)
+	{
+		if (_env.has_elements<T>(1))
+			_env.pop<T>();
+
+		return 1;
+	}
+
+	template <class T>
+	unsigned rot(Environment & _env)
+	{
+		if (_env.has_elements<T>(3))
+		{
+			T x = _env.pop<T>();
+			T y = _env.pop<T>();
+			T z = _env.pop<T>();
+			_env.push<T>(y);
+			_env.push<T>(x);
+			_env.push<T>(z);
+		}
+
+		return 1;
+	}
+
+	template <class T>
+	inline unsigned shove(Environment & _env)
+	{
+		unsigned int effort = 1;
+
+		if ((_env.has_elements<long>(1)) && (_env.has_elements<T>(1)))
+		{
+			int insert_position = safe_index<T>(_env);
+			unsigned int stack_size = _env.get_stack<T>().size();
+
+			std::array<T, domain::argmap::maximum_stack_size>& stack = _env.get_stack<T>().container();
+
+			if ((stack_size < domain::argmap::maximum_stack_size - 1) && (stack_size > 1))
+			{
+				T v = _env.top<T>();
+
+				unsigned int stack_pointer = stack_size - 1;
+
+				while (stack_pointer > insert_position)
+				{
+					stack[stack_pointer + 1] = stack[stack_pointer];
+					stack_pointer--;
+				}
+
+				stack[stack_pointer + 1] = v;
+
+//				_env.pop<T>();
+			}
+
+			effort = stack.size() - insert_position + 1;
+		}
+
+		return effort;
+	}
+
 }
