@@ -170,6 +170,7 @@
     <ClInclude Include="Plush\Plush.BooleanInstructions.h" />
     <ClInclude Include="Plush\Plush.BoolOps.h" />
     <ClInclude Include="Plush\Plush.ExecInstruction.h" />
+    <ClInclude Include="Plush\Plush.FloatInstructions.h" />
     <ClInclude Include="Plush\Plush.Instruction.h" />
     <ClInclude Include="Plush\Plush.NumOps.h" />
     <ClInclude Include="Plush\Plush.StaticInit.h" />
@@ -228,6 +229,7 @@
     <ClCompile Include="Plush\Genome.cpp" />
     <ClCompile Include="Plush\Plush.BooleanInstructions.cpp" />
     <ClCompile Include="Plush\Plush.ExecInstruction.cpp" />
+    <ClCompile Include="Plush\Plush.FloatInstructions.cpp" />
     <ClCompile Include="Plush\Plush.Instruction.cpp" />
     <ClCompile Include="Plush\Plush.StaticInit.cpp" />
     <ClCompile Include="Plush\Processor.cpp" />

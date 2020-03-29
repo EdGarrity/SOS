@@ -105,10 +105,5 @@ namespace Plush
 			else
 				throw;
 		}
-
-		//inline void peek(unsigned index, std::vector<ExecAtom> & v)
-		//{
-
-		//}
 	};
 }

@@ -55,6 +55,16 @@ namespace Utilities
 			return stack_[top_ - 1];
 		}
 
+		inline const_reference operator [] (int index) const
+		{
+			return stack_[index];
+		}
+
+		inline reference operator [] (int index)
+		{
+			return stack_[index];
+		}
+
 		// Checks if the underlying container has no elements
 		inline bool empty() const
 		{

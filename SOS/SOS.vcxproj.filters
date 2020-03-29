@@ -219,6 +219,9 @@
     <ClInclude Include="Plush\Plush.NumOps.h">
       <Filter>Header Files\Plush</Filter>
     </ClInclude>
+    <ClInclude Include="Plush\Plush.FloatInstructions.h">
+      <Filter>Header Files\Plush</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -348,6 +351,9 @@
       <Filter>Source Files\Plush</Filter>
     </ClCompile>
     <ClCompile Include="Plush\Plush.BooleanInstructions.cpp">
+      <Filter>Source Files\Plush</Filter>
+    </ClCompile>
+    <ClCompile Include="Plush\Plush.FloatInstructions.cpp">
       <Filter>Source Files\Plush</Filter>
     </ClCompile>
   </ItemGroup>

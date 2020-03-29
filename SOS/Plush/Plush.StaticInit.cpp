@@ -9,12 +9,14 @@ namespace Plush
 	void initGenerics();
 	void initBool();
 	void initExec();
+	void initFloat();
 
 	StaticInit::StaticInit()
 	{
 		initGenerics();
 		initBool();
 		initExec();
+		initFloat();
 	};
 
 	void StaticInit::register_pushfunc(Operator op, std::string type, std::string name, unsigned int block_wants)
