@@ -45,6 +45,7 @@ namespace Plush
 
 		return 1;
 	}
+
 	template<>
 	inline unsigned yankdup<CodeAtom>(Environment & _env)
 	{
@@ -280,8 +281,6 @@ namespace Plush
 				}
 
 				stack[stack_pointer + 1] = v;
-
-//				_env.pop<T>();
 			}
 
 			effort = stack.size() - insert_position + 1;
@@ -290,4 +289,72 @@ namespace Plush
 		return effort;
 	}
 
+	template <class T>
+	inline unsigned stackdepth(Environment & _env)
+	{
+		_env.push<long>(_env.get_stack<T>().size());
+		return 1;
+	}
+
+	template <typename T>
+	inline unsigned swap(Environment & _env)
+	{
+		if (_env.has_elements<T>(2))
+		{
+			std::array<T, domain::argmap::maximum_stack_size>& stack = _env.get_stack<T>().container();
+			unsigned int stack_size = _env.get_stack<T>().size();
+
+			T tmp = stack[stack_size - 1];
+			stack[stack_size - 1] = stack[stack_size - 2];
+			stack[stack_size - 2] = tmp;
+		}
+
+		return 1;
+	}
+
+	template <class T>
+	inline unsigned yank(Environment & _env)
+	{
+		unsigned int effort = 1;
+
+		// Check for valid parameters
+		if ((_env.has_elements<long>(1)) && (_env.has_elements<T>(1)))
+		{
+			long x = _env.top<long>();
+
+			if (x == 0)
+				_env.pop<long>();
+
+			else
+			{
+				int index = safe_index<T>(_env);
+
+				// Get item from deep in stack
+				T v = _env.peek_index<T>(index);
+
+				// Remove item from deep in stack
+				int delete_position = index;
+				unsigned int stack_size = _env.get_stack<T>().size();
+
+				std::array<T, domain::argmap::maximum_stack_size>& stack = _env.get_stack<T>().container();
+
+				if ((stack_size < domain::argmap::maximum_stack_size - 1) && (stack_size > 1))
+				{
+					unsigned int stack_pointer = delete_position;
+
+					while (stack_pointer < stack_size - 1)
+					{
+						stack[stack_pointer] = stack[stack_pointer + 1];
+						stack_pointer++;
+						effort++;
+					}
+				}
+
+				// Push removed item to top of stack
+				stack[stack_size - 1] = v;
+			}
+		}
+
+		return effort;
+	}
 }

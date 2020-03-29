@@ -977,6 +977,261 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(STACKDEPTH_Empty_Stack)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction BOOLEAN.STACKDEPTH :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 0 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction BOOLEAN.STACKDEPTH :close 0}")
+				}));
+		}
+
+		TEST_METHOD(STACKDEPTH_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction TRUE :close 0}\
+					{:instruction BOOLEAN.STACKDEPTH :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 1 }, {}, { true }, {},
+				{
+					CodeAtom("{:instruction BOOLEAN.STACKDEPTH :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}")
+				}));
+		}
+
+		TEST_METHOD(STACKDEPTH_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction FALSE :close 0}\
+					{:instruction TRUE :close 0}\
+					{:instruction BOOLEAN.STACKDEPTH :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 2 }, {}, { false, true }, {},
+				{
+					CodeAtom("{:instruction BOOLEAN.STACKDEPTH :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}"),
+					CodeAtom("{:instruction FALSE :close 0}")
+				}));
+		}
+
+		TEST_METHOD(STACKDEPTH_3)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction TRUE :close 0}\
+					{:instruction FALSE :close 0}\
+					{:instruction TRUE :close 0}\
+					{:instruction BOOLEAN.STACKDEPTH :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 3 }, {}, { true, false, true }, {},
+				{
+					CodeAtom("{:instruction BOOLEAN.STACKDEPTH :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}"),
+					CodeAtom("{:instruction FALSE :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}")
+				}));
+		}
+
+		TEST_METHOD(SWAP_No_Parameters)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction BOOLEAN.SWAP :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction BOOLEAN.SWAP :close 0}")
+				}));
+		}
+
+		TEST_METHOD(SWAP_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction TRUE :close 0}\
+					{:instruction BOOLEAN.SWAP :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
+				{
+					CodeAtom("{:instruction BOOLEAN.SWAP :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}")
+				}));
+		}
+
+		TEST_METHOD(SWAP_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction FALSE :close 0}\
+					{:instruction TRUE :close 0}\
+					{:instruction BOOLEAN.SWAP :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true, false }, {},
+				{
+					CodeAtom("{:instruction BOOLEAN.SWAP :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}"),
+					CodeAtom("{:instruction FALSE :close 0}")
+				}));
+		}
+
+		TEST_METHOD(SWAP_3)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction TRUE :close 0}\
+					{:instruction FALSE :close 0}\
+					{:instruction TRUE :close 0}\
+					{:instruction BOOLEAN.SWAP :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true, true, false }, {},	// Right most is top of stack.
+				{
+					CodeAtom("{:instruction BOOLEAN.SWAP :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}"),
+					CodeAtom("{:instruction FALSE :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}")
+				}));
+		}
+
+		TEST_METHOD(Yank_No_Parameters)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction BOOLEAN.YANK :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{ 
+					CodeAtom("{:instruction BOOLEAN.YANK :close 0}")
+				}));
+		}
+
+		TEST_METHOD(Yank_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 0 :close 0}\
+					{:instruction TRUE :close 0}\
+					{:instruction FALSE :close 0}\
+					{:instruction TRUE :close 0}\
+					{:instruction BOOLEAN.YANK :close 0}\
+				");
+
+			// Stack_pointer                               0     1     2
+			// Delete_position                             2     1     0
+			// Before_stack                              true, false, true
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true, false, true }, {},
+				{
+					CodeAtom("{:instruction BOOLEAN.YANK :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}"),
+					CodeAtom("{:instruction FALSE :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}"),
+					CodeAtom("{:instruction 0 :close 0}")
+				}));
+		}
+
+		TEST_METHOD(Yank_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 1 :close 0}\
+					{:instruction TRUE :close 0}\
+					{:instruction FALSE :close 0}\
+					{:instruction TRUE :close 0}\
+					{:instruction BOOLEAN.YANK :close 0}\
+				");
+			// Stack_pointer                               0     1     2
+			// Delete_position                             2     1     0
+			// Before_stack                              true, false, true
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true, true, false }, {},
+				{
+					CodeAtom("{:instruction BOOLEAN.YANK :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}"),
+					CodeAtom("{:instruction FALSE :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}"),
+					CodeAtom("{:instruction 1 :close 0}")
+				}));
+		}
+
+		TEST_METHOD(Yank_3)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 3 :close 0}\
+					{:instruction TRUE :close 0}\
+					{:instruction FALSE :close 0}\
+					{:instruction TRUE :close 0}\
+					{:instruction FALSE :close 0}\
+					{:instruction TRUE :close 0}\
+					{:instruction FALSE :close 0}\
+					{:instruction TRUE :close 0}\
+					{:instruction BOOLEAN.YANK :close 0}\
+				");
+			// Stack_pointer                               0     1     2      3      4     5     6  
+			// Delete_position                             6     5     4      3      2     1     0
+			// Before_stack                              true, false, true, false, true, false, true
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true, false, true, true, false, true, false }, {},
+				{
+					CodeAtom("{:instruction BOOLEAN.YANK :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}"),
+					CodeAtom("{:instruction FALSE :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}"),
+					CodeAtom("{:instruction FALSE :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}"),
+					CodeAtom("{:instruction FALSE :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}"),
+					CodeAtom("{:instruction 3 :close 0}")
+				}));
+		}
+
 		TEST_METHOD(YankDup_No_Parameters)
 		{
 			Environment env;
@@ -988,7 +1243,7 @@ namespace UnitTest
 				");
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
-				{ 
+				{
 					CodeAtom("{:instruction BOOLEAN.YANKDUP :close 0}")
 				}));
 		}

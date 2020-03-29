@@ -21,6 +21,10 @@ namespace Plush
 		GENERIC(POP, protected_pop, 0);
 		GENERIC(ROT, rot, 0);
 		GENERIC(SHOVE, shove, 0);
+		GENERIC(STACKDEPTH, stackdepth, 0);
+		GENERIC(SWAP, swap, 0);
+		GENERIC(YANK, yank, 0);
+
 	}
 
 }

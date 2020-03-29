@@ -18,6 +18,7 @@ namespace UnitTest
 		}
 	}
 
+	// long, double, bool, ExecAtom, CodeAtom
 	bool is_stack_state(Environment & env,
 		std::vector<long> int_array,
 		std::vector<double> double_array,
