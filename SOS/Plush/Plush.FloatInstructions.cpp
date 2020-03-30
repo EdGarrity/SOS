@@ -28,12 +28,12 @@ namespace Plush
 		//make_instruction((Operator)out<double>, "FLOAT.OUT", floatType + integerType, nullType);
 
 		
-//		make_instruction((Operator)_and, "BOOLEAN", "AND", 0);
-
 		make_instruction((Operator)plus<double>, "FLOAT", "+", 0);
 		make_instruction((Operator)minus<double>, "FLOAT", "-", 0);
 		make_instruction((Operator)multiplies<double>, "FLOAT", "*", 0);
-		make_instruction((Operator)divides<double>, "FLOAT", "-", 0);
+		make_instruction((Operator)divides<double>, "FLOAT", "/", 0);
 		make_instruction((Operator)_fmod, "FLOAT", "%", 0);
+		make_instruction((Operator)smaller<double>, "FLOAT", "<", 0);
+		make_instruction((Operator)greater<double>, "FLOAT", ">", 0);
 	}
 }

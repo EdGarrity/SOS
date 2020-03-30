@@ -167,5 +167,30 @@ namespace Plush
 		return 1;
 	}
 
+	template <class T>
+	inline unsigned smaller(Environment & _env)
+	{
+		if (_env.has_elements<T>(2))
+		{
+			T first = _env.pop<T>();
+			T second = _env.pop<T>();
+			_env.push<bool>(second < first);
+		}
+
+		return 1;
+	}
+
+	template <class T>
+	inline unsigned greater(Environment & _env)
+	{
+		if (_env.has_elements<T>(2))
+		{
+			T first = _env.pop<T>();
+			T second = _env.pop<T>();
+			_env.push<bool>(second > first);
+		}
+
+		return 1;
+	}
 
 }
