@@ -263,16 +263,18 @@ namespace Plush
 
 		if ((_env.has_elements<long>(1)) && (_env.has_elements<T>(1)))
 		{
-			int insert_position = safe_index<T>(_env);
-			unsigned int stack_size = _env.get_stack<T>().size();
+			int insert_position = safe_index<T>(_env) - 1;
+			int stack_size = _env.get_stack<T>().size();
+
+//			insert_position = (insert_position < 0) ? 0 : insert_position;
 
 			std::array<T, domain::argmap::maximum_stack_size>& stack = _env.get_stack<T>().container();
 
 			if ((stack_size < domain::argmap::maximum_stack_size - 1) && (stack_size > 1))
 			{
-				T v = _env.top<T>();
+				T v = _env.pop<T>();
 
-				unsigned int stack_pointer = stack_size - 1;
+				int stack_pointer = stack_size - 1;
 
 				while (stack_pointer > insert_position)
 				{
@@ -281,6 +283,7 @@ namespace Plush
 				}
 
 				stack[stack_pointer + 1] = v;
+				_env.push(stack[stack_size - 1]);
 			}
 
 			effort = stack.size() - insert_position + 1;

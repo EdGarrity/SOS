@@ -18,4 +18,33 @@ namespace Plush
 
 		return 1;
 	}
+
+	inline unsigned _cos(Environment & _env)
+	{
+		if (_env.has_elements<double>(1))
+			_env.top<double>(cos(_env.top<double>()));
+
+		return 1;
+	}
+
+	inline unsigned _sin(Environment & _env)
+	{
+		if (_env.has_elements<double>(1))
+			_env.top<double>(sin(_env.top<double>()));
+
+		return 1;
+	}
+
+	inline unsigned _tan(Environment & _env)
+	{
+		if (_env.has_elements<double>(1))
+		{
+			double val = _env.top<double>();
+
+			if (val != 0.0)
+				_env.top<double>(tan(val));
+		}
+
+		return 1;
+	}
 }

@@ -85,6 +85,13 @@ namespace Plush
 			return val;
 		}
 
+		template <typename T>
+		inline T top(T val)
+		{
+			get_stack<T>().top() = val;
+			return val;
+		}
+
 		// Need spcial cases for EXEC and CODE
 		template <typename T>
 		inline bool has_elements(unsigned sz)

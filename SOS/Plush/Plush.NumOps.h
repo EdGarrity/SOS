@@ -193,4 +193,30 @@ namespace Plush
 		return 1;
 	}
 
+	template <class T>
+	inline unsigned _max(Environment & _env)
+	{
+		if (_env.has_elements<T>(2))
+		{
+			T first = _env.pop<T>();
+			T second = _env.pop<T>();
+			_env.push<T>(std::max(first, second));
+		}
+
+		return 1;
+	}
+
+	template <class T>
+	inline unsigned _min(Environment & _env)
+	{
+		if (_env.has_elements<T>(2))
+		{
+			T first = _env.pop<T>();
+			T second = _env.pop<T>();
+			_env.push<T>(std::min(first, second));
+		}
+
+		return 1;
+	}
+
 }

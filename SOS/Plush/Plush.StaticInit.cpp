@@ -10,6 +10,7 @@ namespace Plush
 	void initBool();
 	void initExec();
 	void initFloat();
+	void initInt();
 
 	StaticInit::StaticInit()
 	{
@@ -17,6 +18,7 @@ namespace Plush
 		initBool();
 		initExec();
 		initFloat();
+		initInt();
 	};
 
 	void StaticInit::register_pushfunc(Operator op, std::string type, std::string name, unsigned int block_wants)

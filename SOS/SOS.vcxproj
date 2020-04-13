@@ -75,8 +75,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\181\SDK\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\181\SDK\Lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\183\SDK\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\183\SDK\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -172,6 +172,7 @@
     <ClInclude Include="Plush\Plush.ExecInstruction.h" />
     <ClInclude Include="Plush\Plush.FloatInstructions.h" />
     <ClInclude Include="Plush\Plush.Instruction.h" />
+    <ClInclude Include="Plush\Plush.IntegerInstructions.h" />
     <ClInclude Include="Plush\Plush.NumOps.h" />
     <ClInclude Include="Plush\Plush.StaticInit.h" />
     <ClInclude Include="Plush\Processor.h" />
@@ -231,6 +232,7 @@
     <ClCompile Include="Plush\Plush.ExecInstruction.cpp" />
     <ClCompile Include="Plush\Plush.FloatInstructions.cpp" />
     <ClCompile Include="Plush\Plush.Instruction.cpp" />
+    <ClCompile Include="Plush\Plush.IntegerInstructions.cpp" />
     <ClCompile Include="Plush\Plush.StaticInit.cpp" />
     <ClCompile Include="Plush\Processor.cpp" />
     <ClCompile Include="PushGP\Breed.cpp" />
