@@ -202,7 +202,7 @@ namespace Plush
 				if (search != Func2CodeMap.end())
 				{
 					Operator op = Func2CodeMap[atom.instruction];
-					op(env);
+					unit = op(env);
 				}
 
 				break;

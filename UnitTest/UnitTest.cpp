@@ -5252,6 +5252,184 @@ namespace UnitTest
 			}));
 		}
 
+		TEST_METHOD(EQUALS_WITH_NO_PARAMETERS)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction CODE.= :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.= :close 0}")
+				}));
+		}
+
+		TEST_METHOD(EQUALS_WITH_ONE_PARAMETER)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction FLOAT.= :close 0}\
+					{:instruction CODE.= :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.= :close 0}"),
+					CodeAtom("{:instruction FLOAT.= :close 0}")
+				}));
+		}
+
+		TEST_METHOD(EQUALS_WITH_TWO_EQUAL_ATOMS)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction FLOAT.= :close 0}\
+					{:instruction FLOAT.= :close 0}\
+					{:instruction CODE.= :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
+				{
+					CodeAtom("{:instruction CODE.= :close 0}"),
+					CodeAtom("{:instruction FLOAT.= :close 0}"),
+					CodeAtom("{:instruction FLOAT.= :close 0}")
+				}));
+		}
+
+		TEST_METHOD(EQUALS_WITH_TWO_UNEQUAL_ATOMS)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction FLOAT.+ :close 0}\
+					{:instruction FLOAT.= :close 0}\
+					{:instruction CODE.= :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
+				{
+					CodeAtom("{:instruction CODE.= :close 0}"),
+					CodeAtom("{:instruction FLOAT.= :close 0}"),
+					CodeAtom("{:instruction FLOAT.+ :close 0}")
+				}));
+		}
+
+		TEST_METHOD(EQUALS_WITH_TWO_EQUAL_LISTS)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction INTEGER.+ :close 1}\
+					{:instruction 10 :close 0}\
+					{:instruction NOOP.OPEN_PAREN :close 0}\
+					{:instruction INTEGER.+ :close 1}\
+					{:instruction 10 :close 0}\
+					{:instruction NOOP.OPEN_PAREN :close 0}\
+					{:instruction CODE.= :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
+				{
+					CodeAtom("{:instruction CODE.= :close 0}"),
+					CodeAtom("{:instruction NOOP.OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction NOOP.OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction INTEGER.+ :close 1}")
+				}));
+		}
+
+		TEST_METHOD(EQUALS_WITH_TWO_UNEQUAL_LISTS)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction INTEGER.- :close 1}\
+					{:instruction 10 :close 0}\
+					{:instruction NOOP.OPEN_PAREN :close 0}\
+					{:instruction INTEGER.+ :close 1}\
+					{:instruction 10 :close 0}\
+					{:instruction NOOP.OPEN_PAREN :close 0}\
+					{:instruction CODE.= :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
+				{
+					CodeAtom("{:instruction CODE.= :close 0}"),
+					CodeAtom("{:instruction NOOP.OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction NOOP.OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction INTEGER.- :close 1}")
+				}));
+		}
+
+		TEST_METHOD(EQUALS_WITH_LIST_AND_ATOM)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction INTEGER.- :close 1}\
+					{:instruction INTEGER.+ :close 1}\
+					{:instruction 10 :close 0}\
+					{:instruction NOOP.OPEN.PAREN :close 0}\
+					{:instruction CODE.= :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
+				{
+					CodeAtom("{:instruction CODE.= :close 0}"),
+					CodeAtom("{:instruction NOOP.OPEN.PAREN :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction INTEGER.- :close 1}")
+				}));
+		}
+
+		TEST_METHOD(EQUALS_WITH_ATOM_AND_LIST)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction INTEGER.+ :close 1}\
+					{:instruction 10 :close 0}\
+					{:instruction NOOP.OPEN.PAREN :close 0}\
+					{:instruction INTEGER.- :close 1}\
+					{:instruction CODE.= :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
+				{
+					CodeAtom("{:instruction CODE.= :close 0}"),
+					CodeAtom("{:instruction INTEGER.- :close 1}"),
+					CodeAtom("{:instruction NOOP.OPEN.PAREN :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction INTEGER.+ :close 1}")
+				}));
+		}
+
 		TEST_METHOD(YankDup_1)
 		{
 			Environment env;
