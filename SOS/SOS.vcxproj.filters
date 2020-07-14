@@ -225,6 +225,9 @@
     <ClInclude Include="Plush\Plush.IntegerInstructions.h">
       <Filter>Header Files\Plush</Filter>
     </ClInclude>
+    <ClInclude Include="Plush\Plush.CodeInstructions.h">
+      <Filter>Header Files\Plush</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -360,6 +363,9 @@
       <Filter>Source Files\Plush</Filter>
     </ClCompile>
     <ClCompile Include="Plush\Plush.IntegerInstructions.cpp">
+      <Filter>Source Files\Plush</Filter>
+    </ClCompile>
+    <ClCompile Include="Plush\Plush.CodeInstructions.cpp">
       <Filter>Source Files\Plush</Filter>
     </ClCompile>
   </ItemGroup>

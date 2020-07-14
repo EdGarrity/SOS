@@ -83,7 +83,7 @@ namespace Plush
 	//   None
 	// 
 	// Return value:
-	//   The genome first atom as a sting
+	//   The genome's first atom as a sting
 	//
 	// Side Effects:
 	//   None

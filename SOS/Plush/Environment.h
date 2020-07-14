@@ -48,12 +48,6 @@ namespace Plush
 			return bool_stack_;
 		}
 		
-//		// Returns first atom in genome instruction
-//		std::string first_atom(std::string instruction);
-//
-//		// Returns rest of genome instruction after first instruction
-//		std::string rest_atom(std::string instruction);
-
 		template <typename T> inline bool is_empty()
 		{
 			return (get_stack<T>().empty());
@@ -68,13 +62,31 @@ namespace Plush
 			get_stack<T>().push(value);
 		}
 
+		template <class T, size_t N = domain::argmap::maximum_stack_size>
+		inline void push(Utilities::FixedSizeStack<T, N> stack)
+		{
+			for (T element : stack)
+				get_stack<T>().push(element);
+		}
+
 		// Need spcial cases for EXEC and CODE
+		// Need to support receiving and returning stack of instructions
+		// If number of parenthesis balance, then pop will retuirn first instruction
+		// for impabance, then return balanced stack (from first instruction to instuction with matching close parenthesis inclusive)
 		template <typename T>
 		inline T pop()
 		{
 			T val = get_stack<T>().top();
 			get_stack<T>().pop();
 			return val;
+		}
+
+		template <class T, size_t N = domain::argmap::maximum_stack_size>
+		inline std::array<T, N> pop(Utilities::FixedSizeStack<T, N> &stack)
+		{
+			T val = get_stack<T>().top();
+			get_stack<T>().pop();
+			return stack.push(val);
 		}
 
 		// Need spcial cases for EXEC and CODE
