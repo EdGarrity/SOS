@@ -16,43 +16,38 @@ namespace Plush
 	// for possible access during the execution of the body of the loop
 	unsigned do_range(Environment & _env)
 	{
-//		if ((_env.has_elements<long>(2)) && (_env.has_elements<ExecAtom>(1)))
-//		{
-//			int n = _env.pop<long>();	// destination index
-//			int i = _env.pop<long>();	// current index
-//
-//			std::pair<size_t, size_t> block_range = get_block_index<ExecAtom>(_env, 1, 1);	// Code to execute
-//
-//			if (n == i)
-//			{
-//				_env.push<long>(i);
-//				_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
-//			}
-//
-//			else
-//			{
-//				int direction = 1;
-//
-//				if (i > n)
-//					direction = -1;
-//
-//				_env.push<long>(i + direction);
-//				_env.push<long>(n);
-//
-//				std::array<ExecAtom, domain::argmap::maximum_stack_size>& exec_stack = _env.get_stack<ExecAtom>().container();
-//
-//				_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
-//
-//				for (int n = block_range.first; n < block_range.second + 1; n++)
-//				{
-////					ExecAtom v = exec_stack[n];    //_env.peek<ExecAtom>(n);
-//					ExecAtom v = _env.peek_index<ExecAtom>(n);
-//					_env.push<ExecAtom>(v);
-//				}
-//
-//				_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.DO*RANGE :close 0}"));
-//			}
-//		}
+		if ((_env.has_elements<long>(2)) && (_env.has_elements<ExecAtom>(1)))
+		{
+			Utilities::FixedSizeStack<ExecAtom> block_a;
+
+			int n = _env.pop<long>();	// destination index
+			int i = _env.pop<long>();	// current index
+
+			if (n == i)
+			{
+				_env.push<long>(i);
+				_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+			}
+
+			else
+			{
+				int direction = 1;
+
+				if (i > n)
+					direction = -1;
+
+				_env.push<long>(i + direction);
+				_env.push<long>(n);
+
+				int unmatched_a = _env.pop<ExecAtom>(block_a);
+
+				_env.push<ExecAtom>(block_a);
+				_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+				_env.push<ExecAtom>(block_a);
+
+				_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.DO*RANGE :close 0}"));
+			}
+		}
 
 		return 1;
 	}
