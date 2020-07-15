@@ -103,7 +103,7 @@ namespace Plush
 	void Genome::set(std::string _genome_string)
 	{
 		ingest_plush_genome(_genome_string);
-		translate_plush_genome_to_push_program();
+//		translate_plush_genome_to_push_program();
 		convert_genome_to_string();
 	}
 
@@ -255,125 +255,125 @@ namespace Plush
 	//
 	//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
 	//
-	void Genome::translate_plush_genome_to_push_program()
-	{
-		program_ = "(";
+	//void Genome::translate_plush_genome_to_push_program()
+	//{
+	//	program_ = "(";
 
-		std::vector<struct Atom> genome;
+	//	std::vector<struct Atom> genome;
 
-		for (int n = genome_atoms_.size() - 1; n >= 0; n--)
-			genome.push_back(genome_atoms_[n]);
+	//	for (int n = genome_atoms_.size() - 1; n >= 0; n--)
+	//		genome.push_back(genome_atoms_[n]);
 
-		// The number of parens that still need to be added at this location.
-		unsigned int num_parens_here = 0;
+	//	// The number of parens that still need to be added at this location.
+	//	unsigned int num_parens_here = 0;
 
-		// The parenthesis type, close or close-open
-		enum paren_stack_type
-		{
-			close = 0,
-			close_open
-		};
+	//	// The parenthesis type, close or close-open
+	//	enum paren_stack_type
+	//	{
+	//		close = 0,
+	//		close_open
+	//	};
 
-		// Whenever an instruction requires parens grouping, it will 
-		// push either : close or : close - open on this stack. This will
-		// indicate what to insert in the program the next time a paren
-		// is indicated by the : close key in the instruction map.
-		std::stack<paren_stack_type> paren_stack;
+	//	// Whenever an instruction requires parens grouping, it will 
+	//	// push either : close or : close - open on this stack. This will
+	//	// indicate what to insert in the program the next time a paren
+	//	// is indicated by the : close key in the instruction map.
+	//	std::stack<paren_stack_type> paren_stack;
 
-		// True when the translation is done
-		bool done = false;
+	//	// True when the translation is done
+	//	bool done = false;
 
-		// Main translation loop
-		do
-		{
-			// Check if need to add close parens here
-			if (0 < num_parens_here)
-			{
-				if ((paren_stack.empty() == false) && (paren_stack.top() == paren_stack_type::close))
-					program_ += ")";
+	//	// Main translation loop
+	//	do
+	//	{
+	//		// Check if need to add close parens here
+	//		if (0 < num_parens_here)
+	//		{
+	//			if ((paren_stack.empty() == false) && (paren_stack.top() == paren_stack_type::close))
+	//				program_ += ")";
 
-				else if ((paren_stack.empty() == false) && (paren_stack.top() == paren_stack_type::close_open))
-				{
-					program_ += ")";
-					program_ += "(";
-				}
+	//			else if ((paren_stack.empty() == false) && (paren_stack.top() == paren_stack_type::close_open))
+	//			{
+	//				program_ += ")";
+	//				program_ += "(";
+	//			}
 
-				num_parens_here--;
+	//			num_parens_here--;
 
-				if (paren_stack.empty() == false)
-					paren_stack.pop();
-			}
+	//			if (paren_stack.empty() == false)
+	//				paren_stack.pop();
+	//		}
 
-			// Check if at end of program but still need to add parens
-			else if ((genome.empty()) && (paren_stack.empty() == false))
-				num_parens_here = paren_stack.size();
+	//		// Check if at end of program but still need to add parens
+	//		else if ((genome.empty()) && (paren_stack.empty() == false))
+	//			num_parens_here = paren_stack.size();
 
-			// Check if done
-			else if ((genome.empty()) && (paren_stack.empty()))
-				done = true;
+	//		// Check if done
+	//		else if ((genome.empty()) && (paren_stack.empty()))
+	//			done = true;
 
-			// Check for no-oped instruction. This instruction will be replaced
-			// by exec_noop, but will still have effects like :close count
-			else if (genome.back().type == Atom::AtomType::no_op)
-			{
-				num_parens_here = genome.back().close_parentheses;
-				genome.pop_back();
-			}
+	//		// Check for no-oped instruction. This instruction will be replaced
+	//		// by exec_noop, but will still have effects like :close count
+	//		else if (genome.back().type == Atom::AtomType::no_op)
+	//		{
+	//			num_parens_here = genome.back().close_parentheses;
+	//			genome.pop_back();
+	//		}
 
-			// Check for silenced instruction
-			else if (genome.back().type == Atom::AtomType::silent)
-				genome.pop_back();
+	//		// Check for silenced instruction
+	//		else if (genome.back().type == Atom::AtomType::silent)
+	//			genome.pop_back();
 
-			// If here, ready for next instruction
-			else
-			{
-				unsigned int number_paren_groups = Push::lookup_instruction_paren_groups(genome.back().instruction);
+	//		// If here, ready for next instruction
+	//		else
+	//		{
+	//			unsigned int number_paren_groups = Push::lookup_instruction_paren_groups(genome.back().instruction);
 
-				if (number_paren_groups > 0)
-				{
-					paren_stack.push(paren_stack_type::close);
+	//			if (number_paren_groups > 0)
+	//			{
+	//				paren_stack.push(paren_stack_type::close);
 
-					unsigned int n = number_paren_groups;
+	//				unsigned int n = number_paren_groups;
 
-					while (--n > 0)
-						paren_stack.push(paren_stack_type::close_open);
-				}
+	//				while (--n > 0)
+	//					paren_stack.push(paren_stack_type::close_open);
+	//			}
 
-				if (genome.back().instruction == "NOOP_OPEN_PAREN")
-					program_ += "(";
+	//			if (genome.back().instruction == "NOOP_OPEN_PAREN")
+	//				program_ += "(";
 
-				else
-				{
-					program_ += genome.back().instruction;
-					program_ += " ";
+	//			else
+	//			{
+	//				program_ += genome.back().instruction;
+	//				program_ += " ";
 
-					if (number_paren_groups > 0)
-						program_ += "(";
-				}
+	//				if (number_paren_groups > 0)
+	//					program_ += "(";
+	//			}
 
-				num_parens_here = genome.back().close_parentheses;
-				genome.pop_back();
-			}
-		} while (!done);
+	//			num_parens_here = genome.back().close_parentheses;
+	//			genome.pop_back();
+	//		}
+	//	} while (!done);
 
-		program_ += ")";
+	//	program_ += ")";
 
-		//if (genome_atoms_.size() != count_points())
-		//{
-		//	std::cout << "_genome.size() != count_points(program)" << std::endl;
-		//	std::cout << "_genome.size() " << genome_atoms_.size() << std::endl;
-		//	std::cout << "_genome " << to_string() << std::endl;
-		//	std::cout << "count_points(program) " << count_points() << std::endl;
-		//	std::cout << "program " << program_ << std::endl;
+	//	//if (genome_atoms_.size() != count_points())
+	//	//{
+	//	//	std::cout << "_genome.size() != count_points(program)" << std::endl;
+	//	//	std::cout << "_genome.size() " << genome_atoms_.size() << std::endl;
+	//	//	std::cout << "_genome " << to_string() << std::endl;
+	//	//	std::cout << "count_points(program) " << count_points() << std::endl;
+	//	//	std::cout << "program " << program_ << std::endl;
 
-		//	throw MyException("translate_plush_genome_to_push_program() - _genome.size() != count_points(program_)");
-		//}
+	//	//	throw MyException("translate_plush_genome_to_push_program() - _genome.size() != count_points(program_)");
+	//	//}
 
-		if (count_points() > domain::argmap::max_points) //   Push::global_parameters.max_points_in_program)
-			program_ = "";
+	//	if (count_points() > domain::argmap::max_points) //   Push::global_parameters.max_points_in_program)
+	//		program_ = "";
 
-		return;
-	}
+	//	return;
+	//}
 
 	// Purpose: 
 	//   Counts the number of points in the Push program

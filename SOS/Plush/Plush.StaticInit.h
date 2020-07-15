@@ -25,8 +25,7 @@ namespace Plush
 
 	extern StaticInit static_initializer;
 
-	inline
-		void make_instruction(Operator op, std::string type, std::string name, unsigned int block_wants)
+	inline void make_instruction(Operator op, std::string type, std::string name, unsigned int block_wants)
 	{
 		static_initializer.register_pushfunc(op, type, name, block_wants);
 	}

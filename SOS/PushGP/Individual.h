@@ -60,10 +60,10 @@ namespace pushGP
 		Individual(const Individual & other) = delete;
 		Individual& operator = (const Individual &other) = delete;
 		
-		const std::string get_program()
-		{
-			return genome_.get_program();
-		}
+		//const std::string get_program()
+		//{
+		//	return genome_.get_program();
+		//}
 
 		const std::string get_genome()
 		{

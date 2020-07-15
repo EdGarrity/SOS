@@ -1145,299 +1145,299 @@ namespace domain
 
 		int run()
 		{
-			pushGP::SimulatedAnnealing sa;
-
-			// Check if CPU is too hot and if so, wait for it to cool down.
-			double temp = Utilities::GetCpuTemperature();
-
-			std::cout << "CPU Temperature is " << temp << std::endl;
-
-
-			// Check if there is enough memory to continue
-			unsigned long percent_memory_use = Utilities::GetMemoryLoad();
-
-			if (percent_memory_use > argmap::percent_memory_cap)
-			{
-				std::stringstream error;
-
-				error << "Not enough free memory to continue.  Percent used = " << percent_memory_use;
-
-				std::cerr << error.str() << std::endl;
-//				throw MyException(error);
-
-				return 1;
-			}
-
-			// Create memory management factories
-			//Push::intLiteralFactory = new Push::LiteralFactory<int>();
-			//Push::floatLiteralFactory = new Push::LiteralFactory<double>();
-			//Push::boolLiteralFactory = new Push::LiteralFactory<bool>();
-			//Push::codeListFactory = new Push::CodeListFactory();
-			//Push::doRangeClassFactory = new Push::DoRangeClassFactory();
-
-			//SchedulerPolicy policy = CurrentScheduler::GetPolicy();
-
-			//policy.SetPolicyValue(TargetOversubscriptionFactor, 1);
-
-			//policy.SetConcurrencyLimits(1, 8);
-
-			//CurrentScheduler::Create(policy);
-
-
-
-			// Setup
-			Push::Env env;
-
-			Push::init_push(env);
-
-			try
-			{
-				unsigned int generation_number = 1;
-				unsigned int generations_completed_this_session = 0;
-				unsigned int agents_created = 0;
-				bool done = false;
-
-				// Initialize database connection
-				con.connect(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
-
-				// Load example cases.  Create more if not enough loaded.
-				std::cout << "Load Example Cases" << std::endl;
-				unsigned int example_cases_created = make_example_cases(load_example_cases());
-
-				if (example_cases_created > 0)
-					save_example_cases();
-
-				// Load population.  Create more if not enough loaded.
-				std::cout << "Create Population Agents" << std::endl;
-				generation_number = get_last_saved_generation_number() + 1;
-				agents_created = make_pop_agents(env, load_pop_agents());
-
-				sa.set_cold();
-				sa.set_tempareture(get_last_saved_temperature(sa.get_tempareture()));
-
-				if (agents_created > 0)
-					generation_number = 0;
-
-
-				int best_individual = -1;
-				double best_individual_score = std::numeric_limits<double>::max();
-				double best_individual_error = get_last_best_individual_error(std::numeric_limits<double>::max());
-				double prev_best_individual_error = get_last_prev_best_individual_error(std::numeric_limits<double>::max());
-				int stalled_count = get_last_stalled_count(argmap::stalled_count_trigger);
-				int cool_down_count = get_last_cool_down_count(argmap::cool_down_period);
-				bool include_best_individual_in_breeding_pool = get_include_best_individual_in_breeding_pool(true);
-
-				while ((!done) && (generations_completed_this_session < argmap::max_generations_in_one_session))
-				{
-					if ((std::fabs(best_individual_error - prev_best_individual_error) < argmap::stalled_delta) && (cool_down_count <= 0))
-						stalled_count = (stalled_count < 0) ? 0 : stalled_count - 1;
-
-					else
-						stalled_count = argmap::stalled_count_trigger;
-
-					if (stalled_count <=0)
-					{
-						sa.set_hot();
-						cool_down_count = argmap::cool_down_period;
-						include_best_individual_in_breeding_pool = false;
-
-						std::cout << "Heat up " << sa.get_tempareture() << std::endl;
-					}
-					else
-					{
-						sa.cool_down();
-						cool_down_count = (cool_down_count < 0) ? 0 : cool_down_count - 1;
-
-						std::cout << "Cool down " << sa.get_tempareture() << std::endl;
-					}
-
-					prev_best_individual_error = best_individual_error;
-
-					// Check if CPU is too hot and if so, wait for it to cool down.
-					double temp = Utilities::GetCpuTemperature();
-
-					std::cout << "CPU Temperature: Min = " << argmap::cool_temperature << " Max = " << argmap::hot_temperature << " Current Temp = " << temp << std::endl;
-
-					if (temp > argmap::hot_temperature)
-					{
-						std::cout << "CPU is too hot.  Waiting for it to cool down." << std::endl;
-
-						do
-						{
-							std::this_thread::sleep_for(std::chrono::minutes(argmap::cool_down_minutes));
-							temp = Utilities::GetCpuTemperature();
-
-							std::cout << "CPU Temperature is " << temp << std::endl;
-						} while (temp > argmap::cool_temperature);
-
-						std::cout << "CPU is now cool enough to continue." << std::endl;
-						std::cout << std::endl;
-					}
-
-					// Check if there is enough memory to continue
-					unsigned long percent_memory_use = Utilities::GetMemoryLoad();
-
-					if (percent_memory_use > argmap::percent_memory_cap)
-					{
-						std::stringstream error;
-
-						error << "Not enough free memory to continue.  Percent used = " << percent_memory_use;
-
-						std::cerr << error.str() << std::endl;
-//						throw MyException(error);
-
-						return 1;
-					}
-
-					// Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
-					std::cout << "Reset variables which track the minimum error for this test case and the individual who achived the minimum error " << std::endl;
-
-					//for (unsigned int example_case = 0; example_case < argmap::number_of_training_cases; example_case++)
-					//{
-					//	pushGP::globals::minimum_error_array_by_example_case[example_case] = (std::numeric_limits<double>::max)();
-					//	pushGP::globals::individual_with_minimum_error_for_training_case[example_case] = (std::numeric_limits<unsigned int>::max)();
-					//}
-
-					for (int ind = 0; ind < argmap::population_size; ind++)
-					{
-						for (int training_case_index = 0; training_case_index < argmap::number_of_training_cases; training_case_index++)
-							pushGP::globals::error_matrix[training_case_index][ind] = 0.0;
-					}
-
-					std::cout << "Clean up memory" << std::endl;
-
-					Push::parallel_intLiteralFactory.local().clean_up();
-					Push::parallel_floatLiteralFactory.local().clean_up();
-					Push::parallel_boolLiteralFactory.local().clean_up();
-					Push::parallel_codeListFactory.local().clean_up();
-					Push::parallel_doRangeClassFactory.local().clean_up();
-
-					std::cout << "Generation " << generation_number << std::endl;
-					std::cout << "Session " << generations_completed_this_session << std::endl;
-					save_generation();
-
-					std::cout << "Run Programs with Training Cases" << std::endl;
-
-					std::tuple<int, double, double> best_individual_score_error;
-
-
-
-
-//					__int64 begin = GetTickCount();
+//			pushGP::SimulatedAnnealing sa;
 //
-////					best_individual_score_error = compute_training_errors(env, run_individual, argmap::number_of_training_cases);
+//			// Check if CPU is too hot and if so, wait for it to cool down.
+//			double temp = Utilities::GetCpuTemperature();
 //
-//					__int64 end = GetTickCount() - begin;
+//			std::cout << "CPU Temperature is " << temp << std::endl;
 //
-////					std::cout << "Serial time:  " << end << std::endl;
 //
-//					begin = GetTickCount();
+//			// Check if there is enough memory to continue
+//			unsigned long percent_memory_use = Utilities::GetMemoryLoad();
 //
-//					best_individual_score_error = parallel_compute_training_errors(env, run_individual, argmap::number_of_training_cases);
+//			if (percent_memory_use > argmap::percent_memory_cap)
+//			{
+//				std::stringstream error;
 //
-//					end = GetTickCount() - begin;
+//				error << "Not enough free memory to continue.  Percent used = " << percent_memory_use;
 //
-//					std::cout << "Parallel time: " << end << std::endl;
+//				std::cerr << error.str() << std::endl;
+////				throw MyException(error);
 //
-//					break;
-
-
-
-
-					if (argmap::use_PPL)
-						best_individual_score_error = parallel_compute_training_errors(env, run_individual, argmap::number_of_training_cases);
-					else
-						best_individual_score_error = compute_training_errors(env, run_individual, argmap::number_of_training_cases);
-
-					best_individual = std::get<0>(best_individual_score_error);
-					best_individual_score = std::get<1>(best_individual_score_error);
-					best_individual_error = std::get<2>(best_individual_score_error);
-
-					std::cout << "Produce New Offspring" << std::endl;
-
-
-					if (argmap::use_PPL)
-						parallel_produce_new_offspring(argmap::number_of_training_cases, 
-							best_individual, 
-							sa, 
-							include_best_individual_in_breeding_pool);
-
-					else
-						produce_new_offspring(argmap::number_of_training_cases, 
-							best_individual, 
-							sa,
-							include_best_individual_in_breeding_pool);
-
-					std::cout << "Run Best Individual's Program with Test Cases" << std::endl;
-					
-					std::string program = pushGP::globals::population_agents[best_individual].get_program();
-					std::string genome = pushGP::globals::population_agents[best_individual].get_genome_as_string();
-
-					std::cout << "best_individual = " << best_individual << std::endl;
-					std::cout << "program = " << program << std::endl;
-					std::cout << "genome = " << genome << std::endl;
-
-					double test_case_score = compute_test_errors(env, run_individual, best_individual);
-
-					std::cout << "test_case_error = " << test_case_score << std::endl;
-					std::cout << std::endl;
-
-					std::cout << "Generate Status Report" << std::endl;
-
-					double average_traiing_error = 0.0;
-					for (int ind = 0; ind < argmap::population_size; ind++)
-					{
-						for (int training_case_index = 0; training_case_index < argmap::number_of_training_cases; training_case_index++)
-							average_traiing_error += pushGP::globals::error_matrix[training_case_index][ind];
-					}
-					average_traiing_error /= (double)(domain::argmap::population_size * argmap::number_of_training_cases);
-
-					double standard_deviation = 0.0;
-					for (int ind = 0; ind < argmap::population_size; ind++)
-					{
-						for (int training_case_index = 0; training_case_index < argmap::number_of_training_cases; training_case_index++)
-							standard_deviation += (pushGP::globals::error_matrix[training_case_index][ind] - average_traiing_error) 
-							                    * (pushGP::globals::error_matrix[training_case_index][ind] - average_traiing_error);
-					}
-					standard_deviation /= (double)(domain::argmap::population_size * argmap::number_of_training_cases);
-					standard_deviation = std::sqrt(standard_deviation);
-
-					generate_status_report(generation_number, 
-						generations_completed_this_session, 
-						best_individual, 
-						best_individual_score,
-						best_individual_error,
-						prev_best_individual_error,
-						average_traiing_error,
-						standard_deviation,
-						test_case_score, 
-						sa.get_tempareture(),
-						stalled_count,
-						cool_down_count,
-						include_best_individual_in_breeding_pool,
-						pushGP::globals::population_agents[best_individual]
-						);
-
-					std::cout << "Install New Generation" << std::endl;
-					install_next_generation();
-					generation_number++;
-					generations_completed_this_session++;
-				}
-			}
-			catch (const std::exception& e)
-			{
-				env.local().clear_stacks();
-
-				std::cerr << "Standard exception: " << e.what() << std::endl;
-				throw;
-			}
-			catch (...)
-			{
-				env.local().clear_stacks();
-
-				std::cerr << "Exception occurred" << std::endl;
-				throw;
-			}
+//				return 1;
+//			}
+//
+//			// Create memory management factories
+//			//Push::intLiteralFactory = new Push::LiteralFactory<int>();
+//			//Push::floatLiteralFactory = new Push::LiteralFactory<double>();
+//			//Push::boolLiteralFactory = new Push::LiteralFactory<bool>();
+//			//Push::codeListFactory = new Push::CodeListFactory();
+//			//Push::doRangeClassFactory = new Push::DoRangeClassFactory();
+//
+//			//SchedulerPolicy policy = CurrentScheduler::GetPolicy();
+//
+//			//policy.SetPolicyValue(TargetOversubscriptionFactor, 1);
+//
+//			//policy.SetConcurrencyLimits(1, 8);
+//
+//			//CurrentScheduler::Create(policy);
+//
+//
+//
+//			// Setup
+//			Push::Env env;
+//
+//			Push::init_push(env);
+//
+//			try
+//			{
+//				unsigned int generation_number = 1;
+//				unsigned int generations_completed_this_session = 0;
+//				unsigned int agents_created = 0;
+//				bool done = false;
+//
+//				// Initialize database connection
+//				con.connect(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
+//
+//				// Load example cases.  Create more if not enough loaded.
+//				std::cout << "Load Example Cases" << std::endl;
+//				unsigned int example_cases_created = make_example_cases(load_example_cases());
+//
+//				if (example_cases_created > 0)
+//					save_example_cases();
+//
+//				// Load population.  Create more if not enough loaded.
+//				std::cout << "Create Population Agents" << std::endl;
+//				generation_number = get_last_saved_generation_number() + 1;
+//				agents_created = make_pop_agents(env, load_pop_agents());
+//
+//				sa.set_cold();
+//				sa.set_tempareture(get_last_saved_temperature(sa.get_tempareture()));
+//
+//				if (agents_created > 0)
+//					generation_number = 0;
+//
+//
+//				int best_individual = -1;
+//				double best_individual_score = std::numeric_limits<double>::max();
+//				double best_individual_error = get_last_best_individual_error(std::numeric_limits<double>::max());
+//				double prev_best_individual_error = get_last_prev_best_individual_error(std::numeric_limits<double>::max());
+//				int stalled_count = get_last_stalled_count(argmap::stalled_count_trigger);
+//				int cool_down_count = get_last_cool_down_count(argmap::cool_down_period);
+//				bool include_best_individual_in_breeding_pool = get_include_best_individual_in_breeding_pool(true);
+//
+//				while ((!done) && (generations_completed_this_session < argmap::max_generations_in_one_session))
+//				{
+//					if ((std::fabs(best_individual_error - prev_best_individual_error) < argmap::stalled_delta) && (cool_down_count <= 0))
+//						stalled_count = (stalled_count < 0) ? 0 : stalled_count - 1;
+//
+//					else
+//						stalled_count = argmap::stalled_count_trigger;
+//
+//					if (stalled_count <=0)
+//					{
+//						sa.set_hot();
+//						cool_down_count = argmap::cool_down_period;
+//						include_best_individual_in_breeding_pool = false;
+//
+//						std::cout << "Heat up " << sa.get_tempareture() << std::endl;
+//					}
+//					else
+//					{
+//						sa.cool_down();
+//						cool_down_count = (cool_down_count < 0) ? 0 : cool_down_count - 1;
+//
+//						std::cout << "Cool down " << sa.get_tempareture() << std::endl;
+//					}
+//
+//					prev_best_individual_error = best_individual_error;
+//
+//					// Check if CPU is too hot and if so, wait for it to cool down.
+//					double temp = Utilities::GetCpuTemperature();
+//
+//					std::cout << "CPU Temperature: Min = " << argmap::cool_temperature << " Max = " << argmap::hot_temperature << " Current Temp = " << temp << std::endl;
+//
+//					if (temp > argmap::hot_temperature)
+//					{
+//						std::cout << "CPU is too hot.  Waiting for it to cool down." << std::endl;
+//
+//						do
+//						{
+//							std::this_thread::sleep_for(std::chrono::minutes(argmap::cool_down_minutes));
+//							temp = Utilities::GetCpuTemperature();
+//
+//							std::cout << "CPU Temperature is " << temp << std::endl;
+//						} while (temp > argmap::cool_temperature);
+//
+//						std::cout << "CPU is now cool enough to continue." << std::endl;
+//						std::cout << std::endl;
+//					}
+//
+//					// Check if there is enough memory to continue
+//					unsigned long percent_memory_use = Utilities::GetMemoryLoad();
+//
+//					if (percent_memory_use > argmap::percent_memory_cap)
+//					{
+//						std::stringstream error;
+//
+//						error << "Not enough free memory to continue.  Percent used = " << percent_memory_use;
+//
+//						std::cerr << error.str() << std::endl;
+////						throw MyException(error);
+//
+//						return 1;
+//					}
+//
+//					// Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+//					std::cout << "Reset variables which track the minimum error for this test case and the individual who achived the minimum error " << std::endl;
+//
+//					//for (unsigned int example_case = 0; example_case < argmap::number_of_training_cases; example_case++)
+//					//{
+//					//	pushGP::globals::minimum_error_array_by_example_case[example_case] = (std::numeric_limits<double>::max)();
+//					//	pushGP::globals::individual_with_minimum_error_for_training_case[example_case] = (std::numeric_limits<unsigned int>::max)();
+//					//}
+//
+//					for (int ind = 0; ind < argmap::population_size; ind++)
+//					{
+//						for (int training_case_index = 0; training_case_index < argmap::number_of_training_cases; training_case_index++)
+//							pushGP::globals::error_matrix[training_case_index][ind] = 0.0;
+//					}
+//
+//					std::cout << "Clean up memory" << std::endl;
+//
+//					Push::parallel_intLiteralFactory.local().clean_up();
+//					Push::parallel_floatLiteralFactory.local().clean_up();
+//					Push::parallel_boolLiteralFactory.local().clean_up();
+//					Push::parallel_codeListFactory.local().clean_up();
+//					Push::parallel_doRangeClassFactory.local().clean_up();
+//
+//					std::cout << "Generation " << generation_number << std::endl;
+//					std::cout << "Session " << generations_completed_this_session << std::endl;
+//					save_generation();
+//
+//					std::cout << "Run Programs with Training Cases" << std::endl;
+//
+//					std::tuple<int, double, double> best_individual_score_error;
+//
+//
+//
+//
+////					__int64 begin = GetTickCount();
+////
+//////					best_individual_score_error = compute_training_errors(env, run_individual, argmap::number_of_training_cases);
+////
+////					__int64 end = GetTickCount() - begin;
+////
+//////					std::cout << "Serial time:  " << end << std::endl;
+////
+////					begin = GetTickCount();
+////
+////					best_individual_score_error = parallel_compute_training_errors(env, run_individual, argmap::number_of_training_cases);
+////
+////					end = GetTickCount() - begin;
+////
+////					std::cout << "Parallel time: " << end << std::endl;
+////
+////					break;
+//
+//
+//
+//
+//					if (argmap::use_PPL)
+//						best_individual_score_error = parallel_compute_training_errors(env, run_individual, argmap::number_of_training_cases);
+//					else
+//						best_individual_score_error = compute_training_errors(env, run_individual, argmap::number_of_training_cases);
+//
+//					best_individual = std::get<0>(best_individual_score_error);
+//					best_individual_score = std::get<1>(best_individual_score_error);
+//					best_individual_error = std::get<2>(best_individual_score_error);
+//
+//					std::cout << "Produce New Offspring" << std::endl;
+//
+//
+//					if (argmap::use_PPL)
+//						parallel_produce_new_offspring(argmap::number_of_training_cases, 
+//							best_individual, 
+//							sa, 
+//							include_best_individual_in_breeding_pool);
+//
+//					else
+//						produce_new_offspring(argmap::number_of_training_cases, 
+//							best_individual, 
+//							sa,
+//							include_best_individual_in_breeding_pool);
+//
+//					std::cout << "Run Best Individual's Program with Test Cases" << std::endl;
+//					
+//					std::string program = pushGP::globals::population_agents[best_individual].get_program();
+//					std::string genome = pushGP::globals::population_agents[best_individual].get_genome_as_string();
+//
+//					std::cout << "best_individual = " << best_individual << std::endl;
+//					std::cout << "program = " << program << std::endl;
+//					std::cout << "genome = " << genome << std::endl;
+//
+//					double test_case_score = compute_test_errors(env, run_individual, best_individual);
+//
+//					std::cout << "test_case_error = " << test_case_score << std::endl;
+//					std::cout << std::endl;
+//
+//					std::cout << "Generate Status Report" << std::endl;
+//
+//					double average_traiing_error = 0.0;
+//					for (int ind = 0; ind < argmap::population_size; ind++)
+//					{
+//						for (int training_case_index = 0; training_case_index < argmap::number_of_training_cases; training_case_index++)
+//							average_traiing_error += pushGP::globals::error_matrix[training_case_index][ind];
+//					}
+//					average_traiing_error /= (double)(domain::argmap::population_size * argmap::number_of_training_cases);
+//
+//					double standard_deviation = 0.0;
+//					for (int ind = 0; ind < argmap::population_size; ind++)
+//					{
+//						for (int training_case_index = 0; training_case_index < argmap::number_of_training_cases; training_case_index++)
+//							standard_deviation += (pushGP::globals::error_matrix[training_case_index][ind] - average_traiing_error) 
+//							                    * (pushGP::globals::error_matrix[training_case_index][ind] - average_traiing_error);
+//					}
+//					standard_deviation /= (double)(domain::argmap::population_size * argmap::number_of_training_cases);
+//					standard_deviation = std::sqrt(standard_deviation);
+//
+//					generate_status_report(generation_number, 
+//						generations_completed_this_session, 
+//						best_individual, 
+//						best_individual_score,
+//						best_individual_error,
+//						prev_best_individual_error,
+//						average_traiing_error,
+//						standard_deviation,
+//						test_case_score, 
+//						sa.get_tempareture(),
+//						stalled_count,
+//						cool_down_count,
+//						include_best_individual_in_breeding_pool,
+//						pushGP::globals::population_agents[best_individual]
+//						);
+//
+//					std::cout << "Install New Generation" << std::endl;
+//					install_next_generation();
+//					generation_number++;
+//					generations_completed_this_session++;
+//				}
+//			}
+//			catch (const std::exception& e)
+//			{
+//				env.local().clear_stacks();
+//
+//				std::cerr << "Standard exception: " << e.what() << std::endl;
+//				throw;
+//			}
+//			catch (...)
+//			{
+//				env.local().clear_stacks();
+//
+//				std::cerr << "Exception occurred" << std::endl;
+//				throw;
+//			}
 
 			return 0;
 		}

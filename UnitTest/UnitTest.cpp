@@ -5601,5 +5601,222 @@ namespace UnitTest
 					CodeAtom("{:instruction EXEC.DO*RANGE :close 0}")
 				}));
 		}
+
+		TEST_METHOD(EXEC_IF_NO_PARAMETERS_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "\
+							 {:instruction EXEC.IF :close 0}\
+							");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction EXEC.IF :close 0}"),
+				}));
+		}
+
+		TEST_METHOD(EXEC_IF_NO_PARAMETERS_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, 
+				"\
+					{:instruction EXEC.IF :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction INTEGER.+ :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 20 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction INTEGER.+ :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction EXEC.IF :close 0}")
+				}));
+		}
+
+		TEST_METHOD(EXEC_IF_WITH_ONE_BLOCK_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env,
+				"\
+					{:instruction FALSE :close 0}\
+					{:instruction EXEC.IF :close 1}\
+					{:instruction 10 :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction INTEGER.+ :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 20 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction EXEC.IF :close 1}"),
+					CodeAtom("{:instruction FALSE :close 0}")
+				}));
+		}
+
+		TEST_METHOD(EXEC_IF_WITH_ONE_BLOCK_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env,
+				"\
+					{:instruction TRUE :close 0}\
+					{:instruction EXEC.IF :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction INTEGER.+ :close 2}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 20 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction INTEGER.+ :close 2}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction EXEC.IF :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}")
+				}));
+		}
+
+		TEST_METHOD(EXEC_IF_WITH_ONE_BLOCK_3)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env,
+				"\
+					{:instruction TRUE :close 0}\
+					{:instruction EXEC.IF :close 1}\
+					{:instruction 10 :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction INTEGER.+ :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction EXEC.IF :close 1}"),
+					CodeAtom("{:instruction TRUE :close 0}")
+				}));
+		}
+
+		TEST_METHOD(EXEC_IF_WITH_ONE_BLOCK_4)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env,
+				"\
+					{:instruction FALSE :close 0}\
+					{:instruction EXEC.IF :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction INTEGER.+ :close 2}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction INTEGER.+ :close 2}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction EXEC.IF :close 0}"),
+					CodeAtom("{:instruction FALSE :close 0}")
+				}));
+		}
+
+		TEST_METHOD(EXEC_IF_WITH_ZERO_BLOCK_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env,
+				"\
+					{:instruction TRUE :close 0}\
+					{:instruction EXEC.IF :close 2}\
+					{:instruction 10 :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction INTEGER.+ :close 2}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 20 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction INTEGER.+ :close 2}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction EXEC.IF :close 2}"),
+					CodeAtom("{:instruction TRUE :close 0}")
+				}));
+		}
+
+		TEST_METHOD(EXEC_IF_WITH_TWO_BLOCKS_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env,
+				"\
+					{:instruction TRUE :close 0}\
+					{:instruction EXEC.IF :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction INTEGER.+ :close 1}\
+					{:instruction 20 :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction INTEGER.+ :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 20 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction 20 :close 0}"),
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction EXEC.IF :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}")
+				}));
+		}
+
+		TEST_METHOD(EXEC_IF_WITH_TWO_BLOCKS_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env,
+				"\
+					{:instruction FALSE :close 0}\
+					{:instruction EXEC.IF :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction INTEGER.+ :close 1}\
+					{:instruction 20 :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction INTEGER.+ :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 30 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction 20 :close 0}"),
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction EXEC.IF :close 0}"),
+					CodeAtom("{:instruction FALSE :close 0}")
+				}));
+		}
 	};
 }

@@ -197,6 +197,22 @@ namespace Plush
 				unit = 1;
 				break;
 			case Atom::AtomType::ins:
+				// Push open parenthesis onto stack if instruction expects any blocks
+				int blocks_needed = Func2BlockWantsMap[atom.instruction];
+				int blocks_closed = atom.close_parentheses;
+
+				int blocks_to_close = (blocks_closed <= blocks_needed) ? blocks_closed : blocks_needed;
+
+				if (!env.is_empty<ExecAtom>() && (atom.instruction != "EXEC.NOOP_OPEN_PAREN"))
+				{
+					//if (blocks_closed < blocks_needed)
+					//	env.push<ExecAtom>(ExecAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+
+					for (int n = 0; n < blocks_to_close; n++)
+						env.push<ExecAtom>(ExecAtom("{:instruction EXEC.NOOP :close 1}"));
+				}
+
+				// Execute the instruction
 				auto search = Func2CodeMap.find(atom.instruction);
 				
 				if (search != Func2CodeMap.end())

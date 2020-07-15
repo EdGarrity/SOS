@@ -18,7 +18,7 @@ namespace Plush
 
 		// Help functions
 		void ingest_plush_genome(std::string _genome_str);
-		void translate_plush_genome_to_push_program();
+//		void translate_plush_genome_to_push_program();
 		unsigned int count_points();
 		void convert_genome_to_string();
 
@@ -56,13 +56,13 @@ namespace Plush
 			return genome_atoms_;
 		}
 
-		const std::string get_program()
-		{
-			if (program_.empty())
-				translate_plush_genome_to_push_program();
+		//const std::string get_program()
+		//{
+		//	if (program_.empty())
+		//		translate_plush_genome_to_push_program();
 
-			return program_;
-		}
+		//	return program_;
+		//}
 
 		//const unsigned int get_points()
 		//{

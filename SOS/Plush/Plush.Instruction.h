@@ -49,30 +49,30 @@ namespace Plush
 	template<>
 	inline unsigned yankdup<CodeAtom>(Environment & _env)
 	{
-		// Check for valid parameters
-		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
-		{
-			int n = _env.pop<long>();
+		//// Check for valid parameters
+		//if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
+		//{
+		//	int n = _env.pop<long>();
 
-			std::pair<size_t, size_t> block_range = get_block_index<CodeAtom>(_env, n, 0);
+		//	std::pair<size_t, size_t> block_range = get_block_index<CodeAtom>(_env, n, 0);
 
-			if (block_range.first == block_range.second)
-			{
-				CodeAtom v = _env.peek_index<CodeAtom>(block_range.first);
-				_env.push<CodeAtom>(v);
-			}
+		//	if (block_range.first == block_range.second)
+		//	{
+		//		CodeAtom v = _env.peek_index<CodeAtom>(block_range.first);
+		//		_env.push<CodeAtom>(v);
+		//	}
 
-			else
-			{
-				_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+		//	else
+		//	{
+		//		_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 
-				for (int n = block_range.first; n < block_range.second + 1; n++)
-				{
-					CodeAtom v = _env.peek_index<CodeAtom>(n);
-					_env.push<CodeAtom>(v);
-				}
-			}
-		}
+		//		for (int n = block_range.first; n < block_range.second + 1; n++)
+		//		{
+		//			CodeAtom v = _env.peek_index<CodeAtom>(n);
+		//			_env.push<CodeAtom>(v);
+		//		}
+		//	}
+		//}
 
 		return 1;
 	}

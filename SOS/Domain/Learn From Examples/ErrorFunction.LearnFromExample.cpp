@@ -42,58 +42,58 @@ namespace domain
 			std::vector<double>& _example_solution)
 		{
 			double error = 0.0;
-			int actual_solution_length = 0;
+			//int actual_solution_length = 0;
 
-			// Setup
-			Push::init_push(_env, _example_problem);
-			Push::init_static_PushP_instructions();
-			Push::Code code = Push::parse(_program);
-			Push::push_call(_env, code);
+			//// Setup
+			//Push::init_push(_env, _example_problem);
+			//Push::init_static_PushP_instructions();
+			//Push::Code code = Push::parse(_program);
+			//Push::push_call(_env, code);
 
-			// Evaluate
-			_env.local().go(_env, argmap::max_point_evaluations);
+			//// Evaluate
+			//_env.local().go(_env, argmap::max_point_evaluations);
 
-			// Calculate error
-			double sum_of_error_squared = 0;
+			//// Calculate error
+			//double sum_of_error_squared = 0;
 
-			int digits_imbalance = _example_solution.size() - _env.local().output.size();
+			//int digits_imbalance = _example_solution.size() - _env.local().output.size();
 
-			int digits = std::min(_example_solution.size(), _env.local().output.size());
+			//int digits = std::min(_example_solution.size(), _env.local().output.size());
 
-			if (digits > 0)
-			{
-				for (int n = 0; n < digits; n++)
-				{
-					double distance = 0.0;
+			//if (digits > 0)
+			//{
+			//	for (int n = 0; n < digits; n++)
+			//	{
+			//		double distance = 0.0;
 
-					distance = fabs(_example_solution[n] - (isnan(_env.local().output[n]) ? 0.0 : _env.local().output[n]));
+			//		distance = fabs(_example_solution[n] - (isnan(_env.local().output[n]) ? 0.0 : _env.local().output[n]));
 
-					if (distance < (std::numeric_limits<double>::epsilon() + std::numeric_limits<double>::epsilon()))
-						distance = 0.0;
+			//		if (distance < (std::numeric_limits<double>::epsilon() + std::numeric_limits<double>::epsilon()))
+			//			distance = 0.0;
 
-					sum_of_error_squared += distance * distance;
-				}
-			}
+			//		sum_of_error_squared += distance * distance;
+			//	}
+			//}
 
-			// Calculate magnitude of sum of all vectors
-			error = std::sqrt(sum_of_error_squared);
+			//// Calculate magnitude of sum of all vectors
+			//error = std::sqrt(sum_of_error_squared);
 
-			// Convert to a number between [0 - 1)
-			error = (-1.0 / std::log10(error + 10.0)) + 1.0;
+			//// Convert to a number between [0 - 1)
+			//error = (-1.0 / std::log10(error + 10.0)) + 1.0;
 
-			// Add number of wrong digits
-			error += std::abs(digits_imbalance);
+			//// Add number of wrong digits
+			//error += std::abs(digits_imbalance);
 
-			// Cleanup Push Stacks to release memory
-			_env.local().clear_stacks();
+			//// Cleanup Push Stacks to release memory
+			//_env.local().clear_stacks();
 
-			// Cap error
-			if (error > 10000000.0)
-				error = 10000000.0;
+			//// Cap error
+			//if (error > 10000000.0)
+			//	error = 10000000.0;
 
-			// Check for NAN error
-			if (isnan(error))
-				error = std::numeric_limits<double>::max();
+			//// Check for NAN error
+			//if (isnan(error))
+			//	error = std::numeric_limits<double>::max();
 
 			return error;
 		}
@@ -173,9 +173,9 @@ namespace domain
 		{
 			double error = 0.0;
 
-			std::string program = pushGP::globals::population_agents[_individual_index].get_program();
+			//std::string program = pushGP::globals::population_agents[_individual_index].get_program();
 
-			error = run_program(_env, program, _example_problem, _example_solution);
+			//error = run_program(_env, program, _example_problem, _example_solution);
 
 			return error;
 		}
