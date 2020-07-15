@@ -296,10 +296,98 @@ namespace Plush
 		inline T peek_index(unsigned index)
 		{
 			if (has_elements<T>(index + 1))
-				return get_stack<T>().container()[index];
+				return get_stack<T>().container()[get_stack<T>().size() - index - 1];
 
 			else
 				throw;
+		}
+
+		template <typename T> inline int &peek_index(unsigned index, unsigned open_blocks, Utilities::FixedSizeStack<T> &stack) { }
+		template <> inline int &peek_index(unsigned index, unsigned open_blocks, Utilities::FixedSizeStack<CodeAtom> &stack)
+		{
+			int i = 0;
+			int blocks_open = open_blocks;
+
+			for (int n = 0; n < index + 1; n++)
+			{
+//				blocks_open = 1;
+
+				if (blocks_open == 0)
+				{
+					CodeAtom atom = peek_index<CodeAtom>(n);
+
+					if (n == index)
+						stack.push(atom);
+
+					blocks_open += Func2BlockWantsMap[atom.instruction];
+					blocks_open -= atom.close_parentheses;
+
+					i++;
+				}
+
+				else
+				{
+					while ((blocks_open > 0) && (i < get_stack<CodeAtom>().size()))
+					{
+						CodeAtom atom = peek_index<CodeAtom>(n);
+
+						if (n == index)
+							stack.push(atom);
+
+						blocks_open += Func2BlockWantsMap[atom.instruction];
+						blocks_open -= atom.close_parentheses;
+
+						i++;
+					};
+				}
+			}
+
+			blocks_open *= -1;
+
+			return blocks_open; // Return number of unmatched close parenthesis.
+		}
+		template <> inline int &peek_index(unsigned index, unsigned open_blocks, Utilities::FixedSizeStack<ExecAtom> &stack)
+		{
+			int i = 0;
+			int blocks_open = open_blocks;
+
+			for (int n = 0; n < index + 1; n++)
+			{
+				//				blocks_open = 1;
+
+				if (blocks_open == 0)
+				{
+					ExecAtom atom = peek_index<ExecAtom>(n);
+
+					if (n == index)
+						stack.push(atom);
+
+					blocks_open += Func2BlockWantsMap[atom.instruction];
+					blocks_open -= atom.close_parentheses;
+
+					i++;
+				}
+
+				else
+				{
+					while ((blocks_open > 0) && (i < get_stack<ExecAtom>().size()))
+					{
+						ExecAtom atom = peek_index<ExecAtom>(n);
+
+						if (n == index)
+							stack.push(atom);
+
+						blocks_open += Func2BlockWantsMap[atom.instruction];
+						blocks_open -= atom.close_parentheses;
+
+						i++;
+					};
+				}
+			}
+
+			blocks_open *= -1;
+
+			return blocks_open; // Return number of unmatched close parenthesis.
 		}
 	};
 }

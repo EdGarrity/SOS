@@ -957,14 +957,14 @@ namespace UnitTest
 					{:instruction FALSE :close 0}\
 					{:instruction BOOLEAN.SHOVE :close 0}\
 				");
-			//                               index         0     1      2     3      4     5     6     7
-			//                               stack         6     5      4     3      2     1     0
+			//                               array index   0     1      2     3     4      5     6     7
+			//                               stack pos     7     6      5     4     3      2     1     0
 //			                                             true, false, true, false, true, false, true, false
 
-			//                                           true, false, false, true, false, true, false, true
+			//                                           true, false, false, true, false, true, false, true, false
 
-			//                                             7      6     5      4     3      2     1     0
-			Assert::IsTrue(is_stack_state(env, {}, {}, { true, false, false, true, false, true, false, true }, {},
+			//                                             8     7      6     5      4     3      2     1     0
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true, false, false, true, false, true, false, true, false }, {},
 				{
 					CodeAtom("{:instruction BOOLEAN.SHOVE :close 0}"),
 					CodeAtom("{:instruction FALSE :close 0}"),
@@ -1187,9 +1187,9 @@ namespace UnitTest
 					{:instruction TRUE :close 0}\
 					{:instruction BOOLEAN.YANK :close 0}\
 				");
-			// Stack_pointer                               0     1     2
-			// Delete_position                             2     1     0
-			// Before_stack                              true, false, true
+			// Array index                                 0     1     2
+			// Stack index                                 2     1     0
+			// Before                                    true, false, true
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true, true, false }, {},
 				{
 					CodeAtom("{:instruction BOOLEAN.YANK :close 0}"),
@@ -2705,7 +2705,11 @@ namespace UnitTest
 					         {:instruction INTEGER.SHOVE :close 0}\
 			                ");
 
-			Assert::IsTrue(is_stack_state(env, { 10, 30, 20 }, {}, {}, {},
+//          array index   0     1     2 
+//          stack pos     2     1     0
+//			              10    20    30
+//                                               3   2   1   0
+			Assert::IsTrue(is_stack_state(env, { 10, 30, 20, 30 }, {}, {}, {},
 				{
 				  CodeAtom("{:instruction INTEGER.SHOVE :close 0}"),
 				  CodeAtom("{:instruction 1 :close 0}"),
@@ -2748,7 +2752,11 @@ namespace UnitTest
 					{:instruction INTEGER.SHOVE :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { -1, 2 }, {}, {}, {},
+//          array index   0     1 
+//          stack pos     1     0
+//			              2     -1
+                                               
+			Assert::IsTrue(is_stack_state(env, { -1, 2, -1 }, {}, {}, {},
 				{
 					CodeAtom("{:instruction INTEGER.SHOVE :close 0}"),
 					CodeAtom("{:instruction 25 :close 0}"),
@@ -2770,7 +2778,11 @@ namespace UnitTest
 					         {:instruction INTEGER.SHOVE :close 0}\
 			                ");
 
-			Assert::IsTrue(is_stack_state(env, { 30, 10, 20 }, {}, {}, {},
+//          array index   0     1     2
+//          stack pos     2     1     0
+//			              10    20    30
+
+			Assert::IsTrue(is_stack_state(env, { 30, 10, 20, 30 }, {}, {}, {},
 				{
 				  CodeAtom("{:instruction INTEGER.SHOVE :close 0}"),
 				  CodeAtom("{:instruction 2 :close 0}"),
@@ -2793,7 +2805,7 @@ namespace UnitTest
 					         {:instruction INTEGER.SHOVE :close 0}\
 			                ");
 
-			Assert::IsTrue(is_stack_state(env, { 30, 10, 20 }, {}, {}, {},
+			Assert::IsTrue(is_stack_state(env, { 30, 10, 20, 30 }, {}, {}, {},
 				{
 				  CodeAtom("{:instruction INTEGER.SHOVE :close 0}"),
 				  CodeAtom("{:instruction 3 :close 0}"),
@@ -2816,7 +2828,11 @@ namespace UnitTest
 					         {:instruction INTEGER.SHOVE :close 0}\
 			                ");
 
-			Assert::IsTrue(is_stack_state(env, { 30, 10, 20 }, {}, {}, {},
+//          array index   0     1     2
+//          stack pos     2     1     0
+//			              10    20    30
+
+			Assert::IsTrue(is_stack_state(env, { 30, 10, 20, 30 }, {}, {}, {},
 				{
 				  CodeAtom("{:instruction INTEGER.SHOVE :close 0}"),
 				  CodeAtom("{:instruction 10 :close 0}"),
@@ -4591,7 +4607,11 @@ namespace UnitTest
 					         {:instruction FLOAT.SHOVE :close 0}\
 			                ");
 
-			Assert::IsTrue(is_stack_state(env, {}, { 10.0, 30.0, 20.0 }, {}, {},
+			//          array index   0     1     2
+			//          stack pos     2     1     0
+			//			              10    20    30
+
+			Assert::IsTrue(is_stack_state(env, {}, { 10.0, 30.0, 20.0, 30.0 }, {}, {},
 				{
 				  CodeAtom("{:instruction FLOAT.SHOVE :close 0}"),
 				  CodeAtom("{:instruction 1 :close 0}"),
@@ -4634,7 +4654,7 @@ namespace UnitTest
 					{:instruction FLOAT.SHOVE :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, {}, { -1.0, 2.0 }, {}, {},
+			Assert::IsTrue(is_stack_state(env, {}, { -1.0, 2.0, -1.0 }, {}, {},
 				{
 					CodeAtom("{:instruction FLOAT.SHOVE :close 0}"),
 					CodeAtom("{:instruction 25 :close 0}"),
@@ -4656,7 +4676,7 @@ namespace UnitTest
 					         {:instruction FLOAT.SHOVE :close 0}\
 			                ");
 
-			Assert::IsTrue(is_stack_state(env, {}, { 30.0, 10.0, 20.0}, {}, {},
+			Assert::IsTrue(is_stack_state(env, {}, { 30.0, 10.0, 20.0, 30.0 }, {}, {},
 				{
 				  CodeAtom("{:instruction FLOAT.SHOVE :close 0}"),
 				  CodeAtom("{:instruction 2 :close 0}"),
@@ -4679,7 +4699,7 @@ namespace UnitTest
 					         {:instruction FLOAT.SHOVE :close 0}\
 			                ");
 
-			Assert::IsTrue(is_stack_state(env, {}, { 30.0, 10.0, 20.0 }, {}, {},
+			Assert::IsTrue(is_stack_state(env, {}, { 30.0, 10.0, 20.0, 30.0 }, {}, {},
 				{
 				  CodeAtom("{:instruction FLOAT.SHOVE :close 0}"),
 				  CodeAtom("{:instruction 3 :close 0}"),
@@ -4702,7 +4722,7 @@ namespace UnitTest
 					         {:instruction FLOAT.SHOVE :close 0}\
 			                ");
 
-			Assert::IsTrue(is_stack_state(env, {}, { 30.0, 10.0, 20.0 }, {}, {},
+			Assert::IsTrue(is_stack_state(env, {}, { 30.0, 10.0, 20.0, 30.0 }, {}, {},
 				{
 				  CodeAtom("{:instruction FLOAT.SHOVE :close 0}"),
 				  CodeAtom("{:instruction 10 :close 0}"),
@@ -4725,7 +4745,7 @@ namespace UnitTest
 					         {:instruction FLOAT.SHOVE :close 0}\
 			                ");
 
-			Assert::IsTrue(is_stack_state(env, {}, { 10.0, 20.0, 30.0 }, {}, {},
+			Assert::IsTrue(is_stack_state(env, {}, { 10.0, 20.0, 30.0, 30.0 }, {}, {},
 				{
 				  CodeAtom("{:instruction FLOAT.SHOVE :close 0}"),
 				  CodeAtom("{:instruction 0 :close 0}"),

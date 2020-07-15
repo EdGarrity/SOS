@@ -12,7 +12,8 @@ namespace UnitTest
 		{
 			for (size_t n = 0; n < s2.size(); n++)
 			{
-				if (s2[n] != env.peek_index<S1>(n))
+//				if (s2[n] != env.peek_index<S1>(n))
+				if (s2[n] != env.get_stack<S1>().container()[n])
 					return false;
 			}
 		}
