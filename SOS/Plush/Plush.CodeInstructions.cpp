@@ -1,9 +1,53 @@
 #include "Plush.CodeInstructions.h"
+#include "Processor.h"
+#include "Plush.StaticInit.h"
 
 namespace Plush
 {
-	void initCode()
+	//unsigned code_append(Environment & _env)
+	//{
+	//	if (_env.has_elements<CodeAtom>(2))
+	//	{
+	//		Utilities::FixedSizeStack<ExecAtom> block_a;
+	//		Utilities::FixedSizeStack<ExecAtom> block_b;
+
+	//		bool s = _env.pop<bool>();
+	//		int unmatched_a = _env.pop<ExecAtom>(block_a);
+	//		int unmatched_b = _env.pop<ExecAtom>(block_b);
+
+	//		if ((block_a.size() > 0) && (block_b.size() > 0))
+	//		{
+	//			// Remove one closing paranthesis from block A before pushing the blocks back on stack
+	//			Atom atom = block_a.top();
+	//			block_a.pop();
+
+	//			atom.close_parentheses = (atom.close_parentheses > 0) ? atom.close_parentheses - 1 : atom.close_parentheses;
+	//			block_a.push(atom);
+
+	//			_env.push<ExecAtom>(block_a);
+	//			_env.push<ExecAtom>(block_b);
+	//		}
+
+	//		else
+	//		{
+	//			if (block_a.size() > 0)
+	//				_env.push<ExecAtom>(block_a);
+
+	//			if (block_b.size() > 0)
+	//				_env.push<ExecAtom>(block_b);
+	//		}
+	//	}
+
+	//	return 1;
+	//}
+
+	void initCodeA()
 	{
+		static bool initialized = false;
+
+		if (initialized) return;
+
+		initialized = true;
 		//make_instruction((Operator)_cons, "CODE", "CONS", 0);
 
 		//make_instruction((Operator)_cons, "CODE.CONS", binaryCode, codeType);
@@ -37,5 +81,7 @@ namespace Plush
 		//make_instruction((Operator)in2code, "CODE.IN", integerType, codeType);
 		//make_instruction((Operator)inall2code, "CODE.INALL", nullType, codeType);
 		//make_instruction((Operator)inallrev2code, "CODE.INALLREV", nullType, codeType);
+
+//		make_instruction((Operator)code_append, "CODE", "APPEND", 0);
 	}
 }

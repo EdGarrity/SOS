@@ -80,7 +80,7 @@ namespace Plush
 	}
 
 	// Need spcial cases for EXEC and CODE
-	template <typename T>
+	template <typename T> 
 	inline unsigned equals(Environment & _env)
 	{
 		// Check for valid parameters
@@ -90,6 +90,45 @@ namespace Plush
 		return 1;
 	}
 
+	template<>
+	inline unsigned equals<CodeAtom>(Environment & _env)
+	{
+		// Check for valid parameters
+		if (_env.has_elements<CodeAtom>(2))
+		{
+			bool result = true;
+
+			Utilities::FixedSizeStack<CodeAtom> block_a;
+			Utilities::FixedSizeStack<CodeAtom> block_b;
+
+			int unmatched_a = _env.pop<CodeAtom>(block_a);
+			int unmatched_b = _env.pop<CodeAtom>(block_b);
+
+			if (block_a.size() != block_b.size())
+				result = false;
+
+			else
+			{
+				while (block_a.size() > 0)
+				{
+					CodeAtom atom_a = block_a.top();
+					CodeAtom atom_b = block_b.top();
+
+					block_a.pop();
+					block_b.pop();
+
+					if (atom_a != atom_b)
+						result = false;
+				}
+			}
+
+			_env.push<bool>(result);
+		}
+
+		return 1;
+	}
+		
+		
 	template <class T>
 	inline unsigned flush(Environment & _env)
 	{

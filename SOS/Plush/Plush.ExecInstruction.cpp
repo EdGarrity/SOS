@@ -54,11 +54,11 @@ namespace Plush
 
 	unsigned exec_if(Environment & _env)
 	{
-		Utilities::FixedSizeStack<ExecAtom> block_a;
-		Utilities::FixedSizeStack<ExecAtom> block_b;
-
 		if ((_env.has_elements<bool>(1)) && (_env.has_elements<ExecAtom>(2)))
 		{
+			Utilities::FixedSizeStack<ExecAtom> block_a;
+			Utilities::FixedSizeStack<ExecAtom> block_b;
+
 			bool s = _env.pop<bool>();
 			int unmatched_a = _env.pop<ExecAtom>(block_a);
 			int unmatched_b = _env.pop<ExecAtom>(block_b);
@@ -102,6 +102,48 @@ namespace Plush
 		return 1;
 	}
 
+	unsigned code_append(Environment & _env)
+	{
+		if (_env.has_elements<CodeAtom>(2))
+		{
+			Utilities::FixedSizeStack<CodeAtom> block_a;
+			Utilities::FixedSizeStack<CodeAtom> block_b;
+
+			int unmatched_a = _env.pop<CodeAtom>(block_a);
+			int unmatched_b = _env.pop<CodeAtom>(block_b);
+
+			if ((block_a.size() > 0) && (block_b.size() > 0))
+			{
+				// Remove one closing paranthesis from block A before pushing the blocks back on stack
+				Atom atom = block_a.top();
+				block_a.pop();
+
+				atom.close_parentheses = (atom.close_parentheses > 0) ? atom.close_parentheses - 1 : atom.close_parentheses;
+				block_a.push(atom);
+
+				atom = block_b.top();
+				block_b.pop();
+
+				atom.close_parentheses = (atom.close_parentheses == 0) ? 1 : atom.close_parentheses;
+				block_b.push(atom);
+
+				_env.push<CodeAtom>(block_b);
+				_env.push<CodeAtom>(block_a);
+			}
+
+			else
+			{
+				if (block_a.size() > 0)
+					_env.push<CodeAtom>(block_a);
+
+				if (block_b.size() > 0)
+					_env.push<CodeAtom>(block_b);
+			}
+		}
+
+		return 1;
+	}
+
 	void initExec()
 	{
 		static bool initialized = false;
@@ -124,6 +166,8 @@ namespace Plush
 		make_instruction((Operator)noop, "EXEC", "NOOP_OPEN_PAREN", 1);
 		make_instruction((Operator)noop, "EXEC", "NOOP", 0);
 		make_instruction((Operator)exec_if, "EXEC", "IF", 2);
+
+		make_instruction((Operator)code_append, "CODE", "APPEND", 0);
 	}
 
 }

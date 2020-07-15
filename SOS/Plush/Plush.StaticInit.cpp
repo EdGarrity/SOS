@@ -8,6 +8,7 @@ namespace Plush
 
 	void initGenerics();
 	void initBool();
+//	void initCodeA();
 	void initExec();
 	void initFloat();
 	void initInt();
@@ -16,6 +17,7 @@ namespace Plush
 	{
 		initGenerics();
 		initBool();
+//		initCodeA();
 		initExec();
 		initFloat();
 		initInt();
@@ -25,6 +27,8 @@ namespace Plush
 	{
 		std::string func_name = type + "." + name;
 		Func2CodeMap[func_name] = op;
-		Func2BlockWantsMap[func_name] = block_wants;
+
+		if ((type == "EXEC") || (type == "CODE"))
+			Func2BlockWantsMap[func_name] = block_wants;
 	};
 }
