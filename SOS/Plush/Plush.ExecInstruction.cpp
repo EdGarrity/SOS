@@ -184,6 +184,31 @@ namespace Plush
 		return 1;
 	}
 
+	unsigned code_cdr(Environment & _env)
+	{
+		if (_env.has_elements<CodeAtom>(1))
+		{
+			Utilities::FixedSizeStack<CodeAtom> block_a;
+
+			int unmatched_a = _env.pop<CodeAtom>(block_a, 1);
+
+			if (block_a.size() > 1)
+			{
+				while (block_a.size() > 1)
+				{
+					Atom atom = block_a.top();
+					block_a.pop();
+					_env.push<CodeAtom>(atom);
+				}
+			}
+
+			else
+				_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
+		}
+
+		return 1;
+	}
+
 	void initExec()
 	{
 		static bool initialized = false;
@@ -210,6 +235,7 @@ namespace Plush
 		make_instruction((Operator)code_append, "CODE", "APPEND", 0);
 		make_instruction((Operator)code_atom, "CODE", "ATOM", 0);
 		make_instruction((Operator)code_car, "CODE", "CAR", 0);
+		make_instruction((Operator)code_cdr, "CODE", "CDR", 0);
 	}
 
 }
