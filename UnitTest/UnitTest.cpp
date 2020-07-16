@@ -5402,6 +5402,79 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(CAR_WITH_NO_PARAMETERS)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction CODE.CAR :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.CAR :close 0}")
+				}));
+		}
+
+		TEST_METHOD(CAR_WITH_SINGLE_ATOM_BLOCK)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction FLOAT.= :close 1}\
+					{:instruction CODE.CAR :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.CAR :close 0}"),
+					CodeAtom("{:instruction FLOAT.= :close 1}")
+				}));
+		}
+
+		TEST_METHOD(CAR_WITH_DOUBLE_ATOM_BLOCK)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction FLOAT.+ :close 0}\
+					{:instruction FLOAT.= :close 1}\
+					{:instruction CODE.CAR :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.CAR :close 0}"),
+					CodeAtom("{:instruction FLOAT.+ :close 1}")
+				}));
+		}
+
+		TEST_METHOD(CAR_WITH_TRIPLE_ATOM_BLOCK)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction FLOAT.+ :close 0}\
+					{:instruction FLOAT.* :close 0}\
+					{:instruction FLOAT.= :close 1}\
+					{:instruction CODE.CAR :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.CAR :close 0}"),
+					CodeAtom("{:instruction FLOAT.+ :close 1}")
+				}));
+		}
+
 		TEST_METHOD(EQUALS_WITH_NO_PARAMETERS)
 		{
 			Environment env;
