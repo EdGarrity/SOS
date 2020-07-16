@@ -245,6 +245,51 @@ namespace Plush
 		return 1;
 	}
 
+	unsigned code_container(Environment & _env)
+	{
+		if (_env.has_elements<CodeAtom>(2))
+		{
+			Utilities::FixedSizeStack<CodeAtom> block_a;
+			Utilities::FixedSizeStack<CodeAtom> block_b;
+
+			_env.pop<CodeAtom>(block_a, 1);
+			_env.pop<CodeAtom>(block_b, 1);
+
+			if ((block_a.size() > 0) && (block_b.size() > 0))
+			{
+				// Make sure last atom of block B is closed
+				Atom atom = block_b.top();
+				block_b.pop();
+
+				atom.close_parentheses = (atom.close_parentheses = 0) ? 1 : atom.close_parentheses;
+				block_b.push(atom);
+
+				bool found = false;
+				int index = 0;
+
+				for (int i = block_a.size() - 1; i > 0; i--)
+				{
+					for (int j = block_b.size() - 1; j > 0; j--)
+					{
+						if (block_a[i] != block_b[j])
+							break;
+					}
+				}
+			}
+
+			else
+			{
+				if (block_a.size() > 0)
+					_env.push<CodeAtom>(block_a);
+
+				if (block_b.size() > 0)
+					_env.push<CodeAtom>(block_b);
+			}
+		}
+
+		return 1;
+	}
+
 	void initExec()
 	{
 		static bool initialized = false;
@@ -273,6 +318,7 @@ namespace Plush
 		make_instruction((Operator)code_car, "CODE", "CAR", 0);
 		make_instruction((Operator)code_cdr, "CODE", "CDR", 0);
 		make_instruction((Operator)code_cons, "CODE", "CONS", 0);
+		make_instruction((Operator)code_container, "CODE", "CONTAINER", 0);
 	}
 
 }
