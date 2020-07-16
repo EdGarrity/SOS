@@ -2,5 +2,5 @@
 
 namespace Plush
 {
-	void initCodeA();
+	void initCode();
 }

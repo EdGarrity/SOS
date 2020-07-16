@@ -101,8 +101,8 @@ namespace Plush
 			Utilities::FixedSizeStack<CodeAtom> block_a;
 			Utilities::FixedSizeStack<CodeAtom> block_b;
 
-			int unmatched_a = _env.pop<CodeAtom>(block_a);
-			int unmatched_b = _env.pop<CodeAtom>(block_b);
+			int unmatched_a = _env.pop<CodeAtom>(block_a, 1);
+			int unmatched_b = _env.pop<CodeAtom>(block_b, 1);
 
 			if (block_a.size() != block_b.size())
 				result = false;

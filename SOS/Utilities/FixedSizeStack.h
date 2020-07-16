@@ -55,6 +55,14 @@ namespace Utilities
 			return stack_[top_ - 1];
 		}
 
+		inline reference bottom()
+		{
+			if (top_ == 0)
+				throw;
+
+			return stack_[0];
+		}
+
 		inline const_reference operator [] (int index) const
 		{
 			return stack_[index];

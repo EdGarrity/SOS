@@ -8,7 +8,7 @@ namespace Plush
 
 	void initGenerics();
 	void initBool();
-//	void initCodeA();
+//	void initCode();
 	void initExec();
 	void initFloat();
 	void initInt();
@@ -17,7 +17,7 @@ namespace Plush
 	{
 		initGenerics();
 		initBool();
-//		initCodeA();
+//		initCode();
 		initExec();
 		initFloat();
 		initInt();

@@ -39,7 +39,7 @@ namespace Plush
 				_env.push<long>(i + direction);
 				_env.push<long>(n);
 
-				int unmatched_a = _env.pop<ExecAtom>(block_a);
+				int unmatched_a = _env.pop<ExecAtom>(block_a, 1);
 
 				_env.push<ExecAtom>(block_a);
 				_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
@@ -60,8 +60,8 @@ namespace Plush
 			Utilities::FixedSizeStack<ExecAtom> block_b;
 
 			bool s = _env.pop<bool>();
-			int unmatched_a = _env.pop<ExecAtom>(block_a);
-			int unmatched_b = _env.pop<ExecAtom>(block_b);
+			int unmatched_a = _env.pop<ExecAtom>(block_a, 1);
+			int unmatched_b = _env.pop<ExecAtom>(block_b, 1);
 
 			if ((block_a.size() > 0) && ((block_b.size() > 0) || (unmatched_a > 0)))
 			{
@@ -109,8 +109,8 @@ namespace Plush
 			Utilities::FixedSizeStack<CodeAtom> block_a;
 			Utilities::FixedSizeStack<CodeAtom> block_b;
 
-			int unmatched_a = _env.pop<CodeAtom>(block_a);
-			int unmatched_b = _env.pop<CodeAtom>(block_b);
+			int unmatched_a = _env.pop<CodeAtom>(block_a, 1);
+			int unmatched_b = _env.pop<CodeAtom>(block_b, 1);
 
 			if ((block_a.size() > 0) && (block_b.size() > 0))
 			{
@@ -144,6 +144,27 @@ namespace Plush
 		return 1;
 	}
 
+	unsigned code_atom(Environment & _env)
+	{
+		if (_env.has_elements<CodeAtom>(1))
+		{
+			Utilities::FixedSizeStack<CodeAtom> block_a;
+
+			int unmatched_a = _env.pop<CodeAtom>(block_a, 0);
+
+			Atom atom = block_a.bottom();
+			int blocks_needed = Func2BlockWantsMap[atom.instruction];
+
+			if (blocks_needed > 0)
+				_env.push<bool>(true);
+
+			else
+				_env.push<bool>(false);
+		}
+
+		return 1;
+	}
+
 	void initExec()
 	{
 		static bool initialized = false;
@@ -168,6 +189,7 @@ namespace Plush
 		make_instruction((Operator)exec_if, "EXEC", "IF", 2);
 
 		make_instruction((Operator)code_append, "CODE", "APPEND", 0);
+		make_instruction((Operator)code_atom, "CODE", "ATOM", 0);
 	}
 
 }

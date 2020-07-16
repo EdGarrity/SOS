@@ -41,7 +41,7 @@ namespace Plush
 	//	return 1;
 	//}
 
-	void initCodeA()
+	void initCode()
 	{
 		static bool initialized = false;
 

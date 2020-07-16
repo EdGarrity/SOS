@@ -5354,6 +5354,55 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(ATOM_WITH_NO_PARAMETERS)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction CODE.ATOM :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { FALSE }, {},
+				{
+				}));
+		}
+
+		TEST_METHOD(ATOM_WITH_ONE_ATOM_PARAMETER)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction FLOAT.= :close 1}\
+					{:instruction CODE.ATOM :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { FALSE }, {},
+				{
+					CodeAtom("{:instruction CODE.ATOM :close 0}")
+				}));
+		}
+
+		TEST_METHOD(ATOM_WITH_ONE_GROUP_PARAMETER)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 1}\
+					{:instruction CODE.ATOM :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { TRUE }, {},
+				{
+					CodeAtom("{:instruction CODE.ATOM :close 0}")
+				}));
+		}
+
 		TEST_METHOD(EQUALS_WITH_NO_PARAMETERS)
 		{
 			Environment env;

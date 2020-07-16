@@ -88,12 +88,12 @@ namespace Plush
 			return val;
 		}
 
-		template <typename T> inline int &pop(Utilities::FixedSizeStack<T> &stack) { }
-		template <> inline int &pop(Utilities::FixedSizeStack<CodeAtom> &stack)
+		template <typename T> inline int &pop(Utilities::FixedSizeStack<T> &stack, unsigned int open_blocks) { }
+		template <> inline int &pop(Utilities::FixedSizeStack<CodeAtom> &stack, unsigned int open_blocks)
 		{
-			int blocks_open = 1;
+			int blocks_open = open_blocks;
 
-			while ((blocks_open > 0) && (get_stack<CodeAtom>().size() > 0))
+			while (get_stack<CodeAtom>().size() > 0)
 			{
 				Atom atom = get_stack<CodeAtom>().top();
 				get_stack<CodeAtom>().pop();
@@ -101,15 +101,18 @@ namespace Plush
 
 				blocks_open += Func2BlockWantsMap[atom.instruction];
 				blocks_open -= atom.close_parentheses;
+
+				if (blocks_open <= 0)
+					break;
 			};
 			
 			blocks_open *= -1;
 
 			return blocks_open; // Return number of unmatched close parenthesis.
 		}
-		template <> inline int &pop(Utilities::FixedSizeStack<ExecAtom> &stack)
+		template <> inline int &pop(Utilities::FixedSizeStack<ExecAtom> &stack, unsigned int open_blocks)
 		{
-			int blocks_open = 1;
+			int blocks_open = open_blocks;
 
 			while ((blocks_open > 0) && (get_stack<ExecAtom>().size() > 0))
 			{
