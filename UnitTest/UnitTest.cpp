@@ -5549,6 +5549,128 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(CONS_WITH_NO_PARAMETERS)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction CODE.CONS :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.CONS :close 0}")
+				}));
+		}
+
+		TEST_METHOD(CONS_WITH_SINGLE_ATOM_BLOCK)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction FLOAT.= :close 0}\
+					{:instruction CODE.CONS :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.CONS :close 1}"),
+					CodeAtom("{:instruction FLOAT.= :close 0}")
+				}));
+		}
+
+		TEST_METHOD(CONS_WITH_DOUBLE_ATOM_BLOCK)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction FLOAT.+ :close 0}\
+					{:instruction FLOAT.= :close 0}\
+					{:instruction CODE.CONS :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.CONS :close 1}"),
+					CodeAtom("{:instruction FLOAT.= :close 0}"),
+					CodeAtom("{:instruction FLOAT.+ :close 0}")
+				}));
+		}
+
+		TEST_METHOD(CONS_WITH_TRIPLE_ATOM_BLOCK)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction FLOAT.+ :close 0}\
+					{:instruction FLOAT.* :close 0}\
+					{:instruction FLOAT.= :close 0}\
+					{:instruction CODE.CONS :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.CONS :close 0}"),
+					CodeAtom("{:instruction FLOAT.= :close 0}"),
+					CodeAtom("{:instruction FLOAT.* :close 0}"),
+					CodeAtom("{:instruction FLOAT.+ :close 0}")
+				}));
+		}
+
+		TEST_METHOD(CONS_WITH_DOUBLE_BLOCKS_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction FLOAT.+ :close 0}\
+					{:instruction FLOAT.* :close 1}\
+					{:instruction FLOAT.= :close 1}\
+					{:instruction CODE.CONS :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.CONS :close 0}"),
+					CodeAtom("{:instruction FLOAT.* :close 1}"),
+					CodeAtom("{:instruction FLOAT.+ :close 0}"),
+					CodeAtom("{:instruction FLOAT.= :close 0}"),
+				}));
+		}
+
+		TEST_METHOD(CONS_WITH_DOUBLE_BLOCKS_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction FLOAT.+ :close 0}\
+					{:instruction FLOAT.* :close 1}\
+					{:instruction FLOAT.- :close 0}\
+					{:instruction FLOAT.= :close 1}\
+					{:instruction CODE.CONS :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.CONS :close 0}"),
+					CodeAtom("{:instruction FLOAT.* :close 1}"),
+					CodeAtom("{:instruction FLOAT.+ :close 0}"),
+					CodeAtom("{:instruction FLOAT.= :close 0}"),
+					CodeAtom("{:instruction FLOAT.- :close 0}"),
+				}));
+		}
+
 		TEST_METHOD(EQUALS_WITH_NO_PARAMETERS)
 		{
 			Environment env;
