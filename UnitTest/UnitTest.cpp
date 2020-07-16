@@ -5364,7 +5364,7 @@ namespace UnitTest
 					{:instruction CODE.ATOM :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, {}, {}, { FALSE }, {},
+			Assert::IsTrue(is_stack_state(env, {}, {}, { TRUE }, {},
 				{
 				}));
 		}
@@ -5380,7 +5380,7 @@ namespace UnitTest
 					{:instruction CODE.ATOM :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, {}, {}, { FALSE }, {},
+			Assert::IsTrue(is_stack_state(env, {}, {}, { TRUE }, {},
 				{
 					CodeAtom("{:instruction CODE.ATOM :close 0}")
 				}));
@@ -5397,9 +5397,8 @@ namespace UnitTest
 					{:instruction CODE.ATOM :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, {}, {}, { TRUE }, {},
+			Assert::IsTrue(is_stack_state(env, {}, {}, { FALSE }, {},
 				{
-					CodeAtom("{:instruction CODE.ATOM :close 0}")
 				}));
 		}
 

@@ -150,12 +150,9 @@ namespace Plush
 		{
 			Utilities::FixedSizeStack<CodeAtom> block_a;
 
-			int unmatched_a = _env.pop<CodeAtom>(block_a, 0);
+			int unmatched_a = _env.pop<CodeAtom>(block_a, 1);
 
-			Atom atom = block_a.bottom();
-			int blocks_needed = Func2BlockWantsMap[atom.instruction];
-
-			if (blocks_needed > 0)
+			if (block_a.size() == 1)
 				_env.push<bool>(true);
 
 			else
