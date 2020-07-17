@@ -1,6 +1,7 @@
 #include "Plush.ExecInstruction.h"
 #include "Processor.h"
 #include "Plush.StaticInit.h"
+#include <set>
 
 namespace Plush
 {
@@ -370,6 +371,51 @@ namespace Plush
 		return 1;
 	}
 
+	unsigned code_discrepancy(Environment & _env)
+	{
+		if (_env.has_elements<CodeAtom>(2))
+		{
+			Utilities::FixedSizeStack<CodeAtom> block_a;
+			Utilities::FixedSizeStack<CodeAtom> block_b;
+
+			_env.pop<CodeAtom>(block_a, 1);
+			_env.pop<CodeAtom>(block_b, 1);
+
+			std::set<std::string> atom_set;
+
+			if ((block_a.size() > 0) && (block_b.size() > 0))
+			{
+				for (int i = 0; i < block_a.size(); i++)
+					atom_set.insert(block_a[i].instruction);
+
+				for (int i = 0; i < block_b.size(); i++)
+					atom_set.insert(block_b[i].instruction);
+
+				int result = 0;
+
+				for (std::string instruction : atom_set)
+				{
+					int count_a = 0;
+					int count_b = 0;
+
+					for (int i = 0; i < block_a.size(); i++)
+					{
+						if (instruction == block_a[i].instruction)
+							count_a++;
+						if (instruction == block_b[i].instruction)
+							count_b++;
+					}
+
+					result += std::abs(count_a - count_b);
+				}
+
+				_env.push<long>(result);
+			}
+
+			return 1;
+		}
+	}
+
 	void initExec()
 	{
 		static bool initialized = false;
@@ -400,6 +446,7 @@ namespace Plush
 		make_instruction((Operator)code_cons, "CODE", "CONS", 0);
 		make_instruction((Operator)code_container, "CODE", "CONTAINER", 0);
 		make_instruction((Operator)code_contains, "CODE", "CONTAINS", 0);
+		make_instruction((Operator)code_discrepancy, "CODE", "DISCREPANCY", 0);
 	}
 
 }
