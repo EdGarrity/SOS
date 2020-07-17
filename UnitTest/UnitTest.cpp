@@ -5860,6 +5860,42 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(DO_WITH_NO_PARAMETERS)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction CODE.POP :close 0}\
+					{:instruction CODE.DO :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+				}));
+		}
+
+		TEST_METHOD(DO_WITH_ONE_PARAMETER)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 5 :close 0}\
+					{:instruction CODE.POP :close 1}\
+					{:instruction INTEGER.DUP :close 0}\
+					{:instruction INTEGER.+ :close 1}\
+					{:instruction CODE.DO :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 20 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.DO :close 1}")
+				}));
+		}
+
 		TEST_METHOD(EQUALS_WITH_NO_PARAMETERS)
 		{
 			Environment env;

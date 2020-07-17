@@ -165,7 +165,6 @@
     <ClInclude Include="Domain\Learn From Examples\Run.LearnFromExamples.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Plush\Atom.h" />
-    <ClInclude Include="Plush\Plush.CodeInstructions.h" />
     <ClInclude Include="Plush\Environment.h" />
     <ClInclude Include="Plush\Genome.h" />
     <ClInclude Include="Plush\Plush.BooleanInstructions.h" />
@@ -227,7 +226,6 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Plush\Atom.cpp" />
-    <ClCompile Include="Plush\Plush.CodeInstructions.cpp" />
     <ClCompile Include="Plush\Environment.cpp" />
     <ClCompile Include="Plush\Genome.cpp" />
     <ClCompile Include="Plush\Plush.BooleanInstructions.cpp" />

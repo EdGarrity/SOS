@@ -53,7 +53,7 @@ namespace Plush
 		{
 			int n = _env.pop<long>();
 
-			Utilities::FixedSizeStack<CodeAtom> code_block;
+			Utilities::FixedSizeStack<Atom> code_block;
 
 			_env.peek_index<CodeAtom>(n, 0, code_block);
 			_env.push<CodeAtom>(code_block);
@@ -70,7 +70,7 @@ namespace Plush
 		{
 			int n = _env.pop<long>();
 
-			Utilities::FixedSizeStack<ExecAtom> code_block;
+			Utilities::FixedSizeStack<Atom> code_block;
 
 			_env.peek_index<ExecAtom>(n, 0, code_block);
 			_env.push<ExecAtom>(code_block);
@@ -98,8 +98,8 @@ namespace Plush
 		{
 			bool result = true;
 
-			Utilities::FixedSizeStack<CodeAtom> block_a;
-			Utilities::FixedSizeStack<CodeAtom> block_b;
+			Utilities::FixedSizeStack<Atom> block_a;
+			Utilities::FixedSizeStack<Atom> block_b;
 
 			int unmatched_a = _env.pop<CodeAtom>(block_a, 1);
 			int unmatched_b = _env.pop<CodeAtom>(block_b, 1);
@@ -136,11 +136,31 @@ namespace Plush
 		return 1;
 	}
 
-	template <class T>
+	template <typename  T>
 	inline unsigned protected_pop(Environment & _env)
 	{
 		if (_env.has_elements<T>(1))
 			_env.pop<T>();
+
+		return 1;
+	}
+	template <>
+	inline unsigned protected_pop<CodeAtom>(Environment & _env)
+	{
+		Utilities::FixedSizeStack<Atom> stack;
+
+		if (_env.has_elements<CodeAtom>(1))
+			_env.pop<CodeAtom>(stack, 1);
+
+		return 1;
+	}
+	template <>
+	inline unsigned protected_pop<ExecAtom>(Environment & _env)
+	{
+		Utilities::FixedSizeStack<Atom> stack;
+
+		if (_env.has_elements<ExecAtom>(1))
+			_env.pop<ExecAtom>(stack, 1);
 
 		return 1;
 	}

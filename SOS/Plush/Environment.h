@@ -67,7 +67,7 @@ namespace Plush
 		}
 
 		template <class T>
-		inline void push(Utilities::FixedSizeStack<T> stack)
+		inline void push(Utilities::FixedSizeStack<Atom> stack)
 		{
 			//for (int n = 0; n < stack.size(); n++)
 			//	get_stack<T>().push(stack[n]);
@@ -76,10 +76,6 @@ namespace Plush
 					get_stack<T>().push(stack[n]);
 		}
 
-		// Need spcial cases for EXEC and CODE
-		// Need to support receiving and returning stack of instructions
-		// If number of parenthesis balance, then pop will retuirn first instruction
-		// for impabance, then return balanced stack (from first instruction to instuction with matching close parenthesis inclusive)
 		template <typename T>
 		inline T pop()
 		{
@@ -88,15 +84,15 @@ namespace Plush
 			return val;
 		}
 
-		template <typename T> inline int &pop(Utilities::FixedSizeStack<T> &stack, unsigned int open_blocks) { }
-		template <> inline int &pop(Utilities::FixedSizeStack<CodeAtom> &stack, unsigned int open_blocks)
+		template <typename T> 
+		inline int &pop(Utilities::FixedSizeStack<Atom> &stack, unsigned int open_blocks)
 		{
 			int blocks_open = open_blocks;
 
-			while (get_stack<CodeAtom>().size() > 0)
+			while (get_stack<T>().size() > 0)
 			{
-				Atom atom = get_stack<CodeAtom>().top();
-				get_stack<CodeAtom>().pop();
+				Atom atom = get_stack<T>().top();
+				get_stack<T>().pop();
 				stack.push(atom);
 
 				blocks_open += Func2BlockWantsMap[atom.instruction];
@@ -110,24 +106,7 @@ namespace Plush
 
 			return blocks_open; // Return number of unmatched close parenthesis.
 		}
-		template <> inline int &pop(Utilities::FixedSizeStack<ExecAtom> &stack, unsigned int open_blocks)
-		{
-			int blocks_open = open_blocks;
 
-			while ((blocks_open > 0) && (get_stack<ExecAtom>().size() > 0))
-			{
-				Atom atom = get_stack<ExecAtom>().top();
-				get_stack<ExecAtom>().pop();
-				stack.push(atom);
-
-				blocks_open += Func2BlockWantsMap[atom.instruction];
-				blocks_open -= atom.close_parentheses;
-			};
-
-			blocks_open *= -1;
-
-			return blocks_open; // Return number of unmatched close parenthesis.
-		}
 
 		// Need spcial cases for EXEC and CODE
 		template <typename T>
@@ -165,19 +144,16 @@ namespace Plush
 				throw;
 		}
 
-		template <typename T> inline int &peek_index(unsigned index, unsigned open_blocks, Utilities::FixedSizeStack<T> &stack) { }
-		template <> inline int &peek_index(unsigned index, unsigned open_blocks, Utilities::FixedSizeStack<CodeAtom> &stack)
+		template <typename T> inline int &peek_index(unsigned index, unsigned open_blocks, Utilities::FixedSizeStack<Atom> &stack)
 		{
 			int i = 0;
 			int blocks_open = open_blocks;
 
 			for (int n = 0; n < index + 1; n++)
 			{
-//				blocks_open = 1;
-
 				if (blocks_open == 0)
 				{
-					CodeAtom atom = peek_index<CodeAtom>(n);
+					Atom atom = peek_index<T>(n);
 
 					if (n == index)
 						stack.push(atom);
@@ -190,52 +166,9 @@ namespace Plush
 
 				else
 				{
-					while ((blocks_open > 0) && (i < get_stack<CodeAtom>().size()))
+					while ((blocks_open > 0) && (i < get_stack<T>().size()))
 					{
-						CodeAtom atom = peek_index<CodeAtom>(n);
-
-						if (n == index)
-							stack.push(atom);
-
-						blocks_open += Func2BlockWantsMap[atom.instruction];
-						blocks_open -= atom.close_parentheses;
-
-						i++;
-					};
-				}
-			}
-
-			blocks_open *= -1;
-
-			return blocks_open; // Return number of unmatched close parenthesis.
-		}
-		template <> inline int &peek_index(unsigned index, unsigned open_blocks, Utilities::FixedSizeStack<ExecAtom> &stack)
-		{
-			int i = 0;
-			int blocks_open = open_blocks;
-
-			for (int n = 0; n < index + 1; n++)
-			{
-				//				blocks_open = 1;
-
-				if (blocks_open == 0)
-				{
-					ExecAtom atom = peek_index<ExecAtom>(n);
-
-					if (n == index)
-						stack.push(atom);
-
-					blocks_open += Func2BlockWantsMap[atom.instruction];
-					blocks_open -= atom.close_parentheses;
-
-					i++;
-				}
-
-				else
-				{
-					while ((blocks_open > 0) && (i < get_stack<ExecAtom>().size()))
-					{
-						ExecAtom atom = peek_index<ExecAtom>(n);
+						Atom atom = peek_index<T>(n);
 
 						if (n == index)
 							stack.push(atom);
