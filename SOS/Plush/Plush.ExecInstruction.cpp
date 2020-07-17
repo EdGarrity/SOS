@@ -482,7 +482,7 @@ namespace Plush
 				_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 				_env.push<ExecAtom>(block_a);
 
-				_env.push<ExecAtom>(CodeAtom("{:instruction CODE.DO*RANGE :close 0}"));
+				_env.push<ExecAtom>(CodeAtom("{:instruction CODE.DO*RANGE :close 1}"));
 			}
 		}
 
@@ -500,7 +500,26 @@ namespace Plush
 				_env.push<long>(0);
 				_env.push<long>(n - 1);
 
-				_env.push<ExecAtom>(CodeAtom("{:instruction CODE.DO*RANGE :close 0}"));
+				_env.push<ExecAtom>(CodeAtom("{:instruction CODE.DO*RANGE :close 1}"));
+			}
+		}
+
+		return 1;
+	}
+
+	unsigned code_do_times(Environment & _env)
+	{
+		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
+		{
+			int n = _env.pop<long>();	// destination index
+
+			if (n > 0)
+			{
+				_env.push<long>(0);
+				_env.push<long>(n - 1);
+
+				_env.push<ExecAtom>(CodeAtom("{:instruction INTEGER.POP :close 1}"));
+				_env.push<ExecAtom>(CodeAtom("{:instruction CODE.DO*RANGE :close 1}"));
 			}
 		}
 
@@ -550,5 +569,6 @@ namespace Plush
 		make_instruction((Operator)code_do_star, "CODE", "DO*");
 		make_instruction((Operator)code_do_range, "CODE", "DO*RANGE");
 		make_instruction((Operator)code_do_count, "CODE", "DO*COUNT");
+		make_instruction((Operator)code_do_times, "CODE", "DO*TIMES");
 	}
 }
