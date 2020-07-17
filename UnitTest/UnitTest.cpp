@@ -5736,6 +5736,68 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(CONTAINS_WITH_NO_PARAMETERS)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction CODE.CONTAINS :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.CONTAINS :close 0}")
+				}));
+		}
+
+		TEST_METHOD(CONTAINS_TEXTBOOK_EXAMPLE_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction EXEC.DO*RANGE :close 0}\
+					{:instruction FLOAT.+ :close 2}\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction FLOAT.+ :close 3}\
+					{:instruction FLOAT.+ :close 1}\
+					{:instruction CODE.CONTAINS :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { TRUE }, {},
+				{
+					CodeAtom("{:instruction CODE.CONTAINS :close 0}")
+				}));
+		}
+
+		TEST_METHOD(CONTAINS_TEXTBOOK_EXAMPLE_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction EXEC.DO*RANGE :close 0}\
+					{:instruction FLOAT.+ :close 2}\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction FLOAT.+ :close 3}\
+					{:instruction FLOAT.- :close 1}\
+					{:instruction CODE.CONTAINS :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { FALSE }, {},
+				{
+					CodeAtom("{:instruction CODE.CONTAINS :close 0}")
+				}));
+		}
+
 		TEST_METHOD(EQUALS_WITH_NO_PARAMETERS)
 		{
 			Environment env;

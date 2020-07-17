@@ -312,6 +312,64 @@ namespace Plush
 		return 1;
 	}
 
+	unsigned code_contains(Environment & _env)
+	{
+		if (_env.has_elements<CodeAtom>(2))
+		{
+			Utilities::FixedSizeStack<CodeAtom> block_a;
+			Utilities::FixedSizeStack<CodeAtom> block_b;
+
+			_env.pop<CodeAtom>(block_a, 1);
+			_env.pop<CodeAtom>(block_b, 1);
+
+			if ((block_a.size() > 0) && (block_b.size() > 0))
+			{
+				// Make sure last atom of block B is closed
+				Atom atom = block_b.top();
+				block_b.pop();
+
+				atom.close_parentheses = (atom.close_parentheses == 0) ? 1 : atom.close_parentheses;
+				block_b.push(atom);
+
+				bool found = false;
+				int index = 0;
+
+				for (int i = 1; i < block_a.size(); i++)
+				{
+					found = true;
+
+					for (int j = 0; j < block_b.size(); j++)
+					{
+						if (block_a[i].instruction != block_b[j].instruction)
+						{
+							found = false;
+							break;
+						}
+					}
+
+					if (found)
+					{
+						index = i - 1;
+						break;
+					}
+				}
+
+				_env.push<bool>(found);
+			}
+
+			else
+			{
+				if (block_a.size() > 0)
+					_env.push<CodeAtom>(block_a);
+
+				if (block_b.size() > 0)
+					_env.push<CodeAtom>(block_b);
+			}
+		}
+
+		return 1;
+	}
+
 	void initExec()
 	{
 		static bool initialized = false;
@@ -341,6 +399,7 @@ namespace Plush
 		make_instruction((Operator)code_cdr, "CODE", "CDR", 0);
 		make_instruction((Operator)code_cons, "CODE", "CONS", 0);
 		make_instruction((Operator)code_container, "CODE", "CONTAINER", 0);
+		make_instruction((Operator)code_contains, "CODE", "CONTAINS", 0);
 	}
 
 }
