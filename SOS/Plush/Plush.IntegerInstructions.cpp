@@ -26,17 +26,16 @@ namespace Plush
 		//make_instruction((Operator)inallrev<int>, "INTEGER.INALLREV", nullType, integerType);
 		//make_instruction((Operator)out<int>, "INTEGER.OUT", binaryInt, nullType);
 
-		make_instruction((Operator)int_mod, "INTEGER", "%", 0);
-		make_instruction((Operator)multiplies<long>, "INTEGER", "*", 0);
-		make_instruction((Operator)plus<long>, "INTEGER", "+", 0);
-		make_instruction((Operator)minus<long>, "INTEGER", "-", 0);
-		make_instruction((Operator)divides<long>, "INTEGER", "/", 0);
-		make_instruction((Operator)smaller<long>, "INTEGER", "<", 0);
-		make_instruction((Operator)greater<long>, "INTEGER", ">", 0);
-		make_instruction((Operator)bool2int, "INTEGER", "FROMBOOLEAN", 0);
-		make_instruction((Operator)float2int, "INTEGER", "FROMFLOAT", 0);
-		make_instruction((Operator)_max<long>, "INTEGER", "MAX", 0);
-		make_instruction((Operator)_min<long>, "INTEGER", "MIN", 0);
-
+		make_instruction((Operator)int_mod, "INTEGER", "%");
+		make_instruction((Operator)multiplies<long>, "INTEGER", "*");
+		make_instruction((Operator)plus<long>, "INTEGER", "+");
+		make_instruction((Operator)minus<long>, "INTEGER", "-");
+		make_instruction((Operator)divides<long>, "INTEGER", "/");
+		make_instruction((Operator)smaller<long>, "INTEGER", "<");
+		make_instruction((Operator)greater<long>, "INTEGER", ">");
+		make_instruction((Operator)bool2int, "INTEGER", "FROMBOOLEAN");
+		make_instruction((Operator)float2int, "INTEGER", "FROMFLOAT");
+		make_instruction((Operator)_max<long>, "INTEGER", "MAX");
+		make_instruction((Operator)_min<long>, "INTEGER", "MIN");
 	}
 }

@@ -20,11 +20,11 @@ namespace Plush
 		//make_instruction((Operator)inallrev<bool>, "BOOLEAN.INALLREV", nullType, boolType);
 		//make_instruction((Operator)out<bool>, "BOOLEAN.OUT", integerBool, nullType);
 
-		make_instruction((Operator)_and, "BOOLEAN", "AND", 0);
-		make_instruction((Operator)float2bool, "BOOLEAN", "FROMFLOAT", 0);
-		make_instruction((Operator)int2bool, "BOOLEAN", "FROMINTEGER", 0);
-		make_instruction((Operator)_not, "BOOLEAN", "NOT", 0);
-		make_instruction((Operator)_or, "BOOLEAN", "OR", 0);
+		make_instruction((Operator)_and, "BOOLEAN", "AND");
+		make_instruction((Operator)float2bool, "BOOLEAN", "FROMFLOAT");
+		make_instruction((Operator)int2bool, "BOOLEAN", "FROMINTEGER");
+		make_instruction((Operator)_not, "BOOLEAN", "NOT");
+		make_instruction((Operator)_or, "BOOLEAN", "OR");
 	}
 
 }

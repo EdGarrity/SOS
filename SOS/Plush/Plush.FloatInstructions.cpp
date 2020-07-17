@@ -28,19 +28,19 @@ namespace Plush
 		//make_instruction((Operator)out<double>, "FLOAT.OUT", floatType + integerType, nullType);
 
 		
-		make_instruction((Operator)plus<double>, "FLOAT", "+", 0);
-		make_instruction((Operator)minus<double>, "FLOAT", "-", 0);
-		make_instruction((Operator)multiplies<double>, "FLOAT", "*", 0);
-		make_instruction((Operator)divides<double>, "FLOAT", "/", 0);
-		make_instruction((Operator)_fmod, "FLOAT", "%", 0);
-		make_instruction((Operator)smaller<double>, "FLOAT", "<", 0);
-		make_instruction((Operator)greater<double>, "FLOAT", ">", 0);
-		make_instruction((Operator)_cos, "FLOAT", "COS", 0);
-		make_instruction((Operator)_sin, "FLOAT", "SIN", 0);
-		make_instruction((Operator)_tan, "FLOAT", "TAN", 0);
-		make_instruction((Operator)bool2float, "FLOAT", "FROMBOOLEAN", 0);
-		make_instruction((Operator)int2float, "FLOAT", "FROMINTEGER", 0);
-		make_instruction((Operator)_max<double>, "FLOAT", "MAX", 0);
-		make_instruction((Operator)_min<double>, "FLOAT", "MIN", 0);
+		make_instruction((Operator)plus<double>, "FLOAT", "+");
+		make_instruction((Operator)minus<double>, "FLOAT", "-");
+		make_instruction((Operator)multiplies<double>, "FLOAT", "*");
+		make_instruction((Operator)divides<double>, "FLOAT", "/");
+		make_instruction((Operator)_fmod, "FLOAT", "%");
+		make_instruction((Operator)smaller<double>, "FLOAT", "<");
+		make_instruction((Operator)greater<double>, "FLOAT", ">");
+		make_instruction((Operator)_cos, "FLOAT", "COS");
+		make_instruction((Operator)_sin, "FLOAT", "SIN");
+		make_instruction((Operator)_tan, "FLOAT", "TAN");
+		make_instruction((Operator)bool2float, "FLOAT", "FROMBOOLEAN");
+		make_instruction((Operator)int2float, "FLOAT", "FROMINTEGER");
+		make_instruction((Operator)_max<double>, "FLOAT", "MAX");
+		make_instruction((Operator)_min<double>, "FLOAT", "MIN");
 	}
 }

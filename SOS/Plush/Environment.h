@@ -85,7 +85,7 @@ namespace Plush
 		}
 
 		template <typename T> 
-		inline int &pop(Utilities::FixedSizeStack<Atom> &stack, unsigned int open_blocks)
+		inline int pop(Utilities::FixedSizeStack<Atom> &stack, unsigned int open_blocks)
 		{
 			int blocks_open = open_blocks;
 
@@ -107,13 +107,33 @@ namespace Plush
 			return blocks_open; // Return number of unmatched close parenthesis.
 		}
 
-
 		// Need spcial cases for EXEC and CODE
 		template <typename T>
 		inline T top()
 		{
 			T val = get_stack<T>().top();
 			return val;
+		}
+		template <typename T>
+		inline int top(Utilities::FixedSizeStack<Atom> &stack, unsigned int open_blocks)
+		{
+			int blocks_open = open_blocks;
+
+			for (int n = get_stack<T>().size() - 1; n >= 0; n--)
+			{
+				Atom atom = get_stack<T>()[n];
+				stack.push(atom);
+
+				blocks_open += Func2BlockWantsMap[atom.instruction];
+				blocks_open -= atom.close_parentheses;
+
+				if (blocks_open <= 0)
+					break;
+			};
+
+			blocks_open *= -1;
+
+			return blocks_open; // Return number of unmatched close parenthesis.
 		}
 
 		template <typename T>

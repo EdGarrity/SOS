@@ -23,12 +23,15 @@ namespace Plush
 		initInt();
 	};
 
-	void StaticInit::register_pushfunc(Operator op, std::string type, std::string name, unsigned int block_wants)
+	void StaticInit::register_pushfunc(Operator op, std::string type, std::string name)
 	{
 		std::string func_name = type + "." + name;
 		Func2CodeMap[func_name] = op;
+	};
 
-		if ((type == "EXEC") || (type == "CODE"))
-			Func2BlockWantsMap[func_name] = block_wants;
+	void StaticInit::set_parentheses(std::string type, std::string name, unsigned int block_wants)
+	{
+		std::string func_name = type + "." + name;
+		Func2BlockWantsMap[func_name] = block_wants;
 	};
 }

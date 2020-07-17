@@ -20,6 +20,32 @@ namespace Plush
 
 		return 1;
 	}
+	template <>
+	inline unsigned dup<CodeAtom>(Environment & _env)
+	{
+		Utilities::FixedSizeStack<Atom> stack;
+
+		if (_env.has_elements<CodeAtom>(1))
+		{
+			_env.top<CodeAtom>(stack, 1);
+			_env.push<CodeAtom>(stack);
+		}
+
+		return 1;
+	}
+	template <>
+	inline unsigned dup<ExecAtom>(Environment & _env)
+	{
+		Utilities::FixedSizeStack<Atom> stack;
+
+		if (_env.has_elements<ExecAtom>(1))
+		{
+			_env.top<ExecAtom>(stack, 1);
+			_env.push<ExecAtom>(stack);
+		}
+
+		return 1;
+	}
 
 	template <class T>
 	inline unsigned pop_safe_index(Environment & _env)

@@ -427,6 +427,21 @@ namespace Plush
 			Utilities::FixedSizeStack<Atom> block_a;
 
 			_env.pop<CodeAtom>(block_a, 1);
+			_env.push<CodeAtom>(block_a);
+			_env.push<ExecAtom>(CodeAtom("{:instruction CODE.POP :close 1}"));
+			_env.push<ExecAtom>(block_a);
+
+			return 1;
+		}
+	}
+
+	unsigned code_do_star(Environment & _env)
+	{
+		if (_env.has_elements<CodeAtom>(1))
+		{
+			Utilities::FixedSizeStack<Atom> block_a;
+
+			_env.pop<CodeAtom>(block_a, 1);
 			_env.push<ExecAtom>(block_a);
 
 			return 1;
@@ -451,20 +466,29 @@ namespace Plush
 		//make_instruction((Operator)do_while, "EXEC.DO*WHILE", execType, execType, 1);
 		//make_instruction((Operator)exec_when, "EXEC.WHEN", boolType + execType, execType, 1);
 
-		make_instruction((Operator)do_range, "EXEC", "DO*RANGE", 1);
-		make_instruction((Operator)noop, "EXEC", "NOOP_OPEN_PAREN", 1);
-		make_instruction((Operator)noop, "EXEC", "NOOP", 0);
-		make_instruction((Operator)exec_if, "EXEC", "IF", 2);
+		make_instruction((Operator)do_range, "EXEC", "DO*RANGE");
+		make_instruction((Operator)noop, "EXEC", "NOOP_OPEN_PAREN");
+		make_instruction((Operator)noop, "EXEC", "NOOP");
+		make_instruction((Operator)exec_if, "EXEC", "IF");
 
-		make_instruction((Operator)code_append, "CODE", "APPEND", 0);
-		make_instruction((Operator)code_atom, "CODE", "ATOM", 0);
-		make_instruction((Operator)code_car, "CODE", "CAR", 0);
-		make_instruction((Operator)code_cdr, "CODE", "CDR", 0);
-		make_instruction((Operator)code_cons, "CODE", "CONS", 0);
-		make_instruction((Operator)code_container, "CODE", "CONTAINER", 0);
-		make_instruction((Operator)code_contains, "CODE", "CONTAINS", 0);
-		make_instruction((Operator)code_discrepancy, "CODE", "DISCREPANCY", 0);
-		make_instruction((Operator)code_do, "CODE", "DO", 0);
+		set_parentheses("EXEC", "DO*RANGE", 1);
+		set_parentheses("EXEC", "DUP", 1);
+		set_parentheses("EXEC", "IF", 2);
+		set_parentheses("EXEC", "NOOP_OPEN_PAREN", 1);
+		set_parentheses("EXEC", "ROT", 3);
+		set_parentheses("EXEC", "SHOVE", 1);
+		set_parentheses("EXEC", "SWAP", 2);
+
+		make_instruction((Operator)code_append, "CODE", "APPEND");
+		make_instruction((Operator)code_atom, "CODE", "ATOM");
+		make_instruction((Operator)code_car, "CODE", "CAR");
+		make_instruction((Operator)code_cdr, "CODE", "CDR");
+		make_instruction((Operator)code_cons, "CODE", "CONS");
+		make_instruction((Operator)code_container, "CODE", "CONTAINER");
+		make_instruction((Operator)code_contains, "CODE", "CONTAINS");
+		make_instruction((Operator)code_discrepancy, "CODE", "DISCREPANCY");
+		make_instruction((Operator)code_do, "CODE", "DO");
+		make_instruction((Operator)code_do_star, "CODE", "DO*");
 	}
 
 }
