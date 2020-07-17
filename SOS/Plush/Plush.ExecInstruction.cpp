@@ -261,20 +261,42 @@ namespace Plush
 				Atom atom = block_b.top();
 				block_b.pop();
 
-				atom.close_parentheses = (atom.close_parentheses = 0) ? 1 : atom.close_parentheses;
+				atom.close_parentheses = (atom.close_parentheses == 0) ? 1 : atom.close_parentheses;
 				block_b.push(atom);
 
 				bool found = false;
 				int index = 0;
 
-				for (int i = block_a.size() - 1; i > 0; i--)
+				for (int i = 1; i < block_a.size(); i++)
 				{
-					for (int j = block_b.size() - 1; j > 0; j--)
+					found = true;
+
+					for (int j = 0; j < block_b.size(); j++)
 					{
-						if (block_a[i] != block_b[j])
+						if (block_a[i].instruction != block_b[j].instruction)
+						{
+							found = false;
 							break;
+						}
+					}
+
+					if (found)
+					{
+						index = i - 1;
+						break;
 					}
 				}
+
+				if (found)
+				{
+					_env.push<CodeAtom>(block_b);
+
+					atom = block_a[index];
+					_env.push<CodeAtom>(atom);
+				}
+
+				else
+					_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
 			}
 
 			else
