@@ -5798,6 +5798,68 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(DISCREPANCY_WITH_NO_PARAMETERS)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction CODE.DISCREPANCY :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.DISCREPANCY :close 0}")
+				}));
+		}
+
+		TEST_METHOD(DISCREPANCY_WITH_TWO_PARAMETERS_0)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction EXEC.DO*RANGE :close 0}\
+					{:instruction FLOAT.+ :close 2}\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction FLOAT.+ :close 3}\
+					{:instruction FLOAT.- :close 1}\
+					{:instruction CODE.DISCREPANCY :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 7 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.DISCREPANCY :close 0}")
+				}));
+		}
+
+		TEST_METHOD(DISCREPANCY_WITH_TWO_PARAMETERS_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction EXEC.DO*RANGE :close 0}\
+					{:instruction FLOAT.+ :close 2}\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction FLOAT.+ :close 3}\
+					{:instruction FLOAT.+ :close 1}\
+					{:instruction CODE.DISCREPANCY :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 5 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.DISCREPANCY :close 0}")
+				}));
+		}
+
 		TEST_METHOD(EQUALS_WITH_NO_PARAMETERS)
 		{
 			Environment env;

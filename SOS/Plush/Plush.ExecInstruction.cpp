@@ -402,6 +402,10 @@ namespace Plush
 					{
 						if (instruction == block_a[i].instruction)
 							count_a++;
+					}
+
+					for (int i = 0; i < block_b.size(); i++)
+					{
 						if (instruction == block_b[i].instruction)
 							count_b++;
 					}
