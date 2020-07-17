@@ -15,7 +15,7 @@ namespace Plush
 	// An iteration instruction that executes the top item on the EXEC stack a number of times that 
 	// depends on the top two integers, while also pushing the loop counter onto the INTEGER stack 
 	// for possible access during the execution of the body of the loop
-	unsigned do_range(Environment & _env)
+	unsigned exec_do_range(Environment & _env)
 	{
 		if ((_env.has_elements<long>(2)) && (_env.has_elements<ExecAtom>(1)))
 		{
@@ -448,6 +448,65 @@ namespace Plush
 		}
 	}
 
+	unsigned code_do_range(Environment & _env)
+	{
+		if ((_env.has_elements<long>(2)) && (_env.has_elements<CodeAtom>(1)))
+		{
+			Utilities::FixedSizeStack<Atom> block_a;
+
+			int n = _env.pop<long>();	// destination index
+			int i = _env.pop<long>();	// current index
+
+			if (n == i)
+			{
+				_env.push<long>(i);
+				_env.pop<CodeAtom>(block_a, 1);
+				_env.push<CodeAtom>(block_a);
+				_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+				_env.push<ExecAtom>(block_a);
+			}
+
+			else
+			{
+				int direction = 1;
+
+				if (i > n)
+					direction = -1;
+
+				_env.push<long>(i + direction);
+				_env.push<long>(n);
+
+				_env.pop<CodeAtom>(block_a, 1);
+				_env.push<CodeAtom>(block_a);
+
+				_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+				_env.push<ExecAtom>(block_a);
+
+				_env.push<ExecAtom>(CodeAtom("{:instruction CODE.DO*RANGE :close 0}"));
+			}
+		}
+
+		return 1;
+	}
+
+	unsigned code_do_count(Environment & _env)
+	{
+		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
+		{
+			int n = _env.pop<long>();	// destination index
+
+			if (n > 0)
+			{
+				_env.push<long>(0);
+				_env.push<long>(n - 1);
+
+				_env.push<ExecAtom>(CodeAtom("{:instruction CODE.DO*RANGE :close 0}"));
+			}
+		}
+
+		return 1;
+	}
+
 	void initExec()
 	{
 		static bool initialized = false;
@@ -466,7 +525,7 @@ namespace Plush
 		//make_instruction((Operator)do_while, "EXEC.DO*WHILE", execType, execType, 1);
 		//make_instruction((Operator)exec_when, "EXEC.WHEN", boolType + execType, execType, 1);
 
-		make_instruction((Operator)do_range, "EXEC", "DO*RANGE");
+		make_instruction((Operator)exec_do_range, "EXEC", "DO*RANGE");
 		make_instruction((Operator)noop, "EXEC", "NOOP_OPEN_PAREN");
 		make_instruction((Operator)noop, "EXEC", "NOOP");
 		make_instruction((Operator)exec_if, "EXEC", "IF");
@@ -489,6 +548,7 @@ namespace Plush
 		make_instruction((Operator)code_discrepancy, "CODE", "DISCREPANCY");
 		make_instruction((Operator)code_do, "CODE", "DO");
 		make_instruction((Operator)code_do_star, "CODE", "DO*");
+		make_instruction((Operator)code_do_range, "CODE", "DO*RANGE");
+		make_instruction((Operator)code_do_count, "CODE", "DO*COUNT");
 	}
-
 }

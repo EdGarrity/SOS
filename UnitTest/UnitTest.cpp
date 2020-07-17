@@ -5987,6 +5987,143 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(DO_RANGE_CODE_WITH_PARAMETERS_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "\
+							 {:instruction true :close 1}\
+							 {:instruction 1 :close 0}\
+							 {:instruction 3 :close 0}\
+							 {:instruction CODE.DO*RANGE :close 0}\
+							");
+
+			Assert::IsTrue(is_stack_state(env, { 3 }, {}, { true, true, true, true }, {},
+				{
+					CodeAtom("{:instruction CODE.DO*RANGE :close 0}"),
+					CodeAtom("{:instruction 3 :close 0}"),
+					CodeAtom("{:instruction 1 :close 0}"),
+					CodeAtom("{:instruction true :close 1}"),
+				}));
+		}
+
+		TEST_METHOD(DO_RANGE_CODE_WITH_PARAMETERS_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "\
+							 {:instruction false :close 0}\
+							 {:instruction true :close 1}\
+							 {:instruction 1 :close 0}\
+							 {:instruction 3 :close 0}\
+							 {:instruction CODE.DO*RANGE : close 0}\
+							");
+
+			Assert::IsTrue(is_stack_state(env, { 3 }, {}, { false, true, false, true, false, true, false, true }, {},
+				{
+					CodeAtom("{:instruction CODE.DO*RANGE :close 0}"),
+					CodeAtom("{:instruction 3 :close 0}"),
+					CodeAtom("{:instruction 1 :close 0}"),
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction false :close 0}"),
+				}));
+		}
+
+		TEST_METHOD(DO_RANGE_CODE_WITH_NO_PARAMETERS_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "\
+							 {:instruction CODE.DO*RANGE :close 0}\
+							 {:instruction true :close 1}\
+							");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
+				{
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction CODE.DO*RANGE :close 0}")
+				}));
+		}
+
+		TEST_METHOD(DO_COUNT_CODE_WITH_PARAMETERS_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "\
+							 {:instruction true :close 1}\
+							 {:instruction 3 :close 0}\
+							 {:instruction CODE.DO*COUNT :close 0}\
+							");
+
+			Assert::IsTrue(is_stack_state(env, { 2 }, {}, { true, true, true, true }, {},
+				{
+					CodeAtom("{:instruction CODE.DO*COUNT :close 0}"),
+					CodeAtom("{:instruction 3 :close 0}"),
+					CodeAtom("{:instruction true :close 1}"),
+				}));
+		}
+
+		TEST_METHOD(DO_COUNT_CODE_WITH_PARAMETERS_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "\
+							 {:instruction false :close 0}\
+							 {:instruction true :close 1}\
+							 {:instruction 3 :close 0}\
+							 {:instruction CODE.DO*COUNT : close 0}\
+							");
+
+			Assert::IsTrue(is_stack_state(env, { 2 }, {}, { false, true, false, true, false, true, false, true }, {},
+				{
+					CodeAtom("{:instruction CODE.DO*COUNT :close 0}"),
+					CodeAtom("{:instruction 3 :close 0}"),
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction false :close 0}"),
+				}));
+		}
+
+		TEST_METHOD(DO_COUNT_CODE_WITH_NO_PARAMETERS_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "\
+							 {:instruction CODE.DO*COUNT :close 0}\
+							 {:instruction true :close 1}\
+							");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
+				{
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction CODE.DO*COUNT :close 0}")
+				}));
+		}
+
+		TEST_METHOD(DO_COUNT_CODE_WITH_NEGATIVE_PARAMETERS_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "\
+							 {:instruction -3 :close 0}\
+							 {:instruction CODE.DO*COUNT :close 0}\
+							 {:instruction true :close 1}\
+							");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
+				{
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction CODE.DO*COUNT :close 0}"),
+					CodeAtom("{:instruction -3 :close 0}"),
+				}));
+		}
+
 		TEST_METHOD(EQUALS_WITH_NO_PARAMETERS)
 		{
 			Environment env;
