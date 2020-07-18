@@ -6491,6 +6491,26 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(FLUSH_WITH_ATOM_AND_LIST)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction NOOP.OPEN.PAREN :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction INTEGER.+ :close 1}\
+					{:instruction INTEGER.- :close 1}\
+					{:instruction CODE.= :close 0}\
+					{:instruction CODE.FLUSH :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 10 }, {}, { false }, {},
+				{
+				}));
+		}
+
 		TEST_METHOD(YankDup_1)
 		{
 			Environment env;
