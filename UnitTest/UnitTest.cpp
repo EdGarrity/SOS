@@ -6567,6 +6567,62 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(FROMFLOAT_NO_PARAMETERS)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction CODE.FROMFLOAT :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.FROMFLOAT :close 1}"),
+				}));
+		}
+
+		TEST_METHOD(FROMFLOAT_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 10.0 :close 1}\
+					{:instruction CODE.FROMFLOAT :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.FROMFLOAT :close 1}"),
+					CodeAtom("{:instruction 10.0 :close 1}"),
+					CodeAtom("{:instruction 10.000000 :close 1}"),
+				}));
+		}
+
+		TEST_METHOD(FROMFLOAT_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 10.10 :close 1}\
+					{:instruction 20.20 :close 1}\
+					{:instruction CODE.FROMFLOAT :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, { 10.10 }, {}, {},
+				{
+					CodeAtom("{:instruction CODE.FROMFLOAT :close 1}"),
+					CodeAtom("{:instruction 20.20 :close 1}"),
+					CodeAtom("{:instruction 10.10 :close 1}"),
+					CodeAtom("{:instruction 20.200000 :close 1}"),
+				}));
+		}
+
 		TEST_METHOD(YankDup_1)
 		{
 			Environment env;

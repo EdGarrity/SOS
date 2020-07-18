@@ -1,6 +1,7 @@
 #include "Plush.ExecInstruction.h"
 #include "Processor.h"
 #include "Plush.StaticInit.h"
+#include "..\Utilities\String.h"
 #include <set>
 
 namespace Plush
@@ -637,6 +638,18 @@ namespace Plush
 		return 1;
 	}
 
+	inline unsigned float2code(Environment & _env)
+	{
+		if (_env.has_elements<double>(1))
+		{
+			double val = _env.pop<double>();
+			std::string instruction = Utilities::string_format("{:instruction %f :close 1}", val);
+			_env.push<CodeAtom>(CodeAtom(instruction));
+		}
+
+		return 1;
+	}
+
 	void initExec()
 	{
 		static bool initialized = false;
@@ -683,5 +696,6 @@ namespace Plush
 		make_instruction((Operator)code_do_times, "CODE", "DO*TIMES");
 		make_instruction((Operator)code_extract, "CODE", "EXTRACT");
 		make_instruction((Operator)bool2code, "CODE", "FROMBOOLEAN");
+		make_instruction((Operator)float2code, "CODE", "FROMFLOAT");
 	}
 }
