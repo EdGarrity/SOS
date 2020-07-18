@@ -34,4 +34,10 @@ namespace Plush
 		std::string func_name = type + "." + name;
 		Func2BlockWantsMap[func_name] = block_wants;
 	};
+
+	void StaticInit::set_parentheses(std::string name, unsigned int block_wants)
+	{
+		std::string func_name = name;
+		Func2BlockWantsMap[func_name] = block_wants;
+	};
 }

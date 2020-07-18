@@ -22,6 +22,7 @@ namespace Plush
 		/* Registers a function and makes it globally available through the 'instructions' Code */
 		void register_pushfunc(Operator op, std::string type, std::string name);
 		void set_parentheses(std::string type, std::string name, unsigned int block_wants);
+		void set_parentheses(std::string name, unsigned int block_wants);
 	};
 
 	extern StaticInit static_initializer;
@@ -34,5 +35,10 @@ namespace Plush
 	inline void set_parentheses(std::string type, std::string name, unsigned int block_wants)
 	{
 		static_initializer.set_parentheses(type, name, block_wants);
+	}
+
+	inline void set_parentheses(std::string name, unsigned int block_wants)
+	{
+		static_initializer.set_parentheses(name, block_wants);
 	}
 }
