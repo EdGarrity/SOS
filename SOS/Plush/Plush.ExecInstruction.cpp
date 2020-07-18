@@ -1086,6 +1086,121 @@ namespace Plush
 		return 1;
 	}
 
+	unsigned code_nthcdr(Environment & _env)
+	{
+		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
+		{
+			int index = std::abs(_env.pop<long>());	// index
+
+			Utilities::FixedSizeStack<Atom> top_block;
+			Utilities::FixedSizeStack<Atom> extracted_block;
+			Utilities::FixedSizeStack<Atom> extracted_block_cdr;
+			Utilities::FixedSizeStack<Atom> block_without_extracted;
+			Utilities::FixedSizeStack<Atom> block_copy;
+
+			if (index != 0)
+			{
+				// Get first block from stack
+				_env.pop<CodeAtom>(top_block, 1);
+
+				// Save copy of the top block.
+				block_copy = top_block;
+
+				// Get count of sub-blocks
+				int number_of_blocks = 0;
+				int n = 0;
+
+				do
+				{
+					int blocks_open = 1;
+
+					for (; n < top_block.size(); n++)
+					{
+						Plush::Atom atom = top_block[n];
+
+						blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+						blocks_open -= atom.close_parentheses;
+
+						if (atom.close_parentheses > 0)
+						{
+							if (blocks_open > 0)
+								blocks_open++;
+
+							number_of_blocks++;
+						}
+
+						if (blocks_open <= 0)
+							break;
+					};
+
+					if (blocks_open <= 0)
+						break;
+
+				} while (n < top_block.size());
+
+				// Take modulo the number of blocks to ensure that it is within the meaningful range.
+				index = (std::abs(index) - 1) % number_of_blocks;
+
+				// Restore sub-block from copy
+				top_block = block_copy;
+
+				// Get the target sub-block
+				n = 0;
+				int block_number = 0;
+
+				do
+				{
+					int blocks_open = 1;
+					bool first_element_of_block = false;
+
+					for (; n < top_block.size(); n++)
+					{
+						Plush::Atom atom = top_block[n];
+
+						if (Plush::Func2BlockWantsMap[atom.instruction] > 0)
+							first_element_of_block = true;
+
+						if ((block_number == index) && (!first_element_of_block))
+							extracted_block.push(atom);
+
+						else
+							block_without_extracted.push(atom);
+
+						first_element_of_block = false;
+
+						blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+						blocks_open -= atom.close_parentheses;
+
+						if (atom.close_parentheses > 0)
+						{
+							if (blocks_open > 0)
+								blocks_open++;
+
+							block_number++;
+						}
+
+						if (blocks_open <= 0)
+							break;
+					};
+
+					if (blocks_open <= 0)
+						break;
+
+				} while ((block_number < number_of_blocks) && (n < top_block.size()));
+
+				if (extracted_block.size() > 1)
+				{
+					for (int n = 1; n < extracted_block.size(); n++)
+						extracted_block_cdr.push(extracted_block[n]);
+
+					_env.push<CodeAtom>(extracted_block_cdr);
+				}
+			}
+		}
+
+		return 1;
+	}
+
 	void initExec()
 	{
 		static bool initialized = false;
@@ -1140,6 +1255,7 @@ namespace Plush
 		make_instruction((Operator)code_list, "CODE", "LIST");
 		make_instruction((Operator)code_member, "CODE", "MEMBER");
 		make_instruction((Operator)code_nth, "CODE", "NTH");
+		make_instruction((Operator)code_nthcdr, "CODE", "NTHCDR");
 
 		set_parentheses("NOOP_OPEN_PAREN", 1);
 	}
