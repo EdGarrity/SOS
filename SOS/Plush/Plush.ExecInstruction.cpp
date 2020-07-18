@@ -870,6 +870,42 @@ namespace Plush
 		return 1;
 	}
 
+	unsigned code_list(Environment & _env)
+	{
+		if (_env.has_elements<CodeAtom>(2))
+		{
+			Utilities::FixedSizeStack<Atom> block_a;
+			Utilities::FixedSizeStack<Atom> block_b;
+
+			int unmatched_a = _env.pop<CodeAtom>(block_a, 1);
+			int unmatched_b = _env.pop<CodeAtom>(block_b, 1);
+
+			if ((block_a.size() > 0) && (block_b.size() > 0))
+			{
+				// Add one closing paranthesis to block B before pushing the blocks back on stack
+				Atom atom = block_b.top();
+				block_b.pop();
+
+				atom.close_parentheses++;
+				block_b.push(atom);
+
+				_env.push<CodeAtom>(block_b);
+				_env.push<CodeAtom>(block_a);
+			}
+
+			else
+			{
+				if (block_a.size() > 0)
+					_env.push<CodeAtom>(block_a);
+
+				if (block_b.size() > 0)
+					_env.push<CodeAtom>(block_b);
+			}
+		}
+
+		return 1;
+	}
+
 	void initExec()
 	{
 		static bool initialized = false;
@@ -921,5 +957,6 @@ namespace Plush
 		make_instruction((Operator)code_if, "CODE", "IF");
 		make_instruction((Operator)code_insert, "CODE", "INSERT");
 		make_instruction((Operator)code_length, "CODE", "LENGTH");
+		make_instruction((Operator)code_list, "CODE", "LIST");
 	}
 }
