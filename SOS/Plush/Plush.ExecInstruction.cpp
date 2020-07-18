@@ -650,6 +650,18 @@ namespace Plush
 		return 1;
 	}
 
+	inline unsigned int2code(Environment & _env)
+	{
+		if (_env.has_elements<long>(1))
+		{
+			long val = _env.pop<long>();
+			std::string instruction = Utilities::string_format("{:instruction %d :close 1}", val);
+			_env.push<CodeAtom>(CodeAtom(instruction));
+		}
+
+		return 1;
+	}
+
 	void initExec()
 	{
 		static bool initialized = false;
@@ -697,5 +709,6 @@ namespace Plush
 		make_instruction((Operator)code_extract, "CODE", "EXTRACT");
 		make_instruction((Operator)bool2code, "CODE", "FROMBOOLEAN");
 		make_instruction((Operator)float2code, "CODE", "FROMFLOAT");
+		make_instruction((Operator)int2code, "CODE", "FROMINTEGER");
 	}
 }

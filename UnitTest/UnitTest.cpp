@@ -6623,6 +6623,62 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(FROMINTEGER_NO_PARAMETERS)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction CODE.FROMINTEGER :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.FROMINTEGER :close 1}"),
+				}));
+		}
+
+		TEST_METHOD(FROMINTEGER_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 10 :close 1}\
+					{:instruction CODE.FROMINTEGER :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.FROMINTEGER :close 1}"),
+					CodeAtom("{:instruction 10 :close 1}"),
+					CodeAtom("{:instruction 10 :close 1}"),
+				}));
+		}
+
+		TEST_METHOD(FROMINTEGER_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 10 :close 1}\
+					{:instruction 20 :close 1}\
+					{:instruction CODE.FROMINTEGER :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 10 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.FROMINTEGER :close 1}"),
+					CodeAtom("{:instruction 20 :close 1}"),
+					CodeAtom("{:instruction 10 :close 1}"),
+					CodeAtom("{:instruction 20 :close 1}"),
+				}));
+		}
+
 		TEST_METHOD(YankDup_1)
 		{
 			Environment env;
