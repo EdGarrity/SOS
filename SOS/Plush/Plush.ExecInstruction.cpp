@@ -712,6 +712,117 @@ namespace Plush
 		return 1;
 	}
 
+	unsigned code_insert(Environment & _env)
+	{
+		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(2)))
+		{
+			int index = std::abs(_env.pop<long>());	// index
+
+			Utilities::FixedSizeStack<Atom> top_block_1;
+			Utilities::FixedSizeStack<Atom> top_block_2;
+			Utilities::FixedSizeStack<Atom> sub_block;
+			Utilities::FixedSizeStack<Atom> block_copy;
+
+			// Get first block from stack
+			_env.pop<CodeAtom>(top_block_1, 2);
+
+			// Get second block from stack
+			_env.pop<CodeAtom>(top_block_2, 1);
+
+			if (index == 0)
+			{
+				_env.push<CodeAtom>(top_block_1);
+				_env.push<CodeAtom>(top_block_2);
+			}
+
+			else
+			{
+				// Save copy of the top block.
+				block_copy = top_block_1;
+
+				// Get count of sub-blocks
+				int number_of_blocks = 0;
+				int n = 0;
+
+				do
+				{
+					int blocks_open = 2;
+
+					for (; n < top_block_1.size(); n++)
+					{
+						Plush::Atom atom = top_block_1[n];
+
+						blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+						blocks_open -= atom.close_parentheses;
+
+						if ((atom.close_parentheses > 0) && (blocks_open > 0))
+						{
+							blocks_open++;
+							number_of_blocks++;
+						}
+
+						if (blocks_open <= 0)
+							break;
+					};
+
+					if (blocks_open <= 0)
+						break;
+
+				} while (n < top_block_1.size());
+
+				// Take modulo the number of blocks to ensure that it is within the meaningful range.
+				index = std::abs(index % number_of_blocks);
+
+				// Restore sub-block from copy
+				top_block_1 = block_copy;
+
+				// Get the target sub-block
+				n = 0;
+				int block_number = 0;
+
+				do
+				{
+					int blocks_open = 2;
+					sub_block.clear();
+
+					for (; n < top_block_1.size(); n++)
+					{
+						Plush::Atom atom = top_block_1[n];
+						sub_block.push(atom);
+
+						blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+						blocks_open -= atom.close_parentheses;
+
+						if ((atom.close_parentheses > 0) && (blocks_open > 0))
+						{
+							blocks_open++;
+							block_number++;
+
+							if (block_number == index)
+								for (int j = 0; j < top_block_2.size(); j++)
+									sub_block.push(top_block_2[j]);
+						}
+
+						if (blocks_open <= 0)
+							break;
+					};
+
+					if (blocks_open <= 0)
+						break;
+
+				} while ((block_number < number_of_blocks) && (n < top_block_1.size()));
+
+				if (index == 0)
+					for (int j = 0; j < top_block_2.size(); j++)
+						sub_block.push(top_block_2[j]);
+
+				_env.push<CodeAtom>(sub_block);
+			}
+		}
+
+		return 1;
+	}
+
 	void initExec()
 	{
 		static bool initialized = false;
@@ -761,5 +872,6 @@ namespace Plush
 		make_instruction((Operator)float2code, "CODE", "FROMFLOAT");
 		make_instruction((Operator)int2code, "CODE", "FROMINTEGER");
 		make_instruction((Operator)code_if, "CODE", "IF");
+		make_instruction((Operator)code_insert, "CODE", "INSERT");
 	}
 }
