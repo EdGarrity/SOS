@@ -7159,6 +7159,52 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(CODE_LENGTH_0)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env,
+				"\
+					{:instruction CODE.LENGTH :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 1 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.LENGTH :close 0}"),
+				}));
+		}
+
+		TEST_METHOD(CODE_LENGTH_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env,
+				"\
+					{:instruction 10 :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction INTEGER.+ :close 1}\
+					{:instruction 20 :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction INTEGER.+ :close 1}\
+					{:instruction FALSE :close 0}\
+					{:instruction CODE.LENGTH :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 20, 30, 8 }, {}, { FALSE }, {},
+				{
+					CodeAtom("{:instruction CODE.LENGTH :close 0}"),
+					CodeAtom("{:instruction FALSE :close 0}"),
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction 20 :close 0}"),
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+				}));
+		}
+
 		TEST_METHOD(YankDup_1)
 		{
 			Environment env;

@@ -823,6 +823,12 @@ namespace Plush
 		return 1;
 	}
 
+	inline unsigned code_length(Environment & _env)
+	{
+		_env.push<long>(_env.get_stack<CodeAtom>().size());
+		return 1;
+	}
+
 	void initExec()
 	{
 		static bool initialized = false;
@@ -873,5 +879,6 @@ namespace Plush
 		make_instruction((Operator)int2code, "CODE", "FROMINTEGER");
 		make_instruction((Operator)code_if, "CODE", "IF");
 		make_instruction((Operator)code_insert, "CODE", "INSERT");
+		make_instruction((Operator)code_length, "CODE", "LENGTH");
 	}
 }
