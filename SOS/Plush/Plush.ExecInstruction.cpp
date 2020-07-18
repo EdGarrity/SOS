@@ -262,7 +262,7 @@ namespace Plush
 				Atom atom = block_b.top();
 				block_b.pop();
 
-				atom.close_parentheses = (atom.close_parentheses == 0) ? 1 : atom.close_parentheses;
+				atom.close_parentheses = (atom.close_parentheses < 2) ? 2 : atom.close_parentheses;
 				block_b.push(atom);
 
 				bool found = false;
@@ -526,7 +526,6 @@ namespace Plush
 		return 1;
 	}
 
-
 	unsigned code_extract(Environment & _env)
 	{
 		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
@@ -540,28 +539,82 @@ namespace Plush
 			if (index != 0)
 			{
 				// Get first block from stack
-				_env.pop<CodeAtom>(top_block, 1);
+				_env.pop<CodeAtom>(top_block, 2);
 
 				// Save copy of the top block.
 				block_copy = top_block;
 
 				// Get count of sub-blocks
 				int number_of_blocks = 0;
+				int n = 0;
 
-				while (top_block.pop_block(sub_block) != 0)
-					number_of_blocks++;
+				do
+				{
+					int blocks_open = 2;
+
+					for (; n < top_block.size(); n++)
+					{
+						Plush::Atom atom = top_block[n];
+
+						blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+						blocks_open -= atom.close_parentheses;
+
+						if ((atom.close_parentheses > 0) && (blocks_open > 0))
+						{
+							blocks_open++;
+							number_of_blocks++;
+						}
+
+						if (blocks_open <= 0)
+							break;
+					};
+
+					if (blocks_open <= 0)
+						break;
+
+				} while (n < top_block.size());
 
 				// Take modulo the number of blocks to ensure that it is within the meaningful range.
-				index %= number_of_blocks;
+				index = std::abs(index % number_of_blocks) - 1;
 
 				// Restore sub-block from copy
 				top_block = block_copy;
 
 				// Get the target sub-block
-				for (int n = 0; n < index; n++)
-					top_block.pop_block(sub_block);
+				n = 0;
+				int block_number = 0;
 
-				_env.push<CodeAtom>(sub_block);
+				do
+				{
+					int blocks_open = 2;
+
+					for (; n < top_block.size(); n++)
+					{
+						Plush::Atom atom = top_block[n];
+
+						if (block_number == index)
+							sub_block.push(atom);
+
+						blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+						blocks_open -= atom.close_parentheses;
+
+						if ((atom.close_parentheses > 0) && (blocks_open > 0))
+						{
+							blocks_open++;
+							block_number++;
+						}
+
+						if (blocks_open <= 0)
+							break;
+					};
+
+					if (blocks_open <= 0)
+						break;
+
+				} while ((block_number < number_of_blocks) && (n < top_block.size()));
+
+				if (block_number == number_of_blocks)
+					_env.push<CodeAtom>(sub_block);
 			}
 		}
 

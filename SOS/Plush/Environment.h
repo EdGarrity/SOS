@@ -100,6 +100,9 @@ namespace Plush
 				blocks_open += Func2BlockWantsMap[atom.instruction];
 				blocks_open -= atom.close_parentheses;
 
+				if ((atom.close_parentheses > 0) && (blocks_open > 0))
+					blocks_open++;
+
 				if (blocks_open <= 0)
 					break;
 			};

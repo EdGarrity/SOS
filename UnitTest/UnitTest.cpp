@@ -5698,7 +5698,6 @@ namespace UnitTest
 					{:instruction EXEC.DO*RANGE :close 0}\
 					{:instruction FLOAT.+ :close 2}\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
-					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
 					{:instruction FLOAT.+ :close 3}\
 					{:instruction FLOAT.+ :close 1}\
 					{:instruction CODE.CONTAINER :close 0}\
@@ -5707,7 +5706,7 @@ namespace UnitTest
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.CONTAINER :close 0}"),
-					CodeAtom("{:instruction FLOAT.+ :close 1}"),
+					CodeAtom("{:instruction FLOAT.+ :close 2}"),
 					CodeAtom("{:instruction EXEC.DO*RANGE :close 0}"),
 				}));
 		}
@@ -5722,7 +5721,6 @@ namespace UnitTest
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
 					{:instruction EXEC.DO*RANGE :close 0}\
 					{:instruction FLOAT.+ :close 2}\
-					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
 					{:instruction FLOAT.+ :close 3}\
 					{:instruction FLOAT.- :close 1}\
@@ -5763,7 +5761,6 @@ namespace UnitTest
 					{:instruction EXEC.DO*RANGE :close 0}\
 					{:instruction FLOAT.+ :close 2}\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
-					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
 					{:instruction FLOAT.+ :close 3}\
 					{:instruction FLOAT.+ :close 1}\
 					{:instruction CODE.CONTAINS :close 0}\
@@ -5785,7 +5782,6 @@ namespace UnitTest
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
 					{:instruction EXEC.DO*RANGE :close 0}\
 					{:instruction FLOAT.+ :close 2}\
-					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
 					{:instruction FLOAT.+ :close 3}\
 					{:instruction FLOAT.- :close 1}\
@@ -5825,13 +5821,12 @@ namespace UnitTest
 					{:instruction EXEC.DO*RANGE :close 0}\
 					{:instruction FLOAT.+ :close 2}\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
-					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
 					{:instruction FLOAT.+ :close 3}\
 					{:instruction FLOAT.- :close 1}\
 					{:instruction CODE.DISCREPANCY :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 7 }, {}, {}, {},
+			Assert::IsTrue(is_stack_state(env, { 6 }, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.DISCREPANCY :close 0}")
 				}));
@@ -5848,13 +5843,12 @@ namespace UnitTest
 					{:instruction EXEC.DO*RANGE :close 0}\
 					{:instruction FLOAT.+ :close 2}\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
-					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
 					{:instruction FLOAT.+ :close 3}\
 					{:instruction FLOAT.+ :close 1}\
 					{:instruction CODE.DISCREPANCY :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 5 }, {}, {}, {},
+			Assert::IsTrue(is_stack_state(env, { 4 }, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.DISCREPANCY :close 0}")
 				}));
@@ -6477,7 +6471,6 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
