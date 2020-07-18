@@ -662,6 +662,56 @@ namespace Plush
 		return 1;
 	}
 
+	unsigned code_if(Environment & _env)
+	{
+		if ((_env.has_elements<bool>(1)) && (_env.has_elements<CodeAtom>(2)))
+		{
+			Utilities::FixedSizeStack<Atom> block_a;
+			Utilities::FixedSizeStack<Atom> block_b;
+
+			bool s = _env.pop<bool>();
+			int unmatched_a = _env.pop<CodeAtom>(block_a, 1);
+			int unmatched_b = _env.pop<CodeAtom>(block_b, 1);
+
+			if ((block_a.size() > 0) && ((block_b.size() > 0) || (unmatched_a > 0)))
+			{
+				// Remove one closing paranthesis from block before pushing back on stack
+				if (s)
+				{
+					Atom atom = block_a.top();
+					block_a.pop();
+
+					atom.close_parentheses = (atom.close_parentheses > 0) ? atom.close_parentheses - 1 : atom.close_parentheses;
+					block_a.push(atom);
+
+					_env.push<ExecAtom>(block_a);
+				}
+
+				else if (unmatched_a == 0)
+				{
+					Atom atom = block_b.top();
+					block_b.pop();
+
+					atom.close_parentheses = (atom.close_parentheses > 0) ? atom.close_parentheses - 1 : atom.close_parentheses;
+					block_b.push(atom);
+
+					_env.push<ExecAtom>(block_b);
+				}
+			}
+
+			else
+			{
+				if (block_a.size() > 0)
+					_env.push<CodeAtom>(block_a);
+
+				if (block_b.size() > 0)
+					_env.push<CodeAtom>(block_b);
+			}
+		}
+
+		return 1;
+	}
+
 	void initExec()
 	{
 		static bool initialized = false;
@@ -710,5 +760,6 @@ namespace Plush
 		make_instruction((Operator)bool2code, "CODE", "FROMBOOLEAN");
 		make_instruction((Operator)float2code, "CODE", "FROMFLOAT");
 		make_instruction((Operator)int2code, "CODE", "FROMINTEGER");
+		make_instruction((Operator)code_if, "CODE", "IF");
 	}
 }

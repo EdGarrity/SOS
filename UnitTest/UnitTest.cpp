@@ -6679,6 +6679,186 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(CODE_IF_NO_PARAMETERS_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "\
+							 {:instruction CODE.IF :close 0}\
+							");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.IF :close 0}"),
+				}));
+		}
+
+		TEST_METHOD(CODE_IF_NO_PARAMETERS_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env,
+				"\
+					{:instruction CODE.IF :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction INTEGER.+ :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 20 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction INTEGER.+ :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction CODE.IF :close 0}")
+				}));
+		}
+
+		TEST_METHOD(CODE_IF_WITH_ONE_BLOCK_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env,
+				"\
+					{:instruction 10 :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction INTEGER.+ :close 1}\
+					{:instruction FALSE :close 0}\
+					{:instruction CODE.IF :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 20 }, {}, { FALSE }, {},
+				{
+				}));
+		}
+
+		TEST_METHOD(CODE_IF_WITH_ONE_BLOCK_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env,
+				"\
+					{:instruction 10 :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction INTEGER.+ :close 2}\
+					{:instruction TRUE :close 0}\
+					{:instruction CODE.IF :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 20, 20 }, {}, {}, {},
+				{
+				}));
+		}
+
+		TEST_METHOD(CODE_IF_WITH_ONE_BLOCK_3)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env,
+				"\
+					{:instruction 10 :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction INTEGER.+ :close 1}\
+					{:instruction TRUE :close 0}\
+					{:instruction CODE.IF :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 20, 20 }, {}, {}, {},
+				{
+				}));
+		}
+
+		TEST_METHOD(CODE_IF_WITH_ONE_BLOCK_4)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env,
+				"\
+					{:instruction 10 :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction INTEGER.+ :close 2}\
+					{:instruction FALSE :close 0}\
+					{:instruction CODE.IF :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 20 }, {}, {}, {},
+				{
+				}));
+		}
+
+		TEST_METHOD(CODE_IF_WITH_ZERO_BLOCK_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env,
+				"\
+					{:instruction 10 :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction INTEGER.+ :close 2}\
+					{:instruction TRUE :close 0}\
+					{:instruction CODE.IF :close 2}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 20, 20 }, {}, {}, {},
+				{
+				}));
+		}
+
+		TEST_METHOD(CODE_IF_WITH_TWO_BLOCKS_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env,
+				"\
+					{:instruction 10 :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction INTEGER.+ :close 1}\
+					{:instruction 20 :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction INTEGER.+ :close 1}\
+					{:instruction TRUE :close 0}\
+					{:instruction CODE.IF :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 20, 30, 20 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.IF :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}"),
+				}));
+		}
+
+		TEST_METHOD(CODE_IF_WITH_TWO_BLOCKS_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env,
+				"\
+					{:instruction 10 :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction INTEGER.+ :close 1}\
+					{:instruction 20 :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction INTEGER.+ :close 1}\
+					{:instruction FALSE :close 0}\
+					{:instruction CODE.IF :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 20, 30, 30 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.IF :close 0}"),
+					CodeAtom("{:instruction FALSE :close 0}"),
+				}));
+		}
+
 		TEST_METHOD(YankDup_1)
 		{
 			Environment env;
