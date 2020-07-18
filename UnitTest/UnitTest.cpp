@@ -7166,12 +7166,11 @@ namespace UnitTest
 
 			Plush::run(env,
 				"\
-					{:instruction CODE.LENGTH :close 0}\
+					{:instruction CODE.LENGTH :close 1}\
 				");
 
 			Assert::IsTrue(is_stack_state(env, { 1 }, {}, {}, {},
 				{
-					CodeAtom("{:instruction CODE.LENGTH :close 0}"),
 				}));
 		}
 
@@ -7180,28 +7179,30 @@ namespace UnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
-			Plush::run(env,
+			Plush::run(env, \
 				"\
-					{:instruction 10 :close 0}\
-					{:instruction 10 :close 0}\
-					{:instruction INTEGER.+ :close 1}\
-					{:instruction 20 :close 0}\
-					{:instruction 10 :close 0}\
-					{:instruction INTEGER.+ :close 1}\
-					{:instruction FALSE :close 0}\
-					{:instruction CODE.LENGTH :close 0}\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 1}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 2}\
+					{:instruction 4.0 :close 0}\
+					{:instruction 4.1 :close 0}\
+					{:instruction 4.2 :close 0}\
+					{:instruction 4.3 :close 1}\
+					{:instruction 0 :close 1}\
+					{:instruction CODE.LENGTH :close 1}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 20, 30, 8 }, {}, { FALSE }, {},
+			Assert::IsTrue(is_stack_state(env, { 0, 3 }, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0, 4.0, 4.1, 4.2, 4.3 }, {}, {},
 				{
-					CodeAtom("{:instruction CODE.LENGTH :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction INTEGER.+ :close 1}"),
-					CodeAtom("{:instruction 10 :close 0}"),
-					CodeAtom("{:instruction 20 :close 0}"),
-					CodeAtom("{:instruction INTEGER.+ :close 1}"),
-					CodeAtom("{:instruction 10 :close 0}"),
-					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction CODE.LENGTH :close 1}"),
+					CodeAtom("{:instruction 0 :close 1}"),
+					CodeAtom("{:instruction 4.3 :close 1}"),
+					CodeAtom("{:instruction 4.2 :close 0}"),
+					CodeAtom("{:instruction 4.1 :close 0}"),
+					CodeAtom("{:instruction 4.0 :close 0}"),
 				}));
 		}
 

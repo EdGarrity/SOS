@@ -825,7 +825,48 @@ namespace Plush
 
 	inline unsigned code_length(Environment & _env)
 	{
-		_env.push<long>(_env.get_stack<CodeAtom>().size());
+		if (_env.has_elements<CodeAtom>(1))
+		{
+			Utilities::FixedSizeStack<Atom> top_block;
+
+			// Get top block from stack
+			_env.pop<CodeAtom>(top_block, 2);
+
+			// Get count of sub-blocks
+			int number_of_blocks = 0;
+			int n = 0;
+
+			do
+			{
+				int blocks_open = 2;
+
+				for (; n < top_block.size(); n++)
+				{
+					Plush::Atom atom = top_block[n];
+
+					blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+					blocks_open -= atom.close_parentheses;
+
+					if (atom.close_parentheses > 0)
+					{
+						if (blocks_open > 0)
+							blocks_open++;
+						
+						number_of_blocks++;
+					}
+
+					if (blocks_open <= 0)
+						break;
+				};
+
+				if (blocks_open <= 0)
+					break;
+
+			} while (n < top_block.size());
+
+			_env.push<long>(number_of_blocks);
+		}
+
 		return 1;
 	}
 
