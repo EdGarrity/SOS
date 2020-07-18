@@ -270,16 +270,16 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction FALSE :close 0}\
-					{:instruction TRUE :close 0}\
-					{:instruction BOOLEAN.AND :close 0}\
+					{:instruction FALSE :close 1}\
+					{:instruction TRUE :close 1}\
+					{:instruction BOOLEAN.AND :close 1}\
 				");
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.AND :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}")
+					CodeAtom("{:instruction BOOLEAN.AND :close 1}"),
+					CodeAtom("{:instruction TRUE :close 1}"),
+					CodeAtom("{:instruction FALSE :close 1}")
 				}));
 		}
 
@@ -6508,6 +6508,62 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 10 }, {}, { false }, {},
 				{
+				}));
+		}
+
+		TEST_METHOD(FROMBOOLEAN_NO_PARAMETERS)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction CODE.FROMBOOLEAN :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.FROMBOOLEAN :close 1}"),
+				}));
+		}
+
+		TEST_METHOD(FROMBOOLEAN_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction FALSE :close 1}\
+					{:instruction CODE.FROMBOOLEAN :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.FROMBOOLEAN :close 1}"),
+					CodeAtom("{:instruction FALSE :close 1}"),
+					CodeAtom("{:instruction FALSE :close 1}"),
+				}));
+		}
+
+		TEST_METHOD(FROMBOOLEAN_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction FALSE :close 1}\
+					{:instruction TRUE :close 1}\
+					{:instruction CODE.FROMBOOLEAN :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
+				{
+					CodeAtom("{:instruction CODE.FROMBOOLEAN :close 1}"),
+					CodeAtom("{:instruction TRUE :close 1}"),
+					CodeAtom("{:instruction FALSE :close 1}"),
+					CodeAtom("{:instruction TRUE :close 1}"),
 				}));
 		}
 

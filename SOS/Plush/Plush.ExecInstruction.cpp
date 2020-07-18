@@ -621,6 +621,22 @@ namespace Plush
 		return 1;
 	}
 
+	inline unsigned bool2code(Environment & _env)
+	{
+		if (_env.has_elements<bool>(1))
+		{
+			bool val = _env.pop<bool>();
+
+			if (val)
+				_env.push<CodeAtom>(CodeAtom("{:instruction TRUE :close 1}"));
+
+			else
+				_env.push<CodeAtom>(CodeAtom("{:instruction FALSE :close 1}"));
+		}
+
+		return 1;
+	}
+
 	void initExec()
 	{
 		static bool initialized = false;
@@ -666,5 +682,6 @@ namespace Plush
 		make_instruction((Operator)code_do_count, "CODE", "DO*COUNT");
 		make_instruction((Operator)code_do_times, "CODE", "DO*TIMES");
 		make_instruction((Operator)code_extract, "CODE", "EXTRACT");
+		make_instruction((Operator)bool2code, "CODE", "FROMBOOLEAN");
 	}
 }
