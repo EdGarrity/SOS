@@ -6436,6 +6436,68 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(EXTRACT_WITH_NO_PARAMETERS)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction CODE.EXTRACT :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.EXTRACT :close 0}")
+				}));
+		}
+
+		TEST_METHOD(EXTRACT_WITH_ZERO_PARAMETER)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 0 :close 1}\
+					{:instruction CODE.EXTRACT :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.EXTRACT :close 1}"),
+					CodeAtom("{:instruction 0 :close 1}")
+				}));
+		}
+
+		TEST_METHOD(EXTRACT_WITH_POSITIVE_SINGLE_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 1}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 2}\
+					{:instruction 1 :close 1}\
+					{:instruction CODE.EXTRACT :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
+				{
+					CodeAtom("{:instruction CODE.EXTRACT :close 1}"),
+					CodeAtom("{:instruction 1 :close 1}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+				}));
+		}
+
 		TEST_METHOD(YankDup_1)
 		{
 			Environment env;

@@ -1,6 +1,7 @@
 #pragma once
 #include <array>
 #include "..\PushGP\Globals.h"
+#include "..\Plush\Atom.h"
 
 // Purpose: 
 //   Impliments a fixed-sized stack (FIFO)
@@ -112,6 +113,29 @@ namespace Utilities
 				throw;
 
 			top_--;
+		}
+
+		// Returns the top block from the stack
+		inline size_t pop_block(FixedSizeStack<Plush::Atom> &block_stack)
+		{
+			int blocks_open = 1;
+
+			block_stack.clear();
+
+//			while (size() > 0)
+			for (int n = 0; n < size(); n++)
+			{
+				Plush::Atom atom = stack_[n];
+				block_stack.push(atom);
+
+				blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+				blocks_open -= atom.close_parentheses;
+
+				if (blocks_open <= 0)
+					break;
+			};
+
+			return (block_stack.size());
 		}
 
 		// Returns a reference to the underlying container

@@ -526,6 +526,48 @@ namespace Plush
 		return 1;
 	}
 
+
+	unsigned code_extract(Environment & _env)
+	{
+		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
+		{
+			int index = std::abs(_env.pop<long>());	// index
+
+			Utilities::FixedSizeStack<Atom> top_block;
+			Utilities::FixedSizeStack<Atom> sub_block;
+			Utilities::FixedSizeStack<Atom> block_copy;
+
+			if (index != 0)
+			{
+				// Get first block from stack
+				_env.pop<CodeAtom>(top_block, 1);
+
+				// Save copy of the top block.
+				block_copy = top_block;
+
+				// Get count of sub-blocks
+				int number_of_blocks = 0;
+
+				while (top_block.pop_block(sub_block) != 0)
+					number_of_blocks++;
+
+				// Take modulo the number of blocks to ensure that it is within the meaningful range.
+				index %= number_of_blocks;
+
+				// Restore sub-block from copy
+				top_block = block_copy;
+
+				// Get the target sub-block
+				for (int n = 0; n < index; n++)
+					top_block.pop_block(sub_block);
+
+				_env.push<CodeAtom>(sub_block);
+			}
+		}
+
+		return 1;
+	}
+
 	void initExec()
 	{
 		static bool initialized = false;
@@ -570,5 +612,6 @@ namespace Plush
 		make_instruction((Operator)code_do_range, "CODE", "DO*RANGE");
 		make_instruction((Operator)code_do_count, "CODE", "DO*COUNT");
 		make_instruction((Operator)code_do_times, "CODE", "DO*TIMES");
+		make_instruction((Operator)code_extract, "CODE", "EXTRACT");
 	}
 }

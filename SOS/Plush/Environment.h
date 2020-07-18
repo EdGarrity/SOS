@@ -89,6 +89,8 @@ namespace Plush
 		{
 			int blocks_open = open_blocks;
 
+			stack.clear();
+
 			while (get_stack<T>().size() > 0)
 			{
 				Atom atom = get_stack<T>().top();
@@ -118,6 +120,8 @@ namespace Plush
 		inline int top(Utilities::FixedSizeStack<Atom> &stack, unsigned int open_blocks)
 		{
 			int blocks_open = open_blocks;
+
+			stack.clear();
 
 			for (int n = get_stack<T>().size() - 1; n >= 0; n--)
 			{
@@ -168,6 +172,8 @@ namespace Plush
 		{
 			int i = 0;
 			int blocks_open = open_blocks;
+
+			stack.clear();
 
 			for (int n = 0; n < index + 1; n++)
 			{
