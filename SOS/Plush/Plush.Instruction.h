@@ -354,7 +354,56 @@ namespace Plush
 		return 1;
 	}
 		
-		
+	template<>
+	inline unsigned equals<ExecAtom>(Environment & _env)
+	{
+		// Check for valid parameters
+		if (_env.has_elements<ExecAtom>(2))
+		{
+			bool result = true;
+
+			Utilities::FixedSizeStack<Atom> block_a;
+			Utilities::FixedSizeStack<Atom> block_b;
+
+			int unmatched_a = _env.pop<ExecAtom>(block_a, 1);
+			int unmatched_b = _env.pop<ExecAtom>(block_b, 1);
+
+			if ((block_a.size() == 0) || (block_b.size() == 0))
+			{
+				_env.push<ExecAtom>(block_b);
+				_env.push<ExecAtom>(block_a);
+			}
+
+			else if (block_a.size() != block_b.size())
+			{
+				_env.push<bool>(false);
+			}
+
+			else
+			{
+				while (block_a.size() > 0)
+				{
+					ExecAtom atom_a = block_a.top();
+					ExecAtom atom_b = block_b.top();
+
+					block_a.pop();
+					block_b.pop();
+
+					if (atom_a != atom_b)
+					{
+						result = false;
+						break;
+					}
+				}
+
+				_env.push<bool>(result);
+			}
+		}
+
+		return 1;
+	}
+
+
 	template <class T>
 	inline unsigned flush(Environment & _env)
 	{
