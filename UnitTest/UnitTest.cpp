@@ -7821,6 +7821,80 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(POP_WITH_ONE_ITEM)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction CODE.POP :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+				}));
+		}
+
+		TEST_METHOD(POP_WITH_TWO_ITEM)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 0 :close 1}\
+					{:instruction CODE.POP :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 0 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.POP :close 1}"),
+				}));
+		}
+
+		TEST_METHOD(POP_WITH_ONE_LIST)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 1 :close 0}\
+					{:instruction 2 :close 0}\
+					{:instruction 3 :close 1}\
+					{:instruction CODE.POP :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 1, 2, 3 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.POP :close 1}"),
+				}));
+		}
+
+		TEST_METHOD(POP_WITH_TWO_LIST)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 1 :close 0}\
+					{:instruction 2 :close 0}\
+					{:instruction 3 :close 1}\
+					{:instruction 4 :close 0}\
+					{:instruction 5 :close 1}\
+					{:instruction CODE.POP :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 1, 2, 3, 4, 5 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.POP :close 1}"),
+					CodeAtom("{:instruction 5 :close 1}"),
+					CodeAtom("{:instruction 4 :close 0}"),
+				}));
+		}
+
 		TEST_METHOD(YankDup_1)
 		{
 			Environment env;
