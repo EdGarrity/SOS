@@ -7785,6 +7785,42 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(NULL_WITH_CODE)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 0 :close 1}\
+					{:instruction CODE.NULL :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 0 }, {}, { FALSE }, {},
+				{
+					CodeAtom("{:instruction CODE.NULL :close 1}"),
+				}));
+		}
+
+		TEST_METHOD(NULL_WITH_EMPTY_CODE)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction NOOP :close 1}\
+					{:instruction 0 :close 1}\
+					{:instruction CODE.NULL :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 0 }, {}, { TRUE }, {},
+				{
+					CodeAtom("{:instruction CODE.NULL :close 1}"),
+					CodeAtom("{:instruction 0 :close 1}"),
+				}));
+		}
+
 		TEST_METHOD(YankDup_1)
 		{
 			Environment env;
