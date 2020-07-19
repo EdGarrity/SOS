@@ -269,13 +269,13 @@ namespace Plush
 				bool found = false;
 				int index = 0;
 
-				for (int i = 1; i < block_a.size(); i++)
+				for (int i = 1; i < (block_a.size() - block_b.size() + 1); i++)
 				{
 					found = true;
 
 					for (int j = 0; j < block_b.size(); j++)
 					{
-						if (block_a[i].instruction != block_b[j].instruction)
+						if (block_a[i + j].instruction != block_b[j].instruction)
 						{
 							found = false;
 							break;
@@ -336,13 +336,13 @@ namespace Plush
 				bool found = false;
 				int index = 0;
 
-				for (int i = 1; i < block_a.size(); i++)
+				for (int i = 1; i < (block_a.size() - block_b.size() + 1); i++)
 				{
 					found = true;
 
 					for (int j = 0; j < block_b.size(); j++)
 					{
-						if (block_a[i].instruction != block_b[j].instruction)
+						if (block_a[i + j].instruction != block_b[j].instruction)
 						{
 							found = false;
 							break;
@@ -942,13 +942,13 @@ namespace Plush
 				bool found = false;
 				int index = 0;
 
-				for (int i = 1; i < block_b.size(); i++)
+				for (int i = 1; i < (block_b.size() - block_a.size() + 1); i++)
 				{
 					found = true;
 
 					for (int j = 0; j < block_a.size(); j++)
 					{
-						if (block_b[i].instruction != block_a[j].instruction)
+						if (block_b[i + j].instruction != block_a[j].instruction)
 						{
 							found = false;
 							break;
@@ -1225,6 +1225,68 @@ namespace Plush
 		return 1;
 	}
 
+	unsigned code_position(Environment & _env)
+	{
+		if (_env.has_elements<CodeAtom>(2))
+		{
+			Utilities::FixedSizeStack<Atom> block_a;
+			Utilities::FixedSizeStack<Atom> block_b;
+
+			_env.pop<CodeAtom>(block_a, 1);
+			_env.pop<CodeAtom>(block_b, 1);
+
+			if ((block_a.size() > 0) && (block_b.size() > 0))
+			{
+				// Make sure last atom of block B is closed
+				Atom atom = block_b.top();
+				block_b.pop();
+
+				atom.close_parentheses = (atom.close_parentheses == 0) ? 1 : atom.close_parentheses;
+				block_b.push(atom);
+
+				bool found = false;
+				int index = 0;
+
+				for (int i = 1; i < (block_a.size() - block_b.size() + 1); i++)
+				{
+					found = true;
+
+					for (int j = 0; j < block_b.size(); j++)
+					{
+						if (block_a[i + j].instruction != block_b[j].instruction)
+						{
+							found = false;
+							break;
+						}
+					}
+
+					if (found)
+					{
+						index = i;
+						break;
+					}
+				}
+
+				if (found)
+					_env.push<long>(index);
+
+				else
+					_env.push<long>(-1);
+			}
+
+			else
+			{
+				if (block_a.size() > 0)
+					_env.push<CodeAtom>(block_a);
+
+				if (block_b.size() > 0)
+					_env.push<CodeAtom>(block_b);
+			}
+		}
+
+		return 1;
+	}
+
 	void initExec()
 	{
 		static bool initialized = false;
@@ -1281,6 +1343,7 @@ namespace Plush
 		make_instruction((Operator)code_nth, "CODE", "NTH");
 		make_instruction((Operator)code_nthcdr, "CODE", "NTHCDR");
 		make_instruction((Operator)code_null, "CODE", "NULL");
+		make_instruction((Operator)code_position, "CODE", "POSITION");
 
 		set_parentheses("NOOP_OPEN_PAREN", 1);
 	}

@@ -7895,6 +7895,112 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(POSITION_WITH_NO_PARAMETERS)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction CODE.POSITION :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.POSITION :close 0}")
+				}));
+		}
+
+		TEST_METHOD(POSITION_TEXTBOOK_EXAMPLE_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction EXEC.DO*RANGE :close 0}\
+					{:instruction FLOAT.+ :close 2}\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction FLOAT.+ :close 3}\
+					{:instruction FLOAT.+ :close 1}\
+					{:instruction CODE.POSITION :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 2 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.POSITION :close 0}")
+				}));
+		}
+
+		TEST_METHOD(POSITION_TEXTBOOK_EXAMPLE_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction EXEC.DO*RANGE :close 0}\
+					{:instruction FLOAT.+ :close 2}\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction FLOAT.+ :close 3}\
+					{:instruction FLOAT.- :close 1}\
+					{:instruction CODE.POSITION :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { -1 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.POSITION :close 0}")
+				}));
+		}
+
+		TEST_METHOD(POSITION_TEXTBOOK_EXAMPLE_3)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction EXEC.DO*RANGE :close 0}\
+					{:instruction FLOAT.+ :close 2}\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction FLOAT.- :close 3}\
+					{:instruction FLOAT.- :close 1}\
+					{:instruction CODE.POSITION :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 4 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.POSITION :close 0}")
+				}));
+		}
+
+		TEST_METHOD(POSITION_TEXTBOOK_EXAMPLE_4)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction EXEC.DO*RANGE :close 0}\
+					{:instruction FLOAT.+ :close 2}\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction FLOAT.+ :close 0}\
+					{:instruction FLOAT.- :close 3}\
+					{:instruction FLOAT.+ :close 0}\
+					{:instruction FLOAT.- :close 1}\
+					{:instruction CODE.POSITION :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 4 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.POSITION :close 0}")
+				}));
+		}
+
 		TEST_METHOD(YankDup_1)
 		{
 			Environment env;
