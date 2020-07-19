@@ -57,6 +57,138 @@ namespace Plush
 	}
 
 	template <class T>
+	inline unsigned yank(Environment & _env)
+	{
+		unsigned int effort = 1;
+
+		// Check for valid parameters
+		if ((_env.has_elements<long>(1)) && (_env.has_elements<T>(1)))
+		{
+			int index = pop_safe_index<T>(_env);
+
+			if (index > 0)
+			{
+				// Get item from deep in stack
+				T v = _env.peek_index<T>(index);
+
+				// Remove item from deep in stack
+				unsigned int stack_size = _env.get_stack<T>().size();
+				int delete_position = stack_size - index - 1;
+
+				std::array<T, domain::argmap::maximum_stack_size>& stack = _env.get_stack<T>().container();
+
+				if ((stack_size < domain::argmap::maximum_stack_size - 1) && (stack_size > 1))
+				{
+					unsigned int stack_pointer = delete_position;
+
+					while (stack_pointer < stack_size - 1)
+					{
+						stack[stack_pointer] = stack[stack_pointer + 1];
+						stack_pointer++;
+						effort++;
+					}
+				}
+
+				// Push removed item to top of stack
+				stack[stack_size - 1] = v;
+			}
+		}
+
+		return effort;
+	}
+
+	template<>
+	inline unsigned yank<CodeAtom>(Environment & _env)
+	{
+		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
+		{
+			int index = _env.pop<long>();	// index
+
+			Utilities::FixedSizeStack<CodeAtom> &stack = _env.get_stack<CodeAtom>();
+			Utilities::FixedSizeStack<Atom> extracted_block;
+			Utilities::FixedSizeStack<Atom> block_without_extracted;
+
+			if (index > 0)
+			{
+				// Get count of sub-blocks
+				int number_of_blocks = 0;
+				int n = stack.size() - 1;
+
+				do
+				{
+					int blocks_open = 1;
+
+					for (; n >= 0; n--)
+					{
+						Plush::Atom atom = stack[n];
+
+						blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+						blocks_open -= atom.close_parentheses;
+						blocks_open = (blocks_open > 0) ? blocks_open : 0;
+
+						if (atom.close_parentheses > 0)
+						{
+							if (blocks_open > 0)
+								blocks_open++;
+
+							else
+							{
+								number_of_blocks++;
+								blocks_open = 1;
+							}
+						}
+					};
+				} while (n >= 0);
+
+				// If the index is larger than the size of the specified stack, then the deepest element is `yank`ed up to the top.
+				index = (index > (number_of_blocks - 1)) ? (number_of_blocks - 1) : index;
+
+				// Get the target sub-block
+				n = stack.size() - 1;
+				int block_number = 0;
+
+				do
+				{
+					int blocks_open = 1;
+
+					for (; n >= 0; n--)
+					{
+						Plush::Atom atom = stack[n];
+
+						if (block_number == index)
+							extracted_block.push(atom);
+
+						else
+							block_without_extracted.push(atom);
+
+						blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+						blocks_open -= atom.close_parentheses;
+						blocks_open = (blocks_open > 0) ? blocks_open : 0;
+
+						if (atom.close_parentheses > 0)
+						{
+							if (blocks_open > 0)
+								blocks_open++;
+
+							else
+							{
+								block_number++;
+								blocks_open = 1;
+							}
+						}
+					};
+				} while (n >= 0);
+
+				_env.get_stack<CodeAtom>().clear();
+				_env.push<CodeAtom>(block_without_extracted);
+				_env.push<CodeAtom>(extracted_block);
+			}
+		}
+
+		return 1;
+	}
+
+	template <class T>
 	inline unsigned yankdup(Environment & _env)
 	{
 		// Check for valid parameters
@@ -266,44 +398,4 @@ namespace Plush
 		return 1;
 	}
 
-	template <class T>
-	inline unsigned yank(Environment & _env)
-	{
-		unsigned int effort = 1;
-
-		// Check for valid parameters
-		if ((_env.has_elements<long>(1)) && (_env.has_elements<T>(1)))
-		{
-			int index = pop_safe_index<T>(_env);
-
-			if (index > 0)
-			{
-				// Get item from deep in stack
-				T v = _env.peek_index<T>(index);
-
-				// Remove item from deep in stack
-				unsigned int stack_size = _env.get_stack<T>().size();
-				int delete_position = stack_size - index - 1;
-
-				std::array<T, domain::argmap::maximum_stack_size>& stack = _env.get_stack<T>().container();
-
-				if ((stack_size < domain::argmap::maximum_stack_size - 1) && (stack_size > 1))
-				{
-					unsigned int stack_pointer = delete_position;
-
-					while (stack_pointer < stack_size - 1)
-					{
-						stack[stack_pointer] = stack[stack_pointer + 1];
-						stack_pointer++;
-						effort++;
-					}
-				}
-
-				// Push removed item to top of stack
-				stack[stack_size - 1] = v;
-			}
-		}
-
-		return effort;
-	}
 }
