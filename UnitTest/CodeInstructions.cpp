@@ -3159,55 +3159,416 @@ namespace UnitTest
 				}));
 		}
 
-		TEST_METHOD(YankDup_1)
+		TEST_METHOD(YANKDUP_WITH_ZERO_PARAMETER_A)
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
 			Plush::run(env, \
 				"\
-					{:instruction 3 :close 0}\
-					{:instruction 2 :close 0}\
-					{:instruction 1 :close 0}\
-					{:instruction 0 :close 0}\
-					{:instruction CODE.YANKDUP :close 0}\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 1}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 2}\
+					{:instruction 0 :close 1}\
+					{:instruction CODE.YANKDUP :close 1}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 3, 2, 1 }, {}, {}, {},
+			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
-					CodeAtom("{:instruction CODE.YANKDUP :close 0}"),
-					CodeAtom("{:instruction 0 :close 0}"),
-					CodeAtom("{:instruction 1 :close 0}"),
-					CodeAtom("{:instruction 2 :close 0}"),
-					CodeAtom("{:instruction 3 :close 0}"),
-					CodeAtom("{:instruction 3 :close 0}")
+					CodeAtom("{:instruction CODE.YANKDUP :close 1}"),
+					CodeAtom("{:instruction 0 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
 				}));
 		}
 
-		TEST_METHOD(YankDup_2)
+		TEST_METHOD(YANKDUP_WITH_ZERO_PARAMETER_B)
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
 			Plush::run(env, \
 				"\
-					{:instruction 4 :close 0}\
-					{:instruction 3 :close 0}\
-					{:instruction 2 :close 0}\
-					{:instruction 1 :close 0}\
-					{:instruction CODE.YANKDUP :close 0}\
+					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 1}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 2}\
+					{:instruction 0 :close 1}\
+					{:instruction CODE.YANKDUP :close 1}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 4, 3, 2 }, {}, {}, {},
+			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
-					CodeAtom("{:instruction CODE.YANKDUP :close 0}"),
-					CodeAtom("{:instruction 1 :close 0}"),
-					CodeAtom("{:instruction 2 :close 0}"),
-					CodeAtom("{:instruction 3 :close 0}"),
-					CodeAtom("{:instruction 4 :close 0}"),
-					CodeAtom("{:instruction 3 :close 0}")
+					CodeAtom("{:instruction CODE.YANKDUP :close 1}"),
+					CodeAtom("{:instruction 0 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
 				}));
 		}
+
+		TEST_METHOD(YANKDUP_WITH_POSITIVE_1A)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 1}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 2}\
+					{:instruction 1 :close 1}\
+					{:instruction CODE.YANKDUP :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
+				{
+					CodeAtom("{:instruction CODE.YANKDUP :close 1}"),
+					CodeAtom("{:instruction 1 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+				}));
+		}
+
+		TEST_METHOD(YANKDUP_WITH_POSITIVE_1B)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 1}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 2}\
+					{:instruction 1 :close 1}\
+					{:instruction CODE.YANKDUP :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
+				{
+					CodeAtom("{:instruction CODE.YANKDUP :close 1}"),
+					CodeAtom("{:instruction 1 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction 1 :close 1}"),
+				}));
+		}
+
+		TEST_METHOD(YANKDUP_WITH_POSITIVE_2A)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 1}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 2}\
+					{:instruction 2 :close 1}\
+					{:instruction CODE.YANKDUP :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
+				{
+					CodeAtom("{:instruction CODE.YANKDUP :close 1}"),
+					CodeAtom("{:instruction 2 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+				}));
+		}
+
+		TEST_METHOD(YANKDUP_WITH_POSITIVE_2B)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 1}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 2}\
+					{:instruction 2 :close 1}\
+					{:instruction CODE.YANKDUP :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
+				{
+					CodeAtom("{:instruction CODE.YANKDUP :close 1}"),
+					CodeAtom("{:instruction 2 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.YANKDUP :close 1}"),
+				}));
+		}
+
+		TEST_METHOD(YANKDUP_WITH_POSITIVE_3A)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 1}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 2}\
+					{:instruction 3 :close 1}\
+					{:instruction CODE.YANKDUP :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
+				{
+					CodeAtom("{:instruction CODE.YANKDUP :close 1}"),
+					CodeAtom("{:instruction 3 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction 3 :close 1}"),
+				}));
+		}
+
+		TEST_METHOD(YANKDUP_WITH_POSITIVE_3B)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 1}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 2}\
+					{:instruction 3 :close 1}\
+					{:instruction CODE.YANKDUP :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
+				{
+					CodeAtom("{:instruction CODE.YANKDUP :close 1}"),
+					CodeAtom("{:instruction 3 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.YANKDUP :close 1}"),
+				}));
+		}
+
+		TEST_METHOD(YANKDUP_WITH_ZERO_PARAMETER_4A)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 1}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 2}\
+					{:instruction 4 :close 1}\
+					{:instruction CODE.YANKDUP :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
+				{
+					CodeAtom("{:instruction CODE.YANKDUP :close 1}"),
+					CodeAtom("{:instruction 4 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction CODE.YANKDUP :close 1}"),
+				}));
+		}
+
+		TEST_METHOD(YANKDUP_WITH_POSITIVE_4B)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 1}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 2}\
+					{:instruction 4 :close 1}\
+					{:instruction CODE.YANKDUP :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
+				{
+					CodeAtom("{:instruction CODE.YANKDUP :close 1}"),
+					CodeAtom("{:instruction 4 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.YANKDUP :close 1}"),
+				}));
+		}
+
+		TEST_METHOD(YANKDUP_WITH_NEGATIVE_2B)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 1}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 2}\
+					{:instruction -2 :close 1}\
+					{:instruction CODE.YANKDUP :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
+				{
+					CodeAtom("{:instruction CODE.YANKDUP :close 1}"),
+					CodeAtom("{:instruction -2 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+				}));
+		}
+
+		//TEST_METHOD(YankDup_1)
+		//{
+		//	Environment env;
+		//	Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+		//	Plush::run(env, \
+		//		"\
+		//			{:instruction 3 :close 0}\
+		//			{:instruction 2 :close 0}\
+		//			{:instruction 1 :close 0}\
+		//			{:instruction 0 :close 0}\
+		//			{:instruction CODE.YANKDUP :close 0}\
+		//		");
+
+		//	Assert::IsTrue(is_stack_state(env, { 3, 2, 1 }, {}, {}, {},
+		//		{
+		//			CodeAtom("{:instruction CODE.YANKDUP :close 0}"),
+		//			CodeAtom("{:instruction 0 :close 0}"),
+		//			CodeAtom("{:instruction 1 :close 0}"),
+		//			CodeAtom("{:instruction 2 :close 0}"),
+		//			CodeAtom("{:instruction 3 :close 0}"),
+		//			CodeAtom("{:instruction 3 :close 0}")
+		//		}));
+		//}
+
+		//TEST_METHOD(YankDup_2)
+		//{
+		//	Environment env;
+		//	Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+		//	Plush::run(env, \
+		//		"\
+		//			{:instruction 4 :close 0}\
+		//			{:instruction 3 :close 0}\
+		//			{:instruction 2 :close 0}\
+		//			{:instruction 1 :close 0}\
+		//			{:instruction CODE.YANKDUP :close 0}\
+		//		");
+
+		//	Assert::IsTrue(is_stack_state(env, { 4, 3, 2 }, {}, {}, {},
+		//		{
+		//			CodeAtom("{:instruction CODE.YANKDUP :close 0}"),
+		//			CodeAtom("{:instruction 1 :close 0}"),
+		//			CodeAtom("{:instruction 2 :close 0}"),
+		//			CodeAtom("{:instruction 3 :close 0}"),
+		//			CodeAtom("{:instruction 4 :close 0}"),
+		//			CodeAtom("{:instruction 3 :close 0}")
+		//		}));
+		//}
 
 		//	TEST_METHOD(YANKDUP_EXEC_WITH_PARAMETERS)
 	//	{

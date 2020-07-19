@@ -206,15 +206,83 @@ namespace Plush
 	template<>
 	inline unsigned yankdup<CodeAtom>(Environment & _env)
 	{
-		// Check for valid parameters
 		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
 		{
-			int n = _env.pop<long>();
+			int index = _env.pop<long>();	// index
 
-			Utilities::FixedSizeStack<Atom> code_block;
+			Utilities::FixedSizeStack<CodeAtom> &stack = _env.get_stack<CodeAtom>();
+			Utilities::FixedSizeStack<Atom> extracted_block;
 
-			_env.peek_index<CodeAtom>(n, 0, code_block);
-			_env.push<CodeAtom>(code_block);
+			if (index >= 0)
+			{
+				// Get count of sub-blocks
+				int number_of_blocks = 0;
+				int n = stack.size() - 1;
+
+				do
+				{
+					int blocks_open = 1;
+
+					for (; n >= 0; n--)
+					{
+						Plush::Atom atom = stack[n];
+
+						blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+						blocks_open -= atom.close_parentheses;
+						blocks_open = (blocks_open > 0) ? blocks_open : 0;
+
+						if (atom.close_parentheses > 0)
+						{
+							if (blocks_open > 0)
+								blocks_open++;
+
+							else
+							{
+								number_of_blocks++;
+								blocks_open = 1;
+							}
+						}
+					};
+				} while (n >= 0);
+
+				// If the index is larger than the size of the specified stack, then the deepest element is `yank`ed up to the top.
+				index = (index > (number_of_blocks - 1)) ? (number_of_blocks - 1) : index;
+
+				// Get the target sub-block
+				n = stack.size() - 1;
+				int block_number = 0;
+
+				do
+				{
+					int blocks_open = 1;
+
+					for (; n >= 0; n--)
+					{
+						Plush::Atom atom = stack[n];
+
+						if (block_number == index)
+							extracted_block.push(atom);
+
+						blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+						blocks_open -= atom.close_parentheses;
+						blocks_open = (blocks_open > 0) ? blocks_open : 0;
+
+						if (atom.close_parentheses > 0)
+						{
+							if (blocks_open > 0)
+								blocks_open++;
+
+							else
+							{
+								block_number++;
+								blocks_open = 1;
+							}
+						}
+					};
+				} while (n >= 0);
+
+				_env.push<CodeAtom>(extracted_block);
+			}
 		}
 
 		return 1;
