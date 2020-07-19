@@ -168,6 +168,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BooleanInstructions.cpp" />
+    <ClCompile Include="CodeInstructions.cpp" />
+    <ClCompile Include="StackInstructions.cpp" />
     <ClCompile Include="UnitTest.cpp" />
     <ClCompile Include="Utilities\HelperFunctions.cpp" />
   </ItemGroup>
