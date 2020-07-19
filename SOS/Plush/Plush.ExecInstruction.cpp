@@ -1287,6 +1287,19 @@ namespace Plush
 		return 1;
 	}
 
+	unsigned code_quote(Environment & _env)
+	{
+		if (_env.has_elements<CodeAtom>(1))
+		{
+			Utilities::FixedSizeStack<Atom> block_a;
+
+			_env.pop<ExecAtom>(block_a, 1);
+			_env.push<CodeAtom>(block_a);
+		}
+
+		return 1;
+	}
+
 	void initExec()
 	{
 		static bool initialized = false;
@@ -1344,6 +1357,7 @@ namespace Plush
 		make_instruction((Operator)code_nthcdr, "CODE", "NTHCDR");
 		make_instruction((Operator)code_null, "CODE", "NULL");
 		make_instruction((Operator)code_position, "CODE", "POSITION");
+		make_instruction((Operator)code_quote, "CODE", "QUOTE");
 
 		set_parentheses("NOOP_OPEN_PAREN", 1);
 	}

@@ -8001,6 +8001,70 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(QUOTE_WITH_NO_PARAMETERS)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction CODE.QUOTE :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.QUOTE :close 0}"),
+				}));
+		}
+
+		TEST_METHOD(QUOTE_WITH_ONE_ITEM)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 5 :close 1}\
+					{:instruction 10 + :close 1}\
+					{:instruction CODE.QUOTE :close 0}\
+					{:instruction INTEGER.+ :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 5, 10 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction CODE.QUOTE :close 0}"),
+					CodeAtom("{:instruction 10 :close 1}"),
+					CodeAtom("{:instruction 5 :close 1}"),
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+				}));
+		}
+
+		TEST_METHOD(QUOTE_WITH_ONE_BLOCK)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 5 :close 1}\
+					{:instruction 10 + :close 1}\
+					{:instruction CODE.QUOTE :close 0}\
+					{:instruction INTEGER.- :close 0}\
+					{:instruction INTEGER.+ :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 5, 10 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction INTEGER.- :close 0}"),
+					CodeAtom("{:instruction CODE.QUOTE :close 0}"),
+					CodeAtom("{:instruction 10 :close 1}"),
+					CodeAtom("{:instruction 5 :close 1}"),
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction INTEGER.- :close 0}"),
+				}));
+		}
 		TEST_METHOD(YankDup_1)
 		{
 			Environment env;
