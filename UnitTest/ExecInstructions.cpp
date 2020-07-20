@@ -222,6 +222,80 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(DUP_EXEC_WITH_PARAMETERS_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "\
+							 {:instruction 3 :close 0}\
+							 {:instruction EXEC.DUP :close 0}\
+							 {:instruction true :close 1}\
+							");
+
+			Assert::IsTrue(is_stack_state(env, { 3 }, {}, { true, true }, {},
+				{
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction EXEC.DUP :close 0}"),
+					CodeAtom("{:instruction 3 :close 0}"),
+				}));
+		}
+
+		TEST_METHOD(DUP_EXEC_WITH_PARAMETERS_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "\
+							 {:instruction 3 :close 0}\
+							 {:instruction EXEC.DUP : close 0}\
+							 {:instruction false :close 0}\
+							 {:instruction true :close 1}\
+							");
+
+			Assert::IsTrue(is_stack_state(env, { 3 }, {}, { false, true, false, true }, {},
+				{
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction false :close 0}"),
+					CodeAtom("{:instruction EXEC.DUP :close 0}"),
+					CodeAtom("{:instruction 3 :close 0}"),
+				}));
+		}
+
+		TEST_METHOD(DUP_EXEC_WITH_NO_PARAMETERS_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "\
+							 {:instruction EXEC.DUP :close 0}\
+							");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction EXEC.DUP :close 0}"),
+				}));
+		}
+
+		TEST_METHOD(DUP_EXEC_WITH_NEGATIVE_PARAMETERS_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "\
+							 {:instruction -3 :close 0}\
+							 {:instruction EXEC.DUP :close 0}\
+							 {:instruction true :close 1}\
+							");
+
+			Assert::IsTrue(is_stack_state(env, { -3 }, {}, { true, true }, {},
+				{
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction EXEC.DUP :close 0}"),
+					CodeAtom("{:instruction -3 :close 0}"),
+				}));
+		}
+
 		TEST_METHOD(EQUALS_WITH_NO_PARAMETERS)
 		{
 			Environment env;
