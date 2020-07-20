@@ -20,7 +20,7 @@ namespace Plush
 	{
 		if ((_env.has_elements<long>(2)) && (_env.has_elements<ExecAtom>(1)))
 		{
-			Utilities::FixedSizeStack<Atom> block_a;
+			Utilities::FixedSizeStack<Atom> code_block;
 
 			int n = _env.pop<long>();	// destination index
 			int i = _env.pop<long>();	// current index
@@ -41,11 +41,11 @@ namespace Plush
 				_env.push<long>(i + direction);
 				_env.push<long>(n);
 
-				int unmatched_a = _env.pop<ExecAtom>(block_a, 1);
+				int unmatched_a = _env.pop<ExecAtom>(code_block, 1);
 
-				_env.push<ExecAtom>(block_a);
+				_env.push<ExecAtom>(code_block);
 				_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
-				_env.push<ExecAtom>(block_a);
+				_env.push<ExecAtom>(code_block);
 
 				_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.DO*RANGE :close 0}"));
 			}
@@ -115,6 +115,29 @@ namespace Plush
 				_env.push<long>(0);
 				_env.push<long>(n - 1);
 
+				_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.DO*RANGE :close 0}"));
+			}
+		}
+
+		return 1;
+	}
+
+	unsigned exec_do_times(Environment & _env)
+	{
+		if ((_env.has_elements<long>(1)) && (_env.has_elements<ExecAtom>(1)))
+		{
+			int n = _env.pop<long>();	// destination index
+			Utilities::FixedSizeStack<Atom> code_block;
+
+			if (n > 0)
+			{
+				_env.push<long>(0);
+				_env.push<long>(n - 1);
+
+				int unmatched_a = _env.pop<ExecAtom>(code_block, 1);
+
+				_env.push<ExecAtom>(CodeAtom("{:instruction INTEGER.POP :close 1}"));
+				_env.push<ExecAtom>(code_block);
 				_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.DO*RANGE :close 0}"));
 			}
 		}
@@ -1341,9 +1364,11 @@ namespace Plush
 		make_instruction((Operator)noop, "EXEC", "NOOP");
 		make_instruction((Operator)exec_if, "EXEC", "IF");
 		make_instruction((Operator)exec_do_count, "EXEC", "DO*COUNT");
+		make_instruction((Operator)exec_do_times, "EXEC", "DO*TIMES");
 
 		set_parentheses("EXEC", "DO*COUNT", 1);
 		set_parentheses("EXEC", "DO*RANGE", 1);
+		set_parentheses("EXEC", "DO*TIMES", 1);
 		set_parentheses("EXEC", "DUP", 1);
 		set_parentheses("EXEC", "IF", 2);
 		set_parentheses("EXEC", "NOOP_OPEN_PAREN", 1);
