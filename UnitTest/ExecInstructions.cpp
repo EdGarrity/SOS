@@ -474,7 +474,7 @@ namespace UnitTest
 				}));
 		}
 
-		TEST_METHOD(EXEC_IF_NO_PARAMETERS_1)
+		TEST_METHOD(IF_NO_PARAMETERS_1)
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
@@ -489,7 +489,7 @@ namespace UnitTest
 				}));
 		}
 
-		TEST_METHOD(EXEC_IF_NO_PARAMETERS_2)
+		TEST_METHOD(IF_NO_PARAMETERS_2)
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
@@ -511,7 +511,7 @@ namespace UnitTest
 				}));
 		}
 
-		TEST_METHOD(EXEC_IF_WITH_ONE_BLOCK_1)
+		TEST_METHOD(IF_WITH_ONE_BLOCK_1)
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
@@ -535,7 +535,7 @@ namespace UnitTest
 				}));
 		}
 
-		TEST_METHOD(EXEC_IF_WITH_ONE_BLOCK_2)
+		TEST_METHOD(IF_WITH_ONE_BLOCK_2)
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
@@ -559,7 +559,7 @@ namespace UnitTest
 				}));
 		}
 
-		TEST_METHOD(EXEC_IF_WITH_ONE_BLOCK_3)
+		TEST_METHOD(IF_WITH_ONE_BLOCK_3)
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
@@ -583,7 +583,7 @@ namespace UnitTest
 				}));
 		}
 
-		TEST_METHOD(EXEC_IF_WITH_ONE_BLOCK_4)
+		TEST_METHOD(IF_WITH_ONE_BLOCK_4)
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
@@ -607,7 +607,7 @@ namespace UnitTest
 				}));
 		}
 
-		TEST_METHOD(EXEC_IF_WITH_ZERO_BLOCK_1)
+		TEST_METHOD(IF_WITH_ZERO_BLOCK_1)
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
@@ -631,7 +631,7 @@ namespace UnitTest
 				}));
 		}
 
-		TEST_METHOD(EXEC_IF_WITH_TWO_BLOCKS_1)
+		TEST_METHOD(IF_WITH_TWO_BLOCKS_1)
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
@@ -661,7 +661,7 @@ namespace UnitTest
 				}));
 		}
 
-		TEST_METHOD(EXEC_IF_WITH_TWO_BLOCKS_2)
+		TEST_METHOD(IF_WITH_TWO_BLOCKS_2)
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
@@ -712,7 +712,7 @@ namespace UnitTest
 				}));
 		}
 
-		TEST_METHOD(EXEC_K_1)
+		TEST_METHOD(K_1)
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
@@ -734,7 +734,7 @@ namespace UnitTest
 				}));
 		}
 
-		TEST_METHOD(EXEC_K_2)
+		TEST_METHOD(K_2)
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
@@ -764,7 +764,7 @@ namespace UnitTest
 				}));
 		}
 
-		TEST_METHOD(EXEC_POP_1)
+		TEST_METHOD(POP_1)
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
@@ -786,7 +786,7 @@ namespace UnitTest
 				}));
 		}
 
-		TEST_METHOD(EXEC_POP_2)
+		TEST_METHOD(POP_2)
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
