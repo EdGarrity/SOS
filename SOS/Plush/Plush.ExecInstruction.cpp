@@ -204,6 +204,86 @@ namespace Plush
 		return 1;
 	}
 
+	unsigned exec_s(Environment & _env)
+	{
+		if (_env.has_elements<ExecAtom>(3))
+		{
+			int index = 1;
+
+			Utilities::FixedSizeStack<ExecAtom> &stack = _env.get_stack<ExecAtom>();
+			Utilities::FixedSizeStack<Atom> extracted_block_A;
+			Utilities::FixedSizeStack<Atom> extracted_block_B;
+			Utilities::FixedSizeStack<Atom> extracted_block_C;
+			Utilities::FixedSizeStack<Atom> extracted_block_CC;
+			Utilities::FixedSizeStack<Atom> block_without_extracted;
+
+			if (index > 0)
+			{
+				// Get count of sub-blocks
+				int number_of_blocks = 0;
+				int n = stack.size() - 1;
+
+				n = stack.size() - 1;
+				int block_number = 0;
+
+				do
+				{
+					int blocks_open = 1;
+
+					for (; n >= 0; n--)
+					{
+						Plush::Atom atom = stack[n];
+
+						if (block_number == 0)
+							extracted_block_A.push(atom);
+
+						else if (block_number == 1)
+							extracted_block_B.push(atom);
+
+						else if (block_number == 2)
+						{
+							extracted_block_C.push(atom);
+							extracted_block_CC.push(atom);
+						}
+
+						else
+							block_without_extracted.push(atom);
+
+						blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+						blocks_open -= atom.close_parentheses;
+						blocks_open = (blocks_open > 0) ? blocks_open : 0;
+
+						if (atom.close_parentheses > 0)
+						{
+							if (blocks_open > 0)
+								blocks_open++;
+
+							else
+							{
+								block_number++;
+								blocks_open = 1;
+							}
+						}
+					};
+				} while (n >= 0);
+
+				if (extracted_block_CC.size() > 0)
+					extracted_block_CC[extracted_block_CC.size() - 1].close_parentheses++;
+
+				_env.get_stack<ExecAtom>().clear();
+				_env.push<ExecAtom>(block_without_extracted);
+
+				_env.push<ExecAtom>(extracted_block_A);
+				_env.push<ExecAtom>(extracted_block_C);
+				_env.push<ExecAtom>(extracted_block_CC);
+				_env.push<ExecAtom>(extracted_block_B);
+				_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+			}
+		}
+
+		return 1;
+	}
+
 	unsigned code_append(Environment & _env)
 	{
 		if (_env.has_elements<CodeAtom>(2))
@@ -1425,6 +1505,7 @@ namespace Plush
 		make_instruction((Operator)exec_do_count, "EXEC", "DO*COUNT");
 		make_instruction((Operator)exec_do_times, "EXEC", "DO*TIMES");
 		make_instruction((Operator)exec_k, "EXEC", "K");
+		make_instruction((Operator)exec_s, "EXEC", "S");
 
 		set_parentheses("EXEC", "DO*COUNT", 1);
 		set_parentheses("EXEC", "DO*RANGE", 1);
@@ -1434,6 +1515,7 @@ namespace Plush
 		set_parentheses("EXEC", "K", 2);
 		set_parentheses("EXEC", "NOOP_OPEN_PAREN", 1);
 		set_parentheses("EXEC", "ROT", 3);
+		set_parentheses("EXEC", "S", 3);
 		set_parentheses("EXEC", "SHOVE", 1);
 		set_parentheses("EXEC", "SWAP", 2);
 
