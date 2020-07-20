@@ -188,6 +188,97 @@ namespace Plush
 		return 1;
 	}
 
+	template<>
+	inline unsigned yank<ExecAtom>(Environment & _env)
+	{
+		if ((_env.has_elements<long>(1)) && (_env.has_elements<ExecAtom>(1)))
+		{
+			int index = _env.pop<long>();	// index
+
+			Utilities::FixedSizeStack<ExecAtom> &stack = _env.get_stack<ExecAtom>();
+			Utilities::FixedSizeStack<Atom> extracted_block;
+			Utilities::FixedSizeStack<Atom> block_without_extracted;
+
+			if (index > 0)
+			{
+				// Get count of sub-blocks
+				int number_of_blocks = 0;
+				int n = stack.size() - 1;
+
+				do
+				{
+					int blocks_open = 1;
+
+					for (; n >= 0; n--)
+					{
+						Plush::Atom atom = stack[n];
+
+						blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+						blocks_open -= atom.close_parentheses;
+						blocks_open = (blocks_open > 0) ? blocks_open : 0;
+
+						if (atom.close_parentheses > 0)
+						{
+							if (blocks_open > 0)
+								blocks_open++;
+
+							else
+							{
+								number_of_blocks++;
+								blocks_open = 1;
+							}
+						}
+					};
+				} while (n >= 0);
+
+				// If the index is larger than the size of the specified stack, then the deepest element is `yank`ed up to the top.
+				index = (index > (number_of_blocks - 1)) ? (number_of_blocks - 1) : index;
+
+				// Get the target sub-block
+				n = stack.size() - 1;
+				int block_number = 0;
+
+				do
+				{
+					int blocks_open = 1;
+
+					for (; n >= 0; n--)
+					{
+						Plush::Atom atom = stack[n];
+
+						if (block_number == index)
+							extracted_block.push(atom);
+
+						else
+							block_without_extracted.push(atom);
+
+						blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+						blocks_open -= atom.close_parentheses;
+						blocks_open = (blocks_open > 0) ? blocks_open : 0;
+
+						if (atom.close_parentheses > 0)
+						{
+							if (blocks_open > 0)
+								blocks_open++;
+
+							else
+							{
+								block_number++;
+								blocks_open = 1;
+							}
+						}
+					};
+				} while (n >= 0);
+
+				_env.get_stack<ExecAtom>().clear();
+				_env.push<ExecAtom>(block_without_extracted);
+				_env.push<ExecAtom>(extracted_block);
+			}
+		}
+
+		return 1;
+	}
+
 	template <class T>
 	inline unsigned yankdup(Environment & _env)
 	{
