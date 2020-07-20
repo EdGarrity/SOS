@@ -547,6 +547,18 @@ namespace Plush
 		return 1;
 	}
 
+	template<>
+	inline unsigned rot<ExecAtom>(Environment & _env)
+	{
+		if (_env.has_elements<ExecAtom>(3))
+		{
+			_env.push<long>(2);
+			_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.YANK :close 0}"));
+		}
+
+		return 1;
+	}
+
 	template <class T>
 	inline unsigned shove(Environment & _env)
 	{

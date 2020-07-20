@@ -816,6 +816,112 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(ROT_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 2 :close 1}\
+					{:instruction EXEC.ROT :close 0}\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 1}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 2}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 2 }, { 3.0, 1.0, 1.1, 1.2, 2.0, 2.1 }, {}, {},
+				{
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.ROT :close 0}"),
+					CodeAtom("{:instruction 2 :close 1}"),
+				}));
+		}
+
+		TEST_METHOD(ROT_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 2 :close 1}\
+					{:instruction EXEC.ROT :close 0}\
+					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 1}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 2}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 2 }, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
+				{
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction EXEC.ROT :close 0}"),
+					CodeAtom("{:instruction 2 :close 1}"),
+				}));
+		}
+
+		TEST_METHOD(ROT_3)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 2 :close 1}\
+					{:instruction EXEC.ROT :close 0}\
+					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 1}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 2}\
+					{:instruction 4.0 :close 0}\
+					{:instruction 4.1 :close 0}\
+					{:instruction 4.2 :close 1}\
+					{:instruction 5.0 :close 0}\
+					{:instruction 5.1 :close 1}\
+					{:instruction 6.0 :close 2}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 2 }, { 5.0, 5.1, 1.0, 1.1, 1.2, 2.0, 2.1, 3.0, 4.0, 4.1, 4.2, 6.0 }, {}, {},
+				{
+					CodeAtom("{:instruction 6.0 :close 2}"),
+					CodeAtom("{:instruction 5.1 :close 1}"),
+					CodeAtom("{:instruction 5.0 :close 0}"),
+					CodeAtom("{:instruction 4.2 :close 1}"),
+					CodeAtom("{:instruction 4.1 :close 0}"),
+					CodeAtom("{:instruction 4.0 :close 0}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction EXEC.ROT :close 0}"),
+					CodeAtom("{:instruction 2 :close 1}"),
+				}));
+		}
+
 		TEST_METHOD(YANK_WITH_ZERO_PARAMETER_A)
 		{
 			Environment env;
