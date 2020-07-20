@@ -690,6 +690,28 @@ namespace UnitTest
 					CodeAtom("{:instruction FALSE :close 0}")
 				}));
 		}
+
+		TEST_METHOD(FLUSH)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "\
+							 {:instruction 3 :close 0}\
+							 {:instruction EXEC.FLUSH : close 0}\
+							 {:instruction false :close 0}\
+							 {:instruction true :close 1}\
+							");
+
+			Assert::IsTrue(is_stack_state(env, { 3 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction false :close 0}"),
+					CodeAtom("{:instruction EXEC.FLUSH :close 0}"),
+					CodeAtom("{:instruction 3 :close 0}"),
+				}));
+		}
+
 	};
 
 }
