@@ -9,6 +9,82 @@ namespace UnitTest
 	TEST_CLASS(ExecInstructions)
 	{
 	public:
+		TEST_METHOD(DO_COUNT_EXEC_WITH_PARAMETERS_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "\
+							 {:instruction 3 :close 0}\
+							 {:instruction EXEC.DO*COUNT :close 0}\
+							 {:instruction true :close 1}\
+							");
+
+			Assert::IsTrue(is_stack_state(env, { 2 }, {}, { true, true, true }, {},
+				{
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction EXEC.DO*COUNT :close 0}"),
+					CodeAtom("{:instruction 3 :close 0}"),
+				}));
+		}
+
+		TEST_METHOD(DO_COUNT_EXEC_WITH_PARAMETERS_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "\
+							 {:instruction 3 :close 0}\
+							 {:instruction EXEC.DO*COUNT : close 0}\
+							 {:instruction false :close 0}\
+							 {:instruction true :close 1}\
+							");
+
+			Assert::IsTrue(is_stack_state(env, { 2 }, {}, { false, true, false, true, false, true }, {},
+				{
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction false :close 0}"),
+					CodeAtom("{:instruction EXEC.DO*COUNT :close 0}"),
+					CodeAtom("{:instruction 3 :close 0}"),
+				}));
+		}
+
+		TEST_METHOD(DO_COUNT_EXEC_WITH_NO_PARAMETERS_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "\
+							 {:instruction EXEC.DO*COUNT :close 0}\
+							 {:instruction true :close 1}\
+							");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
+				{
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction EXEC.DO*COUNT :close 0}")
+				}));
+		}
+
+		TEST_METHOD(DO_COUNT_EXEC_WITH_NEGATIVE_PARAMETERS_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, "\
+							 {:instruction -3 :close 0}\
+							 {:instruction EXEC.DO*COUNT :close 0}\
+							 {:instruction true :close 1}\
+							");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
+				{
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction EXEC.DO*COUNT :close 0}"),
+					CodeAtom("{:instruction -3 :close 0}"),
+				}));
+		}
+
 		TEST_METHOD(DO_RANGE_EXEC_WITH_PARAMETERS_1)
 		{
 			Environment env;

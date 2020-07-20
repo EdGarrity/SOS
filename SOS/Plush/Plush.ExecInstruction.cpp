@@ -104,6 +104,24 @@ namespace Plush
 		return 1;
 	}
 
+	unsigned exec_do_count(Environment & _env)
+	{
+		if ((_env.has_elements<long>(1)) && (_env.has_elements<ExecAtom>(1)))
+		{
+			int n = _env.pop<long>();	// destination index
+
+			if (n > 0)
+			{
+				_env.push<long>(0);
+				_env.push<long>(n - 1);
+
+				_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.DO*RANGE :close 0}"));
+			}
+		}
+
+		return 1;
+	}
+
 	unsigned code_append(Environment & _env)
 	{
 		if (_env.has_elements<CodeAtom>(2))
@@ -1322,7 +1340,9 @@ namespace Plush
 		make_instruction((Operator)noop, "EXEC", "NOOP_OPEN_PAREN");
 		make_instruction((Operator)noop, "EXEC", "NOOP");
 		make_instruction((Operator)exec_if, "EXEC", "IF");
+		make_instruction((Operator)exec_do_count, "EXEC", "DO*COUNT");
 
+		set_parentheses("EXEC", "DO*COUNT", 1);
 		set_parentheses("EXEC", "DO*RANGE", 1);
 		set_parentheses("EXEC", "DUP", 1);
 		set_parentheses("EXEC", "IF", 2);
