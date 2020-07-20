@@ -712,6 +712,36 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(EXEC_K_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction EXEC.K :close 0}\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 1}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 2}\
+					{:instruction 2 :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 2 }, { 1.0, 1.1, 1.2, 3.0 }, {}, {},
+				{
+					CodeAtom("{:instruction 2 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.K :close 0}"),
+				}));
+		}
+
 	};
 
 }
