@@ -1502,6 +1502,124 @@ namespace Plush
 		return 1;
 	}
 
+	inline unsigned code_subst(Environment & _env)
+	{
+		if (_env.has_elements<CodeAtom>(3))
+		{
+			Utilities::FixedSizeStack<CodeAtom> &stack = _env.get_stack<CodeAtom>();
+			Utilities::FixedSizeStack<Atom> extracted_block_A;
+			Utilities::FixedSizeStack<Atom> extracted_block_B;
+			Utilities::FixedSizeStack<Atom> extracted_block_C;
+			Utilities::FixedSizeStack<Atom> block_without_extracted;
+			Utilities::FixedSizeStack<Atom> modified_block;
+
+			// Get count of sub-blocks
+			int number_of_blocks = 0;
+			int n = stack.size() - 1;
+
+			n = stack.size() - 1;
+			int block_number = 0;
+
+			// Pop first three blocks
+			do
+			{
+				int blocks_open = 1;
+
+				for (; n >= 0; n--)
+				{
+					Plush::Atom atom = _env.pop<CodeAtom>(); //stack[n];
+
+					if (block_number == 0)
+						extracted_block_A.push(atom);
+
+					else if (block_number == 1)
+						extracted_block_B.push(atom);
+
+					else if (block_number == 2)
+						extracted_block_C.push(atom);
+
+					else
+						block_without_extracted.push(atom);
+
+					blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+					blocks_open -= atom.close_parentheses;
+					blocks_open = (blocks_open > 0) ? blocks_open : 0;
+
+					if (atom.close_parentheses > 0)
+					{
+						if (blocks_open > 0)
+							blocks_open++;
+
+						else
+						{
+							block_number++;
+							blocks_open = 1;
+						}
+					}
+				};
+			} while (n >= 0);
+
+			//  To name the first, second and third items from :code 1, 2 and 3. Replace all 3 in 1 with 2.
+			if ((extracted_block_A.size() > 0) && (extracted_block_B.size() > 0) && (extracted_block_C.size() > 0))
+			{
+				// Make sure last atom of block B and C are closed
+				Atom atom = extracted_block_B.top();
+				extracted_block_B.pop();
+				atom.close_parentheses = (atom.close_parentheses == 0) ? 1 : atom.close_parentheses;
+				extracted_block_B.push(atom);
+
+				atom = extracted_block_C.top();
+				extracted_block_C.pop();
+				atom.close_parentheses = (atom.close_parentheses == 0) ? 1 : atom.close_parentheses;
+				extracted_block_C.push(atom);
+
+				// Find block 3 in block 1
+				bool found = false;
+				int index = 0;
+
+				for (int i = 0; i < (extracted_block_A.size() - extracted_block_C.size() + 1); i++)
+				{
+					found = true;
+
+					for (int j = 0; j < extracted_block_C.size(); j++)
+					{
+						if (extracted_block_A[i + j].instruction != extracted_block_C[j].instruction)
+						{
+							found = false;
+							break;
+						}
+					}
+
+					if (found)
+					{
+						// Replace block 3 with block 2 in block 1.
+						for (int j = 0; j < extracted_block_B.size(); j++)
+							modified_block.push(extracted_block_B[j]);
+
+						i += extracted_block_C.size() - 1;
+					}
+					else
+						modified_block.push(extracted_block_A[i]);
+				}
+
+				_env.get_stack<CodeAtom>().clear();
+				_env.push<CodeAtom>(block_without_extracted);
+				_env.push<CodeAtom>(modified_block);
+			}
+
+			else
+			{
+				_env.get_stack<CodeAtom>().clear();
+				_env.push<CodeAtom>(block_without_extracted);
+				_env.push<CodeAtom>(extracted_block_C);
+				_env.push<CodeAtom>(extracted_block_B);
+				_env.push<CodeAtom>(extracted_block_A);
+			}
+		}
+
+		return 1;
+	}
+
 	void initExec()
 	{
 		static bool initialized = false;
@@ -1569,6 +1687,7 @@ namespace Plush
 		make_instruction((Operator)code_position, "CODE", "POSITION");
 		make_instruction((Operator)code_quote, "CODE", "QUOTE");
 		make_instruction((Operator)code_size, "CODE", "SIZE");
+		make_instruction((Operator)code_subst, "CODE", "SUBST");
 
 		set_parentheses("CODE", "NOOP_OPEN_PAREN", 1);
 	}

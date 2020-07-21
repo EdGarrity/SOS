@@ -3849,6 +3849,152 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(SUBST_WITH_NO_PARAMETERS)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction CODE.SUBST :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.SUBST :close 0}")
+				}));
+		}
+
+		TEST_METHOD(SUBST_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction EXEC.DO*RANGE :close 0}\
+					{:instruction FLOAT.+ :close 2}\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction FLOAT.+ :close 3}\
+					{:instruction FLOAT.- :close 1}\
+					{:instruction FLOAT.+ :close 1}\
+					{:instruction CODE.SUBST :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.SUBST :close 0}"),
+					CodeAtom("{:instruction FLOAT.- :close 1}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction FLOAT.- :close 1}"),
+					CodeAtom("{:instruction EXEC.DO*RANGE :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+				}));
+		}
+
+		TEST_METHOD(SUBST_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction FLOAT.+ :close 0}\
+					{:instruction FLOAT.+ :close 1}\
+					{:instruction FLOAT.- :close 1}\
+					{:instruction FLOAT.+ :close 1}\
+					{:instruction CODE.SUBST :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.SUBST :close 1}"),
+					CodeAtom("{:instruction FLOAT.- :close 1}"),
+					CodeAtom("{:instruction FLOAT.- :close 1}"),
+				}));
+		}
+
+		TEST_METHOD(SUBST_3)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction EXEC.DO*RANGE :close 0}\
+					{:instruction FLOAT.+ :close 2}\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction FLOAT.+ :close 3}\
+					{:instruction FLOAT.* :close 0}\
+					{:instruction FLOAT.- :close 1}\
+					{:instruction FLOAT.+ :close 1}\
+					{:instruction CODE.SUBST :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.SUBST :close 0}"),
+					CodeAtom("{:instruction FLOAT.- :close 1}"),
+					CodeAtom("{:instruction FLOAT.* :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction FLOAT.- :close 1}"),
+					CodeAtom("{:instruction FLOAT.* :close 0}"),
+					CodeAtom("{:instruction EXEC.DO*RANGE :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+				}));
+		}
+
+		TEST_METHOD(SUBST_4)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction EXEC.DO*RANGE :close 0}\
+					{:instruction FLOAT.+ :close 2}\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction FLOAT.+ :close 3}\
+					{:instruction FLOAT.* :close 0}\
+					{:instruction FLOAT.- :close 1}\
+					{:instruction CODE.SUBST :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction FLOAT.+ :close 3}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction FLOAT.+ :close 2}"),
+					CodeAtom("{:instruction EXEC.DO*RANGE :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+				}));
+		}
+
+		TEST_METHOD(SUBST_5)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction EXEC.DO*RANGE :close 0}\
+					{:instruction FLOAT.+ :close 2}\
+					{:instruction CODE.SUBST :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.SUBST :close 0}"),
+					CodeAtom("{:instruction FLOAT.+ :close 2}"),
+					CodeAtom("{:instruction EXEC.DO*RANGE :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+				}));
+		}
+
 		TEST_METHOD(YANKDUP_WITH_ZERO_PARAMETER_A)
 		{
 			Environment env;
