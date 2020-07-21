@@ -1570,7 +1570,6 @@ namespace Plush
 		make_instruction((Operator)code_quote, "CODE", "QUOTE");
 		make_instruction((Operator)code_size, "CODE", "SIZE");
 
-//		set_parentheses("CODE", "ROT", 3);
 		set_parentheses("CODE", "NOOP_OPEN_PAREN", 1);
 	}
 }

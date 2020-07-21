@@ -3787,6 +3787,68 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(STACKDEPTH_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 1}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 2}\
+					{:instruction 0 :close 1}\
+					{:instruction CODE.STACKDEPTH :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 0, 8 }, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
+				{
+					CodeAtom("{:instruction CODE.STACKDEPTH :close 1}"),
+					CodeAtom("{:instruction 0 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+				}));
+		}
+
+		TEST_METHOD(STACKDEPTH_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 1}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 2}\
+					{:instruction 0 :close 1}\
+					{:instruction CODE.STACKDEPTH :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 0, 9 }, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
+				{
+					CodeAtom("{:instruction CODE.STACKDEPTH :close 1}"),
+					CodeAtom("{:instruction 0 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction CODE.NOOP_OPEN_PAREN :close 0}"),
+				}));
+		}
+
 		TEST_METHOD(YANKDUP_WITH_ZERO_PARAMETER_A)
 		{
 			Environment env;
