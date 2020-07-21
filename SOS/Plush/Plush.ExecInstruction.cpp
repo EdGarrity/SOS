@@ -1024,7 +1024,7 @@ namespace Plush
 			Utilities::FixedSizeStack<Atom> top_block;
 
 			// Get top block from stack
-			_env.pop<CodeAtom>(top_block, 2);
+			_env.pop<CodeAtom>(top_block, 1);
 
 			// Get count of sub-blocks
 			int number_of_blocks = 0;
@@ -1032,7 +1032,7 @@ namespace Plush
 
 			do
 			{
-				int blocks_open = 2;
+				int blocks_open = 1;
 
 				for (; n < top_block.size(); n++)
 				{
@@ -1043,11 +1043,15 @@ namespace Plush
 
 					if (atom.close_parentheses > 0)
 					{
+						if (blocks_open <= 1)
+							number_of_blocks++;
+
 						if (blocks_open > 0)
 							blocks_open++;
-						
-						number_of_blocks++;
 					}
+
+					else if (blocks_open <= 1)
+						number_of_blocks++;
 
 					if (blocks_open <= 0)
 						break;
@@ -1480,6 +1484,24 @@ namespace Plush
 		return 1;
 	}
 
+	inline unsigned code_size(Environment & _env)
+	{
+		if (_env.has_elements<CodeAtom>(1))
+		{
+			Utilities::FixedSizeStack<Atom> top_block;
+
+			// Get top block from stack
+			_env.pop<CodeAtom>(top_block, 1);
+
+			// Get count of atoms
+			int size = top_block.size();
+
+			_env.push<long>(size);
+		}
+
+		return 1;
+	}
+
 	void initExec()
 	{
 		static bool initialized = false;
@@ -1546,6 +1568,7 @@ namespace Plush
 		make_instruction((Operator)code_null, "CODE", "NULL");
 		make_instruction((Operator)code_position, "CODE", "POSITION");
 		make_instruction((Operator)code_quote, "CODE", "QUOTE");
+		make_instruction((Operator)code_size, "CODE", "SIZE");
 
 //		set_parentheses("CODE", "ROT", 3);
 		set_parentheses("CODE", "NOOP_OPEN_PAREN", 1);
