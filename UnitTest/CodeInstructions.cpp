@@ -2817,7 +2817,37 @@ namespace UnitTest
 				}));
 		}
 
-		TEST_METHOD(ROT_1)
+		TEST_METHOD(ROT_1A)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 1}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 1}\
+					{:instruction 2 :close 1}\
+					{:instruction CODE.ROT :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 2 }, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
+				{
+					CodeAtom("{:instruction CODE.ROT :close 1}"),
+					CodeAtom("{:instruction 2 :close 1}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction 3.0 :close 1}"),
+				}));
+		}
+
+		TEST_METHOD(ROT_1B)
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
@@ -2867,7 +2897,6 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 2 }, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
-					CodeAtom("{:instruction CODE.ROT :close 0}"),
 					CodeAtom("{:instruction 2 :close 1}"),
 					CodeAtom("{:instruction 3.0 :close 2}"),
 					CodeAtom("{:instruction 2.1 :close 1}"),
@@ -2876,6 +2905,7 @@ namespace UnitTest
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
 					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.ROT :close 0}"),
 				}));
 		}
 
@@ -2908,8 +2938,6 @@ namespace UnitTest
 					CodeAtom("{:instruction CODE.ROT :close 0}"),
 					CodeAtom("{:instruction 2 :close 1}"),
 					CodeAtom("{:instruction 6.0 :close 2}"),
-					CodeAtom("{:instruction 5.1 :close 1}"),
-					CodeAtom("{:instruction 5.0 :close 0}"),
 					CodeAtom("{:instruction 4.2 :close 1}"),
 					CodeAtom("{:instruction 4.1 :close 0}"),
 					CodeAtom("{:instruction 4.0 :close 0}"),
@@ -2920,6 +2948,8 @@ namespace UnitTest
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
 					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction 5.1 :close 1}"),
+					CodeAtom("{:instruction 5.0 :close 0}"),
 				}));
 		}
 

@@ -550,10 +550,69 @@ namespace Plush
 	template<>
 	inline unsigned rot<CodeAtom>(Environment & _env)
 	{
-		if (_env.has_elements<ExecAtom>(3))
+		if (_env.has_elements<CodeAtom>(3))
 		{
-			_env.push<long>(2);
-			_env.push<ExecAtom>(CodeAtom("{:instruction CODE.YANK :close 0}"));
+			int index = 1;
+
+			Utilities::FixedSizeStack<CodeAtom> &stack = _env.get_stack<CodeAtom>();
+			Utilities::FixedSizeStack<Atom> extracted_block_A;
+			Utilities::FixedSizeStack<Atom> extracted_block_B;
+			Utilities::FixedSizeStack<Atom> extracted_block_C;
+			Utilities::FixedSizeStack<Atom> block_without_extracted;
+
+			if (index > 0)
+			{
+				// Get count of sub-blocks
+				int number_of_blocks = 0;
+				int n = stack.size() - 1;
+
+				n = stack.size() - 1;
+				int block_number = 0;
+
+				do
+				{
+					int blocks_open = 1;
+
+					for (; n >= 0; n--)
+					{
+						Plush::Atom atom = stack[n];
+
+						if (block_number == 0)
+							extracted_block_A.push(atom);
+
+						else if (block_number == 1)
+							extracted_block_B.push(atom);
+
+						else if (block_number == 2)
+							extracted_block_C.push(atom);
+
+						else
+							block_without_extracted.push(atom);
+
+						blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+						blocks_open -= atom.close_parentheses;
+						blocks_open = (blocks_open > 0) ? blocks_open : 0;
+
+						if (atom.close_parentheses > 0)
+						{
+							if (blocks_open > 0)
+								blocks_open++;
+
+							else
+							{
+								block_number++;
+								blocks_open = 1;
+							}
+						}
+					};
+				} while (n >= 0);
+
+				_env.get_stack<CodeAtom>().clear();
+				_env.push<CodeAtom>(block_without_extracted);
+				_env.push<CodeAtom>(extracted_block_B);
+				_env.push<CodeAtom>(extracted_block_A);
+				_env.push<CodeAtom>(extracted_block_C);
+			}
 		}
 
 		return 1;
