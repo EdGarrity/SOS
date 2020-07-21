@@ -84,10 +84,10 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP.OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP.OPEN_PAREN :close 0}\
 					{:instruction 10 :close 0}\
 					{:instruction INTEGER.+ :close 1}\
-					{:instruction NOOP.OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP.OPEN_PAREN :close 0}\
 					{:instruction 10 :close 0}\
 					{:instruction INTEGER.+ :close 1}\
 					{:instruction CODE.APPEND :close 0}\
@@ -98,10 +98,10 @@ namespace UnitTest
 					CodeAtom("{:instruction CODE.APPEND :close 0}"),
 					CodeAtom("{:instruction INTEGER.+ :close 1}"),
 					CodeAtom("{:instruction 10 :close 0}"),
-					CodeAtom("{:instruction NOOP.OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.NOOP.OPEN_PAREN :close 0}"),
 					CodeAtom("{:instruction INTEGER.+ :close 0}"),
 					CodeAtom("{:instruction 10 :close 0}"),
-					CodeAtom("{:instruction NOOP.OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.NOOP.OPEN_PAREN :close 0}"),
 				}));
 		}
 
@@ -1104,10 +1104,10 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP.OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP.OPEN_PAREN :close 0}\
 					{:instruction 10 :close 0}\
 					{:instruction INTEGER.+ :close 1}\
-					{:instruction NOOP.OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP.OPEN_PAREN :close 0}\
 					{:instruction 10 :close 0}\
 					{:instruction INTEGER.+ :close 1}\
 					{:instruction CODE.= :close 0}\
@@ -1126,10 +1126,10 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP.OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP.OPEN_PAREN :close 0}\
 					{:instruction 10 :close 0}\
 					{:instruction INTEGER.+ :close 1}\
-					{:instruction NOOP.OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP.OPEN_PAREN :close 0}\
 					{:instruction 20 :close 0}\
 					{:instruction INTEGER.+ :close 1}\
 					{:instruction CODE.= :close 0}\
@@ -1149,7 +1149,7 @@ namespace UnitTest
 			Plush::run(env, \
 				"\
 					{:instruction INTEGER.- :close 1}\
-					{:instruction NOOP.OPEN.PAREN :close 0}\
+					{:instruction CODE.NOOP.OPEN.PAREN :close 0}\
 					{:instruction 10 :close 0}\
 					{:instruction INTEGER.+ :close 1}\
 					{:instruction CODE.= :close 0}\
@@ -1168,7 +1168,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP.OPEN.PAREN :close 0}\
+					{:instruction CODE.NOOP.OPEN.PAREN :close 0}\
 					{:instruction 10 :close 0}\
 					{:instruction INTEGER.+ :close 1}\
 					{:instruction INTEGER.- :close 1}\
@@ -1252,7 +1252,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -1270,7 +1270,7 @@ namespace UnitTest
 					CodeAtom("{:instruction 3.0 :close 2}"),
 					CodeAtom("{:instruction 2.1 :close 1}"),
 					CodeAtom("{:instruction 2.0 :close 0}"),
-					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.NOOP_OPEN_PAREN :close 0}"),
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
@@ -1284,7 +1284,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -1303,7 +1303,7 @@ namespace UnitTest
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
-					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.NOOP_OPEN_PAREN :close 0}"),
 					CodeAtom("{:instruction 2.1 :close 1}"),
 					CodeAtom("{:instruction 2.0 :close 0}"),
 				}));
@@ -1316,7 +1316,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -1336,7 +1336,7 @@ namespace UnitTest
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
-					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.NOOP_OPEN_PAREN :close 0}"),
 					CodeAtom("{:instruction 3.0 :close 2}"),
 				}));
 		}
@@ -1348,7 +1348,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -1366,7 +1366,7 @@ namespace UnitTest
 					CodeAtom("{:instruction 3.0 :close 2}"),
 					CodeAtom("{:instruction 2.1 :close 1}"),
 					CodeAtom("{:instruction 2.0 :close 0}"),
-					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.NOOP_OPEN_PAREN :close 0}"),
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
@@ -1380,7 +1380,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -1399,7 +1399,7 @@ namespace UnitTest
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
-					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.NOOP_OPEN_PAREN :close 0}"),
 					CodeAtom("{:instruction 2.1 :close 1}"),
 					CodeAtom("{:instruction 2.0 :close 0}"),
 				}));
@@ -1412,7 +1412,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP.OPEN.PAREN :close 0}\
+					{:instruction CODE.NOOP.OPEN.PAREN :close 0}\
 					{:instruction 10 :close 0}\
 					{:instruction INTEGER.+ :close 1}\
 					{:instruction INTEGER.- :close 1}\
@@ -2291,7 +2291,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -2349,7 +2349,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -2376,7 +2376,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -2436,7 +2436,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -2492,7 +2492,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -2518,7 +2518,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -2560,7 +2560,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP :close 1}\
+					{:instruction CODE.NOOP :close 1}\
 					{:instruction 0 :close 1}\
 					{:instruction CODE.NULL :close 1}\
 				");
@@ -2884,7 +2884,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -2904,7 +2904,7 @@ namespace UnitTest
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
-					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.NOOP_OPEN_PAREN :close 0}"),
 					CodeAtom("{:instruction CODE.ROT :close 0}"),
 				}));
 		}
@@ -2916,7 +2916,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -2947,7 +2947,7 @@ namespace UnitTest
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
-					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.NOOP_OPEN_PAREN :close 0}"),
 					CodeAtom("{:instruction 5.1 :close 1}"),
 					CodeAtom("{:instruction 5.0 :close 0}"),
 				}));
@@ -2990,7 +2990,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -3010,7 +3010,7 @@ namespace UnitTest
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
-					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.NOOP_OPEN_PAREN :close 0}"),
 					CodeAtom("{:instruction CODE.ROT :close 1}"),
 				}));
 		}
@@ -3052,7 +3052,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -3073,7 +3073,7 @@ namespace UnitTest
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
-					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.NOOP_OPEN_PAREN :close 0}"),
 				}));
 		}
 
@@ -3114,7 +3114,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -3134,7 +3134,7 @@ namespace UnitTest
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
-					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.NOOP_OPEN_PAREN :close 0}"),
 					CodeAtom("{:instruction 1 :close 1}"),
 				}));
 		}
@@ -3176,7 +3176,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -3196,7 +3196,7 @@ namespace UnitTest
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
-					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.NOOP_OPEN_PAREN :close 0}"),
 					CodeAtom("{:instruction CODE.YANK :close 1}"),
 				}));
 		}
@@ -3238,7 +3238,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -3258,7 +3258,7 @@ namespace UnitTest
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
-					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.NOOP_OPEN_PAREN :close 0}"),
 					CodeAtom("{:instruction CODE.YANK :close 1}"),
 				}));
 		}
@@ -3300,7 +3300,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -3320,7 +3320,7 @@ namespace UnitTest
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
-					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.NOOP_OPEN_PAREN :close 0}"),
 					CodeAtom("{:instruction CODE.YANK :close 1}"),
 				}));
 		}
@@ -3332,7 +3332,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -3353,7 +3353,7 @@ namespace UnitTest
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
-					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.NOOP_OPEN_PAREN :close 0}"),
 				}));
 		}
 
@@ -3397,7 +3397,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -3418,14 +3418,14 @@ namespace UnitTest
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
-					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.NOOP_OPEN_PAREN :close 0}"),
 					CodeAtom("{:instruction 3.0 :close 2}"),
 					CodeAtom("{:instruction 2.1 :close 1}"),
 					CodeAtom("{:instruction 2.0 :close 0}"),
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
-					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.NOOP_OPEN_PAREN :close 0}"),
 				}));
 		}
 
@@ -3468,7 +3468,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -3489,7 +3489,7 @@ namespace UnitTest
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
-					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.NOOP_OPEN_PAREN :close 0}"),
 					CodeAtom("{:instruction 1 :close 1}"),
 				}));
 		}
@@ -3532,7 +3532,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -3553,7 +3553,7 @@ namespace UnitTest
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
-					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.NOOP_OPEN_PAREN :close 0}"),
 					CodeAtom("{:instruction CODE.YANKDUP :close 1}"),
 				}));
 		}
@@ -3596,7 +3596,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -3617,7 +3617,7 @@ namespace UnitTest
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
-					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.NOOP_OPEN_PAREN :close 0}"),
 					CodeAtom("{:instruction CODE.YANKDUP :close 1}"),
 				}));
 		}
@@ -3660,7 +3660,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -3681,7 +3681,7 @@ namespace UnitTest
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
-					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.NOOP_OPEN_PAREN :close 0}"),
 					CodeAtom("{:instruction CODE.YANKDUP :close 1}"),
 				}));
 		}
@@ -3693,7 +3693,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction NOOP_OPEN_PAREN :close 0}\
+					{:instruction CODE.NOOP_OPEN_PAREN :close 0}\
 					{:instruction 1.0 :close 0}\
 					{:instruction 1.1 :close 0}\
 					{:instruction 1.2 :close 1}\
@@ -3714,7 +3714,7 @@ namespace UnitTest
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
-					CodeAtom("{:instruction NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction CODE.NOOP_OPEN_PAREN :close 0}"),
 				}));
 		}
 

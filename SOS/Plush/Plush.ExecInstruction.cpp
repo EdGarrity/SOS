@@ -1394,7 +1394,7 @@ namespace Plush
 				_env.push<bool>(true);
 			
 			else if ((top_block.size() == 1) 
-				&& (top_block.top().instruction == "NOOP") 
+				&& (top_block.top().instruction == "CODE.NOOP")
 					&& (top_block.top().close_parentheses > 0)) 
 					_env.push<bool>(true);
 
@@ -1548,6 +1548,6 @@ namespace Plush
 		make_instruction((Operator)code_quote, "CODE", "QUOTE");
 
 //		set_parentheses("CODE", "ROT", 3);
-		set_parentheses("NOOP_OPEN_PAREN", 1);
+		set_parentheses("CODE", "NOOP_OPEN_PAREN", 1);
 	}
 }
