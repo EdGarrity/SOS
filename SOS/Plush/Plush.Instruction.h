@@ -10,7 +10,6 @@ namespace Plush
 
 	/* generic functions */
 
-	// Need spcial cases for EXEC and CODE
 	template <typename T>
 	inline unsigned dup(Environment & _env)
 	{
@@ -207,7 +206,7 @@ namespace Plush
 
 				do
 				{
-					int blocks_open = 1;
+					int blocks_open = 0;
 
 					for (; n >= 0; n--)
 					{
@@ -240,7 +239,7 @@ namespace Plush
 
 				do
 				{
-					int blocks_open = 1;
+					int blocks_open = 0;
 
 					for (; n >= 0; n--)
 					{
@@ -526,7 +525,7 @@ namespace Plush
 		Utilities::FixedSizeStack<Atom> stack;
 
 		if (_env.has_elements<ExecAtom>(1))
-			_env.pop<ExecAtom>(stack, 1);
+			_env.pop<ExecAtom>(stack, 0);
 
 		return 1;
 	}
@@ -603,15 +602,6 @@ namespace Plush
 				};
 			} while (n >= 0);
 
-			//int B_paranethesis = extracted_block_B[extracted_block_B.size() - 1].close_parentheses;
-			//extracted_block_B[extracted_block_B.size() - 1].close_parentheses = extracted_block_C[extracted_block_C.size() - 1].close_parentheses;
-			//extracted_block_C[extracted_block_C.size() - 1].close_parentheses = B_paranethesis;
-
-			//extracted_block_C[extracted_block_C.size() - 1].close_parentheses =
-			//	extracted_block_C[extracted_block_C.size() - 1].close_parentheses == 0
-			//	? 1 
-			//	: extracted_block_C[extracted_block_C.size() - 1].close_parentheses;
-
 			_env.get_stack<CodeAtom>().clear();
 			_env.push<CodeAtom>(block_without_extracted);
 			_env.push<CodeAtom>(extracted_block_B);
@@ -627,8 +617,79 @@ namespace Plush
 	{
 		if (_env.has_elements<ExecAtom>(3))
 		{
-			_env.push<long>(2);
-			_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.YANK :close 0}"));
+			Utilities::FixedSizeStack<Atom> block_a;
+			Utilities::FixedSizeStack<Atom> block_b;
+			Utilities::FixedSizeStack<Atom> block_c;
+
+			unsigned int unmatched = 0;
+
+			unsigned int unmatched_a = _env.pop<ExecAtom>(block_a, 0);
+
+			if (unmatched_a > 0)
+			{
+				std::string noop = "{:instruction EXEC.NOOP :close " + std::to_string(unmatched_a) + "}";
+				_env.push<ExecAtom>(ExecAtom(noop));
+
+				Atom atom = block_a.top();
+				block_a.pop();
+
+				atom.close_parentheses = (atom.close_parentheses > unmatched_a) 
+					? atom.close_parentheses - unmatched_a 
+					: atom.close_parentheses;
+				block_a.push(atom);
+			}
+
+			_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+
+			unsigned int unmatched_b = _env.pop<ExecAtom>(block_b, 0);
+
+			if (unmatched_b > 0)
+			{
+				std::string noop = "{:instruction EXEC.NOOP :close " + std::to_string(unmatched_b) + "}";
+				_env.push<ExecAtom>(ExecAtom(noop));
+
+				Atom atom = block_b.top();
+				block_b.pop();
+
+				atom.close_parentheses = (atom.close_parentheses > unmatched_b)
+					? atom.close_parentheses - unmatched_b
+					: atom.close_parentheses;
+				block_b.push(atom);
+			}
+
+			_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+
+			unsigned int unmatched_c = _env.pop<ExecAtom>(block_c, 0);
+
+			if (unmatched_c > 0)
+			{
+				std::string noop = "{:instruction EXEC.NOOP :close " + std::to_string(unmatched_c) + "}";
+				_env.push<ExecAtom>(ExecAtom(noop));
+
+				Atom atom = block_c.top();
+				block_c.pop();
+
+				atom.close_parentheses = (atom.close_parentheses > unmatched_c)
+					? atom.close_parentheses - unmatched_c
+					: atom.close_parentheses;
+				block_c.push(atom);
+			}
+
+			unmatched = unmatched_c;
+
+			if ((block_a.size() > 0) && (block_b.size() > 0) && (block_c.size() > 0))
+			{
+				_env.push<ExecAtom>(block_b);
+				_env.push<ExecAtom>(block_a);
+				_env.push<ExecAtom>(block_c);
+			}
+
+			else
+			{
+				_env.push<ExecAtom>(block_c);
+				_env.push<ExecAtom>(block_b);
+				_env.push<ExecAtom>(block_a);
+			}
 		}
 
 		return 1;
@@ -786,7 +847,7 @@ namespace Plush
 
 				do
 				{
-					int blocks_open = 1;
+					int blocks_open = 0;
 
 					for (; n >= 0; n--)
 					{
@@ -803,7 +864,7 @@ namespace Plush
 
 							else
 							{
-								number_of_blocks++;
+								number_of_blocks += atom.close_parentheses;
 								blocks_open = 1;
 							}
 						}
@@ -814,7 +875,7 @@ namespace Plush
 				index = (index > (number_of_blocks - 1)) ? (number_of_blocks - 1) : index;
 
 				// Get the top block
-				_env.pop<ExecAtom>(extracted_block, 1);
+				_env.pop<ExecAtom>(extracted_block, 0);
 
 				// Get the target sub-block
 				n = stack.size() - 1;
@@ -822,7 +883,7 @@ namespace Plush
 
 				do
 				{
-					int blocks_open = 1;
+					int blocks_open = 0;
 
 					for (; n >= 0; n--)
 					{
@@ -845,7 +906,7 @@ namespace Plush
 
 							else
 							{
-								block_number++;
+								block_number += atom.close_parentheses;
 								blocks_open = 1;
 							}
 						}
@@ -954,59 +1015,55 @@ namespace Plush
 	{
 		if (_env.has_elements<ExecAtom>(2))
 		{
-			Utilities::FixedSizeStack<ExecAtom> &stack = _env.get_stack<ExecAtom>();
-			Utilities::FixedSizeStack<Atom> extracted_block_A;
-			Utilities::FixedSizeStack<Atom> extracted_block_B;
-			Utilities::FixedSizeStack<Atom> block_without_extracted;
+			Utilities::FixedSizeStack<Atom> block_a;
+			Utilities::FixedSizeStack<Atom> block_b;
 
-			// Get count of sub-blocks
-			int number_of_blocks = 0;
-			int n = stack.size() - 1;
+			unsigned int unmatched_a = _env.pop<ExecAtom>(block_a, 0);
 
-			n = stack.size() - 1;
-			int block_number = 0;
-
-			do
+			if (unmatched_a > 0)
 			{
-				int blocks_open = 1;
+				std::string noop = "{:instruction EXEC.NOOP :close " + std::to_string(unmatched_a) + "}";
+				_env.push<ExecAtom>(ExecAtom(noop));
 
-				for (; n >= 0; n--)
-				{
-					Plush::Atom atom = _env.pop<ExecAtom>(); //stack[n];
+				Atom atom = block_a.top();
+				block_a.pop();
 
-					if (block_number == 0)
-						extracted_block_A.push(atom);
+				atom.close_parentheses = (atom.close_parentheses > unmatched_a)
+					? atom.close_parentheses - unmatched_a
+					: atom.close_parentheses;
+				block_a.push(atom);
+			}
 
-					else if (block_number == 1)
-						extracted_block_B.push(atom);
+			_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 
-					else
-						block_without_extracted.push(atom);
+			unsigned int unmatched_b = _env.pop<ExecAtom>(block_b, 0);
 
-					blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
-					blocks_open -= atom.close_parentheses;
-					blocks_open = (blocks_open > 0) ? blocks_open : 0;
-
-					if (atom.close_parentheses > 0)
-					{
-						if (blocks_open > 0)
-							blocks_open++;
-
-						else
-						{
-							block_number++;
-							blocks_open = 1;
-						}
-					}
-				};
-			} while (n >= 0);
-
-			if ((extracted_block_A.size() > 0) && (extracted_block_B.size() > 0))
+			if (unmatched_b > 0)
 			{
-				_env.get_stack<ExecAtom>().clear();
-				_env.push<ExecAtom>(block_without_extracted);
-				_env.push<ExecAtom>(extracted_block_A);
-				_env.push<ExecAtom>(extracted_block_B);
+				std::string noop = "{:instruction EXEC.NOOP :close " + std::to_string(unmatched_b) + "}";
+				_env.push<ExecAtom>(ExecAtom(noop));
+
+				Atom atom = block_b.top();
+				block_b.pop();
+
+				atom.close_parentheses = (atom.close_parentheses > unmatched_b)
+					? atom.close_parentheses - unmatched_b
+					: atom.close_parentheses;
+				block_b.push(atom);
+			}
+
+			_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+
+			if ((block_a.size() > 0) && (block_b.size() > 0))
+			{
+				_env.push<ExecAtom>(block_a);
+				_env.push<ExecAtom>(block_b);
+			}
+
+			else
+			{
+				_env.push<ExecAtom>(block_b);
+				_env.push<ExecAtom>(block_a);
 			}
 		}
 

@@ -1,0 +1,41 @@
+( 2.0 3 EXEC.Y ( 2.0 FLOAT.* 1 INTEGER.- INTEGER.DUP 0 INTEGER.> EXEC.IF () (EXEC.POP ))) 
+       (EXEC.Y ( 2.0 FLOAT.* 1 INTEGER.- INTEGER.DUP 0 INTEGER.> EXEC.IF () (EXEC.POP )))
+
+( 2.0 3 EXEC.Y ( 2.0 FLOAT.* 1 INTEGER.- INTEGER.DUP 0 INTEGER.> EXEC.IF () (EXEC.POP
+
+( 2.0 3 EXEC.Y ( 2.0 FLOAT.* 1 INTEGER.- INTEGER.DUP 0 INTEGER.> EXEC.IF () (EXEC.POP ))) 
+
+2.0 3 EXEC.Y ( 2.0 FLOAT.* 1 INTEGER.- INTEGER.DUP 0 INTEGER.> EXEC.IF () (EXEC.POP ))
+
+EXEC.Y ( 2.0 FLOAT.* 1 INTEGER.- INTEGER.DUP 0 INTEGER.> EXEC.IF () (EXEC.POP ))
+
+(EXEC.Y ( 2.0 FLOAT.* 1 INTEGER.- INTEGER.DUP 0 INTEGER.> EXEC.IF () (EXEC.POP )))
+
+
+
+EXEC.IF () EXEC.POP )
+
+
+
+
+( 2.0 3 EXEC.Y ( 2.0 FLOAT.* 1 INTEGER.- INTEGER.DUP 0 INTEGER.> EXEC.IF () (EXEC.POP 1.0 FLOAT.-)) 
+       (EXEC.Y ( 2.0 FLOAT.* 1 INTEGER.- INTEGER.DUP 0 INTEGER.> EXEC.IF () (EXEC.POP 1.0 FLOAT.-))
+
+  A                            B            C        D   
+( (1.0 1.1 1.2)(2.0 2.1)(3.0))(4.0 4.1 4.2)(5.0 5.1)(6.0))
+
+ B            C           C         A
+((4.0 4.1 4.2)(5.0 5.1)) (5.0 5.1) ( (1.0 1.1 1.2)(2.0 2.1)(3.0))
+
+ A                              C          C         B              D
+( (1.0 1.1 1.2)(2.0 2.1)(3.0)) (5.0 5.1) ((5.0 5.1) (4.0 4.1 4.2)) (6.0))
+
+
+
+
+
+  A             B        C   
+( (1.0 1.1 1.2)(2.0 2.1)(3.0))
+
+ A            C     C     B        
+(1.0 1.1 1.2)(3.0) ((3.0)(2.0 2.1))

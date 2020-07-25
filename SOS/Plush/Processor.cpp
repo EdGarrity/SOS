@@ -58,17 +58,30 @@ namespace Plush
 				break;
 			case Atom::AtomType::ins:
 				// Push open parenthesis onto stack if instruction expects any blocks
+
 				int blocks_needed = Func2BlockWantsMap[atom.instruction];
 				int blocks_closed = atom.close_parentheses;
 
-				int blocks_to_close = (blocks_closed <= blocks_needed) ? blocks_closed : blocks_needed;
-
+				// Close expected blocks for each block the instruction is expecting if the instruction closes that block.
 				if (atom.instruction != "EXEC.NOOP")
 				{
 					if (atom.instruction.substr(0, 5) == "EXEC.")
 					{
-						for (int n = 0; n < blocks_to_close; n++)
-							env.push<ExecAtom>(ExecAtom("{:instruction EXEC.NOOP :close 1}"));
+						if (blocks_closed > 0)
+						{
+							std::string noop = "{:instruction EXEC.NOOP :close " + std::to_string(blocks_closed) + "}";
+							env.push<ExecAtom>(ExecAtom(noop));
+						}
+					}
+				}
+
+				// Open a block if instruction is expecting any blocks.
+				if (atom.instruction != "EXEC.NOOP_OPEN_PAREN")
+				{
+					if (atom.instruction.substr(0, 5) == "EXEC.")
+					{
+						if (blocks_needed > 0)
+							env.push<ExecAtom>(ExecAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 					}
 				}
 

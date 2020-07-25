@@ -1,5 +1,7 @@
 #pragma once
 #include <array>
+#include <stdexcept>
+#include <sstream>
 #include "..\PushGP\Globals.h"
 #include "..\Plush\Atom.h"
 
@@ -51,7 +53,13 @@ namespace Utilities
 		inline reference top()
 		{
 			if (top_ == 0)
-				throw;
+			{
+				std::stringstream error_message;
+				error_message << "Utilities::FixedSizeStack::top() - Stack empty.";
+
+				throw std::underflow_error(error_message.str());
+
+			}
 
 			return stack_[top_ - 1];
 		}
@@ -122,7 +130,6 @@ namespace Utilities
 
 			block_stack.clear();
 
-//			while (size() > 0)
 			for (int n = 0; n < size(); n++)
 			{
 				Plush::Atom atom = stack_[n];
@@ -150,6 +157,5 @@ namespace Utilities
 
 		// The containter for the stack
 		std::array<T, N> stack_;
-
 	};
 }

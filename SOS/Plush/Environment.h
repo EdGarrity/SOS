@@ -13,6 +13,7 @@ namespace Plush
 	class Environment
 	{
 	private:
+		// Stacks
 		Utilities::FixedSizeStack<class ExecAtom> exec_stack_;
 		Utilities::FixedSizeStack<class CodeAtom> code_stack_;
 		Utilities::FixedSizeStack<long> int_stack_;
@@ -20,6 +21,9 @@ namespace Plush
 		Utilities::FixedSizeStack<bool> bool_stack_;
 		
 	public:
+		// Keep track of the number of wanted blocks
+		unsigned int blocks_wanted;
+
 		virtual void clear_stacks()
 		{
 			exec_stack_.clear();
@@ -27,6 +31,8 @@ namespace Plush
 			code_stack_.clear();
 			bool_stack_.clear();
 			double_stack_.clear();
+
+			blocks_wanted = 0;
 		}
 
 		/* Operations */
@@ -119,6 +125,7 @@ namespace Plush
 			T val = get_stack<T>().top();
 			return val;
 		}
+
 		template <typename T>
 		inline int top(Utilities::FixedSizeStack<Atom> &stack, unsigned int open_blocks)
 		{
@@ -160,7 +167,54 @@ namespace Plush
 				return true;
 		}
 
-		// Need spcial cases for EXEC and CODE
+		template <>
+		inline bool has_elements<ExecAtom>(unsigned sz)
+		{
+			if (get_stack<ExecAtom>().size() < sz)
+				return false;
+
+			else
+			{
+				Utilities::FixedSizeStack<ExecAtom> &stack = get_stack<ExecAtom>();
+
+				// Get count of sub-blocks
+				int number_of_blocks = 0;
+				int n = stack.size() - 1;
+
+				do
+				{
+					int blocks_open = 0;
+
+					for (; n >= 0; n--)
+					{
+						Plush::Atom atom = stack[n];
+
+						blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+						blocks_open -= atom.close_parentheses;
+						blocks_open = (blocks_open > 0) ? blocks_open : 0;
+
+						if (atom.close_parentheses > 0)
+						{
+							if (blocks_open > 0)
+								blocks_open++;
+
+							else
+							{
+								number_of_blocks += atom.close_parentheses;
+								blocks_open = 1;
+							}
+						}
+					};
+				} while (n >= 0);
+
+				if (number_of_blocks < sz)
+					return false;
+
+				else
+					return true;
+			}
+		}
+
 		template <typename T>
 		inline T peek_index(unsigned index)
 		{
