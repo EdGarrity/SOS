@@ -59,7 +59,7 @@ namespace Plush
 				_env.push<long>(i + direction);
 				_env.push<long>(n);
 
-				int unmatched_a = _env.pop<ExecAtom>(code_block, 0);
+				int unmatched_a = _env.pop<ExecAtom>(code_block, 1);
 
 				_env.push<ExecAtom>(code_block);
 				_env.push<ExecAtom>(code_block);
@@ -86,7 +86,7 @@ namespace Plush
 			bool done = false;
 			bool s = _env.pop<bool>();
 			unsigned int unmatched = 0;
-			unsigned int unmatched_a = _env.pop<ExecAtom>(block_a, 0);
+			unsigned int unmatched_a = _env.pop<ExecAtom>(block_a, 1);
 			unsigned int unmatched_b = 0;
 
 			if (unmatched_a > 0)
@@ -95,8 +95,8 @@ namespace Plush
 				_env.push<ExecAtom>(ExecAtom(noop));
 			}
 
-			_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
-			unmatched_b = _env.pop<ExecAtom>(block_b, 0);
+//			_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+			unmatched_b = _env.pop<ExecAtom>(block_b, 1);
 			unmatched = unmatched_b;
 
 			if (s)
@@ -167,7 +167,7 @@ namespace Plush
 				_env.push<long>(0);
 				_env.push<long>(n - 1);
 
-				_env.pop<ExecAtom>();
+//				_env.pop<ExecAtom>();
 				_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.DO*RANGE :close 0}"));
 			}
 		}
@@ -273,7 +273,7 @@ namespace Plush
 
 			unsigned int unmatched = 0;
 
-			unsigned int unmatched_a = _env.pop<ExecAtom>(block_a, 0);
+			unsigned int unmatched_a = _env.pop<ExecAtom>(block_a, 1);
 
 			if (unmatched_a > 0)
 			{
@@ -289,9 +289,9 @@ namespace Plush
 				block_a.push(atom);
 			}
 
-			_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+//			_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 
-			unsigned int unmatched_b = _env.pop<ExecAtom>(block_b, 0);
+			unsigned int unmatched_b = _env.pop<ExecAtom>(block_b, 1);
 
 			if (unmatched_b > 0)
 			{
@@ -307,9 +307,9 @@ namespace Plush
 				block_b.push(atom);
 			}
 
-			_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+//			_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 
-			unsigned int unmatched_c = _env.pop<ExecAtom>(block_c, 0);
+			unsigned int unmatched_c = _env.pop<ExecAtom>(block_c, 1);
 
 			if (unmatched_c > 0)
 			{
@@ -998,15 +998,21 @@ namespace Plush
 			Utilities::FixedSizeStack<Atom> block_copy;
 
 			// Get first block from stack
-			_env.pop<CodeAtom>(top_block_1, 2);
+			_env.pop<CodeAtom>(top_block_1, 1);
 
 			// Get second block from stack
 			_env.pop<CodeAtom>(top_block_2, 1);
+
+			int number_of_blocks = _env.NumberOfBlocks(top_block_1);
+
+			// Take modulo the number of blocks to ensure that it is within the meaningful range.
+			index = std::abs(index % number_of_blocks);
 
 			if (index == 0)
 			{
 				_env.push<CodeAtom>(top_block_1);
 				_env.push<CodeAtom>(top_block_2);
+				_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 			}
 
 			else
@@ -1015,43 +1021,40 @@ namespace Plush
 				block_copy = top_block_1;
 
 				// Get count of sub-blocks
-				int number_of_blocks = 0;
-				int n = 0;
+				//int number_of_blocks = 0;
+				//int n = 0;
 
-				do
-				{
-					int blocks_open = 2;
+				//do
+				//{
+				//	int blocks_open = 2;
 
-					for (; n < top_block_1.size(); n++)
-					{
-						Plush::Atom atom = top_block_1[n];
+				//	for (; n < top_block_1.size(); n++)
+				//	{
+				//		Plush::Atom atom = top_block_1[n];
 
-						blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
-						blocks_open -= atom.close_parentheses;
+				//		blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+				//		blocks_open -= atom.close_parentheses;
 
-						if ((atom.close_parentheses > 0) && (blocks_open > 0))
-						{
-							blocks_open++;
-							number_of_blocks++;
-						}
+				//		if ((atom.close_parentheses > 0) && (blocks_open > 0))
+				//		{
+				//			blocks_open++;
+				//			number_of_blocks++;
+				//		}
 
-						if (blocks_open <= 0)
-							break;
-					};
+				//		if (blocks_open <= 0)
+				//			break;
+				//	};
 
-					if (blocks_open <= 0)
-						break;
+				//	if (blocks_open <= 0)
+				//		break;
 
-				} while (n < top_block_1.size());
-
-				// Take modulo the number of blocks to ensure that it is within the meaningful range.
-				index = std::abs(index % number_of_blocks);
+				//} while (n < top_block_1.size());
 
 				// Restore sub-block from copy
 				top_block_1 = block_copy;
 
 				// Get the target sub-block
-				n = 0;
+				int n = 0;
 				int block_number = 0;
 
 				do
@@ -1107,40 +1110,42 @@ namespace Plush
 			_env.pop<CodeAtom>(top_block, 1);
 
 			// Get count of sub-blocks
-			int number_of_blocks = 0;
-			int n = 0;
+			//int number_of_blocks = 0;
+			//int n = 0;
 
-			do
-			{
-				int blocks_open = 1;
+			//do
+			//{
+			//	int blocks_open = 1;
 
-				for (; n < top_block.size(); n++)
-				{
-					Plush::Atom atom = top_block[n];
+			//	for (; n < top_block.size(); n++)
+			//	{
+			//		Plush::Atom atom = top_block[n];
 
-					blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
-					blocks_open -= atom.close_parentheses;
+			//		blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+			//		blocks_open -= atom.close_parentheses;
 
-					if (atom.close_parentheses > 0)
-					{
-						if (blocks_open <= 1)
-							number_of_blocks++;
+			//		if (atom.close_parentheses > 0)
+			//		{
+			//			if (blocks_open <= 1)
+			//				number_of_blocks++;
 
-						if (blocks_open > 0)
-							blocks_open++;
-					}
+			//			if (blocks_open > 0)
+			//				blocks_open++;
+			//		}
 
-					else if (blocks_open <= 1)
-						number_of_blocks++;
+			//		else if (blocks_open <= 1)
+			//			number_of_blocks++;
 
-					if (blocks_open <= 0)
-						break;
-				};
+			//		if (blocks_open <= 0)
+			//			break;
+			//	};
 
-				if (blocks_open <= 0)
-					break;
+			//	if (blocks_open <= 0)
+			//		break;
 
-			} while (n < top_block.size());
+			//} while (n < top_block.size());
+
+			int number_of_blocks = _env.NumberOfBlocks(top_block);
 
 			_env.push<long>(number_of_blocks);
 		}
@@ -1350,6 +1355,7 @@ namespace Plush
 		return 1;
 	}
 
+	// Need to impliment multilevel detection
 	unsigned code_nthcdr(Environment & _env)
 	{
 		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
@@ -1357,105 +1363,61 @@ namespace Plush
 			int index = std::abs(_env.pop<long>());	// index
 
 			Utilities::FixedSizeStack<Atom> top_block;
-			Utilities::FixedSizeStack<Atom> extracted_block;
+			Utilities::FixedSizeStack<Atom> excluded_code;
 			Utilities::FixedSizeStack<Atom> extracted_block_cdr;
-			Utilities::FixedSizeStack<Atom> block_without_extracted;
-			Utilities::FixedSizeStack<Atom> block_copy;
+			Utilities::FixedSizeStack<Atom> included_code;
 
 			if (index != 0)
 			{
 				// Get first block from stack
 				_env.pop<CodeAtom>(top_block, 1);
 
-				// Save copy of the top block.
-				block_copy = top_block;
-
 				// Get count of sub-blocks
-				int number_of_blocks = 0;
-				int n = 0;
-
-				do
-				{
-					int blocks_open = 1;
-
-					for (; n < top_block.size(); n++)
-					{
-						Plush::Atom atom = top_block[n];
-
-						blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
-						blocks_open -= atom.close_parentheses;
-
-						if (atom.close_parentheses > 0)
-						{
-							if (blocks_open > 0)
-								blocks_open++;
-
-							number_of_blocks++;
-						}
-
-						if (blocks_open <= 0)
-							break;
-					};
-
-					if (blocks_open <= 0)
-						break;
-
-				} while (n < top_block.size());
+				int number_of_blocks = _env.NumberOfBlocks(top_block);
 
 				// Take modulo the number of blocks to ensure that it is within the meaningful range.
 				index = (std::abs(index) - 1) % number_of_blocks;
 
-				// Restore sub-block from copy
-				top_block = block_copy;
-
 				// Get the target sub-block
-				n = 0;
+				int n = 0;
 				int block_number = 0;
 
 				do
 				{
-					int blocks_open = 1;
-					bool first_element_of_block = false;
+					int blocks_level = 1;
 
 					for (; n < top_block.size(); n++)
 					{
 						Plush::Atom atom = top_block[n];
 
-						if (Plush::Func2BlockWantsMap[atom.instruction] > 0)
-							first_element_of_block = true;
-
-						if ((block_number == index) && (!first_element_of_block))
-							extracted_block.push(atom);
+						if (block_number <= index)
+							excluded_code.push(atom);
 
 						else
-							block_without_extracted.push(atom);
+							included_code.push(atom);
 
-						first_element_of_block = false;
-
-						blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
-						blocks_open -= atom.close_parentheses;
+						blocks_level += Plush::Func2BlockWantsMap[atom.instruction];
+						blocks_level -= atom.close_parentheses;
 
 						if (atom.close_parentheses > 0)
 						{
-							if (blocks_open > 0)
-								blocks_open++;
-
-							block_number++;
+							if (blocks_level == 1)
+								block_number++;
 						}
 
-						if (blocks_open <= 0)
+						if (blocks_level <= 0)
 							break;
 					};
 
-					if (blocks_open <= 0)
+					if (blocks_level <= 0)
 						break;
 
 				} while ((block_number < number_of_blocks) && (n < top_block.size()));
 
-				if (extracted_block.size() > 1)
+				if (included_code.size() > 1)
 				{
-					for (int n = 1; n < extracted_block.size(); n++)
-						extracted_block_cdr.push(extracted_block[n]);
+					for (int n = 1; n < excluded_code.size(); n++)
+						extracted_block_cdr.push(included_code[n]);
 
 					_env.push<CodeAtom>(extracted_block_cdr);
 				}
@@ -1732,6 +1694,7 @@ namespace Plush
 		set_parentheses("EXEC", "DO*RANGE", 1);
 		set_parentheses("EXEC", "DO*TIMES", 1);
 		set_parentheses("EXEC", "DUP", 1);
+		set_parentheses("EXEC", "=", 2);
 		set_parentheses("EXEC", "IF", 2);
 		set_parentheses("EXEC", "K", 2);
 		set_parentheses("EXEC", "NOOP_OPEN_PAREN", 1);
@@ -1772,7 +1735,7 @@ namespace Plush
 		make_instruction((Operator)code_size, "CODE", "SIZE");
 		make_instruction((Operator)code_subst, "CODE", "SUBST");
 
-		set_parentheses("CODE", "NOOP_OPEN_PAREN", 1);
+//		set_parentheses("CODE", "NOOP_OPEN_PAREN", 1);
 		set_parentheses("CODE", "QUOTE", 1);
 	}
 }

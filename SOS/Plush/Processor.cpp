@@ -75,15 +75,15 @@ namespace Plush
 					}
 				}
 
-				// Open a block if instruction is expecting any blocks.
-				if (atom.instruction != "EXEC.NOOP_OPEN_PAREN")
-				{
-					if (atom.instruction.substr(0, 5) == "EXEC.")
-					{
-						if (blocks_needed > 0)
-							env.push<ExecAtom>(ExecAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
-					}
-				}
+				//// Open a block if instruction is expecting any blocks.
+				//if (atom.instruction != "EXEC.NOOP_OPEN_PAREN")
+				//{
+				//	if (atom.instruction.substr(0, 5) == "EXEC.")
+				//	{
+				//		if (blocks_needed > 0)
+				//			env.push<ExecAtom>(ExecAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+				//	}
+				//}
 
 				// Execute the instruction
 				auto search = Func2CodeMap.find(atom.instruction);

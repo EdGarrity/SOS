@@ -124,26 +124,26 @@ namespace Utilities
 		}
 
 		// Returns the top block from the stack
-		inline size_t pop_block(FixedSizeStack<Plush::Atom> &block_stack)
-		{
-			int blocks_open = 1;
+		//inline size_t pop_block(FixedSizeStack<Plush::Atom> &block_stack)
+		//{
+		//	int blocks_open = 1;
 
-			block_stack.clear();
+		//	block_stack.clear();
 
-			for (int n = 0; n < size(); n++)
-			{
-				Plush::Atom atom = stack_[n];
-				block_stack.push(atom);
+		//	for (int n = 0; n < size(); n++)
+		//	{
+		//		Plush::Atom atom = stack_[n];
+		//		block_stack.push(atom);
 
-				blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
-				blocks_open -= atom.close_parentheses;
+		//		blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+		//		blocks_open -= atom.close_parentheses;
 
-				if (blocks_open <= 0)
-					break;
-			};
+		//		if (blocks_open <= 0)
+		//			break;
+		//	};
 
-			return (block_stack.size());
-		}
+		//	return (block_stack.size());
+		//}
 
 		// Returns a reference to the underlying container
 		inline std::array<T, N>& container()

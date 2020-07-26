@@ -35,6 +35,81 @@ namespace Plush
 			blocks_wanted = 0;
 		}
 
+		/* Helper Functions */
+		unsigned int NumberOfBlocks(Utilities::FixedSizeStack<Atom> &stack)
+		{
+			// Get count of sub-blocks
+			int number_of_blocks = 0;
+			int n = stack.size() - 1;
+
+			do
+			{
+				int blocks_open = 0;
+
+				for (; n >= 0; n--)
+				{
+					Plush::Atom atom = stack[n];
+
+					int closing = atom.close_parentheses - Plush::Func2BlockWantsMap[atom.instruction];
+
+					if ((closing > 0) && (blocks_open == 0))
+						number_of_blocks += atom.close_parentheses;
+
+					blocks_open -= closing;
+					blocks_open = (blocks_open > 0) ? blocks_open : 0;
+				};
+			} while (n >= 0);
+
+			return number_of_blocks;
+		}
+
+		template <typename T>
+		unsigned int NumberOfBlocks(unsigned int block_level)
+		{
+			Utilities::FixedSizeStack<T> &stack = get_stack<T>();
+
+			// Get count of sub-blocks
+			int number_of_blocks = 0;
+			int n = stack.size() - 1;
+
+			do
+			{
+				int blocks_open = block_level;
+
+				for (; n >= 0; n--)
+				{
+					Plush::Atom atom = stack[n];
+
+					//blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+					//blocks_open -= atom.close_parentheses;
+					//blocks_open = (blocks_open > 0) ? blocks_open : 0;
+
+					//if (atom.close_parentheses > 0)
+					//{
+					//	if (blocks_open > 0)
+					//		blocks_open++;
+
+					//	else
+					//	{
+					//		number_of_blocks += atom.close_parentheses;
+					//		blocks_open = block_level;
+					//	}
+					//}
+
+
+					int closing = atom.close_parentheses - Plush::Func2BlockWantsMap[atom.instruction];
+
+					if ((closing > 0) && (blocks_open == 0))
+						number_of_blocks += atom.close_parentheses;
+
+					blocks_open -= closing;
+					blocks_open = (blocks_open > 0) ? blocks_open : 0;
+				};
+			} while (n >= 0);
+
+			return number_of_blocks;
+		}
+
 		/* Operations */
 		template <typename T> inline Utilities::FixedSizeStack<T> &get_stack() { }
 		template <> inline Utilities::FixedSizeStack<ExecAtom> &get_stack()
@@ -75,8 +150,6 @@ namespace Plush
 		template <class T>
 		inline void push(Utilities::FixedSizeStack<Atom> stack)
 		{
-			//for (int n = 0; n < stack.size(); n++)
-			//	get_stack<T>().push(stack[n]);
 			if (stack.size() > 0)
 				for (int n = stack.size() - 1; n >= 0; n--)
 					get_stack<T>().push(stack[n]);
@@ -93,7 +166,7 @@ namespace Plush
 		template <typename T> 
 		inline int pop(Utilities::FixedSizeStack<Atom> &stack, unsigned int open_blocks)
 		{
-			int blocks_open = open_blocks;
+			int block_count = open_blocks;
 
 			stack.clear();
 
@@ -103,19 +176,19 @@ namespace Plush
 				get_stack<T>().pop();
 				stack.push(atom);
 
-				blocks_open += Func2BlockWantsMap[atom.instruction];
-				blocks_open -= atom.close_parentheses;
+				block_count += Func2BlockWantsMap[atom.instruction];
+				block_count -= atom.close_parentheses;
 
-				if ((atom.close_parentheses > 0) && (blocks_open > 0))
-					blocks_open++;
+				//if ((atom.close_parentheses > 0) && (block_count > 0))
+				//	block_count++;
 
-				if (blocks_open <= 0)
+				if (block_count <= 0)
 					break;
 			};
 			
-			blocks_open *= -1;
+			block_count *= -1;
 
-			return blocks_open; // Return number of unmatched close parenthesis.
+			return block_count; // Return number of unmatched close parenthesis.
 		}
 
 		// Need spcial cases for EXEC and CODE
@@ -175,39 +248,45 @@ namespace Plush
 
 			else
 			{
-				Utilities::FixedSizeStack<ExecAtom> &stack = get_stack<ExecAtom>();
+				//Utilities::FixedSizeStack<ExecAtom> &stack = get_stack<ExecAtom>();
 
-				// Get count of sub-blocks
-				int number_of_blocks = 0;
-				int n = stack.size() - 1;
+				//// Get count of sub-blocks
+				//int number_of_blocks = 0;
+				//int n = stack.size() - 1;
 
-				do
-				{
-					int blocks_open = 0;
+				//do
+				//{
+				//	int blocks_open = 0;
 
-					for (; n >= 0; n--)
-					{
-						Plush::Atom atom = stack[n];
+				//	for (; n >= 0; n--)
+				//	{
+				//		Plush::Atom atom = stack[n];
 
-						blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
-						blocks_open -= atom.close_parentheses;
-						blocks_open = (blocks_open > 0) ? blocks_open : 0;
+				//		blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+				//		blocks_open -= atom.close_parentheses;
+				//		blocks_open = (blocks_open > 0) ? blocks_open : 0;
 
-						if (atom.close_parentheses > 0)
-						{
-							if (blocks_open > 0)
-								blocks_open++;
+				//		if (atom.close_parentheses > 0)
+				//		{
+				//			if (blocks_open > 0)
+				//				blocks_open++;
 
-							else
-							{
-								number_of_blocks += atom.close_parentheses;
-								blocks_open = 1;
-							}
-						}
-					};
-				} while (n >= 0);
+				//			else
+				//			{
+				//				number_of_blocks += atom.close_parentheses;
+				//				blocks_open = 1;
+				//			}
+				//		}
+				//	};
+				//} while (n >= 0);
 
-				if (number_of_blocks < sz)
+				//if (number_of_blocks < sz)
+				//	return false;
+
+				//else
+				//	return true;
+
+				if (NumberOfBlocks<ExecAtom>(0) < sz)
 					return false;
 
 				else
