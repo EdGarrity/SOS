@@ -1366,6 +1366,7 @@ namespace Plush
 			Utilities::FixedSizeStack<Atom> excluded_code;
 			Utilities::FixedSizeStack<Atom> extracted_block_cdr;
 			Utilities::FixedSizeStack<Atom> included_code;
+			Utilities::FixedSizeStack<long> wanted_stack;
 
 			if (index != 0)
 			{
@@ -1381,11 +1382,10 @@ namespace Plush
 				// Get the target sub-block
 				int n = 0;
 				int block_number = 0;
+				int blocks_wanted = 0;
 
 				do
 				{
-					int blocks_level = 1;
-
 					for (; n < top_block.size(); n++)
 					{
 						Plush::Atom atom = top_block[n];
@@ -1396,21 +1396,29 @@ namespace Plush
 						else
 							included_code.push(atom);
 
-						blocks_level += Plush::Func2BlockWantsMap[atom.instruction];
-						blocks_level -= atom.close_parentheses;
+						if ((atom.close_parentheses > 0) && (wanted_stack.size() == 0))
+							block_number += atom.close_parentheses;
 
-						if (atom.close_parentheses > 0)
+						int new_blocks_wanted = Plush::Func2BlockWantsMap[atom.instruction] - atom.close_parentheses;
+
+						if (new_blocks_wanted > 0)
 						{
-							if (blocks_level == 1)
-								block_number++;
+							wanted_stack.push(blocks_wanted);
+							blocks_wanted = new_blocks_wanted;
 						}
 
-						if (blocks_level <= 0)
-							break;
-					};
+						while (new_blocks_wanted < 0)
+						{
+							new_blocks_wanted++;
+							blocks_wanted--;
 
-					if (blocks_level <= 0)
-						break;
+							if (blocks_wanted == 0)
+							{
+								blocks_wanted = wanted_stack.top();
+								wanted_stack.pop();
+							}
+						}
+					};
 
 				} while ((block_number < number_of_blocks) && (n < top_block.size()));
 
