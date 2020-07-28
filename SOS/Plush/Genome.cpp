@@ -6,6 +6,9 @@
 
 namespace Plush
 {
+	typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
+	extern Func2BlockWantsMapType Func2BlockWantsMap;
+
 	// Purpose: 
 	//   Default Constructor
 	//
@@ -454,5 +457,48 @@ namespace Plush
 			genome_string_ += "}";
 		}
 	}
+
+	//unsigned int Genome::CodeLength(Utilities::FixedSizeStack<Atom> &stack)
+	//{
+	//	unsigned int item_number = 0;
+	//	unsigned int n = stack.size() - 1;
+	//	unsigned int wanted_blocks = 0;
+
+	//	std::stack<unsigned int> wanted_stack;
+
+	//	do
+	//	{
+	//		for (; n >= 0; n--)
+	//		{
+	//			Plush::Atom atom = stack[n];
+
+	//			int closing = atom.close_parentheses - Func2BlockWantsMap[atom.instruction];
+
+	//			if (closing < 0)
+	//			{
+	//				wanted_stack.push(wanted_blocks);
+	//				wanted_blocks = 0 - closing;
+	//			}
+
+	//			if (closing > 0)
+	//			{
+	//				wanted_blocks > 0 ? --wanted_blocks : 0;
+	//			}
+
+	//			if (wanted_blocks == 0)
+	//			{
+	//				if (wanted_stack.size() > 0)
+	//				{
+	//					wanted_blocks = wanted_stack.top();
+	//					wanted_stack.pop();
+	//				}
+
+	//				item_number++;
+	//			}
+	//		};
+	//	} while (n >= 0);
+
+	//	return item_number;
+	//}
 
 }

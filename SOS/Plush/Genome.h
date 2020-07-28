@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+//#include "..\Utilities\FixedSizeStack.h"
 #include "Atom.h"
 
 namespace Plush
@@ -68,5 +69,6 @@ namespace Plush
 		//{
 		//	return points_;
 		//}
+
 	};
 }

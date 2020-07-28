@@ -2500,6 +2500,8 @@ namespace UnitTest
 					CodeAtom("{:instruction CODE.NTHCDR :close 1}"),
 					CodeAtom("{:instruction 1 :close 1}"),
 					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
 				}));
 		}
 
@@ -2527,6 +2529,8 @@ namespace UnitTest
 					CodeAtom("{:instruction 3.0 :close 2}"),
 					CodeAtom("{:instruction 2.1 :close 1}"),
 					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
 				}));
 		}
 
@@ -2553,6 +2557,11 @@ namespace UnitTest
 					CodeAtom("{:instruction CODE.NTHCDR :close 1}"),
 					CodeAtom("{:instruction 2 :close 1}"),
 					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
 				}));
 		}
 
@@ -2578,6 +2587,9 @@ namespace UnitTest
 				{
 					CodeAtom("{:instruction CODE.NTHCDR :close 1}"),
 					CodeAtom("{:instruction 3 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
 				}));
 		}
 
