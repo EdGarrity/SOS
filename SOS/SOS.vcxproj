@@ -156,13 +156,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Database\SQLCommand.h" />
-    <ClInclude Include="Database\SQLConnection.h" />
-    <ClInclude Include="Database\SQLField.h" />
     <ClInclude Include="Domain\Arguments.h" />
     <ClInclude Include="Domain\Learn From Examples\Arguments.h" />
-    <ClInclude Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.h" />
-    <ClInclude Include="Domain\Learn From Examples\Run.LearnFromExamples.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Plush\Atom.h" />
     <ClInclude Include="Plush\Environment.h" />
@@ -184,23 +179,6 @@
     <ClInclude Include="PushGP\Selection.h" />
     <ClInclude Include="PushGP\SimulatedAnnealing.h" />
     <ClInclude Include="PushGP\Utilities.h" />
-    <ClInclude Include="PushP\BoolOps.h" />
-    <ClInclude Include="PushP\Code.h" />
-    <ClInclude Include="PushP\CodeBasePtr.h" />
-    <ClInclude Include="PushP\CodeOps.h" />
-    <ClInclude Include="PushP\CodeUtils.h" />
-    <ClInclude Include="PushP\Env.h" />
-    <ClInclude Include="PushP\ExecInstruction.h" />
-    <ClInclude Include="PushP\Instruction.h" />
-    <ClInclude Include="PushP\Literal.h" />
-    <ClInclude Include="PushP\NumOps.h" />
-    <ClInclude Include="PushP\RandOps.h" />
-    <ClInclude Include="PushP\RNG.h" />
-    <ClInclude Include="PushP\StaticInit.h" />
-    <ClInclude Include="PushP\StaticLibMacros.h" />
-    <ClInclude Include="PushP\Type.h" />
-    <ClInclude Include="PushP\TypedAtom.h" />
-    <ClInclude Include="PushP\TypeDef.h" />
     <ClInclude Include="Utilities\AtomicFunctions.h" />
     <ClInclude Include="Utilities\Conversion.h" />
     <ClInclude Include="Utilities\CoreTemp\GetCoreTempInfo.h" />
@@ -213,11 +191,6 @@
     <ClInclude Include="Utilities\Singleton.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Database\SQLCommand.cpp" />
-    <ClCompile Include="Database\SQLConnection.cpp" />
-    <ClCompile Include="Database\SQLField.cpp" />
-    <ClCompile Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.cpp" />
-    <ClCompile Include="Domain\Learn From Examples\Run.LearnFromExamples.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -243,19 +216,6 @@
     <ClCompile Include="PushGP\Selection.cpp" />
     <ClCompile Include="PushGP\SimulatedAnnealing.cpp" />
     <ClCompile Include="PushGP\Utilities.cpp" />
-    <ClCompile Include="PushP\BooleanInstructions.cpp" />
-    <ClCompile Include="PushP\Code.cpp" />
-    <ClCompile Include="PushP\CodeInstructions.cpp" />
-    <ClCompile Include="PushP\CodeOps.cpp" />
-    <ClCompile Include="PushP\CodeUtils.cpp" />
-    <ClCompile Include="PushP\Env.cpp" />
-    <ClCompile Include="PushP\ExecInstructions.cpp" />
-    <ClCompile Include="PushP\FloatInstructions.cpp" />
-    <ClCompile Include="PushP\Instruction.cpp" />
-    <ClCompile Include="PushP\IntegerInstructions.cpp" />
-    <ClCompile Include="PushP\Literal.cpp" />
-    <ClCompile Include="PushP\StaticInit.cpp" />
-    <ClCompile Include="PushP\Type.cpp" />
     <ClCompile Include="Utilities\AtomicFunctions.cpp" />
     <ClCompile Include="Utilities\Conversion.cpp" />
     <ClCompile Include="Utilities\FixedSizeStack.cpp" />

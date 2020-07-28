@@ -3,6 +3,7 @@
 //#include "Processor.h"
 #include "Atom.h"
 #include <vector>
+#include <map>
 #include "..\Utilities\FixedSizeStack.h"
 
 namespace Plush

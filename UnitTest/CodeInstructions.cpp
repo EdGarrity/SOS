@@ -115,7 +115,7 @@ namespace UnitTest
 					{:instruction CODE.ATOM :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, {}, {}, { TRUE }, {},
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
 				{
 				}));
 		}
@@ -131,7 +131,7 @@ namespace UnitTest
 					{:instruction CODE.ATOM :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, {}, {}, { TRUE }, {},
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
 				{
 					CodeAtom("{:instruction CODE.ATOM :close 0}")
 				}));
@@ -148,7 +148,7 @@ namespace UnitTest
 					{:instruction CODE.ATOM :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, {}, {}, { FALSE }, {},
+			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
 				{
 				}));
 		}
@@ -517,7 +517,7 @@ namespace UnitTest
 					{:instruction CODE.CONTAINS :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, {}, {}, { TRUE }, {},
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
 				{
 					CodeAtom("{:instruction CODE.CONTAINS :close 0}")
 				}));
@@ -539,7 +539,7 @@ namespace UnitTest
 					{:instruction CODE.CONTAINS :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, {}, {}, { FALSE }, {},
+			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
 				{
 					CodeAtom("{:instruction CODE.CONTAINS :close 0}")
 				}));
@@ -1450,15 +1450,15 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction FALSE :close 1}\
+					{:instruction false :close 1}\
 					{:instruction CODE.FROMBOOLEAN :close 1}\
 				");
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.FROMBOOLEAN :close 1}"),
-					CodeAtom("{:instruction FALSE :close 1}"),
-					CodeAtom("{:instruction FALSE :close 1}"),
+					CodeAtom("{:instruction false :close 1}"),
+					CodeAtom("{:instruction false :close 1}"),
 				}));
 		}
 
@@ -1469,17 +1469,17 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction FALSE :close 1}\
-					{:instruction TRUE :close 1}\
+					{:instruction false :close 1}\
+					{:instruction true :close 1}\
 					{:instruction CODE.FROMBOOLEAN :close 1}\
 				");
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
 				{
 					CodeAtom("{:instruction CODE.FROMBOOLEAN :close 1}"),
-					CodeAtom("{:instruction TRUE :close 1}"),
-					CodeAtom("{:instruction FALSE :close 1}"),
-					CodeAtom("{:instruction TRUE :close 1}"),
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction false :close 1}"),
+					CodeAtom("{:instruction true :close 1}"),
 				}));
 		}
 
@@ -1642,11 +1642,11 @@ namespace UnitTest
 					{:instruction 10 :close 0}\
 					{:instruction 10 :close 0}\
 					{:instruction INTEGER.+ :close 1}\
-					{:instruction FALSE :close 0}\
+					{:instruction false :close 0}\
 					{:instruction CODE.IF :close 1}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 20 }, {}, { FALSE }, {},
+			Assert::IsTrue(is_stack_state(env, { 20 }, {}, { false }, {},
 				{
 				}));
 		}
@@ -1661,7 +1661,7 @@ namespace UnitTest
 					{:instruction 10 :close 0}\
 					{:instruction 10 :close 0}\
 					{:instruction INTEGER.+ :close 2}\
-					{:instruction TRUE :close 0}\
+					{:instruction true :close 0}\
 					{:instruction CODE.IF :close 0}\
 				");
 
@@ -1680,7 +1680,7 @@ namespace UnitTest
 					{:instruction 10 :close 0}\
 					{:instruction 10 :close 0}\
 					{:instruction INTEGER.+ :close 1}\
-					{:instruction TRUE :close 0}\
+					{:instruction true :close 0}\
 					{:instruction CODE.IF :close 1}\
 				");
 
@@ -1699,7 +1699,7 @@ namespace UnitTest
 					{:instruction 10 :close 0}\
 					{:instruction 10 :close 0}\
 					{:instruction INTEGER.+ :close 2}\
-					{:instruction FALSE :close 0}\
+					{:instruction false :close 0}\
 					{:instruction CODE.IF :close 0}\
 				");
 
@@ -1718,7 +1718,7 @@ namespace UnitTest
 					{:instruction 10 :close 0}\
 					{:instruction 10 :close 0}\
 					{:instruction INTEGER.+ :close 2}\
-					{:instruction TRUE :close 0}\
+					{:instruction true :close 0}\
 					{:instruction CODE.IF :close 2}\
 				");
 
@@ -1740,14 +1740,14 @@ namespace UnitTest
 					{:instruction 20 :close 0}\
 					{:instruction 10 :close 0}\
 					{:instruction INTEGER.+ :close 1}\
-					{:instruction TRUE :close 0}\
+					{:instruction true :close 0}\
 					{:instruction CODE.IF :close 0}\
 				");
 
 			Assert::IsTrue(is_stack_state(env, { 20, 30, 20 }, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.IF :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
+					CodeAtom("{:instruction true :close 0}"),
 				}));
 		}
 
@@ -1764,14 +1764,14 @@ namespace UnitTest
 					{:instruction 20 :close 0}\
 					{:instruction 10 :close 0}\
 					{:instruction INTEGER.+ :close 1}\
-					{:instruction FALSE :close 0}\
+					{:instruction false :close 0}\
 					{:instruction CODE.IF :close 0}\
 				");
 
 			Assert::IsTrue(is_stack_state(env, { 20, 30, 30 }, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.IF :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
+					CodeAtom("{:instruction false :close 0}"),
 				}));
 		}
 
@@ -2254,7 +2254,7 @@ namespace UnitTest
 					{:instruction CODE.MEMBER :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, {}, {}, { TRUE }, {},
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
 				{
 					CodeAtom("{:instruction CODE.MEMBER :close 0}")
 				}));
@@ -2276,7 +2276,7 @@ namespace UnitTest
 					{:instruction CODE.MEMBER :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, {}, {}, { FALSE }, {},
+			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
 				{
 					CodeAtom("{:instruction CODE.MEMBER :close 0}")
 				}));
@@ -2604,7 +2604,7 @@ namespace UnitTest
 					{:instruction CODE.NULL :close 1}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 0 }, {}, { FALSE }, {},
+			Assert::IsTrue(is_stack_state(env, { 0 }, {}, { false }, {},
 				{
 					CodeAtom("{:instruction CODE.NULL :close 1}"),
 				}));
@@ -2622,7 +2622,7 @@ namespace UnitTest
 					{:instruction CODE.NULL :close 1}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 0 }, {}, { TRUE }, {},
+			Assert::IsTrue(is_stack_state(env, { 0 }, {}, { true }, {},
 				{
 					CodeAtom("{:instruction CODE.NULL :close 1}"),
 					CodeAtom("{:instruction 0 :close 1}"),

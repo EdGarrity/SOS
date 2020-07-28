@@ -1,6 +1,7 @@
 #include "Genome.h"
 #include <stack>
-#include "../PushP/Instruction.h"
+#include <map>
+//#include "../PushP/Instruction.h"
 #include "../Domain/Arguments.h"
 #include "../Utilities/MyException.h"
 

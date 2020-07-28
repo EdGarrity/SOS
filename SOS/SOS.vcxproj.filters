@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\PushP">
-      <UniqueIdentifier>{572e1097-987b-413a-9fe0-f9332f736c25}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\PushP">
-      <UniqueIdentifier>{4b73c0ff-4909-4fcb-b2e1-0eb7238993a5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Utilities">
       <UniqueIdentifier>{c491ad6e-16a0-4889-839f-33d8e390d938}</UniqueIdentifier>
     </Filter>
@@ -31,24 +25,6 @@
     <Filter Include="Source Files\PushGP">
       <UniqueIdentifier>{0e981989-40c9-4cc0-b795-234e64b2e861}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Domain">
-      <UniqueIdentifier>{48b827ef-e4f3-4798-805d-a6eb923b2590}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Domain">
-      <UniqueIdentifier>{9303fbb5-400f-4c99-b592-ee8539eac7d6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Database">
-      <UniqueIdentifier>{7675bc22-f794-46b2-8a6d-39fb4030bce6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Database">
-      <UniqueIdentifier>{42d0b88d-e49c-4578-a887-607943b1ce32}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Domain\Learn From Examples">
-      <UniqueIdentifier>{97223f07-4b29-4883-b114-a17af862e61a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Domain\Learn From Examples">
-      <UniqueIdentifier>{4295dce2-1b14-45d3-8644-6cc6fb95d2fd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Plush">
       <UniqueIdentifier>{0c70efad-225b-421e-b49c-9a4007498e52}</UniqueIdentifier>
     </Filter>
@@ -57,6 +33,12 @@
     </Filter>
     <Filter Include="Header Files\Utilities\CoreTemp">
       <UniqueIdentifier>{c5e3967d-3351-43de-8b08-38815b3663d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Domain">
+      <UniqueIdentifier>{48dbd1b0-35a3-47bb-ab9e-82146f62963d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Domain\Learn From Examples">
+      <UniqueIdentifier>{4d87c76a-4020-434e-9db5-279efb38e8aa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -68,51 +50,6 @@
     </ClInclude>
     <ClInclude Include="Utilities\Singleton.h">
       <Filter>Header Files\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="PushP\Code.h">
-      <Filter>Header Files\PushP</Filter>
-    </ClInclude>
-    <ClInclude Include="PushP\CodeUtils.h">
-      <Filter>Header Files\PushP</Filter>
-    </ClInclude>
-    <ClInclude Include="PushP\Env.h">
-      <Filter>Header Files\PushP</Filter>
-    </ClInclude>
-    <ClInclude Include="PushP\Literal.h">
-      <Filter>Header Files\PushP</Filter>
-    </ClInclude>
-    <ClInclude Include="PushP\TypedAtom.h">
-      <Filter>Header Files\PushP</Filter>
-    </ClInclude>
-    <ClInclude Include="PushP\Type.h">
-      <Filter>Header Files\PushP</Filter>
-    </ClInclude>
-    <ClInclude Include="PushP\StaticInit.h">
-      <Filter>Header Files\PushP</Filter>
-    </ClInclude>
-    <ClInclude Include="PushP\TypeDef.h">
-      <Filter>Header Files\PushP</Filter>
-    </ClInclude>
-    <ClInclude Include="PushP\Instruction.h">
-      <Filter>Header Files\PushP</Filter>
-    </ClInclude>
-    <ClInclude Include="PushP\RNG.h">
-      <Filter>Header Files\PushP</Filter>
-    </ClInclude>
-    <ClInclude Include="PushP\CodeOps.h">
-      <Filter>Header Files\PushP</Filter>
-    </ClInclude>
-    <ClInclude Include="PushP\RandOps.h">
-      <Filter>Header Files\PushP</Filter>
-    </ClInclude>
-    <ClInclude Include="PushP\NumOps.h">
-      <Filter>Header Files\PushP</Filter>
-    </ClInclude>
-    <ClInclude Include="PushP\StaticLibMacros.h">
-      <Filter>Header Files\PushP</Filter>
-    </ClInclude>
-    <ClInclude Include="PushP\CodeBasePtr.h">
-      <Filter>Header Files\PushP</Filter>
     </ClInclude>
     <ClInclude Include="PushGP\Individual.h">
       <Filter>Header Files\PushGP</Filter>
@@ -129,41 +66,14 @@
     <ClInclude Include="PushGP\Breed.h">
       <Filter>Header Files\PushGP</Filter>
     </ClInclude>
-    <ClInclude Include="PushP\BoolOps.h">
-      <Filter>Header Files\PushP</Filter>
-    </ClInclude>
-    <ClInclude Include="PushP\ExecInstruction.h">
-      <Filter>Header Files\PushP</Filter>
-    </ClInclude>
     <ClInclude Include="Utilities\Conversion.h">
       <Filter>Header Files\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="Database\SQLConnection.h">
-      <Filter>Header Files\Database</Filter>
-    </ClInclude>
-    <ClInclude Include="Database\SQLCommand.h">
-      <Filter>Header Files\Database</Filter>
-    </ClInclude>
-    <ClInclude Include="Database\SQLField.h">
-      <Filter>Header Files\Database</Filter>
     </ClInclude>
     <ClInclude Include="Utilities\AtomicFunctions.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="Domain\Arguments.h">
-      <Filter>Header Files\Domain</Filter>
-    </ClInclude>
     <ClInclude Include="PushGP\Globals.h">
       <Filter>Header Files\PushGP</Filter>
-    </ClInclude>
-    <ClInclude Include="Domain\Learn From Examples\Run.LearnFromExamples.h">
-      <Filter>Header Files\Domain\Learn From Examples</Filter>
-    </ClInclude>
-    <ClInclude Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.h">
-      <Filter>Header Files\Domain\Learn From Examples</Filter>
-    </ClInclude>
-    <ClInclude Include="Domain\Learn From Examples\Arguments.h">
-      <Filter>Header Files\Domain\Learn From Examples</Filter>
     </ClInclude>
     <ClInclude Include="Utilities\CSVIterator.h">
       <Filter>Header Files\Utilities</Filter>
@@ -225,6 +135,12 @@
     <ClInclude Include="Plush\Plush.IntegerInstructions.h">
       <Filter>Header Files\Plush</Filter>
     </ClInclude>
+    <ClInclude Include="Domain\Arguments.h">
+      <Filter>Header Files\Domain</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Learn From Examples\Arguments.h">
+      <Filter>Header Files\Domain\Learn From Examples</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -235,45 +151,6 @@
     </ClCompile>
     <ClCompile Include="Utilities\MyException.cpp">
       <Filter>Source Files\Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="PushP\Code.cpp">
-      <Filter>Source Files\PushP</Filter>
-    </ClCompile>
-    <ClCompile Include="PushP\CodeUtils.cpp">
-      <Filter>Source Files\PushP</Filter>
-    </ClCompile>
-    <ClCompile Include="PushP\Env.cpp">
-      <Filter>Source Files\PushP</Filter>
-    </ClCompile>
-    <ClCompile Include="PushP\Type.cpp">
-      <Filter>Source Files\PushP</Filter>
-    </ClCompile>
-    <ClCompile Include="PushP\Literal.cpp">
-      <Filter>Source Files\PushP</Filter>
-    </ClCompile>
-    <ClCompile Include="PushP\StaticInit.cpp">
-      <Filter>Source Files\PushP</Filter>
-    </ClCompile>
-    <ClCompile Include="PushP\Instruction.cpp">
-      <Filter>Source Files\PushP</Filter>
-    </ClCompile>
-    <ClCompile Include="PushP\CodeInstructions.cpp">
-      <Filter>Source Files\PushP</Filter>
-    </ClCompile>
-    <ClCompile Include="PushP\CodeOps.cpp">
-      <Filter>Source Files\PushP</Filter>
-    </ClCompile>
-    <ClCompile Include="PushP\IntegerInstructions.cpp">
-      <Filter>Source Files\PushP</Filter>
-    </ClCompile>
-    <ClCompile Include="PushP\FloatInstructions.cpp">
-      <Filter>Source Files\PushP</Filter>
-    </ClCompile>
-    <ClCompile Include="PushP\BooleanInstructions.cpp">
-      <Filter>Source Files\PushP</Filter>
-    </ClCompile>
-    <ClCompile Include="PushP\ExecInstructions.cpp">
-      <Filter>Source Files\PushP</Filter>
     </ClCompile>
     <ClCompile Include="PushGP\Individual.cpp">
       <Filter>Source Files\PushGP</Filter>
@@ -293,26 +170,11 @@
     <ClCompile Include="Utilities\Conversion.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="Database\SQLConnection.cpp">
-      <Filter>Source Files\Database</Filter>
-    </ClCompile>
-    <ClCompile Include="Database\SQLCommand.cpp">
-      <Filter>Source Files\Database</Filter>
-    </ClCompile>
-    <ClCompile Include="Database\SQLField.cpp">
-      <Filter>Source Files\Database</Filter>
-    </ClCompile>
     <ClCompile Include="Utilities\AtomicFunctions.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="PushGP\Globals.cpp">
       <Filter>Source Files\PushGP</Filter>
-    </ClCompile>
-    <ClCompile Include="Domain\Learn From Examples\Run.LearnFromExamples.cpp">
-      <Filter>Source Files\Domain\Learn From Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.cpp">
-      <Filter>Source Files\Domain\Learn From Examples</Filter>
     </ClCompile>
     <ClCompile Include="PushGP\Utilities.cpp">
       <Filter>Source Files\PushGP</Filter>
