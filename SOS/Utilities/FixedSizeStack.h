@@ -58,7 +58,6 @@ namespace Utilities
 				error_message << "Utilities::FixedSizeStack::top() - Stack empty.";
 
 				throw std::underflow_error(error_message.str());
-
 			}
 
 			return stack_[top_ - 1];
@@ -151,7 +150,7 @@ namespace Utilities
 			return stack_;
 		}
 
-	private:
+	protected:
 		// Zero-based index to the first empty slot on the stack
 		size_type top_ = 0;
 

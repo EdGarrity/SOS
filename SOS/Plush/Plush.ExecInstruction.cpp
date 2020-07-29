@@ -1,11 +1,55 @@
+#include <set>
+#include <stack>
+#include "Genome.h"
 #include "Plush.ExecInstruction.h"
 #include "Processor.h"
 #include "Plush.StaticInit.h"
 #include "..\Utilities\String.h"
-#include <set>
 
 namespace Plush
 {
+	//unsigned int CodeLength(Utilities::FixedSizeStack<Atom> &stack)
+	//{
+	//	unsigned int item_number = 0;
+	//	unsigned int n = stack.size() - 1;
+	//	unsigned int wanted_blocks = 0;
+
+	//	std::stack<unsigned int> wanted_stack;
+
+	//	do
+	//	{
+	//		for (; n >= 0; n--)
+	//		{
+	//			Plush::Atom atom = stack[n];
+
+	//			int closing = atom.close_parentheses - Func2BlockWantsMap[atom.instruction];
+
+	//			if (closing < 0)
+	//			{
+	//				wanted_stack.push(wanted_blocks);
+	//				wanted_blocks = 0 - closing;
+	//			}
+
+	//			if (closing > 0)
+	//			{
+	//				wanted_blocks > 0 ? --wanted_blocks : 0;
+	//			}
+
+	//			if (wanted_blocks == 0)
+	//			{
+	//				if (wanted_stack.size() > 0)
+	//				{
+	//					wanted_blocks = wanted_stack.top();
+	//					wanted_stack.pop();
+	//				}
+
+	//				item_number++;
+	//			}
+	//		};
+	//	} while (n >= 0);
+
+	//	return item_number;
+	//}
 
 	// Expand inner block
 	unsigned noop_open_paren(Environment & _env)
@@ -1374,31 +1418,35 @@ namespace Plush
 		return 1;
 	}
 
-	// Need to impliment multilevel detection
 	unsigned code_nthcdr(Environment & _env)
 	{
-		//if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
-		//{
-		//	int index = std::abs(_env.pop<long>());	// index
+		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
+		{
+			int index = std::abs(_env.pop<long>());	// index
 
-		//	Utilities::FixedSizeStack<Atom> top_block;
-		//	Utilities::FixedSizeStack<Atom> excluded_code;
-		//	Utilities::FixedSizeStack<Atom> extracted_block_cdr;
-		//	Utilities::FixedSizeStack<Atom> included_code;
-		//	Utilities::FixedSizeStack<long> wanted_stack;
+			Genome<class CodeAtom> top_block;
+			Genome<class CodeAtom> left_half;
+			Genome<class CodeAtom> right_half;
+			Utilities::FixedSizeStack<long> wanted_stack;
 
-		//	if (index != 0)
-		//	{
-		//		// Get first block from stack
-		//		_env.pop<CodeAtom>(top_block, 1);
+			if (index != 0)
+			{
+				// Get first block from stack
+				_env.pop(top_block);
 
-		//		// Get count of sub-blocks
-		//		int number_of_blocks = _env.CodeLength(top_block);
+				// Get count items in first block
+				int number_of_items = top_block.length();
 
-		//		// Take modulo the number of blocks to ensure that it is within the meaningful range.
-		//		index = (std::abs(index) - 1) % number_of_blocks;
+				// Take modulo the number of blocks to ensure that it is within the meaningful range.
+				index = std::abs(index) % number_of_items;
 
-		//		// Get the target sub-block
+				// Remove unwanted items
+				top_block.split(left_half, right_half, index);
+
+				// Push remaining items back on the code stack
+				_env.push(right_half);
+				
+				//		// Get the target sub-block
 		//		int n = 0;
 		//		int block_number = 0;
 		//		int blocks_wanted = 0;
@@ -1448,8 +1496,8 @@ namespace Plush
 
 		//			_env.push<CodeAtom>(extracted_block_cdr);
 		//		}
-		//	}
-		//}
+			}
+		}
 
 		return 1;
 	}

@@ -54,3 +54,7 @@ EXEC.IF () EXEC.POP )
  (1.0 1.1 1.2)
 
 
+//		static unsigned int CodeLength(Utilities::FixedSizeStack<Atom> &stack);
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	LNK2019	unresolved external symbol "class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl Push::make_terminal(void)" (?make_terminal@Push@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ) referenced in function "class Plush::Atom __cdecl pushGP::random_atom(void)" (?random_atom@pushGP@@YA?AVAtom@Plush@@XZ)	SOS	C:\Users\egarrity\Documents\Source\Repo\SOS\SOS\Random.obj	1	

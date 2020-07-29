@@ -1,15 +1,15 @@
 #include "Genome.h"
-#include <stack>
-#include <map>
 //#include "../PushP/Instruction.h"
 #include "../Domain/Arguments.h"
 #include "../Utilities/MyException.h"
 
 namespace Plush
 {
-	typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
-	extern Func2BlockWantsMapType Func2BlockWantsMap;
-
+	//typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
+	//extern Func2BlockWantsMapType Func2BlockWantsMap;
+	
+//	Genome<class Atom> atoms;
+	
 	// Purpose: 
 	//   Default Constructor
 	//
@@ -27,13 +27,19 @@ namespace Plush
 	//
 	// Remarks:
 	//
-	Genome::Genome()
-	{
-		genome_atoms_.clear();
-		genome_string_.clear();
-		program_.clear();
-		points_ = 0;
-	}
+	//Genome::Genome()
+	//{
+	//	//genome_atoms_.clear();
+	//	//genome_string_.clear();
+	//	//program_.clear();
+	//	//points_ = 0;
+	//	stack_ = nullptr;
+	//}
+
+	//Genome::Genome(Utilities::FixedSizeStack<Atom> *stack)
+	//{
+	//	stack_ = stack;
+	//};
 
 	// Purpose: 
 	//   Copy Constructor
@@ -52,13 +58,13 @@ namespace Plush
 	//
 	// Remarks:
 	//
-	Genome::Genome(const Genome & other)
-	{
-		genome_atoms_ = other.genome_atoms_;
-		genome_string_ = other.genome_string_;
-		program_ = other.program_;
-		points_ = other.points_;
-	}
+	//Genome::Genome(const Genome & other)
+	//{
+	//	genome_atoms_ = other.genome_atoms_;
+	//	genome_string_ = other.genome_string_;
+	//	program_ = other.program_;
+	//	points_ = other.points_;
+	//}
 
 	// Purpose: 
 	//   Construct a genome using a provided genome string
@@ -80,10 +86,10 @@ namespace Plush
 	//
 	//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
 	//
-	Genome::Genome(std::string _genome_string)
-	{
-		set(_genome_string);
-	}
+	//Genome::Genome(std::string _genome_string)
+	//{
+	//	set(_genome_string);
+	//}
 
 	// Purpose: 
 	//   Set the genome using a provided genome string
@@ -104,12 +110,12 @@ namespace Plush
 	//
 	//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
 	//
-	void Genome::set(std::string _genome_string)
-	{
-		ingest_plush_genome(_genome_string);
-//		translate_plush_genome_to_push_program();
-		convert_genome_to_string();
-	}
+//	void Genome::set(std::string _genome_string)
+//	{
+//		ingest_plush_genome(_genome_string);
+////		translate_plush_genome_to_push_program();
+//		convert_genome_to_string();
+//	}
 
 	// Purpose: 
 	//   Set the genome using a provided genome atom vector
@@ -130,15 +136,15 @@ namespace Plush
 	//
 	//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
 	//
-	void Genome::set(std::vector<struct Atom> & _genome_atoms)
-	{
-		genome_atoms_ = _genome_atoms;
-		//translate_plush_genome_to_push_program();
-		//convert_genome_to_string();
-		genome_string_.clear();
-		program_.clear();
-		points_ = 0;	
-	}
+//	void Genome::set(std::vector<struct Atom> & _genome_atoms)
+//	{
+////		genome_atoms_ = _genome_atoms;
+//		//translate_plush_genome_to_push_program();
+//		//convert_genome_to_string();
+//		genome_string_.clear();
+//		program_.clear();
+//		points_ = 0;	
+//	}
 
 	// Purpose: 
 	//   Initializes the genome using a provided genome string
@@ -159,68 +165,68 @@ namespace Plush
 	//   The format of the provided string must match the following:
 	//	   genome ::= { :instruction atom :close n :slient true }
 	//
-	void Genome::ingest_plush_genome(std::string _genome_str)
-	{
-		genome_atoms_.clear();
+	//void Genome::ingest_plush_genome(std::string _genome_str)
+	//{
+	//	genome_atoms_.clear();
 
-		std::string gene;
-		std::size_t index, start_of_optional_tokens, start_of_optional_value, end_of_optional_value;
-		struct Atom atom;
+	//	std::string gene;
+	//	std::size_t index, start_of_optional_tokens, start_of_optional_value, end_of_optional_value;
+	//	struct Atom atom;
 
-		while (_genome_str.length() > 0)
-		{
-			gene = first_atom(_genome_str);
-			_genome_str = rest_atom(_genome_str);
+	//	while (_genome_str.length() > 0)
+	//	{
+	//		gene = first_atom(_genome_str);
+	//		_genome_str = rest_atom(_genome_str);
 
-			// Find token for the instruction
-			index = gene.find(":instruction");
+	//		// Find token for the instruction
+	//		index = gene.find(":instruction");
 
-			if (index == std::string::npos)
-				break;
+	//		if (index == std::string::npos)
+	//			break;
 
-			// Find start of instruction atom
-			index += strlen(":instruction");
+	//		// Find start of instruction atom
+	//		index += strlen(":instruction");
 
-			while (gene[index] == ' ')
-				index++;
+	//		while (gene[index] == ' ')
+	//			index++;
 
-			start_of_optional_tokens = gene.find_first_of(" :}", index);
+	//		start_of_optional_tokens = gene.find_first_of(" :}", index);
 
-			atom.instruction = gene.substr(index, start_of_optional_tokens - index);
+	//		atom.instruction = gene.substr(index, start_of_optional_tokens - index);
 
-			// Check for optional close token
-			index = gene.find(":close", start_of_optional_tokens);
+	//		// Check for optional close token
+	//		index = gene.find(":close", start_of_optional_tokens);
 
-			if (index != std::string::npos)
-			{
-				start_of_optional_value = index + strlen(":close");
+	//		if (index != std::string::npos)
+	//		{
+	//			start_of_optional_value = index + strlen(":close");
 
-				while (gene[start_of_optional_value] == ' ')
-					start_of_optional_value++;
+	//			while (gene[start_of_optional_value] == ' ')
+	//				start_of_optional_value++;
 
-				atom.close_parentheses = std::stoi(gene.substr(start_of_optional_value, index));
-			}
+	//			atom.close_parentheses = std::stoi(gene.substr(start_of_optional_value, index));
+	//		}
 
-			// Check for optional silent tiken
-			index = gene.find(":silent", start_of_optional_tokens);
+	//		// Check for optional silent tiken
+	//		index = gene.find(":silent", start_of_optional_tokens);
 
-			if (index != std::string::npos)
-			{
-				start_of_optional_value = index + strlen(":silent");
+	//		if (index != std::string::npos)
+	//		{
+	//			start_of_optional_value = index + strlen(":silent");
 
-				while (gene[start_of_optional_value] == ' ')
-					start_of_optional_value++;
+	//			while (gene[start_of_optional_value] == ' ')
+	//				start_of_optional_value++;
 
-				if (gene.find("TRUE") != std::string::npos)
-					atom.type = atom.silent;
-			}
+	//			if (gene.find("TRUE") != std::string::npos)
+	//				atom.type = atom.silent;
+	//		}
 
-			else
-				atom.type = atom.ins;
+	//		else
+	//			atom.type = atom.ins;
 
-			genome_atoms_.push_back(atom);
-		}
-	}
+	//		genome_atoms_.push_back(atom);
+	//	}
+	//}
 
 	// Purpose: 
 	//   Translates the genome's Plush Atom Vector into a Push program
@@ -396,36 +402,36 @@ namespace Plush
 	//
 	// Remarks:
 	//
-	unsigned int Genome::count_points()
-	{
-		if (program_.length() == 0)
-			return 0;
-	
-		unsigned int total = 0;
-		bool in_atom = false;
-	
-		for (unsigned int n = 0; n < program_.length(); n++)
-		{
-			if (program_[n] == '(')
-				total++;
-	
-			if (in_atom)
-			{
-				if (strchr("() ", program_[n]) != NULL)
-				{
-					total++;
-					in_atom = false;
-				}
-			}
-	
-			else if (strchr("() ", program_[n]) == NULL)
-				in_atom = true;
-		}
-	
-		points_ = total;
+	//unsigned int Genome::count_points()
+	//{
+	//	if (program_.length() == 0)
+	//		return 0;
+	//
+	//	unsigned int total = 0;
+	//	bool in_atom = false;
+	//
+	//	for (unsigned int n = 0; n < program_.length(); n++)
+	//	{
+	//		if (program_[n] == '(')
+	//			total++;
+	//
+	//		if (in_atom)
+	//		{
+	//			if (strchr("() ", program_[n]) != NULL)
+	//			{
+	//				total++;
+	//				in_atom = false;
+	//			}
+	//		}
+	//
+	//		else if (strchr("() ", program_[n]) == NULL)
+	//			in_atom = true;
+	//	}
+	//
+	//	points_ = total;
 
-		return total;
-	}
+	//	return total;
+	//}
 
 	// Purpose: 
 	//   Return a string representation of a genome
@@ -444,22 +450,35 @@ namespace Plush
 	//
 	// Remarks:
 	//
-	void Genome::convert_genome_to_string()
-	{
-		genome_string_.clear();
+	//void Genome::convert_genome_to_string()
+	//{
+	//	genome_string_.clear();
 
-		for (int n = 0; n < genome_atoms_.size(); n++)
-		{
-			genome_string_ += "{";
-			genome_string_ += ":instruction ";
-			genome_string_ += genome_atoms_[n].instruction;
-			genome_string_ += " :close  ";
-			genome_string_ += std::to_string(genome_atoms_[n].close_parentheses);
-			genome_string_ += "}";
-		}
-	}
+	//	//for (int n = 0; n < genome_atoms_.size(); n++)
+	//	//{
+	//	//	genome_string_ += "{";
+	//	//	genome_string_ += ":instruction ";
+	//	//	genome_string_ += genome_atoms_[n].instruction;
+	//	//	genome_string_ += " :close  ";
+	//	//	genome_string_ += std::to_string(genome_atoms_[n].close_parentheses);
+	//	//	genome_string_ += "}";
+	//	//}
+	//}
 
-	//unsigned int Genome::CodeLength(Utilities::FixedSizeStack<Atom> &stack)
+//template<class T>
+//Genome<T>::Genome()
+//{
+//	Utilities::FixedSizeStack<T>::top_ = 0;
+//}
+//
+//template<class T>
+//Genome<T>::Genome(Utilities::FixedSizeStack<Atom>& other)
+//{
+//	Utilities::FixedSizeStack<T>::top_ = other.top_;
+//	Utilities::FixedSizeStack<T>::stack_ = other.stack_;
+//}
+
+	//unsigned int CodeLength(Utilities::FixedSizeStack<Atom> &stack)
 	//{
 	//	unsigned int item_number = 0;
 	//	unsigned int n = stack.size() - 1;
@@ -501,5 +520,4 @@ namespace Plush
 
 	//	return item_number;
 	//}
-
 }

@@ -4,7 +4,7 @@
 #include "Atom.h"
 #include <vector>
 #include <map>
-#include "..\Utilities\FixedSizeStack.h"
+#include "Genome.h"
 
 namespace Plush
 {
@@ -15,8 +15,8 @@ namespace Plush
 	{
 	private:
 		// Stacks
-		Utilities::FixedSizeStack<class ExecAtom> exec_stack_;
-		Utilities::FixedSizeStack<class CodeAtom> code_stack_;
+		Genome<class ExecAtom> exec_stack_;
+		Genome<class CodeAtom> code_stack_;
 		Utilities::FixedSizeStack<long> int_stack_;
 		Utilities::FixedSizeStack<double> double_stack_;
 		Utilities::FixedSizeStack<bool> bool_stack_;
@@ -148,8 +148,18 @@ namespace Plush
 			get_stack<T>().push(value);
 		}
 
+//		template <>
+		inline void push(Genome<class CodeAtom>& stack)
+		{
+			if (stack.size() > 0)
+//				for (int n = stack.size() - 1; n >= 0; n--)
+				for (int n = 0; n < stack.size(); n++)
+					get_stack<CodeAtom>().push(stack[n]);
+		}
+
+		// Obsolete
 		template <class T>
-		inline void push(Utilities::FixedSizeStack<Atom> stack)
+		inline void push(Utilities::FixedSizeStack<Atom> &stack)
 		{
 			if (stack.size() > 0)
 				for (int n = stack.size() - 1; n >= 0; n--)
@@ -164,7 +174,12 @@ namespace Plush
 			return val;
 		}
 
-		template <typename T> 
+		inline void pop(Genome<class CodeAtom> &stack)
+		{
+			code_stack_.pop(stack);
+		}
+
+		template <typename T>
 		inline int pop(Utilities::FixedSizeStack<Atom> &stack, unsigned int open_blocks)
 		{
 			int block_count = open_blocks;
