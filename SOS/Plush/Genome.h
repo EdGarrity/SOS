@@ -11,7 +11,7 @@ namespace Plush
 	typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
 	extern Func2BlockWantsMapType Func2BlockWantsMap;
 
-	template <class T>
+	template <class T, size_t N = domain::argmap::maximum_stack_size>
 	class Genome : public Utilities::FixedSizeStack<T>
 	{
 	private:
@@ -82,6 +82,21 @@ namespace Plush
 
 //		unsigned int length();
 
+		typedef typename std::array<T, N>::value_type value_type;
+		typedef typename std::array<T, N>::reference reference;
+		typedef typename std::array<T, N>::const_reference const_reference;
+		typedef typename std::array<T, N>::size_type size_type;
+
+		inline const_reference operator [] (int index) const
+		{
+			return Utilities::FixedSizeStack<T>::stack_[index];
+		}
+
+		inline reference operator [] (int index)
+		{
+			return Utilities::FixedSizeStack<T>::stack_[index];
+		}
+
 //		template <class T>
 		unsigned int length()
 		{
@@ -91,7 +106,7 @@ namespace Plush
 
 			std::stack<unsigned int> wanted_stack;
 
-			if (n > 0)
+			if (n >= 0)
 			{
 				for (; n >= 0; n--)
 				{
@@ -183,10 +198,11 @@ namespace Plush
 		}
 
 //		template <class T>
-		void pop(Genome<CodeAtom> &poped_item)
+		unsigned int pop(Genome<CodeAtom> &poped_item)
 		{
 			unsigned int item_number = 0;
 			unsigned int wanted_blocks = 0;
+			unsigned int extra_blocks;
 			Utilities::FixedSizeStack<CodeAtom> temp;
 			std::stack<unsigned int> wanted_stack;
 
@@ -211,7 +227,10 @@ namespace Plush
 						wanted_blocks--;
 
 					else if (wanted_blocks == 0)
+					{
+						extra_blocks = (closing > 1) ? (closing - 1) : (0);
 						break;
+					}
 				}
 
 				if (wanted_blocks == 0)
@@ -233,6 +252,8 @@ namespace Plush
 				temp.pop();
 				poped_item.push(atom);
 			}
+
+			return extra_blocks;
 		};
 
 

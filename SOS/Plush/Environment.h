@@ -174,9 +174,9 @@ namespace Plush
 			return val;
 		}
 
-		inline void pop(Genome<class CodeAtom> &stack)
+		inline unsigned int pop(Genome<class CodeAtom> &stack)
 		{
-			code_stack_.pop(stack);
+			return code_stack_.pop(stack);
 		}
 
 		template <typename T>

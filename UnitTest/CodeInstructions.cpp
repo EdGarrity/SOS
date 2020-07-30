@@ -1882,10 +1882,10 @@ namespace UnitTest
 					CodeAtom("{:instruction 3.0 :close 2}"),
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
-					CodeAtom("{:instruction 1.0 :close 0}"),
 					CodeAtom("{:instruction 2.1 :close 1}"),
 					CodeAtom("{:instruction 2.0 :close 0}"),
 					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
 				}));
 		}
 
@@ -1920,11 +1920,11 @@ namespace UnitTest
 					CodeAtom("{:instruction 4.0 :close 0}"),
 					CodeAtom("{:instruction 3.0 :close 2}"),
 					CodeAtom("{:instruction 1.2 :close 1}"),
-					CodeAtom("{:instruction 1.1 :close 0}"),
-					CodeAtom("{:instruction 1.0 :close 0}"),
 					CodeAtom("{:instruction 2.1 :close 1}"),
 					CodeAtom("{:instruction 2.0 :close 0}"),
 					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
 				}));
 		}
 
@@ -1999,10 +1999,10 @@ namespace UnitTest
 					CodeAtom("{:instruction 3.0 :close 2}"),
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
-					CodeAtom("{:instruction 1.0 :close 0}"),
 					CodeAtom("{:instruction 2.1 :close 1}"),
 					CodeAtom("{:instruction 2.0 :close 0}"),
 					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
 				}));
 		}
 
@@ -2037,11 +2037,11 @@ namespace UnitTest
 					CodeAtom("{:instruction 4.0 :close 0}"),
 					CodeAtom("{:instruction 3.0 :close 2}"),
 					CodeAtom("{:instruction 1.2 :close 1}"),
-					CodeAtom("{:instruction 1.1 :close 0}"),
-					CodeAtom("{:instruction 1.0 :close 0}"),
 					CodeAtom("{:instruction 2.1 :close 1}"),
 					CodeAtom("{:instruction 2.0 :close 0}"),
 					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
 				}));
 		}
 
@@ -2084,6 +2084,123 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(INSERT_BLOCK_WITH_POSITIVE_SINGLE_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 1}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 3}\
+					{:instruction 3.0 :close 2}\
+					{:instruction 4.0 :close 0}\
+					{:instruction 4.1 :close 0}\
+					{:instruction 4.2 :close 0}\
+					{:instruction 4.3 :close 1}\
+					{:instruction 1 :close 1}\
+					{:instruction CODE.INSERT :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0, 4.0, 4.1, 4.2, 4.3 }, {}, {},
+				{
+					CodeAtom("{:instruction CODE.INSERT :close 1}"),
+					CodeAtom("{:instruction 1 :close 1}"),
+					CodeAtom("{:instruction 4.3 :close 1}"),
+					CodeAtom("{:instruction 4.2 :close 0}"),
+					CodeAtom("{:instruction 4.1 :close 0}"),
+					CodeAtom("{:instruction 4.0 :close 0}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 1.2 :close 3}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+				}));
+		}
+
+		TEST_METHOD(INSERT_EMPTY_BLOCK_WITH_POSITIVE_SINGLE_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 2}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 2}\
+					{:instruction 4.0 :close 0}\
+					{:instruction 4.1 :close 0}\
+					{:instruction 4.2 :close 0}\
+					{:instruction 4.3 :close 1}\
+					{:instruction 1 :close 1}\
+					{:instruction CODE.INSERT :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0, 4.0, 4.1, 4.2, 4.3 }, {}, {},
+				{
+					CodeAtom("{:instruction CODE.INSERT :close 1}"),
+					CodeAtom("{:instruction 1 :close 1}"),
+					CodeAtom("{:instruction 4.3 :close 1}"),
+					CodeAtom("{:instruction 4.2 :close 0}"),
+					CodeAtom("{:instruction 4.1 :close 0}"),
+					CodeAtom("{:instruction 4.0 :close 0}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+				}));
+		}
+
+		TEST_METHOD(INSERT_EMPTY_BLOCK_WITH_POSITIVE_SINGLE_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 3}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 2}\
+					{:instruction 4.0 :close 0}\
+					{:instruction 4.1 :close 0}\
+					{:instruction 4.2 :close 0}\
+					{:instruction 4.3 :close 1}\
+					{:instruction 1 :close 1}\
+					{:instruction CODE.INSERT :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0, 4.0, 4.1, 4.2, 4.3 }, {}, {},
+				{
+					CodeAtom("{:instruction CODE.INSERT :close 1}"),
+					CodeAtom("{:instruction 1 :close 1}"),
+					CodeAtom("{:instruction 4.3 :close 1}"),
+					CodeAtom("{:instruction 4.2 :close 0}"),
+					CodeAtom("{:instruction 4.1 :close 0}"),
+					CodeAtom("{:instruction 4.0 :close 0}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 2}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+				}));
+		}
+
 		TEST_METHOD(LENGTH_0)
 		{
 			Environment env;
@@ -2120,7 +2237,7 @@ namespace UnitTest
 					{:instruction CODE.LENGTH :close 1}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 0, 1 }, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0, 4.0, 4.1, 4.2, 4.3 }, {}, {},
+			Assert::IsTrue(is_stack_state(env, { 0, 3 }, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0, 4.0, 4.1, 4.2, 4.3 }, {}, {},
 				{
 					CodeAtom("{:instruction CODE.LENGTH :close 1}"),
 					CodeAtom("{:instruction 0 :close 1}"),
@@ -2156,7 +2273,7 @@ namespace UnitTest
 					{:instruction CODE.LENGTH :close 1}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 0, 2 }, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0, 4.0, 4.1, 4.2, 4.3 }, {}, {},
+			Assert::IsTrue(is_stack_state(env, { 0, 3 }, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0, 4.0, 4.1, 4.2, 4.3 }, {}, {},
 				{
 					CodeAtom("{:instruction CODE.LENGTH :close 1}"),
 					CodeAtom("{:instruction 0 :close 1}"),
@@ -2332,6 +2449,64 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(NTH_WITH_POSITIVE_LIST_0)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 1}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 2}\
+					{:instruction 0 :close 1}\
+					{:instruction CODE.NTH :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
+				{
+					CodeAtom("{:instruction CODE.NTH :close 1}"),
+					CodeAtom("{:instruction 0 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 1.2 :close 2}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+				}));
+		}
+
+		TEST_METHOD(NTH_WITH_POSITIVE_SINGLE_0)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 1}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 2}\
+					{:instruction 0 :close 1}\
+					{:instruction CODE.NTH :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
+				{
+					CodeAtom("{:instruction CODE.NTH :close 1}"),
+					CodeAtom("{:instruction 0 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 1}"),
+				}));
+		}
+
 		TEST_METHOD(NTH_WITH_POSITIVE_LIST_1)
 		{
 			Environment env;
@@ -2354,9 +2529,8 @@ namespace UnitTest
 				{
 					CodeAtom("{:instruction CODE.NTH :close 1}"),
 					CodeAtom("{:instruction 1 :close 1}"),
-					CodeAtom("{:instruction 1.2 :close 1}"),
-					CodeAtom("{:instruction 1.1 :close 0}"),
-					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.0 :close 1}"),
 				}));
 		}
 
@@ -2384,9 +2558,7 @@ namespace UnitTest
 					CodeAtom("{:instruction 3.0 :close 2}"),
 					CodeAtom("{:instruction 2.1 :close 1}"),
 					CodeAtom("{:instruction 2.0 :close 0}"),
-					CodeAtom("{:instruction 1.2 :close 1}"),
-					CodeAtom("{:instruction 1.1 :close 0}"),
-					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction 1.1 :close 1}"),
 				}));
 		}
 
@@ -2412,8 +2584,8 @@ namespace UnitTest
 				{
 					CodeAtom("{:instruction CODE.NTH :close 1}"),
 					CodeAtom("{:instruction 2 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
 					CodeAtom("{:instruction 2.1 :close 1}"),
-					CodeAtom("{:instruction 2.0 :close 0}"),
 				}));
 		}
 
@@ -2440,6 +2612,10 @@ namespace UnitTest
 					CodeAtom("{:instruction CODE.NTH :close 1}"),
 					CodeAtom("{:instruction 3 :close 1}"),
 					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 1.2 :close 2}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
 				}));
 		}
 
