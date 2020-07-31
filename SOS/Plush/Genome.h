@@ -140,24 +140,41 @@ namespace Plush
 		}
 
 //		template <class T>
-		unsigned int split(Genome<T> &left_half, Genome<T> &right_half, unsigned int split_position)
+		unsigned int split(Utilities::FixedSizeStack<T> &left_half, Utilities::FixedSizeStack<T> &right_half, unsigned int split_position)
 		{
 			unsigned int item_number = 0;
 			unsigned int wanted_blocks = 0;
 			Utilities::FixedSizeStack<T> temp_left;
 			Utilities::FixedSizeStack<T> temp_right;
 			std::stack<unsigned int> wanted_stack;
+			int simulated_closing_parenthesis = 0;
+			Plush::Atom atom;
 
 			for (int n = Utilities::FixedSizeStack<T>::size() - 1; n >= 0; n--)
 			{
-				Plush::Atom atom = Utilities::FixedSizeStack<T>::stack_[n];
+				if (simulated_closing_parenthesis == 0)
+					atom = Utilities::FixedSizeStack<T>::stack_[n];
+
+
+				if (simulated_closing_parenthesis > 0)
+				{
+					atom = Plush::Atom("{:instruction EXEC.NOOP :close 1}");
+					simulated_closing_parenthesis--;
+					n++;
+				}
+
+				int closing = atom.close_parentheses - Func2BlockWantsMap[atom.instruction];
+
+				if (closing > 1)
+				{
+					simulated_closing_parenthesis = closing - 1;
+					atom.close_parentheses--;
+				}
 
 				if (item_number < split_position)
 					temp_left.push(atom);
 				else
 					temp_right.push(atom);
-
-				int closing = atom.close_parentheses - Func2BlockWantsMap[atom.instruction];
 
 				if (closing < 0)
 				{
@@ -194,17 +211,41 @@ namespace Plush
 				right_half.push(atom);
 			}
 
+			if (simulated_closing_parenthesis > 0)
+				right_half[0].close_parentheses += simulated_closing_parenthesis;
+
 			return item_number;
 		}
 
-//		template <class T>
-		unsigned int pop(Genome<CodeAtom> &poped_item)
+		inline void push(Genome<T> &genome)
+		{
+			unsigned int item_number = 0;
+			unsigned int wanted_blocks = 0;
+			unsigned int extra_blocks;
+			Utilities::FixedSizeStack<T> temp;
+			std::stack<unsigned int> wanted_stack;
+
+			for (int n = 0; n < genome.size(); n++)
+			{
+				Plush::Atom atom = genome[n];
+				Utilities::FixedSizeStack<T>::push(atom);
+			}
+		}
+
+		inline void push(const value_type& value)
+		{
+			Utilities::FixedSizeStack<T>::push(value);
+		}
+
+		unsigned int pop(Genome<T> &poped_item)
 		{
 			unsigned int item_number = 0;
 			unsigned int wanted_blocks = 0;
 			unsigned int extra_blocks;
 			Utilities::FixedSizeStack<CodeAtom> temp;
 			std::stack<unsigned int> wanted_stack;
+
+			poped_item.clear();
 
 			while (Utilities::FixedSizeStack<T>::empty() == false)
 			{
@@ -255,7 +296,6 @@ namespace Plush
 
 			return extra_blocks;
 		};
-
 
 
 		//unsigned int split(Genome &left_half, Genome &right_half, unsigned int split_position);

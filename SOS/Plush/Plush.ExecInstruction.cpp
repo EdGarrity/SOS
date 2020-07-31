@@ -1035,7 +1035,7 @@ namespace Plush
 		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(2)))
 		{
 			int index = std::abs(_env.pop<long>());	// index
-			unsigned int extra_first_bloxks = 0;
+			unsigned int extra_first_blocks = 0;
 			unsigned int extra_second_bloxks = 0;
 
 			Genome<class CodeAtom> first_block;
@@ -1044,9 +1044,9 @@ namespace Plush
 			Genome<class CodeAtom> right_half;
 			
 			// Get first block from stack
-			extra_first_bloxks = _env.pop(first_block);
+			extra_first_blocks = _env.pop(first_block);
 
-			if (extra_first_bloxks == 0)
+			if (extra_first_blocks == 0)
 			{
 				// Get second block from stack
 				extra_second_bloxks = _env.pop(second_block);
@@ -1090,10 +1090,7 @@ namespace Plush
 
 				// Compensate for extra blocks in the second item.
 				if (extra_second_bloxks > 0)
-				{
-					std::string noop = "{:instruction EXEC.NOOP_OPEN_PAREN :close " + std::to_string(extra_second_bloxks) + "}\"";
-					second_block.push(Atom(noop));
-				}
+					right_half[0].close_parentheses += extra_second_bloxks;
 
 				// Insert second block into first block at insertion point
 				_env.push(right_half);

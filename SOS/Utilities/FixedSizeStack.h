@@ -122,33 +122,13 @@ namespace Utilities
 			top_--;
 		}
 
-		// Returns the top block from the stack
-		//inline size_t pop_block(FixedSizeStack<Plush::Atom> &block_stack)
-		//{
-		//	int blocks_open = 1;
-
-		//	block_stack.clear();
-
-		//	for (int n = 0; n < size(); n++)
-		//	{
-		//		Plush::Atom atom = stack_[n];
-		//		block_stack.push(atom);
-
-		//		blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
-		//		blocks_open -= atom.close_parentheses;
-
-		//		if (blocks_open <= 0)
-		//			break;
-		//	};
-
-		//	return (block_stack.size());
-		//}
-
 		// Returns a reference to the underlying container
 		inline std::array<T, N>& container()
 		{
 			return stack_;
 		}
+
+		virtual unsigned int split(Utilities::FixedSizeStack<T> &left_half, Utilities::FixedSizeStack<T> &right_half, unsigned int split_position) { return 0; };
 
 	protected:
 		// Zero-based index to the first empty slot on the stack
