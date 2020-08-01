@@ -37,32 +37,6 @@ namespace Plush
 		}
 
 		/* Helper Functions */
-		//unsigned int CodeLength(Utilities::FixedSizeStack<Atom> &stack)
-		//{
-		//	// Get count of sub-blocks
-		//	int number_of_blocks = 0;
-		//	int n = stack.size() - 1;
-
-		//	do
-		//	{
-		//		int blocks_open = 0;
-
-		//		for (; n >= 0; n--)
-		//		{
-		//			Plush::Atom atom = stack[n];
-
-		//			int closing = atom.close_parentheses - Plush::Func2BlockWantsMap[atom.instruction];
-
-		//			if ((closing > 0) && (blocks_open == 0))
-		//				number_of_blocks += atom.close_parentheses;
-
-		//			blocks_open -= closing;
-		//			blocks_open = (blocks_open > 0) ? blocks_open : 0;
-		//		};
-		//	} while (n >= 0);
-
-		//	return number_of_blocks;
-		//}
 
 		template <typename T>
 		unsigned int NumberOfBlocks(unsigned int block_level)
@@ -80,23 +54,6 @@ namespace Plush
 				for (; n >= 0; n--)
 				{
 					Plush::Atom atom = stack[n];
-
-					//blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
-					//blocks_open -= atom.close_parentheses;
-					//blocks_open = (blocks_open > 0) ? blocks_open : 0;
-
-					//if (atom.close_parentheses > 0)
-					//{
-					//	if (blocks_open > 0)
-					//		blocks_open++;
-
-					//	else
-					//	{
-					//		number_of_blocks += atom.close_parentheses;
-					//		blocks_open = block_level;
-					//	}
-					//}
-
 
 					int closing = atom.close_parentheses - Plush::Func2BlockWantsMap[atom.instruction];
 
@@ -148,13 +105,18 @@ namespace Plush
 			get_stack<T>().push(value);
 		}
 
-//		template <>
 		inline void push(Genome<class CodeAtom>& stack)
 		{
 			if (stack.size() > 0)
-//				for (int n = stack.size() - 1; n >= 0; n--)
 				for (int n = 0; n < stack.size(); n++)
 					get_stack<CodeAtom>().push(stack[n]);
+		}
+
+		inline void push(Genome<class ExecAtom>& stack)
+		{
+			if (stack.size() > 0)
+				for (int n = 0; n < stack.size(); n++)
+					get_stack<ExecAtom>().push(stack[n]);
 		}
 
 		// Obsolete
@@ -177,6 +139,11 @@ namespace Plush
 		inline unsigned int pop(Genome<class CodeAtom> &stack)
 		{
 			return code_stack_.pop(stack);
+		}
+
+		inline unsigned int pop(Genome<class ExecAtom> &stack)
+		{
+			return exec_stack_.pop(stack);
 		}
 
 		template <typename T>
@@ -246,7 +213,6 @@ namespace Plush
 			return val;
 		}
 
-		// Need spcial cases for EXEC and CODE
 		template <typename T>
 		inline bool has_elements(unsigned sz)
 		{
@@ -257,57 +223,29 @@ namespace Plush
 		}
 
 		template <>
-		inline bool has_elements<ExecAtom>(unsigned sz)
+		inline bool has_elements<CodeAtom>(unsigned sz)
 		{
-			if (get_stack<ExecAtom>().size() < sz)
+			Utilities::FixedSizeStack<CodeAtom>& stack = get_stack<CodeAtom>();
+			Genome<CodeAtom>& genome = dynamic_cast<Genome<CodeAtom>&>(stack);
+
+			if (genome.length() < sz)
 				return false;
 
 			else
-			{
-				//Utilities::FixedSizeStack<ExecAtom> &stack = get_stack<ExecAtom>();
+				return true;
+		}
 
-				//// Get count of sub-blocks
-				//int number_of_blocks = 0;
-				//int n = stack.size() - 1;
+		template <>
+		inline bool has_elements<ExecAtom>(unsigned sz)
+		{
+			Utilities::FixedSizeStack<ExecAtom>& stack = get_stack<ExecAtom>();
+			Genome<ExecAtom>& genome = dynamic_cast<Genome<ExecAtom>&>(stack);
 
-				//do
-				//{
-				//	int blocks_open = 0;
+			if (genome.length() < sz)
+				return false;
 
-				//	for (; n >= 0; n--)
-				//	{
-				//		Plush::Atom atom = stack[n];
-
-				//		blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
-				//		blocks_open -= atom.close_parentheses;
-				//		blocks_open = (blocks_open > 0) ? blocks_open : 0;
-
-				//		if (atom.close_parentheses > 0)
-				//		{
-				//			if (blocks_open > 0)
-				//				blocks_open++;
-
-				//			else
-				//			{
-				//				number_of_blocks += atom.close_parentheses;
-				//				blocks_open = 1;
-				//			}
-				//		}
-				//	};
-				//} while (n >= 0);
-
-				//if (number_of_blocks < sz)
-				//	return false;
-
-				//else
-				//	return true;
-
-				if (NumberOfBlocks<ExecAtom>(0) < sz)
-					return false;
-
-				else
-					return true;
-			}
+			else
+				return true;
 		}
 
 		template <typename T>

@@ -378,10 +378,8 @@ namespace UnitTest
 			Plush::run(env, \
 				"\
 					{:instruction EXEC.= :close 0}\
-					{:instruction EXEC.NOOP.OPEN_PAREN :close 0}\
 					{:instruction 10 :close 0}\
 					{:instruction INTEGER.+ :close 1}\
-					{:instruction EXEC.NOOP.OPEN_PAREN :close 0}\
 					{:instruction 10 :close 0}\
 					{:instruction INTEGER.+ :close 1}\
 				");
@@ -390,10 +388,8 @@ namespace UnitTest
 				{
 					CodeAtom("{:instruction INTEGER.+ :close 1}"),
 					CodeAtom("{:instruction 10 :close 0}"),
-					CodeAtom("{:instruction EXEC.NOOP.OPEN_PAREN :close 0}"),
 					CodeAtom("{:instruction INTEGER.+ :close 1}"),
 					CodeAtom("{:instruction 10 :close 0}"),
-					CodeAtom("{:instruction EXEC.NOOP.OPEN_PAREN :close 0}"),
 					CodeAtom("{:instruction EXEC.= :close 0}"),
 				}));
 		}

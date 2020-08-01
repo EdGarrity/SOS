@@ -480,60 +480,48 @@ namespace Plush
 		if (_env.has_elements<ExecAtom>(2))
 		{
 			bool result = true;
+			unsigned int extra_first_blocks = 0;
+			unsigned int extra_second_bloxks = 0;
 
-			Utilities::FixedSizeStack<Atom> block_a;
-			Utilities::FixedSizeStack<Atom> block_b;
+			Genome<class ExecAtom> first_block;
+			Genome<class ExecAtom> second_block;
 
-			unsigned int unmatched_a = _env.pop<ExecAtom>(block_a, 1);
+			// Get first block from stack
+			extra_first_blocks = _env.pop(first_block);
 
-			if (unmatched_a > 0)
+			if (extra_first_blocks == 0)
 			{
-				std::string noop = "{:instruction EXEC.NOOP :close " + std::to_string(unmatched_a) + "}";
-				_env.push<ExecAtom>(ExecAtom(noop));
+				// Get second block from stack
+				extra_second_bloxks = _env.pop(second_block);
 
-				Atom atom = block_a.top();
-				block_a.pop();
-
-				atom.close_parentheses = (atom.close_parentheses > unmatched_a)
-					? atom.close_parentheses - unmatched_a
-					: atom.close_parentheses;
-				block_a.push(atom);
+				// Make sure the second block contains only one block.
+				if (extra_second_bloxks > 0)
+					second_block[0].close_parentheses = 1;
+			}
+			else
+			{
+				// Create a NOOP second block and decrease the extra blocks in the first item by one
+				second_block.push(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
+				first_block[0].close_parentheses--;
 			}
 
-//			_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+			unsigned int first_block_length = first_block.length();
+			unsigned int second_block_length = second_block.length();
 
-			unsigned int unmatched_b = _env.pop<ExecAtom>(block_b, 1);
-
-			if (unmatched_b > 0)
+			if ((first_block_length > 0) && (second_block_length > 0))
 			{
-				std::string noop = "{:instruction EXEC.NOOP :close " + std::to_string(unmatched_b) + "}";
-				_env.push<ExecAtom>(ExecAtom(noop));
-
-				Atom atom = block_b.top();
-				block_b.pop();
-
-				atom.close_parentheses = (atom.close_parentheses > unmatched_b)
-					? atom.close_parentheses - unmatched_b
-					: atom.close_parentheses;
-				block_b.push(atom);
-			}
-
-//			_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
-
-			if ((block_a.size() > 0) && (block_b.size() > 0))
-			{
-				while (block_a.size() > 0)
+				if (first_block_length != second_block_length)
+					result = false;
+				
+				else
 				{
-					ExecAtom atom_a = block_a.top();
-					ExecAtom atom_b = block_b.top();
-
-					block_a.pop();
-					block_b.pop();
-
-					if (atom_a != atom_b)
+					for (int n = 0; n < first_block_length; n++)
 					{
-						result = false;
-						break;
+						if (first_block[n] != second_block[n])
+						{
+							result = false;
+							break;
+						}
 					}
 				}
 
@@ -541,8 +529,8 @@ namespace Plush
 			}
 			else
 			{
-				_env.push<ExecAtom>(block_b);
-				_env.push<ExecAtom>(block_a);
+				_env.push(second_block);
+				_env.push(first_block);
 			}
 		}
 

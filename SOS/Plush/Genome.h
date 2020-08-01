@@ -12,6 +12,7 @@ namespace Plush
 	extern Func2BlockWantsMapType Func2BlockWantsMap;
 
 	template <class T, size_t N = domain::argmap::maximum_stack_size>
+//	template <class T>
 	class Genome : public Utilities::FixedSizeStack<T>
 	{
 	private:
