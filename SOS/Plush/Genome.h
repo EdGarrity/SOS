@@ -97,7 +97,31 @@ namespace Plush
 			return Utilities::FixedSizeStack<T>::stack_[index];
 		}
 
-//		template <class T>
+		// Purpose: 
+		//   Returns the length of the genome stack. 
+		//
+		//   The genome is processed as a list object, i.e., an open parenthesis is assumed to exist 
+		//   before the first item on the stack.  This function returns the number of items in the top 
+		//   level of the list; that is, nested lists contribute only 1 to this count, no matter what 
+		//   they contain.  Closing parenthesis can either be interpreted as close instructions (to satisfy 
+		//   a block requirement in a nested list) or as close - open instructions (for the top level list).
+		//   Nested levels begin when an instruction requiring blocks is encountered in the list and end 
+		//   when all required blocks are found.
+		//
+		// Parameters:
+		//   None
+		// 
+		// Return value:
+		//   Number if items and blocks in the top level of the list
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
 		unsigned int length()
 		{
 			unsigned int item_number = 0;
@@ -139,7 +163,41 @@ namespace Plush
 			return item_number;
 		}
 
-//		template <class T>
+		// Purpose: 
+		//   Splits the genome in two
+		//
+		//   This function will split the genome into two parts at the split point provided by the caller.
+		//   The split point is zero - based; that is, a split point less than or equal to 0 represents a
+		//   point before the first item.A split point greater than the length of the genome will 
+		//   represent a point after the last item.The caller is expected to provide the two genomes to 
+		//   write the two haves to.This function is non - destructive, that is, it will not destroy or 
+		//   alter the genome to be split.
+		//
+		//   When determining the split point, the genome is processed as a list object, i.e., an open 
+		//   parenthesis is assumed to exist before the first item on the stack.This function counts 
+		//   items from the beginning of the genome to locate the split point; nested lists contribute 
+		//   only 1 to this count, no matter what they contain.Closing parenthesis can either be 
+		//   interpreted as close instructions(to satisfy a block requirement in a nested list) or as 
+		//   close - open instructions(for the top level list).Nested levels begin when an instruction 
+		//   requiring blocks is encountered in the list and end when all required blocks are found.
+		//
+		//
+		// Parameters:
+		//   left_half		- Reference to buffer to write genome items located before the split point
+		//   right_half		- Reference to buffer to write genome items located after the split point
+		//   split_position - Zero-based index of the split point in the genome list of items
+		// 
+		// Return value:
+		//   Number if items and blocks in the top level of the list
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
 		unsigned int split(Utilities::FixedSizeStack<T> &left_half, Utilities::FixedSizeStack<T> &right_half, unsigned int split_position)
 		{
 			unsigned int item_number = 0;
@@ -217,6 +275,23 @@ namespace Plush
 			return item_number;
 		}
 
+		// Purpose: 
+		//   Push a genome on the stack
+		//
+		// Parameters:
+		//   genome	- Reference to genome to push
+		// 
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   Stack updated with provided genome at the top of the stack.
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
 		inline void push(Genome<T> &genome)
 		{
 			unsigned int item_number = 0;
@@ -232,11 +307,46 @@ namespace Plush
 			}
 		}
 
-		inline void push(const value_type& value)
+		// Purpose: 
+		//   Push an atom on the stack
+		//
+		// Parameters:
+		//   atom	- Reference to genome to push
+		// 
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   Stack updated with provided atom at the top of the stack.
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline void push(const value_type& atom)
 		{
-			Utilities::FixedSizeStack<T>::push(value);
+			Utilities::FixedSizeStack<T>::push(atom);
 		}
 
+		// Purpose: 
+		//   Pop a genome from the stack
+		//
+		// Parameters:
+		//   genome	- Reference to buffer to copy poped genome into
+		// 
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   The top genome is poped from the stack and copied to the provided buffer.  The provided 
+		//   genome buffer is cleared first.
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
 		unsigned int pop(Genome<T> &poped_item)
 		{
 			unsigned int item_number = 0;
@@ -296,12 +406,5 @@ namespace Plush
 
 			return extra_blocks;
 		};
-
-
-		//unsigned int split(Genome &left_half, Genome &right_half, unsigned int split_position);
-		//int pop(Genome<CodeAtom> &poped_item);
 	};
-
-//	extern Genome<class Atom> atoms;
-//	unsigned int CodeLength(Utilities::FixedSizeStack<Atom> &stack);
 }
