@@ -484,41 +484,6 @@ namespace Plush
 			Utilities::FixedSizeStack<Atom> block_a;
 			Utilities::FixedSizeStack<Atom> block_b;
 
-			//int unmatched_a = _env.pop<ExecAtom>(block_a, 0);
-			//int unmatched_b = _env.pop<ExecAtom>(block_b, 0);
-
-			//if ((block_a.size() == 0) || (block_b.size() == 0))
-			//{
-			//	_env.push<ExecAtom>(block_b);
-			//	_env.push<ExecAtom>(block_a);
-			//}
-
-			//else if (block_a.size() != block_b.size())
-			//{
-			//	_env.push<bool>(false);
-			//}
-
-			//else
-			//{
-			//	while (block_a.size() > 0)
-			//	{
-			//		ExecAtom atom_a = block_a.top();
-			//		ExecAtom atom_b = block_b.top();
-
-			//		block_a.pop();
-			//		block_b.pop();
-
-			//		if (atom_a != atom_b)
-			//		{
-			//			result = false;
-			//			break;
-			//		}
-			//	}
-
-			//	_env.push<bool>(result);
-			//}
-
-
 			unsigned int unmatched_a = _env.pop<ExecAtom>(block_a, 1);
 
 			if (unmatched_a > 0)
@@ -828,6 +793,7 @@ namespace Plush
 		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
 		{
 			int extra_blocks = 0;
+			int simulated_closing_parenthesis = 0;
 			int index = _env.pop<long>();	// index
 
 			Genome<class CodeAtom> first_block;
@@ -851,7 +817,30 @@ namespace Plush
 					int n = 0;
 					while (_env.is_empty<CodeAtom>() == false)
 					{
-						extra_blocks = _env.pop(genome);
+						if (simulated_closing_parenthesis == 0)
+							extra_blocks = _env.pop(genome);
+
+						if (simulated_closing_parenthesis > 0)
+						{
+							genome.clear();
+							Plush::Atom atom = Plush::Atom("{:instruction EXEC.NOOP :close 1}");
+							genome.push(atom);
+
+							simulated_closing_parenthesis--;
+							extra_blocks = 0;
+						}
+
+						if (extra_blocks > 0)
+						{
+							if ((n + 1) == index)
+							{
+								simulated_closing_parenthesis = extra_blocks;
+								genome[0].close_parentheses = 1;;
+							}
+
+							else
+								n += extra_blocks;
+						}
 
 						if (n < index)
 							top_half.push(genome);
