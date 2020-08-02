@@ -483,16 +483,16 @@ namespace Plush
 			unsigned int extra_first_blocks = 0;
 			unsigned int extra_second_bloxks = 0;
 
-			Genome<class ExecAtom> first_block;
-			Genome<class ExecAtom> second_block;
+			Genome<class Atom> first_block;
+			Genome<class Atom> second_block;
 
 			// Get first block from stack
-			extra_first_blocks = _env.pop(first_block);
+			extra_first_blocks = _env.pop<ExecAtom>(first_block);
 
 			if (extra_first_blocks == 0)
 			{
 				// Get second block from stack
-				extra_second_bloxks = _env.pop(second_block);
+				extra_second_bloxks = _env.pop<ExecAtom>(second_block);
 
 				// Make sure the second block contains only one block.
 				if (extra_second_bloxks > 0)
@@ -517,7 +517,7 @@ namespace Plush
 				{
 					for (int n = 0; n < first_block_length; n++)
 					{
-						if (first_block[n] != second_block[n])
+						if ((dynamic_cast<Genome<ExecAtom>&>(first_block))[n] != (dynamic_cast<Genome<ExecAtom>&>(second_block))[n])
 						{
 							result = false;
 							break;
@@ -529,8 +529,8 @@ namespace Plush
 			}
 			else
 			{
-				_env.push(second_block);
-				_env.push(first_block);
+				_env.push<ExecAtom>(second_block);
+				_env.push<ExecAtom>(first_block);
 			}
 		}
 
@@ -784,21 +784,21 @@ namespace Plush
 			int simulated_closing_parenthesis = 0;
 			int index = _env.pop<long>();	// index
 
-			Genome<class CodeAtom> first_block;
-			Genome<class CodeAtom> top_half;
-			Genome<class CodeAtom> bottom_half;
-			Genome<class CodeAtom> top_block;
-			Genome<class CodeAtom> bottom_block;
-			Genome<class CodeAtom> genome;
-			Genome<class CodeAtom> temp_block;
+			Genome<class Atom> first_block;
+			Genome<class Atom> top_half;
+			Genome<class Atom> bottom_half;
+			Genome<class Atom> top_block;
+			Genome<class Atom> bottom_block;
+			Genome<class Atom> genome;
+			Genome<class Atom> temp_block;
 
 			if (index > 0)
 			{
 				// Get first block from stack
-				_env.pop(first_block);
+				_env.pop<CodeAtom>(first_block);
 
 				if (first_block.size() == 0)
-					_env.push(first_block);
+					_env.push<CodeAtom>(first_block);
 
 				else
 				{
@@ -806,7 +806,7 @@ namespace Plush
 					while (_env.is_empty<CodeAtom>() == false)
 					{
 						if (simulated_closing_parenthesis == 0)
-							extra_blocks = _env.pop(genome);
+							extra_blocks = _env.pop<CodeAtom>(genome);
 
 						if (simulated_closing_parenthesis > 0)
 						{
@@ -850,9 +850,9 @@ namespace Plush
 						bottom_block.push(temp_block);
 					}
 
-					_env.push(bottom_block);
-					_env.push(first_block);
-					_env.push(top_block);
+					_env.push<CodeAtom>(bottom_block);
+					_env.push<CodeAtom>(first_block);
+					_env.push<CodeAtom>(top_block);
 				}
 			}
 		}

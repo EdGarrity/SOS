@@ -1038,18 +1038,18 @@ namespace Plush
 			unsigned int extra_first_blocks = 0;
 			unsigned int extra_second_bloxks = 0;
 
-			Genome<class CodeAtom> first_block;
-			Genome<class CodeAtom> second_block;
-			Genome<class CodeAtom> left_half;
-			Genome<class CodeAtom> right_half;
+			Genome<class Atom> first_block;
+			Genome<class Atom> second_block;
+			Genome<class Atom> left_half;
+			Genome<class Atom> right_half;
 			
 			// Get first block from stack
-			extra_first_blocks = _env.pop(first_block);
+			extra_first_blocks = _env.pop<CodeAtom>(first_block);
 
 			if (extra_first_blocks == 0)
 			{
 				// Get second block from stack
-				extra_second_bloxks = _env.pop(second_block);
+				extra_second_bloxks = _env.pop<CodeAtom>(second_block);
 
 				// Put the second block in a list object
 				second_block.push(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
@@ -1074,8 +1074,8 @@ namespace Plush
 				}
 
 				// Insert secoond item into first item at position 0.
-				_env.push(first_block);
-				_env.push(second_block);
+				_env.push<CodeAtom>(first_block);
+				_env.push<CodeAtom>(second_block);
 			}
 			else
 			{
@@ -1093,9 +1093,9 @@ namespace Plush
 					right_half[0].close_parentheses += extra_second_bloxks;
 
 				// Insert second block into first block at insertion point
-				_env.push(right_half);
-				_env.push(second_block);
-				_env.push(left_half);
+				_env.push<CodeAtom>(right_half);
+				_env.push<CodeAtom>(second_block);
+				_env.push<CodeAtom>(left_half);
 			}
 		}
 
@@ -1106,10 +1106,10 @@ namespace Plush
 	{
 		if (_env.has_elements<CodeAtom>(1))
 		{
-			Genome<class CodeAtom> top_block;
+			Genome<class Atom> top_block;
 
 			// Get first block from stack
-			_env.pop(top_block);
+			_env.pop<CodeAtom>(top_block);
 
 			// Get count items in first block
 			int number_of_items = top_block.length();
@@ -1219,15 +1219,15 @@ namespace Plush
 		{
 			int index = std::abs(_env.pop<long>());	// index
 
-			Genome<class CodeAtom> top_block;
-			Genome<class CodeAtom> left_half;
-			Genome<class CodeAtom> right_half;
+			Genome<class Atom> top_block;
+			Genome<class Atom> left_half;
+			Genome<class Atom> right_half;
 
 			// Get first block from stack
-			_env.pop(top_block);
+			_env.pop<CodeAtom>(top_block);
 
 			if (top_block.size() == 0)
-				_env.push(top_block);
+				_env.push<CodeAtom>(top_block);
 
 			else
 			{
@@ -1246,7 +1246,7 @@ namespace Plush
 					if ((index + 1) != number_of_items)
 						left_half[0].close_parentheses++;
 
-					_env.push(left_half);
+					_env.push<CodeAtom>(left_half);
 				}
 
 				else
@@ -1260,7 +1260,7 @@ namespace Plush
 					if ((index + 1) != number_of_items)
 						left_half[0].close_parentheses++;
 	
-					_env.push(left_half);
+					_env.push<CodeAtom>(left_half);
 				}
 			}
 		}
@@ -1274,17 +1274,17 @@ namespace Plush
 		{
 			int index = std::abs(_env.pop<long>());	// index
 
-			Genome<class CodeAtom> top_block;
-			Genome<class CodeAtom> left_half;
-			Genome<class CodeAtom> right_half;
+			Genome<class Atom> top_block;
+			Genome<class Atom> left_half;
+			Genome<class Atom> right_half;
 
 			if (index != 0)
 			{
 				// Get first block from stack
-				_env.pop(top_block);
+				_env.pop<CodeAtom>(top_block);
 
 				if (top_block.size() == 0)
-					_env.push(top_block);
+					_env.push<CodeAtom>(top_block);
 
 				else
 				{
@@ -1298,7 +1298,7 @@ namespace Plush
 					top_block.split(left_half, right_half, index);
 
 					// Push remaining items back on the code stack
-					_env.push(right_half);
+					_env.push<CodeAtom>(right_half);
 				}
 			}
 		}

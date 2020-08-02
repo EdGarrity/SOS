@@ -14,6 +14,7 @@ namespace Plush
 	{
 		std::string gene;
 		Utilities::FixedSizeStack<Atom> code_stack;
+//		Genome<class CodeAtom> program_genome;
 
 		while (_program.length() > 0)
 		{
@@ -24,13 +25,30 @@ namespace Plush
 			Atom atom(gene);
 
 			code_stack.push(atom);
+//			program_genome.push(atom);
 		}
 
 		while (!code_stack.empty())
+//		while (!program_genome.empty())
 		{
 			env.get_stack<CodeAtom>().push(CodeAtom(code_stack.top()));
 			env.get_stack<ExecAtom>().push(ExecAtom(code_stack.top()));
 			code_stack.pop();
+
+			//Genome<Atom> code_block;
+			//program_genome.pop(code_block);
+
+
+			////Utilities::FixedSizeStack<ExecAtom>& stack = get_stack<ExecAtom>();
+			////Genome<ExecAtom>& genome = dynamic_cast<Genome<ExecAtom>&>(stack);
+
+			//Utilities::FixedSizeStack<CodeAtom>& code_stack = env.get_stack<CodeAtom>();
+			//Genome<CodeAtom>& code_genome = dynamic_cast<Genome<CodeAtom>&>(code_stack);
+			//code_genome.push(code_block);
+
+			//Utilities::FixedSizeStack<ExecAtom>& exec_stack = env.get_stack<ExecAtom>();
+			//Genome<ExecAtom>& exec_genome = dynamic_cast<Genome<ExecAtom>&>(exec_stack);
+			//exec_genome.push(code_block);
 		}
 
 		// The basic pop-exec cycle

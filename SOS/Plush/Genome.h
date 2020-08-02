@@ -199,7 +199,8 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		unsigned int split(Utilities::FixedSizeStack<T> &left_half, Utilities::FixedSizeStack<T> &right_half, unsigned int split_position)
+//		unsigned int split(Utilities::FixedSizeStack<T> &left_half, Utilities::FixedSizeStack<T> &right_half, unsigned int split_position)
+		unsigned int split(Genome<T> &left_half, Genome<T> &right_half, unsigned int split_position)
 		{
 			unsigned int item_number = 0;
 			unsigned int wanted_blocks = 0;
@@ -293,7 +294,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline void push(Genome<T> &genome)
+		inline void push(Genome<Atom> &genome)
 		{
 			unsigned int item_number = 0;
 			unsigned int wanted_blocks = 0;
@@ -348,7 +349,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		unsigned int pop(Genome<T> &poped_item)
+		unsigned int pop(Genome<Atom> &poped_item)
 		{
 			unsigned int item_number = 0;
 			unsigned int wanted_blocks = 0;
@@ -407,5 +408,67 @@ namespace Plush
 
 			return extra_blocks;
 		};
+
+
+
+		//unsigned int pop<S>(Genome<Atom> &poped_item)
+		//{
+		//	unsigned int item_number = 0;
+		//	unsigned int wanted_blocks = 0;
+		//	unsigned int extra_blocks;
+		//	Utilities::FixedSizeStack<CodeAtom> temp;
+		//	std::stack<unsigned int> wanted_stack;
+
+		//	poped_item.clear();
+
+		//	while (Utilities::FixedSizeStack<T>::empty() == false)
+		//	{
+		//		Plush::Atom atom = Utilities::FixedSizeStack<T>::top();
+		//		Utilities::FixedSizeStack<T>::pop();
+
+		//		temp.push(atom);
+
+		//		int closing = atom.close_parentheses - Func2BlockWantsMap[atom.instruction];
+
+		//		if (closing < 0)
+		//		{
+		//			wanted_stack.push(wanted_blocks);
+		//			wanted_blocks = 0 - closing;
+		//		}
+
+		//		if (closing > 0)
+		//		{
+		//			if (wanted_blocks > 0)
+		//				wanted_blocks--;
+
+		//			else if (wanted_blocks == 0)
+		//			{
+		//				extra_blocks = (closing > 1) ? (closing - 1) : (0);
+		//				break;
+		//			}
+		//		}
+
+		//		if (wanted_blocks == 0)
+		//		{
+		//			if (wanted_stack.size() == 0)
+		//				item_number++;
+
+		//			if (wanted_stack.size() > 0)
+		//			{
+		//				wanted_blocks = wanted_stack.top();
+		//				wanted_stack.pop();
+		//			}
+		//		}
+		//	}
+
+		//	while (temp.size() > 0)
+		//	{
+		//		Plush::Atom atom = temp.top();
+		//		temp.pop();
+		//		poped_item.push(atom);
+		//	}
+
+		//	return extra_blocks;
+		//};
 	};
 }

@@ -137,6 +137,7 @@ namespace UnitTest
 				}));
 		}
 
+		// Need to add look-back to see if previous instruction opened a block
 		TEST_METHOD(ATOM_WITH_ONE_GROUP_PARAMETER)
 		{
 			Environment env;

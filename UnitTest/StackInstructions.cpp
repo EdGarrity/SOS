@@ -126,6 +126,30 @@ namespace UnitTest
 			Assert::AreEqual(env.pop<bool>(), true);
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 		}
+
+		TEST_METHOD(Program_Stacks_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 1 :close 1}\
+					{:instruction 2 :close 1}\
+					{:instruction 3 :close 1}\
+					{:instruction 4 :close 1}\
+					{:instruction 5 :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 1, 2, 3, 4, 5 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction 5 :close 1}"),
+					CodeAtom("{:instruction 4 :close 1}"),
+					CodeAtom("{:instruction 3 :close 1}"),
+					CodeAtom("{:instruction 2 :close 1}"),
+					CodeAtom("{:instruction 1 :close 1}"),
+				}));
+		}
 	};
 
 }

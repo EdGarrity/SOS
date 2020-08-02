@@ -1,9 +1,8 @@
 #pragma once
 
-//#include "Processor.h"
-#include "Atom.h"
 #include <vector>
 #include <map>
+#include <stdexcept>
 #include "Genome.h"
 
 namespace Plush
@@ -38,6 +37,7 @@ namespace Plush
 
 		/* Helper Functions */
 
+		// Obsolete.  Use Genome.length() instead.
 		template <typename T>
 		unsigned int NumberOfBlocks(unsigned int block_level)
 		{
@@ -69,6 +69,11 @@ namespace Plush
 		}
 
 		/* Operations */
+		//template <typename T> inline Utilities::FixedSizeStack<T> &get_stack() 
+		//{ 
+		//	throw std::runtime_error("push() function not supported for Atom Genomes");
+		//};
+
 		template <typename T> inline Utilities::FixedSizeStack<T> &get_stack() { }
 		template <> inline Utilities::FixedSizeStack<ExecAtom> &get_stack()
 		{
@@ -98,11 +103,22 @@ namespace Plush
 
 		/* pushing and popping */
 
-		// Need spcial cases for pushing an array of EXEC and CODE
 		template <typename T>
 		inline void push(T value)
 		{
 			get_stack<T>().push(value);
+		}
+
+		template <>
+		inline void push(CodeAtom value)
+		{
+			throw std::runtime_error("push() function not supported for Genomes");
+		}
+
+		template <>
+		inline void push(ExecAtom value)
+		{
+			throw std::runtime_error("push() function not supported for Genomes");
 		}
 
 		inline void push(Genome<class CodeAtom>& stack)
@@ -136,15 +152,29 @@ namespace Plush
 			return val;
 		}
 
-		inline unsigned int pop(Genome<class CodeAtom> &stack)
+		template <class T>
+		inline unsigned int pop(Genome<class Atom> &other_stack)
 		{
-			return code_stack_.pop(stack);
+//			return get_stack<T>().pop(stack);
+
+			//Utilities::FixedSizeStack<CodeAtom>& stack = get_stack<CodeAtom>();
+			//Genome<CodeAtom>& genome = dynamic_cast<Genome<CodeAtom>&>(stack);
+
+			Utilities::FixedSizeStack<T>& stack = get_stack<T>();
+			Genome<T>& genome = dynamic_cast<Genome<T>&>(stack);
+
+			return genome.pop(other_stack);
 		}
 
-		inline unsigned int pop(Genome<class ExecAtom> &stack)
-		{
-			return exec_stack_.pop(stack);
-		}
+		//inline unsigned int pop(Genome<class CodeAtom> &stack)
+		//{
+		//	return code_stack_.pop(stack);
+		//}
+
+		//inline unsigned int pop(Genome<class ExecAtom> &stack)
+		//{
+		//	return exec_stack_.pop(stack);
+		//}
 
 		template <typename T>
 		inline int pop(Utilities::FixedSizeStack<Atom> &stack, unsigned int open_blocks)
