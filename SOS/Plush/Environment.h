@@ -109,17 +109,17 @@ namespace Plush
 			get_stack<T>().push(value);
 		}
 
-		template <>
-		inline void push(CodeAtom value)
-		{
-			throw std::runtime_error("push() function not supported for Genomes");
-		}
+		//template <>
+		//inline void push(CodeAtom value)
+		//{
+		//	throw std::runtime_error("push() function not supported for Genomes");
+		//}
 
-		template <>
-		inline void push(ExecAtom value)
-		{
-			throw std::runtime_error("push() function not supported for Genomes");
-		}
+		//template <>
+		//inline void push(ExecAtom value)
+		//{
+		//	throw std::runtime_error("push() function not supported for Genomes");
+		//}
 
 		inline void push(Genome<class CodeAtom>& stack)
 		{
@@ -135,12 +135,11 @@ namespace Plush
 					get_stack<ExecAtom>().push(stack[n]);
 		}
 
-		// Obsolete
 		template <class T>
 		inline void push(Utilities::FixedSizeStack<Atom> &stack)
 		{
 			if (stack.size() > 0)
-				for (int n = stack.size() - 1; n >= 0; n--)
+				for (int n = 0; n < stack.size(); n++)
 					get_stack<T>().push(stack[n]);
 		}
 
@@ -155,27 +154,13 @@ namespace Plush
 		template <class T>
 		inline unsigned int pop(Genome<class Atom> &other_stack)
 		{
-//			return get_stack<T>().pop(stack);
-
-			//Utilities::FixedSizeStack<CodeAtom>& stack = get_stack<CodeAtom>();
-			//Genome<CodeAtom>& genome = dynamic_cast<Genome<CodeAtom>&>(stack);
-
 			Utilities::FixedSizeStack<T>& stack = get_stack<T>();
 			Genome<T>& genome = dynamic_cast<Genome<T>&>(stack);
 
 			return genome.pop(other_stack);
 		}
 
-		//inline unsigned int pop(Genome<class CodeAtom> &stack)
-		//{
-		//	return code_stack_.pop(stack);
-		//}
-
-		//inline unsigned int pop(Genome<class ExecAtom> &stack)
-		//{
-		//	return exec_stack_.pop(stack);
-		//}
-
+		// Obsolete
 		template <typename T>
 		inline int pop(Utilities::FixedSizeStack<Atom> &stack, unsigned int open_blocks)
 		{
@@ -204,7 +189,6 @@ namespace Plush
 			return block_count; // Return number of unmatched close parenthesis.
 		}
 
-		// Need spcial cases for EXEC and CODE
 		template <typename T>
 		inline T top()
 		{
@@ -212,6 +196,16 @@ namespace Plush
 			return val;
 		}
 
+		template <class T>
+		inline unsigned int top(Genome<class Atom> &other_stack)
+		{
+			Utilities::FixedSizeStack<T>& stack = get_stack<T>();
+			Genome<T>& genome = dynamic_cast<Genome<T>&>(stack);
+
+			return genome.top(other_stack);
+		}
+
+		// Obsolete
 		template <typename T>
 		inline int top(Utilities::FixedSizeStack<Atom> &stack, unsigned int open_blocks)
 		{

@@ -199,7 +199,6 @@ namespace Plush
 		//
 		// Remarks:
 		//
-//		unsigned int split(Utilities::FixedSizeStack<T> &left_half, Utilities::FixedSizeStack<T> &right_half, unsigned int split_position)
 		unsigned int split(Genome<T> &left_half, Genome<T> &right_half, unsigned int split_position)
 		{
 			unsigned int item_number = 0;
@@ -332,6 +331,30 @@ namespace Plush
 		}
 
 		// Purpose: 
+		//   Pop an atom from the stack
+		//
+		// Parameters:
+		//   None
+		// 
+		// Return value:
+		//   CodeAtom or ExecAtom poped from the stack
+		//
+		// Side Effects:
+		//   The top atom is poped from the stack.
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline T pop()
+		{
+			Plush::Atom atom = Utilities::FixedSizeStack<T>::top();
+			Utilities::FixedSizeStack<T>::pop();
+			return atom;
+		}
+
+		// Purpose: 
 		//   Pop a genome from the stack
 		//
 		// Parameters:
@@ -409,66 +432,105 @@ namespace Plush
 			return extra_blocks;
 		};
 
+		// Purpose: 
+		//   Returns the top atom on the stack
+		//
+		// Parameters:
+		//   None
+		// 
+		// Return value:
+		//   CodeAtom or ExecAtom poped from the stack
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline T top()
+		{
+			Plush::Atom atom = Utilities::FixedSizeStack<T>::top();
+			return atom;
+		}
 
+		// Purpose: 
+		//   Returns the top genome on the stack
+		//
+		// Parameters:
+		//   genome	- Reference to buffer to copy top genome into
+		// 
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   The provided genome buffer is cleared first.
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		unsigned int top(Genome<Atom> &poped_item)
+		{
+			unsigned int item_number = 0;
+			unsigned int wanted_blocks = 0;
+			unsigned int extra_blocks;
+			Utilities::FixedSizeStack<CodeAtom> temp;
+			std::stack<unsigned int> wanted_stack;
 
-		//unsigned int pop<S>(Genome<Atom> &poped_item)
-		//{
-		//	unsigned int item_number = 0;
-		//	unsigned int wanted_blocks = 0;
-		//	unsigned int extra_blocks;
-		//	Utilities::FixedSizeStack<CodeAtom> temp;
-		//	std::stack<unsigned int> wanted_stack;
+			poped_item.clear();
 
-		//	poped_item.clear();
+			while (Utilities::FixedSizeStack<T>::empty() == false)
+			{
+				Plush::Atom atom = Utilities::FixedSizeStack<T>::top();
+				Utilities::FixedSizeStack<T>::pop();
 
-		//	while (Utilities::FixedSizeStack<T>::empty() == false)
-		//	{
-		//		Plush::Atom atom = Utilities::FixedSizeStack<T>::top();
-		//		Utilities::FixedSizeStack<T>::pop();
+				temp.push(atom);
 
-		//		temp.push(atom);
+				int closing = atom.close_parentheses - Func2BlockWantsMap[atom.instruction];
 
-		//		int closing = atom.close_parentheses - Func2BlockWantsMap[atom.instruction];
+				if (closing < 0)
+				{
+					wanted_stack.push(wanted_blocks);
+					wanted_blocks = 0 - closing;
+				}
 
-		//		if (closing < 0)
-		//		{
-		//			wanted_stack.push(wanted_blocks);
-		//			wanted_blocks = 0 - closing;
-		//		}
+				if (closing > 0)
+				{
+					if (wanted_blocks > 0)
+						wanted_blocks--;
 
-		//		if (closing > 0)
-		//		{
-		//			if (wanted_blocks > 0)
-		//				wanted_blocks--;
+					else if (wanted_blocks == 0)
+					{
+						extra_blocks = (closing > 1) ? (closing - 1) : (0);
+						break;
+					}
+				}
 
-		//			else if (wanted_blocks == 0)
-		//			{
-		//				extra_blocks = (closing > 1) ? (closing - 1) : (0);
-		//				break;
-		//			}
-		//		}
+				if (wanted_blocks == 0)
+				{
+					if (wanted_stack.size() == 0)
+						item_number++;
 
-		//		if (wanted_blocks == 0)
-		//		{
-		//			if (wanted_stack.size() == 0)
-		//				item_number++;
+					if (wanted_stack.size() > 0)
+					{
+						wanted_blocks = wanted_stack.top();
+						wanted_stack.pop();
+					}
+				}
+			}
 
-		//			if (wanted_stack.size() > 0)
-		//			{
-		//				wanted_blocks = wanted_stack.top();
-		//				wanted_stack.pop();
-		//			}
-		//		}
-		//	}
+			while (temp.size() > 0)
+			{
+				Plush::Atom atom = temp.top();
+				temp.pop();
+				poped_item.push(atom);
+				Utilities::FixedSizeStack<T>::push(atom);
+			}
 
-		//	while (temp.size() > 0)
-		//	{
-		//		Plush::Atom atom = temp.top();
-		//		temp.pop();
-		//		poped_item.push(atom);
-		//	}
-
-		//	return extra_blocks;
-		//};
+			return extra_blocks;
+		};
 	};
 }

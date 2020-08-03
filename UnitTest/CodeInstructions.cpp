@@ -84,10 +84,8 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction CODE.NOOP.OPEN_PAREN :close 0}\
 					{:instruction 10 :close 0}\
 					{:instruction INTEGER.+ :close 1}\
-					{:instruction CODE.NOOP.OPEN_PAREN :close 0}\
 					{:instruction 10 :close 0}\
 					{:instruction INTEGER.+ :close 1}\
 					{:instruction CODE.APPEND :close 0}\
@@ -98,10 +96,8 @@ namespace UnitTest
 					CodeAtom("{:instruction CODE.APPEND :close 0}"),
 					CodeAtom("{:instruction INTEGER.+ :close 1}"),
 					CodeAtom("{:instruction 10 :close 0}"),
-					CodeAtom("{:instruction CODE.NOOP.OPEN_PAREN :close 0}"),
 					CodeAtom("{:instruction INTEGER.+ :close 0}"),
 					CodeAtom("{:instruction 10 :close 0}"),
-					CodeAtom("{:instruction CODE.NOOP.OPEN_PAREN :close 0}"),
 				}));
 		}
 
@@ -750,7 +746,6 @@ namespace UnitTest
 					CodeAtom("{:instruction CODE.DO*RANGE :close 0}"),
 					CodeAtom("{:instruction 3 :close 0}"),
 					CodeAtom("{:instruction 1 :close 0}"),
-					CodeAtom("{:instruction true :close 1}"),
 				}));
 		}
 
@@ -772,8 +767,6 @@ namespace UnitTest
 					CodeAtom("{:instruction CODE.DO*RANGE :close 0}"),
 					CodeAtom("{:instruction 3 :close 0}"),
 					CodeAtom("{:instruction 1 :close 0}"),
-					CodeAtom("{:instruction true :close 1}"),
-					CodeAtom("{:instruction false :close 0}"),
 				}));
 		}
 
@@ -809,7 +802,6 @@ namespace UnitTest
 				{
 					CodeAtom("{:instruction CODE.DO*COUNT :close 0}"),
 					CodeAtom("{:instruction 3 :close 0}"),
-					CodeAtom("{:instruction true :close 1}"),
 				}));
 		}
 
@@ -829,8 +821,6 @@ namespace UnitTest
 				{
 					CodeAtom("{:instruction CODE.DO*COUNT :close 0}"),
 					CodeAtom("{:instruction 3 :close 0}"),
-					CodeAtom("{:instruction true :close 1}"),
-					CodeAtom("{:instruction false :close 0}"),
 				}));
 		}
 
@@ -885,7 +875,6 @@ namespace UnitTest
 				{
 					CodeAtom("{:instruction CODE.DO*TIMES :close 0}"),
 					CodeAtom("{:instruction 3 :close 0}"),
-					CodeAtom("{:instruction true :close 1}"),
 				}));
 		}
 
@@ -905,8 +894,6 @@ namespace UnitTest
 				{
 					CodeAtom("{:instruction CODE.DO*TIMES :close 0}"),
 					CodeAtom("{:instruction 3 :close 0}"),
-					CodeAtom("{:instruction true :close 1}"),
-					CodeAtom("{:instruction false :close 0}"),
 				}));
 		}
 
@@ -1240,9 +1227,7 @@ namespace UnitTest
 					CodeAtom("{:instruction 3.0 :close 2}"),
 					CodeAtom("{:instruction 2.1 :close 1}"),
 					CodeAtom("{:instruction 2.0 :close 0}"),
-					CodeAtom("{:instruction 1.2 :close 1}"),
-					CodeAtom("{:instruction 1.1 :close 0}"),
-					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 1}"),
 				}));
 		}
 
@@ -1269,12 +1254,10 @@ namespace UnitTest
 					CodeAtom("{:instruction CODE.EXTRACT :close 1}"),
 					CodeAtom("{:instruction 1 :close 1}"),
 					CodeAtom("{:instruction 3.0 :close 2}"),
-					CodeAtom("{:instruction 2.1 :close 1}"),
-					CodeAtom("{:instruction 2.0 :close 0}"),
-					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.2 :close 2}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
 				}));
 		}
 
@@ -1301,12 +1284,34 @@ namespace UnitTest
 					CodeAtom("{:instruction CODE.EXTRACT :close 1}"),
 					CodeAtom("{:instruction 2 :close 1}"),
 					CodeAtom("{:instruction 3.0 :close 2}"),
-					CodeAtom("{:instruction 1.2 :close 1}"),
-					CodeAtom("{:instruction 1.1 :close 0}"),
-					CodeAtom("{:instruction 1.0 :close 0}"),
-					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					CodeAtom("{:instruction 2.1 :close 1}"),
-					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 2.0 :close 1}"),
+				}));
+		}
+
+		TEST_METHOD(EXTRACT_WITH_NEGATIVE_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction 1.0 :close 0}\
+					{:instruction 1.1 :close 0}\
+					{:instruction 1.2 :close 1}\
+					{:instruction 2.0 :close 0}\
+					{:instruction 2.1 :close 1}\
+					{:instruction 3.0 :close 2}\
+					{:instruction -2 :close 1}\
+					{:instruction CODE.EXTRACT :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
+				{
+					CodeAtom("{:instruction CODE.EXTRACT :close 1}"),
+					CodeAtom("{:instruction -2 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.0 :close 1}"),
 				}));
 		}
 
@@ -1335,11 +1340,6 @@ namespace UnitTest
 					CodeAtom("{:instruction 3 :close 1}"),
 					CodeAtom("{:instruction 3.0 :close 2}"),
 					CodeAtom("{:instruction 2.1 :close 1}"),
-					CodeAtom("{:instruction 2.0 :close 0}"),
-					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					CodeAtom("{:instruction 1.2 :close 1}"),
-					CodeAtom("{:instruction 1.1 :close 0}"),
-					CodeAtom("{:instruction 1.0 :close 0}"),
 				}));
 		}
 
@@ -1367,44 +1367,10 @@ namespace UnitTest
 					CodeAtom("{:instruction CODE.EXTRACT :close 1}"),
 					CodeAtom("{:instruction 4 :close 1}"),
 					CodeAtom("{:instruction 3.0 :close 2}"),
-					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.2 :close 2}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
 					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					CodeAtom("{:instruction 2.1 :close 1}"),
-					CodeAtom("{:instruction 2.0 :close 0}"),
-				}));
-		}
-
-		TEST_METHOD(EXTRACT_WITH_NEGATIVE_2)
-		{
-			Environment env;
-			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
-
-			Plush::run(env, \
-				"\
-					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
-					{:instruction 1.0 :close 0}\
-					{:instruction 1.1 :close 0}\
-					{:instruction 1.2 :close 1}\
-					{:instruction 2.0 :close 0}\
-					{:instruction 2.1 :close 1}\
-					{:instruction 3.0 :close 2}\
-					{:instruction -2 :close 1}\
-					{:instruction CODE.EXTRACT :close 1}\
-				");
-
-			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
-				{
-					CodeAtom("{:instruction CODE.EXTRACT :close 1}"),
-					CodeAtom("{:instruction -2 :close 1}"),
-					CodeAtom("{:instruction 3.0 :close 2}"),
-					CodeAtom("{:instruction 1.2 :close 1}"),
-					CodeAtom("{:instruction 1.1 :close 0}"),
-					CodeAtom("{:instruction 1.0 :close 0}"),
-					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					CodeAtom("{:instruction 2.1 :close 1}"),
-					CodeAtom("{:instruction 2.0 :close 0}"),
 				}));
 		}
 
@@ -2332,11 +2298,12 @@ namespace UnitTest
 					CodeAtom("{:instruction 4.1 :close 0}"),
 					CodeAtom("{:instruction 4.0 :close 0}"),
 					CodeAtom("{:instruction 3.0 :close 2}"),
-					CodeAtom("{:instruction 2.1 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
 					CodeAtom("{:instruction 2.0 :close 0}"),
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
 				}));
 		}
 
@@ -3033,7 +3000,7 @@ namespace UnitTest
 			Plush::run(env, \
 				"\
 					{:instruction 5 :close 1}\
-					{:instruction 10 + :close 1}\
+					{:instruction 10 :close 1}\
 					{:instruction CODE.QUOTE :close 0}\
 					{:instruction INTEGER.- :close 0}\
 					{:instruction INTEGER.+ :close 1}\

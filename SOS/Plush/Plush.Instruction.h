@@ -22,11 +22,19 @@ namespace Plush
 	template <>
 	inline unsigned dup<CodeAtom>(Environment & _env)
 	{
-		Utilities::FixedSizeStack<Atom> stack;
+		//Utilities::FixedSizeStack<Atom> stack;
+
+		//if (_env.has_elements<CodeAtom>(1))
+		//{
+		//	_env.top<CodeAtom>(stack, 1);
+		//	_env.push<CodeAtom>(stack);
+		//}
+
+		Genome<Atom> stack;
 
 		if (_env.has_elements<CodeAtom>(1))
 		{
-			_env.top<CodeAtom>(stack, 1);
+			_env.top<CodeAtom>(stack);
 			_env.push<CodeAtom>(stack);
 		}
 
@@ -595,11 +603,11 @@ namespace Plush
 	{
 		if (_env.has_elements<CodeAtom>(3))
 		{
-			Utilities::FixedSizeStack<CodeAtom> &stack = _env.get_stack<CodeAtom>();
-			Utilities::FixedSizeStack<Atom> extracted_block_A;
-			Utilities::FixedSizeStack<Atom> extracted_block_B;
-			Utilities::FixedSizeStack<Atom> extracted_block_C;
-			Utilities::FixedSizeStack<Atom> block_without_extracted;
+			Genome<CodeAtom> &stack = _env.get_stack<CodeAtom>();
+			Genome<Atom> extracted_block_A;
+			Genome<Atom> extracted_block_B;
+			Genome<Atom> extracted_block_C;
+			Genome<Atom> block_without_extracted;
 
 			// Get count of sub-blocks
 			int number_of_blocks = 0;
