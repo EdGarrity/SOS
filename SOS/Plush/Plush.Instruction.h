@@ -603,62 +603,124 @@ namespace Plush
 	{
 		if (_env.has_elements<CodeAtom>(3))
 		{
-			Genome<CodeAtom> &stack = _env.get_stack<CodeAtom>();
 			Genome<Atom> extracted_block_A;
 			Genome<Atom> extracted_block_B;
 			Genome<Atom> extracted_block_C;
-			Genome<Atom> block_without_extracted;
+			int extra_blocks = 0;
+			int extra_blocks_B = 0;
+			int extra_blocks_C = 0;
 
-			// Get count of sub-blocks
-			int number_of_blocks = 0;
-			int n = stack.size() - 1;
+			// Get first block from stack
+			extra_blocks = _env.pop<CodeAtom>(extracted_block_A);
+			extracted_block_A[0].close_parentheses -= extra_blocks;
 
-			n = stack.size() - 1;
-			int block_number = 0;
-
-			do
+			// Get or create second block
+			if (extra_blocks > 0)
 			{
-				int blocks_open = 1;
+				// Create a NOOP second block and decrease the extra blocks in the first item by one
+				extracted_block_B.push(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
+				extra_blocks--;
+			}
 
-				for (; n >= 0; n--)
-				{
-					Plush::Atom atom = _env.pop<CodeAtom>(); //stack[n];
+			else
+			{
+				// Get second block from stack
+				extra_blocks_B = _env.pop<CodeAtom>(extracted_block_B);
+				extracted_block_B[0].close_parentheses -= extra_blocks_B;
+				extra_blocks += extra_blocks_B;
+			}
 
-					if (block_number == 0)
-						extracted_block_A.push(atom);
+			// Get or create third block
+			if (extra_blocks > 0)
+			{
+				// Create a NOOP second block and decrease the extra blocks in the first item by one
+				extracted_block_C.push(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
+				extra_blocks--;
+			}
 
-					else if (block_number == 1)
-						extracted_block_B.push(atom);
+			else
+			{
+				// Get second block from stack
+				extra_blocks_C = _env.pop<CodeAtom>(extracted_block_C);
+				extracted_block_C[0].close_parentheses -= extra_blocks_C;
+				extra_blocks += extra_blocks_C;
+			}
 
-					else if (block_number == 2)
-						extracted_block_C.push(atom);
+			// Balance parenthesis
+			extracted_block_B[0].close_parentheses += extra_blocks;
 
-					else
-						block_without_extracted.push(atom);
+			// Get length of blocks
+			unsigned int extracted_block_A_length = extracted_block_A.length();
+			unsigned int extracted_block_B_length = extracted_block_B.length();
+			unsigned int extracted_block_C_length = extracted_block_C.length();
 
-					blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
-					blocks_open -= atom.close_parentheses;
-					blocks_open = (blocks_open > 0) ? blocks_open : 0;
-
-					if (atom.close_parentheses > 0)
-					{
-						if (blocks_open > 0)
-							blocks_open++;
-
-						else
-						{
-							block_number++;
-							blocks_open = 1;
-						}
-					}
-				};
-			} while (n >= 0);
-
-			_env.get_stack<CodeAtom>().clear();
-			_env.push<CodeAtom>(block_without_extracted);
 			_env.push<CodeAtom>(extracted_block_B);
 			_env.push<CodeAtom>(extracted_block_A);
 			_env.push<CodeAtom>(extracted_block_C);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			//// Get count of sub-blocks
+			//int number_of_blocks = 0;
+			//int n = stack.size() - 1;
+
+			//n = stack.size() - 1;
+			//int block_number = 0;
+
+			//do
+			//{
+			//	int blocks_open = 1;
+
+			//	for (; n >= 0; n--)
+			//	{
+			//		Plush::Atom atom = _env.pop<CodeAtom>(); //stack[n];
+
+			//		if (block_number == 0)
+			//			extracted_block_A.push(atom);
+
+			//		else if (block_number == 1)
+			//			extracted_block_B.push(atom);
+
+			//		else if (block_number == 2)
+			//			extracted_block_C.push(atom);
+
+			//		else
+			//			block_without_extracted.push(atom);
+
+			//		blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+			//		blocks_open -= atom.close_parentheses;
+			//		blocks_open = (blocks_open > 0) ? blocks_open : 0;
+
+			//		if (atom.close_parentheses > 0)
+			//		{
+			//			if (blocks_open > 0)
+			//				blocks_open++;
+
+			//			else
+			//			{
+			//				block_number++;
+			//				blocks_open = 1;
+			//			}
+			//		}
+			//	};
+			//} while (n >= 0);
+
+			//_env.get_stack<CodeAtom>().clear();
+			//_env.push<CodeAtom>(block_without_extracted);
+			//_env.push<CodeAtom>(extracted_block_B);
+			//_env.push<CodeAtom>(extracted_block_A);
+			//_env.push<CodeAtom>(extracted_block_C);
 		}
 
 		return 1;
