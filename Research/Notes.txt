@@ -1,0 +1,7 @@
+Working on bug in code_subst() in ExecInstruction.cpp
+
+
+             ( FLOAT.+)
+  ( DO*RANGE           ) ( FLOAT.+)
+(                                  )(FLOAT.-)(FLOAT.+)(CODE.SUBST
+
