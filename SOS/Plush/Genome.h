@@ -33,7 +33,19 @@ namespace Plush
 //		void convert_genome_to_string();
 
 	public:
-		//Genome();
+		Genome()
+		{
+			Utilities::FixedSizeStack<T>::top_ = 0;
+		}
+
+		inline Genome(Genome *other)
+		{
+			Utilities::FixedSizeStack<T>::top_ = other->top_;
+
+			for (int n = 0; n < Utilities::FixedSizeStack<T>::top_; n++)
+				Utilities::FixedSizeStack<T>::stack_[n] = other->stack_[n];
+		}
+
 		////Genome(Utilities::FixedSizeStack<Atom> *stack);
 		////Genome(const Genome &other_genome);
 		////Genome(std::string _genome_string);
@@ -316,6 +328,28 @@ namespace Plush
 				Plush::Atom atom = genome[n];
 				Utilities::FixedSizeStack<T>::push(atom);
 			}
+		}
+
+		// Purpose: 
+		//   Push a genome on the stack
+		//
+		// Parameters:
+		//   genome	- Reference to genome to push
+		// 
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   Stack updated with provided genome at the top of the stack.
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline void push_back(Genome<Atom> &genome)
+		{
+			Utilities::FixedSizeStack<T>::shove(genome, Utilities::FixedSizeStack<T>::size());
 		}
 
 		// Purpose: 
@@ -665,7 +699,7 @@ namespace Plush
 		//
 		bool comp(Genome<Atom> &other_genome) const
 		{
-			int size_A = Utilities::FixedSizeStack<T>::stack_.size();
+			int size_A = Utilities::FixedSizeStack<T>::size();
 			int size_B = other_genome.size();
 
 			if (size_A != size_B)
@@ -699,36 +733,117 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		void subst(Genome<Atom> &first_genome, Genome<Atom> &second_genome)
+		bool subst(Genome<Atom> &first_genome, Genome<Atom> &second_genome)
 		{
-			bool found = true;
+			bool found = false;
 			Genome<Atom> modified_block;
+			Genome<Atom> original_genome(this);
 
-			while (Utilities::FixedSizeStack<T>::empty() == false)
+			if ((first_genome.size() ==1) &&(second_genome.size() == 1))
 			{
-				Genome<Atom> temp_block;
-
-				pop_first(temp_block);
-
-				if (temp_block != second_genome)
+				while (Utilities::FixedSizeStack<T>::empty() == false)
 				{
-					found = false;
+					Genome<Atom> temp_block;
 
-					if (temp_block.size() > 1)
+					pop_first(temp_block);
+
+					if (temp_block == second_genome)
 					{
-						temp_block.pop();
-						temp_block.subst(first_genome, second_genome);
+						modified_block.push(first_genome);
+						found = true;
+					}
+					else
+					{
+						if (temp_block.size() > 1)
+						{
+							Atom atom = temp_block.pop();
+
+							if (atom.like(second_genome[0]))
+								atom.instruction = first_genome[0].instruction;
+
+							if (temp_block.subst(first_genome, second_genome))
+								found = true;
+
+							temp_block.push(atom);
+
+							modified_block.push_back(temp_block);
+						}
+
+						else if (temp_block[0].like(second_genome[0]))
+						{
+							temp_block[0].instruction = first_genome[0].instruction;
+							modified_block.push(temp_block);
+							found = true;
+						}
+
+						else
+							modified_block.push(temp_block);
 					}
 				}
-
-				if (found)
-					modified_block.push(first_genome);
-
-				else
-					modified_block.push(temp_block);
 			}
 
-			push(modified_block);
+			else
+			{
+				while (Utilities::FixedSizeStack<T>::empty() == false)
+				{
+					Genome<Atom> temp_block;
+					Genome<Atom> temp_first_genome = first_genome;
+
+					pop_first(temp_block);
+
+					// Normalliize to one block
+					int extra_blocks = 0;
+
+					if (temp_block[0].close_parentheses > second_genome[0].close_parentheses)
+					{
+						extra_blocks = temp_block[0].close_parentheses - second_genome[0].close_parentheses;
+						temp_block[0].close_parentheses = second_genome[0].close_parentheses;
+						temp_first_genome[0].close_parentheses += extra_blocks;
+					}
+
+					if (temp_block == second_genome)
+					{
+						modified_block.push(temp_first_genome);
+						found = true;
+					}
+
+					else
+					{
+						if (temp_block.size() > 1)
+						{
+							Atom atom = temp_block.pop();
+
+							if (atom == second_genome[0])
+								atom.instruction = temp_first_genome[0].instruction;
+
+							if (temp_block.subst(temp_first_genome, second_genome))
+								found = true;
+
+							temp_block.push(atom);
+
+							modified_block.push_back(temp_block);
+						}
+
+						else if (temp_block[0].like(second_genome[0]))
+						{
+							temp_block[0].instruction = temp_first_genome[0].instruction;
+							modified_block.push(temp_block);
+							found = true;
+						}
+
+						else
+							modified_block.push(temp_block);
+					}
+				}
+			}
+
+			if (found)
+				push(modified_block);
+
+			else
+				push(original_genome);
+
+			return found;
 		}
 	};
 }

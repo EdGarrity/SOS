@@ -54,26 +54,95 @@ namespace Plush
 
 		void compile(std::string _program_statement);
 
-		inline bool operator==(Atom &other_atom) const
+		//inline bool operator==(Atom &other_atom) const
+		//{
+		//	if ((instruction == other_atom.instruction)
+		//		&& (close_parentheses == other_atom.close_parentheses)
+		//		&& (type == other_atom.type))
+		//		return true;
+
+		//	else
+		//		return false;
+		//}
+
+		//inline bool operator!=(Atom &other_atom) const
+		//{
+		//	if ((instruction == other_atom.instruction)
+		//		&& (close_parentheses == other_atom.close_parentheses)
+		//		&& (type == other_atom.type))
+		//		return false;
+
+		//	else
+		//		return true;
+		//}
+
+		// Purpose: 
+		//   Compare atom with provided atom and return True if they match
+		//
+		// Parameters:
+		//   other	- Reference to the atom to compare
+		// 
+		// Return value:
+		//   True if the atoms match
+		//   False if they do not match
+		//
+		// Side Effects:
+		//   None.
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		bool comp(Atom &other) const
 		{
-			if ((instruction == other_atom.instruction)
-				&& (close_parentheses == other_atom.close_parentheses)
-				&& (type == other_atom.type))
+			if ((instruction == other.instruction)
+				&& (close_parentheses == other.close_parentheses)
+				&& (type == other.type)
+				)
 				return true;
 
 			else
 				return false;
 		}
 
-		inline bool operator!=(Atom &other_atom) const
+		// Purpose: 
+		//   Compare the atom instruction with provided atom and return True if they match
+		//
+		// Parameters:
+		//   other	- Reference to the atom to compare
+		// 
+		// Return value:
+		//   True if the atoms match
+		//   False if they do not match
+		//
+		// Side Effects:
+		//   None.
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		bool like(Atom &other) const
 		{
-			if ((instruction == other_atom.instruction)
-				&& (close_parentheses == other_atom.close_parentheses)
-				&& (type == other_atom.type))
-				return false;
+			if ((instruction == other.instruction)
+				&& (type == other.type)
+				)
+				return true;
 
 			else
-				return true;
+				return false;
+		}
+
+		inline bool operator==(Atom &other) const
+		{
+			return comp(other);
+		}
+
+		inline bool operator!=(Atom &other) const
+		{
+			return !comp(other);
 		}
 	};
 

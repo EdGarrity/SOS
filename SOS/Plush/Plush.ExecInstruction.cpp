@@ -1376,26 +1376,6 @@ namespace Plush
 			extracted_block_A.subst(extracted_block_B, extracted_block_C);
 
 			_env.push<CodeAtom>(extracted_block_A);
-
-			//bool found = true;
-
-			//while (extracted_block_A.empty() == false)
-			//{
-			//	Genome<Atom> temp_block;
-			//	
-			//	extracted_block_A.pop_first(temp_block);
-
-			//	if (temp_block != extracted_block_C)
-			//		found = false;
-
-			//	if (found)
-			//		modified_block_A.push(extracted_block_B);
-
-			//	else
-			//		modified_block_A.push(temp_block);
-			//}
-
-			//_env.push<CodeAtom>(modified_block_A);
 		}
 
 		return 1;

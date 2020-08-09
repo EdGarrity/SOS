@@ -113,6 +113,43 @@ namespace Utilities
 			top_++;
 		}
 
+		// Purpose: 
+		//   Insert provided stack deep in the stack
+		//
+		// Parameters:
+		//   other	- Reference to the other stack to insert
+		//   n		- Positin where to insert the other stack.  0 or less refers to the top of the stack.  
+		//			  Values greater than the size of the stack will insert the other stack at the bottom.
+		// 
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   Stack updated with inserted stack.
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline void shove(FixedSizeStack<T>& other, int n)
+		{
+			if ((top_ + other.size()) >= N)
+				throw;
+
+			n = (n < 0) ? 0 : n;
+			n = (n > top_) ? top_ : n;
+			n = n - top_;
+
+			for (int i = (top_ + other.size()); i > other.size() - 1; i--)
+				stack_[i] = stack_[i - top_ + 1];
+
+			for (int i = 0; i < other.size(); i++)
+				stack_[i + n] = other[i];
+
+			top_ += other.size();
+		}
+
 		// Removes the top element from the stack
 		inline void pop()
 		{
