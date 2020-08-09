@@ -98,6 +98,16 @@ namespace Plush
 			return Utilities::FixedSizeStack<T>::stack_[index];
 		}
 
+		inline bool operator==(Genome<Atom> &other_genome) const
+		{
+			return comp(other_genome);
+		}
+
+		inline bool operator!=(Genome<Atom> &other_genome) const
+		{
+			return !comp(other_genome);
+		}
+
 		// Purpose: 
 		//   Returns the length of the genome stack. 
 		//
@@ -376,7 +386,7 @@ namespace Plush
 		{
 			unsigned int item_number = 0;
 			unsigned int wanted_blocks = 0;
-			unsigned int extra_blocks;
+			unsigned int extra_blocks = 0;
 			Utilities::FixedSizeStack<CodeAtom> temp;
 			std::stack<unsigned int> wanted_stack;
 
@@ -384,10 +394,19 @@ namespace Plush
 
 			while (Utilities::FixedSizeStack<T>::empty() == false)
 			{
-				Plush::Atom atom = Utilities::FixedSizeStack<T>::top();
-				Utilities::FixedSizeStack<T>::pop();
+				Plush::Atom atom;
 
-				temp.push(atom);
+				if (extra_blocks == 0)
+				{
+					atom = Utilities::FixedSizeStack<T>::top();
+					Utilities::FixedSizeStack<T>::pop();
+					temp.push(atom);
+				}
+				else
+				{
+					atom = Plush::Atom("{:instruction EXEC.NOOP :close 1}");
+					extra_blocks--;
+				}
 
 				int closing = atom.close_parentheses - Func2BlockWantsMap[atom.instruction];
 
@@ -397,14 +416,107 @@ namespace Plush
 					wanted_blocks = 0 - closing;
 				}
 
+				extra_blocks = (closing > 1) ? (closing - 1) : (0);
+
 				if (closing > 0)
 				{
 					if (wanted_blocks > 0)
 						wanted_blocks--;
 
-					else if (wanted_blocks == 0)
+					else if ((wanted_blocks == 0) && (wanted_stack.size() == 0))
 					{
-						extra_blocks = (closing > 1) ? (closing - 1) : (0);
+						//extra_blocks = (closing > 1) ? (closing - 1) : (0);
+						break;
+					}
+				}
+
+				if (wanted_blocks == 0)
+				{
+					if (wanted_stack.size() == 0)
+						item_number++;
+
+					if (wanted_stack.size() > 0)
+					{
+						wanted_blocks = wanted_stack.top();
+						wanted_stack.pop();
+					}
+				}
+			}
+
+			while (temp.size() > 0)
+			{
+				Plush::Atom atom = temp.top();
+				temp.pop();
+				poped_item.push(atom);
+			}
+
+			return extra_blocks;
+		};
+
+		// Purpose: 
+		//   Pop first items from the genome
+		//
+		//   For example, if the top genome "( A B )" then this returns "A" (after popping the argument 
+		//   from the genome). 
+		//
+		// Parameters:
+		//   first	- Reference to buffer to copy poped item into
+		// 
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   The top item is removed from the genome.
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		unsigned int pop_first(Genome<Atom> &poped_item)
+		{
+			unsigned int item_number = 0;
+			unsigned int wanted_blocks = 0;
+			unsigned int extra_blocks = 0;
+			Utilities::FixedSizeStack<CodeAtom> temp;
+			std::stack<unsigned int> wanted_stack;
+
+			poped_item.clear();
+
+			while (Utilities::FixedSizeStack<T>::empty() == false)
+			{
+				Plush::Atom atom;
+
+				if (extra_blocks == 0)
+				{
+					atom = Utilities::FixedSizeStack<T>::top();
+					Utilities::FixedSizeStack<T>::pop();
+					temp.push(atom);
+				}
+				else
+				{
+					atom = Plush::Atom("{:instruction EXEC.NOOP :close 1}");
+					extra_blocks--;
+				}
+
+				int closing = atom.close_parentheses - Func2BlockWantsMap[atom.instruction];
+
+				if (closing < 0)
+				{
+					wanted_stack.push(wanted_blocks);
+					wanted_blocks = 0 - closing;
+				}
+
+				extra_blocks = (closing > 1) ? (closing - 1) : (0);
+
+				if (closing > 0)
+				{
+					if (wanted_blocks > 0)
+						wanted_blocks--;
+
+					if ((wanted_blocks == 0) && (wanted_stack.size() == 1))
+					{
+						//extra_blocks = (closing > 1) ? (closing - 1) : (0);
 						break;
 					}
 				}
@@ -532,5 +644,91 @@ namespace Plush
 
 			return extra_blocks;
 		};
+
+		// Purpose: 
+		//   Compare genome with provided genome and return True if they match
+		//
+		// Parameters:
+		//   other_genome	- Reference to the genome to compare
+		// 
+		// Return value:
+		//   True if the genomes match
+		//   False if they do not match
+		//
+		// Side Effects:
+		//   None.
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		bool comp(Genome<Atom> &other_genome) const
+		{
+			int size_A = Utilities::FixedSizeStack<T>::stack_.size();
+			int size_B = other_genome.size();
+
+			if (size_A != size_B)
+				return false;
+
+			for (int n = 0; n < size_A; n++)
+			{
+				Atom atom_A = Utilities::FixedSizeStack<T>::stack_[n];
+				Atom atom_B = other_genome[n];
+
+				if (atom_A != atom_B)
+					return false;
+			}
+		}
+
+		// Purpose: 
+		//   Substitute the second item for the first item in the genome
+		//
+		// Parameters:
+		//   first	- Reference to item to replace with
+		//   second - Reference to item to replace
+		// 
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   The genome is modified if the second item is found
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		void subst(Genome<Atom> &first_genome, Genome<Atom> &second_genome)
+		{
+			bool found = true;
+			Genome<Atom> modified_block;
+
+			while (Utilities::FixedSizeStack<T>::empty() == false)
+			{
+				Genome<Atom> temp_block;
+
+				pop_first(temp_block);
+
+				if (temp_block != second_genome)
+				{
+					found = false;
+
+					if (temp_block.size() > 1)
+					{
+						temp_block.pop();
+						temp_block.subst(first_genome, second_genome);
+					}
+				}
+
+				if (found)
+					modified_block.push(first_genome);
+
+				else
+					modified_block.push(temp_block);
+			}
+
+			push(modified_block);
+		}
 	};
 }

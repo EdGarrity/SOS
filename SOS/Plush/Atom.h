@@ -53,6 +53,28 @@ namespace Plush
 		};
 
 		void compile(std::string _program_statement);
+
+		inline bool operator==(Atom &other_atom) const
+		{
+			if ((instruction == other_atom.instruction)
+				&& (close_parentheses == other_atom.close_parentheses)
+				&& (type == other_atom.type))
+				return true;
+
+			else
+				return false;
+		}
+
+		inline bool operator!=(Atom &other_atom) const
+		{
+			if ((instruction == other_atom.instruction)
+				&& (close_parentheses == other_atom.close_parentheses)
+				&& (type == other_atom.type))
+				return false;
+
+			else
+				return true;
+		}
 	};
 
 	class ExecAtom : public Atom

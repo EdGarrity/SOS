@@ -5,3 +5,7 @@ Working on bug in code_subst() in ExecInstruction.cpp
   ( DO*RANGE           ) ( FLOAT.+)
 (                                  )(FLOAT.-)(FLOAT.+)(CODE.SUBST
 
+             ( FLOAT.+)
+  ( DO*RANGE           ) 
+(                        ( FLOAT.+))
+								     (FLOAT.-)(FLOAT.+)(CODE.SUBST
