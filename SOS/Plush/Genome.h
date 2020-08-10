@@ -145,41 +145,63 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		unsigned int length()
+		unsigned int number_of_blocks()
 		{
 			unsigned int item_number = 0;
-			int n = Utilities::FixedSizeStack<T>::size() - 1;
-			unsigned int wanted_blocks = 0;
-
+			unsigned int wanted_blocks = 1;	// Assume all genomes begin as a block.
+			unsigned int extra_blocks = 0;
 			std::stack<unsigned int> wanted_stack;
+			int n = Utilities::FixedSizeStack<T>::size() - 1;
 
-			if (n >= 0)
+			while (n >= 0)
 			{
-				for (; n >= 0; n--)
+				Plush::Atom atom;
+
+				if (extra_blocks == 0)
 				{
-					Plush::Atom atom = Utilities::FixedSizeStack<T>::stack_[n];
+					atom = Utilities::FixedSizeStack<T>::stack_[n];
+					n--;
+				}
+				else
+				{
+					atom = Plush::Atom("{:instruction EXEC.NOOP :close 1}");
+					//					extra_blocks--;
+				}
 
-					int closing = atom.close_parentheses - Func2BlockWantsMap[atom.instruction];
+				int closing = atom.close_parentheses - Func2BlockWantsMap[atom.instruction];
 
-					if (closing < 0)
-					{
-						wanted_stack.push(wanted_blocks);
-						wanted_blocks = 0 - closing;
-					}
+				if (n < 0)
+					closing = wanted_blocks;
 
-					if (closing > 0)
-						wanted_blocks > 0 ? --wanted_blocks : 0;
+				if (closing < 0)
+				{
+					wanted_stack.push(wanted_blocks);
+					wanted_blocks = 0 - closing;
+				}
 
-					if (wanted_blocks == 0)
-					{
-						if (wanted_stack.size() > 0)
-						{
-							wanted_blocks = wanted_stack.top();
-							wanted_stack.pop();
-						}
+				extra_blocks = (closing > 1) ? (closing - 1) : (0);
 
+				if (closing > 0)
+				{
+					if (wanted_blocks > 0)
+						wanted_blocks--;
+
+					else if ((wanted_blocks == 0) && (wanted_stack.size() == 0))
+						break;
+				}
+
+				if (wanted_blocks == 0)
+				{
+					if (wanted_stack.size() == 0)
 						item_number++;
+
+					if (wanted_stack.size() > 0)
+					{
+						wanted_blocks = wanted_stack.top();
+						wanted_stack.pop();
 					}
+					else
+						wanted_blocks = 1; // Assume closing parenthesis on top level block always start another block.
 				}
 			}
 
@@ -187,23 +209,153 @@ namespace Plush
 		}
 
 		// Purpose: 
+		//   Returns the length of the genome stack. 
+		//
+		//   The genome is processed as a list object, i.e., an open parenthesis is assumed to exist 
+		//   before the first item on the stack.  This function returns the number of items in the top 
+		//   level of the list; that is, nested lists contribute only 1 to this count, no matter what 
+		//   they contain.  Closing parenthesis can either be interpreted as close instructions (to satisfy 
+		//   a block requirement in a nested list) or as close - open instructions (for the top level list).
+		//   Nested levels begin when an instruction requiring blocks is encountered in the list and end 
+		//   when all required blocks are found.
+		//
+		// Parameters:
+		//   None
+		// 
+		// Return value:
+		//   Number if items and blocks in the top level of the list
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		unsigned int number_of_items()
+		{
+			unsigned int item_number = 0;
+			unsigned int wanted_blocks = 0;
+			unsigned int extra_blocks = 0;
+			std::stack<unsigned int> wanted_stack;
+			int n = Utilities::FixedSizeStack<T>::size() - 1;
+
+			while (n >= 0)
+			{
+				Plush::Atom atom;
+
+				if (extra_blocks == 0)
+				{
+					atom = Utilities::FixedSizeStack<T>::stack_[n];
+					n--;
+				}
+				else
+					atom = Plush::Atom("{:instruction EXEC.NOOP :close 1}");
+
+				int closing = atom.close_parentheses - Func2BlockWantsMap[atom.instruction];
+
+				if (n < 0)
+					closing = wanted_blocks;
+
+				if (closing < 0)
+				{
+					wanted_stack.push(wanted_blocks);
+					wanted_blocks = 0 - closing;
+				}
+
+				extra_blocks = (closing > 1) ? (closing - 1) : (0);
+
+				if (closing > 0)
+				{
+					if (wanted_blocks > 0)
+						wanted_blocks--;
+
+					else if ((wanted_blocks == 0) && (wanted_stack.size() == 0))
+						break;
+				}
+
+				if (wanted_blocks == 0)
+				{
+					if (wanted_stack.size() > 0)
+					{
+						wanted_blocks = wanted_stack.top();
+						wanted_stack.pop();
+					}
+					else
+						wanted_blocks = 0;
+
+					if (wanted_stack.size() == 0)
+						item_number++;
+				}
+			}
+
+			return item_number;
+
+
+
+
+
+
+
+			//unsigned int item_number = 0;
+			//int n = Utilities::FixedSizeStack<T>::size() - 1;
+			//unsigned int wanted_blocks = 1;	// Assume all genomes begin as a block.
+
+			//std::stack<unsigned int> wanted_stack;
+
+			//if (n >= 0)
+			//{
+			//	for (; n >= 0; n--)
+			//	{
+			//		Plush::Atom atom = Utilities::FixedSizeStack<T>::stack_[n];
+
+			//		int closing = atom.close_parentheses - Func2BlockWantsMap[atom.instruction];
+
+			//		if (closing < 0)
+			//		{
+			//			wanted_stack.push(wanted_blocks);
+			//			wanted_blocks = 0 - closing;
+			//		}
+
+			//		if (closing > 0)
+			//			wanted_blocks > 0 ? --wanted_blocks : 0;
+
+			//		if (wanted_blocks == 0)
+			//		{
+			//			if (wanted_stack.size() > 0)
+			//			{
+			//				wanted_blocks = wanted_stack.top();
+			//				wanted_stack.pop();
+			//			}
+			//			else
+			//				wanted_blocks = 1; // Assume closing parenthesis on top level block always start another block.
+
+			//			item_number++;
+			//		}
+			//	}
+			//}
+
+			//return item_number;
+		}
+
+		// Purpose: 
 		//   Splits the genome in two
 		//
 		//   This function will split the genome into two parts at the split point provided by the caller.
 		//   The split point is zero - based; that is, a split point less than or equal to 0 represents a
-		//   point before the first item.A split point greater than the length of the genome will 
-		//   represent a point after the last item.The caller is expected to provide the two genomes to 
-		//   write the two haves to.This function is non - destructive, that is, it will not destroy or 
+		//   point before the first item.  A split point greater than the length of the genome will 
+		//   represent a point after the last item.  The caller is expected to provide the two genomes to 
+		//   write the two haves to.  This function is non - destructive, that is, it will not destroy or 
 		//   alter the genome to be split.
 		//
 		//   When determining the split point, the genome is processed as a list object, i.e., an open 
-		//   parenthesis is assumed to exist before the first item on the stack.This function counts 
+		//   parenthesis is assumed to exist before the first item on the stack.  This function counts 
 		//   items from the beginning of the genome to locate the split point; nested lists contribute 
-		//   only 1 to this count, no matter what they contain.Closing parenthesis can either be 
-		//   interpreted as close instructions(to satisfy a block requirement in a nested list) or as 
-		//   close - open instructions(for the top level list).Nested levels begin when an instruction 
+		//   only 1 to this count, no matter what they contain.  Closing parenthesis can either be 
+		//   interpreted as close instructions (to satisfy a block requirement in a nested list) or as 
+		//   close - open instructions (for the top level list).  Nested levels begin when an instruction 
 		//   requiring blocks is encountered in the list and end when all required blocks are found.
-		//
 		//
 		// Parameters:
 		//   left_half		- Reference to buffer to write genome items located before the split point
@@ -231,11 +383,11 @@ namespace Plush
 			int simulated_closing_parenthesis = 0;
 			Plush::Atom atom;
 
+			// Itierate through the stack in the order the would be poped
 			for (int n = Utilities::FixedSizeStack<T>::size() - 1; n >= 0; n--)
 			{
 				if (simulated_closing_parenthesis == 0)
 					atom = Utilities::FixedSizeStack<T>::stack_[n];
-
 
 				if (simulated_closing_parenthesis > 0)
 				{
@@ -488,7 +640,7 @@ namespace Plush
 		};
 
 		// Purpose: 
-		//   Pop first items from the genome
+		//   Pop first item from the genome
 		//
 		//   For example, if the top genome "( A B )" then this returns "A" (after popping the argument 
 		//   from the genome). 

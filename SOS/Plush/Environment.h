@@ -37,6 +37,15 @@ namespace Plush
 
 		/* Helper Functions */
 
+		template<typename T>
+		unsigned int length()
+		{
+			Utilities::FixedSizeStack<CodeAtom>& stack = get_stack<CodeAtom>();
+			Genome<CodeAtom>& genome = dynamic_cast<Genome<CodeAtom>&>(stack);
+
+			return genome.number_of_blocks();
+		}
+
 		// Obsolete.  Use Genome.length() instead.
 		template <typename T>
 		unsigned int NumberOfBlocks(unsigned int block_level)
@@ -252,7 +261,7 @@ namespace Plush
 			Utilities::FixedSizeStack<CodeAtom>& stack = get_stack<CodeAtom>();
 			Genome<CodeAtom>& genome = dynamic_cast<Genome<CodeAtom>&>(stack);
 
-			if (genome.length() < sz)
+			if (genome.number_of_blocks() < sz)
 				return false;
 
 			else
@@ -265,7 +274,7 @@ namespace Plush
 			Utilities::FixedSizeStack<ExecAtom>& stack = get_stack<ExecAtom>();
 			Genome<ExecAtom>& genome = dynamic_cast<Genome<ExecAtom>&>(stack);
 
-			if (genome.length() < sz)
+			if (genome.number_of_blocks() < sz)
 				return false;
 
 			else

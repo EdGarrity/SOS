@@ -805,7 +805,7 @@ namespace Plush
 				_env.pop<CodeAtom>(first_block);
 
 				// Get count items in first block
-				int number_of_items = first_block.length();
+				int number_of_items = first_block.number_of_items();
 
 				if (number_of_items > 0)
 				{
@@ -976,7 +976,7 @@ namespace Plush
 			else
 			{
 				// Get count items in first block
-				int number_of_items = first_block.length();
+				int number_of_items = first_block.number_of_blocks();
 
 				// Take modulo the number of blocks to ensure that it is within the meaningful range.
 				index = std::abs(index) % number_of_items;
@@ -1008,7 +1008,7 @@ namespace Plush
 			_env.pop<CodeAtom>(top_block);
 
 			// Get count items in first block
-			int number_of_items = top_block.length();
+			int number_of_items = top_block.number_of_blocks();
 			_env.push<long>(number_of_items);
 		}
 
@@ -1122,7 +1122,7 @@ namespace Plush
 			else
 			{
 				// Get count items in first block
-				int number_of_items = top_block.length();
+				int number_of_items = top_block.number_of_blocks();
 
 				// Take modulo the number of blocks to ensure that it is within the meaningful range.
 				index = std::abs(index) % number_of_items;
@@ -1179,7 +1179,7 @@ namespace Plush
 				else
 				{
 					// Get count items in first block
-					int number_of_items = top_block.length();
+					int number_of_items = top_block.number_of_blocks();
 
 					// Take modulo the number of blocks to ensure that it is within the meaningful range.
 					index = std::abs(index) % number_of_items;
