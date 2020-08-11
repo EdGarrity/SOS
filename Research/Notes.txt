@@ -11,7 +11,7 @@ Working on bug in code_subst() in ExecInstruction.cpp
 								     (FLOAT.-)(FLOAT.+)(CODE.SUBST
 
 
-- Favor blocks over items algorithm
+Favor blocks over items algorithm:
 - A genome is processed as a list object, i.e., an open parenthesis is assumed to exist before the first item on the stack.  
 - A genome block level starts at 0 (after first implied open parenthesis) and increments for each nested block
 - Nested blocks begin with the instruction after a block requiring instruction
@@ -26,3 +26,14 @@ Interpretation:
 
 1:  (1.0 1.1 1.2)
 0: (              2.0 2.1)( 3.0)()(2)(CODE.EXTRACT)
+
+
+Example:
+	( EXEC.DO*RANGE( FLOAT.+)) ( FLOAT.+)) FLOAT.+) CODE.CONTAINER
+
+Interpretation:
+2:                 ( FLOAT.+)
+1:  ( EXEC.DO*RANGE          ) ( FLOAT.+)    
+0: (                                     )(FLOAT.+)(CODE.CONTAINER)
+
+INSERT_WITH_POSITIVE_SINGLE_3

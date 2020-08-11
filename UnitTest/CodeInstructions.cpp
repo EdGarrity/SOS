@@ -133,7 +133,6 @@ namespace UnitTest
 				}));
 		}
 
-		// Need to add look-back to see if previous instruction opened a block
 		TEST_METHOD(ATOM_WITH_ONE_GROUP_PARAMETER)
 		{
 			Environment env;
@@ -437,6 +436,14 @@ namespace UnitTest
 
 		TEST_METHOD(CONTAINER_TEXTBOOK_EXAMPLE_1)
 		{
+			//Example:
+			//	(EXEC.DO*RANGE(FLOAT.+)) (FLOAT.+)) FLOAT.+) CODE.CONTAINER
+
+			//	Interpretation:
+			//	2:                (FLOAT.+)
+			//	1:  (EXEC.DO*RANGE         ) (FLOAT.+)
+			//	0: (                                  )(FLOAT.+)(CODE.CONTAINER)
+
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
@@ -446,7 +453,7 @@ namespace UnitTest
 					{:instruction EXEC.DO*RANGE :close 0}\
 					{:instruction FLOAT.+ :close 2}\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
-					{:instruction FLOAT.+ :close 3}\
+					{:instruction FLOAT.+ :close 2}\
 					{:instruction FLOAT.+ :close 1}\
 					{:instruction CODE.CONTAINER :close 0}\
 				");
@@ -454,13 +461,21 @@ namespace UnitTest
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.CONTAINER :close 0}"),
-					CodeAtom("{:instruction FLOAT.+ :close 2}"),
+					CodeAtom("{:instruction FLOAT.+ :close 1}"),
 					CodeAtom("{:instruction EXEC.DO*RANGE :close 0}"),
 				}));
 		}
 
 		TEST_METHOD(CONTAINER_TEXTBOOK_EXAMPLE_2)
 		{
+			//Example:
+			//	(EXEC.DO*RANGE(FLOAT.+)) (FLOAT.+)) FLOAT.-) CODE.CONTAINER
+
+			//	Interpretation:
+			//	2:                (FLOAT.+)
+			//	1:  (EXEC.DO*RANGE         ) (FLOAT.+)
+			//	0: (                                  )(FLOAT.-)(CODE.CONTAINER)
+
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
@@ -470,7 +485,7 @@ namespace UnitTest
 					{:instruction EXEC.DO*RANGE :close 0}\
 					{:instruction FLOAT.+ :close 2}\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
-					{:instruction FLOAT.+ :close 3}\
+					{:instruction FLOAT.+ :close 2}\
 					{:instruction FLOAT.- :close 1}\
 					{:instruction CODE.CONTAINER :close 0}\
 				");
@@ -500,17 +515,25 @@ namespace UnitTest
 
 		TEST_METHOD(CONTAINS_TEXTBOOK_EXAMPLE_1)
 		{
+			//Example:
+			//	FLOAT.+) ( EXEC.DO*RANGE(FLOAT.+)) (FLOAT.+)) ) CODE.CONTAINES
+
+			//	Interpretation:
+			//	2:                         (FLOAT.+)
+			//	1:           (EXEC.DO*RANGE         ) (FLOAT.+)
+			//	0: (FLOAT.+)(                                  )(CODE.CONTAINES)
+
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
 			Plush::run(env, \
 				"\
+					{:instruction FLOAT.+ :close 1}\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
 					{:instruction EXEC.DO*RANGE :close 0}\
 					{:instruction FLOAT.+ :close 2}\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
-					{:instruction FLOAT.+ :close 3}\
-					{:instruction FLOAT.+ :close 1}\
+					{:instruction FLOAT.+ :close 2}\
 					{:instruction CODE.CONTAINS :close 0}\
 				");
 
@@ -522,17 +545,25 @@ namespace UnitTest
 
 		TEST_METHOD(CONTAINS_TEXTBOOK_EXAMPLE_2)
 		{
+			//Example:
+			//	FLOAT.-) ( EXEC.DO*RANGE(FLOAT.+)) (FLOAT.+)) ) CODE.CONTAINES
+
+			//	Interpretation:
+			//	2:                         (FLOAT.+)
+			//	1:           (EXEC.DO*RANGE         ) (FLOAT.+)
+			//	0: (FLOAT.-)(                                  )(CODE.CONTAINES)
+
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
 			Plush::run(env, \
 				"\
+					{:instruction FLOAT.- :close 1}\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
 					{:instruction EXEC.DO*RANGE :close 0}\
 					{:instruction FLOAT.+ :close 2}\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
-					{:instruction FLOAT.+ :close 3}\
-					{:instruction FLOAT.- :close 1}\
+					{:instruction FLOAT.+ :close 2}\
 					{:instruction CODE.CONTAINS :close 0}\
 				");
 
@@ -560,6 +591,14 @@ namespace UnitTest
 
 		TEST_METHOD(DISCREPANCY_WITH_TWO_PARAMETERS_0)
 		{
+			//Example:
+			//	(EXEC.DO*RANGE(FLOAT.+)) (FLOAT.+)) FLOAT.-) CODE.DISCREPANCY
+
+			//	Interpretation:
+			//	2:                (FLOAT.+)
+			//	1:  (EXEC.DO*RANGE         ) (FLOAT.+)
+			//	0: (                                  )(FLOAT.-)(CODE.DISCREPANCY)
+
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
@@ -569,7 +608,7 @@ namespace UnitTest
 					{:instruction EXEC.DO*RANGE :close 0}\
 					{:instruction FLOAT.+ :close 2}\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
-					{:instruction FLOAT.+ :close 3}\
+					{:instruction FLOAT.+ :close 2}\
 					{:instruction FLOAT.- :close 1}\
 					{:instruction CODE.DISCREPANCY :close 0}\
 				");
@@ -720,12 +759,7 @@ namespace UnitTest
 			Assert::IsTrue(is_stack_state(env, { 20 }, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.DO* :close 1}"),
-					CodeAtom("{:instruction CODE.DUP :close 1}"),
-					CodeAtom("{:instruction INTEGER.+ :close 0}"),
-					CodeAtom("{:instruction INTEGER.DUP :close 0}"),
-					CodeAtom("{:instruction CODE.DUP :close 1}"),
-					CodeAtom("{:instruction INTEGER.+ :close 0}"),
-					CodeAtom("{:instruction INTEGER.DUP :close 0}"),
+					CodeAtom("{:instruction CODE.DO* :close 1}"),
 				}));
 		}
 
@@ -1092,10 +1126,8 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction CODE.NOOP.OPEN_PAREN :close 0}\
 					{:instruction 10 :close 0}\
 					{:instruction INTEGER.+ :close 1}\
-					{:instruction CODE.NOOP.OPEN_PAREN :close 0}\
 					{:instruction 10 :close 0}\
 					{:instruction INTEGER.+ :close 1}\
 					{:instruction CODE.= :close 0}\
@@ -1114,10 +1146,8 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction CODE.NOOP.OPEN_PAREN :close 0}\
 					{:instruction 10 :close 0}\
 					{:instruction INTEGER.+ :close 1}\
-					{:instruction CODE.NOOP.OPEN_PAREN :close 0}\
 					{:instruction 20 :close 0}\
 					{:instruction INTEGER.+ :close 1}\
 					{:instruction CODE.= :close 0}\
@@ -1136,8 +1166,7 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction INTEGER.- :close 1}\
-					{:instruction CODE.NOOP.OPEN.PAREN :close 0}\
+					{:instruction INTEGER.+ :close 1}\
 					{:instruction 10 :close 0}\
 					{:instruction INTEGER.+ :close 1}\
 					{:instruction CODE.= :close 0}\
@@ -1156,10 +1185,9 @@ namespace UnitTest
 
 			Plush::run(env, \
 				"\
-					{:instruction CODE.NOOP.OPEN.PAREN :close 0}\
 					{:instruction 10 :close 0}\
 					{:instruction INTEGER.+ :close 1}\
-					{:instruction INTEGER.- :close 1}\
+					{:instruction INTEGER.+ :close 1}\
 					{:instruction CODE.= :close 0}\
 				");
 
@@ -1318,7 +1346,6 @@ namespace UnitTest
 				}));
 		}
 
-		// Need to correct issue with adding a closing parenthesis after the 2.1 to close out the NOOP_OPEN_PAREN
 		TEST_METHOD(EXTRACT_WITH_POSITIVE_3)
 		{
 			Environment env;
@@ -1332,6 +1359,7 @@ namespace UnitTest
 					{:instruction 1.2 :close 1}\
 					{:instruction 2.0 :close 0}\
 					{:instruction 2.1 :close 1}\
+\
 					{:instruction 3.0 :close 2}\
 					{:instruction 3 :close 1}\
 					{:instruction CODE.EXTRACT :close 1}\
@@ -1342,11 +1370,11 @@ namespace UnitTest
 					CodeAtom("{:instruction CODE.EXTRACT :close 1}"),
 					CodeAtom("{:instruction 3 :close 1}"),
 					CodeAtom("{:instruction 3.0 :close 2}"),
+
 					CodeAtom("{:instruction 2.1 :close 1}"),
 				}));
 		}
 
-		// Need to correct issue with adding a closing parenthesis after the 1.2 to close out the NOOP_OPEN_PAREN
 		TEST_METHOD(EXTRACT_WITH_POSITIVE_4)
 		{
 			Environment env;
@@ -1360,6 +1388,7 @@ namespace UnitTest
 					{:instruction 1.2 :close 1}\
 					{:instruction 2.0 :close 0}\
 					{:instruction 2.1 :close 1}\
+\
 					{:instruction 3.0 :close 2}\
 					{:instruction 4 :close 1}\
 					{:instruction CODE.EXTRACT :close 1}\
@@ -1370,6 +1399,7 @@ namespace UnitTest
 					CodeAtom("{:instruction CODE.EXTRACT :close 1}"),
 					CodeAtom("{:instruction 4 :close 1}"),
 					CodeAtom("{:instruction 3.0 :close 2}"),
+
 					CodeAtom("{:instruction 1.2 :close 2}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
@@ -1616,7 +1646,7 @@ namespace UnitTest
 					{:instruction CODE.IF :close 1}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 20 }, {}, { false }, {},
+			Assert::IsTrue(is_stack_state(env, { 20, 20 }, {}, { false }, {},
 				{
 				}));
 		}
@@ -1635,8 +1665,10 @@ namespace UnitTest
 					{:instruction CODE.IF :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 20, 20 }, {}, {}, {},
+			Assert::IsTrue(is_stack_state(env, { 20 }, {}, {}, {},
 				{
+					CodeAtom("{:instruction CODE.IF :close 0}"),
+					CodeAtom("{:instruction true :close 0}")
 				}));
 		}
 
@@ -1654,7 +1686,7 @@ namespace UnitTest
 					{:instruction CODE.IF :close 1}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 20, 20 }, {}, {}, {},
+			Assert::IsTrue(is_stack_state(env, { 20 }, {}, { true }, {},
 				{
 				}));
 		}
@@ -1673,8 +1705,10 @@ namespace UnitTest
 					{:instruction CODE.IF :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 20 }, {}, {}, {},
+			Assert::IsTrue(is_stack_state(env, { 20, 20 }, {}, {}, {},
 				{
+					CodeAtom("{:instruction CODE.IF :close 0}"),
+					CodeAtom("{:instruction false :close 0}")
 				}));
 		}
 
@@ -1692,8 +1726,10 @@ namespace UnitTest
 					{:instruction CODE.IF :close 2}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 20, 20 }, {}, {}, {},
+			Assert::IsTrue(is_stack_state(env, { 20 }, {}, {}, {},
 				{
+					CodeAtom("{:instruction CODE.IF :close 2}"),
+					CodeAtom("{:instruction true :close 0}")
 				}));
 		}
 
@@ -1714,7 +1750,7 @@ namespace UnitTest
 					{:instruction CODE.IF :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 20, 30, 20 }, {}, {}, {},
+			Assert::IsTrue(is_stack_state(env, { 20, 30, 30 }, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.IF :close 0}"),
 					CodeAtom("{:instruction true :close 0}"),
@@ -1738,7 +1774,7 @@ namespace UnitTest
 					{:instruction CODE.IF :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 20, 30, 30 }, {}, {}, {},
+			Assert::IsTrue(is_stack_state(env, { 20, 30, 20 }, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.IF :close 0}"),
 					CodeAtom("{:instruction false :close 0}"),
