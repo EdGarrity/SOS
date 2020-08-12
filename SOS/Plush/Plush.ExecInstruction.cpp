@@ -608,61 +608,6 @@ namespace Plush
 		}
 
 		return 1;
-
-		//if (_env.has_elements<CodeAtom>(2))
-		//{
-		//	Utilities::FixedSizeStack<Atom> block_a;
-		//	Utilities::FixedSizeStack<Atom> block_b;
-
-		//	_env.pop<CodeAtom>(block_a, 1);
-		//	_env.pop<CodeAtom>(block_b, 1);
-
-		//	if ((block_a.size() > 0) && (block_b.size() > 0))
-		//	{
-		//		// Make sure last atom of block B is closed
-		//		Atom atom = block_b.top();
-		//		block_b.pop();
-
-		//		atom.close_parentheses = (atom.close_parentheses == 0) ? 1 : atom.close_parentheses;
-		//		block_b.push(atom);
-
-		//		bool found = false;
-		//		int index = 0;
-
-		//		for (int i = 1; i < (block_a.size() - block_b.size() + 1); i++)
-		//		{
-		//			found = true;
-
-		//			for (int j = 0; j < block_b.size(); j++)
-		//			{
-		//				if (block_a[i + j].instruction != block_b[j].instruction)
-		//				{
-		//					found = false;
-		//					break;
-		//				}
-		//			}
-
-		//			if (found)
-		//			{
-		//				index = i - 1;
-		//				break;
-		//			}
-		//		}
-
-		//		_env.push<bool>(found);
-		//	}
-
-		//	else
-		//	{
-		//		if (block_a.size() > 0)
-		//			_env.push<CodeAtom>(block_a);
-
-		//		if (block_b.size() > 0)
-		//			_env.push<CodeAtom>(block_b);
-		//	}
-		//}
-
-		//return 1;
 	}
 
 	unsigned code_discrepancy(Environment & _env)
