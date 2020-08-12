@@ -369,7 +369,7 @@ namespace Plush
 			while (temp_genome.empty() == false)
 			{
 				Genome<Atom> temp_block;
-				temp_genome.pop(temp_block);
+				temp_genome.pop_genome(temp_block);
 				_env.push<CodeAtom>(temp_block);
 			}
 
@@ -898,13 +898,13 @@ namespace Plush
 
 					while (top_half.empty() == false)
 					{
-						top_half.pop(temp_block);
+						top_half.pop_genome(temp_block);
 						top_block.push(temp_block);
 					}
 
 					while (bottom_half.empty() == false)
 					{
-						bottom_half.pop(temp_block);
+						bottom_half.pop_genome(temp_block);
 						bottom_block.push(temp_block);
 					}
 

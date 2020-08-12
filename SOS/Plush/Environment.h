@@ -166,7 +166,7 @@ namespace Plush
 			Utilities::FixedSizeStack<T>& stack = get_stack<T>();
 			Genome<T>& genome = dynamic_cast<Genome<T>&>(stack);
 
-			return genome.pop(other_stack);
+			return genome.pop_genome(other_stack);
 		}
 
 		// Obsolete

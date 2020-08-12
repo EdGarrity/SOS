@@ -6,16 +6,17 @@
 #include "..\Utilities\FixedSizeStack.h"
 #include "Atom.h"
 
-// Favor blocks over items algorithm:
-//- An item is considered a single littoral or instruction.
-//- A block is zero or more items surrounded by parenthesis.
-//- A genome is one or more blocks
-//- A genome is processed as a list object, i.e., an open parenthesis is assumed to exist before the first item on the stack.
-//- A genome block level starts at 0 (after first implied open parenthesis) and increments for each nested block
-//- Nested blocks begin with the instruction after a block requiring instruction
-//- Closing parenthesis on block 0 is interpreted as an close - open instruction
-//- Closing parenthesis on any other level is an open - close if the block level expects more blocks of a close if not.
-//- Block levels are closed when all expected blocks are found
+// Favor blocks over atoms algorithm:
+// - An atoms is considered a single littoral or instruction.
+// - A block is zero or more atoms surrounded by parenthesis.
+// - An item is an atom or a block
+// - A genome is one or more items
+// - A genome is processed as a list object, i.e., an open parenthesis is assumed to exist before the first item on the stack.
+// - A genome block level starts at 0 (after first implied open parenthesis) and increments for each nested block
+// - Nested blocks begin with the item after a block requiring items
+// - Closing parenthesis on block 0 is interpreted as an close - open instruction
+// - Closing parenthesis on any other level is an open - close if the block level expects more items of a close if not.
+// - Block levels are closed when all expected items are found
 
 namespace Plush
 {
@@ -518,6 +519,9 @@ namespace Plush
 		// Purpose: 
 		//   Pop a genome from the stack
 		//
+		//   For example, if the top genome "( A B )" then this returns "( A B )" (after popping the 
+		//   argument from the genome). If the top genome is "( ( A B ) C )" then this returns "( A B )".
+		//
 		// Parameters:
 		//   genome	- Reference to buffer to copy poped genome into
 		// 
@@ -533,7 +537,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		unsigned int pop(Genome<Atom> &poped_item)
+		unsigned int pop_genome(Genome<Atom> &poped_item)
 		{
 			unsigned int item_number = 0;
 			unsigned int wanted_blocks = 0;
@@ -608,7 +612,8 @@ namespace Plush
 		//   Pop first item from the genome
 		//
 		//   For example, if the top genome "( A B )" then this returns "A" (after popping the argument 
-		//   from the genome). 
+		//   from the genome). However, if the top genome is a block then that will be returned.  For 
+		//	 example, if the top genome is "( ( A B ) C )" then this returns "( A B )".
 		//
 		// Parameters:
 		//   first	- Reference to buffer to copy poped item into
@@ -624,7 +629,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		unsigned int pop_first(Genome<Atom> &poped_item)
+		unsigned int pop_item(Genome<Atom> &poped_item)
 		{
 			unsigned int item_number = 0;
 			unsigned int wanted_blocks = 0;
@@ -862,7 +867,7 @@ namespace Plush
 				{
 					Genome<Atom> temp_block;
 
-					pop_first(temp_block);
+					pop_item(temp_block);
 
 					if (temp_block == second_genome)
 					{
@@ -906,7 +911,7 @@ namespace Plush
 					Genome<Atom> temp_block;
 					Genome<Atom> temp_first_genome = first_genome;
 
-					pop_first(temp_block);
+					pop_item(temp_block);
 
 					// Normalliize to one block
 					int extra_blocks = 0;
@@ -959,6 +964,104 @@ namespace Plush
 
 			else
 				push(original_genome);
+
+			return found;
+		}
+
+		// Purpose: 
+		//   Returns TRUE if the genome contains the provided code item anywhere (e.g. in a sub-list).
+		//
+		// Parameters:
+		//   other_genome	- Genome to search for
+		// 
+		// Return value:
+		//   True if found
+		//	 False if not found
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		bool contains(Genome<Atom> &other_genome)
+		{
+			bool found = false;
+			Genome<Atom> original_genome(this);
+
+			// If searching for a single item
+			if (other_genome.size() == 1)
+			{
+				while (Utilities::FixedSizeStack<T>::empty() == false)
+				{
+					Genome<Atom> temp_block;
+
+					pop_item(temp_block);	// May need to push back empty blocks if there were extra blocks returned by pop().
+
+					if (temp_block == other_genome)
+						found = true;
+
+					else
+					{
+						if (temp_block.size() > 1)
+						{
+							Atom atom = temp_block.pop();
+
+							if (temp_block.contains(other_genome))
+								found = true;
+
+							temp_block.push(atom);
+						}
+
+						else if (temp_block[0].like(other_genome[0]))
+							found = true;
+					}
+				}
+			}
+
+			// If searching for a block
+			else
+			{
+				while (Utilities::FixedSizeStack<T>::empty() == false)
+				{
+					Genome<Atom> temp_block;
+
+					pop_item(temp_block);
+
+					// Normalliize to one block
+					int extra_blocks = 0;
+
+					if (temp_block[0].close_parentheses > other_genome[0].close_parentheses)
+					{
+						extra_blocks = temp_block[0].close_parentheses - other_genome[0].close_parentheses;
+						temp_block[0].close_parentheses = other_genome[0].close_parentheses;
+					}
+
+					if (temp_block == other_genome)
+						found = true;
+
+					else
+					{
+						if (temp_block.size() > 1)
+						{
+							Atom atom = temp_block.pop();
+
+							if (temp_block.contains(other_genome))
+								found = true;
+
+							temp_block.push(atom);
+						}
+
+						else if (temp_block[0].like(other_genome[0]))
+							found = true;
+					}
+				}
+			}
+
+			Utilities::FixedSizeStack<T>::clear();
+			push(original_genome);
 
 			return found;
 		}

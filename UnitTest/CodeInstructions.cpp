@@ -516,7 +516,7 @@ namespace UnitTest
 		TEST_METHOD(CONTAINS_TEXTBOOK_EXAMPLE_1)
 		{
 			//Example:
-			//	FLOAT.+) ( EXEC.DO*RANGE(FLOAT.+)) (FLOAT.+)) ) CODE.CONTAINES
+			//	FLOAT.+) ( EXEC.DO*RANGE FLOAT.+))    (FLOAT.+)) CODE.CONTAINES
 
 			//	Interpretation:
 			//	2:                         (FLOAT.+)
