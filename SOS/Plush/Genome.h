@@ -991,6 +991,9 @@ namespace Plush
 			bool found = false;
 			Genome<Atom> original_genome(this);
 
+			if (Utilities::FixedSizeStack<T>::size() < other_genome.size())
+				return false;
+
 			// If searching for a single item
 			if (other_genome.size() == 1)
 			{
