@@ -12,6 +12,9 @@ Working on bug in code_subst() in ExecInstruction.cpp
 
 
 Favor blocks over items algorithm:
+- An item is considered a single littoral or instruction.
+- A block is zero or more items surrounded by parenthesis.
+- A genome is one or more blocks
 - A genome is processed as a list object, i.e., an open parenthesis is assumed to exist before the first item on the stack.  
 - A genome block level starts at 0 (after first implied open parenthesis) and increments for each nested block
 - Nested blocks begin with the instruction after a block requiring instruction

@@ -3669,7 +3669,7 @@ namespace UnitTest
 					{:instruction CODE.SIZE :close 1}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 0, 6 }, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
+			Assert::IsTrue(is_stack_state(env, { 0, 8 }, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
 					CodeAtom("{:instruction CODE.SIZE :close 1}"),
 					CodeAtom("{:instruction 0 :close 1}"),
@@ -3694,7 +3694,7 @@ namespace UnitTest
 					{:instruction CODE.STACKDEPTH :close 1}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 0, 8 }, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
+			Assert::IsTrue(is_stack_state(env, { 0, 6 }, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
 					CodeAtom("{:instruction CODE.STACKDEPTH :close 1}"),
 					CodeAtom("{:instruction 0 :close 1}"),
@@ -3725,7 +3725,7 @@ namespace UnitTest
 					{:instruction CODE.STACKDEPTH :close 1}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 0, 9 }, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
+			Assert::IsTrue(is_stack_state(env, { 0, 5 }, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
 					CodeAtom("{:instruction CODE.STACKDEPTH :close 1}"),
 					CodeAtom("{:instruction 0 :close 1}"),
@@ -4192,13 +4192,13 @@ namespace UnitTest
 				{
 					CodeAtom("{:instruction CODE.YANK :close 1}"),
 					CodeAtom("{:instruction 1 :close 1}"),
-					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.1 :close 2}"),
 					CodeAtom("{:instruction 2.0 :close 0}"),
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
 					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 3.0 :close 1}"),
 				}));
 		}
 
@@ -4223,12 +4223,12 @@ namespace UnitTest
 				{
 					CodeAtom("{:instruction CODE.YANK :close 1}"),
 					CodeAtom("{:instruction 2 :close 1}"),
-					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.1 :close 2}"),
 					CodeAtom("{:instruction 2.0 :close 0}"),
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
 					CodeAtom("{:instruction 1.0 :close 0}"),
-					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 3.0 :close 1}"),
 				}));
 		}
 

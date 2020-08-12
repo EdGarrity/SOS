@@ -6,6 +6,17 @@
 #include "..\Utilities\FixedSizeStack.h"
 #include "Atom.h"
 
+// Favor blocks over items algorithm:
+//- An item is considered a single littoral or instruction.
+//- A block is zero or more items surrounded by parenthesis.
+//- A genome is one or more blocks
+//- A genome is processed as a list object, i.e., an open parenthesis is assumed to exist before the first item on the stack.
+//- A genome block level starts at 0 (after first implied open parenthesis) and increments for each nested block
+//- Nested blocks begin with the instruction after a block requiring instruction
+//- Closing parenthesis on block 0 is interpreted as an close - open instruction
+//- Closing parenthesis on any other level is an open - close if the block level expects more blocks of a close if not.
+//- Block levels are closed when all expected blocks are found
+
 namespace Plush
 {
 	typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
@@ -291,52 +302,6 @@ namespace Plush
 			}
 
 			return item_number;
-
-
-
-
-
-
-
-			//unsigned int item_number = 0;
-			//int n = Utilities::FixedSizeStack<T>::size() - 1;
-			//unsigned int wanted_blocks = 1;	// Assume all genomes begin as a block.
-
-			//std::stack<unsigned int> wanted_stack;
-
-			//if (n >= 0)
-			//{
-			//	for (; n >= 0; n--)
-			//	{
-			//		Plush::Atom atom = Utilities::FixedSizeStack<T>::stack_[n];
-
-			//		int closing = atom.close_parentheses - Func2BlockWantsMap[atom.instruction];
-
-			//		if (closing < 0)
-			//		{
-			//			wanted_stack.push(wanted_blocks);
-			//			wanted_blocks = 0 - closing;
-			//		}
-
-			//		if (closing > 0)
-			//			wanted_blocks > 0 ? --wanted_blocks : 0;
-
-			//		if (wanted_blocks == 0)
-			//		{
-			//			if (wanted_stack.size() > 0)
-			//			{
-			//				wanted_blocks = wanted_stack.top();
-			//				wanted_stack.pop();
-			//			}
-			//			else
-			//				wanted_blocks = 1; // Assume closing parenthesis on top level block always start another block.
-
-			//			item_number++;
-			//		}
-			//	}
-			//}
-
-			//return item_number;
 		}
 
 		// Purpose: 
