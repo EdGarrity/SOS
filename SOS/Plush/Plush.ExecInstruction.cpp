@@ -880,47 +880,6 @@ namespace Plush
 
 			else
 				_env.push<ExecAtom>(extracted_block_B);
-
-			//Genome<Atom> block_a;
-			//Genome<Atom> block_b;
-
-			//bool s = _env.pop<bool>();
-			//int unmatched_a = _env.pop<CodeAtom>(block_a);
-			//int unmatched_b = _env.pop<CodeAtom>(block_b);
-
-			//if ((block_a.size() > 0) && ((block_b.size() > 0) || (unmatched_a > 0)))
-			//{
-			//	// Remove one closing paranthesis from block before pushing back on stack
-			//	if (s)
-			//	{
-			//		Atom atom = block_a.pop();
-
-			//		atom.close_parentheses = (atom.close_parentheses > 0) ? atom.close_parentheses - 1 : atom.close_parentheses;
-			//		block_a.push(atom);
-
-			//		_env.push<ExecAtom>(block_a);
-			//	}
-
-			//	else if (unmatched_a == 0)
-			//	{
-			//		Atom atom = block_b.top();
-			//		block_b.pop();
-
-			//		atom.close_parentheses = (atom.close_parentheses > 0) ? atom.close_parentheses - 1 : atom.close_parentheses;
-			//		block_b.push(atom);
-
-			//		_env.push<ExecAtom>(block_b);
-			//	}
-			//}
-
-			//else
-			//{
-			//	if (block_a.size() > 0)
-			//		_env.push<CodeAtom>(block_a);
-
-			//	if (block_b.size() > 0)
-			//		_env.push<CodeAtom>(block_b);
-			//}
 		}
 
 		return 1;
@@ -976,7 +935,7 @@ namespace Plush
 			else
 			{
 				// Get count items in first block
-				int number_of_items = first_block.number_of_blocks();
+				int number_of_items = first_block.number_of_items();
 
 				// Take modulo the number of blocks to ensure that it is within the meaningful range.
 				index = std::abs(index) % number_of_items;
