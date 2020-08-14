@@ -967,7 +967,7 @@ namespace Plush
 			_env.pop<CodeAtom>(top_block);
 
 			// Get count items in first block
-			int number_of_items = top_block.number_of_blocks();
+			int number_of_items = top_block.number_of_items();
 			_env.push<long>(number_of_items);
 		}
 
