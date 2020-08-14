@@ -949,7 +949,12 @@ namespace UnitTest
 			Assert::IsTrue(is_stack_state(env, { 20 }, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.DO* :close 1}"),
-					CodeAtom("{:instruction CODE.DO* :close 1}"),
+					CodeAtom("{:instruction CODE.DUP :close 1}"),
+					CodeAtom("{:instruction INTEGER.+ :close 0}"),
+					CodeAtom("{:instruction INTEGER.DUP :close 0}"),
+					CodeAtom("{:instruction CODE.DUP :close 1}"),
+					CodeAtom("{:instruction INTEGER.+ :close 0}"),
+					CodeAtom("{:instruction INTEGER.DUP :close 0}"),
 				}));
 		}
 
