@@ -842,46 +842,85 @@ namespace Plush
 	{
 		if ((_env.has_elements<bool>(1)) && (_env.has_elements<CodeAtom>(2)))
 		{
-			Genome<Atom> block_a;
-			Genome<Atom> block_b;
+			Genome<Atom> extracted_block_A;
+			Genome<Atom> extracted_block_B;
+			Genome<Atom> modified_block_A;
+			int extra_blocks = 0;
+			int extra_blocks_B = 0;
 
+			// Get conditional boolean
 			bool s = _env.pop<bool>();
-			int unmatched_a = _env.pop<CodeAtom>(block_a);
-			int unmatched_b = _env.pop<CodeAtom>(block_b);
 
-			if ((block_a.size() > 0) && ((block_b.size() > 0) || (unmatched_a > 0)))
+			// Get first block from stack
+			extra_blocks = _env.pop<CodeAtom>(extracted_block_A);
+			extracted_block_A[0].close_parentheses -= extra_blocks;
+
+			// Get or create second block
+			if (extra_blocks > 0)
 			{
-				// Remove one closing paranthesis from block before pushing back on stack
-				if (s)
-				{
-					Atom atom = block_a.pop();
-
-					atom.close_parentheses = (atom.close_parentheses > 0) ? atom.close_parentheses - 1 : atom.close_parentheses;
-					block_a.push(atom);
-
-					_env.push<ExecAtom>(block_a);
-				}
-
-				else if (unmatched_a == 0)
-				{
-					Atom atom = block_b.top();
-					block_b.pop();
-
-					atom.close_parentheses = (atom.close_parentheses > 0) ? atom.close_parentheses - 1 : atom.close_parentheses;
-					block_b.push(atom);
-
-					_env.push<ExecAtom>(block_b);
-				}
+				// Create a NOOP second block and decrease the extra blocks in the first item by one
+				extracted_block_B.push(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
+				extra_blocks--;
 			}
 
 			else
 			{
-				if (block_a.size() > 0)
-					_env.push<CodeAtom>(block_a);
-
-				if (block_b.size() > 0)
-					_env.push<CodeAtom>(block_b);
+				// Get second block from stack
+				extra_blocks_B = _env.pop<CodeAtom>(extracted_block_B);
+				extracted_block_B[0].close_parentheses -= extra_blocks_B;
+				extra_blocks += extra_blocks_B;
 			}
+
+			// Get length of blocks
+//			unsigned int extracted_block_A_size = extracted_block_A.size();
+//			unsigned int extracted_block_B_size = extracted_block_B.size();
+
+			if (s)
+				_env.push<ExecAtom>(extracted_block_A);
+
+			else
+				_env.push<ExecAtom>(extracted_block_B);
+
+			//Genome<Atom> block_a;
+			//Genome<Atom> block_b;
+
+			//bool s = _env.pop<bool>();
+			//int unmatched_a = _env.pop<CodeAtom>(block_a);
+			//int unmatched_b = _env.pop<CodeAtom>(block_b);
+
+			//if ((block_a.size() > 0) && ((block_b.size() > 0) || (unmatched_a > 0)))
+			//{
+			//	// Remove one closing paranthesis from block before pushing back on stack
+			//	if (s)
+			//	{
+			//		Atom atom = block_a.pop();
+
+			//		atom.close_parentheses = (atom.close_parentheses > 0) ? atom.close_parentheses - 1 : atom.close_parentheses;
+			//		block_a.push(atom);
+
+			//		_env.push<ExecAtom>(block_a);
+			//	}
+
+			//	else if (unmatched_a == 0)
+			//	{
+			//		Atom atom = block_b.top();
+			//		block_b.pop();
+
+			//		atom.close_parentheses = (atom.close_parentheses > 0) ? atom.close_parentheses - 1 : atom.close_parentheses;
+			//		block_b.push(atom);
+
+			//		_env.push<ExecAtom>(block_b);
+			//	}
+			//}
+
+			//else
+			//{
+			//	if (block_a.size() > 0)
+			//		_env.push<CodeAtom>(block_a);
+
+			//	if (block_b.size() > 0)
+			//		_env.push<CodeAtom>(block_b);
+			//}
 		}
 
 		return 1;

@@ -1841,7 +1841,7 @@ namespace UnitTest
 					{:instruction CODE.IF :close 1}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 20, 20 }, {}, { false }, {},
+			Assert::IsTrue(is_stack_state(env, { 20 }, {}, { false }, {},
 				{
 				}));
 		}
@@ -1860,7 +1860,7 @@ namespace UnitTest
 					{:instruction CODE.IF :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 20 }, {}, {}, {},
+			Assert::IsTrue(is_stack_state(env, { 20, 20 }, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.IF :close 0}"),
 					CodeAtom("{:instruction true :close 0}")
@@ -1881,7 +1881,7 @@ namespace UnitTest
 					{:instruction CODE.IF :close 1}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 20 }, {}, { true }, {},
+			Assert::IsTrue(is_stack_state(env, { 20, 20 }, {}, {}, {},
 				{
 				}));
 		}
@@ -1900,7 +1900,7 @@ namespace UnitTest
 					{:instruction CODE.IF :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 20, 20 }, {}, {}, {},
+			Assert::IsTrue(is_stack_state(env, { 20 }, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.IF :close 0}"),
 					CodeAtom("{:instruction false :close 0}")
@@ -1921,7 +1921,7 @@ namespace UnitTest
 					{:instruction CODE.IF :close 2}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 20 }, {}, {}, {},
+			Assert::IsTrue(is_stack_state(env, { 20, 20 }, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.IF :close 2}"),
 					CodeAtom("{:instruction true :close 0}")
@@ -1945,7 +1945,7 @@ namespace UnitTest
 					{:instruction CODE.IF :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 20, 30, 30 }, {}, {}, {},
+			Assert::IsTrue(is_stack_state(env, { 20, 30, 20 }, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.IF :close 0}"),
 					CodeAtom("{:instruction true :close 0}"),
@@ -1969,7 +1969,7 @@ namespace UnitTest
 					{:instruction CODE.IF :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 20, 30, 20 }, {}, {}, {},
+			Assert::IsTrue(is_stack_state(env, { 20, 30, 30 }, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.IF :close 0}"),
 					CodeAtom("{:instruction false :close 0}"),
