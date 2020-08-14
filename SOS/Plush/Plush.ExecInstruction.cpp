@@ -844,7 +844,7 @@ namespace Plush
 		{
 			Genome<Atom> extracted_block_A;
 			Genome<Atom> extracted_block_B;
-			Genome<Atom> modified_block_A;
+//			Genome<Atom> modified_block_A;
 			int extra_blocks = 0;
 			int extra_blocks_B = 0;
 
@@ -978,27 +978,65 @@ namespace Plush
 	{
 		if (_env.has_elements<CodeAtom>(2))
 		{
-			Genome<Atom> block_a;
-			Genome<Atom> block_b;
+			Genome<Atom> extracted_block_A;
+			Genome<Atom> extracted_block_B;
+			int extra_blocks = 0;
+			int extra_blocks_B = 0;
 
-			int unmatched_a = _env.pop<CodeAtom>(block_a);
-			int unmatched_b = _env.pop<CodeAtom>(block_b);
+			// Get first block from stack
+			extra_blocks = _env.pop<CodeAtom>(extracted_block_A);
+			extracted_block_A[0].close_parentheses -= extra_blocks;
 
-			if ((block_a.size() > 0) && (block_b.size() > 0))
+			// Get or create second block
+			if (extra_blocks > 0)
 			{
-				_env.push<CodeAtom>(block_b);
-				_env.push<CodeAtom>(block_a);
-				_env.push<CodeAtom>(ExecAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+				// Create a NOOP second block and decrease the extra blocks in the first item by one
+				extracted_block_B.push(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
+				extra_blocks--;
 			}
 
 			else
 			{
-				if (block_b.size() > 0)
-					_env.push<CodeAtom>(block_b);
-
-				if (block_a.size() > 0)
-					_env.push<CodeAtom>(block_a);
+				// Get second block from stack
+				extra_blocks_B = _env.pop<CodeAtom>(extracted_block_B);
+				extracted_block_B[0].close_parentheses -= extra_blocks_B;
+				extra_blocks += extra_blocks_B;
 			}
+
+			// Get length of blocks
+//			unsigned int extracted_block_A_size = extracted_block_A.size();
+//			unsigned int extracted_block_B_size = extracted_block_B.size();
+
+			// Close combined list
+			extracted_block_B[0].close_parentheses++;
+
+			_env.push<CodeAtom>(extracted_block_B);
+			_env.push<CodeAtom>(ExecAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+			_env.push<CodeAtom>(extracted_block_A);
+			_env.push<CodeAtom>(ExecAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+
+
+			//Genome<Atom> block_a;
+			//Genome<Atom> block_b;
+
+			//int unmatched_a = _env.pop<CodeAtom>(block_a);
+			//int unmatched_b = _env.pop<CodeAtom>(block_b);
+
+			//if ((block_a.size() > 0) && (block_b.size() > 0))
+			//{
+			//	_env.push<CodeAtom>(block_b);
+			//	_env.push<CodeAtom>(block_a);
+			//	_env.push<CodeAtom>(ExecAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+			//}
+
+			//else
+			//{
+			//	if (block_b.size() > 0)
+			//		_env.push<CodeAtom>(block_b);
+
+			//	if (block_a.size() > 0)
+			//		_env.push<CodeAtom>(block_a);
+			//}
 		}
 
 		return 1;
