@@ -505,64 +505,42 @@ namespace Plush
 	{
 		if (_env.has_elements<CodeAtom>(2))
 		{
-			Utilities::FixedSizeStack<Atom> block_a;
-			Utilities::FixedSizeStack<Atom> block_b;
+			Genome<Atom> extracted_block_A;
+			Genome<Atom> extracted_block_B;
+			Genome<Atom> modified_block_A;
+			Genome<Atom> container_block;
+			int extra_blocks = 0;
+			int extra_blocks_B = 0;
 
-			_env.pop<CodeAtom>(block_a, 1);
-			_env.pop<CodeAtom>(block_b, 1);
+			// Get first block from stack
+			extra_blocks = _env.pop<CodeAtom>(extracted_block_A);
+			extracted_block_A[0].close_parentheses -= extra_blocks;
 
-			if ((block_a.size() > 0) && (block_b.size() > 0))
+			// Get or create second block
+			if (extra_blocks > 0)
 			{
-				// Make sure last atom of block B is closed
-				Atom atom = block_b.top();
-				block_b.pop();
-
-				atom.close_parentheses = (atom.close_parentheses < 2) ? 2 : atom.close_parentheses;
-				block_b.push(atom);
-
-				bool found = false;
-				int index = 0;
-
-				for (int i = 1; i < (block_a.size() - block_b.size() + 1); i++)
-				{
-					found = true;
-
-					for (int j = 0; j < block_b.size(); j++)
-					{
-						if (block_a[i + j].instruction != block_b[j].instruction)
-						{
-							found = false;
-							break;
-						}
-					}
-
-					if (found)
-					{
-						index = i - 1;
-						break;
-					}
-				}
-
-				if (found)
-				{
-					_env.push<CodeAtom>(block_b);
-
-					atom = block_a[index];
-					_env.push<CodeAtom>(atom);
-				}
-
-				else
-					_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
+				// Create a NOOP second block and decrease the extra blocks in the first item by one
+				extracted_block_B.push(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
+				extra_blocks--;
 			}
 
 			else
 			{
-				if (block_a.size() > 0)
-					_env.push<CodeAtom>(block_a);
-
-				if (block_b.size() > 0)
-					_env.push<CodeAtom>(block_b);
+				// Get second block from stack
+				extra_blocks_B = _env.pop<CodeAtom>(extracted_block_B);
+				extracted_block_B[0].close_parentheses -= extra_blocks_B;
+				extra_blocks += extra_blocks_B;
 			}
+
+			// Get length of blocks
+//			unsigned int extracted_block_A_size = extracted_block_A.size();
+//			unsigned int extracted_block_B_size = extracted_block_B.size();
+
+			if (extracted_block_A.container(extracted_block_B, container_block))
+				_env.push<CodeAtom>(container_block);
+
+			else
+				_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
 		}
 
 		return 1;
@@ -570,7 +548,6 @@ namespace Plush
 
 	unsigned code_contains(Environment & _env)
 	{
-
 		if (_env.has_elements<CodeAtom>(2))
 		{
 			Genome<Atom> extracted_block_A;

@@ -1068,5 +1068,167 @@ namespace Plush
 
 			return found;
 		}
+
+		// Purpose: 
+		//   Returns the container of the provided item within the genome.
+		//
+		//   If the genome contains the provided item anywhere (i.e. in any nested list) then the 
+		//   container is the smallest sub-list that contains but is not equal to the provided item. For 
+		//   example, if the genome is "( B ( C ( A ) ) ( D ( A ) ) )" and the provided item is "( A )" 
+		//   then this returns "( C ( A ) )" or returns an empty list if there is no such container.
+		//
+		// Parameters:
+		//   other_genome	- Genome to search for
+		//   container		- The container
+		//
+		// Return value:
+		//   True if found
+		//	 False if not found
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		bool container(Genome<Atom> &other_genome, Genome<Atom> &container)
+		{
+			bool found = false;
+			Genome<Atom> original_genome(this);
+			Genome<Atom> container_block;
+			Genome<Atom> container_block_canidate;
+			Genome<Atom> other_block;
+
+			//container.clear();
+			//container.push(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
+
+			if (Utilities::FixedSizeStack<T>::size() < other_genome.size())
+				return false;
+
+			// If searching for a single item
+			if (other_genome.size() == 1)
+			{
+				while (Utilities::FixedSizeStack<T>::empty() == false)
+				{
+					container_block_canidate.clear();
+					container_block_canidate.push(other_block);
+
+					pop_item(other_block);	// May need to push back empty blocks if there were extra blocks returned by pop().
+
+//					if ((other_block == other_genome) && (container_block_canidate.empty() == false))
+					if (other_block == other_genome)
+					{
+						Atom atom = container.pop();
+						container.clear();
+						other_block[0].close_parentheses = 1;
+						container.push(other_block);
+						container.push(atom);
+
+						found = true;
+						break;
+					}
+					else
+					{
+						if (other_block.size() > 1)
+						{
+							Atom atom = other_block.pop();
+							container.clear();
+							container.push(atom);
+
+							if (other_block.container(other_genome, container))
+							{
+								found = true;
+								break;
+							}
+
+							other_block.push(atom);
+						}
+
+						else if (other_block[0].like(other_genome[0]))
+						{
+							Atom atom = container.pop();
+							container.clear();
+							other_block[0].close_parentheses = 1;
+							container.push(other_block);
+							container.push(atom);
+
+							found = true;
+							break;
+						}
+					}
+				}
+			}
+
+			// If searching for a block
+			else
+			{
+				while (Utilities::FixedSizeStack<T>::empty() == false)
+				{
+					container_block_canidate.clear();
+					container_block_canidate.push(other_block);
+
+					pop_item(other_block);
+
+					// Normalliize to one block
+					int extra_blocks = 0;
+
+					if (other_block[0].close_parentheses > other_genome[0].close_parentheses)
+					{
+						extra_blocks = other_block[0].close_parentheses - other_genome[0].close_parentheses;
+						other_block[0].close_parentheses = other_genome[0].close_parentheses;
+					}
+
+//					if ((other_block == other_genome) && (container_block_canidate.empty() == false))
+					if (other_block == other_genome)
+					{
+						Atom atom = container.pop();
+						container.clear();
+						other_block[0].close_parentheses = other_genome[0].close_parentheses;
+						container.push(other_block);
+						container.push(atom);
+
+						found = true;
+						break;
+					}
+
+					else
+					{
+						if (other_block.size() > 1)
+						{
+							Atom atom = other_block.pop();
+							container.clear();
+							container.push(atom);
+
+							if (other_block.container(other_genome, container))
+							{
+								found = true;
+								break;
+							}
+
+							other_block.push(atom);
+						}
+
+						else if (other_block[0].like(other_genome[0]))
+						{
+							Atom atom = container.pop();
+							container.clear();
+							other_block[0].close_parentheses = other_genome[0].close_parentheses;
+							container.push(other_block);
+							container.push(atom);
+
+							found = true;
+							break;
+						}
+					}
+				}
+			}
+
+			Utilities::FixedSizeStack<T>::clear();
+			push(original_genome);
+
+			return found;
+		}
 	};
 }
