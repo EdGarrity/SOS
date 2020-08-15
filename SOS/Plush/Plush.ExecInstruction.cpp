@@ -1300,10 +1300,10 @@ namespace Plush
 	{
 		if (_env.has_elements<CodeAtom>(1))
 		{
-			Utilities::FixedSizeStack<Atom> top_block;
+			Genome<Atom> top_block;
 
 			// Get top block from stack
-			_env.pop<CodeAtom>(top_block, 1);
+			_env.pop<CodeAtom>(top_block);
 
 			// Get count of atoms
 			int size = top_block.size();
