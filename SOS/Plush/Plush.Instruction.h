@@ -174,72 +174,7 @@ namespace Plush
 
 				_env.push<CodeAtom>(modified_genome);
 				_env.push<CodeAtom>(target_block);
-			}
-											
-											
-											
-											
-			//Utilities::FixedSizeStack<CodeAtom> &stack = _env.get_stack<CodeAtom>();
-			//Utilities::FixedSizeStack<Atom> extracted_block;
-			//Utilities::FixedSizeStack<Atom> block_without_extracted;
-
-			//if (index > 0)
-			//{
-			//	// Get count of sub-blocks
-			//	int number_of_blocks = _env.NumberOfBlocks<CodeAtom>(0);
-
-			//	// If the index is larger than the size of the specified stack, then the deepest element is `yank`ed up to the top.
-			//	index = (index > (number_of_blocks - 1)) ? (number_of_blocks - 1) : index;
-
-			//	// Get the target sub-block
-			//	int n = stack.size() - 1;
-			//	int block_number = 0;
-			//	int closings_to_simulate = 0;
-
-			//	do
-			//	{
-			//		int blocks_open = 0;
-
-			//		for (; n >= 0; n--)
-			//		{
-			//			Plush::Atom atom;
-
-			//			if (closings_to_simulate > 0)
-			//			{
-			//				atom = Atom("{:instruction EXEC.NOOP :close 1}");
-			//				closings_to_simulate--;
-			//				n++;
-			//			}
-			//			else
-			//				atom = stack[n];
-
-			//			int closing = atom.close_parentheses - Plush::Func2BlockWantsMap[atom.instruction];
-
-			//			if ((closing > 1) && (index > block_number) && ((block_number + closing) > index))
-			//			{
-			//				closings_to_simulate = closing - 1;
-			//				closing = 1;
-			//				atom.close_parentheses = 1;
-			//			}
-
-			//			if (block_number == index)
-			//				extracted_block.push(atom);
-
-			//			else
-			//				block_without_extracted.push(atom);
-
-			//			if ((closing > 0) && (blocks_open == 0))
-			//				block_number += closing;
-
-			//			blocks_open -= closing;
-			//			blocks_open = (blocks_open > 0) ? blocks_open : 0;
-			//		};
-			//	} while (n >= 0);
-
-			//	_env.get_stack<CodeAtom>().clear();
-			//	_env.push<CodeAtom>(block_without_extracted);
-			//	_env.push<CodeAtom>(extracted_block);
-			//}
+			}											
 		}
 
 		return 1;

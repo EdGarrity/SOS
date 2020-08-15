@@ -443,7 +443,27 @@ namespace Plush
 
 			for (int n = 0; n < genome.size(); n++)
 			{
-				Plush::Atom atom = genome[n];
+				Atom atom = genome[n];
+
+				//if ((atom.instruction == "EXEC.NOOP")
+				//	&& (atom.type == Atom::AtomType::ins)
+				//	&& (Utilities::FixedSizeStack<T>::top_ > 0))
+				//{
+				//	Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::top_ - 1].close_parentheses += atom.close_parentheses;
+				//}
+
+				//else
+
+				Atom top_atom = Utilities::FixedSizeStack<T>::top();
+				
+				if ((top_atom.instruction == "EXEC.NOOP")
+					&& (top_atom.type == Atom::AtomType::ins)
+					&& (Utilities::FixedSizeStack<T>::top_ > 0))
+				{
+					atom.close_parentheses += top_atom.close_parentheses;
+					Utilities::FixedSizeStack<T>::pop();
+				}
+
 				Utilities::FixedSizeStack<T>::push(atom);
 			}
 		}
@@ -489,7 +509,27 @@ namespace Plush
 		//
 		inline void push(const value_type& atom)
 		{
-			Utilities::FixedSizeStack<T>::push(atom);
+			//if ((atom.instruction == "EXEC.NOOP")
+			//	&& (atom.type == Atom::AtomType::ins)
+			//	&& (Utilities::FixedSizeStack<T>::top_ > 0))
+			//{
+			//	Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::top_ - 1].close_parentheses += atom.close_parentheses;
+			//}
+
+			//else
+
+			Atom top_atom = Utilities::FixedSizeStack<T>::top();
+			Atom atom_copy(atom);
+
+			if ((top_atom.instruction == "EXEC.NOOP")
+				&& (top_atom.type == Atom::AtomType::ins)
+				&& (Utilities::FixedSizeStack<T>::top_ > 0))
+			{
+				atom_copy.close_parentheses += top_atom.close_parentheses;
+				Utilities::FixedSizeStack<T>::pop();
+			}
+		
+			Utilities::FixedSizeStack<T>::push(atom_copy);
 		}
 
 		// Purpose: 
@@ -582,10 +622,7 @@ namespace Plush
 						wanted_blocks--;
 
 					else if ((wanted_blocks == 0) && (wanted_stack.size() == 0))
-					{
-						//extra_blocks = (closing > 1) ? (closing - 1) : (0);
 						break;
-					}
 				}
 
 				if (wanted_blocks == 0)
@@ -601,6 +638,11 @@ namespace Plush
 				}
 			}
 
+			Plush::Atom first = temp.top();
+			temp.pop();
+			first.close_parentheses -= extra_blocks;
+			temp.push(first);
+
 			while (temp.size() > 0)
 			{
 				Plush::Atom atom = temp.top();
@@ -608,7 +650,14 @@ namespace Plush
 				poped_item.push(atom);
 			}
 
-			return extra_blocks;
+			if (extra_blocks > 0)
+			{
+				std::string noop = "{:instruction EXEC.NOOP :close " + std::to_string(extra_blocks) + "}";
+
+				Utilities::FixedSizeStack<T>::push(noop);
+			}
+
+			return 0;
 		};
 
 		// Purpose: 
