@@ -1025,7 +1025,6 @@ namespace Plush
 		{
 			Genome<Atom> extracted_block_A;
 			Genome<Atom> extracted_block_B;
-			Genome<Atom> modified_block_A;
 			int extra_blocks = 0;
 			int extra_blocks_B = 0;
 
@@ -1121,33 +1120,55 @@ namespace Plush
 		{
 			int index = std::abs(_env.pop<long>());	// index
 
-			Genome<class Atom> top_block;
+			Genome<Atom> extracted_block_A;
 			Genome<class Atom> left_half;
 			Genome<class Atom> right_half;
+			int extra_blocks = 0;
 
-			if (index != 0)
-			{
-				// Get first block from stack
-				_env.pop<CodeAtom>(top_block);
+			// Get first block from stack
+			extra_blocks = _env.pop<CodeAtom>(extracted_block_A);
+			extracted_block_A[0].close_parentheses -= extra_blocks;
 
-				if (top_block.size() == 0)
-					_env.push<CodeAtom>(top_block);
+			// Get count items in first block
+			unsigned int extracted_block_A_size = extracted_block_A.number_of_items();
 
-				else
-				{
-					// Get count items in first block
-					int number_of_items = top_block.number_of_blocks();
+			// Take modulo the number of blocks to ensure that it is within the meaningful range.
+			index = std::abs(index) % extracted_block_A_size;
 
-					// Take modulo the number of blocks to ensure that it is within the meaningful range.
-					index = std::abs(index) % number_of_items;
+			// Remove unwanted items
+			extracted_block_A.split(left_half, right_half, index);
 
-					// Remove unwanted items
-					top_block.split(left_half, right_half, index);
+			// Push remaining items back on the code stack
+			_env.push<CodeAtom>(right_half);
 
-					// Push remaining items back on the code stack
-					_env.push<CodeAtom>(right_half);
-				}
-			}
+
+			//Genome<class Atom> top_block;
+			//Genome<class Atom> left_half;
+			//Genome<class Atom> right_half;
+
+			//if (index != 0)
+			//{
+			//	// Get first block from stack
+			//	_env.pop<CodeAtom>(top_block);
+
+			//	if (top_block.size() == 0)
+			//		_env.push<CodeAtom>(top_block);
+
+			//	else
+			//	{
+			//		// Get count items in first block
+			//		int number_of_items = top_block.number_of_blocks();
+
+			//		// Take modulo the number of blocks to ensure that it is within the meaningful range.
+			//		index = std::abs(index) % number_of_items;
+
+			//		// Remove unwanted items
+			//		top_block.split(left_half, right_half, index);
+
+			//		// Push remaining items back on the code stack
+			//		_env.push<CodeAtom>(right_half);
+			//	}
+			//}
 		}
 
 		return 1;

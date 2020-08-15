@@ -310,7 +310,7 @@ namespace Plush
 		//
 		//   This function will split the genome into two parts at the split point provided by the caller.
 		//   The split point is zero - based; that is, a split point less than or equal to 0 represents a
-		//   point before the first item.  A split point greater than the length of the genome will 
+		//   point before the first item.  A split point greater than the number of items in the genome will 
 		//   represent a point after the last item.  The caller is expected to provide the two genomes to 
 		//   write the two haves to.  This function is non - destructive, that is, it will not destroy or 
 		//   alter the genome to be split.
@@ -329,7 +329,7 @@ namespace Plush
 		//   split_position - Zero-based index of the split point in the genome list of items
 		// 
 		// Return value:
-		//   Number if items and blocks in the top level of the list
+		//   Number if items in the top level of the list
 		//
 		// Side Effects:
 		//   None
