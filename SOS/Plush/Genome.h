@@ -10,7 +10,7 @@
 // - An atoms is considered a single littoral or instruction.
 // - A block is zero or more atoms surrounded by parenthesis.
 // - An item is an atom or a block
-// - A genome is one or more items
+// - A genome is a list of one or more items
 // - A genome is processed as a list object, i.e., an open parenthesis is assumed to exist before the first item on the stack.
 // - A genome block level starts at 0 (after first implied open parenthesis) and increments for each nested block
 // - Nested blocks begin with the item after a block requiring items
@@ -521,6 +521,9 @@ namespace Plush
 		//
 		//   For example, if the top genome "( A B )" then this returns "( A B )" (after popping the 
 		//   argument from the genome). If the top genome is "( ( A B ) C )" then this returns "( A B )".
+		//
+		//   Will push a NOOP on the stack with the approprieate number of close parenthesis if needed to 
+		//   compensate for extra closing parenthesis in the poped genome.
 		//
 		// Parameters:
 		//   genome	- Reference to buffer to copy poped genome into
