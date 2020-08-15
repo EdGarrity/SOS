@@ -3114,8 +3114,16 @@ namespace UnitTest
 				}));
 		}
 
-		TEST_METHOD(POSITION_TEXTBOOK_EXAMPLE_1)
+		TEST_METHOD(POSITION_EXAMPLE_1)
 		{
+			//Example:
+			//	( EXEC.NOOP_OPEN_PAREN EXEC.DO*RANGE FLOAT.+)) FLOAT.+))) FLOAT.+) CODE.POSITION
+
+			//	Interpretation:
+			//	2:                (FLOAT.+)
+			//	1:  (EXEC.DO*RANGE         ) 
+			//	0: (                         FLOAT.+)()()(FLOAT.+)(CODE.POSITION)
+
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
@@ -3131,13 +3139,15 @@ namespace UnitTest
 					{:instruction CODE.POSITION :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 2 }, {}, {}, {},
+			Assert::IsTrue(is_stack_state(env, { -1 }, {}, {}, {},
 				{
-					CodeAtom("{:instruction CODE.POSITION :close 0}")
+					CodeAtom("{:instruction CODE.POSITION :close 0}"),
+					CodeAtom("{:instruction FLOAT.+ :close 1}"),
+					CodeAtom("{:instruction EXEC.NOOP :close 1}"),
 				}));
 		}
 
-		TEST_METHOD(POSITION_TEXTBOOK_EXAMPLE_2)
+		TEST_METHOD(POSITION_EXAMPLE_2)
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
@@ -3156,12 +3166,22 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { -1 }, {}, {}, {},
 				{
-					CodeAtom("{:instruction CODE.POSITION :close 0}")
+					CodeAtom("{:instruction CODE.POSITION :close 0}"),
+					CodeAtom("{:instruction FLOAT.- :close 1}"),
+					CodeAtom("{:instruction EXEC.NOOP :close 1}"),
 				}));
 		}
 
-		TEST_METHOD(POSITION_TEXTBOOK_EXAMPLE_3)
+		TEST_METHOD(POSITION_EXAMPLE_3)
 		{
+			//Example:
+			//	( EXEC.NOOP_OPEN_PAREN EXEC.DO*RANGE FLOAT.+)) FLOAT.-))) FLOAT.-) CODE.POSITION
+
+			//	Interpretation:
+			//	2:                (FLOAT.+)
+			//	1:  (EXEC.DO*RANGE         ) 
+			//	0: (                         FLOAT.-)()()(FLOAT.-)(CODE.POSITION)
+
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
@@ -3177,14 +3197,58 @@ namespace UnitTest
 					{:instruction CODE.POSITION :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 2 }, {}, {}, {},
+			Assert::IsTrue(is_stack_state(env, { -1 }, {}, {}, {},
 				{
-					CodeAtom("{:instruction CODE.POSITION :close 0}")
+					CodeAtom("{:instruction CODE.POSITION :close 0}"),
+					CodeAtom("{:instruction FLOAT.- :close 1}"),
+					CodeAtom("{:instruction EXEC.NOOP :close 1}"),
 				}));
 		}
 
-		TEST_METHOD(POSITION_TEXTBOOK_EXAMPLE_4)
+		TEST_METHOD(POSITION_EXAMPLE_4)
 		{
+			//Example:
+			//	( EXEC.NOOP_OPEN_PAREN EXEC.DO*RANGE FLOAT.+)) FLOAT.+ FLOAT.-))) FLOAT.+ FLOAT.-) CODE.POSITION
+
+			//	Interpretation:
+			//	2:                (FLOAT.+)
+			//	1:  (EXEC.DO*RANGE         ) 
+			//	0: (                         FLOAT.+ FLOAT.-)()()(FLOAT.+ FLOAT.-)(CODE.POSITION)
+
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction EXEC.DO*RANGE :close 0}\
+					{:instruction FLOAT.+ :close 2}\
+					{:instruction FLOAT.+ :close 0}\
+					{:instruction FLOAT.- :close 3}\
+					{:instruction FLOAT.+ :close 0}\
+					{:instruction FLOAT.- :close 1}\
+					{:instruction CODE.POSITION :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { -1 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.POSITION :close 0}"),
+					CodeAtom("{:instruction FLOAT.- :close 1}"),
+					CodeAtom("{:instruction FLOAT.+ :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP :close 1}"),
+				}));
+		}
+
+		TEST_METHOD(POSITION_EXAMPLE_5)
+		{
+			//Example:
+			//	( EXEC.NOOP_OPEN_PAREN EXEC.DO*RANGE FLOAT.+)) FLOAT.+) FLOAT.+) CODE.POSITION
+
+			//	Interpretation:
+			//	2:                (FLOAT.+)
+			//	1:  (EXEC.DO*RANGE         ) 
+			//	0: (                         FLOAT.+)(FLOAT.+)(CODE.POSITION)
+
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
@@ -3194,17 +3258,47 @@ namespace UnitTest
 					{:instruction EXEC.DO*RANGE :close 0}\
 					{:instruction FLOAT.+ :close 2}\
 \
-					{:instruction FLOAT.+ :close 0}\
-					{:instruction FLOAT.- :close 3}\
+					{:instruction FLOAT.+ :close 1}\
 \
-					{:instruction FLOAT.+ :close 0}\
-					{:instruction FLOAT.- :close 1}\
+					{:instruction FLOAT.+ :close 1}\
 					{:instruction CODE.POSITION :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 2 }, {}, {}, {},
+			Assert::IsTrue(is_stack_state(env, { 0 }, {}, {}, {},
 				{
-					CodeAtom("{:instruction CODE.POSITION :close 0}")
+					CodeAtom("{:instruction CODE.POSITION :close 0}"),
+				}));
+		}
+
+		TEST_METHOD(POSITION_EXAMPLE_6)
+		{
+			//Example:
+			//	( EXEC.NOOP_OPEN_PAREN FLOAT.* EXEC.DO*RANGE FLOAT.+)) FLOAT.+) FLOAT.+) CODE.POSITION
+
+			//	Interpretation:
+			//	2:                        (FLOAT.+)
+			//	1:          (EXEC.DO*RANGE         ) 
+			//	0: (FLOAT.*                          FLOAT.+)(FLOAT.+)(CODE.POSITION)
+
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction FLOAT.* :close 0}\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction EXEC.DO*RANGE :close 0}\
+					{:instruction FLOAT.+ :close 2}\
+\
+					{:instruction FLOAT.+ :close 1}\
+\
+					{:instruction FLOAT.+ :close 1}\
+					{:instruction CODE.POSITION :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 1 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.POSITION :close 0}"),
 				}));
 		}
 

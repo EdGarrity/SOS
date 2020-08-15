@@ -639,7 +639,7 @@ namespace Plush
 
 			poped_item.clear();
 
-			while (Utilities::FixedSizeStack<T>::empty() == false)
+			while ((Utilities::FixedSizeStack<T>::empty() == false) && (item_number == 0))
 			{
 				Plush::Atom atom;
 
@@ -969,14 +969,13 @@ namespace Plush
 		}
 
 		// Purpose: 
-		//   Returns TRUE if the genome contains the provided code item anywhere (e.g. in a sub-list).
+		//   Returns the position of the provided item in the genome or -1 if not found.
 		//
 		// Parameters:
 		//   other_genome	- Genome to search for
 		// 
 		// Return value:
-		//   True if found
-		//	 False if not found
+		//   Position of the item or -1 if not found
 		//
 		// Side Effects:
 		//   None
@@ -986,13 +985,14 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		bool contains(Genome<Atom> &other_genome)
+		int contains(Genome<Atom> &other_genome)
 		{
 			bool found = false;
+			int position = -1;
 			Genome<Atom> original_genome(this);
 
 			if (Utilities::FixedSizeStack<T>::size() < other_genome.size())
-				return false;
+				return -1;
 
 			// If searching for a single item
 			if (other_genome.size() == 1)
@@ -1003,8 +1003,13 @@ namespace Plush
 
 					pop_item(temp_block);	// May need to push back empty blocks if there were extra blocks returned by pop().
 
+					position++;
+
 					if (temp_block == other_genome)
+					{
 						found = true;
+						break;
+					}
 
 					else
 					{
@@ -1012,14 +1017,20 @@ namespace Plush
 						{
 							Atom atom = temp_block.pop();
 
-							if (temp_block.contains(other_genome))
+							if (temp_block.contains(other_genome) >= 0)
+							{
 								found = true;
+								break;
+							}
 
 							temp_block.push(atom);
 						}
 
 						else if (temp_block[0].like(other_genome[0]))
+						{
 							found = true;
+							break;
+						}
 					}
 				}
 			}
@@ -1033,6 +1044,8 @@ namespace Plush
 
 					pop_item(temp_block);
 
+					position++;
+
 					// Normalliize to one block
 					int extra_blocks = 0;
 
@@ -1043,7 +1056,10 @@ namespace Plush
 					}
 
 					if (temp_block == other_genome)
+					{
 						found = true;
+						break;
+					}
 
 					else
 					{
@@ -1051,14 +1067,20 @@ namespace Plush
 						{
 							Atom atom = temp_block.pop();
 
-							if (temp_block.contains(other_genome))
+							if (temp_block.contains(other_genome) >= 0)
+							{
 								found = true;
+								break;
+							}
 
 							temp_block.push(atom);
 						}
 
 						else if (temp_block[0].like(other_genome[0]))
+						{
 							found = true;
+							break;
+						}
 					}
 				}
 			}
@@ -1066,7 +1088,11 @@ namespace Plush
 			Utilities::FixedSizeStack<T>::clear();
 			push(original_genome);
 
-			return found;
+			if (found)
+				return position;
+
+			else
+				return -1;
 		}
 
 		// Purpose: 

@@ -580,7 +580,7 @@ namespace Plush
 //			unsigned int extracted_block_A_size = extracted_block_A.size();
 //			unsigned int extracted_block_B_size = extracted_block_B.size();
 
-			bool found = extracted_block_B.contains(extracted_block_A);
+			bool found = (extracted_block_B.contains(extracted_block_A) >= 0);
 			_env.push<bool>(found);
 		}
 
@@ -1052,7 +1052,7 @@ namespace Plush
 //			unsigned int extracted_block_A_size = extracted_block_A.size();
 //			unsigned int extracted_block_B_size = extracted_block_B.size();
 
-			bool found = extracted_block_A.contains(extracted_block_B);
+			bool found = (extracted_block_A.contains(extracted_block_B) >= 0);
 			_env.push<bool>(found);
 		}
 
@@ -1140,35 +1140,6 @@ namespace Plush
 
 			// Push remaining items back on the code stack
 			_env.push<CodeAtom>(right_half);
-
-
-			//Genome<class Atom> top_block;
-			//Genome<class Atom> left_half;
-			//Genome<class Atom> right_half;
-
-			//if (index != 0)
-			//{
-			//	// Get first block from stack
-			//	_env.pop<CodeAtom>(top_block);
-
-			//	if (top_block.size() == 0)
-			//		_env.push<CodeAtom>(top_block);
-
-			//	else
-			//	{
-			//		// Get count items in first block
-			//		int number_of_items = top_block.number_of_blocks();
-
-			//		// Take modulo the number of blocks to ensure that it is within the meaningful range.
-			//		index = std::abs(index) % number_of_items;
-
-			//		// Remove unwanted items
-			//		top_block.split(left_half, right_half, index);
-
-			//		// Push remaining items back on the code stack
-			//		_env.push<CodeAtom>(right_half);
-			//	}
-			//}
 		}
 
 		return 1;
@@ -1202,60 +1173,105 @@ namespace Plush
 	{
 		if (_env.has_elements<CodeAtom>(2))
 		{
-			Utilities::FixedSizeStack<Atom> block_a;
-			Utilities::FixedSizeStack<Atom> block_b;
+			Genome<Atom> extracted_block_A;
+			Genome<Atom> extracted_block_B;
+			int extra_blocks = 0;
+			int extra_blocks_B = 0;
 
-			_env.pop<CodeAtom>(block_a, 1);
-			_env.pop<CodeAtom>(block_b, 1);
+			// Get first block from stack
+			extra_blocks = _env.pop<CodeAtom>(extracted_block_A);
+			extracted_block_A[0].close_parentheses -= extra_blocks;
 
-			if ((block_a.size() > 0) && (block_b.size() > 0))
+			// Get or create second block
+			if (extra_blocks > 0)
 			{
-				// Make sure last atom of block B is closed
-				Atom atom = block_b.top();
-				block_b.pop();
-
-				atom.close_parentheses = (atom.close_parentheses == 0) ? 1 : atom.close_parentheses;
-				block_b.push(atom);
-
-				bool found = false;
-				int index = 0;
-
-				for (int i = 1; i < (block_a.size() - block_b.size() + 1); i++)
-				{
-					found = true;
-
-					for (int j = 0; j < block_b.size(); j++)
-					{
-						if (block_a[i + j].instruction != block_b[j].instruction)
-						{
-							found = false;
-							break;
-						}
-					}
-
-					if (found)
-					{
-						index = i;
-						break;
-					}
-				}
-
-				if (found)
-					_env.push<long>(index);
-
-				else
-					_env.push<long>(-1);
+				// Create a NOOP second block and decrease the extra blocks in the first item by one
+				extracted_block_B.push(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
+				extra_blocks--;
 			}
 
 			else
 			{
-				if (block_a.size() > 0)
-					_env.push<CodeAtom>(block_a);
+				// Get second block from stack
+				extra_blocks_B = _env.pop<CodeAtom>(extracted_block_B);
+				extracted_block_B[0].close_parentheses -= extra_blocks_B;
+				extra_blocks += extra_blocks_B;
+			}
 
-				if (block_b.size() > 0)
-					_env.push<CodeAtom>(block_b);
+			// Get length of blocks
+//			unsigned int extracted_block_A_size = extracted_block_A.size();
+//			unsigned int extracted_block_B_size = extracted_block_B.size();
+
+			int position = extracted_block_A.contains(extracted_block_B);
+			_env.push<long>(position);
+
+			if (extra_blocks > 0)
+			{
+				std::string noop = "{:instruction EXEC.NOOP :close " + std::to_string(extra_blocks) + "}";
+				_env.push<CodeAtom>(CodeAtom(noop));
 			}
 		}
+
+
+
+
+
+		//if (_env.has_elements<CodeAtom>(2))
+		//{
+		//	Utilities::FixedSizeStack<Atom> block_a;
+		//	Utilities::FixedSizeStack<Atom> block_b;
+
+		//	_env.pop<CodeAtom>(block_a, 1);
+		//	_env.pop<CodeAtom>(block_b, 1);
+
+		//	if ((block_a.size() > 0) && (block_b.size() > 0))
+		//	{
+		//		// Make sure last atom of block B is closed
+		//		Atom atom = block_b.top();
+		//		block_b.pop();
+
+		//		atom.close_parentheses = (atom.close_parentheses == 0) ? 1 : atom.close_parentheses;
+		//		block_b.push(atom);
+
+		//		bool found = false;
+		//		int index = 0;
+
+		//		for (int i = 1; i < (block_a.size() - block_b.size() + 1); i++)
+		//		{
+		//			found = true;
+
+		//			for (int j = 0; j < block_b.size(); j++)
+		//			{
+		//				if (block_a[i + j].instruction != block_b[j].instruction)
+		//				{
+		//					found = false;
+		//					break;
+		//				}
+		//			}
+
+		//			if (found)
+		//			{
+		//				index = i;
+		//				break;
+		//			}
+		//		}
+
+		//		if (found)
+		//			_env.push<long>(index);
+
+		//		else
+		//			_env.push<long>(-1);
+		//	}
+
+		//	else
+		//	{
+		//		if (block_a.size() > 0)
+		//			_env.push<CodeAtom>(block_a);
+
+		//		if (block_b.size() > 0)
+		//			_env.push<CodeAtom>(block_b);
+		//	}
+		//}
 
 		return 1;
 	}
