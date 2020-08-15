@@ -1078,7 +1078,7 @@ namespace Plush
 			else
 			{
 				// Get count items in first block
-				int number_of_items = top_block.number_of_blocks();
+				int number_of_items = top_block.number_of_items();
 
 				// Take modulo the number of blocks to ensure that it is within the meaningful range.
 				index = std::abs(index) % number_of_items;
