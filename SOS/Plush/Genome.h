@@ -871,7 +871,13 @@ namespace Plush
 
 					if (temp_block == second_genome)
 					{
+						Genome<Atom> modified_block_copy(modified_block);
+
+						modified_block.clear();
+
 						modified_block.push(first_genome);
+						modified_block.push(modified_block_copy);
+
 						found = true;
 					}
 					else
@@ -886,9 +892,12 @@ namespace Plush
 							if (temp_block.subst(first_genome, second_genome))
 								found = true;
 
-							temp_block.push(atom);
+							Genome<Atom> modified_block_copy(modified_block);
 
-							modified_block.push_back(temp_block);
+							modified_block.clear();
+							modified_block.push(temp_block);
+							modified_block.push(atom);
+							modified_block.push(modified_block_copy);
 						}
 
 						else if (temp_block[0].like(second_genome[0]))
@@ -941,9 +950,12 @@ namespace Plush
 							if (temp_block.subst(temp_first_genome, second_genome))
 								found = true;
 
-							temp_block.push(atom);
+							Genome<Atom> modified_block_copy(modified_block);
 
-							modified_block.push_back(temp_block);
+							modified_block.clear();
+							modified_block.push(temp_block);
+							modified_block.push(atom);
+							modified_block.push(modified_block_copy);
 						}
 
 						else if (temp_block[0].like(second_genome[0]))
