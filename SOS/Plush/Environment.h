@@ -97,18 +97,6 @@ namespace Plush
 			get_stack<T>().push(value);
 		}
 
-		//template <>
-		//inline void push(CodeAtom value)
-		//{
-		//	throw std::runtime_error("push() function not supported for Genomes");
-		//}
-
-		//template <>
-		//inline void push(ExecAtom value)
-		//{
-		//	throw std::runtime_error("push() function not supported for Genomes");
-		//}
-
 		inline void push(Genome<class CodeAtom>& stack)
 		{
 			if (stack.size() > 0)
@@ -134,15 +122,6 @@ namespace Plush
 		template <>
 		inline void push<CodeAtom>(Utilities::FixedSizeStack<Atom> &genome)
 		{
-			//if (stack.size() > 0)
-			//	for (int n = 0; n < stack.size(); n++)
-			//		get_stack<CodeAtom>().push(stack[n]);
-
-			//Utilities::FixedSizeStack<CodeAtom>& stack = _env.get_stack<CodeAtom>();
-			//Genome<CodeAtom>& genome = dynamic_cast<Genome<CodeAtom>&>(stack);
-			//push(genome);
-
-
 			if (genome.size() > 0)
 			{
 				for (int n = 0; n < genome.size(); n++)
@@ -162,6 +141,32 @@ namespace Plush
 					}
 
 					get_stack<CodeAtom>().push(atom);
+				}
+			}
+		}
+
+		template <>
+		inline void push<ExecAtom>(Utilities::FixedSizeStack<Atom> &genome)
+		{
+			if (genome.size() > 0)
+			{
+				for (int n = 0; n < genome.size(); n++)
+				{
+					Atom atom = genome[n];
+
+					if (get_stack<ExecAtom>().size() > 0)
+					{
+						Atom top_atom = top<ExecAtom>();
+
+						if ((top_atom.instruction == "EXEC.NOOP")
+							&& (top_atom.type == Atom::AtomType::ins))
+						{
+							atom.close_parentheses += top_atom.close_parentheses;
+							get_stack<ExecAtom>().pop();
+						}
+					}
+
+					get_stack<ExecAtom>().push(atom);
 				}
 			}
 		}
