@@ -189,33 +189,33 @@ namespace Plush
 		}
 
 		// Obsolete
-		template <typename T>
-		inline int pop(Utilities::FixedSizeStack<Atom> &stack, unsigned int open_blocks)
-		{
-			int block_count = open_blocks;
+		//template <typename T>
+		//inline int pop(Utilities::FixedSizeStack<Atom> &stack, unsigned int open_blocks)
+		//{
+		//	int block_count = open_blocks;
 
-			stack.clear();
+		//	stack.clear();
 
-			while (get_stack<T>().size() > 0)
-			{
-				Atom atom = get_stack<T>().top();
-				get_stack<T>().pop();
-				stack.push(atom);
+		//	while (get_stack<T>().size() > 0)
+		//	{
+		//		Atom atom = get_stack<T>().top();
+		//		get_stack<T>().pop();
+		//		stack.push(atom);
 
-				block_count += Func2BlockWantsMap[atom.instruction];
-				block_count -= atom.close_parentheses;
+		//		block_count += Func2BlockWantsMap[atom.instruction];
+		//		block_count -= atom.close_parentheses;
 
-				//if ((atom.close_parentheses > 0) && (block_count > 0))
-				//	block_count++;
+		//		//if ((atom.close_parentheses > 0) && (block_count > 0))
+		//		//	block_count++;
 
-				if (block_count <= 0)
-					break;
-			};
-			
-			block_count *= -1;
+		//		if (block_count <= 0)
+		//			break;
+		//	};
+		//	
+		//	block_count *= -1;
 
-			return block_count; // Return number of unmatched close parenthesis.
-		}
+		//	return block_count; // Return number of unmatched close parenthesis.
+		//}
 
 		template <typename T>
 		inline T top()

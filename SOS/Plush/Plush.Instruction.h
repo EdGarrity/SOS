@@ -457,33 +457,45 @@ namespace Plush
 		// Check for valid parameters
 		if (_env.has_elements<CodeAtom>(2))
 		{
-			bool result = true;
+			Genome<Atom> extracted_block_A;
+			Genome<Atom> extracted_block_B;
 
-			Utilities::FixedSizeStack<Atom> block_a;
-			Utilities::FixedSizeStack<Atom> block_b;
+			_env.pop<CodeAtom>(extracted_block_A);
+			_env.pop<CodeAtom>(extracted_block_B);
 
-			int unmatched_a = _env.pop<CodeAtom>(block_a, 1);
-			int unmatched_b = _env.pop<CodeAtom>(block_b, 1);
-
-			if (block_a.size() != block_b.size())
-				result = false;
-
+			if (extracted_block_A == extracted_block_B)
+				_env.push<bool>(true);
 			else
-			{
-				while (block_a.size() > 0)
-				{
-					CodeAtom atom_a = block_a.top();
-					CodeAtom atom_b = block_b.top();
+				_env.push<bool>(false);
 
-					block_a.pop();
-					block_b.pop();
 
-					if (atom_a != atom_b)
-						result = false;
-				}
-			}
+			//bool result = true;
 
-			_env.push<bool>(result);
+			//Utilities::FixedSizeStack<Atom> block_a;
+			//Utilities::FixedSizeStack<Atom> block_b;
+
+			//int unmatched_a = _env.pop<CodeAtom>(block_a, 1);
+			//int unmatched_b = _env.pop<CodeAtom>(block_b, 1);
+
+			//if (block_a.size() != block_b.size())
+			//	result = false;
+
+			//else
+			//{
+			//	while (block_a.size() > 0)
+			//	{
+			//		CodeAtom atom_a = block_a.top();
+			//		CodeAtom atom_b = block_b.top();
+
+			//		block_a.pop();
+			//		block_b.pop();
+
+			//		if (atom_a != atom_b)
+			//			result = false;
+			//	}
+			//}
+
+			//_env.push<bool>(result);
 		}
 
 		return 1;

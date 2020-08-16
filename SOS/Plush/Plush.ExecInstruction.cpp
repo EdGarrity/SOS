@@ -254,28 +254,46 @@ namespace Plush
 		if ((_env.has_elements<long>(1)) && (_env.has_elements<ExecAtom>(1)))
 		{
 			int n = _env.pop<long>();	// destination index
-			Utilities::FixedSizeStack<Atom> code_block;
 
 			if (n > 0)
 			{
 				_env.push<long>(0);
 				_env.push<long>(n - 1);
 
-				int unmatched_a = _env.pop<ExecAtom>(code_block, 1);
-
-				_env.push<ExecAtom>(CodeAtom("{:instruction INTEGER.POP :close 1}"));
-				_env.push<ExecAtom>(code_block);
-
-				Atom atom = _env.top<ExecAtom>();
-
-				if (atom.instruction == "EXEC.NOOP_OPEN_PAREN")
-					_env.pop<ExecAtom>();
-
-				_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.DO*RANGE :close 0}"));
+				_env.push<ExecAtom>(ExecAtom("{:instruction INTEGER.POP :close 1}"));
+				_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.DO*RANGE :close 1}"));
 			}
 		}
 
 		return 1;
+
+
+
+		//if ((_env.has_elements<long>(1)) && (_env.has_elements<ExecAtom>(1)))
+		//{
+		//	int n = _env.pop<long>();	// destination index
+		//	Utilities::FixedSizeStack<Atom> code_block;
+
+		//	if (n > 0)
+		//	{
+		//		_env.push<long>(0);
+		//		_env.push<long>(n - 1);
+
+		//		int unmatched_a = _env.pop<ExecAtom>(code_block, 1);
+
+		//		_env.push<ExecAtom>(CodeAtom("{:instruction INTEGER.POP :close 1}"));
+		//		_env.push<ExecAtom>(code_block);
+
+		//		Atom atom = _env.top<ExecAtom>();
+
+		//		if (atom.instruction == "EXEC.NOOP_OPEN_PAREN")
+		//			_env.pop<ExecAtom>();
+
+		//		_env.push<ExecAtom>(CodeAtom("{:instruction EXEC.DO*RANGE :close 0}"));
+		//	}
+		//}
+
+		//return 1;
 	}
 
 	unsigned exec_k(Environment & _env)
@@ -442,16 +460,26 @@ namespace Plush
 	{
 		if (_env.has_elements<ExecAtom>(1))
 		{
-			Utilities::FixedSizeStack<Atom> extracted_block;
+			Genome<Atom> extracted_block;
 
-			_env.pop<ExecAtom>(extracted_block, 1);
+			_env.pop<ExecAtom>(extracted_block);
 
 			_env.push<ExecAtom>(extracted_block);
 			_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.Y :close 0}"));
-			_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 			_env.push<ExecAtom>(extracted_block);
 		}
 
+		//if (_env.has_elements<ExecAtom>(1))
+		//{
+		//	Utilities::FixedSizeStack<Atom> extracted_block;
+
+		//	_env.pop<ExecAtom>(extracted_block, 1);
+
+		//	_env.push<ExecAtom>(extracted_block);
+		//	_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.Y :close 0}"));
+		//	_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+		//	_env.push<ExecAtom>(extracted_block);
+		//}
 		return 1;
 	}
 
@@ -1271,8 +1299,8 @@ namespace Plush
 			int index = std::abs(_env.pop<long>());	// index
 
 			Genome<Atom> extracted_block_A;
-			Genome<class Atom> left_half;
-			Genome<class Atom> right_half;
+			Genome<Atom> left_half;
+			Genome<Atom> right_half;
 			int extra_blocks = 0;
 
 			// Get first block from stack
@@ -1299,10 +1327,10 @@ namespace Plush
 	{
 		if (_env.has_elements<CodeAtom>(1))
 		{
-			Utilities::FixedSizeStack<Atom> top_block;
+			Genome<Atom> top_block;
 
 			// Get first block from stack
-			_env.pop<CodeAtom>(top_block, 1);
+			_env.pop<CodeAtom>(top_block);
 
 			if (top_block.size() == 0)
 				_env.push<bool>(true);
