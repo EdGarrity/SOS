@@ -411,7 +411,7 @@ namespace Plush
 			}
 
 			if (simulated_closing_parenthesis > 0)
-				right_half[0].close_parentheses += simulated_closing_parenthesis;
+				right_half.bottom().close_parentheses += simulated_closing_parenthesis;
 
 			return item_number;
 		}
@@ -1090,7 +1090,7 @@ namespace Plush
 							temp_block.push(atom);
 						}
 
-						else if (temp_block[0].like(other_genome[0]))
+						else if (temp_block.bottom().like(other_genome.bottom()))
 						{
 							found = true;
 							break;
@@ -1113,10 +1113,10 @@ namespace Plush
 					// Normalliize to one block
 					int extra_blocks = 0;
 
-					if (temp_block[0].close_parentheses > other_genome[0].close_parentheses)
+					if (temp_block.bottom().close_parentheses > other_genome.bottom().close_parentheses)
 					{
-						extra_blocks = temp_block[0].close_parentheses - other_genome[0].close_parentheses;
-						temp_block[0].close_parentheses = other_genome[0].close_parentheses;
+						extra_blocks = temp_block.bottom().close_parentheses - other_genome.bottom().close_parentheses;
+						temp_block.bottom().close_parentheses = other_genome.bottom().close_parentheses;
 					}
 
 					if (temp_block == other_genome)
@@ -1140,7 +1140,7 @@ namespace Plush
 							temp_block.push(atom);
 						}
 
-						else if (temp_block[0].like(other_genome[0]))
+						else if (temp_block.bottom().like(other_genome.bottom()))
 						{
 							found = true;
 							break;
@@ -1212,7 +1212,7 @@ namespace Plush
 					{
 						Atom atom = container.pop();
 						container.clear();
-						other_block[0].close_parentheses = 1;
+						other_block.bottom().close_parentheses = 1;
 						container.push(other_block);
 						container.push(atom);
 
@@ -1236,11 +1236,11 @@ namespace Plush
 							other_block.push(atom);
 						}
 
-						else if (other_block[0].like(other_genome[0]))
+						else if (other_block.bottom().like(other_genome.bottom()))
 						{
 							Atom atom = container.pop();
 							container.clear();
-							other_block[0].close_parentheses = 1;
+							other_block.bottom().close_parentheses = 1;
 							container.push(other_block);
 							container.push(atom);
 
@@ -1264,10 +1264,10 @@ namespace Plush
 					// Normalliize to one block
 					int extra_blocks = 0;
 
-					if (other_block[0].close_parentheses > other_genome[0].close_parentheses)
+					if (other_block.bottom().close_parentheses > other_genome.bottom().close_parentheses)
 					{
-						extra_blocks = other_block[0].close_parentheses - other_genome[0].close_parentheses;
-						other_block[0].close_parentheses = other_genome[0].close_parentheses;
+						extra_blocks = other_block.bottom().close_parentheses - other_genome.bottom().close_parentheses;
+						other_block.bottom().close_parentheses = other_genome.bottom().close_parentheses;
 					}
 
 //					if ((other_block == other_genome) && (container_block_canidate.empty() == false))
@@ -1275,7 +1275,7 @@ namespace Plush
 					{
 						Atom atom = container.pop();
 						container.clear();
-						other_block[0].close_parentheses = other_genome[0].close_parentheses;
+						other_block.bottom().close_parentheses = other_genome.bottom().close_parentheses;
 						container.push(other_block);
 						container.push(atom);
 
@@ -1300,11 +1300,11 @@ namespace Plush
 							other_block.push(atom);
 						}
 
-						else if (other_block[0].like(other_genome[0]))
+						else if (other_block.bottom().like(other_genome.bottom()))
 						{
 							Atom atom = container.pop();
 							container.clear();
-							other_block[0].close_parentheses = other_genome[0].close_parentheses;
+							other_block.bottom().close_parentheses = other_genome.bottom().close_parentheses;
 							container.push(other_block);
 							container.push(atom);
 

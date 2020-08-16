@@ -377,15 +377,15 @@ namespace Plush
 
 			if ((block_a.size() > 0) && (block_b.size() > 0))
 			{
-				block_a[0].close_parentheses 
-					= (block_a[0].close_parentheses > 0) 
-					? block_a[0].close_parentheses - 1 
-					: block_a[0].close_parentheses;
+				block_a.bottom().close_parentheses
+					= (block_a.bottom().close_parentheses > 0)
+					? block_a.bottom().close_parentheses - 1
+					: block_a.bottom().close_parentheses;
 
-				block_b[0].close_parentheses 
-					= (block_b[0].close_parentheses == 0) 
+				block_b.bottom().close_parentheses
+					= (block_b.bottom().close_parentheses == 0)
 					? 1 
-					: block_b[0].close_parentheses;
+					: block_b.bottom().close_parentheses;
 
 				_env.push<CodeAtom>(block_b);
 				_env.push<CodeAtom>(block_a);
@@ -481,8 +481,8 @@ namespace Plush
 
 			if ((block_a.size() > 0) && (block_b.size() > 0))
 			{
-				block_a[0].close_parentheses += unmatched_a;
-				block_b[0].close_parentheses = 0;
+				block_a.bottom().close_parentheses += unmatched_a;
+				block_b.bottom().close_parentheses = 0;
 
 				_env.push<CodeAtom>(block_a);
 				_env.push<CodeAtom>(block_b);
@@ -514,7 +514,7 @@ namespace Plush
 
 			// Get first block from stack
 			extra_blocks = _env.pop<CodeAtom>(extracted_block_A);
-			extracted_block_A[0].close_parentheses -= extra_blocks;
+			extracted_block_A.bottom().close_parentheses -= extra_blocks;
 
 			// Get or create second block
 			if (extra_blocks > 0)
@@ -528,7 +528,7 @@ namespace Plush
 			{
 				// Get second block from stack
 				extra_blocks_B = _env.pop<CodeAtom>(extracted_block_B);
-				extracted_block_B[0].close_parentheses -= extra_blocks_B;
+				extracted_block_B.bottom().close_parentheses -= extra_blocks_B;
 				extra_blocks += extra_blocks_B;
 			}
 
@@ -558,7 +558,7 @@ namespace Plush
 
 			// Get first block from stack
 			extra_blocks = _env.pop<CodeAtom>(extracted_block_A);
-			extracted_block_A[0].close_parentheses -= extra_blocks;
+			extracted_block_A.bottom().close_parentheses -= extra_blocks;
 
 			// Get or create second block
 			if (extra_blocks > 0)
@@ -572,7 +572,7 @@ namespace Plush
 			{
 				// Get second block from stack
 				extra_blocks_B = _env.pop<CodeAtom>(extracted_block_B);
-				extracted_block_B[0].close_parentheses -= extra_blocks_B;
+				extracted_block_B.bottom().close_parentheses -= extra_blocks_B;
 				extra_blocks += extra_blocks_B;
 			}
 
@@ -778,16 +778,16 @@ namespace Plush
 
 					// Compensate for extra blocks in the second item.
 					if (extra_second_bloxks > 0)
-						right_half[0].close_parentheses += extra_second_bloxks;
+						right_half.bottom().close_parentheses += extra_second_bloxks;
 
 					// Get indexed block
 					right_half.split(indexed_block, rest_block, 1);
 
 					// Close extracted item
 					if ((indexed_block.top().instruction == "EXEC.NOOP_OPEN_PAREN") && (indexed_block.top().close_parentheses == 0))
-						indexed_block[0].close_parentheses = 2;
+						indexed_block.bottom().close_parentheses = 2;
 					else
-						indexed_block[0].close_parentheses = 1;
+						indexed_block.bottom().close_parentheses = 1;
 
 					// Replace top of stack with extracted item
 					_env.push<CodeAtom>(indexed_block);
@@ -844,7 +844,6 @@ namespace Plush
 		{
 			Genome<Atom> extracted_block_A;
 			Genome<Atom> extracted_block_B;
-//			Genome<Atom> modified_block_A;
 			int extra_blocks = 0;
 			int extra_blocks_B = 0;
 
@@ -853,7 +852,7 @@ namespace Plush
 
 			// Get first block from stack
 			extra_blocks = _env.pop<CodeAtom>(extracted_block_A);
-			extracted_block_A[0].close_parentheses -= extra_blocks;
+			extracted_block_A.bottom().close_parentheses -= extra_blocks;
 
 			// Get or create second block
 			if (extra_blocks > 0)
@@ -867,7 +866,7 @@ namespace Plush
 			{
 				// Get second block from stack
 				extra_blocks_B = _env.pop<CodeAtom>(extracted_block_B);
-				extracted_block_B[0].close_parentheses -= extra_blocks_B;
+				extracted_block_B.bottom().close_parentheses -= extra_blocks_B;
 				extra_blocks += extra_blocks_B;
 			}
 
@@ -910,13 +909,13 @@ namespace Plush
 				second_block.push(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 
 				if (extra_second_bloxks > 0)
-					second_block[0].close_parentheses = 1;
+					second_block.bottom().close_parentheses = 1;
 			}
 			else
 			{
 				// Create a NOOP second block and decrease the extra blocks in the first item by one
 				second_block.push(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
-				first_block[0].close_parentheses--;
+				first_block.bottom().close_parentheses--;
 			}
 
 			if (index == 0)
@@ -945,7 +944,7 @@ namespace Plush
 
 				// Compensate for extra blocks in the second item.
 				if (extra_second_bloxks > 0)
-					right_half[0].close_parentheses += extra_second_bloxks;
+					right_half.bottom().close_parentheses += extra_second_bloxks;
 
 				// Insert second block into first block at insertion point
 				_env.push<CodeAtom>(right_half);
@@ -985,7 +984,7 @@ namespace Plush
 
 			// Get first block from stack
 			extra_blocks = _env.pop<CodeAtom>(extracted_block_A);
-			extracted_block_A[0].close_parentheses -= extra_blocks;
+			extracted_block_A.bottom().close_parentheses -= extra_blocks;
 
 			// Get or create second block
 			if (extra_blocks > 0)
@@ -999,16 +998,12 @@ namespace Plush
 			{
 				// Get second block from stack
 				extra_blocks_B = _env.pop<CodeAtom>(extracted_block_B);
-				extracted_block_B[0].close_parentheses -= extra_blocks_B;
+				extracted_block_B.bottom().close_parentheses -= extra_blocks_B;
 				extra_blocks += extra_blocks_B;
 			}
 
-			// Get length of blocks
-//			unsigned int extracted_block_A_size = extracted_block_A.size();
-//			unsigned int extracted_block_B_size = extracted_block_B.size();
-
 			// Close combined list
-			extracted_block_B[0].close_parentheses++;
+			extracted_block_B.bottom().close_parentheses++;
 
 			_env.push<CodeAtom>(extracted_block_B);
 			_env.push<CodeAtom>(ExecAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
@@ -1030,7 +1025,7 @@ namespace Plush
 
 			// Get first block from stack
 			extra_blocks = _env.pop<CodeAtom>(extracted_block_A);
-			extracted_block_A[0].close_parentheses -= extra_blocks;
+			extracted_block_A.bottom().close_parentheses -= extra_blocks;
 
 			// Get or create second block
 			if (extra_blocks > 0)
@@ -1044,7 +1039,7 @@ namespace Plush
 			{
 				// Get second block from stack
 				extra_blocks_B = _env.pop<CodeAtom>(extracted_block_B);
-				extracted_block_B[0].close_parentheses -= extra_blocks_B;
+				extracted_block_B.bottom().close_parentheses -= extra_blocks_B;
 				extra_blocks += extra_blocks_B;
 			}
 
@@ -1090,7 +1085,7 @@ namespace Plush
 
 					// Push extracted item back on the code stack
 					if ((index + 1) != number_of_items)
-						left_half[0].close_parentheses++;
+						left_half.bottom().close_parentheses++;
 
 					_env.push<CodeAtom>(left_half);
 				}
@@ -1104,7 +1099,7 @@ namespace Plush
 
 					// Push extracted item back on the code stack
 					if ((index + 1) != number_of_items)
-						left_half[0].close_parentheses++;
+						left_half.bottom().close_parentheses++;
 	
 					_env.push<CodeAtom>(left_half);
 				}
@@ -1127,7 +1122,7 @@ namespace Plush
 
 			// Get first block from stack
 			extra_blocks = _env.pop<CodeAtom>(extracted_block_A);
-			extracted_block_A[0].close_parentheses -= extra_blocks;
+			extracted_block_A.bottom().close_parentheses -= extra_blocks;
 
 			// Get count items in first block
 			unsigned int extracted_block_A_size = extracted_block_A.number_of_items();
@@ -1180,7 +1175,7 @@ namespace Plush
 
 			// Get first block from stack
 			extra_blocks = _env.pop<CodeAtom>(extracted_block_A);
-			extracted_block_A[0].close_parentheses -= extra_blocks;
+			extracted_block_A.bottom().close_parentheses -= extra_blocks;
 
 			// Get or create second block
 			if (extra_blocks > 0)
@@ -1194,7 +1189,7 @@ namespace Plush
 			{
 				// Get second block from stack
 				extra_blocks_B = _env.pop<CodeAtom>(extracted_block_B);
-				extracted_block_B[0].close_parentheses -= extra_blocks_B;
+				extracted_block_B.bottom().close_parentheses -= extra_blocks_B;
 				extra_blocks += extra_blocks_B;
 			}
 
@@ -1328,7 +1323,7 @@ namespace Plush
 
 			// Get first block from stack
 			extra_blocks = _env.pop<CodeAtom>(extracted_block_A);
-			extracted_block_A[0].close_parentheses -= extra_blocks;
+			extracted_block_A.bottom().close_parentheses -= extra_blocks;
 
 			// Get or create second block
 			if (extra_blocks > 0)
@@ -1342,7 +1337,7 @@ namespace Plush
 			{
 				// Get second block from stack
 				extra_blocks_B = _env.pop<CodeAtom>(extracted_block_B);
-				extracted_block_B[0].close_parentheses -= extra_blocks_B;
+				extracted_block_B.bottom().close_parentheses -= extra_blocks_B;
 				extra_blocks += extra_blocks_B;
 			}
 
@@ -1358,7 +1353,7 @@ namespace Plush
 			{
 				// Get second block from stack
 				extra_blocks_C = _env.pop<CodeAtom>(extracted_block_C);
-				extracted_block_C[0].close_parentheses -= extra_blocks_C;
+				extracted_block_C.bottom().close_parentheses -= extra_blocks_C;
 				extra_blocks += extra_blocks_C;
 			}
 
