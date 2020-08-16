@@ -43,11 +43,11 @@ namespace Plush
 	template <>
 	inline unsigned dup<ExecAtom>(Environment & _env)
 	{
-		Utilities::FixedSizeStack<Atom> stack;
+		Genome<Atom> stack;
 
 		if (_env.has_elements<ExecAtom>(1))
 		{
-			_env.top<ExecAtom>(stack, 1);
+			_env.top<ExecAtom>(stack);
 			_env.push<ExecAtom>(stack);
 		}
 
@@ -333,108 +333,63 @@ namespace Plush
 		}
 
 		return 1;
-
-
-
-
-
-
-
-
-		//if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
-		//{
-		//	int index = _env.pop<long>();	// index
-
-		//	Utilities::FixedSizeStack<CodeAtom> &stack = _env.get_stack<CodeAtom>();
-		//	Utilities::FixedSizeStack<Atom> extracted_block;
-
-		//	if (index >= 0)
-		//	{
-		//		// Get count of sub-blocks
-		//		int number_of_blocks = 0;
-		//		int n = stack.size() - 1;
-
-		//		do
-		//		{
-		//			int blocks_open = 1;
-
-		//			for (; n >= 0; n--)
-		//			{
-		//				Plush::Atom atom = stack[n];
-
-		//				blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
-		//				blocks_open -= atom.close_parentheses;
-		//				blocks_open = (blocks_open > 0) ? blocks_open : 0;
-
-		//				if (atom.close_parentheses > 0)
-		//				{
-		//					if (blocks_open > 0)
-		//						blocks_open++;
-
-		//					else
-		//					{
-		//						number_of_blocks++;
-		//						blocks_open = 1;
-		//					}
-		//				}
-		//			};
-		//		} while (n >= 0);
-
-		//		// If the index is larger than the size of the specified stack, then the deepest element is `yank`ed up to the top.
-		//		index = (index > (number_of_blocks - 1)) ? (number_of_blocks - 1) : index;
-
-		//		// Get the target sub-block
-		//		n = stack.size() - 1;
-		//		int block_number = 0;
-
-		//		do
-		//		{
-		//			int blocks_open = 1;
-
-		//			for (; n >= 0; n--)
-		//			{
-		//				Plush::Atom atom = stack[n];
-
-		//				if (block_number == index)
-		//					extracted_block.push(atom);
-
-		//				blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
-		//				blocks_open -= atom.close_parentheses;
-		//				blocks_open = (blocks_open > 0) ? blocks_open : 0;
-
-		//				if (atom.close_parentheses > 0)
-		//				{
-		//					if (blocks_open > 0)
-		//						blocks_open++;
-
-		//					else
-		//					{
-		//						block_number++;
-		//						blocks_open = 1;
-		//					}
-		//				}
-		//			};
-		//		} while (n >= 0);
-
-		//		_env.push<CodeAtom>(extracted_block);
-		//	}
-		//}
-
-		//return 1;
 	}
 
 	template<>
 	inline unsigned yankdup<ExecAtom>(Environment & _env)
 	{
 		// Check for valid parameters
+		//if ((_env.has_elements<long>(1)) && (_env.has_elements<ExecAtom>(1)))
+		//{
+		//	int n = _env.pop<long>();
+
+		//	Utilities::FixedSizeStack<Atom> code_block;
+
+		//	_env.peek_index<ExecAtom>(n, 0, code_block);
+		//	_env.push<ExecAtom>(code_block);
+		//}
+
 		if ((_env.has_elements<long>(1)) && (_env.has_elements<ExecAtom>(1)))
 		{
-			int n = _env.pop<long>();
+			int index = _env.pop<long>();	// index
+			Genome<Atom> extracted_block;
+			Genome<Atom> temp_genome;
+			int extra_blocks = 0;
 
-			Utilities::FixedSizeStack<Atom> code_block;
+			// Get number of blocks on the stack
+			int number_of_blocks = _env.length<ExecAtom>();
 
-			_env.peek_index<ExecAtom>(n, 0, code_block);
-			_env.push<ExecAtom>(code_block);
+			// If the index is larger than the size of the specified stack, then the deepest element is `yank`ed up to the top.
+			index = (index > (number_of_blocks - 1)) ? (number_of_blocks - 1) : index;
+			index = (index < 0) ? 0 : index;
+
+			while ((_env.is_empty<ExecAtom>() == false) && (index >= 0))
+			{
+				extra_blocks = _env.pop<ExecAtom>(extracted_block);
+				temp_genome.push(extracted_block);
+
+				//				if ((index - extra_blocks) == 0)
+				if ((index) == 0)
+					extracted_block.bottom().close_parentheses = 1;
+
+				else if ((index - extra_blocks) <= 0)
+				{
+					extracted_block.clear();
+					extracted_block.push(ExecAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
+				}
+
+				index -= extra_blocks;
+				index--;
+			}
+
+			while (temp_genome.empty() == false)
+			{
+				Genome<Atom> temp_block;
+				temp_genome.pop_genome(temp_block);
+				_env.push<ExecAtom>(temp_block);
+			}
+
+			_env.push<ExecAtom>(extracted_block);
 		}
 
 		return 1;

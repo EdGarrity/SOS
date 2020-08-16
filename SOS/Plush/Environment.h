@@ -188,35 +188,6 @@ namespace Plush
 			return genome.pop_genome(other_stack);
 		}
 
-		// Obsolete
-		//template <typename T>
-		//inline int pop(Utilities::FixedSizeStack<Atom> &stack, unsigned int open_blocks)
-		//{
-		//	int block_count = open_blocks;
-
-		//	stack.clear();
-
-		//	while (get_stack<T>().size() > 0)
-		//	{
-		//		Atom atom = get_stack<T>().top();
-		//		get_stack<T>().pop();
-		//		stack.push(atom);
-
-		//		block_count += Func2BlockWantsMap[atom.instruction];
-		//		block_count -= atom.close_parentheses;
-
-		//		//if ((atom.close_parentheses > 0) && (block_count > 0))
-		//		//	block_count++;
-
-		//		if (block_count <= 0)
-		//			break;
-		//	};
-		//	
-		//	block_count *= -1;
-
-		//	return block_count; // Return number of unmatched close parenthesis.
-		//}
-
 		template <typename T>
 		inline T top()
 		{
@@ -231,31 +202,6 @@ namespace Plush
 			Genome<T>& genome = dynamic_cast<Genome<T>&>(stack);
 
 			return genome.top(other_stack);
-		}
-
-		// Obsolete
-		template <typename T>
-		inline int top(Utilities::FixedSizeStack<Atom> &stack, unsigned int open_blocks)
-		{
-			int blocks_open = open_blocks;
-
-			stack.clear();
-
-			for (int n = get_stack<T>().size() - 1; n >= 0; n--)
-			{
-				Atom atom = get_stack<T>()[n];
-				stack.push(atom);
-
-				blocks_open += Func2BlockWantsMap[atom.instruction];
-				blocks_open -= atom.close_parentheses;
-
-				if (blocks_open <= 0)
-					break;
-			};
-
-			blocks_open *= -1;
-
-			return blocks_open; // Return number of unmatched close parenthesis.
 		}
 
 		template <typename T>
@@ -310,48 +256,50 @@ namespace Plush
 				throw;
 		}
 
-		template <typename T> inline int &peek_index(unsigned index, unsigned open_blocks, Utilities::FixedSizeStack<Atom> &stack)
-		{
-			int i = 0;
-			int blocks_open = open_blocks;
+		//template <typename T> inline int &peek_index(unsigned index, 
+		//	unsigned open_blocks, 
+		//	Utilities::FixedSizeStack<Atom> &stack)
+		//{
+		//	int i = 0;
+		//	int blocks_open = open_blocks;
 
-			stack.clear();
+		//	stack.clear();
 
-			for (int n = 0; n < index + 1; n++)
-			{
-				if (blocks_open == 0)
-				{
-					Atom atom = peek_index<T>(n);
+		//	for (int n = 0; n < index + 1; n++)
+		//	{
+		//		if (blocks_open == 0)
+		//		{
+		//			Atom atom = peek_index<T>(n);
 
-					if (n == index)
-						stack.push(atom);
+		//			if (n == index)
+		//				stack.push(atom);
 
-					blocks_open += Func2BlockWantsMap[atom.instruction];
-					blocks_open -= atom.close_parentheses;
+		//			blocks_open += Func2BlockWantsMap[atom.instruction];
+		//			blocks_open -= atom.close_parentheses;
 
-					i++;
-				}
+		//			i++;
+		//		}
 
-				else
-				{
-					while ((blocks_open > 0) && (i < get_stack<T>().size()))
-					{
-						Atom atom = peek_index<T>(n);
+		//		else
+		//		{
+		//			while ((blocks_open > 0) && (i < get_stack<T>().size()))
+		//			{
+		//				Atom atom = peek_index<T>(n);
 
-						if (n == index)
-							stack.push(atom);
+		//				if (n == index)
+		//					stack.push(atom);
 
-						blocks_open += Func2BlockWantsMap[atom.instruction];
-						blocks_open -= atom.close_parentheses;
+		//				blocks_open += Func2BlockWantsMap[atom.instruction];
+		//				blocks_open -= atom.close_parentheses;
 
-						i++;
-					};
-				}
-			}
+		//				i++;
+		//			};
+		//		}
+		//	}
 
-			blocks_open *= -1;
+		//	blocks_open *= -1;
 
-			return blocks_open; // Return number of unmatched close parenthesis.
-		}
+		//	return blocks_open; // Return number of unmatched close parenthesis.
+		//}
 	};
 }
