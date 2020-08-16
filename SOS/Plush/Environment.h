@@ -180,7 +180,7 @@ namespace Plush
 		}
 
 		template <class T>
-		inline unsigned int pop(Genome<class Atom> &other_stack)
+		inline unsigned int pop(Genome<Atom> &other_stack)
 		{
 			Utilities::FixedSizeStack<T>& stack = get_stack<T>();
 			Genome<T>& genome = dynamic_cast<Genome<T>&>(stack);
