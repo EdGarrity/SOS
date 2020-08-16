@@ -137,7 +137,7 @@ namespace Plush
 					if (n == index)
 					{
 						target_extra_blocks = extra_blocks;
-						extracted_block[0].close_parentheses -= extra_blocks;
+						extracted_block.bottom().close_parentheses -= extra_blocks;
 						target_block.push(extracted_block);
 
 						if (extra_blocks > 0)
@@ -310,7 +310,7 @@ namespace Plush
 
 //				if ((index - extra_blocks) == 0)
 				if ((index) == 0)
-					extracted_block[0].close_parentheses = 1;
+					extracted_block.bottom().close_parentheses = 1;
 
 				else if ((index - extra_blocks) <= 0)
 				{
@@ -512,13 +512,13 @@ namespace Plush
 
 				// Make sure the second block contains only one block.
 				if (extra_second_bloxks > 0)
-					second_block[0].close_parentheses = 1;
+					second_block.bottom().close_parentheses = 1;
 			}
 			else
 			{
 				// Create a NOOP second block and decrease the extra blocks in the first item by one
 				second_block.push(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
-				first_block[0].close_parentheses--;
+				first_block.bottom().close_parentheses--;
 			}
 
 			unsigned int first_block_length = first_block.number_of_blocks();
@@ -620,7 +620,7 @@ namespace Plush
 
 			// Get first block from stack
 			extra_blocks = _env.pop<CodeAtom>(extracted_block_A);
-			extracted_block_A[0].close_parentheses -= extra_blocks;
+			extracted_block_A.bottom().close_parentheses -= extra_blocks;
 
 			// Get or create second block
 			if (extra_blocks > 0)
@@ -634,7 +634,7 @@ namespace Plush
 			{
 				// Get second block from stack
 				extra_blocks_B = _env.pop<CodeAtom>(extracted_block_B);
-				extracted_block_B[0].close_parentheses -= extra_blocks_B;
+				extracted_block_B.bottom().close_parentheses -= extra_blocks_B;
 				extra_blocks += extra_blocks_B;
 			}
 
@@ -650,12 +650,12 @@ namespace Plush
 			{
 				// Get second block from stack
 				extra_blocks_C = _env.pop<CodeAtom>(extracted_block_C);
-				extracted_block_C[0].close_parentheses -= extra_blocks_C;
+				extracted_block_C.bottom().close_parentheses -= extra_blocks_C;
 				extra_blocks += extra_blocks_C;
 			}
 
 			// Balance parenthesis
-			extracted_block_B[0].close_parentheses += extra_blocks;
+			extracted_block_B.bottom().close_parentheses += extra_blocks;
 
 			// Get length of blocks
 			//unsigned int extracted_block_A_length = extracted_block_A.length();
@@ -837,7 +837,7 @@ namespace Plush
 							if ((n + 1) == index)
 							{
 								simulated_closing_parenthesis = extra_blocks;
-								genome[0].close_parentheses = 1;;
+								genome.bottom().close_parentheses = 1;;
 							}
 
 							else
@@ -978,7 +978,7 @@ namespace Plush
 
 			// Get first block from stack
 			extra_blocks = _env.pop<CodeAtom>(extracted_block_A);
-			extracted_block_A[0].close_parentheses -= extra_blocks;
+			extracted_block_A.bottom().close_parentheses -= extra_blocks;
 
 			// Get or create second block
 			if (extra_blocks > 0)
@@ -992,12 +992,12 @@ namespace Plush
 			{
 				// Get second block from stack
 				extra_blocks_B = _env.pop<CodeAtom>(extracted_block_B);
-				extracted_block_B[0].close_parentheses -= extra_blocks_B;
+				extracted_block_B.bottom().close_parentheses -= extra_blocks_B;
 				extra_blocks += extra_blocks_B;
 			}
 
 			// Balance parenthesis
-			extracted_block_A[0].close_parentheses += extra_blocks;
+			extracted_block_A.bottom().close_parentheses += extra_blocks;
 
 			_env.push<CodeAtom>(extracted_block_A);
 			_env.push<CodeAtom>(extracted_block_B);

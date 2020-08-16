@@ -938,8 +938,8 @@ namespace Plush
 						{
 							Atom atom = temp_block.pop();
 
-							if (atom.like(second_genome[0]))
-								atom.instruction = first_genome[0].instruction;
+							if (atom.like(second_genome.bottom()))
+								atom.instruction = first_genome.bottom().instruction;
 
 							if (temp_block.subst(first_genome, second_genome))
 								found = true;
@@ -952,9 +952,9 @@ namespace Plush
 							modified_block.push(modified_block_copy);
 						}
 
-						else if (temp_block[0].like(second_genome[0]))
+						else if (temp_block.bottom().like(second_genome.bottom()))
 						{
-							temp_block[0].instruction = first_genome[0].instruction;
+							temp_block.bottom().instruction = first_genome.bottom().instruction;
 							modified_block.push(temp_block);
 							found = true;
 						}
@@ -977,11 +977,11 @@ namespace Plush
 					// Normalliize to one block
 					int extra_blocks = 0;
 
-					if (temp_block[0].close_parentheses > second_genome[0].close_parentheses)
+					if (temp_block.bottom().close_parentheses > second_genome.bottom().close_parentheses)
 					{
-						extra_blocks = temp_block[0].close_parentheses - second_genome[0].close_parentheses;
-						temp_block[0].close_parentheses = second_genome[0].close_parentheses;
-						temp_first_genome[0].close_parentheses += extra_blocks;
+						extra_blocks = temp_block.bottom().close_parentheses - second_genome.bottom().close_parentheses;
+						temp_block.bottom().close_parentheses = second_genome.bottom().close_parentheses;
+						temp_first_genome.bottom().close_parentheses += extra_blocks;
 					}
 
 					if (temp_block == second_genome)
@@ -996,8 +996,8 @@ namespace Plush
 						{
 							Atom atom = temp_block.pop();
 
-							if (atom == second_genome[0])
-								atom.instruction = temp_first_genome[0].instruction;
+							if (atom == second_genome.bottom())
+								atom.instruction = temp_first_genome.bottom().instruction;
 
 							if (temp_block.subst(temp_first_genome, second_genome))
 								found = true;
@@ -1010,9 +1010,9 @@ namespace Plush
 							modified_block.push(modified_block_copy);
 						}
 
-						else if (temp_block[0].like(second_genome[0]))
+						else if (temp_block.bottom().like(second_genome.bottom()))
 						{
-							temp_block[0].instruction = temp_first_genome[0].instruction;
+							temp_block.bottom().instruction = temp_first_genome.bottom().instruction;
 							modified_block.push(temp_block);
 							found = true;
 						}

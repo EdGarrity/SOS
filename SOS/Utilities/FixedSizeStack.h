@@ -34,41 +34,35 @@ namespace Utilities
 		typedef typename std::array<T, N>::const_reference const_reference;
 		typedef typename std::array<T, N>::size_type size_type;
 
+		inline reference bottom()
+		{
+			if (top_ == 0)
+			{
+				std::stringstream error_message;
+				error_message << "Utilities::FixedSizeStack::bottom() - Stack empty.";
+
+				throw std::underflow_error(error_message.str());
+			}
+
+			return stack_[0];
+		}
+
 		// Initializes stack
 		inline void clear()
 		{
 			top_ = 0;
 		};
 
-		// Returns constant reference to the top element in the stack. 
-		inline const_reference top() const
+		// Returns a reference to the underlying container
+		inline std::array<T, N>& container()
 		{
-			if (top_ == 0)
-				throw;
-
-			return stack_[top_ - 1];
+			return stack_;
 		}
 
-		// Returns reference to the top element in the stack. 
-		inline reference top()
+		// Checks if the underlying container has no elements
+		inline bool empty() const
 		{
-			if (top_ == 0)
-			{
-				std::stringstream error_message;
-				error_message << "Utilities::FixedSizeStack::top() - Stack empty.";
-
-				throw std::underflow_error(error_message.str());
-			}
-
-			return stack_[top_ - 1];
-		}
-
-		inline reference bottom()
-		{
-			if (top_ == 0)
-				throw;
-
-			return stack_[0];
+			return top_ == 0;
 		}
 
 		inline const_reference operator [] (int index) const
@@ -81,23 +75,30 @@ namespace Utilities
 			return stack_[index];
 		}
 
-		// Checks if the underlying container has no elements
-		inline bool empty() const
+		// Removes the top element from the stack
+		inline void pop()
 		{
-			return top_ == 0;
-		}
+			if (top_ == 0)
+			{
+				std::stringstream error_message;
+				error_message << "Utilities::FixedSizeStack::pop() - Stack empty.";
 
-		// Returns the number of elements in the underlying container
-		inline size_type size() const
-		{
-			return top_;
+				throw std::underflow_error(error_message.str());
+			}
+
+			top_--;
 		}
 
 		// Pushes the given element value to the top of the stack.
 		inline void push(const value_type& value)
 		{
 			if (top_ >= N)
-				throw;
+			{
+				std::stringstream error_message;
+				error_message << "Utilities::FixedSizeStack::push() - Stack overflow.";
+
+				throw std::overflow_error(error_message.str());
+			}
 
 			stack_[top_] = value;
 			top_++;
@@ -107,7 +108,12 @@ namespace Utilities
 		inline void push(value_type&& value)
 		{
 			if (top_ >= N)
-				throw;
+			{
+				std::stringstream error_message;
+				error_message << "Utilities::FixedSizeStack::push() - Stack overflow.";
+
+				throw std::overflow_error(error_message.str());
+			}
 
 			stack_[top_] = value;
 			top_++;
@@ -135,7 +141,12 @@ namespace Utilities
 		inline void shove(FixedSizeStack<T>& other, int n)
 		{
 			if ((top_ + other.size()) >= N)
-				throw;
+			{
+				std::stringstream error_message;
+				error_message << "Utilities::FixedSizeStack::shove() - Stack overflow.";
+
+				throw std::overflow_error(error_message.str());
+			}
 
 			n = (n < 0) ? 0 : n;
 			n = (n > top_) ? top_ : n;
@@ -150,22 +161,46 @@ namespace Utilities
 			top_ += other.size();
 		}
 
-		// Removes the top element from the stack
-		inline void pop()
+		// Returns the number of elements in the underlying container
+		inline size_type size() const
+		{
+			return top_;
+		}
+
+		virtual unsigned int split(Utilities::FixedSizeStack<T> &left_half, 
+			Utilities::FixedSizeStack<T> &right_half, 
+			unsigned int split_position) 
+		{ 
+			return 0; 
+		};
+
+		// Returns constant reference to the top element in the stack. 
+		inline const_reference top() const
 		{
 			if (top_ == 0)
-				throw;
+			{
+				std::stringstream error_message;
+				error_message << "Utilities::FixedSizeStack::top() - Stack empty.";
 
-			top_--;
+				throw std::underflow_error(error_message.str());
+			}
+
+			return stack_[top_ - 1];
 		}
 
-		// Returns a reference to the underlying container
-		inline std::array<T, N>& container()
+		// Returns reference to the top element in the stack. 
+		inline reference top()
 		{
-			return stack_;
-		}
+			if (top_ == 0)
+			{
+				std::stringstream error_message;
+				error_message << "Utilities::FixedSizeStack::top() - Stack empty.";
 
-		virtual unsigned int split(Utilities::FixedSizeStack<T> &left_half, Utilities::FixedSizeStack<T> &right_half, unsigned int split_position) { return 0; };
+				throw std::underflow_error(error_message.str());
+			}
+
+			return stack_[top_ - 1];
+		}
 
 	protected:
 		// Zero-based index to the first empty slot on the stack
