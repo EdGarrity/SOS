@@ -152,6 +152,41 @@ namespace Plush
 					get_stack<T>().push(stack[n]);
 		}
 
+		template <>
+		inline void push<CodeAtom>(Utilities::FixedSizeStack<Atom> &genome)
+		{
+			//if (stack.size() > 0)
+			//	for (int n = 0; n < stack.size(); n++)
+			//		get_stack<CodeAtom>().push(stack[n]);
+
+			//Utilities::FixedSizeStack<CodeAtom>& stack = _env.get_stack<CodeAtom>();
+			//Genome<CodeAtom>& genome = dynamic_cast<Genome<CodeAtom>&>(stack);
+			//push(genome);
+
+
+			if (genome.size() > 0)
+			{
+				for (int n = 0; n < genome.size(); n++)
+				{
+					Atom atom = genome[n];
+
+					if (get_stack<CodeAtom>().size() > 0)
+					{
+						Atom top_atom = top<CodeAtom>();
+
+						if ((top_atom.instruction == "EXEC.NOOP")
+							&& (top_atom.type == Atom::AtomType::ins))
+						{
+							atom.close_parentheses += top_atom.close_parentheses;
+							get_stack<CodeAtom>().pop();
+						}
+					}
+
+					get_stack<CodeAtom>().push(atom);
+				}
+			}
+		}
+
 		template <typename T>
 		inline T pop()
 		{

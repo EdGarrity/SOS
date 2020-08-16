@@ -1278,7 +1278,7 @@ namespace Plush
 
 	unsigned code_quote(Environment & _env)
 	{
-		if (_env.has_elements<CodeAtom>(1))
+		if (_env.has_elements<ExecAtom>(1))
 		{
 			Genome<Atom> block_a;
 

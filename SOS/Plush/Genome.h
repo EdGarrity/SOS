@@ -445,23 +445,17 @@ namespace Plush
 			{
 				Atom atom = genome[n];
 
-				//if ((atom.instruction == "EXEC.NOOP")
-				//	&& (atom.type == Atom::AtomType::ins)
-				//	&& (Utilities::FixedSizeStack<T>::top_ > 0))
-				//{
-				//	Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::top_ - 1].close_parentheses += atom.close_parentheses;
-				//}
-
-				//else
-
-				Atom top_atom = Utilities::FixedSizeStack<T>::top();
-				
-				if ((top_atom.instruction == "EXEC.NOOP")
-					&& (top_atom.type == Atom::AtomType::ins)
-					&& (Utilities::FixedSizeStack<T>::top_ > 0))
+				if (Utilities::FixedSizeStack<T>::top_ > 0)
 				{
-					atom.close_parentheses += top_atom.close_parentheses;
-					Utilities::FixedSizeStack<T>::pop();
+					Atom top_atom = Utilities::FixedSizeStack<T>::top();
+
+					if ((top_atom.instruction == "EXEC.NOOP")
+						&& (top_atom.type == Atom::AtomType::ins)
+						&& (Utilities::FixedSizeStack<T>::top_ > 0))
+					{
+						atom.close_parentheses += top_atom.close_parentheses;
+						Utilities::FixedSizeStack<T>::pop();
+					}
 				}
 
 				Utilities::FixedSizeStack<T>::push(atom);
@@ -518,18 +512,24 @@ namespace Plush
 
 			//else
 
-			Atom top_atom = Utilities::FixedSizeStack<T>::top();
-			Atom atom_copy(atom);
-
-			if ((top_atom.instruction == "EXEC.NOOP")
-				&& (top_atom.type == Atom::AtomType::ins)
-				&& (Utilities::FixedSizeStack<T>::top_ > 0))
+			if (Utilities::FixedSizeStack<T>::top_ > 0)
 			{
-				atom_copy.close_parentheses += top_atom.close_parentheses;
-				Utilities::FixedSizeStack<T>::pop();
+				Atom top_atom = Utilities::FixedSizeStack<T>::top();
+				Atom atom_copy(atom);
+
+				if ((top_atom.instruction == "EXEC.NOOP")
+					&& (top_atom.type == Atom::AtomType::ins)
+					&& (Utilities::FixedSizeStack<T>::top_ > 0))
+				{
+					atom_copy.close_parentheses += top_atom.close_parentheses;
+					Utilities::FixedSizeStack<T>::pop();
+				}
+
+				Utilities::FixedSizeStack<T>::push(atom_copy);
 			}
-		
-			Utilities::FixedSizeStack<T>::push(atom_copy);
+
+			else
+				Utilities::FixedSizeStack<T>::push(atom);
 		}
 
 		// Purpose: 
