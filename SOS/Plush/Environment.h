@@ -40,8 +40,24 @@ namespace Plush
 		template<typename T>
 		unsigned int length()
 		{
+			Utilities::FixedSizeStack<T>& stack = get_stack<T>();
+			return stack.size();
+		}
+
+		template<>
+		unsigned int length<CodeAtom>()
+		{
 			Utilities::FixedSizeStack<CodeAtom>& stack = get_stack<CodeAtom>();
 			Genome<CodeAtom>& genome = dynamic_cast<Genome<CodeAtom>&>(stack);
+
+			return genome.number_of_blocks();
+		}
+
+		template<>
+		unsigned int length<ExecAtom>()
+		{
+			Utilities::FixedSizeStack<ExecAtom>& stack = get_stack<ExecAtom>();
+			Genome<ExecAtom>& genome = dynamic_cast<Genome<ExecAtom>&>(stack);
 
 			return genome.number_of_blocks();
 		}
