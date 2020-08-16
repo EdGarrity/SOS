@@ -62,43 +62,6 @@ namespace Plush
 			return genome.number_of_blocks();
 		}
 
-		// Obsolete.  Use Genome.length() instead.
-		template <typename T>
-		unsigned int NumberOfBlocks(unsigned int block_level)
-		{
-			Utilities::FixedSizeStack<T> &stack = get_stack<T>();
-
-			// Get count of sub-blocks
-			int number_of_blocks = 0;
-			int n = stack.size() - 1;
-
-			do
-			{
-				int blocks_open = block_level;
-
-				for (; n >= 0; n--)
-				{
-					Plush::Atom atom = stack[n];
-
-					int closing = atom.close_parentheses - Plush::Func2BlockWantsMap[atom.instruction];
-
-					if ((closing > 0) && (blocks_open == 0))
-						number_of_blocks += atom.close_parentheses;
-
-					blocks_open -= closing;
-					blocks_open = (blocks_open > 0) ? blocks_open : 0;
-				};
-			} while (n >= 0);
-
-			return number_of_blocks;
-		}
-
-		/* Operations */
-		//template <typename T> inline Utilities::FixedSizeStack<T> &get_stack() 
-		//{ 
-		//	throw std::runtime_error("push() function not supported for Atom Genomes");
-		//};
-
 		template <typename T> inline Utilities::FixedSizeStack<T> &get_stack() { }
 		template <> inline Utilities::FixedSizeStack<ExecAtom> &get_stack()
 		{
