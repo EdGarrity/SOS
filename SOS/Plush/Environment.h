@@ -97,31 +97,12 @@ namespace Plush
 			get_stack<T>().push(value);
 		}
 
-		inline void push(Genome<class CodeAtom>& stack)
+		inline void push(Genome<class CodeAtom>& genome)
 		{
-			if (stack.size() > 0)
-				for (int n = 0; n < stack.size(); n++)
-					get_stack<CodeAtom>().push(stack[n]);
-		}
+			//if (stack.size() > 0)
+			//	for (int n = 0; n < stack.size(); n++)
+			//		get_stack<CodeAtom>().push(stack[n]);
 
-		inline void push(Genome<class ExecAtom>& stack)
-		{
-			if (stack.size() > 0)
-				for (int n = 0; n < stack.size(); n++)
-					get_stack<ExecAtom>().push(stack[n]);
-		}
-
-		template <class T>
-		inline void push(Utilities::FixedSizeStack<Atom> &stack)
-		{
-			if (stack.size() > 0)
-				for (int n = 0; n < stack.size(); n++)
-					get_stack<T>().push(stack[n]);
-		}
-
-		template <>
-		inline void push<CodeAtom>(Utilities::FixedSizeStack<Atom> &genome)
-		{
 			if (genome.size() > 0)
 			{
 				for (int n = 0; n < genome.size(); n++)
@@ -145,9 +126,11 @@ namespace Plush
 			}
 		}
 
-		template <>
-		inline void push<ExecAtom>(Utilities::FixedSizeStack<Atom> &genome)
+		inline void push(Genome<class ExecAtom>& genome)
 		{
+			//if (stack.size() > 0)
+			//	for (int n = 0; n < stack.size(); n++)
+			//		get_stack<ExecAtom>().push(stack[n]);
 			if (genome.size() > 0)
 			{
 				for (int n = 0; n < genome.size(); n++)
@@ -171,6 +154,72 @@ namespace Plush
 			}
 		}
 
+		template <class T>
+		inline void push(Utilities::FixedSizeStack<Atom> &stack)
+		{
+			if (stack.size() > 0)
+				for (int n = 0; n < stack.size(); n++)
+					get_stack<T>().push(stack[n]);
+		}
+
+		template <>
+		inline void push<CodeAtom>(Utilities::FixedSizeStack<Atom> &stack)
+		{
+			Genome<CodeAtom>& genome = dynamic_cast<Genome<CodeAtom>&>(stack);
+			push(genome);
+
+			//if (genome.size() > 0)
+			//{
+			//	for (int n = 0; n < genome.size(); n++)
+			//	{
+			//		Atom atom = genome[n];
+
+			//		if (get_stack<CodeAtom>().size() > 0)
+			//		{
+			//			Atom top_atom = top<CodeAtom>();
+
+			//			if ((top_atom.instruction == "EXEC.NOOP")
+			//				&& (top_atom.type == Atom::AtomType::ins))
+			//			{
+			//				atom.close_parentheses += top_atom.close_parentheses;
+			//				get_stack<CodeAtom>().pop();
+			//			}
+			//		}
+
+			//		get_stack<CodeAtom>().push(atom);
+			//	}
+			//}
+		}
+
+		template <>
+		inline void push<ExecAtom>(Utilities::FixedSizeStack<Atom> &stack)
+		{
+			Genome<CodeAtom>& genome = dynamic_cast<Genome<CodeAtom>&>(stack);
+			push(genome);
+
+			//if (genome.size() > 0)
+			//{
+			//	for (int n = 0; n < genome.size(); n++)
+			//	{
+			//		Atom atom = genome[n];
+
+			//		if (get_stack<ExecAtom>().size() > 0)
+			//		{
+			//			Atom top_atom = top<ExecAtom>();
+
+			//			if ((top_atom.instruction == "EXEC.NOOP")
+			//				&& (top_atom.type == Atom::AtomType::ins))
+			//			{
+			//				atom.close_parentheses += top_atom.close_parentheses;
+			//				get_stack<ExecAtom>().pop();
+			//			}
+			//		}
+
+			//		get_stack<ExecAtom>().push(atom);
+			//	}
+			//}
+		}
+
 		template <typename T>
 		inline T pop()
 		{
@@ -184,6 +233,20 @@ namespace Plush
 		{
 			Utilities::FixedSizeStack<T>& stack = get_stack<T>();
 			Genome<T>& genome = dynamic_cast<Genome<T>&>(stack);
+
+			return genome.pop_genome(other_stack);
+		}
+
+		template <class T>
+		inline unsigned int pop(Genome<T> &other_stack)
+		{
+			Utilities::FixedSizeStack<T>& stack = get_stack<T>();
+			Genome<T>& genome = dynamic_cast<Genome<T>&>(stack);
+//
+////			Utilities::FixedSizeStack<T>& stack2 = other_stack.get_stack();
+//			Genome<Atom>& other_genome = dynamic_cast<Genome<Atom>&>(other_stack);
+
+			Genome<Atom>& other_genome = other_stack;
 
 			return genome.pop_genome(other_stack);
 		}

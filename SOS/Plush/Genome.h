@@ -1320,5 +1320,10 @@ namespace Plush
 
 			return found;
 		}
+
+		//Utilities::FixedSizeStack<T>& get_stack()
+		//{
+		//	return Utilities::FixedSizeStack<T>::stack_;
+		//}
 	};
 }

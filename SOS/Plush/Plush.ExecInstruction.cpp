@@ -487,37 +487,59 @@ namespace Plush
 	{
 		if (_env.has_elements<CodeAtom>(2))
 		{
-			Genome<Atom> block_a;
-			Genome<Atom> block_b;
+			Genome<CodeAtom> block_a;
+			Genome<CodeAtom> block_b;
 
-			int unmatched_a = _env.pop<CodeAtom>(block_a);
-			int unmatched_b = _env.pop<CodeAtom>(block_b);
+			_env.pop(block_a);
+			_env.pop(block_b);
 
-			if ((block_a.size() > 0) && (block_b.size() > 0))
-			{
-				block_a.bottom().close_parentheses
-					= (block_a.bottom().close_parentheses > 0)
-					? block_a.bottom().close_parentheses - 1
-					: block_a.bottom().close_parentheses;
+			block_a.bottom().close_parentheses
+				= (block_a.bottom().close_parentheses > 0)
+				? block_a.bottom().close_parentheses - 1
+				: block_a.bottom().close_parentheses;
 
-				block_b.bottom().close_parentheses
-					= (block_b.bottom().close_parentheses == 0)
-					? 1 
-					: block_b.bottom().close_parentheses;
+			block_b.bottom().close_parentheses
+				= (block_b.bottom().close_parentheses == 0)
+				? 1 
+				: block_b.bottom().close_parentheses;
 
-				_env.push<CodeAtom>(block_b);
-				_env.push<CodeAtom>(block_a);
-			}
-
-			else
-			{
-				if (block_a.size() > 0)
-					_env.push<CodeAtom>(block_a);
-
-				if (block_b.size() > 0)
-					_env.push<CodeAtom>(block_b);
-			}
+			_env.push(block_b);
+			_env.push(block_a);
 		}
+
+		//if (_env.has_elements<CodeAtom>(2))
+		//{
+		//	Genome<Atom> block_a;
+		//	Genome<Atom> block_b;
+
+		//	int unmatched_a = _env.pop<CodeAtom>(block_a);
+		//	int unmatched_b = _env.pop<CodeAtom>(block_b);
+
+		//	if ((block_a.size() > 0) && (block_b.size() > 0))
+		//	{
+		//		block_a.bottom().close_parentheses
+		//			= (block_a.bottom().close_parentheses > 0)
+		//			? block_a.bottom().close_parentheses - 1
+		//			: block_a.bottom().close_parentheses;
+
+		//		block_b.bottom().close_parentheses
+		//			= (block_b.bottom().close_parentheses == 0)
+		//			? 1
+		//			: block_b.bottom().close_parentheses;
+
+		//		_env.push<CodeAtom>(block_b);
+		//		_env.push<CodeAtom>(block_a);
+		//	}
+
+		//	else
+		//	{
+		//		if (block_a.size() > 0)
+		//			_env.push<CodeAtom>(block_a);
+
+		//		if (block_b.size() > 0)
+		//			_env.push<CodeAtom>(block_b);
+		//	}
+		//}
 
 		return 1;
 	}
