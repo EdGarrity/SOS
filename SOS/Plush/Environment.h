@@ -255,51 +255,5 @@ namespace Plush
 			else
 				throw;
 		}
-
-		//template <typename T> inline int &peek_index(unsigned index, 
-		//	unsigned open_blocks, 
-		//	Utilities::FixedSizeStack<Atom> &stack)
-		//{
-		//	int i = 0;
-		//	int blocks_open = open_blocks;
-
-		//	stack.clear();
-
-		//	for (int n = 0; n < index + 1; n++)
-		//	{
-		//		if (blocks_open == 0)
-		//		{
-		//			Atom atom = peek_index<T>(n);
-
-		//			if (n == index)
-		//				stack.push(atom);
-
-		//			blocks_open += Func2BlockWantsMap[atom.instruction];
-		//			blocks_open -= atom.close_parentheses;
-
-		//			i++;
-		//		}
-
-		//		else
-		//		{
-		//			while ((blocks_open > 0) && (i < get_stack<T>().size()))
-		//			{
-		//				Atom atom = peek_index<T>(n);
-
-		//				if (n == index)
-		//					stack.push(atom);
-
-		//				blocks_open += Func2BlockWantsMap[atom.instruction];
-		//				blocks_open -= atom.close_parentheses;
-
-		//				i++;
-		//			};
-		//		}
-		//	}
-
-		//	blocks_open *= -1;
-
-		//	return blocks_open; // Return number of unmatched close parenthesis.
-		//}
 	};
 }

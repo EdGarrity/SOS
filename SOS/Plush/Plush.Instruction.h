@@ -22,14 +22,6 @@ namespace Plush
 	template <>
 	inline unsigned dup<CodeAtom>(Environment & _env)
 	{
-		//Utilities::FixedSizeStack<Atom> stack;
-
-		//if (_env.has_elements<CodeAtom>(1))
-		//{
-		//	_env.top<CodeAtom>(stack, 1);
-		//	_env.push<CodeAtom>(stack);
-		//}
-
 		Genome<Atom> stack;
 
 		if (_env.has_elements<CodeAtom>(1))
@@ -111,7 +103,6 @@ namespace Plush
 	{
 		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
 		{
-			int target_extra_blocks = 0;
 			int index = _env.pop<long>();	// index
 
 			if (index > 0)
@@ -132,24 +123,10 @@ namespace Plush
 
 				while (_env.is_empty<CodeAtom>() == false)
 				{
-					int extra_blocks = _env.pop<CodeAtom>(extracted_block);
+					_env.pop<CodeAtom>(extracted_block);
 
 					if (n == index)
-					{
-						target_extra_blocks = extra_blocks;
-						extracted_block.bottom().close_parentheses -= extra_blocks;
 						target_block.push(extracted_block);
-
-						if (extra_blocks > 0)
-						{
-							std::string noop = "{:instruction EXEC.NOOP :close " + std::to_string(extra_blocks) + "}";
-
-							Genome<Atom> modified_genome_copy(modified_genome);
-							modified_genome.clear();
-							modified_genome.push(noop);
-							modified_genome.push(modified_genome_copy);
-						}
-					}
 
 					else
 					{
@@ -161,16 +138,6 @@ namespace Plush
 
 					n++;
 				}
-
-//				modified_genome[0].close_parentheses += target_extra_blocks;
-
-				//while (modified_genome.empty() != false)
-				//{
-				//	Genome<Atom> a_genome;
-
-				//	modified_genome.pop_genome(a_genome);
-				//	_env.push<CodeAtom>(a_genome);
-				//}
 
 				_env.push<CodeAtom>(modified_genome);
 				_env.push<CodeAtom>(target_block);
@@ -187,86 +154,129 @@ namespace Plush
 		{
 			int index = _env.pop<long>();	// index
 
-			Utilities::FixedSizeStack<ExecAtom> &stack = _env.get_stack<ExecAtom>();
-			Utilities::FixedSizeStack<Atom> extracted_block;
-			Utilities::FixedSizeStack<Atom> block_without_extracted;
-
 			if (index > 0)
 			{
+				Genome<Atom> extracted_block;
+				Genome<Atom> target_block;
+				Genome<Atom> modified_genome;
+
 				// Get count of sub-blocks
-				int number_of_blocks = 0;
-				int n = stack.size() - 1;
+				Utilities::FixedSizeStack<ExecAtom>& stack = _env.get_stack<ExecAtom>();
+				Genome<ExecAtom>& genome = dynamic_cast<Genome<ExecAtom>&>(stack);
 
-				do
-				{
-					int blocks_open = 0;
-
-					for (; n >= 0; n--)
-					{
-						Plush::Atom atom = stack[n];
-
-						blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
-						blocks_open -= atom.close_parentheses;
-						blocks_open = (blocks_open > 0) ? blocks_open : 0;
-
-						if (atom.close_parentheses > 0)
-						{
-							if (blocks_open > 0)
-								blocks_open++;
-
-							else
-							{
-								number_of_blocks++;
-								blocks_open = 1;
-							}
-						}
-					};
-				} while (n >= 0);
+				int number_of_blocks = genome.number_of_blocks();
 
 				// If the index is larger than the size of the specified stack, then the deepest element is `yank`ed up to the top.
 				index = (index > (number_of_blocks - 1)) ? (number_of_blocks - 1) : index;
+				int n = 0;
 
-				// Get the target sub-block
-				n = stack.size() - 1;
-				int block_number = 0;
-
-				do
+				while (_env.is_empty<ExecAtom>() == false)
 				{
-					int blocks_open = 0;
+					_env.pop<ExecAtom>(extracted_block);
 
-					for (; n >= 0; n--)
+					if (n == index)
+						target_block.push(extracted_block);
+
+					else
 					{
-						Plush::Atom atom = stack[n];
+						Genome<Atom> modified_genome_copy(modified_genome);
+						modified_genome.clear();
+						modified_genome.push(extracted_block);
+						modified_genome.push(modified_genome_copy);
+					}
 
-						if (block_number == index)
-							extracted_block.push(atom);
+					n++;
+				}
 
-						else
-							block_without_extracted.push(atom);
-
-						blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
-						blocks_open -= atom.close_parentheses;
-						blocks_open = (blocks_open > 0) ? blocks_open : 0;
-
-						if (atom.close_parentheses > 0)
-						{
-							if (blocks_open > 0)
-								blocks_open++;
-
-							else
-							{
-								block_number++;
-								blocks_open = 1;
-							}
-						}
-					};
-				} while (n >= 0);
-
-				_env.get_stack<ExecAtom>().clear();
-				_env.push<ExecAtom>(block_without_extracted);
-				_env.push<ExecAtom>(extracted_block);
+				_env.push<ExecAtom>(modified_genome);
+				_env.push<ExecAtom>(target_block);
 			}
 		}
+
+		//if ((_env.has_elements<long>(1)) && (_env.has_elements<ExecAtom>(1)))
+		//{
+		//	int index = _env.pop<long>();	// index
+
+		//	Utilities::FixedSizeStack<ExecAtom> &stack = _env.get_stack<ExecAtom>();
+		//	Utilities::FixedSizeStack<Atom> extracted_block;
+		//	Utilities::FixedSizeStack<Atom> block_without_extracted;
+
+		//	if (index > 0)
+		//	{
+		//		// Get count of sub-blocks
+		//		int number_of_blocks = 0;
+		//		int n = stack.size() - 1;
+
+		//		do
+		//		{
+		//			int blocks_open = 0;
+
+		//			for (; n >= 0; n--)
+		//			{
+		//				Plush::Atom atom = stack[n];
+
+		//				blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+		//				blocks_open -= atom.close_parentheses;
+		//				blocks_open = (blocks_open > 0) ? blocks_open : 0;
+
+		//				if (atom.close_parentheses > 0)
+		//				{
+		//					if (blocks_open > 0)
+		//						blocks_open++;
+
+		//					else
+		//					{
+		//						number_of_blocks++;
+		//						blocks_open = 1;
+		//					}
+		//				}
+		//			};
+		//		} while (n >= 0);
+
+		//		// If the index is larger than the size of the specified stack, then the deepest element is `yank`ed up to the top.
+		//		index = (index > (number_of_blocks - 1)) ? (number_of_blocks - 1) : index;
+
+		//		// Get the target sub-block
+		//		n = stack.size() - 1;
+		//		int block_number = 0;
+
+		//		do
+		//		{
+		//			int blocks_open = 0;
+
+		//			for (; n >= 0; n--)
+		//			{
+		//				Plush::Atom atom = stack[n];
+
+		//				if (block_number == index)
+		//					extracted_block.push(atom);
+
+		//				else
+		//					block_without_extracted.push(atom);
+
+		//				blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
+		//				blocks_open -= atom.close_parentheses;
+		//				blocks_open = (blocks_open > 0) ? blocks_open : 0;
+
+		//				if (atom.close_parentheses > 0)
+		//				{
+		//					if (blocks_open > 0)
+		//						blocks_open++;
+
+		//					else
+		//					{
+		//						block_number++;
+		//						blocks_open = 1;
+		//					}
+		//				}
+		//			};
+		//		} while (n >= 0);
+
+		//		_env.get_stack<ExecAtom>().clear();
+		//		_env.push<ExecAtom>(block_without_extracted);
+		//		_env.push<ExecAtom>(extracted_block);
+		//	}
+		//}
 
 		return 1;
 	}
