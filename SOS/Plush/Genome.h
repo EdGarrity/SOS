@@ -55,12 +55,12 @@ namespace Plush
 			return Utilities::FixedSizeStack<T>::stack_[index];
 		}
 
-		inline bool operator==(Genome<Atom> &other_genome) const
+		inline bool operator==(Genome<T> &other_genome) const
 		{
 			return comp(other_genome);
 		}
 
-		inline bool operator!=(Genome<Atom> &other_genome) const
+		inline bool operator!=(Genome<T> &other_genome) const
 		{
 			return !comp(other_genome);
 		}
@@ -363,7 +363,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline void push(Genome<Atom> &genome)
+		inline void push(Genome<T> &genome)
 		{
 			unsigned int item_number = 0;
 			unsigned int wanted_blocks = 0;
@@ -409,7 +409,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline void push_back(Genome<Atom> &genome)
+		inline void push_back(Genome<T> &genome)
 		{
 			Utilities::FixedSizeStack<T>::shove(genome, Utilities::FixedSizeStack<T>::size());
 		}
@@ -435,7 +435,8 @@ namespace Plush
 		{
 			if (Utilities::FixedSizeStack<T>::top_ > 0)
 			{
-				Atom top_atom = Utilities::FixedSizeStack<T>::top();
+//				Atom top_atom = Utilities::FixedSizeStack<T>::top();
+				Atom top_atom = Genome<T>::top();
 				Atom atom_copy(atom);
 
 				if ((top_atom.instruction == "EXEC.NOOP")
@@ -501,7 +502,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		unsigned int pop_genome(Genome<Atom> &poped_item)
+		inline unsigned int pop_genome(Genome<T> &poped_item)
 		{
 			unsigned int item_number = 0;
 			unsigned int wanted_blocks = 0;
@@ -602,7 +603,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		unsigned int pop_item(Genome<Atom> &poped_item)
+		unsigned int pop_item(Genome<T> &poped_item)
 		{
 			unsigned int item_number = 0;
 			unsigned int wanted_blocks = 0;
@@ -710,7 +711,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		unsigned int top(Genome<Atom> &poped_item)
+		unsigned int top(Genome<T> &poped_item)
 		{
 			unsigned int item_number = 0;
 			unsigned int wanted_blocks = 0;
@@ -789,7 +790,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		bool comp(Genome<Atom> &other_genome) const
+		bool comp(Genome<T> &other_genome) const
 		{
 			int size_A = Utilities::FixedSizeStack<T>::size();
 			int size_B = other_genome.size();
@@ -825,23 +826,23 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		bool subst(Genome<Atom> &first_genome, Genome<Atom> &second_genome)
+		bool subst(Genome<T> &first_genome, Genome<T> &second_genome)
 		{
 			bool found = false;
-			Genome<Atom> modified_block;
-			Genome<Atom> original_genome(this);
+			Genome<T> modified_block;
+			Genome<T> original_genome(this);
 
 			if ((first_genome.size() ==1) &&(second_genome.size() == 1))
 			{
 				while (Utilities::FixedSizeStack<T>::empty() == false)
 				{
-					Genome<Atom> temp_block;
+					Genome<T> temp_block;
 
 					pop_item(temp_block);
 
 					if (temp_block == second_genome)
 					{
-						Genome<Atom> modified_block_copy(modified_block);
+						Genome<T> modified_block_copy(modified_block);
 
 						modified_block.clear();
 
@@ -862,7 +863,7 @@ namespace Plush
 							if (temp_block.subst(first_genome, second_genome))
 								found = true;
 
-							Genome<Atom> modified_block_copy(modified_block);
+							Genome<T> modified_block_copy(modified_block);
 
 							modified_block.clear();
 							modified_block.push(temp_block);
@@ -887,8 +888,8 @@ namespace Plush
 			{
 				while (Utilities::FixedSizeStack<T>::empty() == false)
 				{
-					Genome<Atom> temp_block;
-					Genome<Atom> temp_first_genome = first_genome;
+					Genome<T> temp_block;
+					Genome<T> temp_first_genome = first_genome;
 
 					pop_item(temp_block);
 
@@ -920,7 +921,7 @@ namespace Plush
 							if (temp_block.subst(temp_first_genome, second_genome))
 								found = true;
 
-							Genome<Atom> modified_block_copy(modified_block);
+							Genome<T> modified_block_copy(modified_block);
 
 							modified_block.clear();
 							modified_block.push(temp_block);
@@ -967,11 +968,11 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		int contains(Genome<Atom> &other_genome)
+		int contains(Genome<T> &other_genome)
 		{
 			bool found = false;
 			int position = -1;
-			Genome<Atom> original_genome(this);
+			Genome<T> original_genome(this);
 
 			if (Utilities::FixedSizeStack<T>::size() < other_genome.size())
 				return -1;
@@ -981,7 +982,7 @@ namespace Plush
 			{
 				while (Utilities::FixedSizeStack<T>::empty() == false)
 				{
-					Genome<Atom> temp_block;
+					Genome<T> temp_block;
 
 					pop_item(temp_block);	// May need to push back empty blocks if there were extra blocks returned by pop().
 
@@ -997,7 +998,7 @@ namespace Plush
 					{
 						if (temp_block.size() > 1)
 						{
-							Atom atom = temp_block.pop();
+							T atom = temp_block.pop();
 
 							if (temp_block.contains(other_genome) >= 0)
 							{
@@ -1022,7 +1023,7 @@ namespace Plush
 			{
 				while (Utilities::FixedSizeStack<T>::empty() == false)
 				{
-					Genome<Atom> temp_block;
+					Genome<T> temp_block;
 
 					pop_item(temp_block);
 
@@ -1047,7 +1048,7 @@ namespace Plush
 					{
 						if (temp_block.size() > 1)
 						{
-							Atom atom = temp_block.pop();
+							T atom = temp_block.pop();
 
 							if (temp_block.contains(other_genome) >= 0)
 							{
@@ -1101,13 +1102,13 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		bool container(Genome<Atom> &other_genome, Genome<Atom> &container)
+		bool container(Genome<T> &other_genome, Genome<T> &container)
 		{
 			bool found = false;
-			Genome<Atom> original_genome(this);
-			Genome<Atom> container_block;
-			Genome<Atom> container_block_canidate;
-			Genome<Atom> other_block;
+			Genome<T> original_genome(this);
+			Genome<T> container_block;
+			Genome<T> container_block_canidate;
+			Genome<T> other_block;
 
 			//container.clear();
 			//container.push(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
@@ -1235,12 +1236,6 @@ namespace Plush
 			push(original_genome);
 
 			return found;
-		}
-
-		template <class T>
-		inline Genome<Atom> & get_base(Genome<T> &genome)
-		{
-			return dynamic_cast<Genome<Atom>&>(genome);
 		}
 	};
 }
