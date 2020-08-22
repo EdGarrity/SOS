@@ -246,9 +246,12 @@ namespace Plush
 ////			Utilities::FixedSizeStack<T>& stack2 = other_stack.get_stack();
 //			Genome<Atom>& other_genome = dynamic_cast<Genome<Atom>&>(other_stack);
 
-			Genome<Atom>& other_genome = other_stack;
+//			Genome<Atom>& other_genome = other_stack;
 
-			return genome.pop_genome(other_stack);
+//			return genome.pop_genome(other_stack);
+//			return genome.pop_genome(genome);
+
+			return genome.pop_genome(genome.get_base(other_stack));
 		}
 
 		template <typename T>

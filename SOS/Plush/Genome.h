@@ -24,26 +24,8 @@ namespace Plush
 	extern Func2BlockWantsMapType Func2BlockWantsMap;
 
 	template <class T, size_t N = domain::argmap::maximum_stack_size>
-//	template <class T>
 	class Genome : public Utilities::FixedSizeStack<T>
 	{
-	private:
-//		Utilities::FixedSizeStack<Atom> *stack_;
-
-		// Plush genome
-		//std::vector<struct Atom> genome_atoms_;
-		//std::string genome_string_;
-
-		// Push program
-		//std::string program_;
-		//unsigned int points_;
-
-		// Help functions
-//		void ingest_plush_genome(std::string _genome_str);
-////		void translate_plush_genome_to_push_program();
-//		unsigned int count_points();
-//		void convert_genome_to_string();
-
 	public:
 		Genome()
 		{
@@ -57,55 +39,6 @@ namespace Plush
 			for (int n = 0; n < Utilities::FixedSizeStack<T>::top_; n++)
 				Utilities::FixedSizeStack<T>::stack_[n] = other->stack_[n];
 		}
-
-		////Genome(Utilities::FixedSizeStack<Atom> *stack);
-		////Genome(const Genome &other_genome);
-		////Genome(std::string _genome_string);
-		//Genome(Utilities::FixedSizeStack<Atom> &atoms);
-
-		//void set(std::string _genome_string);
-		//void set(std::vector<struct Atom> & _genome_atoms);
-
-		//void clear()
-		//{
-		//	genome_atoms_.clear();
-		//	genome_string_.clear();
-		//	program_.clear();
-		//	points_ = 0;
-		//}
-
-		//const std::string to_string()
-		//{
-		//	if (genome_string_.empty())
-		//		convert_genome_to_string();
-
-		//	return genome_string_;
-		//}
-
-		//const unsigned int size()
-		//{
-		//	return genome_atoms_.size();
-		//}
-
-		//const std::vector<struct Atom> get_atoms()
-		//{
-		//	return genome_atoms_;
-		//}
-
-		//const std::string get_program()
-		//{
-		//	if (program_.empty())
-		//		translate_plush_genome_to_push_program();
-
-		//	return program_;
-		//}
-
-		//const unsigned int get_points()
-		//{
-		//	return points_;
-		//}
-
-//		unsigned int length();
 
 		typedef typename std::array<T, N>::value_type value_type;
 		typedef typename std::array<T, N>::reference reference;
@@ -175,10 +108,7 @@ namespace Plush
 					n--;
 				}
 				else
-				{
 					atom = Plush::Atom("{:instruction EXEC.NOOP :close 1}");
-					//					extra_blocks--;
-				}
 
 				int closing = atom.close_parentheses - Func2BlockWantsMap[atom.instruction];
 
@@ -503,15 +433,6 @@ namespace Plush
 		//
 		inline void push(const value_type& atom)
 		{
-			//if ((atom.instruction == "EXEC.NOOP")
-			//	&& (atom.type == Atom::AtomType::ins)
-			//	&& (Utilities::FixedSizeStack<T>::top_ > 0))
-			//{
-			//	Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::top_ - 1].close_parentheses += atom.close_parentheses;
-			//}
-
-			//else
-
 			if (Utilities::FixedSizeStack<T>::top_ > 0)
 			{
 				Atom top_atom = Utilities::FixedSizeStack<T>::top();
@@ -723,10 +644,7 @@ namespace Plush
 						wanted_blocks--;
 
 					if ((wanted_blocks == 0) && (wanted_stack.size() == 1))
-					{
-						//extra_blocks = (closing > 1) ? (closing - 1) : (0);
 						break;
-					}
 				}
 
 				if (wanted_blocks == 0)
@@ -1207,7 +1125,6 @@ namespace Plush
 
 					pop_item(other_block);	// May need to push back empty blocks if there were extra blocks returned by pop().
 
-//					if ((other_block == other_genome) && (container_block_canidate.empty() == false))
 					if (other_block == other_genome)
 					{
 						Atom atom = container.pop();
@@ -1270,7 +1187,6 @@ namespace Plush
 						other_block.bottom().close_parentheses = other_genome.bottom().close_parentheses;
 					}
 
-//					if ((other_block == other_genome) && (container_block_canidate.empty() == false))
 					if (other_block == other_genome)
 					{
 						Atom atom = container.pop();
@@ -1321,9 +1237,10 @@ namespace Plush
 			return found;
 		}
 
-		//Utilities::FixedSizeStack<T>& get_stack()
-		//{
-		//	return Utilities::FixedSizeStack<T>::stack_;
-		//}
+		template <class T>
+		inline Genome<Atom> & get_base(Genome<T> &genome)
+		{
+			return dynamic_cast<Genome<Atom>&>(genome);
+		}
 	};
 }
