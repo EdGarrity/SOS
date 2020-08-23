@@ -96,11 +96,11 @@ namespace Plush
 
 		/* pushing and popping */
 
-		template <typename T>
-		inline void push(T value)
-		{
-			get_stack<T>().push(value);
-		}
+		//template <typename T>
+		//inline void push(T& value)
+		//{
+		//	get_stack<T>().push(value);
+		//}
 
 		// Check if all calls to this function should use push(Genome<T>) instead
 		//template <class T>
@@ -153,36 +153,51 @@ namespace Plush
 		//	}
 		//}
 
-		//template <class T>
-		//inline void push(Genome<class ExecAtom>& genome)
+
+
+
+
+		//template <class T> inline void push<T>(Genome<Atom>& genome) {}
+		//template <>	inline void push<CodeAtom>(Genome<Atom>& genome)
 		//{
-		//	if (genome.size() > 0)
-		//	{
-		//		for (int n = 0; n < genome.size(); n++)
-		//		{
-		//			T atom = genome[n];
-
-		//			if (get_stack<T>().size() > 0)
-		//			{
-		//				T top_atom = top<T>();
-
-		//				if ((top_atom.instruction == "EXEC.NOOP")
-		//					&& (top_atom.type == Atom::AtomType::ins))
-		//				{
-		//					atom.close_parentheses += top_atom.close_parentheses;
-		//					get_stack<T>().pop();
-		//				}
-		//			}
-
-		//			get_stack<T>().push(atom);
-		//		}
-		//	}
+		//	get_stack<CodeAtom>().push(genome);
 		//}
+		//template <> inline void push<ExecAtom>(Genome<Atom>& genome)
+		//{
+		//	get_stack<ExecAtom>().push(genome);
+		//}
+
+		template <typename T>
+		inline void push(T value)
+		{
+			get_stack<T>().push(value);
+		}
+
+		template <class T>
+		inline void push_genome(Genome<CodeAtom>& genome)
+		{
+			get_stack<T>().push_genome(genome);
+		}
+		
+		template <class T>
+		inline void push_genome(Genome<ExecAtom>& genome)
+		{
+			get_stack<T>().push_genome(genome);
+		}
+
+		inline void push(CodeAtom genome)
+		{
+			get_stack<CodeAtom>().push(genome);
+		}
+		inline void push(ExecAtom genome)
+		{
+			get_stack<ExecAtom>().push(genome);
+		}
 
 		template <typename T>
 		inline T pop()
 		{
-			T val = get_stack<T>().top();
+			T val = get_stack<T>().get_top();
 			get_stack<T>().pop();
 			return val;
 		}
@@ -190,32 +205,36 @@ namespace Plush
 		template <class T>
 		inline unsigned int pop(Genome<T> &other_stack)
 		{
-			Utilities::FixedSizeStack<T>& stack = get_stack<T>();
-			Genome<T>& genome = dynamic_cast<Genome<T>&>(stack);
+			//Utilities::FixedSizeStack<T>& stack = get_stack<T>();
+			//Genome<T>& genome = dynamic_cast<Genome<T>&>(stack);
 
-			return genome.pop_genome(other_stack);
+			//return genome.pop_genome(other_stack);
+
+			return get_stack<T>().pop_genome(other_stack);
 		}
 
 		template <typename T>
-		inline T top()
+		inline T get_top()
 		{
-			T val = get_stack<T>().top();
+			T val = get_stack<T>().get_top();
 			return val;
 		}
 
 		template <class T>
-		inline unsigned int top(Genome<T> &other_stack)
+		inline unsigned int get_top(Genome<T> &other_stack)
 		{
-			Utilities::FixedSizeStack<T>& stack = get_stack<T>();
-			Genome<T>& genome = dynamic_cast<Genome<T>&>(stack);
+			//Utilities::FixedSizeStack<T>& stack = get_stack<T>();
+			//Genome<T>& genome = dynamic_cast<Genome<T>&>(stack);
 
-			return genome.top(other_stack);
+			//return genome.top(other_stack);
+
+			return get_stack<T>().get_top(other_stack);
 		}
 
 		template <typename T>
-		inline T top(T val)
+		inline T set_top(T val)
 		{
-			get_stack<T>().top() = val;
+			get_stack<T>().get_top_ref() = val;
 			return val;
 		}
 
@@ -231,8 +250,9 @@ namespace Plush
 		template <>
 		inline bool has_elements<CodeAtom>(unsigned sz)
 		{
-			Utilities::FixedSizeStack<CodeAtom>& stack = get_stack<CodeAtom>();
-			Genome<CodeAtom>& genome = dynamic_cast<Genome<CodeAtom>&>(stack);
+//			Utilities::FixedSizeStack<CodeAtom>& stack = get_stack<CodeAtom>();
+//			Genome<CodeAtom>& genome = dynamic_cast<Genome<CodeAtom>&>(stack);
+			Genome<CodeAtom>& genome = get_stack<CodeAtom>();
 
 			if (genome.number_of_blocks() < sz)
 				return false;
@@ -244,8 +264,9 @@ namespace Plush
 		template <>
 		inline bool has_elements<ExecAtom>(unsigned sz)
 		{
-			Utilities::FixedSizeStack<ExecAtom>& stack = get_stack<ExecAtom>();
-			Genome<ExecAtom>& genome = dynamic_cast<Genome<ExecAtom>&>(stack);
+			//Utilities::FixedSizeStack<ExecAtom>& stack = get_stack<ExecAtom>();
+			//Genome<ExecAtom>& genome = dynamic_cast<Genome<ExecAtom>&>(stack);
+			Genome<ExecAtom>& genome = get_stack<ExecAtom>();
 
 			if (genome.number_of_blocks() < sz)
 				return false;

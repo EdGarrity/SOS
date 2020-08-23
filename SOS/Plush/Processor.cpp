@@ -31,8 +31,8 @@ namespace Plush
 		while (!code_stack.empty())
 //		while (!program_genome.empty())
 		{
-			env.get_stack<CodeAtom>().push(CodeAtom(code_stack.top()));
-			env.get_stack<ExecAtom>().push(ExecAtom(code_stack.top()));
+			env.get_stack<CodeAtom>().push(CodeAtom(code_stack.get_top()));
+			env.get_stack<ExecAtom>().push(ExecAtom(code_stack.get_top()));
 			code_stack.pop();
 
 			//Genome<Atom> code_block;

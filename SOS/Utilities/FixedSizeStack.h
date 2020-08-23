@@ -90,22 +90,37 @@ namespace Utilities
 		}
 
 		// Pushes the given element value to the top of the stack.
-		inline void push(const value_type& value)
-		{
-			if (top_ >= N)
-			{
-				std::stringstream error_message;
-				error_message << "Utilities::FixedSizeStack::push() - Stack overflow.";
+		//inline void push(const value_type& value)
+		//{
+		//	if (top_ >= N)
+		//	{
+		//		std::stringstream error_message;
+		//		error_message << "Utilities::FixedSizeStack::push() - Stack overflow.";
 
-				throw std::overflow_error(error_message.str());
-			}
+		//		throw std::overflow_error(error_message.str());
+		//	}
 
-			stack_[top_] = value;
-			top_++;
-		}
+		//	stack_[top_] = value;
+		//	top_++;
+		//}
 
 		// Pushes the given element value to the top of the stack.
-		inline void push(value_type&& value)
+		//inline void push(value_type&& value)
+		//{
+		//	if (top_ >= N)
+		//	{
+		//		std::stringstream error_message;
+		//		error_message << "Utilities::FixedSizeStack::push() - Stack overflow.";
+
+		//		throw std::overflow_error(error_message.str());
+		//	}
+
+		//	stack_[top_] = value;
+		//	top_++;
+		//}
+
+		// Pushes the given element value to the top of the stack.
+		inline void push(value_type value)
 		{
 			if (top_ >= N)
 			{
@@ -175,7 +190,7 @@ namespace Utilities
 		};
 
 		// Returns constant reference to the top element in the stack. 
-		inline const_reference top() const
+		inline const_reference get_top() const
 		{
 			if (top_ == 0)
 			{
@@ -189,7 +204,7 @@ namespace Utilities
 		}
 
 		// Returns reference to the top element in the stack. 
-		inline reference top()
+		inline reference get_top()
 		{
 			if (top_ == 0)
 			{

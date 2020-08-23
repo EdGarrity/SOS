@@ -8,7 +8,7 @@ namespace Plush
 	inline unsigned int_mod(Environment & _env)
 	{
 		// Check for valid parameters
-		if ((_env.has_elements<long>(2)) && (_env.top<long>() != 0.0))
+		if ((_env.has_elements<long>(2)) && (_env.get_top<long>() != 0.0))
 		{
 			long first = _env.pop<long>();
 			long second = _env.pop<long>();

@@ -60,15 +60,15 @@ namespace UnitTest
 			env.push<long>(30);
 			Assert::IsTrue(is_stack_state(env, { 10, 20, 30 }, {}, {}, {}, {}));
 
-			Assert::AreEqual<long>(env.top<long>(), 30);
+			Assert::AreEqual<long>(env.get_top<long>(), 30);
 			Assert::AreEqual<long>(env.pop<long>(), 30);
 			Assert::IsTrue(is_stack_state(env, { 10, 20 }, {}, {}, {}, {}));
 
-			Assert::AreEqual<long>(env.top<long>(), 20);
+			Assert::AreEqual<long>(env.get_top<long>(), 20);
 			Assert::AreEqual<long>(env.pop<long>(), 20);
 			Assert::IsTrue(is_stack_state(env, { 10 }, {}, {}, {}, {}));
 
-			Assert::AreEqual<long>(env.top<long>(), 10);
+			Assert::AreEqual<long>(env.get_top<long>(), 10);
 			Assert::AreEqual<long>(env.pop<long>(), 10);
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 		}
@@ -87,15 +87,15 @@ namespace UnitTest
 			env.push<double>(30.0);
 			Assert::IsTrue(is_stack_state(env, {}, { 10.0, 20.0, 30.0 }, {}, {}, {}));
 
-			Assert::AreEqual(env.top<double>(), 30.0);
+			Assert::AreEqual(env.get_top<double>(), 30.0);
 			Assert::AreEqual(env.pop<double>(), 30.0);
 			Assert::IsTrue(is_stack_state(env, {}, { 10.0, 20.0 }, {}, {}, {}));
 
-			Assert::AreEqual(env.top<double>(), 20.0);
+			Assert::AreEqual(env.get_top<double>(), 20.0);
 			Assert::AreEqual(env.pop<double>(), 20.0);
 			Assert::IsTrue(is_stack_state(env, {}, { 10.0 }, {}, {}, {}));
 
-			Assert::AreEqual(env.top<double>(), 10.0);
+			Assert::AreEqual(env.get_top<double>(), 10.0);
 			Assert::AreEqual(env.pop<double>(), 10.0);
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 		}
@@ -114,15 +114,15 @@ namespace UnitTest
 			env.push<bool>(true);
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true, false, true }, {}, {}));
 
-			Assert::AreEqual(env.top<bool>(), true);
+			Assert::AreEqual(env.get_top<bool>(), true);
 			Assert::AreEqual(env.pop<bool>(), true);
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true, false }, {}, {}));
 
-			Assert::AreEqual(env.top<bool>(), false);
+			Assert::AreEqual(env.get_top<bool>(), false);
 			Assert::AreEqual(env.pop<bool>(), false);
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {}, {}));
 
-			Assert::AreEqual(env.top<bool>(), true);
+			Assert::AreEqual(env.get_top<bool>(), true);
 			Assert::AreEqual(env.pop<bool>(), true);
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 		}

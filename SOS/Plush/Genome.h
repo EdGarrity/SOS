@@ -328,14 +328,14 @@ namespace Plush
 
 			while (temp_left.size() > 0)
 			{
-				Plush::Atom atom = temp_left.top();
+				T atom = temp_left.get_top();
 				temp_left.pop();
 				left_half.push(atom);
 			}
 
 			while (temp_right.size() > 0)
 			{
-				Plush::Atom atom = temp_right.top();
+				T atom = temp_right.get_top();
 				temp_right.pop();
 				right_half.push(atom);
 			}
@@ -377,7 +377,7 @@ namespace Plush
 
 				if (Utilities::FixedSizeStack<T>::top_ > 0)
 				{
-					Atom top_atom = Utilities::FixedSizeStack<T>::top();
+					Atom top_atom = Utilities::FixedSizeStack<T>::get_top();
 
 					if ((top_atom.instruction == "EXEC.NOOP")
 						&& (top_atom.type == Atom::AtomType::ins)
@@ -431,28 +431,192 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline void push(const value_type& atom)
+		inline void push(long value)
+		{
+			Utilities::FixedSizeStack<T>::push(value);
+		}
+
+		inline void push(double value)
+		{
+			Utilities::FixedSizeStack<T>::push(value);
+		}
+
+		inline void push(bool value)
+		{
+			Utilities::FixedSizeStack<T>::push(value);
+		}
+
+		inline void push(CodeAtom atom)
 		{
 			if (Utilities::FixedSizeStack<T>::top_ > 0)
 			{
-//				Atom top_atom = Utilities::FixedSizeStack<T>::top();
-				Atom top_atom = Genome<T>::top();
-				Atom atom_copy(atom);
+				T top_atom = Utilities::FixedSizeStack<T>::get_top();
 
 				if ((top_atom.instruction == "EXEC.NOOP")
 					&& (top_atom.type == Atom::AtomType::ins)
 					&& (Utilities::FixedSizeStack<T>::top_ > 0))
 				{
-					atom_copy.close_parentheses += top_atom.close_parentheses;
+					atom.close_parentheses += top_atom.close_parentheses;
 					Utilities::FixedSizeStack<T>::pop();
 				}
 
-				Utilities::FixedSizeStack<T>::push(atom_copy);
+				Utilities::FixedSizeStack<T>::push(atom);
 			}
 
 			else
 				Utilities::FixedSizeStack<T>::push(atom);
 		}
+		
+		inline void push(ExecAtom atom)
+		{
+			if (Utilities::FixedSizeStack<T>::top_ > 0)
+			{
+				T top_atom = Utilities::FixedSizeStack<T>::get_top();
+
+				if ((top_atom.instruction == "EXEC.NOOP")
+					&& (top_atom.type == Atom::AtomType::ins)
+					&& (Utilities::FixedSizeStack<T>::top_ > 0))
+				{
+					atom.close_parentheses += top_atom.close_parentheses;
+					Utilities::FixedSizeStack<T>::pop();
+				}
+
+				Utilities::FixedSizeStack<T>::push(atom);
+			}
+
+			else
+				Utilities::FixedSizeStack<T>::push(atom);
+		}
+
+		inline void push_genome(Genome<class CodeAtom>& genome)
+//		inline void push(Genome<class CodeAtom>& genome)
+		{
+			if (genome.size() > 0)
+			{
+				for (int n = 0; n < genome.size(); n++)
+				{
+					T atom = genome[n];
+
+					if (Utilities::FixedSizeStack<T>::size() > 0)
+					{
+						T top_atom = Utilities::FixedSizeStack<T>::get_top();
+
+						if ((top_atom.instruction == "EXEC.NOOP")
+							&& (top_atom.type == Atom::AtomType::ins))
+						{
+							atom.close_parentheses += top_atom.close_parentheses;
+							Utilities::FixedSizeStack<T>::pop();
+						}
+					}
+
+					Utilities::FixedSizeStack<T>::push(atom);
+				}
+			}
+		}
+
+		inline void push_genome(Genome<class ExecAtom>& genome)
+//		inline void push(Genome<class ExecAtom>& genome)
+		{
+			if (genome.size() > 0)
+			{
+				for (int n = 0; n < genome.size(); n++)
+				{
+					T atom = genome[n];
+
+					if (Utilities::FixedSizeStack<T>::size() > 0)
+					{
+						T top_atom = Utilities::FixedSizeStack<T>::get_top();
+
+						if ((top_atom.instruction == "EXEC.NOOP")
+							&& (top_atom.type == Atom::AtomType::ins))
+						{
+							atom.close_parentheses += top_atom.close_parentheses;
+							Utilities::FixedSizeStack<T>::pop();
+						}
+					}
+
+					Utilities::FixedSizeStack<T>::push(atom);
+				}
+			}
+		}
+
+
+
+
+
+//		template <typename P> 
+//		inline void push(T value)
+//		{
+//			P value2 = value;
+//			Utilities::FixedSizeStack<T>::push(value2);
+//		}
+//		template <> 
+//		inline void push(CodeAtom atom)
+//		{
+//			if (Utilities::FixedSizeStack<CodeAtom>::top_ > 0)
+//			{
+//				CodeAtom top_atom = Utilities::FixedSizeStack<CodeAtom>::get_top();
+//
+//				if ((top_atom.instruction == "EXEC.NOOP")
+//					&& (top_atom.type == Atom::AtomType::ins)
+//					&& (Utilities::FixedSizeStack<CodeAtom>::top_ > 0))
+//				{
+//					atom.close_parentheses += top_atom.close_parentheses;
+//					Utilities::FixedSizeStack<CodeAtom>::pop();
+//				}
+//
+//				Utilities::FixedSizeStack<CodeAtom>::push(atom);
+//			}
+//
+//			else
+//				Utilities::FixedSizeStack<CodeAtom>::push(atom);
+//		}
+//		template <> 
+//		inline void push(ExecAtom atom)
+//		{
+//			if (Utilities::FixedSizeStack<ExecAtom>::top_ > 0)
+//			{
+//				ExecAtom top_atom = Utilities::FixedSizeStack<ExecAtom>::get_top();
+//
+//				if ((top_atom.instruction == "EXEC.NOOP")
+//					&& (top_atom.type == Atom::AtomType::ins)
+//					&& (Utilities::FixedSizeStack<ExecAtom>::top_ > 0))
+//				{
+////					atom_copy.close_parentheses += top_atom.close_parentheses;
+//					atom.close_parentheses += top_atom.close_parentheses;
+//					Utilities::FixedSizeStack<ExecAtom>::pop();
+//				}
+//
+////				Utilities::FixedSizeStack<ExecAtom>::push(atom_copy);
+//				Utilities::FixedSizeStack<ExecAtom>::push(atom);
+//			}
+//
+//			else
+//				Utilities::FixedSizeStack<ExecAtom>::push(atom);
+//		}
+
+		//inline void push(const value_type& atom)
+		//{
+		//	if (Utilities::FixedSizeStack<T>::top_ > 0)
+		//	{
+		//		Atom top_atom = Utilities::FixedSizeStack<T>::top();
+		//		Atom atom_copy(atom);
+
+		//		if ((top_atom.instruction == "EXEC.NOOP")
+		//			&& (top_atom.type == Atom::AtomType::ins)
+		//			&& (Utilities::FixedSizeStack<T>::top_ > 0))
+		//		{
+		//			atom_copy.close_parentheses += top_atom.close_parentheses;
+		//			Utilities::FixedSizeStack<T>::pop();
+		//		}
+
+		//		Utilities::FixedSizeStack<T>::push(atom_copy);
+		//	}
+
+		//	else
+		//		Utilities::FixedSizeStack<T>::push(atom);
+		//}
+
 
 		// Purpose: 
 		//   Pop an atom from the stack
@@ -473,7 +637,8 @@ namespace Plush
 		//
 		inline T pop()
 		{
-			Plush::Atom atom = Utilities::FixedSizeStack<T>::top();
+//			Plush::Atom atom = Utilities::FixedSizeStack<T>::top();
+			T atom = Utilities::FixedSizeStack<T>::get_top();
 			Utilities::FixedSizeStack<T>::pop();
 			return atom;
 		}
@@ -518,7 +683,7 @@ namespace Plush
 
 				if (extra_blocks == 0)
 				{
-					atom = Utilities::FixedSizeStack<T>::top();
+					atom = Utilities::FixedSizeStack<T>::get_top();
 					Utilities::FixedSizeStack<T>::pop();
 					temp.push(atom);
 				}
@@ -560,14 +725,14 @@ namespace Plush
 				}
 			}
 
-			Plush::Atom first = temp.top();
+			Plush::Atom first = temp.get_top();
 			temp.pop();
 			first.close_parentheses -= extra_blocks;
 			temp.push(first);
 
 			while (temp.size() > 0)
 			{
-				Plush::Atom atom = temp.top();
+				T atom = temp.get_top();
 				temp.pop();
 				poped_item.push(atom);
 			}
@@ -619,7 +784,7 @@ namespace Plush
 
 				if (extra_blocks == 0)
 				{
-					atom = Utilities::FixedSizeStack<T>::top();
+					atom = Utilities::FixedSizeStack<T>::get_top();
 					Utilities::FixedSizeStack<T>::pop();
 					temp.push(atom);
 				}
@@ -663,7 +828,7 @@ namespace Plush
 
 			while (temp.size() > 0)
 			{
-				Plush::Atom atom = temp.top();
+				T atom = temp.get_top();
 				temp.pop();
 				poped_item.push(atom);
 			}
@@ -688,9 +853,10 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline T top()
+		inline T get_top()
 		{
-			Plush::Atom atom = Utilities::FixedSizeStack<T>::top();
+//			Plush::Atom atom = Utilities::FixedSizeStack<T>::top();
+			T atom = Utilities::FixedSizeStack<T>::get_top();
 			return atom;
 		}
 
@@ -711,7 +877,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		unsigned int top(Genome<T> &poped_item)
+		unsigned int get_top(Genome<T> &poped_item)
 		{
 			unsigned int item_number = 0;
 			unsigned int wanted_blocks = 0;
@@ -723,7 +889,7 @@ namespace Plush
 
 			while (Utilities::FixedSizeStack<T>::empty() == false)
 			{
-				Plush::Atom atom = Utilities::FixedSizeStack<T>::top();
+				Plush::Atom atom = Utilities::FixedSizeStack<T>::get_top();
 				Utilities::FixedSizeStack<T>::pop();
 
 				temp.push(atom);
@@ -763,7 +929,7 @@ namespace Plush
 
 			while (temp.size() > 0)
 			{
-				Plush::Atom atom = temp.top();
+				Plush::Atom atom = temp.get_top();
 				temp.pop();
 				poped_item.push(atom);
 				Utilities::FixedSizeStack<T>::push(atom);
@@ -771,6 +937,29 @@ namespace Plush
 
 			return extra_blocks;
 		};
+
+		// Purpose: 
+		//   Returns a reference to the top atom on the stack
+		//
+		// Parameters:
+		//   None
+		// 
+		// Return value:
+		//   CodeAtom or ExecAtom poped from the stack
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline T& get_top_ref()
+		{
+			T& atom = Utilities::FixedSizeStack<T>::get_top();
+			return atom;
+		}
 
 		// Purpose: 
 		//   Compare genome with provided genome and return True if they match
@@ -855,7 +1044,7 @@ namespace Plush
 					{
 						if (temp_block.size() > 1)
 						{
-							Atom atom = temp_block.pop();
+							T atom = temp_block.pop();
 
 							if (atom.like(second_genome.bottom()))
 								atom.instruction = first_genome.bottom().instruction;
@@ -913,7 +1102,7 @@ namespace Plush
 					{
 						if (temp_block.size() > 1)
 						{
-							Atom atom = temp_block.pop();
+							T atom = temp_block.pop();
 
 							if (atom == second_genome.bottom())
 								atom.instruction = temp_first_genome.bottom().instruction;
@@ -1128,7 +1317,7 @@ namespace Plush
 
 					if (other_block == other_genome)
 					{
-						Atom atom = container.pop();
+						T atom = container.pop();
 						container.clear();
 						other_block.bottom().close_parentheses = 1;
 						container.push(other_block);
@@ -1141,7 +1330,7 @@ namespace Plush
 					{
 						if (other_block.size() > 1)
 						{
-							Atom atom = other_block.pop();
+							T atom = other_block.pop();
 							container.clear();
 							container.push(atom);
 
@@ -1156,7 +1345,7 @@ namespace Plush
 
 						else if (other_block.bottom().like(other_genome.bottom()))
 						{
-							Atom atom = container.pop();
+							T atom = container.pop();
 							container.clear();
 							other_block.bottom().close_parentheses = 1;
 							container.push(other_block);
@@ -1190,7 +1379,7 @@ namespace Plush
 
 					if (other_block == other_genome)
 					{
-						Atom atom = container.pop();
+						T atom = container.pop();
 						container.clear();
 						other_block.bottom().close_parentheses = other_genome.bottom().close_parentheses;
 						container.push(other_block);
@@ -1204,7 +1393,7 @@ namespace Plush
 					{
 						if (other_block.size() > 1)
 						{
-							Atom atom = other_block.pop();
+							T atom = other_block.pop();
 							container.clear();
 							container.push(atom);
 
@@ -1219,7 +1408,7 @@ namespace Plush
 
 						else if (other_block.bottom().like(other_genome.bottom()))
 						{
-							Atom atom = container.pop();
+							T atom = container.pop();
 							container.clear();
 							other_block.bottom().close_parentheses = other_genome.bottom().close_parentheses;
 							container.push(other_block);

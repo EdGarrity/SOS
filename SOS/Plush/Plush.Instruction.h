@@ -15,7 +15,7 @@ namespace Plush
 	{
 		// Check for valid parameters
 		if (_env.has_elements<T>(1))
-			_env.push<T>(_env.top<T>());
+			_env.push<T>(_env.get_top<T>());
 
 		return 1;
 	}
@@ -26,8 +26,8 @@ namespace Plush
 
 		if (_env.has_elements<CodeAtom>(1))
 		{
-			_env.top<CodeAtom>(stack);
-			_env.push<CodeAtom>(stack);
+			_env.get_top<CodeAtom>(stack);
+			_env.push(stack);
 		}
 
 		return 1;
@@ -39,8 +39,8 @@ namespace Plush
 
 		if (_env.has_elements<ExecAtom>(1))
 		{
-			_env.top<ExecAtom>(stack);
-			_env.push<ExecAtom>(stack);
+			_env.get_top<ExecAtom>(stack);
+			_env.push(stack);
 		}
 
 		return 1;
@@ -139,8 +139,8 @@ namespace Plush
 					n++;
 				}
 
-				_env.push<CodeAtom>(modified_genome);
-				_env.push<CodeAtom>(target_block);
+				_env.push(modified_genome);
+				_env.push(target_block);
 			}											
 		}
 
@@ -188,8 +188,8 @@ namespace Plush
 					n++;
 				}
 
-				_env.push<ExecAtom>(modified_genome);
-				_env.push<ExecAtom>(target_block);
+				_env.push(modified_genome);
+				_env.push(target_block);
 			}
 		}
 
@@ -242,10 +242,10 @@ namespace Plush
 			{
 				Genome<CodeAtom> temp_block;
 				temp_genome.pop_genome(temp_block);
-				_env.push<CodeAtom>(temp_block);
+				_env.push(temp_block);
 			}
 
-			_env.push<CodeAtom>(extracted_block);
+			_env.push(extracted_block);
 		}
 
 		return 1;
@@ -282,10 +282,10 @@ namespace Plush
 			{
 				Genome<ExecAtom> temp_block;
 				temp_genome.pop_genome(temp_block);
-				_env.push<ExecAtom>(temp_block);
+				_env.push(temp_block);
 			}
 
-			_env.push<ExecAtom>(extracted_block);
+			_env.push(extracted_block);
 		}
 
 		return 1;
@@ -410,9 +410,9 @@ namespace Plush
 			_env.pop<CodeAtom>(block_B);
 			_env.pop<CodeAtom>(block_C);
 
-			_env.push<CodeAtom>(block_B);
-			_env.push<CodeAtom>(block_A);
-			_env.push<CodeAtom>(block_C);
+			_env.push(block_B);
+			_env.push(block_A);
+			_env.push(block_C);
 		}
 
 		return 1;
@@ -431,9 +431,9 @@ namespace Plush
 			_env.pop<ExecAtom>(block_B);
 			_env.pop<ExecAtom>(block_C);
 
-			_env.push<ExecAtom>(block_B);
-			_env.push<ExecAtom>(block_A);
-			_env.push<ExecAtom>(block_C);
+			_env.push(block_B);
+			_env.push(block_A);
+			_env.push(block_C);
 		}
 
 		return 1;
@@ -444,33 +444,33 @@ namespace Plush
 	{
 		unsigned int effort = 1;
 
-		if ((_env.has_elements<long>(1)) && (_env.has_elements<T>(1)))
-		{
-			int index = pop_safe_index<T>(_env);
-			int stack_size = _env.get_stack<T>().size();
+		//if ((_env.has_elements<long>(1)) && (_env.has_elements<T>(1)))
+		//{
+		//	int index = pop_safe_index<T>(_env);
+		//	int stack_size = _env.get_stack<T>().size();
 
-			int insert_position = stack_size - index - 1;
+		//	int insert_position = stack_size - index - 1;
 
-			std::array<T, domain::argmap::maximum_stack_size>& stack = _env.get_stack<T>().container();
+		//	std::array<T, domain::argmap::maximum_stack_size>& stack = _env.get_stack<T>().container();
 
-			if ((stack_size < domain::argmap::maximum_stack_size - 1) && (stack_size > 1))
-			{
-				T v = _env.top<T>();
+		//	if ((stack_size < domain::argmap::maximum_stack_size - 1) && (stack_size > 1))
+		//	{
+		//		T v = _env.get_top<T>();
 
-				int stack_pointer = stack_size - 1;
+		//		int stack_pointer = stack_size - 1;
 
-				while (stack_pointer >= insert_position)
-				{
-					stack[stack_pointer + 1] = stack[stack_pointer];
-					stack_pointer--;
-				}
+		//		while (stack_pointer >= insert_position)
+		//		{
+		//			stack[stack_pointer + 1] = stack[stack_pointer];
+		//			stack_pointer--;
+		//		}
 
-				stack[stack_pointer + 1] = v;
-				_env.push(stack[stack_size]);
-			}
+		//		stack[stack_pointer + 1] = v;
+		//		_env.push(stack[stack_size]);
+		//	}
 
-			effort = stack.size() - insert_position + 1;
-		}
+		//	effort = stack.size() - insert_position + 1;
+		//}
 
 		return effort;
 	}
@@ -571,7 +571,7 @@ namespace Plush
 				_env.pop<ExecAtom>(first_block);
 
 				if (first_block.size() == 0)
-					_env.push<ExecAtom>(first_block);
+					_env.push(first_block);
 
 				else
 				{
@@ -584,7 +584,7 @@ namespace Plush
 						if (simulated_closing_parenthesis > 0)
 						{
 							genome.clear();
-							Plush::Atom atom = Plush::Atom("{:instruction EXEC.NOOP :close 1}");
+							ExecAtom atom = Plush::ExecAtom("{:instruction EXEC.NOOP :close 1}");
 							genome.push(atom);
 
 							simulated_closing_parenthesis--;
@@ -623,9 +623,9 @@ namespace Plush
 						bottom_block.push(temp_block);
 					}
 
-					_env.push<CodeAtom>(bottom_block);
-					_env.push<CodeAtom>(first_block);
-					_env.push<CodeAtom>(top_block);
+					_env.push(bottom_block);
+					_env.push(first_block);
+					_env.push(top_block);
 				}
 			}
 		}
@@ -643,15 +643,15 @@ namespace Plush
 	template <typename T>
 	inline unsigned swap(Environment & _env)
 	{
-		if (_env.has_elements<T>(2))
-		{
-			std::array<T, domain::argmap::maximum_stack_size>& stack = _env.get_stack<T>().container();
-			unsigned int stack_size = _env.get_stack<T>().size();
+		//if (_env.has_elements<T>(2))
+		//{
+		//	std::array<T, domain::argmap::maximum_stack_size>& stack = _env.get_stack<T>().container();
+		//	unsigned int stack_size = _env.get_stack<T>().size();
 
-			T tmp = stack[stack_size - 1];
-			stack[stack_size - 1] = stack[stack_size - 2];
-			stack[stack_size - 2] = tmp;
-		}
+		//	T tmp = stack[stack_size - 1];
+		//	stack[stack_size - 1] = stack[stack_size - 2];
+		//	stack[stack_size - 2] = tmp;
+		//}
 
 		return 1;
 	}
@@ -689,8 +689,8 @@ namespace Plush
 			// Balance parenthesis
 			extracted_block_A.bottom().close_parentheses += extra_blocks;
 
-			_env.push<CodeAtom>(extracted_block_A);
-			_env.push<CodeAtom>(extracted_block_B);
+			_env.push(extracted_block_A);
+			_env.push(extracted_block_B);
 		}
 
 		return 1;
@@ -714,7 +714,7 @@ namespace Plush
 			if (extra_blocks > 0)
 			{
 				// Create a NOOP second block and decrease the extra blocks in the first item by one
-				extracted_block_B.push(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
+				extracted_block_B.push(ExecAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
 				extra_blocks--;
 			}
 
@@ -729,8 +729,8 @@ namespace Plush
 			// Balance parenthesis
 			extracted_block_A.bottom().close_parentheses += extra_blocks;
 
-			_env.push<ExecAtom>(extracted_block_A);
-			_env.push<ExecAtom>(extracted_block_B);
+			_env.push(extracted_block_A);
+			_env.push(extracted_block_B);
 		}
 
 		return 1;
