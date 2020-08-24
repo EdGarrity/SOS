@@ -88,7 +88,7 @@ namespace Plush
 						if (blocks_closed > 0)
 						{
 							std::string noop = "{:instruction EXEC.NOOP :close " + std::to_string(blocks_closed) + "}";
-							env.push<ExecAtom>(ExecAtom(noop));
+							env.push1<ExecAtom>(ExecAtom(noop));
 						}
 					}
 				}

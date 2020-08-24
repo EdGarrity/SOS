@@ -66,7 +66,7 @@ namespace Plush
 		}
 
 		// Purpose: 
-		//   Returns the length of the genome stack. 
+		//   Returns the number of blocks on the top of the genome stack. 
 		//
 		//   The genome is processed as a list object, i.e., an open parenthesis is assumed to exist 
 		//   before the first item on the stack.  This function returns the number of items in the top 
@@ -80,7 +80,7 @@ namespace Plush
 		//   None
 		// 
 		// Return value:
-		//   Number if items and blocks in the top level of the list
+		//   Number of blocks in the top level of the list
 		//
 		// Side Effects:
 		//   None
@@ -151,7 +151,7 @@ namespace Plush
 		}
 
 		// Purpose: 
-		//   Returns the length of the genome stack. 
+		//   Returns the number of items in the genome stack. 
 		//
 		//   The genome is processed as a list object, i.e., an open parenthesis is assumed to exist 
 		//   before the first item on the stack.  This function returns the number of items in the top 
@@ -165,7 +165,7 @@ namespace Plush
 		//   None
 		// 
 		// Return value:
-		//   Number if items and blocks in the top level of the list
+		//   Number of items and blocks in the top level of the list
 		//
 		// Side Effects:
 		//   None
@@ -247,11 +247,12 @@ namespace Plush
 		//
 		//   When determining the split point, the genome is processed as a list object, i.e., an open 
 		//   parenthesis is assumed to exist before the first item on the stack.  This function counts 
-		//   items from the beginning of the genome to locate the split point; nested lists contribute 
-		//   only 1 to this count, no matter what they contain.  Closing parenthesis can either be 
-		//   interpreted as close instructions (to satisfy a block requirement in a nested list) or as 
-		//   close - open instructions (for the top level list).  Nested levels begin when an instruction 
-		//   requiring blocks is encountered in the list and end when all required blocks are found.
+		//   items or blocks (depending on te mode) from the beginning of the genome to locate the split 
+		//   point; nested lists contribute only 1 to this count, no matter what they contain.  Closing 
+		//   parenthesis can either be interpreted as close instructions (to satisfy a block requirement 
+		//   in a nested list) or as close - open instructions (for the top level list).  Nested levels 
+		//   begin when an instruction requiring blocks is encountered in the list and end when all 
+		//   required blocks are found.
 		//
 		// Parameters:
 		//   left_half		- Reference to buffer to write genome items located before the split point
@@ -425,37 +426,37 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline void push(Genome<T> &genome)
-		{
-			unsigned int item_number = 0;
-			unsigned int wanted_blocks = 0;
-			unsigned int extra_blocks;
-			Utilities::FixedSizeStack<T> temp;
-			std::stack<unsigned int> wanted_stack;
+		//inline void push(Genome<T> &genome)
+		//{
+		//	unsigned int item_number = 0;
+		//	unsigned int wanted_blocks = 0;
+		//	unsigned int extra_blocks;
+		//	Utilities::FixedSizeStack<T> temp;
+		//	std::stack<unsigned int> wanted_stack;
 
-			for (int n = 0; n < genome.size(); n++)
-			{
-				Atom atom = genome[n];
+		//	for (int n = 0; n < genome.size(); n++)
+		//	{
+		//		Atom atom = genome[n];
 
-				if (Utilities::FixedSizeStack<T>::top_ > 0)
-				{
-					Atom top_atom = Utilities::FixedSizeStack<T>::get_top();
+		//		if (Utilities::FixedSizeStack<T>::top_ > 0)
+		//		{
+		//			Atom top_atom = Utilities::FixedSizeStack<T>::get_top();
 
-					if ((top_atom.instruction == "EXEC.NOOP")
-						&& (top_atom.type == Atom::AtomType::ins)
-						&& (Utilities::FixedSizeStack<T>::top_ > 0))
-					{
-						atom.close_parentheses += top_atom.close_parentheses;
-						Utilities::FixedSizeStack<T>::pop();
-					}
-				}
+		//			if ((top_atom.instruction == "EXEC.NOOP")
+		//				&& (top_atom.type == Atom::AtomType::ins)
+		//				&& (Utilities::FixedSizeStack<T>::top_ > 0))
+		//			{
+		//				atom.close_parentheses += top_atom.close_parentheses;
+		//				Utilities::FixedSizeStack<T>::pop();
+		//			}
+		//		}
 
-				Utilities::FixedSizeStack<T>::push(atom);
-			}
-		}
+		//		Utilities::FixedSizeStack<T>::push(atom);
+		//	}
+		//}
 
 		// Purpose: 
-		//   Push a genome on the stack
+		//   Push a genome on the back of the stack
 		//
 		// Parameters:
 		//   genome	- Reference to genome to push
@@ -464,7 +465,7 @@ namespace Plush
 		//   None
 		//
 		// Side Effects:
-		//   Stack updated with provided genome at the top of the stack.
+		//   Stack updated with provided genome at the bottom of the stack.
 		//
 		// Thread Safe:
 		//   Yes.  As long as no other thread attemps to write to the child.
@@ -602,6 +603,55 @@ namespace Plush
 			}
 		}
 
+		inline void push(Genome<class CodeAtom>& genome)
+		{
+			if (genome.size() > 0)
+			{
+				for (int n = 0; n < genome.size(); n++)
+				{
+					T atom = genome[n];
+
+					if (Utilities::FixedSizeStack<T>::size() > 0)
+					{
+						T top_atom = Utilities::FixedSizeStack<T>::get_top();
+
+						if ((top_atom.instruction == "EXEC.NOOP")
+							&& (top_atom.type == Atom::AtomType::ins))
+						{
+							atom.close_parentheses += top_atom.close_parentheses;
+							Utilities::FixedSizeStack<T>::pop();
+						}
+					}
+
+					Utilities::FixedSizeStack<T>::push(atom);
+				}
+			}
+		}
+
+		inline void push(Genome<class ExecAtom>& genome)
+		{
+			if (genome.size() > 0)
+			{
+				for (int n = 0; n < genome.size(); n++)
+				{
+					T atom = genome[n];
+
+					if (Utilities::FixedSizeStack<T>::size() > 0)
+					{
+						T top_atom = Utilities::FixedSizeStack<T>::get_top();
+
+						if ((top_atom.instruction == "EXEC.NOOP")
+							&& (top_atom.type == Atom::AtomType::ins))
+						{
+							atom.close_parentheses += top_atom.close_parentheses;
+							Utilities::FixedSizeStack<T>::pop();
+						}
+					}
+
+					Utilities::FixedSizeStack<T>::push(atom);
+				}
+			}
+		}
 
 
 
@@ -699,7 +749,6 @@ namespace Plush
 		//
 		inline T pop()
 		{
-//			Plush::Atom atom = Utilities::FixedSizeStack<T>::top();
 			T atom = Utilities::FixedSizeStack<T>::get_top();
 			Utilities::FixedSizeStack<T>::pop();
 			return atom;
@@ -905,7 +954,7 @@ namespace Plush
 		//   None
 		// 
 		// Return value:
-		//   CodeAtom or ExecAtom poped from the stack
+		//   CodeAtom or ExecAtom from the stack
 		//
 		// Side Effects:
 		//   None
@@ -917,7 +966,6 @@ namespace Plush
 		//
 		inline T get_top()
 		{
-//			Plush::Atom atom = Utilities::FixedSizeStack<T>::top();
 			T atom = Utilities::FixedSizeStack<T>::get_top();
 			return atom;
 		}
@@ -951,8 +999,6 @@ namespace Plush
 
 			while (Utilities::FixedSizeStack<T>::empty() == false)
 			{
-// Debug_1
-//				Plush::Atom atom = Utilities::FixedSizeStack<T>::get_top();
 				T atom = Utilities::FixedSizeStack<T>::get_top();
 				Utilities::FixedSizeStack<T>::pop();
 
@@ -993,8 +1039,6 @@ namespace Plush
 
 			while (temp.size() > 0)
 			{
-// Debug_1
-//				Plush::Atom atom = temp.get_top();
 				T atom = temp.get_top();
 				temp.pop();
 				poped_item.push(atom);
@@ -1011,7 +1055,7 @@ namespace Plush
 		//   None
 		// 
 		// Return value:
-		//   CodeAtom or ExecAtom poped from the stack
+		//   Reference to CodeAtom or ExecAtom from the top of the stack
 		//
 		// Side Effects:
 		//   None
@@ -1087,7 +1131,7 @@ namespace Plush
 			Genome<T> modified_block;
 			Genome<T> original_genome(this);
 
-			if ((first_genome.size() ==1) &&(second_genome.size() == 1))
+			if ((first_genome.size() == 1) &&(second_genome.size() == 1))
 			{
 				while (Utilities::FixedSizeStack<T>::empty() == false)
 				{
@@ -1364,9 +1408,6 @@ namespace Plush
 			Genome<T> container_block;
 			Genome<T> container_block_canidate;
 			Genome<T> other_block;
-
-			//container.clear();
-			//container.push(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
 
 			if (Utilities::FixedSizeStack<T>::size() < other_genome.size())
 				return false;
