@@ -24,8 +24,6 @@ namespace Plush
 			atom.close_parentheses = (atom.close_parentheses > 0) ? atom.close_parentheses - 1 : atom.close_parentheses;
 			code_block.push(atom);
 
-//			_env.push<ExecAtom>(code_block);
-//			_env.push(code_block);
 			_env.push<ExecAtom>(code_block);
 		}
 
@@ -79,31 +77,15 @@ namespace Plush
 		{
 			Genome<ExecAtom> extracted_block_A;
 			Genome<ExecAtom> extracted_block_B;
-			int extra_blocks = 0;
-			int extra_blocks_B = 0;
 
 			// Get conditional boolean
 			bool s = _env.pop<bool>();
 
 			// Get first block from stack
-			extra_blocks = _env.pop<ExecAtom>(extracted_block_A);
-			extracted_block_A.bottom().close_parentheses -= extra_blocks;
+			_env.pop<ExecAtom>(extracted_block_A);
 
-			// Get or create second block
-			if (extra_blocks > 0)
-			{
-				// Create a NOOP second block and decrease the extra blocks in the first item by one
-				extracted_block_B.push(ExecAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
-				extra_blocks--;
-			}
-
-			else
-			{
-				// Get second block from stack
-				extra_blocks_B = _env.pop<ExecAtom>(extracted_block_B);
-				extracted_block_B.bottom().close_parentheses -= extra_blocks_B;
-				extra_blocks += extra_blocks_B;
-			}
+			// Get second block from stack
+			_env.pop<ExecAtom>(extracted_block_B);
 
 			if (s)
 				_env.push<ExecAtom>(extracted_block_A);
@@ -346,33 +328,6 @@ namespace Plush
 
 	unsigned code_cons(Environment & _env)
 	{
-		//if (_env.has_elements<CodeAtom>(2))
-		//{
-		//	Genome<CodeAtom> block_a;
-		//	Genome<CodeAtom> block_b;
-
-		//	int unmatched_a = _env.pop<CodeAtom>(block_a);
-		//	int unmatched_b = _env.pop<CodeAtom>(block_b);
-
-		//	if ((block_a.size() > 0) && (block_b.size() > 0))
-		//	{
-		//		block_a.bottom().close_parentheses += unmatched_a;
-		//		block_b.bottom().close_parentheses = 0;
-
-		//		_env.push<CodeAtom>(block_a);
-		//		_env.push<CodeAtom>(block_b);
-		//	}
-
-		//	else
-		//	{
-		//		if (block_a.size() > 0)
-		//			_env.push(block_a);
-
-		//		if (block_b.size() > 0)
-		//			_env.push(block_b);
-		//	}
-		//}
-
 		if (_env.has_elements<CodeAtom>(2))
 		{
 			Genome<CodeAtom> block_a;
@@ -398,28 +353,12 @@ namespace Plush
 			Genome<CodeAtom> extracted_block_B;
 			Genome<CodeAtom> modified_block_A;
 			Genome<CodeAtom> container_block;
-			int extra_blocks = 0;
-			int extra_blocks_B = 0;
 
 			// Get first block from stack
-			extra_blocks = _env.pop<CodeAtom>(extracted_block_A);
-			extracted_block_A.bottom().close_parentheses -= extra_blocks;
+			_env.pop<CodeAtom>(extracted_block_A);
 
-			// Get or create second block
-			if (extra_blocks > 0)
-			{
-				// Create a NOOP second block and decrease the extra blocks in the first item by one
-				extracted_block_B.push(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
-				extra_blocks--;
-			}
-
-			else
-			{
-				// Get second block from stack
-				extra_blocks_B = _env.pop<CodeAtom>(extracted_block_B);
-				extracted_block_B.bottom().close_parentheses -= extra_blocks_B;
-				extra_blocks += extra_blocks_B;
-			}
+			// Get second block from stack
+			_env.pop<CodeAtom>(extracted_block_B);
 
 			if (extracted_block_A.container(extracted_block_B, container_block))
 				_env.push<CodeAtom>(container_block);
@@ -438,28 +377,12 @@ namespace Plush
 			Genome<CodeAtom> extracted_block_A;
 			Genome<CodeAtom> extracted_block_B;
 			Genome<CodeAtom> modified_block_A;
-			int extra_blocks = 0;
-			int extra_blocks_B = 0;
 
 			// Get first block from stack
-			extra_blocks = _env.pop<CodeAtom>(extracted_block_A);
-			extracted_block_A.bottom().close_parentheses -= extra_blocks;
+			_env.pop<CodeAtom>(extracted_block_A);
 
-			// Get or create second block
-			if (extra_blocks > 0)
-			{
-				// Create a NOOP second block and decrease the extra blocks in the first item by one
-				extracted_block_B.push(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
-				extra_blocks--;
-			}
-
-			else
-			{
-				// Get second block from stack
-				extra_blocks_B = _env.pop<CodeAtom>(extracted_block_B);
-				extracted_block_B.bottom().close_parentheses -= extra_blocks_B;
-				extra_blocks += extra_blocks_B;
-			}
+			// Get second block from stack
+			_env.pop<CodeAtom>(extracted_block_B);
 
 			bool found = (extracted_block_B.contains(extracted_block_A) >= 0);
 			_env.push<bool>(found);
@@ -727,31 +650,15 @@ namespace Plush
 		{
 			Genome<CodeAtom> extracted_block_A;
 			Genome<CodeAtom> extracted_block_B;
-			int extra_blocks = 0;
-			int extra_blocks_B = 0;
 
 			// Get conditional boolean
 			bool s = _env.pop<bool>();
 
 			// Get first block from stack
-			extra_blocks = _env.pop<CodeAtom>(extracted_block_A);
-			extracted_block_A.bottom().close_parentheses -= extra_blocks;
+			_env.pop<CodeAtom>(extracted_block_A);
 
-			// Get or create second block
-			if (extra_blocks > 0)
-			{
-				// Create a NOOP second block and decrease the extra blocks in the first item by one
-				extracted_block_B.push(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
-				extra_blocks--;
-			}
-
-			else
-			{
-				// Get second block from stack
-				extra_blocks_B = _env.pop<CodeAtom>(extracted_block_B);
-				extracted_block_B.bottom().close_parentheses -= extra_blocks_B;
-				extra_blocks += extra_blocks_B;
-			}
+			// Get second block from stack
+			_env.pop<CodeAtom>(extracted_block_B);
 
 			if (s)
 				_env.push<ExecAtom>(extracted_block_A);
@@ -768,8 +675,6 @@ namespace Plush
 		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(2)))
 		{
 			int index = std::abs(_env.pop<long>());	// index
-			unsigned int extra_first_blocks = 0;
-			unsigned int extra_second_bloxks = 0;
 
 			Genome<CodeAtom> first_block;
 			Genome<CodeAtom> second_block;
@@ -777,35 +682,16 @@ namespace Plush
 			Genome<CodeAtom> right_half;
 			
 			// Get first block from stack
-			extra_first_blocks = _env.pop<CodeAtom>(first_block);
+			_env.pop<CodeAtom>(first_block);
 
-			if (extra_first_blocks == 0)
-			{
-				// Get second block from stack
-				extra_second_bloxks = _env.pop<CodeAtom>(second_block);
+			// Get second block from stack
+			_env.pop<CodeAtom>(second_block);
 
-				// Put the second block in a list object
-				second_block.push(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
-
-				if (extra_second_bloxks > 0)
-					second_block.bottom().close_parentheses = 1;
-			}
-			else
-			{
-				// Create a NOOP second block and decrease the extra blocks in the first item by one
-				second_block.push(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
-				first_block.bottom().close_parentheses--;
-			}
+			// Put the second block in a list object
+			second_block.push(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 
 			if (index == 0)
 			{
-				// Compensate for extra blocks in the second item.
-				if (extra_second_bloxks > 0)
-				{
-					std::string noop = "{:instruction EXEC.NOOP_OPEN_PAREN :close " + std::to_string(extra_second_bloxks) + "}\"";
-					second_block.push(CodeAtom(noop));
-				}
-
 				// Insert secoond item into first item at position 0.
 				_env.push<CodeAtom>(first_block);
 				_env.push<CodeAtom>(second_block);
@@ -820,10 +706,6 @@ namespace Plush
 
 				// Split block at insertion point
 				first_block.split(left_half, right_half, index, Genome<CodeAtom>::SPLIT_MODE::item);
-
-				// Compensate for extra blocks in the second item.
-				if (extra_second_bloxks > 0)
-					right_half.bottom().close_parentheses += extra_second_bloxks;
 
 				// Insert second block into first block at insertion point
 				_env.push<CodeAtom>(right_half);
@@ -858,28 +740,11 @@ namespace Plush
 		{
 			Genome<CodeAtom> extracted_block_A;
 			Genome<CodeAtom> extracted_block_B;
-			int extra_blocks = 0;
-			int extra_blocks_B = 0;
 
-			// Get first block from stack
-			extra_blocks = _env.pop<CodeAtom>(extracted_block_A);
-			extracted_block_A.bottom().close_parentheses -= extra_blocks;
+			_env.pop<CodeAtom>(extracted_block_A);
 
-			// Get or create second block
-			if (extra_blocks > 0)
-			{
-				// Create a NOOP second block and decrease the extra blocks in the first item by one
-				extracted_block_B.push(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
-				extra_blocks--;
-			}
-
-			else
-			{
-				// Get second block from stack
-				extra_blocks_B = _env.pop<CodeAtom>(extracted_block_B);
-				extracted_block_B.bottom().close_parentheses -= extra_blocks_B;
-				extra_blocks += extra_blocks_B;
-			}
+			// Get second block from stack
+			_env.pop<CodeAtom>(extracted_block_B);
 
 			// Close combined list
 			extracted_block_B.bottom().close_parentheses++;
@@ -899,28 +764,12 @@ namespace Plush
 		{
 			Genome<CodeAtom> extracted_block_A;
 			Genome<CodeAtom> extracted_block_B;
-			int extra_blocks = 0;
-			int extra_blocks_B = 0;
 
 			// Get first block from stack
-			extra_blocks = _env.pop<CodeAtom>(extracted_block_A);
-			extracted_block_A.bottom().close_parentheses -= extra_blocks;
+			_env.pop<CodeAtom>(extracted_block_A);
 
-			// Get or create second block
-			if (extra_blocks > 0)
-			{
-				// Create a NOOP second block and decrease the extra blocks in the first item by one
-				extracted_block_B.push(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
-				extra_blocks--;
-			}
-
-			else
-			{
-				// Get second block from stack
-				extra_blocks_B = _env.pop<CodeAtom>(extracted_block_B);
-				extracted_block_B.bottom().close_parentheses -= extra_blocks_B;
-				extra_blocks += extra_blocks_B;
-			}
+			// Get second block from stack
+			_env.pop<CodeAtom>(extracted_block_B);
 
 			bool found = (extracted_block_A.contains(extracted_block_B) >= 0);
 			_env.push<bool>(found);
@@ -993,11 +842,9 @@ namespace Plush
 			Genome<CodeAtom> extracted_block_A;
 			Genome<CodeAtom> left_half;
 			Genome<CodeAtom> right_half;
-			int extra_blocks = 0;
 
 			// Get first block from stack
-			extra_blocks = _env.pop<CodeAtom>(extracted_block_A);
-			extracted_block_A.bottom().close_parentheses -= extra_blocks;
+			_env.pop<CodeAtom>(extracted_block_A);
 
 			// Get count items in first block
 			unsigned int extracted_block_A_size = extracted_block_A.number_of_items();
@@ -1045,37 +892,15 @@ namespace Plush
 		{
 			Genome<CodeAtom> extracted_block_A;
 			Genome<CodeAtom> extracted_block_B;
-			int extra_blocks = 0;
-			int extra_blocks_B = 0;
 
 			// Get first block from stack
-			extra_blocks = _env.pop<CodeAtom>(extracted_block_A);
-			extracted_block_A.bottom().close_parentheses -= extra_blocks;
+			_env.pop<CodeAtom>(extracted_block_A);
 
-			// Get or create second block
-			if (extra_blocks > 0)
-			{
-				// Create a NOOP second block and decrease the extra blocks in the first item by one
-				extracted_block_B.push(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
-				extra_blocks--;
-			}
-
-			else
-			{
-				// Get second block from stack
-				extra_blocks_B = _env.pop<CodeAtom>(extracted_block_B);
-				extracted_block_B.bottom().close_parentheses -= extra_blocks_B;
-				extra_blocks += extra_blocks_B;
-			}
+			// Get second block from stack
+			_env.pop<CodeAtom>(extracted_block_B);
 
 			int position = extracted_block_A.contains(extracted_block_B);
 			_env.push<long>(position);
-
-			if (extra_blocks > 0)
-			{
-				std::string noop = "{:instruction EXEC.NOOP :close " + std::to_string(extra_blocks) + "}";
-				_env.push<CodeAtom>(CodeAtom(noop));
-			}
 		}
 
 		return 1;
@@ -1119,51 +944,15 @@ namespace Plush
 			Genome<CodeAtom> extracted_block_A;
 			Genome<CodeAtom> extracted_block_B;
 			Genome<CodeAtom> extracted_block_C;
-			Genome<CodeAtom> modified_block_A;
-			int extra_blocks = 0;
-			int extra_blocks_B = 0;
-			int extra_blocks_C = 0;
 
 			// Get first block from stack
-			extra_blocks = _env.pop<CodeAtom>(extracted_block_A);
-			extracted_block_A.bottom().close_parentheses -= extra_blocks;
+			_env.pop<CodeAtom>(extracted_block_A);
 
-			// Get or create second block
-			if (extra_blocks > 0)
-			{
-				// Create a NOOP second block and decrease the extra blocks in the first item by one
-				extracted_block_B.push(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
-				extra_blocks--;
-			}
+			// Get second block from stack
+			_env.pop<CodeAtom>(extracted_block_B);
 
-			else
-			{
-				// Get second block from stack
-				extra_blocks_B = _env.pop<CodeAtom>(extracted_block_B);
-				extracted_block_B.bottom().close_parentheses -= extra_blocks_B;
-				extra_blocks += extra_blocks_B;
-			}
-
-			// Get or create third block
-			if (extra_blocks > 0)
-			{
-				// Create a NOOP second block and decrease the extra blocks in the first item by one
-				extracted_block_C.push(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
-				extra_blocks--;
-			}
-
-			else
-			{
-				// Get second block from stack
-				extra_blocks_C = _env.pop<CodeAtom>(extracted_block_C);
-				extracted_block_C.bottom().close_parentheses -= extra_blocks_C;
-				extra_blocks += extra_blocks_C;
-			}
-
-			// Get length of blocks
-			unsigned int extracted_block_A_size = extracted_block_A.size();
-			unsigned int extracted_block_B_size = extracted_block_B.size();
-			unsigned int extracted_block_C_size = extracted_block_C.size();
+			// Get second block from stack
+			_env.pop<CodeAtom>(extracted_block_C);
 
 			extracted_block_A.subst(extracted_block_B, extracted_block_C);
 

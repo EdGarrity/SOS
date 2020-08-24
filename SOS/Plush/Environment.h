@@ -90,7 +90,6 @@ namespace Plush
 		template <typename T>
 		inline void push(T value)
 		{
-			// Debug_1
 			get_stack<T>().push(value);
 		}
 
@@ -161,8 +160,6 @@ namespace Plush
 		template <>
 		inline bool has_elements<CodeAtom>(unsigned sz)
 		{
-//			Utilities::FixedSizeStack<CodeAtom>& stack = get_stack<CodeAtom>();
-//			Genome<CodeAtom>& genome = dynamic_cast<Genome<CodeAtom>&>(stack);
 			Genome<CodeAtom>& genome = get_stack<CodeAtom>();
 
 			if (genome.number_of_blocks() < sz)
@@ -175,8 +172,6 @@ namespace Plush
 		template <>
 		inline bool has_elements<ExecAtom>(unsigned sz)
 		{
-			//Utilities::FixedSizeStack<ExecAtom>& stack = get_stack<ExecAtom>();
-			//Genome<ExecAtom>& genome = dynamic_cast<Genome<ExecAtom>&>(stack);
 			Genome<ExecAtom>& genome = get_stack<ExecAtom>();
 
 			if (genome.number_of_blocks() < sz)
@@ -189,11 +184,6 @@ namespace Plush
 		template <typename T>
 		inline T peek_index(unsigned index)
 		{
-// Debug_1
-//T val = get_stack<T>().get_top();
-//return val;
-			//if (has_elements<T>(index + 1))
-			//	return get_stack<T>().container()[get_stack<T>().size() - index - 1];
 			if (has_elements<T>(index + 1))
 				return get_stack<T>()[get_stack<T>().size() - index - 1];
 
