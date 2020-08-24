@@ -14,7 +14,6 @@ namespace Plush
 	{
 		std::string gene;
 		Utilities::FixedSizeStack<Atom> code_stack;
-//		Genome<class CodeAtom> program_genome;
 
 		while (_program.length() > 0)
 		{
@@ -25,11 +24,9 @@ namespace Plush
 			Atom atom(gene);
 
 			code_stack.push(atom);
-//			program_genome.push(atom);
 		}
 
 		while (!code_stack.empty())
-//		while (!program_genome.empty())
 		{
 			env.get_stack<CodeAtom>().push(CodeAtom(code_stack.get_top()));
 			env.get_stack<ExecAtom>().push(ExecAtom(code_stack.get_top()));
