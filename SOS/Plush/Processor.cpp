@@ -63,15 +63,15 @@ namespace Plush
 			switch (atom.type)
 			{
 			case Atom::AtomType::integer:
-				env.push1<long>(std::stol(atom.instruction));
+				env.push<long>(std::stol(atom.instruction));
 				unit = 1;
 				break;
 			case Atom::AtomType::floating_point:
-				env.push1<double>(std::stod(atom.instruction));
+				env.push<double>(std::stod(atom.instruction));
 				unit = 1;
 				break;
 			case Atom::AtomType::boolean:
-				env.push1<bool>(atom.instruction == "TRUE");
+				env.push<bool>(atom.instruction == "TRUE");
 				unit = 1;
 				break;
 			case Atom::AtomType::ins:
@@ -88,7 +88,7 @@ namespace Plush
 						if (blocks_closed > 0)
 						{
 							std::string noop = "{:instruction EXEC.NOOP :close " + std::to_string(blocks_closed) + "}";
-							env.push1<ExecAtom>(ExecAtom(noop));
+							env.push<ExecAtom>(ExecAtom(noop));
 						}
 					}
 				}

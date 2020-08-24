@@ -88,7 +88,7 @@ namespace Plush
 		/* pushing and popping */
 
 		template <typename T>
-		inline void push1(T value)
+		inline void push(T value)
 		{
 			// Debug_1
 			get_stack<T>().push(value);

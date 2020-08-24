@@ -15,7 +15,7 @@ namespace Plush
 	{
 		// Check for valid parameters
 		if (_env.has_elements<T>(1))
-			_env.push1<T>(_env.get_top<T>());
+			_env.push<T>(_env.get_top<T>());
 
 		return 1;
 	}
@@ -206,7 +206,7 @@ namespace Plush
 			int index = pop_safe_index<T>(_env);
 
 			T v = _env.peek_index<T>(index);
-			_env.push1<T>(v);
+			_env.push<T>(v);
 		}
 
 		return 1;
@@ -298,7 +298,7 @@ namespace Plush
 	{
 		// Check for valid parameters
 		if (_env.has_elements<T>(2))
-			_env.push1<bool>(_env.pop<T>() == _env.pop<T>());
+			_env.push<bool>(_env.pop<T>() == _env.pop<T>());
 
 		return 1;
 	}
@@ -316,9 +316,9 @@ namespace Plush
 			_env.pop<CodeAtom>(extracted_block_B);
 
 			if (extracted_block_A == extracted_block_B)
-				_env.push1<bool>(true);
+				_env.push<bool>(true);
 			else
-				_env.push1<bool>(false);
+				_env.push<bool>(false);
 		}
 
 		return 1;
@@ -337,9 +337,9 @@ namespace Plush
 			_env.pop<ExecAtom>(block_B);
 
 			if (block_A == block_B)
-				_env.push1<bool>(true);
+				_env.push<bool>(true);
 			else
-				_env.push1<bool>(false);
+				_env.push<bool>(false);
 		}
 
 		return 1;
@@ -390,9 +390,9 @@ namespace Plush
 			T x = _env.pop<T>();
 			T y = _env.pop<T>();
 			T z = _env.pop<T>();
-			_env.push1<T>(y);
-			_env.push1<T>(x);
-			_env.push1<T>(z);
+			_env.push<T>(y);
+			_env.push<T>(x);
+			_env.push<T>(z);
 		}
 
 		return 1;
@@ -468,7 +468,7 @@ namespace Plush
 				}
 
 				stack[stack_pointer + 1] = v;
-				_env.push1(stack[stack_size]);
+				_env.push(stack[stack_size]);
 			}
 
 			effort = stack.size() - insert_position + 1;
@@ -640,7 +640,7 @@ namespace Plush
 	template <class T>
 	inline unsigned stackdepth(Environment & _env)
 	{
-		_env.push1<long>(_env.get_stack<T>().size());
+		_env.push<long>(_env.get_stack<T>().size());
 		return 1;
 	}
 

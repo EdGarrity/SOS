@@ -50,7 +50,7 @@ namespace Plush
 			int i = _env.pop<long>();	// current index
 
 			if (n == i)
-				_env.push1<long>(i);
+				_env.push<long>(i);
 
 			else
 			{
@@ -59,14 +59,14 @@ namespace Plush
 				if (i > n)
 					direction = -1;
 
-				_env.push1<long>(i + direction);
-				_env.push1<long>(n);
+				_env.push<long>(i + direction);
+				_env.push<long>(n);
 
 				_env.pop(block_a);
 				_env.push_genome<ExecAtom>(block_a);
 				_env.push_genome<ExecAtom>(block_a);
 
-				_env.push1<ExecAtom>(ExecAtom("{:instruction EXEC.DO*RANGE :close 0}"));
+				_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.DO*RANGE :close 0}"));
 			}
 		}
 
@@ -123,10 +123,10 @@ namespace Plush
 
 			if (n > 0)
 			{
-				_env.push1<long>(0);
-				_env.push1<long>(n - 1);
+				_env.push<long>(0);
+				_env.push<long>(n - 1);
 
-				_env.push1<ExecAtom>(ExecAtom("{:instruction EXEC.DO*RANGE :close 0}"));
+				_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.DO*RANGE :close 0}"));
 			}
 		}
 
@@ -141,11 +141,11 @@ namespace Plush
 
 			if (n > 0)
 			{
-				_env.push1<long>(0);
-				_env.push1<long>(n - 1);
+				_env.push<long>(0);
+				_env.push<long>(n - 1);
 
-				_env.push1<ExecAtom>(ExecAtom("{:instruction INTEGER.POP :close 1}"));
-				_env.push1<ExecAtom>(ExecAtom("{:instruction EXEC.DO*RANGE :close 1}"));
+				_env.push<ExecAtom>(ExecAtom("{:instruction INTEGER.POP :close 1}"));
+				_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.DO*RANGE :close 1}"));
 			}
 		}
 
@@ -225,10 +225,10 @@ namespace Plush
 			_env.pop<ExecAtom>(block_c);
 
 			// Push a list containing B and C back onto the EXEC stack
-			_env.push1<ExecAtom>(ExecAtom("{:instruction EXEC.NOOP :close 1}"));
+			_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.NOOP :close 1}"));
 			_env.push_genome<ExecAtom>(block_b);
 			_env.push_genome<ExecAtom>(block_c);
-			_env.push1<ExecAtom>(ExecAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+			_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 
 			// Followed by another instance of C 
 			_env.push_genome<ExecAtom>(block_c);
@@ -249,7 +249,7 @@ namespace Plush
 			_env.pop<ExecAtom>(extracted_block);
 
 			_env.push_genome<ExecAtom>(extracted_block);
-			_env.push1<ExecAtom>(ExecAtom("{:instruction EXEC.Y :close 0}"));
+			_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.Y :close 0}"));
 			_env.push_genome<ExecAtom>(extracted_block);
 		}
 
@@ -292,10 +292,10 @@ namespace Plush
 			_env.pop<CodeAtom>(block);
 
 			if (block.size() == 1)
-				_env.push1<bool>(true);
+				_env.push<bool>(true);
 
 			else
-				_env.push1<bool>(false);
+				_env.push<bool>(false);
 		}
 
 		return 1;
@@ -338,7 +338,7 @@ namespace Plush
 			}
 
 			else
-				_env.push1<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
+				_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
 		}
 
 		return 1;
@@ -425,7 +425,7 @@ namespace Plush
 				_env.push_genome<CodeAtom>(container_block);
 
 			else
-				_env.push1<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
+				_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
 		}
 
 		return 1;
@@ -462,7 +462,7 @@ namespace Plush
 			}
 
 			bool found = (extracted_block_B.contains(extracted_block_A) >= 0);
-			_env.push1<bool>(found);
+			_env.push<bool>(found);
 		}
 
 		return 1;
@@ -510,7 +510,7 @@ namespace Plush
 					result += std::abs(count_a - count_b);
 				}
 
-				_env.push1<long>(result);
+				_env.push<long>(result);
 			}
 		}
 
@@ -525,7 +525,7 @@ namespace Plush
 
 			_env.pop<CodeAtom>(block_a);
 			_env.push_genome<CodeAtom>(block_a);
-			_env.push1<ExecAtom>(ExecAtom("{:instruction CODE.POP :close 1}"));
+			_env.push<ExecAtom>(ExecAtom("{:instruction CODE.POP :close 1}"));
 			_env.push_genome<ExecAtom>(block_a);
 
 			return 1;
@@ -556,7 +556,7 @@ namespace Plush
 
 			if (n == i)
 			{
-				_env.push1<long>(i);
+				_env.push<long>(i);
 				_env.pop(block_a);
 				_env.push_genome<ExecAtom>(block_a);
 			}
@@ -568,15 +568,15 @@ namespace Plush
 				if (i > n)
 					direction = -1;
 
-				_env.push1<long>(i + direction);
-				_env.push1<long>(n);
+				_env.push<long>(i + direction);
+				_env.push<long>(n);
 
 				_env.pop<CodeAtom>(block_a);
 				_env.push_genome<CodeAtom>(block_a);
 
 				_env.push_genome<ExecAtom>(block_a);
 
-				_env.push1<ExecAtom>(ExecAtom("{:instruction CODE.DO*RANGE :close 1}"));
+				_env.push<ExecAtom>(ExecAtom("{:instruction CODE.DO*RANGE :close 1}"));
 			}
 		}
 
@@ -591,10 +591,10 @@ namespace Plush
 
 			if (n > 0)
 			{
-				_env.push1<long>(0);
-				_env.push1<long>(n - 1);
+				_env.push<long>(0);
+				_env.push<long>(n - 1);
 
-				_env.push1<ExecAtom>(ExecAtom("{:instruction CODE.DO*RANGE :close 1}"));
+				_env.push<ExecAtom>(ExecAtom("{:instruction CODE.DO*RANGE :close 1}"));
 			}
 		}
 
@@ -609,11 +609,11 @@ namespace Plush
 
 			if (n > 0)
 			{
-				_env.push1<long>(0);
-				_env.push1<long>(n - 1);
+				_env.push<long>(0);
+				_env.push<long>(n - 1);
 
-				_env.push1<ExecAtom>(ExecAtom("{:instruction INTEGER.POP :close 1}"));
-				_env.push1<ExecAtom>(ExecAtom("{:instruction CODE.DO*RANGE :close 1}"));
+				_env.push<ExecAtom>(ExecAtom("{:instruction INTEGER.POP :close 1}"));
+				_env.push<ExecAtom>(ExecAtom("{:instruction CODE.DO*RANGE :close 1}"));
 			}
 		}
 
@@ -688,10 +688,10 @@ namespace Plush
 			bool val = _env.pop<bool>();
 
 			if (val)
-				_env.push1<CodeAtom>(CodeAtom("{:instruction TRUE :close 1}"));
+				_env.push<CodeAtom>(CodeAtom("{:instruction TRUE :close 1}"));
 
 			else
-				_env.push1<CodeAtom>(CodeAtom("{:instruction FALSE :close 1}"));
+				_env.push<CodeAtom>(CodeAtom("{:instruction FALSE :close 1}"));
 		}
 
 		return 1;
@@ -703,7 +703,7 @@ namespace Plush
 		{
 			double val = _env.pop<double>();
 			std::string instruction = Utilities::string_format("{:instruction %f :close 1}", val);
-			_env.push1<CodeAtom>(CodeAtom(instruction));
+			_env.push<CodeAtom>(CodeAtom(instruction));
 		}
 
 		return 1;
@@ -715,7 +715,7 @@ namespace Plush
 		{
 			long val = _env.pop<long>();
 			std::string instruction = Utilities::string_format("{:instruction %d :close 1}", val);
-			_env.push1<CodeAtom>(CodeAtom(instruction));
+			_env.push<CodeAtom>(CodeAtom(instruction));
 		}
 
 		return 1;
@@ -846,7 +846,7 @@ namespace Plush
 
 			// Get count items in first block
 			int number_of_items = top_block.number_of_items();
-			_env.push1<long>(number_of_items);
+			_env.push<long>(number_of_items);
 		}
 
 		return 1;
@@ -885,9 +885,9 @@ namespace Plush
 			extracted_block_B.bottom().close_parentheses++;
 
 			_env.push_genome<CodeAtom>(extracted_block_B);
-			_env.push1<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+			_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 			_env.push_genome<CodeAtom>(extracted_block_A);
-			_env.push1<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+			_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 		}
 
 		return 1;
@@ -923,7 +923,7 @@ namespace Plush
 			}
 
 			bool found = (extracted_block_A.contains(extracted_block_B) >= 0);
-			_env.push1<bool>(found);
+			_env.push<bool>(found);
 		}
 
 		return 1;
@@ -1025,15 +1025,15 @@ namespace Plush
 			_env.pop<CodeAtom>(top_block);
 
 			if (top_block.size() == 0)
-				_env.push1<bool>(true);
+				_env.push<bool>(true);
 			
 			else if ((top_block.size() == 1) 
 				&& (top_block.get_top().instruction == "CODE.NOOP")
 					&& (top_block.get_top().close_parentheses > 0))
-					_env.push1<bool>(true);
+					_env.push<bool>(true);
 
 			else
-				_env.push1<bool>(false);
+				_env.push<bool>(false);
 		}
 
 		return 1;
@@ -1069,12 +1069,12 @@ namespace Plush
 			}
 
 			int position = extracted_block_A.contains(extracted_block_B);
-			_env.push1<long>(position);
+			_env.push<long>(position);
 
 			if (extra_blocks > 0)
 			{
 				std::string noop = "{:instruction EXEC.NOOP :close " + std::to_string(extra_blocks) + "}";
-				_env.push1<CodeAtom>(CodeAtom(noop));
+				_env.push<CodeAtom>(CodeAtom(noop));
 			}
 		}
 
@@ -1106,7 +1106,7 @@ namespace Plush
 			// Get count of atoms
 			int size = top_block.size();
 
-			_env.push1<long>(size);
+			_env.push<long>(size);
 		}
 
 		return 1;
