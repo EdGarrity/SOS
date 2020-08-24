@@ -13,7 +13,7 @@ namespace Plush
 			double first = _env.pop<double>();
 			double second = _env.pop<double>();
 
-			_env.push<double>(fmod(second, first));
+			_env.push1<double>(fmod(second, first));
 		}
 
 		return 1;

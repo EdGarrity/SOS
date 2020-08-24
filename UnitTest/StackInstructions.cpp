@@ -15,7 +15,7 @@ namespace UnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
-			env.push<long>(10);
+			env.push1<long>(10);
 			Assert::IsTrue(is_stack_state(env, { 10 }, {}, {}, {}, {}));
 
 			Assert::AreEqual<long>(env.pop<long>(), 10);
@@ -27,7 +27,7 @@ namespace UnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
-			env.push<double>(10.0);
+			env.push1<double>(10.0);
 			Assert::IsTrue(is_stack_state(env, {}, { 10.0 }, {}, {}, {}));
 
 			Assert::AreEqual(env.pop<double>(), 10.0);
@@ -39,7 +39,7 @@ namespace UnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
-			env.push<bool>(true);
+			env.push1<bool>(true);
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {}, {}));
 
 			Assert::AreEqual(env.pop<bool>(), true);
@@ -51,13 +51,13 @@ namespace UnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
-			env.push<long>(10);
+			env.push1<long>(10);
 			Assert::IsTrue(is_stack_state(env, { 10 }, {}, {}, {}, {}));
 
-			env.push<long>(20);
+			env.push1<long>(20);
 			Assert::IsTrue(is_stack_state(env, { 10, 20 }, {}, {}, {}, {}));
 
-			env.push<long>(30);
+			env.push1<long>(30);
 			Assert::IsTrue(is_stack_state(env, { 10, 20, 30 }, {}, {}, {}, {}));
 
 			Assert::AreEqual<long>(env.get_top<long>(), 30);
@@ -78,13 +78,13 @@ namespace UnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
-			env.push<double>(10.0);
+			env.push1<double>(10.0);
 			Assert::IsTrue(is_stack_state(env, {}, { 10.0 }, {}, {}, {}));
 
-			env.push<double>(20.0);
+			env.push1<double>(20.0);
 			Assert::IsTrue(is_stack_state(env, {}, { 10.0, 20.0 }, {}, {}, {}));
 
-			env.push<double>(30.0);
+			env.push1<double>(30.0);
 			Assert::IsTrue(is_stack_state(env, {}, { 10.0, 20.0, 30.0 }, {}, {}, {}));
 
 			Assert::AreEqual(env.get_top<double>(), 30.0);
@@ -105,13 +105,13 @@ namespace UnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
-			env.push<bool>(true);
+			env.push1<bool>(true);
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {}, {}));
 
-			env.push<bool>(false);
+			env.push1<bool>(false);
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true, false }, {}, {}));
 
-			env.push<bool>(true);
+			env.push1<bool>(true);
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true, false, true }, {}, {}));
 
 			Assert::AreEqual(env.get_top<bool>(), true);

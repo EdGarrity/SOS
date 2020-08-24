@@ -15,7 +15,7 @@ namespace Plush
 	{
 		// Check for valid parameters
 		if (_env.has_elements<T>(1))
-			_env.push<T>(_env.get_top<T>());
+			_env.push1<T>(_env.get_top<T>());
 
 		return 1;
 	}
@@ -27,7 +27,7 @@ namespace Plush
 		if (_env.has_elements<CodeAtom>(1))
 		{
 			_env.get_top<CodeAtom>(stack);
-			_env.push(stack);
+			_env.push_genome<CodeAtom>(stack);
 		}
 
 		return 1;
@@ -40,7 +40,7 @@ namespace Plush
 		if (_env.has_elements<ExecAtom>(1))
 		{
 			_env.get_top<ExecAtom>(stack);
-			_env.push(stack);
+			_env.push_genome<CodeAtom>(stack);
 		}
 
 		return 1;
@@ -75,8 +75,9 @@ namespace Plush
 				// Remove item from deep in stack
 				unsigned int stack_size = _env.get_stack<T>().size();
 				int delete_position = stack_size - index - 1;
-
-				std::array<T, domain::argmap::maximum_stack_size>& stack = _env.get_stack<T>().container();
+// Debug_1
+//				std::array<T, domain::argmap::maximum_stack_size>& stack = _env.get_stack<T>().container();
+				Genome<T>& stack = _env.get_stack<T>();
 
 				if ((stack_size < domain::argmap::maximum_stack_size - 1) && (stack_size > 1))
 				{
@@ -139,8 +140,8 @@ namespace Plush
 					n++;
 				}
 
-				_env.push(modified_genome);
-				_env.push(target_block);
+				_env.push_genome<CodeAtom>(modified_genome);
+				_env.push_genome<CodeAtom>(target_block);
 			}											
 		}
 
@@ -188,8 +189,8 @@ namespace Plush
 					n++;
 				}
 
-				_env.push(modified_genome);
-				_env.push(target_block);
+				_env.push_genome<ExecAtom>(modified_genome);
+				_env.push_genome<ExecAtom>(target_block);
 			}
 		}
 
@@ -205,7 +206,7 @@ namespace Plush
 			int index = pop_safe_index<T>(_env);
 
 			T v = _env.peek_index<T>(index);
-			_env.push<T>(v);
+			_env.push1<T>(v);
 		}
 
 		return 1;
@@ -242,10 +243,10 @@ namespace Plush
 			{
 				Genome<CodeAtom> temp_block;
 				temp_genome.pop_genome(temp_block);
-				_env.push(temp_block);
+				_env.push_genome<CodeAtom>(temp_block);
 			}
 
-			_env.push(extracted_block);
+			_env.push_genome<CodeAtom>(extracted_block);
 		}
 
 		return 1;
@@ -282,10 +283,10 @@ namespace Plush
 			{
 				Genome<ExecAtom> temp_block;
 				temp_genome.pop_genome(temp_block);
-				_env.push(temp_block);
+				_env.push_genome<ExecAtom>(temp_block);
 			}
 
-			_env.push(extracted_block);
+			_env.push_genome<ExecAtom>(extracted_block);
 		}
 
 		return 1;
@@ -297,7 +298,7 @@ namespace Plush
 	{
 		// Check for valid parameters
 		if (_env.has_elements<T>(2))
-			_env.push<bool>(_env.pop<T>() == _env.pop<T>());
+			_env.push1<bool>(_env.pop<T>() == _env.pop<T>());
 
 		return 1;
 	}
@@ -315,9 +316,9 @@ namespace Plush
 			_env.pop<CodeAtom>(extracted_block_B);
 
 			if (extracted_block_A == extracted_block_B)
-				_env.push<bool>(true);
+				_env.push1<bool>(true);
 			else
-				_env.push<bool>(false);
+				_env.push1<bool>(false);
 		}
 
 		return 1;
@@ -336,9 +337,9 @@ namespace Plush
 			_env.pop<ExecAtom>(block_B);
 
 			if (block_A == block_B)
-				_env.push<bool>(true);
+				_env.push1<bool>(true);
 			else
-				_env.push<bool>(false);
+				_env.push1<bool>(false);
 		}
 
 		return 1;
@@ -389,9 +390,9 @@ namespace Plush
 			T x = _env.pop<T>();
 			T y = _env.pop<T>();
 			T z = _env.pop<T>();
-			_env.push<T>(y);
-			_env.push<T>(x);
-			_env.push<T>(z);
+			_env.push1<T>(y);
+			_env.push1<T>(x);
+			_env.push1<T>(z);
 		}
 
 		return 1;
@@ -410,9 +411,9 @@ namespace Plush
 			_env.pop<CodeAtom>(block_B);
 			_env.pop<CodeAtom>(block_C);
 
-			_env.push(block_B);
-			_env.push(block_A);
-			_env.push(block_C);
+			_env.push_genome<CodeAtom>(block_B);
+			_env.push_genome<CodeAtom>(block_A);
+			_env.push_genome<CodeAtom>(block_C);
 		}
 
 		return 1;
@@ -431,9 +432,9 @@ namespace Plush
 			_env.pop<ExecAtom>(block_B);
 			_env.pop<ExecAtom>(block_C);
 
-			_env.push(block_B);
-			_env.push(block_A);
-			_env.push(block_C);
+			_env.push_genome<ExecAtom>(block_B);
+			_env.push_genome<ExecAtom>(block_A);
+			_env.push_genome<ExecAtom>(block_C);
 		}
 
 		return 1;
@@ -444,33 +445,34 @@ namespace Plush
 	{
 		unsigned int effort = 1;
 
-		//if ((_env.has_elements<long>(1)) && (_env.has_elements<T>(1)))
-		//{
-		//	int index = pop_safe_index<T>(_env);
-		//	int stack_size = _env.get_stack<T>().size();
+		if ((_env.has_elements<long>(1)) && (_env.has_elements<T>(1)))
+		{
+			int index = pop_safe_index<T>(_env);
+			int stack_size = _env.get_stack<T>().size();
 
-		//	int insert_position = stack_size - index - 1;
+			int insert_position = stack_size - index - 1;
 
-		//	std::array<T, domain::argmap::maximum_stack_size>& stack = _env.get_stack<T>().container();
+//			std::array<T, domain::argmap::maximum_stack_size>& stack = _env.get_stack<T>().container();
+			Genome<T>& stack = _env.get_stack<T>();
 
-		//	if ((stack_size < domain::argmap::maximum_stack_size - 1) && (stack_size > 1))
-		//	{
-		//		T v = _env.get_top<T>();
+			if ((stack_size < domain::argmap::maximum_stack_size - 1) && (stack_size > 1))
+			{
+				T v = _env.get_top<T>();
 
-		//		int stack_pointer = stack_size - 1;
+				int stack_pointer = stack_size - 1;
 
-		//		while (stack_pointer >= insert_position)
-		//		{
-		//			stack[stack_pointer + 1] = stack[stack_pointer];
-		//			stack_pointer--;
-		//		}
+				while (stack_pointer >= insert_position)
+				{
+					stack[stack_pointer + 1] = stack[stack_pointer];
+					stack_pointer--;
+				}
 
-		//		stack[stack_pointer + 1] = v;
-		//		_env.push(stack[stack_size]);
-		//	}
+				stack[stack_pointer + 1] = v;
+				_env.push1(stack[stack_size]);
+			}
 
-		//	effort = stack.size() - insert_position + 1;
-		//}
+			effort = stack.size() - insert_position + 1;
+		}
 
 		return effort;
 	}
@@ -492,7 +494,7 @@ namespace Plush
 				_env.pop<CodeAtom>(first_block);
 
 				if (first_block.size() == 0)
-					_env.push(first_block);
+					_env.push_genome<CodeAtom>(first_block);
 
 				else
 				{
@@ -533,14 +535,16 @@ namespace Plush
 
 
 
-					Utilities::FixedSizeStack<CodeAtom>& stack = _env.get_stack<CodeAtom>();
-					Genome<CodeAtom>& genome = dynamic_cast<Genome<CodeAtom>&>(stack);
+					//Utilities::FixedSizeStack<CodeAtom>& stack = _env.get_stack<CodeAtom>();
+					//Genome<CodeAtom>& genome = dynamic_cast<Genome<CodeAtom>&>(stack);
+					Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
 
-					genome.split(top_block, bottom_block, index);
+					genome.split(top_block, bottom_block, index, Genome<CodeAtom>::SPLIT_MODE::block);
 
-					_env.push(bottom_block);
-					_env.push(first_block);
-					_env.push(top_block);
+					_env.clear<CodeAtom>();
+					_env.push_genome<CodeAtom>(bottom_block);
+					_env.push_genome<CodeAtom>(first_block);
+					_env.push_genome<CodeAtom>(top_block);
 				}
 			}
 		}
@@ -571,7 +575,7 @@ namespace Plush
 				_env.pop<ExecAtom>(first_block);
 
 				if (first_block.size() == 0)
-					_env.push(first_block);
+					_env.push_genome<ExecAtom>(first_block);
 
 				else
 				{
@@ -623,9 +627,9 @@ namespace Plush
 						bottom_block.push(temp_block);
 					}
 
-					_env.push(bottom_block);
-					_env.push(first_block);
-					_env.push(top_block);
+					_env.push_genome<ExecAtom>(bottom_block);
+					_env.push_genome<ExecAtom>(first_block);
+					_env.push_genome<ExecAtom>(top_block);
 				}
 			}
 		}
@@ -636,22 +640,24 @@ namespace Plush
 	template <class T>
 	inline unsigned stackdepth(Environment & _env)
 	{
-		_env.push<long>(_env.get_stack<T>().size());
+		_env.push1<long>(_env.get_stack<T>().size());
 		return 1;
 	}
 
 	template <typename T>
 	inline unsigned swap(Environment & _env)
 	{
-		//if (_env.has_elements<T>(2))
-		//{
-		//	std::array<T, domain::argmap::maximum_stack_size>& stack = _env.get_stack<T>().container();
-		//	unsigned int stack_size = _env.get_stack<T>().size();
+		if (_env.has_elements<T>(2))
+		{
+//			std::array<T, domain::argmap::maximum_stack_size>& stack = _env.get_stack<T>().container();
+			Genome<T>& stack = _env.get_stack<T>();
 
-		//	T tmp = stack[stack_size - 1];
-		//	stack[stack_size - 1] = stack[stack_size - 2];
-		//	stack[stack_size - 2] = tmp;
-		//}
+			unsigned int stack_size = _env.get_stack<T>().size();
+
+			T tmp = stack[stack_size - 1];
+			stack[stack_size - 1] = stack[stack_size - 2];
+			stack[stack_size - 2] = tmp;
+		}
 
 		return 1;
 	}
@@ -689,8 +695,8 @@ namespace Plush
 			// Balance parenthesis
 			extracted_block_A.bottom().close_parentheses += extra_blocks;
 
-			_env.push(extracted_block_A);
-			_env.push(extracted_block_B);
+			_env.push_genome<CodeAtom>(extracted_block_A);
+			_env.push_genome<CodeAtom>(extracted_block_B);
 		}
 
 		return 1;
@@ -729,8 +735,8 @@ namespace Plush
 			// Balance parenthesis
 			extracted_block_A.bottom().close_parentheses += extra_blocks;
 
-			_env.push(extracted_block_A);
-			_env.push(extracted_block_B);
+			_env.push_genome<ExecAtom>(extracted_block_A);
+			_env.push_genome<ExecAtom>(extracted_block_B);
 		}
 
 		return 1;

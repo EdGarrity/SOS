@@ -257,7 +257,8 @@ namespace Plush
 		//   left_half		- Reference to buffer to write genome items located before the split point
 		//   right_half		- Reference to buffer to write genome items located after the split point
 		//   split_position - Zero-based index of the split point in the genome list of items
-		// 
+		//   mode			- Bolck or Item
+		//
 		// Return value:
 		//   Number if items in the top level of the list
 		//
@@ -269,79 +270,140 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		unsigned int split(Genome<T> &left_half, Genome<T> &right_half, unsigned int split_position)
+		enum SPLIT_MODE
 		{
-			unsigned int item_number = 0;
-			unsigned int wanted_blocks = 0;
-			Utilities::FixedSizeStack<T> temp_left;
-			Utilities::FixedSizeStack<T> temp_right;
-			std::stack<unsigned int> wanted_stack;
-			int simulated_closing_parenthesis = 0;
-			Plush::Atom atom;
+			block,
+			item
+		};
+		unsigned int split(Genome<T> &left_half, 
+			Genome<T> &right_half, 
+			unsigned int split_position, 
+			SPLIT_MODE mode)
+		{
+			Genome<T> genome(this);
+			Genome<T> temp_left;
+			Genome<T> temp_right;
 
-			// Itierate through the stack in the order the would be poped
-			for (int n = Utilities::FixedSizeStack<T>::size() - 1; n >= 0; n--)
+			while ((genome.empty() == false) && (split_position-- > 0))
 			{
-				if (simulated_closing_parenthesis == 0)
-					atom = Utilities::FixedSizeStack<T>::stack_[n];
+				Genome<T> temp;
 
-				if (simulated_closing_parenthesis > 0)
-				{
-					atom = Plush::Atom("{:instruction EXEC.NOOP :close 1}");
-					simulated_closing_parenthesis--;
-					n++;
-				}
-
-				int closing = atom.close_parentheses - Func2BlockWantsMap[atom.instruction];
-
-				if (closing > 1)
-				{
-					simulated_closing_parenthesis = closing - 1;
-					atom.close_parentheses--;
-				}
-
-				if (item_number < split_position)
-					temp_left.push(atom);
+				if (mode == SPLIT_MODE::block)
+					genome.pop_genome(temp);
 				else
-					temp_right.push(atom);
+					genome.pop_item(temp);
 
-				if (closing < 0)
-				{
-					wanted_stack.push(wanted_blocks);
-					wanted_blocks = 0 - closing;
-				}
-
-				if (closing > 0)
-					wanted_blocks > 0 ? --wanted_blocks : 0;
-
-				if (wanted_blocks == 0)
-				{
-					if (wanted_stack.size() > 0)
-					{
-						wanted_blocks = wanted_stack.top();
-						wanted_stack.pop();
-					}
-
-					item_number++;
-				}
-			};
-
-			while (temp_left.size() > 0)
-			{
-				T atom = temp_left.get_top();
-				temp_left.pop();
-				left_half.push(atom);
+				temp_left.push(temp);
 			}
 
-			while (temp_right.size() > 0)
+			while (genome.empty() == false)
 			{
-				T atom = temp_right.get_top();
-				temp_right.pop();
-				right_half.push(atom);
+				Genome<T> temp;
+
+				if (mode == SPLIT_MODE::block)
+					genome.pop_genome(temp);
+				else
+					genome.pop_item(temp);
+
+				temp_right.push(temp);
 			}
 
-			if (simulated_closing_parenthesis > 0)
-				right_half.bottom().close_parentheses += simulated_closing_parenthesis;
+			while (temp_left.empty() == false)
+			{
+				Genome<T> temp;
+
+				if (mode == SPLIT_MODE::block)
+					temp_left.pop_genome(temp);
+				else
+					temp_left.pop_item(temp);
+
+				left_half.push(temp);
+			}
+
+			while (temp_right.empty() == false)
+			{
+				Genome<T> temp;
+
+				if (mode == SPLIT_MODE::block)
+					temp_right.pop_genome(temp);
+				else
+					temp_right.pop_item(temp);
+
+				right_half.push(temp);
+			}
+
+			unsigned int item_number = 0;
+			
+			//unsigned int wanted_blocks = 0;
+			//Genome<T> temp_left;
+			//Genome<T> temp_right;
+			//std::stack<unsigned int> wanted_stack;
+			//int simulated_closing_parenthesis = 0;
+			//T atom;
+
+			//// Itierate through the stack in the order the would be poped
+			//for (int n = Genome<T>::size() - 1; n >= 0; n--)
+			//{
+			//	if (simulated_closing_parenthesis == 0)
+			//		atom = Genome<T>::stack_[n];
+
+			//	if (simulated_closing_parenthesis > 0)
+			//	{
+			//		atom = Plush::Atom("{:instruction EXEC.NOOP :close 1}");
+			//		simulated_closing_parenthesis--;
+			//		n++;
+			//	}
+
+			//	int closing = atom.close_parentheses - Func2BlockWantsMap[atom.instruction];
+
+			//	if (closing > 1)
+			//	{
+			//		simulated_closing_parenthesis = closing - 1;
+			//		atom.close_parentheses--;
+			//	}
+
+			//	if (item_number < split_position)
+			//		temp_left.push(atom);
+			//	else
+			//		temp_right.push(atom);
+
+			//	if (closing < 0)
+			//	{
+			//		wanted_stack.push(wanted_blocks);
+			//		wanted_blocks = 0 - closing;
+			//	}
+
+			//	if (closing > 0)
+			//		wanted_blocks > 0 ? --wanted_blocks : 0;
+
+			//	if (wanted_blocks == 0)
+			//	{
+			//		if (wanted_stack.size() > 0)
+			//		{
+			//			wanted_blocks = wanted_stack.top();
+			//			wanted_stack.pop();
+			//		}
+
+			//		item_number++;
+			//	}
+			//};
+
+			//while (temp_left.size() > 0)
+			//{
+			//	T atom = temp_left.get_top();
+			//	temp_left.pop();
+			//	left_half.push(atom);
+			//}
+
+			//while (temp_right.size() > 0)
+			//{
+			//	T atom = temp_right.get_top();
+			//	temp_right.pop();
+			//	right_half.push(atom);
+			//}
+
+			//if (simulated_closing_parenthesis > 0)
+			//	right_half.bottom().close_parentheses += simulated_closing_parenthesis;
 
 			return item_number;
 		}
@@ -889,7 +951,9 @@ namespace Plush
 
 			while (Utilities::FixedSizeStack<T>::empty() == false)
 			{
-				Plush::Atom atom = Utilities::FixedSizeStack<T>::get_top();
+// Debug_1
+//				Plush::Atom atom = Utilities::FixedSizeStack<T>::get_top();
+				T atom = Utilities::FixedSizeStack<T>::get_top();
 				Utilities::FixedSizeStack<T>::pop();
 
 				temp.push(atom);
@@ -929,7 +993,9 @@ namespace Plush
 
 			while (temp.size() > 0)
 			{
-				Plush::Atom atom = temp.get_top();
+// Debug_1
+//				Plush::Atom atom = temp.get_top();
+				T atom = temp.get_top();
 				temp.pop();
 				poped_item.push(atom);
 				Utilities::FixedSizeStack<T>::push(atom);

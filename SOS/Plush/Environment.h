@@ -94,6 +94,11 @@ namespace Plush
 			return (get_stack<T>().empty());
 		}
 
+		template <typename T> inline void clear()
+		{
+			get_stack<T>().clear();
+		}
+
 		/* pushing and popping */
 
 		//template <typename T>
@@ -168,9 +173,17 @@ namespace Plush
 		//}
 
 		template <typename T>
+		inline void push1(T value)
+		{
+			// Debug_1
+			get_stack<T>().push(value);
+		}
+
+		template <typename T>
 		inline void push(T value)
 		{
-			get_stack<T>().push(value);
+			// Debug_1
+//			get_stack<T>().push(value);
 		}
 
 		template <class T>
@@ -278,8 +291,13 @@ namespace Plush
 		template <typename T>
 		inline T peek_index(unsigned index)
 		{
+// Debug_1
+//T val = get_stack<T>().get_top();
+//return val;
+			//if (has_elements<T>(index + 1))
+			//	return get_stack<T>().container()[get_stack<T>().size() - index - 1];
 			if (has_elements<T>(index + 1))
-				return get_stack<T>().container()[get_stack<T>().size() - index - 1];
+				return get_stack<T>()[get_stack<T>().size() - index - 1];
 
 			else
 				throw;

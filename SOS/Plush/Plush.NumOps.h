@@ -8,7 +8,7 @@ namespace Plush
 	inline unsigned push_cast(Environment & _env)
 	{
 		if (_env.has_elements<From>(1))
-			_env.push<To>(static_cast<To>(_env.pop<From>()));
+			_env.push1<To>(static_cast<To>(_env.pop<From>()));
 
 		return 1;
 	}
@@ -175,7 +175,7 @@ namespace Plush
 		{
 			T first = _env.pop<T>();
 			T second = _env.pop<T>();
-			_env.push<bool>(second < first);
+			_env.push1<bool>(second < first);
 		}
 
 		return 1;
@@ -188,7 +188,7 @@ namespace Plush
 		{
 			T first = _env.pop<T>();
 			T second = _env.pop<T>();
-			_env.push<bool>(second > first);
+			_env.push1<bool>(second > first);
 		}
 
 		return 1;
@@ -201,7 +201,7 @@ namespace Plush
 		{
 			T first = _env.pop<T>();
 			T second = _env.pop<T>();
-			_env.push<T>(std::max(first, second));
+			_env.push1<T>(std::max(first, second));
 		}
 
 		return 1;
@@ -214,7 +214,7 @@ namespace Plush
 		{
 			T first = _env.pop<T>();
 			T second = _env.pop<T>();
-			_env.push<T>(std::min(first, second));
+			_env.push1<T>(std::min(first, second));
 		}
 
 		return 1;

@@ -10,7 +10,7 @@ namespace Plush
 		{
 			bool first = _env.pop<bool>();
 			bool second = _env.pop<bool>();
-			_env.push<bool>(first && second);
+			_env.push1<bool>(first && second);
 		}
 
 		return 1;
@@ -22,7 +22,7 @@ namespace Plush
 		{
 			bool first = _env.pop<bool>();
 			bool second = _env.pop<bool>();
-			_env.push<bool>(first || second);
+			_env.push1<bool>(first || second);
 		}
 
 		return 1;
@@ -33,7 +33,7 @@ namespace Plush
 		if (_env.has_elements<bool>(1))
 		{
 			bool first = _env.pop<bool>();
-			_env.push<bool>(!first);
+			_env.push1<bool>(!first);
 		}
 
 		return 1;

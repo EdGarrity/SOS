@@ -63,15 +63,15 @@ namespace Plush
 			switch (atom.type)
 			{
 			case Atom::AtomType::integer:
-				env.push<long>(std::stol(atom.instruction));
+				env.push1<long>(std::stol(atom.instruction));
 				unit = 1;
 				break;
 			case Atom::AtomType::floating_point:
-				env.push<double>(std::stod(atom.instruction));
+				env.push1<double>(std::stod(atom.instruction));
 				unit = 1;
 				break;
 			case Atom::AtomType::boolean:
-				env.push<bool>(atom.instruction == "TRUE");
+				env.push1<bool>(atom.instruction == "TRUE");
 				unit = 1;
 				break;
 			case Atom::AtomType::ins:

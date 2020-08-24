@@ -15,7 +15,7 @@ namespace Plush
 
 			// Check for integer overflow
 			if ((first != -1) || (second != INT_MIN))
-				_env.push<long>(second % first);
+				_env.push1<long>(second % first);
 		}
 
 		return 1;
