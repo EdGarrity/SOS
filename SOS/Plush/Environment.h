@@ -95,13 +95,13 @@ namespace Plush
 		}
 
 		template <class T>
-		inline void push_genome(Genome<CodeAtom>& genome)
+		inline void push(Genome<CodeAtom>& genome)
 		{
 			get_stack<T>().push_genome(genome);
 		}
 		
 		template <class T>
-		inline void push_genome(Genome<ExecAtom>& genome)
+		inline void push(Genome<ExecAtom>& genome)
 		{
 			get_stack<T>().push_genome(genome);
 		}

@@ -27,7 +27,7 @@ namespace Plush
 		if (_env.has_elements<CodeAtom>(1))
 		{
 			_env.get_top<CodeAtom>(stack);
-			_env.push_genome<CodeAtom>(stack);
+			_env.push<CodeAtom>(stack);
 		}
 
 		return 1;
@@ -40,7 +40,7 @@ namespace Plush
 		if (_env.has_elements<ExecAtom>(1))
 		{
 			_env.get_top<ExecAtom>(stack);
-			_env.push_genome<CodeAtom>(stack);
+			_env.push<CodeAtom>(stack);
 		}
 
 		return 1;
@@ -140,8 +140,8 @@ namespace Plush
 					n++;
 				}
 
-				_env.push_genome<CodeAtom>(modified_genome);
-				_env.push_genome<CodeAtom>(target_block);
+				_env.push<CodeAtom>(modified_genome);
+				_env.push<CodeAtom>(target_block);
 			}											
 		}
 
@@ -189,8 +189,8 @@ namespace Plush
 					n++;
 				}
 
-				_env.push_genome<ExecAtom>(modified_genome);
-				_env.push_genome<ExecAtom>(target_block);
+				_env.push<ExecAtom>(modified_genome);
+				_env.push<ExecAtom>(target_block);
 			}
 		}
 
@@ -243,10 +243,10 @@ namespace Plush
 			{
 				Genome<CodeAtom> temp_block;
 				temp_genome.pop_genome(temp_block);
-				_env.push_genome<CodeAtom>(temp_block);
+				_env.push<CodeAtom>(temp_block);
 			}
 
-			_env.push_genome<CodeAtom>(extracted_block);
+			_env.push<CodeAtom>(extracted_block);
 		}
 
 		return 1;
@@ -283,10 +283,10 @@ namespace Plush
 			{
 				Genome<ExecAtom> temp_block;
 				temp_genome.pop_genome(temp_block);
-				_env.push_genome<ExecAtom>(temp_block);
+				_env.push<ExecAtom>(temp_block);
 			}
 
-			_env.push_genome<ExecAtom>(extracted_block);
+			_env.push<ExecAtom>(extracted_block);
 		}
 
 		return 1;
@@ -411,9 +411,9 @@ namespace Plush
 			_env.pop<CodeAtom>(block_B);
 			_env.pop<CodeAtom>(block_C);
 
-			_env.push_genome<CodeAtom>(block_B);
-			_env.push_genome<CodeAtom>(block_A);
-			_env.push_genome<CodeAtom>(block_C);
+			_env.push<CodeAtom>(block_B);
+			_env.push<CodeAtom>(block_A);
+			_env.push<CodeAtom>(block_C);
 		}
 
 		return 1;
@@ -432,9 +432,9 @@ namespace Plush
 			_env.pop<ExecAtom>(block_B);
 			_env.pop<ExecAtom>(block_C);
 
-			_env.push_genome<ExecAtom>(block_B);
-			_env.push_genome<ExecAtom>(block_A);
-			_env.push_genome<ExecAtom>(block_C);
+			_env.push<ExecAtom>(block_B);
+			_env.push<ExecAtom>(block_A);
+			_env.push<ExecAtom>(block_C);
 		}
 
 		return 1;
@@ -494,7 +494,7 @@ namespace Plush
 				_env.pop<CodeAtom>(first_block);
 
 				if (first_block.size() == 0)
-					_env.push_genome<CodeAtom>(first_block);
+					_env.push<CodeAtom>(first_block);
 
 				else
 				{
@@ -542,9 +542,9 @@ namespace Plush
 					genome.split(top_block, bottom_block, index, Genome<CodeAtom>::SPLIT_MODE::block);
 
 					_env.clear<CodeAtom>();
-					_env.push_genome<CodeAtom>(bottom_block);
-					_env.push_genome<CodeAtom>(first_block);
-					_env.push_genome<CodeAtom>(top_block);
+					_env.push<CodeAtom>(bottom_block);
+					_env.push<CodeAtom>(first_block);
+					_env.push<CodeAtom>(top_block);
 				}
 			}
 		}
@@ -575,7 +575,7 @@ namespace Plush
 				_env.pop<ExecAtom>(first_block);
 
 				if (first_block.size() == 0)
-					_env.push_genome<ExecAtom>(first_block);
+					_env.push<ExecAtom>(first_block);
 
 				else
 				{
@@ -627,9 +627,9 @@ namespace Plush
 						bottom_block.push(temp_block);
 					}
 
-					_env.push_genome<ExecAtom>(bottom_block);
-					_env.push_genome<ExecAtom>(first_block);
-					_env.push_genome<ExecAtom>(top_block);
+					_env.push<ExecAtom>(bottom_block);
+					_env.push<ExecAtom>(first_block);
+					_env.push<ExecAtom>(top_block);
 				}
 			}
 		}
@@ -695,8 +695,8 @@ namespace Plush
 			// Balance parenthesis
 			extracted_block_A.bottom().close_parentheses += extra_blocks;
 
-			_env.push_genome<CodeAtom>(extracted_block_A);
-			_env.push_genome<CodeAtom>(extracted_block_B);
+			_env.push<CodeAtom>(extracted_block_A);
+			_env.push<CodeAtom>(extracted_block_B);
 		}
 
 		return 1;
@@ -735,8 +735,8 @@ namespace Plush
 			// Balance parenthesis
 			extracted_block_A.bottom().close_parentheses += extra_blocks;
 
-			_env.push_genome<ExecAtom>(extracted_block_A);
-			_env.push_genome<ExecAtom>(extracted_block_B);
+			_env.push<ExecAtom>(extracted_block_A);
+			_env.push<ExecAtom>(extracted_block_B);
 		}
 
 		return 1;
