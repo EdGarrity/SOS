@@ -98,7 +98,7 @@ namespace Plush
 			std::stack<unsigned int> wanted_stack;
 			int n = Utilities::FixedSizeStack<T>::size() - 1;
 
-			while (n >= 0)
+			while ((n >= 0) || (extra_blocks > 0))
 			{
 				Plush::Atom atom;
 
@@ -108,12 +108,15 @@ namespace Plush
 					n--;
 				}
 				else
+				{
 					atom = Plush::Atom("{:instruction EXEC.NOOP :close 1}");
+					extra_blocks--;
+				}
+
+				if ((n < 0) && (extra_blocks <= 0) && (atom.close_parentheses == 0))
+					atom.close_parentheses = 1;
 
 				int closing = atom.close_parentheses - Func2BlockWantsMap[atom.instruction];
-
-				if (n < 0)
-					closing = wanted_blocks;
 
 				if (closing < 0)
 				{
@@ -127,9 +130,6 @@ namespace Plush
 				{
 					if (wanted_blocks > 0)
 						wanted_blocks--;
-
-					else if ((wanted_blocks == 0) && (wanted_stack.size() == 0))
-						break;
 				}
 
 				if (wanted_blocks == 0)
@@ -142,8 +142,6 @@ namespace Plush
 						wanted_blocks = wanted_stack.top();
 						wanted_stack.pop();
 					}
-					else
-						wanted_blocks = 1; // Assume closing parenthesis on top level block always start another block.
 				}
 			}
 
@@ -783,7 +781,7 @@ namespace Plush
 			unsigned int item_number = 0;
 			unsigned int wanted_blocks = 0;
 			unsigned int extra_blocks = 0;
-			Utilities::FixedSizeStack<CodeAtom> temp;
+			Utilities::FixedSizeStack<T> temp;
 			std::stack<unsigned int> wanted_stack;
 
 			poped_item.clear();

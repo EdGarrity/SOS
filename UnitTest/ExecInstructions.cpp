@@ -1850,7 +1850,7 @@ namespace UnitTest
 					{:instruction 3.0 :close 2}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
+			Assert::IsTrue(is_stack_state(env, {}, { 3.0, 1.0, 1.1, 1.2, 2.0, 2.1 }, {}, {},
 				{
 					CodeAtom("{:instruction 3.0 :close 2}"),
 					CodeAtom("{:instruction 2.1 :close 1}"),
@@ -1943,7 +1943,7 @@ namespace UnitTest
 					{:instruction 3.0 :close 2}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, {}, { 3.0, 1.0, 1.1, 1.2, 2.0, 2.1 }, {}, {},
+			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
 					CodeAtom("{:instruction 3.0 :close 2}"),
 					CodeAtom("{:instruction 2.1 :close 1}"),

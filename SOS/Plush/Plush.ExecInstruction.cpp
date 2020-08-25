@@ -126,8 +126,8 @@ namespace Plush
 				_env.push<long>(0);
 				_env.push<long>(n - 1);
 
-				_env.push<ExecAtom>(ExecAtom("{:instruction INTEGER.POP :close 1}"));
-				_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.DO*RANGE :close 1}"));
+				_env.push<ExecAtom>(ExecAtom("{:instruction INTEGER.POP :close 0}"));
+				_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.DO*RANGE :close 0}"));
 			}
 		}
 
@@ -136,6 +136,17 @@ namespace Plush
 
 	unsigned exec_k(Environment & _env)
 	{
+		if (_env.has_elements<ExecAtom>(2))
+		{
+			Genome<ExecAtom> block_a;
+			Genome<ExecAtom> block_b;
+
+			_env.pop<ExecAtom>(block_a);
+			_env.pop<ExecAtom>(block_b);
+
+			_env.push<ExecAtom>(block_a);
+		}
+
 		//if (_env.has_elements<ExecAtom>(2))
 		//{
 		//	int index = 1;

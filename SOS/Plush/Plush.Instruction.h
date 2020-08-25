@@ -40,7 +40,7 @@ namespace Plush
 		if (_env.has_elements<ExecAtom>(1))
 		{
 			_env.get_top<ExecAtom>(stack);
-			_env.push<CodeAtom>(stack);
+			_env.push<ExecAtom>(stack);
 		}
 
 		return 1;
