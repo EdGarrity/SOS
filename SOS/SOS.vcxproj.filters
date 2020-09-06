@@ -40,6 +40,18 @@
     <Filter Include="Header Files\Domain\Learn From Examples">
       <UniqueIdentifier>{4d87c76a-4020-434e-9db5-279efb38e8aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Domain">
+      <UniqueIdentifier>{cc453880-d0cd-4c5f-ae4f-f3f6b7e457bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Domain\Learn From Examples">
+      <UniqueIdentifier>{60353737-3136-4c96-8de2-30679052c18b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Database">
+      <UniqueIdentifier>{ed68d610-6692-4458-bf9c-e91e1e08f9c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Database">
+      <UniqueIdentifier>{84afd13c-2678-4fa3-aa84-67a87b3a6ee7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -141,6 +153,15 @@
     <ClInclude Include="Domain\Learn From Examples\Arguments.h">
       <Filter>Header Files\Domain\Learn From Examples</Filter>
     </ClInclude>
+    <ClInclude Include="Domain\Learn From Examples\Run.LearnFromExamples.h">
+      <Filter>Header Files\Domain\Learn From Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Database\SQLCommand.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="Database\SQLConnection.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -223,6 +244,15 @@
     </ClCompile>
     <ClCompile Include="Plush\Plush.IntegerInstructions.cpp">
       <Filter>Source Files\Plush</Filter>
+    </ClCompile>
+    <ClCompile Include="Domain\Learn From Examples\Run.LearnFromExamples.cpp">
+      <Filter>Source Files\Domain\Learn From Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Database\SQLCommand.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="Database\SQLConnection.cpp">
+      <Filter>Source Files\Database</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

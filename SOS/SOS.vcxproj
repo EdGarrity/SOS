@@ -156,8 +156,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Database\SQLCommand.h" />
+    <ClInclude Include="Database\SQLConnection.h" />
     <ClInclude Include="Domain\Arguments.h" />
     <ClInclude Include="Domain\Learn From Examples\Arguments.h" />
+    <ClInclude Include="Domain\Learn From Examples\Run.LearnFromExamples.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Plush\Atom.h" />
     <ClInclude Include="Plush\Environment.h" />
@@ -191,6 +194,9 @@
     <ClInclude Include="Utilities\Singleton.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Database\SQLCommand.cpp" />
+    <ClCompile Include="Database\SQLConnection.cpp" />
+    <ClCompile Include="Domain\Learn From Examples\Run.LearnFromExamples.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
