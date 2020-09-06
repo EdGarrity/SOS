@@ -1,7 +1,8 @@
 #include "Genome.h"
 //#include "../PushP/Instruction.h"
-#include "../Domain/Arguments.h"
-#include "../Utilities/MyException.h"
+//#include "../Domain/Arguments.h"
+//#include "../Utilities/MyException.h"
+//#include "..\Utilities\String.h"
 
 namespace Plush
 {
@@ -112,9 +113,9 @@ namespace Plush
 	//
 //	void Genome::set(std::string _genome_string)
 //	{
-//		ingest_plush_genome(_genome_string);
-////		translate_plush_genome_to_push_program();
-//		convert_genome_to_string();
+////		ingest_plush_genome(_genome_string);
+//////		translate_plush_genome_to_push_program();
+////		convert_genome_to_string();
 //	}
 
 	// Purpose: 
@@ -225,6 +226,19 @@ namespace Plush
 	//			atom.type = atom.ins;
 
 	//		genome_atoms_.push_back(atom);
+	//	}
+
+
+	//	std::string gene;
+	//	Utilities::FixedSizeStack<Atom> code_stack;
+
+	//	while (_genome_str.length() > 0)
+	//	{
+	//		gene = first_atom(_genome_str);
+	//		_genome_str = rest_atom(_genome_str);
+	//		Utilities::trim(_genome_str);
+
+	//		Atom atom(gene);
 	//	}
 	//}
 
@@ -450,19 +464,19 @@ namespace Plush
 	//
 	// Remarks:
 	//
-	//void Genome::convert_genome_to_string()
+	//void Plush::convert_genome_to_string()
 	//{
 	//	genome_string_.clear();
 
-	//	//for (int n = 0; n < genome_atoms_.size(); n++)
-	//	//{
-	//	//	genome_string_ += "{";
-	//	//	genome_string_ += ":instruction ";
-	//	//	genome_string_ += genome_atoms_[n].instruction;
-	//	//	genome_string_ += " :close  ";
-	//	//	genome_string_ += std::to_string(genome_atoms_[n].close_parentheses);
-	//	//	genome_string_ += "}";
-	//	//}
+	//	for (int n = 0; n < Utilities::FixedSizeStack<T>::size(); n++)
+	//	{
+	//		genome_string_ += "{";
+	//		genome_string_ += ":instruction ";
+	//		genome_string_ += genome_atoms_[n].instruction;
+	//		genome_string_ += " :close  ";
+	//		genome_string_ += std::to_string(genome_atoms_[n].close_parentheses);
+	//		genome_string_ += "}";
+	//	}
 	//}
 
 //template<class T>

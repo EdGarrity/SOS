@@ -230,7 +230,7 @@ namespace Plush
 				temp_genome.push(extracted_block);
 
 				if ((index) == 0)
-					extracted_block.bottom().close_parentheses = 1;
+					extracted_block.bottom().close_parenthesis = 1;
 
 				index--;
 			}
@@ -270,7 +270,7 @@ namespace Plush
 				temp_genome.push(extracted_block);
 
 				if ((index) == 0)
-					extracted_block.bottom().close_parentheses = 1;
+					extracted_block.bottom().close_parenthesis = 1;
 
 				index--;
 			}
@@ -556,7 +556,7 @@ namespace Plush
 							if ((n + 1) == index)
 							{
 								simulated_closing_parenthesis = extra_blocks;
-								genome.bottom().close_parentheses = 1;;
+								genome.bottom().close_parenthesis = 1;;
 							}
 
 							else

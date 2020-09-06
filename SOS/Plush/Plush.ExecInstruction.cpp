@@ -21,7 +21,7 @@ namespace Plush
 			ExecAtom atom = code_block.get_top();
 			code_block.pop();
 
-			atom.close_parentheses = (atom.close_parentheses > 0) ? atom.close_parentheses - 1 : atom.close_parentheses;
+			atom.close_parenthesis = (atom.close_parenthesis > 0) ? atom.close_parenthesis - 1 : atom.close_parenthesis;
 			code_block.push(atom);
 
 			_env.push<ExecAtom>(code_block);
@@ -259,15 +259,15 @@ namespace Plush
 			_env.pop(block_a);
 			_env.pop(block_b);
 
-			block_a.bottom().close_parentheses
-				= (block_a.bottom().close_parentheses > 0)
-				? block_a.bottom().close_parentheses - 1
-				: block_a.bottom().close_parentheses;
+			block_a.bottom().close_parenthesis
+				= (block_a.bottom().close_parenthesis > 0)
+				? block_a.bottom().close_parenthesis - 1
+				: block_a.bottom().close_parenthesis;
 
-			block_b.bottom().close_parentheses
-				= (block_b.bottom().close_parentheses == 0)
+			block_b.bottom().close_parenthesis
+				= (block_b.bottom().close_parenthesis == 0)
 				? 1 
-				: block_b.bottom().close_parentheses;
+				: block_b.bottom().close_parenthesis;
 
 			_env.push<CodeAtom>(block_b);
 			_env.push<CodeAtom>(block_a);
@@ -305,7 +305,7 @@ namespace Plush
 			{
 				Genome<CodeAtom> first_item;
 				top_block.pop_item(first_item);
-				first_item.bottom().close_parentheses++;
+				first_item.bottom().close_parenthesis++;
 				_env.push<CodeAtom>(first_item);
 			}
 
@@ -347,7 +347,7 @@ namespace Plush
 			_env.pop<CodeAtom>(block_a);
 			_env.pop<CodeAtom>(block_b);
 
-			block_b.bottom().close_parentheses--;
+			block_b.bottom().close_parenthesis--;
 			
 			_env.push<CodeAtom>(block_a);
 			_env.push<CodeAtom>(block_b);
@@ -593,18 +593,18 @@ namespace Plush
 
 					// Compensate for extra blocks in the second item.
 					if (extra_second_bloxks > 0)
-						right_half.bottom().close_parentheses += extra_second_bloxks;
+						right_half.bottom().close_parenthesis += extra_second_bloxks;
 
 					// Get indexed block
 					right_half.split(indexed_block, rest_block, 1, Genome<CodeAtom>::SPLIT_MODE::item);
 
 					// Close extracted item
 					if ((indexed_block.get_top_ref().instruction == "EXEC.NOOP_OPEN_PAREN") 
-						&& (indexed_block.get_top_ref().close_parentheses == 0)
+						&& (indexed_block.get_top_ref().close_parenthesis == 0)
 						)
-						indexed_block.bottom().close_parentheses = 2;
+						indexed_block.bottom().close_parenthesis = 2;
 					else
-						indexed_block.bottom().close_parentheses = 1;
+						indexed_block.bottom().close_parenthesis = 1;
 
 					// Replace top of stack with extracted item
 					_env.push<CodeAtom>(indexed_block);
@@ -758,7 +758,7 @@ namespace Plush
 			_env.pop<CodeAtom>(extracted_block_B);
 
 			// Close combined list
-			extracted_block_B.bottom().close_parentheses++;
+			extracted_block_B.bottom().close_parenthesis++;
 
 			_env.push<CodeAtom>(extracted_block_B);
 			_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
@@ -820,7 +820,7 @@ namespace Plush
 
 					// Push extracted item back on the code stack
 					if ((index + 1) != number_of_items)
-						left_half.bottom().close_parentheses++;
+						left_half.bottom().close_parenthesis++;
 
 					_env.push<CodeAtom>(left_half);
 				}
@@ -834,7 +834,7 @@ namespace Plush
 
 					// Push extracted item back on the code stack
 					if ((index + 1) != number_of_items)
-						left_half.bottom().close_parentheses++;
+						left_half.bottom().close_parenthesis++;
 	
 					_env.push<CodeAtom>(left_half);
 				}
@@ -887,7 +887,7 @@ namespace Plush
 			
 			else if ((top_block.size() == 1) 
 				&& (top_block.get_top().instruction == "CODE.NOOP")
-					&& (top_block.get_top().close_parentheses > 0))
+					&& (top_block.get_top().close_parenthesis > 0))
 					_env.push<bool>(true);
 
 			else

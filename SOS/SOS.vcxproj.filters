@@ -63,35 +63,14 @@
     <ClInclude Include="Utilities\Singleton.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="PushGP\Individual.h">
-      <Filter>Header Files\PushGP</Filter>
-    </ClInclude>
-    <ClInclude Include="PushGP\Random.h">
-      <Filter>Header Files\PushGP</Filter>
-    </ClInclude>
-    <ClInclude Include="PushGP\Selection.h">
-      <Filter>Header Files\PushGP</Filter>
-    </ClInclude>
-    <ClInclude Include="PushGP\GeneticOperators.h">
-      <Filter>Header Files\PushGP</Filter>
-    </ClInclude>
-    <ClInclude Include="PushGP\Breed.h">
-      <Filter>Header Files\PushGP</Filter>
-    </ClInclude>
     <ClInclude Include="Utilities\Conversion.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="Utilities\AtomicFunctions.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="PushGP\Globals.h">
-      <Filter>Header Files\PushGP</Filter>
-    </ClInclude>
     <ClInclude Include="Utilities\CSVIterator.h">
       <Filter>Header Files\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="PushGP\Utilities.h">
-      <Filter>Header Files\PushGP</Filter>
     </ClInclude>
     <ClInclude Include="Plush\Genome.h">
       <Filter>Header Files\Plush</Filter>
@@ -107,9 +86,6 @@
     </ClInclude>
     <ClInclude Include="Utilities\SystemInfo.h">
       <Filter>Header Files\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="PushGP\SimulatedAnnealing.h">
-      <Filter>Header Files\PushGP</Filter>
     </ClInclude>
     <ClInclude Include="Plush\Processor.h">
       <Filter>Header Files\Plush</Filter>
@@ -153,14 +129,23 @@
     <ClInclude Include="Domain\Learn From Examples\Arguments.h">
       <Filter>Header Files\Domain\Learn From Examples</Filter>
     </ClInclude>
-    <ClInclude Include="Domain\Learn From Examples\Run.LearnFromExamples.h">
-      <Filter>Header Files\Domain\Learn From Examples</Filter>
-    </ClInclude>
     <ClInclude Include="Database\SQLCommand.h">
       <Filter>Header Files\Database</Filter>
     </ClInclude>
     <ClInclude Include="Database\SQLConnection.h">
       <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="PushGP\Globals.h">
+      <Filter>Header Files\PushGP</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Learn From Examples\Run.LearnFromExamples.h">
+      <Filter>Header Files\Domain\Learn From Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="PushGP\SimulatedAnnealing.h">
+      <Filter>Header Files\PushGP</Filter>
+    </ClInclude>
+    <ClInclude Include="PushGP\Individual.h">
+      <Filter>Header Files\PushGP</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -173,32 +158,11 @@
     <ClCompile Include="Utilities\MyException.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="PushGP\Individual.cpp">
-      <Filter>Source Files\PushGP</Filter>
-    </ClCompile>
-    <ClCompile Include="PushGP\Random.cpp">
-      <Filter>Source Files\PushGP</Filter>
-    </ClCompile>
-    <ClCompile Include="PushGP\Selection.cpp">
-      <Filter>Source Files\PushGP</Filter>
-    </ClCompile>
-    <ClCompile Include="PushGP\GeneticOperators.cpp">
-      <Filter>Source Files\PushGP</Filter>
-    </ClCompile>
-    <ClCompile Include="PushGP\Breed.cpp">
-      <Filter>Source Files\PushGP</Filter>
-    </ClCompile>
     <ClCompile Include="Utilities\Conversion.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="Utilities\AtomicFunctions.cpp">
       <Filter>Source Files\Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="PushGP\Globals.cpp">
-      <Filter>Source Files\PushGP</Filter>
-    </ClCompile>
-    <ClCompile Include="PushGP\Utilities.cpp">
-      <Filter>Source Files\PushGP</Filter>
     </ClCompile>
     <ClCompile Include="Plush\Genome.cpp">
       <Filter>Source Files\Plush</Filter>
@@ -211,9 +175,6 @@
     </ClCompile>
     <ClCompile Include="Utilities\SystemInfo.cpp">
       <Filter>Source Files\Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="PushGP\SimulatedAnnealing.cpp">
-      <Filter>Source Files\PushGP</Filter>
     </ClCompile>
     <ClCompile Include="Plush\Processor.cpp">
       <Filter>Source Files\Plush</Filter>
@@ -245,14 +206,23 @@
     <ClCompile Include="Plush\Plush.IntegerInstructions.cpp">
       <Filter>Source Files\Plush</Filter>
     </ClCompile>
-    <ClCompile Include="Domain\Learn From Examples\Run.LearnFromExamples.cpp">
-      <Filter>Source Files\Domain\Learn From Examples</Filter>
-    </ClCompile>
     <ClCompile Include="Database\SQLCommand.cpp">
       <Filter>Source Files\Database</Filter>
     </ClCompile>
     <ClCompile Include="Database\SQLConnection.cpp">
       <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="Domain\Learn From Examples\Run.LearnFromExamples.cpp">
+      <Filter>Source Files\Domain\Learn From Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="PushGP\SimulatedAnnealing.cpp">
+      <Filter>Source Files\PushGP</Filter>
+    </ClCompile>
+    <ClCompile Include="PushGP\Globals.cpp">
+      <Filter>Source Files\PushGP</Filter>
+    </ClCompile>
+    <ClCompile Include="PushGP\Individual.cpp">
+      <Filter>Source Files\PushGP</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

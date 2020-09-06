@@ -75,7 +75,7 @@ namespace Plush
 				// Push open parenthesis onto stack if instruction expects any blocks
 
 				int blocks_needed = Func2BlockWantsMap[atom.instruction];
-				int blocks_closed = atom.close_parentheses;
+				int blocks_closed = atom.close_parenthesis;
 
 				// Close expected blocks for each block the instruction is expecting if the instruction closes that block.
 				if (atom.instruction != "EXEC.NOOP")

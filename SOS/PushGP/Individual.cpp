@@ -1,88 +1,85 @@
-//#include <string.h>
-//
-//#include "Individual.h"
-//#include "..\PushP\Instruction.h"
-//#include "..\PushP\Env.h"
-//#include "..\PushP\Literal.h"
+#include <string.h>
+
+#include "Individual.h"
 //#include "Utilities.h"
-//#include "Globals.h"
+#include "Globals.h"
+
+// Purpose: 
+//   Overload less-than relational operator for comparison of two GUID values.
 //
-//// Purpose: 
-////   Overload less-than relational operator for comparison of two GUID values.
-////
-//// Parameters:
-////   guid1 - Reference to left-hand GUID operand.
-////   guid2 - Reference to right-hand GUID operand.
-//// 
-//// Return value:
-////   True if guid1 is less than guid 2.
-////   False if guid1 is not less than guid 2
-////
-//// Side Effects:
-////   None
-////
-//// Thread Safe:
-////   Yes
-////
-//// Remarks:
-////   This function will do a relational comparison of each data element of the provided GUID values.
-////
-////bool operator < (const GUID &guid1, const GUID &guid2) {
-////	if (guid1.Data1 != guid2.Data1) {
-////		return guid1.Data1 < guid2.Data1;
-////	}
-////	if (guid1.Data2 != guid2.Data2) {
-////		return guid1.Data2 < guid2.Data2;
-////	}
-////	if (guid1.Data3 != guid2.Data3) {
-////		return guid1.Data3 < guid2.Data3;
-////	}
-////	for (int i = 0; i < 8; i++) {
-////		if (guid1.Data4[i] != guid2.Data4[i]) {
-////			return guid1.Data4[i] < guid2.Data4[i];
-////		}
-////	}
-////	return false;
-////}
+// Parameters:
+//   guid1 - Reference to left-hand GUID operand.
+//   guid2 - Reference to right-hand GUID operand.
+// 
+// Return value:
+//   True if guid1 is less than guid 2.
+//   False if guid1 is not less than guid 2
 //
-//// Returns the number of points in tree, where each atom and each pair of parentheses 
-//// counts as a point.
+// Side Effects:
+//   None
 //
+// Thread Safe:
+//   Yes
 //
-//namespace pushGP
-//{
-//	using namespace Push;
+// Remarks:
+//   This function will do a relational comparison of each data element of the provided GUID values.
 //
-//	// Purpose: 
-//	//   Erase individual's genome and all member fields
-//	//
-//	// Parameters:
-//	//   None
-//	// 
-//	// Return value:
-//	//   None
-//	//
-//	// Side Effects:
-//	//   The individual's mamber fields are reset
-//	//
-//	// Thread Safe:
-//	//   No.  Lock individual to prevent access to member fields during initializtion
-//	//
-//	// Remarks:
-//	//   This function must be called whenever a new individual is contructed
-//	//
-//	void Individual::init()
-//	{
-//		genome_.clear();
-//
-//		// Uniquely identify the indivudal to track genealogy
-//		::UuidCreate(&id_);
-//
-//		parents_.clear();
-//		grandparents_.clear();
-//		greatgrandparents_.clear();
+//bool operator < (const GUID &guid1, const GUID &guid2) {
+//	if (guid1.Data1 != guid2.Data1) {
+//		return guid1.Data1 < guid2.Data1;
 //	}
-//
+//	if (guid1.Data2 != guid2.Data2) {
+//		return guid1.Data2 < guid2.Data2;
+//	}
+//	if (guid1.Data3 != guid2.Data3) {
+//		return guid1.Data3 < guid2.Data3;
+//	}
+//	for (int i = 0; i < 8; i++) {
+//		if (guid1.Data4[i] != guid2.Data4[i]) {
+//			return guid1.Data4[i] < guid2.Data4[i];
+//		}
+//	}
+//	return false;
+//}
+
+// Returns the number of points in tree, where each atom and each pair of parentheses 
+// counts as a point.
+
+
+namespace pushGP
+{
+////	using namespace Push;
+
+	// Purpose: 
+	//   Erase individual's genome and all member fields
+	//
+	// Parameters:
+	//   None
+	// 
+	// Return value:
+	//   None
+	//
+	// Side Effects:
+	//   The individual's mamber fields are reset
+	//
+	// Thread Safe:
+	//   No.  Lock individual to prevent access to member fields during initializtion
+	//
+	// Remarks:
+	//   This function must be called whenever a new individual is contructed
+	//
+	void Individual::init()
+	{
+		genome_.clear();
+
+		// Uniquely identify the indivudal to track genealogy
+		::UuidCreate(&id_);
+
+		parents_.clear();
+		grandparents_.clear();
+		greatgrandparents_.clear();
+	}
+
 //	// Purpose: 
 //	//   Default Constructor
 //	//
@@ -163,10 +160,10 @@
 //
 //		parents_.insert(globals::population_agents[parent].get_id());
 //
-//		grandparents_.insert(globals::population_agents[parent].get_parents().begin(), 
+//		grandparents_.insert(globals::population_agents[parent].get_parents().begin(),
 //			globals::population_agents[parent].get_parents().end());
 //
-//		greatgrandparents_.insert(globals::population_agents[parent].get_grandparents().begin(), 
+//		greatgrandparents_.insert(globals::population_agents[parent].get_grandparents().begin(),
 //			globals::population_agents[parent].get_grandparents().end());
 //	}
 //
@@ -258,20 +255,20 @@
 //	//   This function is used to track an individual's ancestory to help ensure population divdersity.
 //	//
 //	void Individual::record_family_tree(const GUID Parent_1,
-//										const GUID Parent_2,
-//										const GUID Parent_1_1,
-//										const GUID Parent_1_2,
-//										const GUID Parent_2_1,
-//										const GUID Parent_2_2,
-//										const GUID Parent_1_1_1,
-//										const GUID Parent_1_1_2,
-//										const GUID Parent_1_2_1,
-//										const GUID Parent_1_2_2,
-//										const GUID Parent_2_1_1,
-//										const GUID Parent_2_1_2,
-//										const GUID Parent_2_2_1,
-//										const GUID Parent_2_2_2
-//										)
+//		const GUID Parent_2,
+//		const GUID Parent_1_1,
+//		const GUID Parent_1_2,
+//		const GUID Parent_2_1,
+//		const GUID Parent_2_2,
+//		const GUID Parent_1_1_1,
+//		const GUID Parent_1_1_2,
+//		const GUID Parent_1_2_1,
+//		const GUID Parent_1_2_2,
+//		const GUID Parent_2_1_1,
+//		const GUID Parent_2_1_2,
+//		const GUID Parent_2_2_1,
+//		const GUID Parent_2_2_2
+//	)
 //	{
 //		UUID NilUuid;
 //
@@ -324,32 +321,32 @@
 //		if (Parent_2_2_2 != NilUuid)
 //			greatgrandparents_.insert(Parent_2_2_2);
 //	}
-//
-//	// Purpose: 
-//	//   Set individual's genome to provided string and update individual's program
-//	//
-//	// Parameters:
-//	//   genome_string - String containing new genome
-//	// 
-//	// Return value:
-//	//   None
-//	//
-//	// Side Effects:
-//	//   The individual's genome is set to the provided string, and the individual's PUSH program is 
-//	//   updated with the PUSH translation of the provided genome string.
-//	//
-//	// Thread Safe:
-//	//   No.  Lock individual to prevent access to member fields during initializtion
-//	//
-//	// Remarks:
-//	//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
-//	//
-//	void Individual::set_genome(std::string _genome_string)
-//	{
-//		init();
-//		genome_.set(_genome_string);
-//	}
-//
+
+	// Purpose: 
+	//   Set individual's genome to provided string and update individual's program
+	//
+	// Parameters:
+	//   genome_string - String containing new genome
+	// 
+	// Return value:
+	//   None
+	//
+	// Side Effects:
+	//   The individual's genome is set to the provided string, and the individual's PUSH program is 
+	//   updated with the PUSH translation of the provided genome string.
+	//
+	// Thread Safe:
+	//   No.  Lock individual to prevent access to member fields during initializtion
+	//
+	// Remarks:
+	//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
+	//
+	void Individual::set_genome(std::string _genome_string)
+	{
+		init();
+		genome_.set(_genome_string);
+	}
+
 //	// Purpose: 
 //	//   Set individual's genome to provided vector of Atoms and update individual's program
 //	//
@@ -369,11 +366,11 @@
 //	// Remarks:
 //	//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
 //	//
-//	void Individual::set_genome(std::vector<struct Plush::Atom> _genome)
-//	{
-//		init();
-//		genome_.set(_genome);
-//	}
+//	//void Individual::set_genome(Plush::Genome<Plush::Atom> _genome)
+//	//{
+//	//	init();
+//	//	genome_.set(_genome);
+//	//}
 //
 //	// Purpose: 
 //	//   Erase individual's genome, PUSH program, and all member fields
@@ -469,33 +466,33 @@
 //		return genome_.to_string();
 //	}
 //
-//		//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
+//	//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
 //
-//	//void pushGP::Individual::translate_plush_genome_to_push_program()
-//	//{
-//	//	program_ = pushGP::translate_plush_genome_to_push_program(genome_);
-//	//}
+////void pushGP::Individual::translate_plush_genome_to_push_program()
+////{
+////	program_ = pushGP::translate_plush_genome_to_push_program(genome_);
+////}
 //
-//	// Purpose: 
-//	//   Returns a stream which representation of the individual's genome
-//	//
-//	// Parameters:
-//	//   None
-//	// 
-//	// Return value:
-//	//   The individul's genome as a stream
-//	//
-//	// Side Effects:
-//	//   None
-//	//
-//	// Thread Safe:
-//	//   Yes
-//	//
-//	// Remarks:
-//	//
+//// Purpose: 
+////   Returns a stream which representation of the individual's genome
+////
+//// Parameters:
+////   None
+//// 
+//// Return value:
+////   The individul's genome as a stream
+////
+//// Side Effects:
+////   None
+////
+//// Thread Safe:
+////   Yes
+////
+//// Remarks:
+////
 //	std::ostream& operator<<(std::ostream& os, Individual& individual)
 //	{
 //		os << individual.get_genome_as_string();
 //		return os;
 //	}
-//}
+}

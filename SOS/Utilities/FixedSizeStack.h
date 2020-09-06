@@ -2,7 +2,8 @@
 #include <array>
 #include <stdexcept>
 #include <sstream>
-#include "..\PushGP\Globals.h"
+//#include "..\PushGP\Globals.h"
+#include "../Domain/Arguments.h"
 #include "..\Plush\Atom.h"
 
 // Purpose: 
