@@ -10,6 +10,9 @@ namespace Plush
 	typedef std::map<std::string, Operator> Func2CodeMapType;
 	extern 	Func2CodeMapType Func2CodeMap;
 
+	typedef std::vector<std::string> Names;
+	extern Names function_names;
+
 	// Declared in Processor.h
 	//typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
 	//extern Func2BlockWantsMapType Func2BlockWantsMap;
@@ -40,5 +43,15 @@ namespace Plush
 	inline void set_parentheses(std::string name, unsigned int block_wants)
 	{
 		static_initializer.set_parentheses(name, block_wants);
+	}
+
+	inline unsigned int number_of_functions()
+	{
+		return function_names.size();
+	}
+
+	inline std::string get_function_name(unsigned int function_index)
+	{
+		return function_names[function_index];
 	}
 }

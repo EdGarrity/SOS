@@ -371,7 +371,7 @@ namespace Plush
 			// Get second block from stack
 			_env.pop<CodeAtom>(extracted_block_B);
 
-			if (extracted_block_A.container(extracted_block_B, container_block))
+			if (extracted_block_A.container_of(extracted_block_B, container_block))
 				_env.push<CodeAtom>(container_block);
 
 			else

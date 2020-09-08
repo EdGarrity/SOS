@@ -158,6 +158,7 @@ namespace Plush
 	//};
 
 	void run(Environment& env, std::string _program);
+	unsigned int run(Environment& env, unsigned _max_effort);
 
 	
 	

@@ -1,3 +1,5 @@
+#define NOMINMAX
+
 #include <functional>
 #include <concurrent_unordered_set.h>
 #include <concurrent_vector.h>
@@ -18,14 +20,14 @@
 #include "..\..\Utilities\CSVIterator.h"
 #include "../../Utilities/Random.Utilities.h"
 #include "../../PushGP/Globals.h"
-//#include "ErrorFunction.LearnFromExample.h"
-//#include "../../PushGP/Random.h"
-//#include "../../PushGP/Breed.h"
+#include "../../Utilities/Conversion.h"
+#include "ErrorFunction.LearnFromExample.h"
+#include "../../PushGP/Breed.h"
+#include "../../PushGP/AsyncBreed.h"
+#include "../../PushGP/Random.h"
 //#include "../../Plush/Environment.h"
 //#include "../../PushGP/Utilities.h"
 //#include "../../Plush/Genome.h"
-//#include "../../Utilities/Conversion.h"
-//#include "../../PushGP/AsyncBreed.h"
 
 // Correction for Syntax error with std::numeric_limits::max compiler error
 // See https://stackoverflow.com/questions/27442885/syntax-error-with-stdnumeric-limitsmax
@@ -507,21 +509,21 @@ namespace domain
 						std::string genome = sqlcmd_get_individuals->get_field_as_string(2);
 						pushGP::globals::population_agents[n].set_genome(genome);
 
-						//pushGP::globals::population_agents[n].record_family_tree(
-						//	StringToGuid(sqlcmd_get_individuals->get_field_as_string(3)),
-						//	StringToGuid(sqlcmd_get_individuals->get_field_as_string(4)),
-						//	StringToGuid(sqlcmd_get_individuals->get_field_as_string(5)),
-						//	StringToGuid(sqlcmd_get_individuals->get_field_as_string(6)),
-						//	StringToGuid(sqlcmd_get_individuals->get_field_as_string(7)),
-						//	StringToGuid(sqlcmd_get_individuals->get_field_as_string(8)),
-						//	StringToGuid(sqlcmd_get_individuals->get_field_as_string(9)),
-						//	StringToGuid(sqlcmd_get_individuals->get_field_as_string(10)),
-						//	StringToGuid(sqlcmd_get_individuals->get_field_as_string(11)),
-						//	StringToGuid(sqlcmd_get_individuals->get_field_as_string(12)),
-						//	StringToGuid(sqlcmd_get_individuals->get_field_as_string(13)),
-						//	StringToGuid(sqlcmd_get_individuals->get_field_as_string(14)),
-						//	StringToGuid(sqlcmd_get_individuals->get_field_as_string(15)),
-						//	StringToGuid(sqlcmd_get_individuals->get_field_as_string(16)));
+						pushGP::globals::population_agents[n].record_family_tree(
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(3)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(4)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(5)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(6)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(7)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(8)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(9)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(10)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(11)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(12)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(13)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(14)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(15)),
+							StringToGuid(sqlcmd_get_individuals->get_field_as_string(16)));
 
 						n++;
 					}
@@ -544,16 +546,470 @@ namespace domain
 			unsigned int agents_created = 0;
 
 			for (int n = _start; n < argmap::population_size; n++)
-			{
-//				pushGP::globals::population_agents[n].set_genome(pushGP::random_plush_genome());
-
 				agents_created++;
-			}
 
 			// Cleanup thread factories
 			_env.clear_stacks();
 
 			return agents_created;
+		}
+
+		void save_generation()
+		{
+			UUID NilUuid;
+
+			// creates a nil-valued UUID
+			UuidCreateNil(&NilUuid);
+
+			database::SQLCommand* sqlcmd_delete_individuals;
+			database::SQLCommand* sqlcmd_insert_new_individual;
+
+			sqlcmd_delete_individuals = new database::SQLCommand(&con, sqlstmt_delete_individual);
+			sqlcmd_insert_new_individual = new database::SQLCommand(&con);
+
+			// Begin a transaction
+			sqlcmd_insert_new_individual->begin_transaction();  //transaction->begin();
+
+			// Delete previously saved generation
+			sqlcmd_insert_new_individual->execute(sqlstmt_delete_individual);
+
+			// Save new generation
+			sqlcmd_insert_new_individual->set_command(sqlstmt_insert_new_individual);
+
+			for (int n = 0; n < argmap::population_size; n++)
+			{
+				sqlcmd_insert_new_individual->set_as_integer(1, n + 1);
+				sqlcmd_insert_new_individual->set_as_string(2, pushGP::globals::population_agents[n]);
+
+				std::unordered_set<UUID> parents = pushGP::globals::population_agents[n].get_parents();
+				auto it = parents.begin();
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(3, *it++);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(3, NilUuid);
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(4, *it);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(4, NilUuid);
+
+				parents = pushGP::globals::population_agents[n].get_grandparents();
+				it = parents.begin();
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(5, *it++);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(5, NilUuid);
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(6, *it++);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(6, NilUuid);
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(7, *it++);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(7, NilUuid);
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(8, *it);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(8, NilUuid);
+
+				parents = pushGP::globals::population_agents[n].get_greatgrandparents();
+				it = parents.begin();
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(9, *it++);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(9, NilUuid);
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(10, *it++);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(10, NilUuid);
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(11, *it++);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(11, NilUuid);
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(12, *it++);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(12, NilUuid);
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(13, *it++);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(13, NilUuid);
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(14, *it++);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(14, NilUuid);
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(15, *it++);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(15, NilUuid);
+
+				if (it != parents.end())
+					sqlcmd_insert_new_individual->set_as_GUID(16, *it);
+				else
+					sqlcmd_insert_new_individual->set_as_GUID(16, NilUuid);
+
+				sqlcmd_insert_new_individual->execute();
+			}
+
+			// Commit transaction
+			sqlcmd_insert_new_individual->commit_transaction();  //transaction->commit();
+
+			delete sqlcmd_delete_individuals;
+			delete sqlcmd_insert_new_individual;
+		}
+
+		std::tuple<int, double, double> compute_training_errors(Plush::Environment& _env,
+			std::function<double(Plush::Environment& _env,
+				unsigned int _individual_index,
+				std::vector<double>& _input_list,
+				std::vector<double>& _output_list)> _run_individual_program,
+			int _number_of_example_cases)
+		{
+			int individual_with_least_error = -1;
+			int individual_with_best_score = -1;
+			double min_error = (std::numeric_limits<double>::max)();
+			double min_score = (std::numeric_limits<double>::max)();
+
+			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
+			{
+				int error_count_for_individual = 0;
+				double avg_error_for_individual = 0.0;
+
+				if ((individual_index % 100) == 0)
+					std::cout << individual_index;
+
+				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
+				{
+					std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
+					std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
+
+					// Run program
+					double error = _run_individual_program(_env, individual_index, example_problem, example_solution);
+
+					if (error > 0.0)
+						error_count_for_individual++;
+
+					avg_error_for_individual += error;
+
+					pushGP::globals::error_matrix[example_case][individual_index] = error;
+				}
+
+				// Calculate the average error for all example cases
+				avg_error_for_individual /= (double)_number_of_example_cases;
+
+				double score = (double)error_count_for_individual / (double)_number_of_example_cases;
+
+				if ((score < 1.0) && (score < min_score))
+				{
+					min_score = score;
+					individual_with_best_score = individual_index;
+				}
+
+				if (avg_error_for_individual < min_error)
+				{
+					min_error = avg_error_for_individual;
+					individual_with_least_error = individual_index;
+				}
+
+				if ((individual_index % 100) == 0)
+					std::cout << std::endl;
+			}
+
+
+			std::cout << std::endl;
+
+			return std::make_tuple
+			(
+				(individual_with_best_score == -1) ? individual_with_least_error : individual_with_best_score,
+				min_score,
+				min_error
+			);
+		}
+
+		std::tuple<int, double, double> parallel_compute_training_errors(Plush::Environment& _env,
+			std::function<double(Plush::Environment& _env,
+				unsigned int _individual_index,
+				std::vector<double>& _input_list,
+				std::vector<double>& _output_list)> _run_individual_program,
+			int _number_of_example_cases)
+		{
+			int individual_with_least_error = -1;
+			int individual_with_best_score = -1;
+			double min_error = (std::numeric_limits<double>::max)();
+			double min_score = (std::numeric_limits<double>::max)();
+			const unsigned int zero = 0;
+
+			parallel_for(zero, domain::argmap::population_size / domain::argmap::thread_chunk_size, [&, _number_of_example_cases](const unsigned int chunk_index)
+			{
+				for (int individual_index = chunk_index * domain::argmap::thread_chunk_size; individual_index < (chunk_index + 1) * domain::argmap::thread_chunk_size; individual_index++)
+				{
+					int error_count_for_individual = 0;
+					double avg_error_for_individual = 0.0;
+
+					for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
+					{
+						std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
+						std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
+
+						// Run program
+						double error = _run_individual_program(_env, individual_index, example_problem, example_solution);
+
+						if (error > 0.0)
+							error_count_for_individual++;
+
+						avg_error_for_individual += error;
+
+						pushGP::globals::error_matrix[example_case][individual_index] = error;
+					}
+
+					// Calculate the average error for all example cases
+					avg_error_for_individual /= (double)_number_of_example_cases;
+
+					double score = (double)error_count_for_individual / (double)_number_of_example_cases;
+
+					if ((score < 1.0) && (score < min_score))
+					{
+						min_score = score;
+						individual_with_best_score = individual_index;
+					}
+
+					if (avg_error_for_individual < min_error)
+					{
+						min_error = avg_error_for_individual;
+						individual_with_least_error = individual_index;
+					}
+				}
+			});
+
+			return std::make_tuple
+			(
+				(individual_with_best_score == -1) ? individual_with_least_error : individual_with_best_score,
+				min_score,
+				min_error
+			);
+		}
+
+		double compute_test_errors(Plush::Environment& _env,
+			std::function<double(Plush::Environment& _env,
+				unsigned int _individual_index,
+				std::vector<double>& _example_problem,
+				std::vector<double>& _example_solution)> _run_individual_program,
+			int _individual_index)
+		{
+			double error = (std::numeric_limits<double>::max)();
+			int error_count = 0;
+
+			for (int example_case = 0; example_case < argmap::number_of_test_cases; ++example_case)
+			{
+				std::cout << ".";
+
+				std::vector<double> example_problem(test_cases_problem[example_case].begin(), test_cases_problem[example_case].end());
+				std::vector<double> example_solution(test_cases_solution[example_case].begin(), test_cases_solution[example_case].end());
+
+				double example_case_error = _run_individual_program(_env, _individual_index, example_problem, example_solution);
+
+				if (example_case_error > 0.0)
+					error_count++;
+			}
+
+			error = (double)error_count / (double)argmap::number_of_test_cases;
+
+			std::cout << std::endl;
+			std::cout << std::endl;
+
+			return error;
+		}
+
+		void produce_new_offspring(int _number_of_example_cases,
+			unsigned int _best_individual,
+			pushGP::SimulatedAnnealing & sa,
+			bool _include_best_individual_in_breeding_pool)
+		{
+			std::set<std::string> set_of_gnomes;
+			combinable<pushGP::globals::Training_case_min_error_type> training_case_min_error;
+
+			// Reset children.
+			std::cout << "  Reset children" << std::endl;
+			for (unsigned int n = 0; n < argmap::population_size; n++)
+				pushGP::globals::child_agents[n].clear_genome();
+
+			// Breed new generation
+			std::cout << "  Breed new generation" << std::endl;
+
+			for (unsigned int individual_index = 0; individual_index < argmap::population_size; individual_index++)
+			{
+				// Keep the best individual
+				if ((_include_best_individual_in_breeding_pool) && (individual_index == _best_individual))
+					pushGP::globals::child_agents[individual_index].copy(pushGP::globals::population_agents[individual_index]);
+
+				else
+				{
+					pushGP::breed(individual_index,
+						_number_of_example_cases,
+						training_case_min_error,
+						sa,
+						_include_best_individual_in_breeding_pool,
+						_best_individual);
+
+					// If a child with the same genome already exists, create a new random child.
+					if (set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string()).second == false)
+						pushGP::globals::child_agents[individual_index].set_genome(pushGP::random_plush_genome());
+				}
+			}
+
+			// Keep the best individuals for each test case
+			if (_include_best_individual_in_breeding_pool)
+			{
+				for (unsigned int training_case = 0; training_case < domain::argmap::number_of_training_cases; training_case++)
+				{
+					unsigned int best_individual_for_training_case = training_case_min_error.local().individual_with_minimum_error_for_training_case[training_case];
+
+					if (best_individual_for_training_case < (std::numeric_limits<unsigned int>::max)())
+						pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);
+				}
+			}
+
+			std::cout << std::endl;
+		}
+
+		void parallel_produce_new_offspring(int _number_of_example_cases,
+			unsigned int _best_individual,
+			pushGP::SimulatedAnnealing & sa,
+			bool _include_best_individual_in_breeding_pool)
+		{
+			concurrent_unordered_set<std::string> set_of_gnomes;
+			combinable<pushGP::globals::Training_case_min_error_type> training_case_min_error_sub_computations;
+			pushGP::globals::Training_case_min_error_type training_case_min_error;
+
+			// Reset children.
+			std::cout << "  Reset children" << std::endl;
+			for (unsigned int n = 0; n < argmap::population_size; n++)
+				pushGP::globals::child_agents[n].clear_genome();
+
+			// Breed new generation
+			std::cout << "  Breed new generation" << std::endl;
+
+			//			for (unsigned int individual_index = 0; individual_index < argmap::population_size; individual_index++)
+			const unsigned int zero = 0;
+			parallel_for(zero, domain::argmap::population_size, [&, _best_individual, _number_of_example_cases](const unsigned int individual_index)
+			{
+				// Keep the best individual
+				if (individual_index == _best_individual)
+					pushGP::globals::child_agents[individual_index].copy(pushGP::globals::population_agents[individual_index]);
+
+				else
+				{
+					pushGP::breed(individual_index,
+						_number_of_example_cases,
+						training_case_min_error_sub_computations,
+						sa,
+						_include_best_individual_in_breeding_pool,
+						_best_individual);
+				}
+			});
+
+			parallel_for(zero, domain::argmap::population_size, [&, _best_individual, _number_of_example_cases](const unsigned int individual_index)
+			{
+				// If a child with the same genome already exists, create a new random child.
+				if (individual_index != _best_individual)
+				{
+					if (set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string()).second == false)
+						pushGP::globals::child_agents[individual_index].set_genome(pushGP::random_plush_genome());
+				}
+			});
+
+			// Combine the Training Case Minimum Errors
+			training_case_min_error_sub_computations.combine_each([&](pushGP::globals::Training_case_min_error_type &local)
+			{
+				for (unsigned int example_case = 0; example_case < domain::argmap::number_of_training_cases; example_case++)
+				{
+					if (training_case_min_error.minimum_error_array_by_example_case[example_case] > local.minimum_error_array_by_example_case[example_case])
+					{
+						training_case_min_error.minimum_error_array_by_example_case[example_case] = local.minimum_error_array_by_example_case[example_case];
+						training_case_min_error.individual_with_minimum_error_for_training_case[example_case] = local.individual_with_minimum_error_for_training_case[example_case];
+					}
+				}
+			});
+
+			// Keep the best individuals for each test case
+			if (_include_best_individual_in_breeding_pool)
+			{
+				for (unsigned int training_case = 0; training_case < domain::argmap::number_of_training_cases; training_case++)
+				{
+					unsigned int best_individual_for_training_case = training_case_min_error.individual_with_minimum_error_for_training_case[training_case];
+
+					if (best_individual_for_training_case < (std::numeric_limits<unsigned int>::max)())
+						pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);
+				}
+			}
+
+			std::cout << std::endl;
+		}
+
+		void install_next_generation()
+		{
+			for (unsigned int n = 0; n < argmap::population_size; n++)
+				pushGP::globals::population_agents[n].copy(pushGP::globals::child_agents[n]);
+
+			// Possibly this is where we should compile the genomes
+		}
+
+		void generate_status_report(unsigned int _generation_number,
+			unsigned int _generations_completed_this_session,
+			unsigned int _best_individual_id,
+			double _best_individual_training_score,
+			double _best_individual_training_error,
+			double _best_individual_prev_training_error,
+			double _average_traiing_error,
+			double _standard_deviation,
+			double _best_individual_test_score,
+			double _temperature,
+			unsigned long _stalled_count,
+			unsigned int _cool_down_count,
+			bool _include_best_individual_in_breeding_pool,
+			std::string _best_gnome)
+		{
+			database::SQLCommand* sqlcmd_save_status_report;
+
+			sqlcmd_save_status_report = new database::SQLCommand(&con, sqlstmt_save_status_report);
+
+			sqlcmd_save_status_report->set_as_integer(1, _generation_number);
+			sqlcmd_save_status_report->set_as_integer(2, _generations_completed_this_session);
+			sqlcmd_save_status_report->set_as_integer(3, _best_individual_id);
+			sqlcmd_save_status_report->set_as_float(4, _best_individual_training_score);
+			sqlcmd_save_status_report->set_as_float(5, _best_individual_training_error);
+			sqlcmd_save_status_report->set_as_float(6, _average_traiing_error);
+			sqlcmd_save_status_report->set_as_float(7, _standard_deviation);
+			sqlcmd_save_status_report->set_as_float(8, _best_individual_test_score);
+			sqlcmd_save_status_report->set_as_integer(9, argmap::number_of_training_cases);
+			sqlcmd_save_status_report->set_as_integer(10, argmap::number_of_test_cases);
+			sqlcmd_save_status_report->set_as_string(11, _best_gnome);
+			sqlcmd_save_status_report->set_as_integer(12, argmap::population_size);
+			sqlcmd_save_status_report->set_as_float(13, argmap::alternation_rate);
+			sqlcmd_save_status_report->set_as_float(14, argmap::uniform_mutation_rate);
+			sqlcmd_save_status_report->set_as_integer(15, argmap::example_case_max_length);
+			sqlcmd_save_status_report->set_as_integer(16, argmap::example_case_upper_range);
+			sqlcmd_save_status_report->set_as_float(17, _temperature);
+			sqlcmd_save_status_report->set_as_float(18, _best_individual_prev_training_error);
+			sqlcmd_save_status_report->set_as_integer(19, _stalled_count);
+			sqlcmd_save_status_report->set_as_integer(20, _cool_down_count);
+			sqlcmd_save_status_report->set_as_integer(21, _include_best_individual_in_breeding_pool);
+
+			sqlcmd_save_status_report->execute();
+
+			delete sqlcmd_save_status_report;
 		}
 
 		int run()
@@ -610,7 +1066,6 @@ namespace domain
 				if (agents_created > 0)
 					generation_number = 0;
 
-
 				int best_individual = -1;
 				double best_individual_score = std::numeric_limits<double>::max();
 				double best_individual_error = get_last_best_individual_error(std::numeric_limits<double>::max());
@@ -619,6 +1074,165 @@ namespace domain
 				int cool_down_count = get_last_cool_down_count(argmap::cool_down_period);
 				bool include_best_individual_in_breeding_pool = get_include_best_individual_in_breeding_pool(true);
 
+				while ((!done) && (generations_completed_this_session < argmap::max_generations_in_one_session))
+				{
+					if ((std::fabs(best_individual_error - prev_best_individual_error) < argmap::stalled_delta) && (cool_down_count <= 0))
+						stalled_count = (stalled_count < 0) ? 0 : stalled_count - 1;
+
+					else
+						stalled_count = argmap::stalled_count_trigger;
+
+					if (stalled_count <= 0)
+					{
+						sa.set_hot();
+						cool_down_count = argmap::cool_down_period;
+						include_best_individual_in_breeding_pool = false;
+
+						std::cout << "Heat up " << sa.get_tempareture() << std::endl;
+					}
+					else
+					{
+						sa.cool_down();
+						cool_down_count = (cool_down_count < 0) ? 0 : cool_down_count - 1;
+
+						std::cout << "Cool down " << sa.get_tempareture() << std::endl;
+					}
+
+					prev_best_individual_error = best_individual_error;
+
+					// Check if CPU is too hot and if so, wait for it to cool down.
+					double temp = Utilities::GetCpuTemperature();
+
+					std::cout << "CPU Temperature: Min = " << argmap::cool_temperature << " Max = " << argmap::hot_temperature << " Current Temp = " << temp << std::endl;
+
+					if (temp > argmap::hot_temperature)
+					{
+						std::cout << "CPU is too hot.  Waiting for it to cool down." << std::endl;
+
+						do
+						{
+							std::this_thread::sleep_for(std::chrono::minutes(argmap::cool_down_minutes));
+							temp = Utilities::GetCpuTemperature();
+
+							std::cout << "CPU Temperature is " << temp << std::endl;
+						} while (temp > argmap::cool_temperature);
+
+						std::cout << "CPU is now cool enough to continue." << std::endl;
+						std::cout << std::endl;
+					}
+
+					// Check if there is enough memory to continue
+					unsigned long percent_memory_use = Utilities::GetMemoryLoad();
+
+					if (percent_memory_use > argmap::percent_memory_cap)
+					{
+						std::stringstream error;
+
+						error << "Not enough free memory to continue.  Percent used = " << percent_memory_use;
+
+						std::cerr << error.str() << std::endl;
+
+						return 1;
+					}
+
+					// Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+					std::cout << "Reset variables which track the minimum error for this test case and the individual who achived the minimum error " << std::endl;
+
+					for (int ind = 0; ind < argmap::population_size; ind++)
+					{
+						for (int training_case_index = 0; training_case_index < argmap::number_of_training_cases; training_case_index++)
+							pushGP::globals::error_matrix[training_case_index][ind] = 0.0;
+					}
+
+					std::cout << "Generation " << generation_number << std::endl;
+					std::cout << "Session " << generations_completed_this_session << std::endl;
+					save_generation();
+
+					std::cout << "Run Programs with Training Cases" << std::endl;
+
+					std::tuple<int, double, double> best_individual_score_error;
+
+					if (argmap::use_PPL)
+						best_individual_score_error = parallel_compute_training_errors(
+							env, 
+							run_individual, 
+							argmap::number_of_training_cases);
+					else
+						best_individual_score_error = compute_training_errors(env, run_individual, argmap::number_of_training_cases);
+
+					best_individual = std::get<0>(best_individual_score_error);
+					best_individual_score = std::get<1>(best_individual_score_error);
+					best_individual_error = std::get<2>(best_individual_score_error);
+
+					std::cout << "Produce New Offspring" << std::endl;
+
+					if (argmap::use_PPL)
+						parallel_produce_new_offspring(argmap::number_of_training_cases,
+							best_individual,
+							sa,
+							include_best_individual_in_breeding_pool);
+
+					else
+						produce_new_offspring(argmap::number_of_training_cases,
+							best_individual,
+							sa,
+							include_best_individual_in_breeding_pool);
+
+					std::cout << "Run Best Individual's Program with Test Cases" << std::endl;
+
+//					std::string program = pushGP::globals::population_agents[best_individual].get_program();
+					std::string genome = pushGP::globals::population_agents[best_individual].get_genome_as_string();
+
+					std::cout << "best_individual = " << best_individual << std::endl;
+//					std::cout << "program = " << program << std::endl;
+					std::cout << "genome = " << genome << std::endl;
+
+					double test_case_score = compute_test_errors(env, run_individual, best_individual);
+
+					std::cout << "test_case_error = " << test_case_score << std::endl;
+					std::cout << std::endl;
+
+					std::cout << "Generate Status Report" << std::endl;
+
+					double average_traiing_error = 0.0;
+					for (int ind = 0; ind < argmap::population_size; ind++)
+					{
+						for (int training_case_index = 0; training_case_index < argmap::number_of_training_cases; training_case_index++)
+							average_traiing_error += pushGP::globals::error_matrix[training_case_index][ind];
+					}
+					average_traiing_error /= (double)(domain::argmap::population_size * argmap::number_of_training_cases);
+
+					double standard_deviation = 0.0;
+					for (int ind = 0; ind < argmap::population_size; ind++)
+					{
+						for (int training_case_index = 0; training_case_index < argmap::number_of_training_cases; training_case_index++)
+							standard_deviation += (pushGP::globals::error_matrix[training_case_index][ind] - average_traiing_error)
+							* (pushGP::globals::error_matrix[training_case_index][ind] - average_traiing_error);
+					}
+					standard_deviation /= (double)(domain::argmap::population_size * argmap::number_of_training_cases);
+					standard_deviation = std::sqrt(standard_deviation);
+
+					generate_status_report(generation_number,
+						generations_completed_this_session,
+						best_individual,
+						best_individual_score,
+						best_individual_error,
+						prev_best_individual_error,
+						average_traiing_error,
+						standard_deviation,
+						test_case_score,
+						sa.get_tempareture(),
+						stalled_count,
+						cool_down_count,
+						include_best_individual_in_breeding_pool,
+						pushGP::globals::population_agents[best_individual]
+					);
+
+					std::cout << "Install New Generation" << std::endl;
+					install_next_generation();
+					generation_number++;
+					generations_completed_this_session++;
+				}
 			}
 			catch (const std::exception& e)
 			{
@@ -634,9 +1248,6 @@ namespace domain
 				std::cerr << "Exception occurred" << std::endl;
 				throw;
 			}
-
-
-
 
 			return 0;
 		}

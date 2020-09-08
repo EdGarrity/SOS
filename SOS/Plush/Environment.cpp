@@ -2,6 +2,8 @@
 
 namespace Plush
 {
+//	std::vector<double> null_input;
+	
 //	// Purpose: 
 //	//   Returns first atom in genome
 //	//

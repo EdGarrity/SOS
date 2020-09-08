@@ -31,21 +31,6 @@ namespace Plush
 			env.get_stack<CodeAtom>().push(CodeAtom(code_stack.get_top()));
 			env.get_stack<ExecAtom>().push(ExecAtom(code_stack.get_top()));
 			code_stack.pop();
-
-			//Genome<Atom> code_block;
-			//program_genome.pop(code_block);
-
-
-			////Utilities::FixedSizeStack<ExecAtom>& stack = get_stack<ExecAtom>();
-			////Genome<ExecAtom>& genome = dynamic_cast<Genome<ExecAtom>&>(stack);
-
-			//Utilities::FixedSizeStack<CodeAtom>& code_stack = env.get_stack<CodeAtom>();
-			//Genome<CodeAtom>& code_genome = dynamic_cast<Genome<CodeAtom>&>(code_stack);
-			//code_genome.push(code_block);
-
-			//Utilities::FixedSizeStack<ExecAtom>& exec_stack = env.get_stack<ExecAtom>();
-			//Genome<ExecAtom>& exec_genome = dynamic_cast<Genome<ExecAtom>&>(exec_stack);
-			//exec_genome.push(code_block);
 		}
 
 		// The basic pop-exec cycle
@@ -90,16 +75,6 @@ namespace Plush
 					}
 				}
 
-				//// Open a block if instruction is expecting any blocks.
-				//if (atom.instruction != "EXEC.NOOP_OPEN_PAREN")
-				//{
-				//	if (atom.instruction.substr(0, 5) == "EXEC.")
-				//	{
-				//		if (blocks_needed > 0)
-				//			env.push<ExecAtom>(ExecAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
-				//	}
-				//}
-
 				// Execute the instruction
 				auto search = Func2CodeMap.find(atom.instruction);
 				
@@ -114,5 +89,67 @@ namespace Plush
 
 			effort += (1u) > (unit) ? (1u) : (unit);
 		}
+	}
+
+	unsigned int run(Environment& env, unsigned _max_effort)
+	{
+		// The basic pop-exec cycle
+		unsigned effort = 0;
+
+		while ((!env.is_empty<ExecAtom>()) && (effort < _max_effort))
+		{
+			unsigned unit = 0;
+
+			ExecAtom atom = env.pop<ExecAtom>();
+
+			switch (atom.type)
+			{
+			case Atom::AtomType::integer:
+				env.push<long>(std::stol(atom.instruction));
+				unit = 1;
+				break;
+			case Atom::AtomType::floating_point:
+				env.push<double>(std::stod(atom.instruction));
+				unit = 1;
+				break;
+			case Atom::AtomType::boolean:
+				env.push<bool>(atom.instruction == "TRUE");
+				unit = 1;
+				break;
+			case Atom::AtomType::ins:
+				// Push open parenthesis onto stack if instruction expects any blocks
+
+				int blocks_needed = Func2BlockWantsMap[atom.instruction];
+				int blocks_closed = atom.close_parenthesis;
+
+				// Close expected blocks for each block the instruction is expecting if the instruction closes that block.
+				if (atom.instruction != "EXEC.NOOP")
+				{
+					if (atom.instruction.substr(0, 5) == "EXEC.")
+					{
+						if (blocks_closed > 0)
+						{
+							std::string noop = "{:instruction EXEC.NOOP :close " + std::to_string(blocks_closed) + "}";
+							env.push<ExecAtom>(ExecAtom(noop));
+						}
+					}
+				}
+
+				// Execute the instruction
+				auto search = Func2CodeMap.find(atom.instruction);
+
+				if (search != Func2CodeMap.end())
+				{
+					Operator op = Func2CodeMap[atom.instruction];
+					unit = op(env);
+				}
+
+				break;
+			}
+
+			effort += (1u) > (unit) ? (1u) : (unit);
+		}
+
+		return effort;
 	}
 }

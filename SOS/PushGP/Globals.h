@@ -29,19 +29,19 @@ namespace pushGP
 				//extern double minimum_error_array_by_example_case[domain::argmap::number_of_training_cases];
 				//extern unsigned int individual_with_minimum_error_for_training_case[domain::argmap::number_of_training_cases];
 
-//		struct Training_case_min_error
-//		{
-//			double minimum_error_array_by_example_case[domain::argmap::number_of_training_cases];
-//			unsigned int individual_with_minimum_error_for_training_case[domain::argmap::number_of_training_cases];
-//
-//			Training_case_min_error();
-//
-//		};
-//
-//		typedef struct Training_case_min_error Training_case_min_error_type;
-//
-//		// Used in epsilon lexicase. Only calculated once per population
-//		extern std::vector<double> epsilons;
-//		extern std::vector<unsigned int> non_zero_epsilons;
+		struct Training_case_min_error
+		{
+			double minimum_error_array_by_example_case[domain::argmap::number_of_training_cases];
+			unsigned int individual_with_minimum_error_for_training_case[domain::argmap::number_of_training_cases];
+
+			Training_case_min_error();
+
+		};
+
+		typedef struct Training_case_min_error Training_case_min_error_type;
+
+		// Used in epsilon lexicase. Only calculated once per population
+		extern std::vector<double> epsilons;
+		extern std::vector<unsigned int> non_zero_epsilons;
 	}
 }

@@ -5,6 +5,7 @@ namespace Plush
 	Func2CodeMapType Func2CodeMap;
 	Func2BlockWantsMapType Func2BlockWantsMap;
 	StaticInit static_initializer;
+	Names function_names;
 
 	void initGenerics();
 	void initBool();
@@ -27,6 +28,7 @@ namespace Plush
 	{
 		std::string func_name = type + "." + name;
 		Func2CodeMap[func_name] = op;
+		function_names.push_back(func_name);
 	};
 
 	void StaticInit::set_parentheses(std::string type, std::string name, unsigned int block_wants)

@@ -1,13 +1,16 @@
 #pragma once
 
+#define NOMINMAX
+
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
 #include <stack> 
 #include <unordered_set>
-
 #include "..\Plush\Genome.h"
+#include "..\Plush\Plush.StaticInit.h"
+#include "..\Utilities\Random.Utilities.h"
 
 // For UUID
 #include <Rpc.h>
@@ -65,17 +68,22 @@ namespace pushGP
 //		//{
 //		//	return genome_.get_program();
 //		//}
-//
-//		const std::string get_genome()
-//		{
-//			return genome_.to_string();
-//		}
-//
-//		const unsigned int get_genome_point_estimate()
-//		{
-//			return 0; // This needs to be coded.  For now, return 0.  It use to do this: genome_.size();
-//		}
-//
+
+		const std::string get_genome_string()
+		{
+			return genome_.to_string();
+		}
+
+		Plush::Genome<Plush::Atom>& get_genome()
+		{
+			return genome_;
+		}
+
+		const unsigned int get_genome_point_estimate()
+		{
+			return 0; // This needs to be coded.  For now, return 0.  It use to do this: genome_.size();
+		}
+
 //		//const std::vector<Plush::Atom> get_genome_atoms()	// Push programs are obsolete.  Use Plush Genomes instead.
 //		//{
 //		//	return genome_.get_atoms();
@@ -87,46 +95,56 @@ namespace pushGP
 //		//}
 //
 		void set_genome(std::string _genome);
-////		void set_genome(Plush::Genome<Plush::Atom> _genome);
-//		void clear_genome();
-//
-//		void copy(Individual & other);
-//
+		void set_genome(Plush::Genome<Plush::Atom> _genome);
+		void clear_genome();
+
+		void copy(Individual & other);
+
 //		void record_family_tree(Individual& parent);
-//		void record_family_tree(unsigned int parent);
+		void record_family_tree(unsigned int parent);
 //		void record_family_tree(Individual& parent1, Individual& parent2);
-//		void record_family_tree(unsigned int parent1, unsigned int parent2);
-//		void record_family_tree(const GUID Parent_1, const GUID Parent_2, const GUID Parent_1_1, const GUID Parent_1_2, const GUID Parent_2_1, const GUID Parent_2_2, const GUID Parent_1_1_1, const GUID Parent_1_1_2, const GUID Parent_1_2_1, const GUID Parent_1_2_2, const GUID Parent_2_1_1, const GUID Parent_2_1_2, const GUID Parent_2_2_1, const GUID Parent_2_2_2);
-//
-//		std::string get_genome_as_string();
-//
-//		// conversion operator to std::string
-//		operator std::string()
-//		{
-//			return get_genome_as_string();
-//		}
-//
-//		UUID get_id()
-//		{
-//			return id_;
-//		}
-//
-//		std::unordered_set<UUID>& get_parents()
-//		{
-//			return parents_;
-//		}
-//
-//		std::unordered_set<UUID>& get_grandparents()
-//		{
-//			return grandparents_;
-//		}
-//
-//		std::unordered_set<UUID>& get_greatgrandparents()
-//		{
-//			return greatgrandparents_;
-//		}
+		void record_family_tree(unsigned int parent1, unsigned int parent2);
+		void record_family_tree(const GUID Parent_1, const GUID Parent_2, const GUID Parent_1_1, const GUID Parent_1_2, const GUID Parent_2_1, const GUID Parent_2_2, const GUID Parent_1_1_1, const GUID Parent_1_1_2, const GUID Parent_1_2_1, const GUID Parent_1_2_2, const GUID Parent_2_1_1, const GUID Parent_2_1_2, const GUID Parent_2_2_1, const GUID Parent_2_2_2);
+
+		std::string get_genome_as_string();
+
+		// conversion operator to std::string
+		operator std::string()
+		{
+			return get_genome_as_string();
+		}
+
+		UUID get_id()
+		{
+			return id_;
+		}
+
+		std::unordered_set<UUID>& get_parents()
+		{
+			return parents_;
+		}
+
+		std::unordered_set<UUID>& get_grandparents()
+		{
+			return grandparents_;
+		}
+
+		std::unordered_set<UUID>& get_greatgrandparents()
+		{
+			return greatgrandparents_;
+		}
+
+		inline static std::string make_terminal()
+		{
+			//unsigned int r = Utilities::random_integer(0, Push::detail::function_names.size() - 1);
+			//return (Push::detail::function_names[r]);
+
+			unsigned int r = Utilities::random_integer(0, Plush::number_of_functions() - 1);
+			return (Plush::get_function_name(r));
+		}
+
 	};
-//
-//	// Helper functions
-//	std::ostream& operator<<(std::ostream& os, Individual& individual);
+
+	// Helper functions
+	std::ostream& operator<<(std::ostream& os, Individual& individual);
 }

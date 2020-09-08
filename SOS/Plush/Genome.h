@@ -54,10 +54,26 @@ namespace Plush
 		void set(std::string _genome_string);
 		//void set(Atom& _genome_atoms);
 
+		// Update so as to not be copying the genome
+		inline void set(Genome<T, N> other)
+		{
+			Utilities::FixedSizeStack<T>::top_ = other.top_;
+
+			for (int n = 0; n < Utilities::FixedSizeStack<T>::top_; n++)
+				Utilities::FixedSizeStack<T>::stack_[n] = other.stack_[n];
+		}
+
+
+
 		typedef typename std::array<T, N>::value_type value_type;
 		typedef typename std::array<T, N>::reference reference;
 		typedef typename std::array<T, N>::const_reference const_reference;
 		typedef typename std::array<T, N>::size_type size_type;
+
+		inline const std::array<T, N>& get_atoms()
+		{
+			return Utilities::FixedSizeStack<T>::stack_;
+		}
 
 		inline const_reference operator [] (int index) const
 		{
@@ -79,13 +95,13 @@ namespace Plush
 			return !comp(other_genome);
 		}
 
-		//inline const std::string to_string()
-		//{
-		//	if (genome_string_.empty())
-		//		convert_genome_to_string();
+		inline const std::string to_string()
+		{
+			if (genome_string_.empty())
+				convert_genome_to_string();
 
-		//	return genome_string_;
-		//}
+			return genome_string_;
+		}
 
 		// Purpose: 
 		//   Returns the number of blocks on the top of the genome stack. 
@@ -412,7 +428,7 @@ namespace Plush
 			Utilities::FixedSizeStack<T>::push(value);
 		}
 
-		inline void push(CodeAtom atom)
+		inline void push(Atom atom)
 		{
 			if (Utilities::FixedSizeStack<T>::top_ > 0)
 			{
@@ -433,6 +449,27 @@ namespace Plush
 				Utilities::FixedSizeStack<T>::push(atom);
 		}
 		
+		inline void push(CodeAtom atom)
+		{
+			if (Utilities::FixedSizeStack<T>::top_ > 0)
+			{
+				T top_atom = Utilities::FixedSizeStack<T>::get_top();
+
+				if ((top_atom.instruction == "EXEC.NOOP")
+					&& (top_atom.type == Atom::AtomType::ins)
+					&& (Utilities::FixedSizeStack<T>::top_ > 0))
+				{
+					atom.close_parenthesis += top_atom.close_parenthesis;
+					Utilities::FixedSizeStack<T>::pop();
+				}
+
+				Utilities::FixedSizeStack<T>::push(atom);
+			}
+
+			else
+				Utilities::FixedSizeStack<T>::push(atom);
+		}
+
 		inline void push(ExecAtom atom)
 		{
 			if (Utilities::FixedSizeStack<T>::top_ > 0)
@@ -1225,7 +1262,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		bool container(Genome<T> &other_genome, Genome<T> &container)
+		bool container_of(Genome<T> &other_genome, Genome<T> &container)
 		{
 			bool found = false;
 			Genome<T> original_genome(this);
@@ -1265,7 +1302,7 @@ namespace Plush
 							container.clear();
 							container.push(atom);
 
-							if (other_block.container(other_genome, container))
+							if (other_block.container_of(other_genome, container))
 							{
 								found = true;
 								break;
@@ -1328,7 +1365,7 @@ namespace Plush
 							container.clear();
 							container.push(atom);
 
-							if (other_block.container(other_genome, container))
+							if (other_block.container_of(other_genome, container))
 							{
 								found = true;
 								break;
@@ -1359,11 +1396,6 @@ namespace Plush
 		}
 	};
 
-	//template<class T, size_t N>
-	//inline void Genome<T, N>::convert_genome_to_string()
-	//{
-	//	genome_string_.clear();
-
 	template<class T, size_t N>
 	inline void Genome<T, N>::convert_genome_to_string()
 	{
@@ -1383,27 +1415,30 @@ namespace Plush
 	template<class T, size_t N>
 	inline void Genome<T, N>::ingest_plush_genome(std::string _genome_str)
 	{
-			std::string gene;
-			Utilities::FixedSizeStack<Atom> code_stack;
+		std::string gene;
+		Utilities::FixedSizeStack<Atom> code_stack;
 
-			while (_genome_str.length() > 0)
-			{
-				gene = first_atom(_genome_str);
-				_genome_str = rest_atom(_genome_str);
-				Utilities::trim(_genome_str);
+		while (_genome_str.length() > 0)
+		{
+			gene = first_atom(_genome_str);
+			_genome_str = rest_atom(_genome_str);
+			Utilities::trim(_genome_str);
 
-				Atom atom(gene);
-			}
+			Atom atom(gene);
+		}
 	}
 
 	template<class T, size_t N>
 	inline void Genome<T, N>::set(std::string _genome_string)
 	{
 		ingest_plush_genome(_genome_string);
-//		translate_plush_genome_to_push_program();
 		convert_genome_to_string();
-
 	}
+
+
+
+
+
 
 	//	for (int n = 0; n < Utilities::FixedSizeStack<T>::size(); n++)
 	//	{

@@ -20,7 +20,13 @@ namespace Plush
 		Genome<double> double_stack_;
 		Genome<bool> bool_stack_;
 
+		std::vector<double> null_input;
+
 	public:
+		// Pointer to input & output data
+		std::vector<double> input = null_input;
+		std::vector<double> output;
+
 		virtual void clear_stacks()
 		{
 			exec_stack_.clear();
