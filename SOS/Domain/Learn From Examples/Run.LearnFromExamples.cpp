@@ -541,12 +541,29 @@ namespace domain
 			return n;
 		}
 
+		//unsigned int make_pop_agents(Plush::Environment& _env, int _start)
+		//{
+		//	unsigned int agents_created = 0;
+
+		//	for (int n = _start; n < argmap::population_size; n++)
+		//		agents_created++;
+
+		//	// Cleanup thread factories
+		//	_env.clear_stacks();
+
+		//	return agents_created;
+		//}
+
 		unsigned int make_pop_agents(Plush::Environment& _env, int _start)
 		{
 			unsigned int agents_created = 0;
 
 			for (int n = _start; n < argmap::population_size; n++)
+			{
+				pushGP::globals::population_agents[n].set_genome(pushGP::random_plush_genome());
+
 				agents_created++;
+			}
 
 			// Cleanup thread factories
 			_env.clear_stacks();

@@ -10,8 +10,9 @@ namespace Plush
 	typedef std::map<std::string, Operator> Func2CodeMapType;
 	extern 	Func2CodeMapType Func2CodeMap;
 
-	typedef std::vector<std::string> Names;
-	extern Names function_names;
+//	typedef std::vector<std::string> Names;
+//	extern Names function_names;
+//	extern std::vector<std::string> function_names;
 
 	// Declared in Processor.h
 	//typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
@@ -19,6 +20,9 @@ namespace Plush
 
 	class StaticInit
 	{
+	private:
+		std::vector<std::string> function_names;
+
 	public:
 		StaticInit();
 
@@ -26,6 +30,9 @@ namespace Plush
 		void register_pushfunc(Operator op, std::string type, std::string name);
 		void set_parentheses(std::string type, std::string name, unsigned int block_wants);
 		void set_parentheses(std::string name, unsigned int block_wants);
+
+		unsigned int number_of_functions();
+		std::string get_function_name(unsigned int function_index);
 	};
 
 	extern StaticInit static_initializer;
@@ -43,15 +50,5 @@ namespace Plush
 	inline void set_parentheses(std::string name, unsigned int block_wants)
 	{
 		static_initializer.set_parentheses(name, block_wants);
-	}
-
-	inline unsigned int number_of_functions()
-	{
-		return function_names.size();
-	}
-
-	inline std::string get_function_name(unsigned int function_index)
-	{
-		return function_names[function_index];
 	}
 }
