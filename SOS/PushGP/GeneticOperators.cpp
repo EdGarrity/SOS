@@ -84,13 +84,8 @@ namespace pushGP
 	//
 	void uniform_mutation(unsigned int _parent, unsigned int _child)
 	{
-//		Individual& ind = globals::population_agents[_parent];
-//		Plush::Genome<Plush::Atom>& old_genome = ind.get_genome();
-
 		Plush::Genome<Plush::Atom>& old_genome = globals::population_agents[_parent].get_genome();
 		Plush::Genome<Plush::Atom> new_genome;
-
-//		const std::array<Plush::Atom, domain::argmap::maximum_stack_size>& stack = old_genome.container();
 
 		for (Plush::Atom atom : old_genome.get_atoms())
 		{
@@ -173,10 +168,6 @@ namespace pushGP
 	//
 	void alternation(unsigned int _parent1, unsigned int _parent2, unsigned int _child)
 	{
-//		Plush::Genome<Plush::Atom>& old_genome = globals::population_agents[_parent].get_genome();
-
-
-
 		Plush::Genome<Plush::Atom>& s1 = globals::population_agents[_parent1].get_genome();
 		Plush::Genome<Plush::Atom>& s2 = globals::population_agents[_parent2].get_genome();
 
@@ -199,15 +190,6 @@ namespace pushGP
 
 			else
 			{
-				//Plush::Atom atom;
-
-				//if (use_s1)
-				//	atom = s1[i];
-				//else
-				//	atom = s2[i];
-
-				//result_genome.push(atom);
-
 				result_genome.push(use_s1 ? s1[i] : s2[i]);
 
 				iteration_budget--;

@@ -42,14 +42,7 @@ namespace domain
 			double error = 0.0;
 			int actual_solution_length = 0;
 
-			// Setup
-			//Push::init_push(_env, _example_problem);
-			//Push::init_static_PushP_instructions();
-			//Push::Code code = Push::parse(_program);
-			//Push::push_call(_env, code);
-
 			// Evaluate
-//			_env.go(_env, argmap::max_point_evaluations);
 			Plush::run(_env, domain::argmap::max_point_evaluations);
 
 			// Calculate error
@@ -96,49 +89,6 @@ namespace domain
 
 			return error;
 		}
-
-		// Purpose: 
-		//   Run a Plush program and calculate error result
-		//
-		// Parameters:
-		//   program - The Plush program to run
-		//   example_problem - The problem we are attempting to solve
-		//   example_solution - The solution to the problem the program is suppose to find
-		//
-		// Return value:
-		//   The vector difference between the program's result and the expected result.
-		//
-		// Side Effects:
-		//   The Push environment is initialized and the Push stacks are manipulated.
-		//
-		// Thread Safe:
-		//   No
-		//
-		// Remarks:
-		//   Examples are expected to be a vector of doubles in the following form:
-		//     X1 X2 X3 ...
-		//
-		//     Where:
-		//       X = 0 or more doubles.
-		//
-		//   Must call Push::init_push() prior to this function call to register the Push functions and 
-		//   populate str2parentheses_map_ptr
-		//
-		//double run_genome(std::string _genome,
-		//	static std::vector<double>& _example_problem,
-		//	static std::vector<double>& _example_solution)
-		//{
-		//	double error = 0.0;
-		//	pushGP::Individual individual;
-
-		//	individual.set_genome(_genome);
-
-		//	std::string program = individual.get_program();
-
-		//	error = run_program(program, _example_problem, _example_solution);
-
-		//	return error;
-		//}
 
 		// Purpose: 
 		//   Run an Individual's Push program and calculate error result

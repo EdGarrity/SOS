@@ -25,9 +25,6 @@
 #include "../../PushGP/Breed.h"
 #include "../../PushGP/AsyncBreed.h"
 #include "../../PushGP/Random.h"
-//#include "../../Plush/Environment.h"
-//#include "../../PushGP/Utilities.h"
-//#include "../../Plush/Genome.h"
 
 // Correction for Syntax error with std::numeric_limits::max compiler error
 // See https://stackoverflow.com/questions/27442885/syntax-error-with-stdnumeric-limitsmax
@@ -541,19 +538,6 @@ namespace domain
 			return n;
 		}
 
-		//unsigned int make_pop_agents(Plush::Environment& _env, int _start)
-		//{
-		//	unsigned int agents_created = 0;
-
-		//	for (int n = _start; n < argmap::population_size; n++)
-		//		agents_created++;
-
-		//	// Cleanup thread factories
-		//	_env.clear_stacks();
-
-		//	return agents_created;
-		//}
-
 		unsigned int make_pop_agents(Plush::Environment& _env, int _start)
 		{
 			unsigned int agents_created = 0;
@@ -851,7 +835,7 @@ namespace domain
 
 		void produce_new_offspring(int _number_of_example_cases,
 			unsigned int _best_individual,
-			pushGP::SimulatedAnnealing & sa,
+			pushGP::SimulatedAnnealing& sa,
 			bool _include_best_individual_in_breeding_pool)
 		{
 			std::set<std::string> set_of_gnomes;
@@ -903,7 +887,7 @@ namespace domain
 
 		void parallel_produce_new_offspring(int _number_of_example_cases,
 			unsigned int _best_individual,
-			pushGP::SimulatedAnnealing & sa,
+			pushGP::SimulatedAnnealing& sa,
 			bool _include_best_individual_in_breeding_pool)
 		{
 			concurrent_unordered_set<std::string> set_of_gnomes;
@@ -918,7 +902,6 @@ namespace domain
 			// Breed new generation
 			std::cout << "  Breed new generation" << std::endl;
 
-			//			for (unsigned int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 			const unsigned int zero = 0;
 			parallel_for(zero, domain::argmap::population_size, [&, _best_individual, _number_of_example_cases](const unsigned int individual_index)
 			{
@@ -979,8 +962,6 @@ namespace domain
 		{
 			for (unsigned int n = 0; n < argmap::population_size; n++)
 				pushGP::globals::population_agents[n].copy(pushGP::globals::child_agents[n]);
-
-			// Possibly this is where we should compile the genomes
 		}
 
 		void generate_status_report(unsigned int _generation_number,
@@ -1197,11 +1178,9 @@ namespace domain
 
 					std::cout << "Run Best Individual's Program with Test Cases" << std::endl;
 
-//					std::string program = pushGP::globals::population_agents[best_individual].get_program();
 					std::string genome = pushGP::globals::population_agents[best_individual].get_genome_as_string();
 
 					std::cout << "best_individual = " << best_individual << std::endl;
-//					std::cout << "program = " << program << std::endl;
 					std::cout << "genome = " << genome << std::endl;
 
 					double test_case_score = compute_test_errors(env, run_individual, best_individual);

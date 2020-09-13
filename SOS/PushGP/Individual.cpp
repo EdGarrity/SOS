@@ -413,7 +413,7 @@ namespace pushGP
 	// Remarks:
 	//   Sets individual's member fields to the values of the other individual
 	//
-	void Individual::copy(Individual & other)
+	void Individual::copy(Individual& other)
 	{
 		init();
 
