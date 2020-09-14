@@ -9,7 +9,7 @@ namespace pushGP
 {
 	unsigned int random_closes();
 	struct Plush::Atom random_atom();
-	Plush::Genome<Plush::Atom> random_plush_genome_with_size(unsigned int genome_size);
-	Plush::Genome<Plush::Atom> random_plush_genome(); // Modify to not return genome on stack
+	Plush::Genome<Plush::Atom>& random_plush_genome_with_size(Plush::Genome<Plush::Atom>& genome, unsigned int genome_size);
+	Plush::Genome<Plush::Atom>& make_random_plush_genome(Plush::Genome<Plush::Atom>& genome); // Modify to not return genome on stack
 }
 

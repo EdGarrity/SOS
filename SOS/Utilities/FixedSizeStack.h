@@ -66,13 +66,48 @@ namespace Utilities
 			return top_ == 0;
 		}
 
+		inline void copy(const FixedSizeStack<T>& other)
+		{
+			if (other->top_ > N)
+			{
+				std::stringstream error_message;
+				error_message << "Utilities::FixedSizeStack::copy() - Stack overflow.  top = " << other->top_;
+
+				throw std::overflow_error(error_message.str());
+			}
+
+			top_ = other->top_;
+
+			for (int n = 0; n < top_; n++)
+				stack_[n] = other->stack_[n];
+		}
+
+		FixedSizeStack operator= (const FixedSizeStack& other)
+		{
+			copy(other);
+		}
+
 		inline const_reference operator [] (int index) const
 		{
+			if (index > N)
+			{
+				std::stringstream error_message;
+				error_message << "const_reference Utilities::FixedSizeStack::operator [] - Stack overflow.  index = " << index;
+
+				throw std::overflow_error(error_message.str());
+			}
 			return stack_[index];
 		}
 
 		inline reference operator [] (int index)
 		{
+			if (index > N)
+			{
+				std::stringstream error_message;
+				error_message << "reference Utilities::FixedSizeStack::operator [] - Stack overflow.  index = " << index;
+
+				throw std::overflow_error(error_message.str());
+			}
 			return stack_[index];
 		}
 
@@ -123,10 +158,10 @@ namespace Utilities
 		// Pushes the given element value to the top of the stack.
 		inline void push(value_type value)
 		{
-			if (top_ >= N)
+			if (top_ > N)
 			{
 				std::stringstream error_message;
-				error_message << "Utilities::FixedSizeStack::push() - Stack overflow.";
+				error_message << "Utilities::FixedSizeStack::push() - Stack overflow.  top = " << top_;
 
 				throw std::overflow_error(error_message.str());
 			}
@@ -156,7 +191,7 @@ namespace Utilities
 		//
 		inline void shove(FixedSizeStack<T>& other, int n)
 		{
-			if ((top_ + other.size()) >= N)
+			if ((top_ + other.size()) > N)
 			{
 				std::stringstream error_message;
 				error_message << "Utilities::FixedSizeStack::shove() - Stack overflow.";

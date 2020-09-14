@@ -38,6 +38,9 @@ namespace pushGP
 		unsigned int first_parent_index = 0;
 		unsigned int other_parent_index = 0;
 		double random_variable = Utilities::random_double(0.0, 1.0);
+//		Plush::Genome<Plush::Atom> genome;
+
+		Plush::Genome<Plush::Atom>& child_genome = globals::child_agents[_individual_index].get_genome();
 
 		pushGP::SimulatedAnnealing::States state = _sa.get_state(random_variable);
 
@@ -160,7 +163,8 @@ namespace pushGP
 				alternation(first_parent_index, other_parent_index, _individual_index);
 
 			else
-				globals::child_agents[_individual_index].set_genome(random_plush_genome());
+//				globals::child_agents[_individual_index].set_genome(make_random_plush_genome(genome));
+				make_random_plush_genome(child_genome);
 		}
 
 		else if (state == pushGP::SimulatedAnnealing::States::mutate)
@@ -184,16 +188,20 @@ namespace pushGP
 		else if (state == pushGP::SimulatedAnnealing::States::cloan)
 		{
 			if ((!_include_best_individual_in_breeding_pool) && (_individual_index == _best_individual))
-				globals::child_agents[_individual_index].set_genome(random_plush_genome());
+//				globals::child_agents[_individual_index].set_genome(random_plush_genome(genome));
+				make_random_plush_genome(child_genome);
 
 			else
 				globals::child_agents[_individual_index].copy(globals::population_agents[_individual_index]);
 		}
 
 		else
-			globals::child_agents[_individual_index].set_genome(random_plush_genome());
+		//	globals::child_agents[_individual_index].set_genome(random_plush_genome(genome));
+			make_random_plush_genome(child_genome);
 
 		if ((globals::child_agents[_individual_index].get_genome_point_estimate()) > domain::argmap::max_points)
-			globals::child_agents[_individual_index].set_genome(random_plush_genome());
+//			globals::child_agents[_individual_index].set_genome(make_random_plush_genome(genome));
+			make_random_plush_genome(child_genome);
+
 	}
 }

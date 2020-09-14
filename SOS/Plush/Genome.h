@@ -45,24 +45,73 @@ namespace Plush
 
 		inline Genome(Genome *other)
 		{
+			if (other->top_ > N)
+			{
+				std::stringstream error_message;
+				error_message << "Utilities::Genome::Genome() - Stack overflow.  top = " << other->top_;
+
+				throw std::overflow_error(error_message.str());
+			}
+
 			Utilities::FixedSizeStack<T>::top_ = other->top_;
 
 			for (int n = 0; n < Utilities::FixedSizeStack<T>::top_; n++)
 				Utilities::FixedSizeStack<T>::stack_[n] = other->stack_[n];
 		}
 
+		inline Genome(const Genome<T>& other)
+		{
+			copy(other);
+		}
+
+		inline void copy(const Genome& other)
+		{
+			if (other.top_ > N)
+			{
+				std::stringstream error_message;
+				error_message << "Utilities::Genome::copy() - Stack overflow.  top = " << other.top_;
+
+				throw std::overflow_error(error_message.str());
+			}
+
+			Utilities::FixedSizeStack<T>::top_ = other.top_;
+
+			for (int n = 0; n < Utilities::FixedSizeStack<T>::top_; n++)
+				Utilities::FixedSizeStack<T>::stack_[n] = other.stack_[n];
+
+			genome_string_ = other.genome_string_;
+		}
+
+		inline void operator= (const Genome& other)
+		{
+			copy(other);
+		}
+
 		void set(std::string _genome_string);
 		//void set(Atom& _genome_atoms);
 
 		// Update so as to not be copying the genome
-		inline void set(Genome<T, N> other)
+		inline void set(Genome<T, N>& other)
 		{
+			if (other.top_ > N)
+			{
+				std::stringstream error_message;
+				error_message << "Utilities::Genome::set() - Stack overflow.  top = " << other.top_;
+
+				throw std::overflow_error(error_message.str());
+			}
+
 			Utilities::FixedSizeStack<T>::top_ = other.top_;
 
 			for (int n = 0; n < Utilities::FixedSizeStack<T>::top_; n++)
 				Utilities::FixedSizeStack<T>::stack_[n] = other.stack_[n];
 		}
 
+		inline void clear()
+		{
+			Utilities::FixedSizeStack<T>::clear();
+			genome_string_.clear();
+		};
 
 
 		typedef typename std::array<T, N>::value_type value_type;
@@ -77,11 +126,27 @@ namespace Plush
 
 		inline const_reference operator [] (int index) const
 		{
+			if (index > N)
+			{
+				std::stringstream error_message;
+				error_message << "const_reference Utilities::Genome::operator [] - Stack overflow.  index = " << index;
+
+				throw std::overflow_error(error_message.str());
+			}
+
 			return Utilities::FixedSizeStack<T>::stack_[index];
 		}
 
 		inline reference operator [] (int index)
 		{
+			if (index > N)
+			{
+				std::stringstream error_message;
+				error_message << "reference Utilities::Genome::operator [] - Stack overflow.  index = " << index;
+
+				throw std::overflow_error(error_message.str());
+			}
+
 			return Utilities::FixedSizeStack<T>::stack_[index];
 		}
 

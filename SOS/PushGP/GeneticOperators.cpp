@@ -85,7 +85,10 @@ namespace pushGP
 	void uniform_mutation(unsigned int _parent, unsigned int _child)
 	{
 		Plush::Genome<Plush::Atom>& old_genome = globals::population_agents[_parent].get_genome();
-		Plush::Genome<Plush::Atom> new_genome;
+//		Plush::Genome<Plush::Atom> new_genome;
+		Plush::Genome<Plush::Atom>& new_genome = globals::child_agents[_child].get_genome();
+
+		new_genome.clear();
 
 		for (Plush::Atom atom : old_genome.get_atoms())
 		{
@@ -138,7 +141,7 @@ namespace pushGP
 		} // for (auto atom : old_genome)
 
 		// Create new child
-		globals::child_agents[_child].set_genome(new_genome);
+//		globals::child_agents[_child].set_genome(new_genome);
 
 		// Track individual's parents and grandparents
 		globals::child_agents[_child].record_family_tree(_parent);
@@ -166,6 +169,48 @@ namespace pushGP
 	//
 	//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
 	//
+	//void alternation(unsigned int _parent1, unsigned int _parent2, unsigned int _child)
+	//{
+	//	Plush::Genome<Plush::Atom>& s1 = globals::population_agents[_parent1].get_genome();
+	//	Plush::Genome<Plush::Atom>& s2 = globals::population_agents[_parent2].get_genome();
+
+	//	unsigned int i = 0;
+	//	bool use_s1 = (Utilities::random_double(0.0, 1.0) > 0.5) ? true : false;
+	//	Plush::Genome<Plush::Atom> result_genome;
+	//	int iteration_budget = s1.size() + s2.size();
+
+	//	while ( (i < (use_s1 ? s1.size() : s2.size()))					// finished current program
+	//		 && (result_genome.size() <= (domain::argmap::max_points))	// runaway growth
+	//		 && (iteration_budget > 0)									// looping too long
+	//		  )
+	//	{
+	//		if (Utilities::random_double(0.0, 1.0) < domain::argmap::alternation_rate)
+	//		{
+	//			i = std::fmax(0.0, i + std::round(domain::argmap::alignment_deviation * gaussian_noise_factor()));
+	//			use_s1 = !use_s1;
+	//			iteration_budget--;
+	//		}
+
+	//		else
+	//		{
+	//			//result_genome.push(use_s1 ? s1[i] : s2[i]);
+
+	//			Plush::Atom a(use_s1 ? s1[i] : s2[i]);
+	//			int sz = result_genome.size();
+
+	//			result_genome.push(a);
+
+	//			iteration_budget--;
+	//			i++;
+	//		}
+	//	}
+
+	//	// Create new child
+	//	globals::child_agents[_child].set_genome(result_genome);
+
+	//	// Track individual's parents and grandparents
+	//	globals::child_agents[_child].record_family_tree(_parent1, _parent2);
+	//}
 	void alternation(unsigned int _parent1, unsigned int _parent2, unsigned int _child)
 	{
 		Plush::Genome<Plush::Atom>& s1 = globals::population_agents[_parent1].get_genome();
@@ -173,13 +218,17 @@ namespace pushGP
 
 		unsigned int i = 0;
 		bool use_s1 = (Utilities::random_double(0.0, 1.0) > 0.5) ? true : false;
-		Plush::Genome<Plush::Atom> result_genome;
+//		Plush::Genome<Plush::Atom> result_genome;
+
+		Plush::Genome<Plush::Atom>& result_genome = globals::child_agents[_child].get_genome();
+		result_genome.clear();
+
 		int iteration_budget = s1.size() + s2.size();
 
-		while ( (i < (use_s1 ? s1.size() : s2.size()))					// finished current program
-			 && (result_genome.size() <= (domain::argmap::max_points))	// runaway growth
-			 && (iteration_budget > 0)									// looping too long
-			  )
+		while ((i < (use_s1 ? s1.size() : s2.size()))					// finished current program
+			&& (result_genome.size() <= (domain::argmap::max_points))	// runaway growth
+			&& (iteration_budget > 0)									// looping too long
+			)
 		{
 			if (Utilities::random_double(0.0, 1.0) < domain::argmap::alternation_rate)
 			{
@@ -190,7 +239,12 @@ namespace pushGP
 
 			else
 			{
-				result_genome.push(use_s1 ? s1[i] : s2[i]);
+				//result_genome.push(use_s1 ? s1[i] : s2[i]);
+
+				Plush::Atom a(use_s1 ? s1[i] : s2[i]);
+				int sz = result_genome.size();
+
+				result_genome.push(a);
 
 				iteration_budget--;
 				i++;
@@ -198,7 +252,7 @@ namespace pushGP
 		}
 
 		// Create new child
-		globals::child_agents[_child].set_genome(result_genome);
+//		globals::child_agents[_child].set_genome(result_genome);
 
 		// Track individual's parents and grandparents
 		globals::child_agents[_child].record_family_tree(_parent1, _parent2);

@@ -6,7 +6,8 @@ namespace database
 {
 	const unsigned int NUMROWS_CHUNK = 1000;
 	const unsigned int MAX_PARAMETERS = 100;
-	const unsigned int MAX_ROW_LENGTH = 1024 * 32; // 8000;  This field was changed from VARCHAR(8000) to TEXT.  SQL should support genomes larger than 8000 bytes
+//	const unsigned int MAX_ROW_LENGTH = 1024 * 32; // 8000;  This field was changed from VARCHAR(8000) to TEXT.  SQL should support genomes larger than 8000 bytes
+	const unsigned int MAX_ROW_LENGTH = 1024 * 128; // 8000;  This field was changed from VARCHAR(8000) to TEXT.  SQL should support genomes larger than 8000 bytes
 
 	class SQLCommand
 	{

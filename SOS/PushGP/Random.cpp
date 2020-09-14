@@ -108,12 +108,14 @@ namespace pushGP
 		a.insert(a.end(), b.begin(), b.end());  // std::move(b.begin(), b.end(), std::back_inserter(a));
 	}
 
-	Plush::Genome<Plush::Atom> random_plush_genome_with_size(unsigned int genome_size)
+	Plush::Genome<Plush::Atom>& random_plush_genome_with_size(Plush::Genome<Plush::Atom>& genome, unsigned int genome_size)
 	{
 		int n = genome_size;	
 		Plush::Atom atom;
 
-		Plush::Genome<Plush::Atom> genome;
+//		Plush::Genome<Plush::Atom> genome;
+
+		genome.clear();
 
 		while (--n > 0)
 		{
@@ -249,8 +251,8 @@ namespace pushGP
 		return genome;
 	}
 
-	Plush::Genome<Plush::Atom> random_plush_genome()
+	Plush::Genome<Plush::Atom>& make_random_plush_genome(Plush::Genome<Plush::Atom>& genome)
 	{
-		return random_plush_genome_with_size(Utilities::random_integer(1, domain::argmap::max_genome_size_in_initial_program));
+		return random_plush_genome_with_size(genome, Utilities::random_integer(1, domain::argmap::max_genome_size_in_initial_program));
 	}
 }

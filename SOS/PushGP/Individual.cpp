@@ -366,7 +366,7 @@ namespace pushGP
 	// Remarks:
 	//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
 	//
-	void Individual::set_genome(Plush::Genome<Plush::Atom> _genome)
+	void Individual::set_genome(Plush::Genome<Plush::Atom>& _genome)
 	{
 		init();
 		genome_.set(_genome);
@@ -417,6 +417,7 @@ namespace pushGP
 	{
 		init();
 
+		// May need to created copy constructor and operator to Genome and FixedSizeStack.
 		genome_ = other.genome_;
 		id_ = other.id_;
 

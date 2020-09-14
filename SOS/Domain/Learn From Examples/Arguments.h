@@ -5,8 +5,8 @@ namespace domain
 {
 	namespace argmap
 	{
-		// Default maximum size of the stack buffer.
-		const unsigned int maximum_stack_size = 1000;
+		// Default maximum size of the stack buffer.  Must be greater than max_points
+		const unsigned int maximum_stack_size = 2000;
 
 		const unsigned int maximum_stack_dept = 100;
 
@@ -57,7 +57,7 @@ namespace domain
 		//		;; The instructions that pushgp will use in random code.
 
 		// Number of individuals in the population.
-		const unsigned int population_size = 20; // 200'000;
+		const unsigned int population_size = 2000; // 200'000;
 
 		// The maximum number of generations to run GP.
 		const unsigned int max_generations_in_one_session = 10'000;
@@ -73,7 +73,7 @@ namespace domain
 		// Maximum size of push programs and push code, as counted by points
 		// in the program. 1 / 4 this limit is used as the limit for sizes of
 		// Plush genomes.
-		const unsigned int max_points = 2'000;
+		const unsigned int max_points = maximum_stack_size - 1;
 
 		// Maximum size of initial Plush genomes in generation 0. Keep in mind
 		// that genome lengths will otherwise be limited by 1 / 4 of :max - points.

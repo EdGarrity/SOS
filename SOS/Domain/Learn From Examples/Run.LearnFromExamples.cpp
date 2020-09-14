@@ -541,10 +541,12 @@ namespace domain
 		unsigned int make_pop_agents(Plush::Environment& _env, int _start)
 		{
 			unsigned int agents_created = 0;
+//			Plush::Genome<Plush::Atom> genome;
 
 			for (int n = _start; n < argmap::population_size; n++)
 			{
-				pushGP::globals::population_agents[n].set_genome(pushGP::random_plush_genome());
+//				pushGP::globals::population_agents[n].set_genome(pushGP::make_random_plush_genome(genome));
+				pushGP::make_random_plush_genome(pushGP::globals::population_agents[n].get_genome());
 
 				agents_created++;
 			}
@@ -838,6 +840,7 @@ namespace domain
 			pushGP::SimulatedAnnealing& sa,
 			bool _include_best_individual_in_breeding_pool)
 		{
+//			Plush::Genome<Plush::Atom> genome;
 			std::set<std::string> set_of_gnomes;
 			combinable<pushGP::globals::Training_case_min_error_type> training_case_min_error;
 
@@ -851,12 +854,16 @@ namespace domain
 
 			for (unsigned int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 			{
+				Plush::Genome<Plush::Atom>& child_genome = pushGP::globals::child_agents[individual_index].get_genome();
+
 				// Keep the best individual
+				std::cout << "  Keep the best individual" << std::endl;
 				if ((_include_best_individual_in_breeding_pool) && (individual_index == _best_individual))
 					pushGP::globals::child_agents[individual_index].copy(pushGP::globals::population_agents[individual_index]);
 
 				else
 				{
+					std::cout << "  breed()" << std::endl;
 					pushGP::breed(individual_index,
 						_number_of_example_cases,
 						training_case_min_error,
@@ -865,12 +872,19 @@ namespace domain
 						_best_individual);
 
 					// If a child with the same genome already exists, create a new random child.
+//					std::cout << "  If a child with the same genome already exists, create a new random child." << std::endl;
 					if (set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string()).second == false)
-						pushGP::globals::child_agents[individual_index].set_genome(pushGP::random_plush_genome());
+					{
+//						std::cout << "  create a new random child." << std::endl;
+//						pushGP::globals::child_agents[individual_index].set_genome(pushGP::make_random_plush_genome(genome));
+						pushGP::make_random_plush_genome(child_genome);
+					}
 				}
 			}
 
 			// Keep the best individuals for each test case
+//			std::cout << "  Keep the best individuals for each test case" << std::endl;
+			std::cout << ".";
 			if (_include_best_individual_in_breeding_pool)
 			{
 				for (unsigned int training_case = 0; training_case < domain::argmap::number_of_training_cases; training_case++)
@@ -878,7 +892,10 @@ namespace domain
 					unsigned int best_individual_for_training_case = training_case_min_error.local().individual_with_minimum_error_for_training_case[training_case];
 
 					if (best_individual_for_training_case < (std::numeric_limits<unsigned int>::max)())
+					{
+//						std::cout << "  						pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);" << std::endl;
 						pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);
+					}
 				}
 			}
 
@@ -922,11 +939,16 @@ namespace domain
 
 			parallel_for(zero, domain::argmap::population_size, [&, _best_individual, _number_of_example_cases](const unsigned int individual_index)
 			{
+//				Plush::Genome<Plush::Atom> genome;
+				
 				// If a child with the same genome already exists, create a new random child.
 				if (individual_index != _best_individual)
 				{
+					Plush::Genome<Plush::Atom>& child_genome = pushGP::globals::child_agents[individual_index].get_genome();
+
 					if (set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string()).second == false)
-						pushGP::globals::child_agents[individual_index].set_genome(pushGP::random_plush_genome());
+//						pushGP::globals::child_agents[individual_index].set_genome(pushGP::make_random_plush_genome(genome));
+						pushGP::make_random_plush_genome(child_genome);
 				}
 			});
 
@@ -1010,6 +1032,9 @@ namespace domain
 			delete sqlcmd_save_status_report;
 		}
 
+		// May need to move to thread local.
+		Plush::Environment env;
+
 		int run()
 		{
 			pushGP::SimulatedAnnealing sa;
@@ -1034,7 +1059,8 @@ namespace domain
 			}
 
 			// Setup
-			Plush::Environment env;
+			// moved to global.  WIll need to be moved to thread global for parallel execution
+//			Plush::Environment env;
 
 			try
 			{
