@@ -143,11 +143,11 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 1, 2, 3, 4, 5 }, {}, {}, {},
 				{
-					CodeAtom("{:instruction 5 :close 1}"),
-					CodeAtom("{:instruction 4 :close 1}"),
-					CodeAtom("{:instruction 3 :close 1}"),
-					CodeAtom("{:instruction 2 :close 1}"),
-					CodeAtom("{:instruction 1 :close 1}"),
+					Atom("{:instruction 5 :close 1}"),
+					Atom("{:instruction 4 :close 1}"),
+					Atom("{:instruction 3 :close 1}"),
+					Atom("{:instruction 2 :close 1}"),
+					Atom("{:instruction 1 :close 1}"),
 				}));
 		}
 	};

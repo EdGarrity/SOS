@@ -21,7 +21,7 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.= :close 0}")
+					Atom("{:instruction BOOLEAN.= :close 0}")
 				}));
 		}
 
@@ -39,9 +39,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.= :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}")
+					Atom("{:instruction BOOLEAN.= :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction TRUE :close 0}")
 				}));
 		}
 
@@ -59,9 +59,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.= :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}")
+					Atom("{:instruction BOOLEAN.= :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction FALSE :close 0}")
 				}));
 		}
 
@@ -79,9 +79,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.= :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}")
+					Atom("{:instruction BOOLEAN.= :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction TRUE :close 0}")
 				}));
 		}
 
@@ -99,9 +99,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.= :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}")
+					Atom("{:instruction BOOLEAN.= :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction FALSE :close 0}")
 				}));
 		}
 
@@ -117,7 +117,7 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.AND :close 0}")
+					Atom("{:instruction BOOLEAN.AND :close 0}")
 				}));
 		}
 
@@ -135,9 +135,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.AND :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}")
+					Atom("{:instruction BOOLEAN.AND :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction TRUE :close 0}")
 				}));
 		}
 
@@ -155,9 +155,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.AND :close 1}"),
-					CodeAtom("{:instruction TRUE :close 1}"),
-					CodeAtom("{:instruction FALSE :close 1}")
+					Atom("{:instruction BOOLEAN.AND :close 1}"),
+					Atom("{:instruction TRUE :close 1}"),
+					Atom("{:instruction FALSE :close 1}")
 				}));
 		}
 
@@ -175,9 +175,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.AND :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}")
+					Atom("{:instruction BOOLEAN.AND :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction TRUE :close 0}")
 				}));
 		}
 
@@ -195,9 +195,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.AND :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}")
+					Atom("{:instruction BOOLEAN.AND :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction FALSE :close 0}")
 				}));
 		}
 
@@ -213,7 +213,7 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.DUP :close 0}")
+					Atom("{:instruction BOOLEAN.DUP :close 0}")
 				}));
 		}
 
@@ -230,8 +230,8 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true, true }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.DUP :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}")
+					Atom("{:instruction BOOLEAN.DUP :close 0}"),
+					Atom("{:instruction TRUE :close 0}")
 				}));
 		}
 
@@ -248,8 +248,8 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { false, false }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.DUP :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}")
+					Atom("{:instruction BOOLEAN.DUP :close 0}"),
+					Atom("{:instruction FALSE :close 0}")
 				}));
 		}
 
@@ -267,9 +267,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { false, true, true }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.DUP :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}")
+					Atom("{:instruction BOOLEAN.DUP :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction FALSE :close 0}")
 				}));
 		}
 
@@ -285,7 +285,7 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.FLUSH :close 0}")
+					Atom("{:instruction BOOLEAN.FLUSH :close 0}")
 				}));
 		}
 
@@ -302,8 +302,8 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.FLUSH :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}")
+					Atom("{:instruction BOOLEAN.FLUSH :close 0}"),
+					Atom("{:instruction FALSE :close 0}")
 				}));
 		}
 
@@ -321,9 +321,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.FLUSH :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}")
+					Atom("{:instruction BOOLEAN.FLUSH :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction TRUE :close 0}")
 				}));
 		}
 
@@ -339,7 +339,7 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.FROMFLOAT :close 0}")
+					Atom("{:instruction BOOLEAN.FROMFLOAT :close 0}")
 				}));
 		}
 
@@ -356,8 +356,8 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.FROMFLOAT :close 0}"),
-					CodeAtom("{:instruction 123.45 :close 0}")
+					Atom("{:instruction BOOLEAN.FROMFLOAT :close 0}"),
+					Atom("{:instruction 123.45 :close 0}")
 				}));
 		}
 
@@ -374,8 +374,8 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.FROMFLOAT :close 0}"),
-					CodeAtom("{:instruction 0.0 :close 0}")
+					Atom("{:instruction BOOLEAN.FROMFLOAT :close 0}"),
+					Atom("{:instruction 0.0 :close 0}")
 				}));
 		}
 
@@ -393,9 +393,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 123.45 }, { false }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.FROMFLOAT :close 0}"),
-					CodeAtom("{:instruction 0.0 :close 0}"),
-					CodeAtom("{:instruction 123.45 :close 0}")
+					Atom("{:instruction BOOLEAN.FROMFLOAT :close 0}"),
+					Atom("{:instruction 0.0 :close 0}"),
+					Atom("{:instruction 123.45 :close 0}")
 				}));
 		}
 
@@ -411,7 +411,7 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.FROMINTEGER :close 0}")
+					Atom("{:instruction BOOLEAN.FROMINTEGER :close 0}")
 				}));
 		}
 
@@ -428,8 +428,8 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.FROMINTEGER :close 0}"),
-					CodeAtom("{:instruction 123 :close 0}")
+					Atom("{:instruction BOOLEAN.FROMINTEGER :close 0}"),
+					Atom("{:instruction 123 :close 0}")
 				}));
 		}
 
@@ -446,8 +446,8 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.FROMINTEGER :close 0}"),
-					CodeAtom("{:instruction 0 :close 0}")
+					Atom("{:instruction BOOLEAN.FROMINTEGER :close 0}"),
+					Atom("{:instruction 0 :close 0}")
 				}));
 		}
 
@@ -465,9 +465,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 123 }, {}, { false }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.FROMINTEGER :close 0}"),
-					CodeAtom("{:instruction 0 :close 0}"),
-					CodeAtom("{:instruction 123 :close 0}")
+					Atom("{:instruction BOOLEAN.FROMINTEGER :close 0}"),
+					Atom("{:instruction 0 :close 0}"),
+					Atom("{:instruction 123 :close 0}")
 				}));
 		}
 
@@ -483,7 +483,7 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.NOT :close 0}")
+					Atom("{:instruction BOOLEAN.NOT :close 0}")
 				}));
 		}
 
@@ -500,8 +500,8 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.NOT :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}")
+					Atom("{:instruction BOOLEAN.NOT :close 0}"),
+					Atom("{:instruction FALSE :close 0}")
 				}));
 		}
 
@@ -518,8 +518,8 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.NOT :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}")
+					Atom("{:instruction BOOLEAN.NOT :close 0}"),
+					Atom("{:instruction TRUE :close 0}")
 				}));
 		}
 
@@ -537,9 +537,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { false, false }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.NOT :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}")
+					Atom("{:instruction BOOLEAN.NOT :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction FALSE :close 0}")
 				}));
 		}
 
@@ -555,7 +555,7 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.OR :close 0}")
+					Atom("{:instruction BOOLEAN.OR :close 0}")
 				}));
 		}
 
@@ -573,9 +573,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.OR :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}")
+					Atom("{:instruction BOOLEAN.OR :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction TRUE :close 0}")
 				}));
 		}
 
@@ -593,9 +593,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.OR :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}")
+					Atom("{:instruction BOOLEAN.OR :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction FALSE :close 0}")
 				}));
 		}
 
@@ -613,9 +613,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.OR :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}")
+					Atom("{:instruction BOOLEAN.OR :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction TRUE :close 0}")
 				}));
 		}
 
@@ -633,9 +633,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.OR :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}")
+					Atom("{:instruction BOOLEAN.OR :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction FALSE :close 0}")
 				}));
 		}
 
@@ -651,7 +651,7 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.POP :close 0}")
+					Atom("{:instruction BOOLEAN.POP :close 0}")
 				}));
 		}
 
@@ -668,8 +668,8 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.POP :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}")
+					Atom("{:instruction BOOLEAN.POP :close 0}"),
+					Atom("{:instruction TRUE :close 0}")
 				}));
 		}
 
@@ -687,9 +687,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.POP :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}")
+					Atom("{:instruction BOOLEAN.POP :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction TRUE :close 0}")
 				}));
 		}
 
@@ -708,10 +708,10 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { false, true }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.POP :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}")
+					Atom("{:instruction BOOLEAN.POP :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction FALSE :close 0}")
 				}));
 		}
 
@@ -727,7 +727,7 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.ROT :close 0}")
+					Atom("{:instruction BOOLEAN.ROT :close 0}")
 				}));
 		}
 
@@ -746,10 +746,10 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true, false, false }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.ROT :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}")
+					Atom("{:instruction BOOLEAN.ROT :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction FALSE :close 0}")
 				}));
 		}
 
@@ -771,13 +771,13 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { false, true, false, true, false, false }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.ROT :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}")
+					Atom("{:instruction BOOLEAN.ROT :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction FALSE :close 0}")
 				}));
 		}
 
@@ -793,7 +793,7 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.SHOVE :close 0}")
+					Atom("{:instruction BOOLEAN.SHOVE :close 0}")
 				}));
 		}
 
@@ -811,9 +811,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.SHOVE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction 0 :close 0}")
+					Atom("{:instruction BOOLEAN.SHOVE :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction 0 :close 0}")
 				}));
 		}
 
@@ -844,16 +844,16 @@ namespace UnitTest
 			//                                             8     7      6     5      4     3      2     1     0
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true, false, false, true, false, true, false, true, false }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.SHOVE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction 5 :close 0}")
+					Atom("{:instruction BOOLEAN.SHOVE :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction 5 :close 0}")
 				}));
 		}
 
@@ -869,7 +869,7 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 0 }, {}, {}, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.STACKDEPTH :close 0}")
+					Atom("{:instruction BOOLEAN.STACKDEPTH :close 0}")
 				}));
 		}
 
@@ -886,8 +886,8 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 1 }, {}, { true }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.STACKDEPTH :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}")
+					Atom("{:instruction BOOLEAN.STACKDEPTH :close 0}"),
+					Atom("{:instruction TRUE :close 0}")
 				}));
 		}
 
@@ -905,9 +905,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 2 }, {}, { false, true }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.STACKDEPTH :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}")
+					Atom("{:instruction BOOLEAN.STACKDEPTH :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction FALSE :close 0}")
 				}));
 		}
 
@@ -926,10 +926,10 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 3 }, {}, { true, false, true }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.STACKDEPTH :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}")
+					Atom("{:instruction BOOLEAN.STACKDEPTH :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction TRUE :close 0}")
 				}));
 		}
 
@@ -945,7 +945,7 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.SWAP :close 0}")
+					Atom("{:instruction BOOLEAN.SWAP :close 0}")
 				}));
 		}
 
@@ -962,8 +962,8 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.SWAP :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}")
+					Atom("{:instruction BOOLEAN.SWAP :close 0}"),
+					Atom("{:instruction TRUE :close 0}")
 				}));
 		}
 
@@ -981,9 +981,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true, false }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.SWAP :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}")
+					Atom("{:instruction BOOLEAN.SWAP :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction FALSE :close 0}")
 				}));
 		}
 
@@ -1002,10 +1002,10 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true, true, false }, {},	// Right most is top of stack.
 				{
-					CodeAtom("{:instruction BOOLEAN.SWAP :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}")
+					Atom("{:instruction BOOLEAN.SWAP :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction TRUE :close 0}")
 				}));
 		}
 
@@ -1021,7 +1021,7 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.YANK :close 0}")
+					Atom("{:instruction BOOLEAN.YANK :close 0}")
 				}));
 		}
 
@@ -1044,11 +1044,11 @@ namespace UnitTest
 			// Before_stack                              true, false, true
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true, false, true }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.YANK :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction 0 :close 0}")
+					Atom("{:instruction BOOLEAN.YANK :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction 0 :close 0}")
 				}));
 		}
 
@@ -1070,11 +1070,11 @@ namespace UnitTest
 			// Before                                    true, false, true
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true, true, false }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.YANK :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction 1 :close 0}")
+					Atom("{:instruction BOOLEAN.YANK :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction 1 :close 0}")
 				}));
 		}
 
@@ -1100,15 +1100,15 @@ namespace UnitTest
 			// Before_stack                              true, false, true, false, true, false, true
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true, false, true, true, false, true, false }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.YANK :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction 3 :close 0}")
+					Atom("{:instruction BOOLEAN.YANK :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction 3 :close 0}")
 				}));
 		}
 
@@ -1124,7 +1124,7 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.YANKDUP :close 0}")
+					Atom("{:instruction BOOLEAN.YANKDUP :close 0}")
 				}));
 		}
 
@@ -1144,11 +1144,11 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true, false, true, true }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.YANKDUP :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction 0 :close 0}")
+					Atom("{:instruction BOOLEAN.YANKDUP :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction 0 :close 0}")
 				}));
 		}
 
@@ -1168,11 +1168,11 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true, false, true, false }, {},
 				{
-					CodeAtom("{:instruction BOOLEAN.YANKDUP :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction FALSE :close 0}"),
-					CodeAtom("{:instruction TRUE :close 0}"),
-					CodeAtom("{:instruction 1 :close 0}")
+					Atom("{:instruction BOOLEAN.YANKDUP :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction FALSE :close 0}"),
+					Atom("{:instruction TRUE :close 0}"),
+					Atom("{:instruction 1 :close 0}")
 				}));
 		}
 	};

@@ -544,7 +544,7 @@ namespace Plush
 						if (simulated_closing_parenthesis > 0)
 						{
 							genome.clear();
-							ExecAtom atom = Plush::ExecAtom("{:instruction EXEC.NOOP :close 1}");
+							ExecAtom atom = Plush::Atom("{:instruction EXEC.NOOP :close 1}");
 							genome.push(atom);
 
 							simulated_closing_parenthesis--;

@@ -64,7 +64,7 @@ namespace Plush
 				_env.push<ExecAtom>(block_a);
 				_env.push<ExecAtom>(block_a);
 
-				_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.DO*RANGE :close 0}"));
+				_env.push<ExecAtom>(Atom("{:instruction EXEC.DO*RANGE :close 0}"));
 			}
 		}
 
@@ -108,7 +108,7 @@ namespace Plush
 				_env.push<long>(0);
 				_env.push<long>(n - 1);
 
-				_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.DO*RANGE :close 0}"));
+				_env.push<ExecAtom>(Atom("{:instruction EXEC.DO*RANGE :close 0}"));
 			}
 		}
 
@@ -126,8 +126,8 @@ namespace Plush
 				_env.push<long>(0);
 				_env.push<long>(n - 1);
 
-				_env.push<ExecAtom>(ExecAtom("{:instruction INTEGER.POP :close 0}"));
-				_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.DO*RANGE :close 0}"));
+				_env.push<ExecAtom>(Atom("{:instruction INTEGER.POP :close 0}"));
+				_env.push<ExecAtom>(Atom("{:instruction EXEC.DO*RANGE :close 0}"));
 			}
 		}
 
@@ -218,10 +218,10 @@ namespace Plush
 			_env.pop<ExecAtom>(block_c);
 
 			// Push a list containing B and C back onto the EXEC stack
-			_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.NOOP :close 1}"));
+			_env.push<ExecAtom>(Atom("{:instruction EXEC.NOOP :close 1}"));
 			_env.push<ExecAtom>(block_b);
 			_env.push<ExecAtom>(block_c);
-			_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+			_env.push<ExecAtom>(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 
 			// Followed by another instance of C 
 			_env.push<ExecAtom>(block_c);
@@ -242,7 +242,7 @@ namespace Plush
 			_env.pop<ExecAtom>(extracted_block);
 
 			_env.push<ExecAtom>(extracted_block);
-			_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.Y :close 0}"));
+			_env.push<ExecAtom>(Atom("{:instruction EXEC.Y :close 0}"));
 			_env.push<ExecAtom>(extracted_block);
 		}
 
@@ -331,7 +331,7 @@ namespace Plush
 			}
 
 			else
-				_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
+				_env.push<CodeAtom>(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
 		}
 
 		return 1;
@@ -375,7 +375,7 @@ namespace Plush
 				_env.push<CodeAtom>(container_block);
 
 			else
-				_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
+				_env.push<CodeAtom>(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
 		}
 
 		return 1;
@@ -459,7 +459,7 @@ namespace Plush
 
 			_env.pop<CodeAtom>(block_a);
 			_env.push<CodeAtom>(block_a);
-			_env.push<ExecAtom>(ExecAtom("{:instruction CODE.POP :close 1}"));
+			_env.push<ExecAtom>(Atom("{:instruction CODE.POP :close 1}"));
 			_env.push<ExecAtom>(block_a);
 
 			return 1;
@@ -510,7 +510,7 @@ namespace Plush
 
 				_env.push<ExecAtom>(block_a);
 
-				_env.push<ExecAtom>(ExecAtom("{:instruction CODE.DO*RANGE :close 1}"));
+				_env.push<ExecAtom>(Atom("{:instruction CODE.DO*RANGE :close 1}"));
 			}
 		}
 
@@ -528,7 +528,7 @@ namespace Plush
 				_env.push<long>(0);
 				_env.push<long>(n - 1);
 
-				_env.push<ExecAtom>(ExecAtom("{:instruction CODE.DO*RANGE :close 1}"));
+				_env.push<ExecAtom>(Atom("{:instruction CODE.DO*RANGE :close 1}"));
 			}
 		}
 
@@ -546,8 +546,8 @@ namespace Plush
 				_env.push<long>(0);
 				_env.push<long>(n - 1);
 
-				_env.push<ExecAtom>(ExecAtom("{:instruction INTEGER.POP :close 1}"));
-				_env.push<ExecAtom>(ExecAtom("{:instruction CODE.DO*RANGE :close 1}"));
+				_env.push<ExecAtom>(Atom("{:instruction INTEGER.POP :close 1}"));
+				_env.push<ExecAtom>(Atom("{:instruction CODE.DO*RANGE :close 1}"));
 			}
 		}
 
@@ -622,10 +622,10 @@ namespace Plush
 			bool val = _env.pop<bool>();
 
 			if (val)
-				_env.push<CodeAtom>(CodeAtom("{:instruction TRUE :close 1}"));
+				_env.push<CodeAtom>(Atom("{:instruction TRUE :close 1}"));
 
 			else
-				_env.push<CodeAtom>(CodeAtom("{:instruction FALSE :close 1}"));
+				_env.push<CodeAtom>(Atom("{:instruction FALSE :close 1}"));
 		}
 
 		return 1;
@@ -699,7 +699,7 @@ namespace Plush
 			_env.pop<CodeAtom>(second_block);
 
 			// Put the second block in a list object
-			second_block.push(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+			second_block.push(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 
 			if (index == 0)
 			{
@@ -761,9 +761,9 @@ namespace Plush
 			extracted_block_B.bottom().close_parenthesis++;
 
 			_env.push<CodeAtom>(extracted_block_B);
-			_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+			_env.push<CodeAtom>(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 			_env.push<CodeAtom>(extracted_block_A);
-			_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+			_env.push<CodeAtom>(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 		}
 
 		return 1;
@@ -968,6 +968,100 @@ namespace Plush
 			extracted_block_A.subst(extracted_block_B, extracted_block_C);
 
 			_env.push<CodeAtom>(extracted_block_A);
+		}
+
+		return 1;
+	}
+
+	// Purpose: 
+	//   Push the Nth element from the input array onto the Code stack.
+	//
+	// Parameters:
+	//   None
+	//
+	// Return value:
+	//   1
+	//
+	// Side Effects:
+	//   If successful, a number is pushed to the Code stack
+	//
+	// Thread Safe:
+	//   Yes
+	//
+	// Remarks:
+	//   N is popped from the Integer stack first. If N < 0, or if N >= size of input array, or the Integer 
+	//	 stack is empty then a NO-OP is executed instead.
+	//
+	unsigned in2code(Environment & _env)
+	{
+		long index = _env.pop<long>();
+
+		index = std::abs((long)(index % _env.input.size()));
+		double value = _env.input[index];
+		_env.push<CodeAtom>(Atom(value));
+
+		return 1;
+	}
+
+	// Purpose: 
+	//   Push all elements from the input array onto a stack.
+	//
+	// Parameters:
+	//   None
+	//
+	// Return value:
+	//   1
+	//
+	// Side Effects:
+	//   If successful, all numbers are pushed to the a stack
+	//
+	// Thread Safe:
+	//   Yes
+	//
+	// Remarks:
+	//   if input array is empty, NO-OP is executed.
+	//
+	unsigned inall2code(Environment & _env)
+	{
+		if (_env.input.size() > 0)
+		{
+			for (int index = 0; index < _env.input.size(); index++)
+			{
+				double value = _env.input[index];
+				_env.push<CodeAtom>(Atom(value));
+			}
+		}
+
+		return 1;
+	}
+
+	// Purpose: 
+	//   Push all elements from the input array onto a stack in reverse order.
+	//
+	// Parameters:
+	//   None
+	//
+	// Return value:
+	//   1
+	//
+	// Side Effects:
+	//   If successful, all numbers are pushed to a stack
+	//
+	// Thread Safe:
+	//   Yes
+	//
+	// Remarks:
+	//   if input array is empty, NO-OP is executed.
+	//
+	unsigned inallrev2code(Environment & _env)
+	{
+		if (_env.input.size() > 0)
+		{
+			for (int index = _env.input.size() - 1; index >= 0; index--)
+			{
+				double value = _env.input[index];
+				_env.push<CodeAtom>(Atom(value));
+			}
 		}
 
 		return 1;

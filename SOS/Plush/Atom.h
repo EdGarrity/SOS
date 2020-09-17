@@ -38,6 +38,27 @@ namespace Plush
 			compile(_program_statement);
 		};
 
+		Atom(long value)
+		{
+			instruction = std::to_string(value);
+			close_parenthesis = 0;
+			type = AtomType::integer;
+		};
+
+		Atom(double value)
+		{
+			instruction = std::to_string(value);
+			close_parenthesis = 0;
+			type = AtomType::floating_point;
+		};
+
+		Atom(bool value)
+		{
+			instruction = value ? "true" : "false";
+			close_parenthesis = 0;
+			type = AtomType::boolean;
+		};
+
 		Atom(const Atom &other)
 		{
 			instruction = other.instruction;

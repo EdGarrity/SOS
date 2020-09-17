@@ -10,6 +10,8 @@ namespace Plush
 	typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
 	extern Func2BlockWantsMapType Func2BlockWantsMap;
 
+	//typedef combinable<Push::Env_detail> Env;
+
 	class Environment
 	{
 	private:
@@ -23,6 +25,14 @@ namespace Plush
 		std::vector<double> null_input;
 
 	public:
+		Environment()
+		{
+			clear_stacks();
+			null_input.clear();
+			input = null_input;
+			output.clear();
+		}
+
 		// Pointer to input & output data
 		std::vector<double> input = null_input;
 		std::vector<double> output;
@@ -34,6 +44,13 @@ namespace Plush
 			code_stack_.clear();
 			bool_stack_.clear();
 			double_stack_.clear();
+		}
+
+		virtual void initialize(std::vector<double> & _input, unsigned _reserve = 1000)
+		{
+			clear_stacks();
+			input = _input;
+			output.clear();
 		}
 
 		/* Helper Functions */
