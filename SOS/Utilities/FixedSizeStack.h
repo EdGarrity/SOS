@@ -156,7 +156,7 @@ namespace Utilities
 		//}
 
 		// Pushes the given element value to the top of the stack.
-		inline void push(value_type value)
+		inline void push(value_type& value)
 		{
 			if (top_ > N)
 			{
@@ -166,6 +166,22 @@ namespace Utilities
 				throw std::overflow_error(error_message.str());
 			}
 
+			stack_[top_] = value;
+			top_++;
+		}
+
+		// Pushes the given element value to the top of the stack.
+		inline void push(std::string& program)
+		{
+			if (top_ > N)
+			{
+				std::stringstream error_message;
+				error_message << "Utilities::FixedSizeStack::push() - Stack overflow.  top = " << top_;
+
+				throw std::overflow_error(error_message.str());
+			}
+
+			value_type value(program);
 			stack_[top_] = value;
 			top_++;
 		}

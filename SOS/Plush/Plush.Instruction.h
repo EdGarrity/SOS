@@ -125,14 +125,14 @@ namespace Plush
 					_env.pop<CodeAtom>(extracted_block);
 
 					if (n == index)
-						target_block.push(extracted_block);
+						target_block.push_genome(extracted_block);
 
 					else
 					{
 						Genome<CodeAtom> modified_genome_copy(modified_genome);
 						modified_genome.clear();
-						modified_genome.push(extracted_block);
-						modified_genome.push(modified_genome_copy);
+						modified_genome.push_genome(extracted_block);
+						modified_genome.push_genome(modified_genome_copy);
 					}
 
 					n++;
@@ -172,14 +172,14 @@ namespace Plush
 					_env.pop<ExecAtom>(extracted_block);
 
 					if (n == index)
-						target_block.push(extracted_block);
+						target_block.push_genome(extracted_block);
 
 					else
 					{
 						Genome<ExecAtom> modified_genome_copy(modified_genome);
 						modified_genome.clear();
-						modified_genome.push(extracted_block);
-						modified_genome.push(modified_genome_copy);
+						modified_genome.push_genome(extracted_block);
+						modified_genome.push_genome(modified_genome_copy);
 					}
 
 					n++;
@@ -227,7 +227,7 @@ namespace Plush
 			while ((_env.is_empty<CodeAtom>() == false) && (index >= 0))
 			{
 				_env.pop<CodeAtom>(extracted_block);
-				temp_genome.push(extracted_block);
+				temp_genome.push_genome(extracted_block);
 
 				if ((index) == 0)
 					extracted_block.bottom().close_parenthesis = 1;
@@ -267,7 +267,7 @@ namespace Plush
 			while ((_env.is_empty<ExecAtom>() == false) && (index >= 0))
 			{
 				_env.pop<ExecAtom>(extracted_block);
-				temp_genome.push(extracted_block);
+				temp_genome.push_genome(extracted_block);
 
 				if ((index) == 0)
 					extracted_block.bottom().close_parenthesis = 1;
@@ -564,9 +564,9 @@ namespace Plush
 						}
 
 						if (n < index)
-							top_half.push(genome);
+							top_half.push_genome(genome);
 						else
-							bottom_half.push(genome);
+							bottom_half.push_genome(genome);
 
 						n++;
 					}
@@ -574,13 +574,13 @@ namespace Plush
 					while (top_half.empty() == false)
 					{
 						top_half.pop_genome(temp_block);
-						top_block.push(temp_block);
+						top_block.push_genome(temp_block);
 					}
 
 					while (bottom_half.empty() == false)
 					{
 						bottom_half.pop_genome(temp_block);
-						bottom_block.push(temp_block);
+						bottom_block.push_genome(temp_block);
 					}
 
 					_env.push<ExecAtom>(bottom_block);

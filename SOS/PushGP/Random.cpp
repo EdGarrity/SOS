@@ -52,10 +52,8 @@ namespace pushGP
 		return n;
 	}
 
-	struct Plush::Atom random_atom()
+	Plush::CodeAtom& random_atom(Plush::CodeAtom& gene)
 	{
-		Plush::Atom gene;
-
 		if (Utilities::random_double(0.0, 1.0) < domain::argmap::probability_of_generating_a_constant_Plush_atom)
 		{
 			unsigned int r = Utilities::random_integer(3);
@@ -78,10 +76,10 @@ namespace pushGP
 				case 2:
 				{
 					if (Utilities::random_double(0.0, 1.0) < 0.5)
-						gene.instruction = "True";
+						gene.instruction = Plush::Atom::boolean_true;
 
 					else
-						gene.instruction = "False";
+						gene.instruction = Plush::Atom::boolean_false;
 
 					gene.type = Plush::Atom::AtomType::boolean;
 					break;
@@ -102,18 +100,17 @@ namespace pushGP
 		return gene;
 	}
 
-	void append_genome(std::vector<Plush::Atom>& a, const std::vector<Plush::Atom>& b)
+	void append_genome(std::vector<Plush::CodeAtom>& a, const std::vector<Plush::CodeAtom>& b)
 	{
 		a.reserve(a.size() + b.size());
 		a.insert(a.end(), b.begin(), b.end());  // std::move(b.begin(), b.end(), std::back_inserter(a));
 	}
 
-	Plush::Genome<Plush::Atom>& random_plush_genome_with_size(Plush::Genome<Plush::Atom>& genome, unsigned int genome_size)
+	Plush::Genome<Plush::CodeAtom>& random_plush_genome_with_size(Plush::Genome<Plush::CodeAtom>& genome, unsigned int genome_size)
 	{
 		int n = genome_size;	
-		Plush::Atom atom;
-
-//		Plush::Genome<Plush::Atom> genome;
+		Plush::CodeAtom atom;
+		Plush::CodeAtom temp_atom;
 
 		genome.clear();
 
@@ -241,7 +238,7 @@ namespace pushGP
 
 			else
 			{
-				atom = random_atom();
+				atom = random_atom(temp_atom);
 				atom.close_parenthesis = random_closes();
 
 				genome.push(atom);
@@ -251,7 +248,7 @@ namespace pushGP
 		return genome;
 	}
 
-	Plush::Genome<Plush::Atom>& make_random_plush_genome(Plush::Genome<Plush::Atom>& genome)
+	Plush::Genome<Plush::CodeAtom>& make_random_plush_genome(Plush::Genome<Plush::CodeAtom>& genome)
 	{
 		return random_plush_genome_with_size(genome, Utilities::random_integer(1, domain::argmap::max_genome_size_in_initial_program));
 	}

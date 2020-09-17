@@ -22,48 +22,89 @@ namespace Plush
 			silent
 		};
 
+		static const char boolean_true[]; // = "TRUE"; C2864
+		static const char boolean_false[]; // = "FALSE"; C2864
+
 		std::string instruction;
 		unsigned int close_parenthesis;
 		AtomType type;
 
-		Atom()
+		explicit Atom()
 		{
 			instruction = "";
 			close_parenthesis = 0;
 			type = AtomType::empty;
 		};
 
-		Atom(std::string _program_statement)
+		explicit Atom(std::string instruction, unsigned int close_parenthesis, AtomType type)
+		{
+			this->instruction = instruction;
+			this->close_parenthesis = close_parenthesis;
+			this->type = type;
+		};
+
+		explicit Atom(std::string _program_statement)
 		{
 			compile(_program_statement);
 		};
 
-		Atom(long value)
+		explicit Atom(char _program_statement[])
+		{
+			compile(_program_statement);
+		};
+
+		explicit Atom(const char* _program_statement)
+		{
+			compile(_program_statement);
+		};
+
+		explicit Atom(long value)
 		{
 			instruction = std::to_string(value);
 			close_parenthesis = 0;
 			type = AtomType::integer;
 		};
 
-		Atom(double value)
+		explicit Atom(double value)
 		{
 			instruction = std::to_string(value);
 			close_parenthesis = 0;
 			type = AtomType::floating_point;
 		};
 
-		Atom(bool value)
+		explicit Atom(bool value)
 		{
-			instruction = value ? "true" : "false";
+			instruction = value ? Plush::Atom::boolean_true : Plush::Atom::boolean_false;
 			close_parenthesis = 0;
 			type = AtomType::boolean;
 		};
 
-		Atom(const Atom &other)
+		explicit Atom(const Atom &other)
 		{
 			instruction = other.instruction;
 			close_parenthesis = other.close_parenthesis;
 			type = other.type;
+		};
+
+		explicit Atom(Atom &other)
+		{
+			instruction = other.instruction;
+			close_parenthesis = other.close_parenthesis;
+			type = other.type;
+		};
+
+		explicit Atom(const Atom* other)
+		{
+			instruction = other->instruction;
+			close_parenthesis = other->close_parenthesis;
+			type = other->type;
+		};
+
+		explicit Atom(Atom* other)
+		{
+			instruction = other->instruction;
+			close_parenthesis = other->close_parenthesis;
+			type = other->type;
 		};
 
 		void clear()
@@ -201,17 +242,18 @@ namespace Plush
 	private:
 
 	public:
-		CodeAtom() : Atom()
-		{
-		};
-
-		CodeAtom(std::string _program_statement) : Atom(_program_statement)
-		{
-		};
-
-		CodeAtom(const Atom &atom) : Atom(atom)
-		{
-		};
+		explicit CodeAtom() : Atom() {};
+		explicit CodeAtom(std::string _program_statement) : Atom(_program_statement) {};
+		explicit CodeAtom(char _program_statement[]) : Atom(_program_statement) {};
+		explicit CodeAtom(const char* _program_statement) : Atom(_program_statement) {};
+		explicit CodeAtom(long value) : Atom(value) {};
+		explicit CodeAtom(double value) : Atom(value) {};
+		explicit CodeAtom(bool value) : Atom(value) {};
+		explicit CodeAtom(const Atom &other) : Atom(other) {};
+		explicit CodeAtom(Atom &other) : Atom(other) {};
+		explicit CodeAtom(const Atom* other) : Atom(other) {};
+		explicit CodeAtom(Atom* other) : Atom(other) {};
+		explicit CodeAtom(ExecAtom& other) : Atom(other.instruction, other.close_parenthesis, other.type) {};
 
 		~CodeAtom() {};
 

@@ -53,7 +53,7 @@ namespace Plush
 				unit = 1;
 				break;
 			case Atom::AtomType::boolean:
-				env.push<bool>(atom.instruction == "TRUE");
+				env.push<bool>(atom.instruction == Plush::Atom::boolean_true);
 				unit = 1;
 				break;
 			case Atom::AtomType::ins:
@@ -113,7 +113,7 @@ namespace Plush
 				unit = 1;
 				break;
 			case Atom::AtomType::boolean:
-				env.push<bool>(atom.instruction == "TRUE");
+				env.push<bool>(atom.instruction == Plush::Atom::boolean_true);
 				unit = 1;
 				break;
 			case Atom::AtomType::ins:

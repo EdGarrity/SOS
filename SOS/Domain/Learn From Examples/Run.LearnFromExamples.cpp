@@ -541,13 +541,10 @@ namespace domain
 		unsigned int make_pop_agents(Plush::Environment& _env, int _start)
 		{
 			unsigned int agents_created = 0;
-//			Plush::Genome<Plush::Atom> genome;
 
 			for (int n = _start; n < argmap::population_size; n++)
 			{
-//				pushGP::globals::population_agents[n].set_genome(pushGP::make_random_plush_genome(genome));
 				pushGP::make_random_plush_genome(pushGP::globals::population_agents[n].get_genome());
-
 				agents_created++;
 			}
 
@@ -840,7 +837,6 @@ namespace domain
 			pushGP::SimulatedAnnealing& sa,
 			bool _include_best_individual_in_breeding_pool)
 		{
-//			Plush::Genome<Plush::Atom> genome;
 			std::set<std::string> set_of_gnomes;
 			combinable<pushGP::globals::Training_case_min_error_type> training_case_min_error;
 
@@ -854,7 +850,7 @@ namespace domain
 
 			for (unsigned int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 			{
-				Plush::Genome<Plush::Atom>& child_genome = pushGP::globals::child_agents[individual_index].get_genome();
+				Plush::Genome<Plush::CodeAtom>& child_genome = pushGP::globals::child_agents[individual_index].get_genome();
 
 				// Keep the best individual
 				std::cout << "  Keep the best individual" << std::endl;
@@ -939,15 +935,12 @@ namespace domain
 
 			parallel_for(zero, domain::argmap::population_size, [&, _best_individual, _number_of_example_cases](const unsigned int individual_index)
 			{
-//				Plush::Genome<Plush::Atom> genome;
-				
 				// If a child with the same genome already exists, create a new random child.
 				if (individual_index != _best_individual)
 				{
-					Plush::Genome<Plush::Atom>& child_genome = pushGP::globals::child_agents[individual_index].get_genome();
+					Plush::Genome<Plush::CodeAtom>& child_genome = pushGP::globals::child_agents[individual_index].get_genome();
 
 					if (set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string()).second == false)
-//						pushGP::globals::child_agents[individual_index].set_genome(pushGP::make_random_plush_genome(genome));
 						pushGP::make_random_plush_genome(child_genome);
 				}
 			});

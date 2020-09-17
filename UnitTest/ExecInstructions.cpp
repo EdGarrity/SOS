@@ -22,9 +22,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 2 }, {}, { true, true, true }, {},
 				{
-					Atom("{:instruction true :close 1}"),
-					Atom("{:instruction EXEC.DO*COUNT :close 0}"),
-					Atom("{:instruction 3 :close 1}"),
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction EXEC.DO*COUNT :close 0}"),
+					CodeAtom("{:instruction 3 :close 1}"),
 				}));
 		}
 
@@ -42,10 +42,10 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 2 }, {}, { false, true, false, true, false, true }, {},
 				{
-					Atom("{:instruction true :close 1}"),
-					Atom("{:instruction false :close 0}"),
-					Atom("{:instruction EXEC.DO*COUNT :close 0}"),
-					Atom("{:instruction 3 :close 0}"),
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction false :close 0}"),
+					CodeAtom("{:instruction EXEC.DO*COUNT :close 0}"),
+					CodeAtom("{:instruction 3 :close 0}"),
 				}));
 		}
 
@@ -61,8 +61,8 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
 				{
-					Atom("{:instruction true :close 1}"),
-					Atom("{:instruction EXEC.DO*COUNT :close 0}")
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction EXEC.DO*COUNT :close 0}")
 				}));
 		}
 
@@ -79,9 +79,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
 				{
-					Atom("{:instruction true :close 1}"),
-					Atom("{:instruction EXEC.DO*COUNT :close 0}"),
-					Atom("{:instruction -3 :close 0}"),
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction EXEC.DO*COUNT :close 0}"),
+					CodeAtom("{:instruction -3 :close 0}"),
 				}));
 		}
 
@@ -99,10 +99,10 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 3 }, {}, { true, true, true }, {},
 				{
-					Atom("{:instruction true :close 1}"),
-					Atom("{:instruction EXEC.DO*RANGE :close 0}"),
-					Atom("{:instruction 3 :close 0}"),
-					Atom("{:instruction 1 :close 0}")
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction EXEC.DO*RANGE :close 0}"),
+					CodeAtom("{:instruction 3 :close 0}"),
+					CodeAtom("{:instruction 1 :close 0}")
 				}));
 		}
 
@@ -121,11 +121,11 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 3 }, {}, { false, true, false, true, false, true }, {},
 				{
-					Atom("{:instruction true :close 1}"),
-					Atom("{:instruction false :close 0}"),
-					Atom("{:instruction EXEC.DO*RANGE :close 0}"),
-					Atom("{:instruction 3 :close 0}"),
-					Atom("{:instruction 1 :close 0}")
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction false :close 0}"),
+					CodeAtom("{:instruction EXEC.DO*RANGE :close 0}"),
+					CodeAtom("{:instruction 3 :close 0}"),
+					CodeAtom("{:instruction 1 :close 0}")
 				}));
 		}
 
@@ -141,8 +141,8 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
 				{
-					Atom("{:instruction true :close 1}"),
-					Atom("{:instruction EXEC.DO*RANGE :close 0}")
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction EXEC.DO*RANGE :close 0}")
 				}));
 		}
 
@@ -159,9 +159,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true, true, true }, {},
 				{
-					Atom("{:instruction true :close 1}"),
-					Atom("{:instruction EXEC.DO*TIMES :close 0}"),
-					Atom("{:instruction 3 :close 0}"),
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction EXEC.DO*TIMES :close 0}"),
+					CodeAtom("{:instruction 3 :close 0}"),
 				}));
 		}
 
@@ -179,10 +179,10 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { false, true, false, true, false, true }, {},
 				{
-					Atom("{:instruction true :close 1}"),
-					Atom("{:instruction false :close 0}"),
-					Atom("{:instruction EXEC.DO*TIMES :close 0}"),
-					Atom("{:instruction 3 :close 0}"),
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction false :close 0}"),
+					CodeAtom("{:instruction EXEC.DO*TIMES :close 0}"),
+					CodeAtom("{:instruction 3 :close 0}"),
 				}));
 		}
 
@@ -198,8 +198,8 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
 				{
-					Atom("{:instruction true :close 1}"),
-					Atom("{:instruction EXEC.DO*TIMES :close 0}")
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction EXEC.DO*TIMES :close 0}")
 				}));
 		}
 
@@ -216,9 +216,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
 				{
-					Atom("{:instruction true :close 1}"),
-					Atom("{:instruction EXEC.DO*TIMES :close 0}"),
-					Atom("{:instruction -3 :close 0}"),
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction EXEC.DO*TIMES :close 0}"),
+					CodeAtom("{:instruction -3 :close 0}"),
 				}));
 		}
 
@@ -235,9 +235,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 3 }, {}, { true, true }, {},
 				{
-					Atom("{:instruction true :close 1}"),
-					Atom("{:instruction EXEC.DUP :close 0}"),
-					Atom("{:instruction 3 :close 0}"),
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction EXEC.DUP :close 0}"),
+					CodeAtom("{:instruction 3 :close 0}"),
 				}));
 		}
 
@@ -255,10 +255,10 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 3 }, {}, { false, true, false, true }, {},
 				{
-					Atom("{:instruction true :close 1}"),
-					Atom("{:instruction false :close 0}"),
-					Atom("{:instruction EXEC.DUP :close 0}"),
-					Atom("{:instruction 3 :close 0}"),
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction false :close 0}"),
+					CodeAtom("{:instruction EXEC.DUP :close 0}"),
+					CodeAtom("{:instruction 3 :close 0}"),
 				}));
 		}
 
@@ -273,7 +273,7 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					Atom("{:instruction EXEC.DUP :close 0}"),
+					CodeAtom("{:instruction EXEC.DUP :close 0}"),
 				}));
 		}
 
@@ -290,9 +290,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { -3 }, {}, { true, true }, {},
 				{
-					Atom("{:instruction true :close 1}"),
-					Atom("{:instruction EXEC.DUP :close 0}"),
-					Atom("{:instruction -3 :close 0}"),
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction EXEC.DUP :close 0}"),
+					CodeAtom("{:instruction -3 :close 0}"),
 				}));
 		}
 
@@ -308,7 +308,7 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					Atom("{:instruction EXEC.= :close 0}")
+					CodeAtom("{:instruction EXEC.= :close 0}")
 				}));
 		}
 
@@ -325,8 +325,8 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					Atom("{:instruction FLOAT.= :close 1}"),
-					Atom("{:instruction EXEC.= :close 0}")
+					CodeAtom("{:instruction FLOAT.= :close 1}"),
+					CodeAtom("{:instruction EXEC.= :close 0}")
 				}));
 		}
 
@@ -344,9 +344,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
 				{
-					Atom("{:instruction FLOAT.= :close 1}"),
-					Atom("{:instruction FLOAT.= :close 1}"),
-					Atom("{:instruction EXEC.= :close 0}")
+					CodeAtom("{:instruction FLOAT.= :close 1}"),
+					CodeAtom("{:instruction FLOAT.= :close 1}"),
+					CodeAtom("{:instruction EXEC.= :close 0}")
 				}));
 		}
 
@@ -364,9 +364,9 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
 				{
-					Atom("{:instruction FLOAT.= :close 1}"),
-					Atom("{:instruction FLOAT.+ :close 1}"),
-					Atom("{:instruction EXEC.= :close 0}"),
+					CodeAtom("{:instruction FLOAT.= :close 1}"),
+					CodeAtom("{:instruction FLOAT.+ :close 1}"),
+					CodeAtom("{:instruction EXEC.= :close 0}"),
 				}));
 		}
 
@@ -386,11 +386,11 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
 				{
-					Atom("{:instruction INTEGER.+ :close 1}"),
-					Atom("{:instruction 10 :close 0}"),
-					Atom("{:instruction INTEGER.+ :close 1}"),
-					Atom("{:instruction 10 :close 0}"),
-					Atom("{:instruction EXEC.= :close 0}"),
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction EXEC.= :close 0}"),
 				}));
 		}
 
@@ -410,11 +410,11 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
 				{
-					Atom("{:instruction INTEGER.+ :close 1}"),
-					Atom("{:instruction 20 :close 0}"),
-					Atom("{:instruction INTEGER.+ :close 1}"),
-					Atom("{:instruction 10 :close 0}"),
-					Atom("{:instruction EXEC.= :close 0}"),
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction 20 :close 0}"),
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction EXEC.= :close 0}"),
 				}));
 		}
 
@@ -433,10 +433,10 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
 				{
-					Atom("{:instruction INTEGER.+ :close 1}"),
-					Atom("{:instruction 10 :close 0}"),
-					Atom("{:instruction INTEGER.- :close 1}"),
-					Atom("{:instruction EXEC.= :close 0}"),
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction INTEGER.- :close 1}"),
+					CodeAtom("{:instruction EXEC.= :close 0}"),
 				}));
 		}
 
@@ -456,11 +456,11 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 10 }, {}, {}, {},
 				{
-					Atom("{:instruction INTEGER.- :close 1}"),
-					Atom("{:instruction INTEGER.+ :close 1}"),
-					Atom("{:instruction 10 :close 0}"),
-					Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					Atom("{:instruction EXEC.= :close 0}")
+					CodeAtom("{:instruction INTEGER.- :close 1}"),
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction EXEC.= :close 0}")
 				}));
 		}
 
@@ -478,10 +478,10 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 3 }, {}, {}, {},
 				{
-					Atom("{:instruction true :close 1}"),
-					Atom("{:instruction false :close 0}"),
-					Atom("{:instruction EXEC.FLUSH :close 0}"),
-					Atom("{:instruction 3 :close 0}"),
+					CodeAtom("{:instruction true :close 1}"),
+					CodeAtom("{:instruction false :close 0}"),
+					CodeAtom("{:instruction EXEC.FLUSH :close 0}"),
+					CodeAtom("{:instruction 3 :close 0}"),
 				}));
 		}
 
@@ -496,7 +496,7 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					Atom("{:instruction EXEC.IF :close 0}"),
+					CodeAtom("{:instruction EXEC.IF :close 0}"),
 				}));
 		}
 
@@ -515,10 +515,10 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 20 }, {}, {}, {},
 				{
-					Atom("{:instruction INTEGER.+ :close 0}"),
-					Atom("{:instruction 10 :close 0}"),
-					Atom("{:instruction 10 :close 0}"),
-					Atom("{:instruction EXEC.IF :close 0}")
+					CodeAtom("{:instruction INTEGER.+ :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction EXEC.IF :close 0}")
 				}));
 		}
 
@@ -538,11 +538,11 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 20 }, {}, {}, {},
 				{
-					Atom("{:instruction INTEGER.+ :close 1}"),
-					Atom("{:instruction 10 :close 0}"),
-					Atom("{:instruction 10 :close 0}"),
-					Atom("{:instruction EXEC.IF :close 1}"),
-					Atom("{:instruction FALSE :close 0}")
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction EXEC.IF :close 1}"),
+					CodeAtom("{:instruction FALSE :close 0}")
 				}));
 		}
 
@@ -562,11 +562,11 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 20 }, {}, {}, {},
 				{
-					Atom("{:instruction INTEGER.+ :close 2}"),
-					Atom("{:instruction 10 :close 0}"),
-					Atom("{:instruction 10 :close 0}"),
-					Atom("{:instruction EXEC.IF :close 0}"),
-					Atom("{:instruction TRUE :close 0}")
+					CodeAtom("{:instruction INTEGER.+ :close 2}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction EXEC.IF :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}")
 				}));
 		}
 
@@ -586,11 +586,11 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					Atom("{:instruction INTEGER.+ :close 1}"),
-					Atom("{:instruction 10 :close 0}"),
-					Atom("{:instruction 10 :close 0}"),
-					Atom("{:instruction EXEC.IF :close 1}"),
-					Atom("{:instruction TRUE :close 1}")
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction EXEC.IF :close 1}"),
+					CodeAtom("{:instruction TRUE :close 1}")
 				}));
 		}
 
@@ -610,11 +610,11 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					Atom("{:instruction INTEGER.+ :close 2}"),
-					Atom("{:instruction 10 :close 0}"),
-					Atom("{:instruction 10 :close 0}"),
-					Atom("{:instruction EXEC.IF :close 0}"),
-					Atom("{:instruction FALSE :close 0}")
+					CodeAtom("{:instruction INTEGER.+ :close 2}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction EXEC.IF :close 0}"),
+					CodeAtom("{:instruction FALSE :close 0}")
 				}));
 		}
 
@@ -634,11 +634,11 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 20 }, {}, {}, {},
 				{
-					Atom("{:instruction INTEGER.+ :close 2}"),
-					Atom("{:instruction 10 :close 0}"),
-					Atom("{:instruction 10 :close 0}"),
-					Atom("{:instruction EXEC.IF :close 2}"),
-					Atom("{:instruction TRUE :close 0}")
+					CodeAtom("{:instruction INTEGER.+ :close 2}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction EXEC.IF :close 2}"),
+					CodeAtom("{:instruction TRUE :close 0}")
 				}));
 		}
 
@@ -661,14 +661,14 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 20 }, {}, {}, {},
 				{
-					Atom("{:instruction INTEGER.+ :close 1}"),
-					Atom("{:instruction 10 :close 0}"),
-					Atom("{:instruction 20 :close 0}"),
-					Atom("{:instruction INTEGER.+ :close 1}"),
-					Atom("{:instruction 10 :close 0}"),
-					Atom("{:instruction 10 :close 0}"),
-					Atom("{:instruction EXEC.IF :close 0}"),
-					Atom("{:instruction TRUE :close 0}")
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction 20 :close 0}"),
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction EXEC.IF :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}")
 				}));
 		}
 
@@ -691,14 +691,14 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 30 }, {}, {}, {},
 				{
-					Atom("{:instruction INTEGER.+ :close 1}"),
-					Atom("{:instruction 10 :close 0}"),
-					Atom("{:instruction 20 :close 0}"),
-					Atom("{:instruction INTEGER.+ :close 1}"),
-					Atom("{:instruction 10 :close 0}"),
-					Atom("{:instruction 10 :close 0}"),
-					Atom("{:instruction EXEC.IF :close 0}"),
-					Atom("{:instruction FALSE :close 0}")
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction 20 :close 0}"),
+					CodeAtom("{:instruction INTEGER.+ :close 1}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction EXEC.IF :close 0}"),
+					CodeAtom("{:instruction FALSE :close 0}")
 				}));
 		}
 
@@ -717,10 +717,10 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2 }, {}, {},
 				{
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.K :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.K :close 0}"),
 				}));
 		}
 
@@ -743,14 +743,14 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 2 }, { 1.0, 1.1, 1.2, 3.0 }, {}, {},
 				{
-					Atom("{:instruction 2 :close 1}"),
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.K :close 0}"),
+					CodeAtom("{:instruction 2 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.K :close 0}"),
 				}));
 		}
 
@@ -769,10 +769,10 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.POP :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.POP :close 0}"),
 				}));
 		}
 
@@ -795,14 +795,14 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 2 }, { 2.0, 2.1, 3.0 }, {}, {},
 				{
-					Atom("{:instruction 2 :close 1}"),
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.POP :close 0}"),
+					CodeAtom("{:instruction 2 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.POP :close 0}"),
 				}));
 		}
 
@@ -825,14 +825,14 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 2 }, { 3.0, 1.0, 1.1, 1.2, 2.0, 2.1 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.ROT :close 0}"),
-					Atom("{:instruction 2 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.ROT :close 0}"),
+					CodeAtom("{:instruction 2 :close 1}"),
 				}));
 		}
 
@@ -856,15 +856,15 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 2 }, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					Atom("{:instruction EXEC.ROT :close 0}"),
-					Atom("{:instruction 2 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction EXEC.ROT :close 0}"),
+					CodeAtom("{:instruction 2 :close 1}"),
 				}));
 		}
 
@@ -894,21 +894,21 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 2 }, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0, 4.0, 4.1, 4.2, 5.0, 5.1, 6.0 }, {}, {},
 				{
-					Atom("{:instruction 6.0 :close 2}"),
-					Atom("{:instruction 5.1 :close 1}"),
-					Atom("{:instruction 5.0 :close 0}"),
-					Atom("{:instruction 4.2 :close 1}"),
-					Atom("{:instruction 4.1 :close 0}"),
-					Atom("{:instruction 4.0 :close 0}"),
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					Atom("{:instruction EXEC.ROT :close 0}"),
-					Atom("{:instruction 2 :close 1}"),
+					CodeAtom("{:instruction 6.0 :close 2}"),
+					CodeAtom("{:instruction 5.1 :close 1}"),
+					CodeAtom("{:instruction 5.0 :close 0}"),
+					CodeAtom("{:instruction 4.2 :close 1}"),
+					CodeAtom("{:instruction 4.1 :close 0}"),
+					CodeAtom("{:instruction 4.0 :close 0}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction EXEC.ROT :close 0}"),
+					CodeAtom("{:instruction 2 :close 1}"),
 				}));
 		}
 
@@ -931,14 +931,14 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 2 }, { 1.0, 1.1, 1.2, 3.0, 3.0, 2.0, 2.1 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 1}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.S :close 0}"),
-					Atom("{:instruction 2 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 1}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.S :close 0}"),
+					CodeAtom("{:instruction 2 :close 1}"),
 				}));
 		}
 
@@ -962,15 +962,15 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 2 }, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					Atom("{:instruction EXEC.S :close 0}"),
-					Atom("{:instruction 2 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction EXEC.S :close 0}"),
+					CodeAtom("{:instruction 2 :close 1}"),
 				}));
 		}
 
@@ -1000,21 +1000,21 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 2 }, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0, 4.0, 4.1, 4.2, 5.0, 5.1, 6.0 }, {}, {},
 				{
-					Atom("{:instruction 6.0 :close 2}"),
-					Atom("{:instruction 5.1 :close 1}"),
-					Atom("{:instruction 5.0 :close 0}"),
-					Atom("{:instruction 4.2 :close 1}"),
-					Atom("{:instruction 4.1 :close 0}"),
-					Atom("{:instruction 4.0 :close 0}"),
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					Atom("{:instruction EXEC.S :close 0}"),
-					Atom("{:instruction 2 :close 1}"),
+					CodeAtom("{:instruction 6.0 :close 2}"),
+					CodeAtom("{:instruction 5.1 :close 1}"),
+					CodeAtom("{:instruction 5.0 :close 0}"),
+					CodeAtom("{:instruction 4.2 :close 1}"),
+					CodeAtom("{:instruction 4.1 :close 0}"),
+					CodeAtom("{:instruction 4.0 :close 0}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction EXEC.S :close 0}"),
+					CodeAtom("{:instruction 2 :close 1}"),
 				}));
 		}
 
@@ -1037,14 +1037,14 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.SHOVE :close 0}"),
-					Atom("{:instruction 0 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.SHOVE :close 0}"),
+					CodeAtom("{:instruction 0 :close 1}"),
 				}));
 		}
 
@@ -1068,15 +1068,15 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					Atom("{:instruction EXEC.SHOVE :close 0}"),
-					Atom("{:instruction 0 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction EXEC.SHOVE :close 0}"),
+					CodeAtom("{:instruction 0 :close 1}"),
 				}));
 		}
 
@@ -1099,14 +1099,14 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 2.0, 2.1, 1.0, 1.1, 1.2, 3.0 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.SHOVE :close 0}"),
-					Atom("{:instruction 1 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.SHOVE :close 0}"),
+					CodeAtom("{:instruction 1 :close 1}"),
 				}));
 		}
 
@@ -1130,15 +1130,15 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 3.0, 1.0, 1.1, 1.2, 2.0, 2.1 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					Atom("{:instruction EXEC.SHOVE :close 0}"),
-					Atom("{:instruction 1 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction EXEC.SHOVE :close 0}"),
+					CodeAtom("{:instruction 1 :close 1}"),
 				}));
 		}
 
@@ -1161,14 +1161,14 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 2.0, 2.1, 3.0, 1.0, 1.1, 1.2 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.SHOVE :close 0}"),
-					Atom("{:instruction 2 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.SHOVE :close 0}"),
+					CodeAtom("{:instruction 2 :close 1}"),
 				}));
 		}
 
@@ -1192,15 +1192,15 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 3.0, 1.0, 1.1, 1.2, 2.0, 2.1 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					Atom("{:instruction EXEC.SHOVE :close 0}"),
-					Atom("{:instruction 2 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction EXEC.SHOVE :close 0}"),
+					CodeAtom("{:instruction 2 :close 1}"),
 				}));
 		}
 
@@ -1223,14 +1223,14 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 2.0, 2.1, 3.0, 1.0, 1.1, 1.2 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.SHOVE :close 0}"),
-					Atom("{:instruction 3 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.SHOVE :close 0}"),
+					CodeAtom("{:instruction 3 :close 1}"),
 				}));
 		}
 
@@ -1254,15 +1254,15 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 3.0, 1.0, 1.1, 1.2, 2.0, 2.1 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					Atom("{:instruction EXEC.SHOVE :close 0}"),
-					Atom("{:instruction 3 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction EXEC.SHOVE :close 0}"),
+					CodeAtom("{:instruction 3 :close 1}"),
 				}));
 		}
 
@@ -1285,14 +1285,14 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 2.0, 2.1, 3.0, 1.0, 1.1, 1.2 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.SHOVE :close 0}"),
-					Atom("{:instruction 4 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.SHOVE :close 0}"),
+					CodeAtom("{:instruction 4 :close 1}"),
 				}));
 		}
 
@@ -1316,15 +1316,15 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 3.0, 1.0, 1.1, 1.2, 2.0, 2.1 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					Atom("{:instruction EXEC.SHOVE :close 0}"),
-					Atom("{:instruction 4 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction EXEC.SHOVE :close 0}"),
+					CodeAtom("{:instruction 4 :close 1}"),
 				}));
 		}
 
@@ -1348,15 +1348,15 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					Atom("{:instruction EXEC.SHOVE :close 0}"),
-					Atom("{:instruction -2 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction EXEC.SHOVE :close 0}"),
+					CodeAtom("{:instruction -2 :close 1}"),
 				}));
 		}
 
@@ -1379,14 +1379,14 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.SHOVE :close 1}"),
-					Atom("{:instruction 1 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.SHOVE :close 1}"),
+					CodeAtom("{:instruction 1 :close 1}"),
 				}));
 		}
 
@@ -1409,14 +1409,14 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 8, 0 }, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
-					Atom("{:instruction 0 :close 1}"),
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.STACKDEPTH :close 1}"),
+					CodeAtom("{:instruction 0 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.STACKDEPTH :close 1}"),
 				}));
 		}
 
@@ -1440,15 +1440,15 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 8, 0 }, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
-					Atom("{:instruction 0 :close 1}"),
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					Atom("{:instruction EXEC.STACKDEPTH :close 0}"),
+					CodeAtom("{:instruction 0 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction EXEC.STACKDEPTH :close 0}"),
 				}));
 		}
 
@@ -1471,14 +1471,14 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 2 }, { 2.0, 2.1, 1.0, 1.1, 1.2, 3.0 }, {}, {},
 				{
-					Atom("{:instruction 2 :close 1}"),
-					Atom("{:instruction 3.0 :close 1}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.SWAP :close 0}"),
+					CodeAtom("{:instruction 2 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 1}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.SWAP :close 0}"),
 				}));
 		}
 
@@ -1501,14 +1501,14 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 2 }, { 2.0, 2.1, 1.0, 1.1, 1.2, 3.0 }, {}, {},
 				{
-					Atom("{:instruction 2 :close 1}"),
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.SWAP :close 0}"),
+					CodeAtom("{:instruction 2 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.SWAP :close 0}"),
 				}));
 		}
 
@@ -1532,15 +1532,15 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 2 }, { 3.0, 1.0, 1.1, 1.2, 2.0, 2.1 }, {}, {},
 				{
-					Atom("{:instruction 2 :close 1}"),
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					Atom("{:instruction EXEC.SWAP :close 0}"),
+					CodeAtom("{:instruction 2 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction EXEC.SWAP :close 0}"),
 				}));
 		}
 
@@ -1570,21 +1570,21 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 2 }, { 3.0, 1.0, 1.1, 1.2, 2.0, 2.1, 4.0, 4.1, 4.2, 5.0, 5.1, 6.0 }, {}, {},
 				{
-					Atom("{:instruction 2 :close 1}"),
-					Atom("{:instruction 6.0 :close 2}"),
-					Atom("{:instruction 5.1 :close 1}"),
-					Atom("{:instruction 5.0 :close 0}"),
-					Atom("{:instruction 4.2 :close 1}"),
-					Atom("{:instruction 4.1 :close 0}"),
-					Atom("{:instruction 4.0 :close 0}"),
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					Atom("{:instruction EXEC.SWAP :close 0}"),
+					CodeAtom("{:instruction 2 :close 1}"),
+					CodeAtom("{:instruction 6.0 :close 2}"),
+					CodeAtom("{:instruction 5.1 :close 1}"),
+					CodeAtom("{:instruction 5.0 :close 0}"),
+					CodeAtom("{:instruction 4.2 :close 1}"),
+					CodeAtom("{:instruction 4.1 :close 0}"),
+					CodeAtom("{:instruction 4.0 :close 0}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction EXEC.SWAP :close 0}"),
 				}));
 		}
 
@@ -1600,7 +1600,7 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					Atom("{:instruction EXEC.SWAP :close 1}"),
+					CodeAtom("{:instruction EXEC.SWAP :close 1}"),
 				}));
 		}
 
@@ -1623,14 +1623,14 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					Atom("{:instruction EXEC.SWAP :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction EXEC.SWAP :close 1}"),
 				}));
 		}
 
@@ -1660,21 +1660,21 @@ namespace UnitTest
 
 		//	Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 		//		{
-		//			Atom("{:instruction FLOAT.- :close 0}"),
-		//			Atom("{:instruction 1.0 :close 0}"),
-		//			Atom("{:instruction EXEC.POP :close 0}"),
-		//			Atom("{:instruction EXEC.IF :close 1}"),
-		//			Atom("{:instruction INTEGER.> :close 0}"),
-		//			Atom("{:instruction 0 :close 0}"),
-		//			Atom("{:instruction INTEGER.DUP :close 0}"),
-		//			Atom("{:instruction INTEGER.- :close 0}"),
-		//			Atom("{:instruction 1 :close 0}"),
-		//			Atom("{:instruction FLOAT.* :close 0}"),
-		//			Atom("{:instruction 2.0 :close 0}"),
-		//			Atom("{:instruction EXEC.Y :close 0}"),
-		//			Atom("{:instruction 3 :close 0}"),
-		//			Atom("{:instruction 2.0 :close 0}"),
-		//			Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+		//			CodeAtom("{:instruction FLOAT.- :close 0}"),
+		//			CodeAtom("{:instruction 1.0 :close 0}"),
+		//			CodeAtom("{:instruction EXEC.POP :close 0}"),
+		//			CodeAtom("{:instruction EXEC.IF :close 1}"),
+		//			CodeAtom("{:instruction INTEGER.> :close 0}"),
+		//			CodeAtom("{:instruction 0 :close 0}"),
+		//			CodeAtom("{:instruction INTEGER.DUP :close 0}"),
+		//			CodeAtom("{:instruction INTEGER.- :close 0}"),
+		//			CodeAtom("{:instruction 1 :close 0}"),
+		//			CodeAtom("{:instruction FLOAT.* :close 0}"),
+		//			CodeAtom("{:instruction 2.0 :close 0}"),
+		//			CodeAtom("{:instruction EXEC.Y :close 0}"),
+		//			CodeAtom("{:instruction 3 :close 0}"),
+		//			CodeAtom("{:instruction 2.0 :close 0}"),
+		//			CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
 		//		}));
 		//}
 
@@ -1697,14 +1697,14 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.YANK :close 1}"),
-					Atom("{:instruction 0 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.YANK :close 1}"),
+					CodeAtom("{:instruction 0 :close 1}"),
 				}));
 		}
 
@@ -1728,15 +1728,15 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					Atom("{:instruction EXEC.YANK :close 1}"),
-					Atom("{:instruction 0 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction EXEC.YANK :close 1}"),
+					CodeAtom("{:instruction 0 :close 1}"),
 				}));
 		}
 
@@ -1759,14 +1759,14 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.YANK :close 1}"),
-					Atom("{:instruction 1 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.YANK :close 1}"),
+					CodeAtom("{:instruction 1 :close 1}"),
 				}));
 		}
 
@@ -1790,15 +1790,15 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					Atom("{:instruction EXEC.YANK :close 1}"),
-					Atom("{:instruction 1 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction EXEC.YANK :close 1}"),
+					CodeAtom("{:instruction 1 :close 1}"),
 				}));
 		}
 
@@ -1821,14 +1821,14 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 2.0, 2.1, 1.0, 1.1, 1.2, 3.0}, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.YANK :close 1}"),
-					Atom("{:instruction 2 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.YANK :close 1}"),
+					CodeAtom("{:instruction 2 :close 1}"),
 				}));
 		}
 
@@ -1852,15 +1852,15 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 3.0, 1.0, 1.1, 1.2, 2.0, 2.1 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					Atom("{:instruction EXEC.YANK :close 1}"),
-					Atom("{:instruction 2 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction EXEC.YANK :close 1}"),
+					CodeAtom("{:instruction 2 :close 1}"),
 				}));
 		}
 
@@ -1883,14 +1883,14 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 3.0, 1.0, 1.1, 1.2, 2.0, 2.1 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.YANK :close 1}"),
-					Atom("{:instruction 3 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.YANK :close 1}"),
+					CodeAtom("{:instruction 3 :close 1}"),
 				}));
 		}
 
@@ -1914,15 +1914,15 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					Atom("{:instruction EXEC.YANK :close 1}"),
-					Atom("{:instruction 3 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction EXEC.YANK :close 1}"),
+					CodeAtom("{:instruction 3 :close 1}"),
 				}));
 		}
 
@@ -1945,14 +1945,14 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.YANK :close 1}"),
-					Atom("{:instruction 4 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.YANK :close 1}"),
+					CodeAtom("{:instruction 4 :close 1}"),
 				}));
 		}
 
@@ -1976,15 +1976,15 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					Atom("{:instruction EXEC.YANK :close 1}"),
-					Atom("{:instruction 4 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction EXEC.YANK :close 1}"),
+					CodeAtom("{:instruction 4 :close 1}"),
 				}));
 		}
 
@@ -2008,15 +2008,15 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
-					Atom("{:instruction 3.0 :close 2}"),
-					Atom("{:instruction 2.1 :close 1}"),
-					Atom("{:instruction 2.0 :close 0}"),
-					Atom("{:instruction 1.2 :close 1}"),
-					Atom("{:instruction 1.1 :close 0}"),
-					Atom("{:instruction 1.0 :close 0}"),
-					Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
-					Atom("{:instruction EXEC.YANK :close 1}"),
-					Atom("{:instruction -2 :close 1}"),
+					CodeAtom("{:instruction 3.0 :close 2}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
+					CodeAtom("{:instruction 2.0 :close 0}"),
+					CodeAtom("{:instruction 1.2 :close 1}"),
+					CodeAtom("{:instruction 1.1 :close 0}"),
+					CodeAtom("{:instruction 1.0 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+					CodeAtom("{:instruction EXEC.YANK :close 1}"),
+					CodeAtom("{:instruction -2 :close 1}"),
 				}));
 		}
 

@@ -44,7 +44,7 @@ namespace pushGP
 	class Individual
 	{
 		// Genome
-		Plush::Genome<Plush::Atom> genome_;
+		Plush::Genome<Plush::CodeAtom> genome_;
 
 		// Uniquely identify the indivudal to track genealogy
 		// See (https://stackoverflow.com/questions/1327157/whats-the-c-version-of-guid-newguid)
@@ -73,7 +73,7 @@ namespace pushGP
 			return genome_.to_string();
 		}
 
-		Plush::Genome<Plush::Atom>& get_genome()
+		Plush::Genome<Plush::CodeAtom>& get_genome()
 		{
 			return genome_;
 		}
@@ -94,7 +94,7 @@ namespace pushGP
 //		//}
 //
 		void set_genome(std::string _genome);
-		void set_genome(Plush::Genome<Plush::Atom>& _genome);
+		void set_genome(Plush::Genome<Plush::CodeAtom>& _genome);
 		void clear_genome();
 
 		void copy(Individual & other);

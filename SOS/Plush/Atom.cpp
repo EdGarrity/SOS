@@ -5,6 +5,9 @@
 
 namespace Plush
 {
+	const char Atom::boolean_true[] = "TRUE";
+	const char Atom::boolean_false[] = "FALSE";
+
 	void Atom::compile(std::string _atom_string) 
 	{
 		std::size_t index, start_of_optional_tokens, start_of_optional_value, end_of_optional_value;
@@ -61,7 +64,7 @@ namespace Plush
 		}
 
 		// Check for boolean
-		else if ((instruction == "TRUE") || (instruction == "FALSE"))
+		else if ((instruction == Plush::Atom::boolean_true) || (instruction == Plush::Atom::boolean_false))
 			type = AtomType::boolean;
 
 		// Check for integer

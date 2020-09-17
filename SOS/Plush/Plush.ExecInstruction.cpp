@@ -331,7 +331,7 @@ namespace Plush
 			}
 
 			else
-				_env.push<CodeAtom>(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
+				_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
 		}
 
 		return 1;
@@ -375,7 +375,7 @@ namespace Plush
 				_env.push<CodeAtom>(container_block);
 
 			else
-				_env.push<CodeAtom>(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
+				_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
 		}
 
 		return 1;
@@ -622,10 +622,10 @@ namespace Plush
 			bool val = _env.pop<bool>();
 
 			if (val)
-				_env.push<CodeAtom>(Atom("{:instruction TRUE :close 1}"));
+				_env.push<CodeAtom>(CodeAtom("{:instruction TRUE :close 1}"));
 
 			else
-				_env.push<CodeAtom>(Atom("{:instruction FALSE :close 1}"));
+				_env.push<CodeAtom>(CodeAtom("{:instruction FALSE :close 1}"));
 		}
 
 		return 1;
@@ -699,7 +699,7 @@ namespace Plush
 			_env.pop<CodeAtom>(second_block);
 
 			// Put the second block in a list object
-			second_block.push(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+			second_block.push(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 
 			if (index == 0)
 			{
@@ -761,9 +761,9 @@ namespace Plush
 			extracted_block_B.bottom().close_parenthesis++;
 
 			_env.push<CodeAtom>(extracted_block_B);
-			_env.push<CodeAtom>(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+			_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 			_env.push<CodeAtom>(extracted_block_A);
-			_env.push<CodeAtom>(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+			_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 		}
 
 		return 1;
@@ -998,7 +998,7 @@ namespace Plush
 
 		index = std::abs((long)(index % _env.input.size()));
 		double value = _env.input[index];
-		_env.push<CodeAtom>(Atom(value));
+		_env.push<CodeAtom>(CodeAtom(value));
 
 		return 1;
 	}
@@ -1028,7 +1028,7 @@ namespace Plush
 			for (int index = 0; index < _env.input.size(); index++)
 			{
 				double value = _env.input[index];
-				_env.push<CodeAtom>(Atom(value));
+				_env.push<CodeAtom>(CodeAtom(value));
 			}
 		}
 
@@ -1060,7 +1060,7 @@ namespace Plush
 			for (int index = _env.input.size() - 1; index >= 0; index--)
 			{
 				double value = _env.input[index];
-				_env.push<CodeAtom>(Atom(value));
+				_env.push<CodeAtom>(CodeAtom(value));
 			}
 		}
 
