@@ -134,6 +134,57 @@ namespace Plush
 		return 1;
 	}
 
+	unsigned exec_while(Environment & _env)
+	{
+		if ((_env.has_elements<bool>(1)) && (_env.has_elements<ExecAtom>(1)))
+		{
+			bool flag = _env.pop<bool>();
+			Genome<ExecAtom> block_a;
+
+			_env.pop(block_a);
+
+			if (flag)
+			{
+				_env.push<ExecAtom>(block_a);
+				_env.push<ExecAtom>(Atom("{:instruction EXEC.WHILE :close 0}"));
+				_env.push<ExecAtom>(block_a);
+			}
+		}
+
+		return 1;
+	}
+
+	unsigned do_while(Environment & _env)
+	{
+		if (_env.has_elements<ExecAtom>(1))
+		{
+			Genome<ExecAtom> block_a;
+
+			_env.pop(block_a);
+			_env.push<ExecAtom>(block_a);
+			_env.push<ExecAtom>(Atom("{:instruction EXEC.WHILE :close 0}"));
+			_env.push<ExecAtom>(block_a);
+		}
+
+		return 1;
+	}
+
+	unsigned exec_when(Environment & _env)
+	{
+		if ((_env.has_elements<bool>(1)) && (_env.has_elements<ExecAtom>(1)))
+		{
+			bool flag = _env.pop<bool>();
+
+			if (!flag)
+			{
+				Genome<ExecAtom> block_a;
+				_env.pop(block_a);
+			}
+		}
+
+		return 1;
+	}
+
 	unsigned exec_k(Environment & _env)
 	{
 		if (_env.has_elements<ExecAtom>(2))
@@ -146,60 +197,6 @@ namespace Plush
 
 			_env.push<ExecAtom>(block_a);
 		}
-
-		//if (_env.has_elements<ExecAtom>(2))
-		//{
-		//	int index = 1;
-
-		//	Utilities::FixedSizeStack<ExecAtom> &stack = _env.get_stack<ExecAtom>();
-		//	Utilities::FixedSizeStack<ExecAtom> extracted_block;
-		//	Utilities::FixedSizeStack<ExecAtom> block_without_extracted;
-
-		//	if (index > 0)
-		//	{
-		//		// Get count of sub-blocks
-		//		int number_of_blocks = 0;
-		//		int n = stack.size() - 1;
-
-		//		n = stack.size() - 1;
-		//		int block_number = 0;
-
-		//		do
-		//		{
-		//			int blocks_open = 0;
-
-		//			for (; n >= 0; n--)
-		//			{
-		//				Plush::ExecAtom atom = stack[n];
-
-		//				if (block_number == index)
-		//					extracted_block.push(atom);
-
-		//				else
-		//					block_without_extracted.push(atom);
-
-		//				blocks_open += Plush::Func2BlockWantsMap[atom.instruction];
-		//				blocks_open -= atom.close_parentheses;
-		//				blocks_open = (blocks_open > 0) ? blocks_open : 0;
-
-		//				if (atom.close_parentheses > 0)
-		//				{
-		//					if (blocks_open > 0)
-		//						blocks_open++;
-
-		//					else
-		//					{
-		//						block_number++;
-		//						blocks_open = 1;
-		//					}
-		//				}
-		//			};
-		//		} while (n >= 0);
-
-		//		_env.get_stack<ExecAtom>().clear();
-		//		_env.push<ExecAtom>(block_without_extracted);
-		//	}
-		//}
 
 		return 1;
 	}
@@ -1085,15 +1082,19 @@ namespace Plush
 		//make_instruction((Operator)do_while, "EXEC.DO*WHILE", execType, execType, 1);
 		//make_instruction((Operator)exec_when, "EXEC.WHEN", boolType + execType, execType, 1);
 
-		make_instruction((Operator)exec_do_range, "EXEC", "DO*RANGE");
-		make_instruction((Operator)noop_open_paren, "EXEC", "NOOP_OPEN_PAREN");
-		make_instruction((Operator)noop, "EXEC", "NOOP");
-		make_instruction((Operator)exec_if, "EXEC", "IF");
-		make_instruction((Operator)exec_do_count, "EXEC", "DO*COUNT");
-		make_instruction((Operator)exec_do_times, "EXEC", "DO*TIMES");
 		make_instruction((Operator)exec_k, "EXEC", "K");
 		make_instruction((Operator)exec_s, "EXEC", "S");
 		make_instruction((Operator)exec_y, "EXEC", "Y");
+		make_instruction((Operator)exec_if, "EXEC", "IF");
+		make_instruction((Operator)exec_do_range, "EXEC", "DO*RANGE");
+		make_instruction((Operator)exec_do_count, "EXEC", "DO*COUNT");
+		make_instruction((Operator)exec_do_times, "EXEC", "DO*TIMES");
+		make_instruction((Operator)exec_while, "EXEC", "WHILE");
+		make_instruction((Operator)do_while, "EXEC", "DO*WHILE");
+		make_instruction((Operator)exec_when, "EXEC", "DO*WHEN");
+
+		make_instruction((Operator)noop_open_paren, "EXEC", "NOOP_OPEN_PAREN");
+		make_instruction((Operator)noop, "EXEC", "NOOP");
 
 		set_parentheses("EXEC", "DO*COUNT", 1);
 		set_parentheses("EXEC", "DO*RANGE", 1);

@@ -859,7 +859,7 @@ namespace domain
 
 				else
 				{
-					std::cout << "  breed()" << std::endl;
+					std::cout << "  breed(" << individual_index << ")" << std::endl;
 					pushGP::breed(individual_index,
 						_number_of_example_cases,
 						training_case_min_error,

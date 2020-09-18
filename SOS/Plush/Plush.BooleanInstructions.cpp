@@ -23,8 +23,14 @@ namespace Plush
 		make_instruction((Operator)_and, "BOOLEAN", "AND");
 		make_instruction((Operator)_or, "BOOLEAN", "OR");
 		make_instruction((Operator)_not, "BOOLEAN", "NOT");
+		make_instruction((Operator)_nand, "BOOLEAN", "NAND");
+		make_instruction((Operator)_nor, "BOOLEAN", "NOR");
 		make_instruction((Operator)float2bool, "BOOLEAN", "FROMFLOAT");
 		make_instruction((Operator)int2bool, "BOOLEAN", "FROMINTEGER");
+		make_instruction((Operator)in<bool>, "BOOLEAN", "IN");
+		make_instruction((Operator)inall<bool>, "BOOLEAN", "INALL");
+		make_instruction((Operator)inallrev<bool>, "BOOLEAN", "INALLREV");
+		make_instruction((Operator)out<bool>, "BOOLEAN", "OUT");
 	}
 
 }

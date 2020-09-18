@@ -243,7 +243,7 @@ namespace Plush
 	{
 		if (_env.input.size() > 0)
 		{
-			int index = _env.pop<int>();
+			int index = _env.pop<long>();
 
 			index = std::abs((int)(index % _env.input.size()));
 			T value = _env.input[index];
@@ -275,7 +275,7 @@ namespace Plush
 	//{
 	//	if (env.input.size() > 0)
 	//	{
-	//		int index = pop<int>(env);
+	//		int index = pop<long>(env);
 
 	//		index = std::abs((int)(index % env.input.size()));
 	//		double value = env.input[index];
@@ -307,7 +307,7 @@ namespace Plush
 	//{
 	//	if (env.input.size() > 0)
 	//	{
-	//		int index = pop<int>(env);
+	//		int index = pop<long>(env);
 
 	//		index = std::abs((int)(index % env.input.size()));
 
@@ -412,7 +412,7 @@ namespace Plush
 	inline unsigned out(Environment & _env)
 	{
 		T value = _env.pop<T>();
-		int index = std::abs((int)_env.pop<int>());
+		int index = std::abs((int)_env.pop<long>());
 
 		if (index < _env.output.size())
 			_env.output[index] = value;
@@ -445,7 +445,7 @@ namespace Plush
 	////
 	//inline unsigned float2output()
 	//{
-	//	int index = std::abs((int)pop<int>(env));
+	//	int index = std::abs((int)pop<long>(env));
 	//	double value = pop<double>(env);
 
 	//	if (std::isnan(value))
@@ -482,7 +482,7 @@ namespace Plush
 	////
 	//inline unsigned bool2output()
 	//{
-	//	int index = std::abs((int)pop<int>(env));
+	//	int index = std::abs((int)pop<long>(env));
 	//	double value = pop<bool>(env) ? 1.0 : 0.0;
 
 	//	if (index < env.output.size())

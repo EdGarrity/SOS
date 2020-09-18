@@ -39,4 +39,27 @@ namespace Plush
 		return 1;
 	}
 
+	inline unsigned _nand(Environment & _env)
+	{
+		if (_env.has_elements<bool>(2))
+		{
+			bool first = _env.pop<bool>();
+			bool second = _env.pop<bool>();
+			_env.push<bool>(!(first && second));
+		}
+
+		return 1;
+	}
+
+	inline unsigned _nor(Environment & _env)
+	{
+		if (_env.has_elements<bool>(2))
+		{
+			bool first = _env.pop<bool>();
+			bool second = _env.pop<bool>();
+			_env.push<bool>(!(first || second));
+		}
+
+		return 1;
+	}
 }

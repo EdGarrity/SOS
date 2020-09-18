@@ -201,6 +201,102 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(NAND_No_Parameters)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction BOOLEAN.NAND :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction BOOLEAN.NAND :close 0}")
+				}));
+		}
+
+		TEST_METHOD(NAND_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction TRUE :close 0}\
+					{:instruction TRUE :close 0}\
+					{:instruction BOOLEAN.NAND :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
+				{
+					CodeAtom("{:instruction BOOLEAN.NAND :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}")
+				}));
+		}
+
+		TEST_METHOD(NAND_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction FALSE :close 1}\
+					{:instruction TRUE :close 1}\
+					{:instruction BOOLEAN.NAND :close 1}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
+				{
+					CodeAtom("{:instruction BOOLEAN.NAND :close 1}"),
+					CodeAtom("{:instruction TRUE :close 1}"),
+					CodeAtom("{:instruction FALSE :close 1}")
+				}));
+		}
+
+		TEST_METHOD(NAND_3)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction TRUE :close 0}\
+					{:instruction FALSE :close 0}\
+					{:instruction BOOLEAN.NAND :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
+				{
+					CodeAtom("{:instruction BOOLEAN.NAND :close 0}"),
+					CodeAtom("{:instruction FALSE :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}")
+				}));
+		}
+
+		TEST_METHOD(NAND_4)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction FALSE :close 0}\
+					{:instruction FALSE :close 0}\
+					{:instruction BOOLEAN.NAND :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
+				{
+					CodeAtom("{:instruction BOOLEAN.NAND :close 0}"),
+					CodeAtom("{:instruction FALSE :close 0}"),
+					CodeAtom("{:instruction FALSE :close 0}")
+				}));
+		}
+
 		TEST_METHOD(DUP_No_Parameters)
 		{
 			Environment env;
@@ -634,6 +730,102 @@ namespace UnitTest
 			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
 				{
 					CodeAtom("{:instruction BOOLEAN.OR :close 0}"),
+					CodeAtom("{:instruction FALSE :close 0}"),
+					CodeAtom("{:instruction FALSE :close 0}")
+				}));
+		}
+
+		TEST_METHOD(NOR_No_Parameters)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction BOOLEAN.NOR :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction BOOLEAN.NOR :close 0}")
+				}));
+		}
+
+		TEST_METHOD(NOR_1)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction TRUE :close 0}\
+					{:instruction TRUE :close 0}\
+					{:instruction BOOLEAN.NOR :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
+				{
+					CodeAtom("{:instruction BOOLEAN.NOR :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}")
+				}));
+		}
+
+		TEST_METHOD(NOR_2)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction FALSE :close 0}\
+					{:instruction TRUE :close 0}\
+					{:instruction BOOLEAN.NOR :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
+				{
+					CodeAtom("{:instruction BOOLEAN.NOR :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}"),
+					CodeAtom("{:instruction FALSE :close 0}")
+				}));
+		}
+
+		TEST_METHOD(NOR_3)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction TRUE :close 0}\
+					{:instruction FALSE :close 0}\
+					{:instruction BOOLEAN.NOR :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { false }, {},
+				{
+					CodeAtom("{:instruction BOOLEAN.NOR :close 0}"),
+					CodeAtom("{:instruction FALSE :close 0}"),
+					CodeAtom("{:instruction TRUE :close 0}")
+				}));
+		}
+
+		TEST_METHOD(NOR_4)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction FALSE :close 0}\
+					{:instruction FALSE :close 0}\
+					{:instruction BOOLEAN.NOR :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, { true }, {},
+				{
+					CodeAtom("{:instruction BOOLEAN.NOR :close 0}"),
 					CodeAtom("{:instruction FALSE :close 0}"),
 					CodeAtom("{:instruction FALSE :close 0}")
 				}));

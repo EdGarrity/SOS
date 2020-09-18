@@ -5,6 +5,19 @@ namespace Plush
 {
 	void initFloat();
 
+	inline unsigned _log(Environment & _env)
+	{
+		if (_env.has_elements<double>(1))
+		{
+			double value = _env.get_top<double>();
+
+			if (value > 0.0)
+				_env.set_top<double>(std::log(value));
+		}
+
+		return 1;
+	}
+
 	inline unsigned _fmod(Environment & _env)
 	{
 		// Check for valid parameters

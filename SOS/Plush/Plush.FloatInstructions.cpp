@@ -32,15 +32,19 @@ namespace Plush
 		make_instruction((Operator)minus<double>, "FLOAT", "-");
 		make_instruction((Operator)multiplies<double>, "FLOAT", "*");
 		make_instruction((Operator)divides<double>, "FLOAT", "/");
+		make_instruction((Operator)bool2float, "FLOAT", "FROMBOOLEAN");
+		make_instruction((Operator)int2float, "FLOAT", "FROMINTEGER");
 		make_instruction((Operator)_fmod, "FLOAT", "%");
 		make_instruction((Operator)smaller<double>, "FLOAT", "<");
 		make_instruction((Operator)greater<double>, "FLOAT", ">");
+		make_instruction((Operator)_max<double>, "FLOAT", "MAX");
+		make_instruction((Operator)_min<double>, "FLOAT", "MIN");
 		make_instruction((Operator)_cos, "FLOAT", "COS");
 		make_instruction((Operator)_sin, "FLOAT", "SIN");
 		make_instruction((Operator)_tan, "FLOAT", "TAN");
-		make_instruction((Operator)bool2float, "FLOAT", "FROMBOOLEAN");
-		make_instruction((Operator)int2float, "FLOAT", "FROMINTEGER");
-		make_instruction((Operator)_max<double>, "FLOAT", "MAX");
-		make_instruction((Operator)_min<double>, "FLOAT", "MIN");
+		make_instruction((Operator)in<double>, "FLOAT", "IN");
+		make_instruction((Operator)inall<double>, "FLOAT", "INALL");
+		make_instruction((Operator)inallrev<double>, "FLOAT", "INALLREV");
+		make_instruction((Operator)out<double>, "FLOAT", "OUT");
 	}
 }
