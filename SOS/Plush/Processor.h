@@ -157,7 +157,7 @@ namespace Plush
 	//	return std::make_pair(end_index, start_index);
 	//};
 
-	void run(Environment& env, std::string _program);
+	unsigned int run(Environment& env, std::string _program);
 	unsigned int run(Environment& env, unsigned _max_effort);
 
 	

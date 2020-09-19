@@ -503,26 +503,33 @@ namespace domain
 						if ((n % 1'000) == 0)
 							std::cout << "n = " << n << std::endl;
 
-						std::string genome = sqlcmd_get_individuals->get_field_as_string(2);
-						pushGP::globals::population_agents[n].set_genome(genome);
+						std::string genome = Utilities::trim_copy(sqlcmd_get_individuals->get_field_as_string(2));
 
-						pushGP::globals::population_agents[n].record_family_tree(
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(3)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(4)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(5)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(6)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(7)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(8)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(9)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(10)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(11)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(12)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(13)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(14)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(15)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(16)));
+						if (genome.length() > 0)
+						{
+							pushGP::globals::population_agents[n].set_genome(genome);
 
-						n++;
+							pushGP::globals::population_agents[n].record_family_tree(
+								StringToGuid(sqlcmd_get_individuals->get_field_as_string(3)),
+								StringToGuid(sqlcmd_get_individuals->get_field_as_string(4)),
+								StringToGuid(sqlcmd_get_individuals->get_field_as_string(5)),
+								StringToGuid(sqlcmd_get_individuals->get_field_as_string(6)),
+								StringToGuid(sqlcmd_get_individuals->get_field_as_string(7)),
+								StringToGuid(sqlcmd_get_individuals->get_field_as_string(8)),
+								StringToGuid(sqlcmd_get_individuals->get_field_as_string(9)),
+								StringToGuid(sqlcmd_get_individuals->get_field_as_string(10)),
+								StringToGuid(sqlcmd_get_individuals->get_field_as_string(11)),
+								StringToGuid(sqlcmd_get_individuals->get_field_as_string(12)),
+								StringToGuid(sqlcmd_get_individuals->get_field_as_string(13)),
+								StringToGuid(sqlcmd_get_individuals->get_field_as_string(14)),
+								StringToGuid(sqlcmd_get_individuals->get_field_as_string(15)),
+								StringToGuid(sqlcmd_get_individuals->get_field_as_string(16)));
+
+							n++;
+						}
+
+						else
+							std::cout << "n = " << n << "  Ignoring empty genome string" << std::endl;
 					}
 				}
 			}
@@ -853,7 +860,7 @@ namespace domain
 				Plush::Genome<Plush::CodeAtom>& child_genome = pushGP::globals::child_agents[individual_index].get_genome();
 
 				// Keep the best individual
-				std::cout << "  Keep the best individual" << std::endl;
+//				std::cout << "  Keep the best individual" << std::endl;
 				if ((_include_best_individual_in_breeding_pool) && (individual_index == _best_individual))
 					pushGP::globals::child_agents[individual_index].copy(pushGP::globals::population_agents[individual_index]);
 

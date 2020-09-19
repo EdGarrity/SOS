@@ -34,58 +34,63 @@ namespace domain
 		//     Where:
 		//       X = 0 or more doubles.
 		//
-		double run_program(Plush::Environment& _env,
-			std::string _program,
-			std::vector<double>& _example_problem,
-			std::vector<double>& _example_solution)
+		double run_program(Plush::Environment& env,
+			std::string program,
+			std::vector<double>& example_problem,
+			std::vector<double>& example_solution)
 		{
 			double error = 0.0;
 			int actual_solution_length = 0;
 
-			// Evaluate
-			Plush::run(_env, domain::argmap::max_point_evaluations);
-
-			// Calculate error
-			double sum_of_error_squared = 0;
-
-			int digits_imbalance = _example_solution.size() - _env.output.size();
-
-			int digits = std::min(_example_solution.size(), _env.output.size());
-
-			if (digits > 0)
+			if (Utilities::trim_copy(program).length() > 0)
 			{
-				for (int n = 0; n < digits; n++)
+				// Evaluate
+				Plush::run(env, program);
+
+				// Calculate error
+				double sum_of_error_squared = 0;
+
+				int digits_imbalance = example_solution.size() - env.output.size();
+
+				int digits = std::min(example_solution.size(), env.output.size());
+
+				if (digits > 0)
 				{
-					double distance = 0.0;
+					for (int n = 0; n < digits; n++)
+					{
+						double distance = 0.0;
 
-					distance = fabs(_example_solution[n] - (isnan(_env.output[n]) ? 0.0 : _env.output[n]));
+						distance = fabs(example_solution[n] - (isnan(env.output[n]) ? 0.0 : env.output[n]));
 
-					if (distance < (std::numeric_limits<double>::epsilon() + std::numeric_limits<double>::epsilon()))
-						distance = 0.0;
+						if (distance < (std::numeric_limits<double>::epsilon() + std::numeric_limits<double>::epsilon()))
+							distance = 0.0;
 
-					sum_of_error_squared += distance * distance;
+						sum_of_error_squared += distance * distance;
+					}
 				}
+
+				// Calculate magnitude of sum of all vectors
+				error = std::sqrt(sum_of_error_squared);
+
+				// Convert to a number between [0 - 1)
+				error = (-1.0 / std::log10(error + 10.0)) + 1.0;
+
+				// Add number of wrong digits
+				error += std::abs(digits_imbalance);
+
+				// Cleanup Push Stacks to release memory
+				env.clear_stacks();
+
+				// Cap error
+				if (error > 10000000.0)
+					error = 10000000.0;
+
+				// Check for NAN error
+				if (isnan(error))
+					error = std::numeric_limits<double>::max() / (domain::argmap::population_size * 2.0);
 			}
-
-			// Calculate magnitude of sum of all vectors
-			error = std::sqrt(sum_of_error_squared);
-
-			// Convert to a number between [0 - 1)
-			error = (-1.0 / std::log10(error + 10.0)) + 1.0;
-
-			// Add number of wrong digits
-			error += std::abs(digits_imbalance);
-
-			// Cleanup Push Stacks to release memory
-			_env.clear_stacks();
-
-			// Cap error
-			if (error > 10000000.0)
-				error = 10000000.0;
-
-			// Check for NAN error
-			if (isnan(error))
-				error = std::numeric_limits<double>::max();
+			else
+				error = std::numeric_limits<double>::max() / (domain::argmap::population_size * 2.0);
 
 			return error;
 		}

@@ -57,14 +57,19 @@ namespace Plush
 				if (i > n)
 					direction = -1;
 
-				_env.push<long>(i + direction);
-				_env.push<long>(n);
-
 				_env.pop(block_a);
 				_env.push<ExecAtom>(block_a);
-				_env.push<ExecAtom>(block_a);
 
-				_env.push<ExecAtom>(Atom("{:instruction EXEC.DO*RANGE :close 0}"));
+				// Check that the EXEC stack can hold another copy of Block A
+				if (_env.get_stack<ExecAtom>().free() > (block_a.size() * 2))
+				{
+					_env.push<long>(i + direction);
+					_env.push<long>(n);
+					_env.push<ExecAtom>(block_a);
+					_env.push<ExecAtom>(Atom("{:instruction EXEC.DO*RANGE :close 0}"));
+				}
+				else
+					_env.push<long>(i);
 			}
 		}
 

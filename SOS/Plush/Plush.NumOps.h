@@ -411,14 +411,17 @@ namespace Plush
 	template <class T>
 	inline unsigned out(Environment & _env)
 	{
-		T value = _env.pop<T>();
-		int index = std::abs((int)_env.pop<long>());
+		if ((_env.has_elements<T>(1)) && (_env.has_elements<long>(1)))
+		{
+			T value = _env.pop<T>();
+			int index = std::abs((int)_env.pop<long>());
 
-		if (index < _env.output.size())
-			_env.output[index] = value;
+			if (index < _env.output.size())
+				_env.output[index] = value;
 
-		else
-			_env.output.push_back(value);
+			else
+				_env.output.push_back(value);
+		}
 
 		return 1;
 	}

@@ -68,7 +68,7 @@ namespace Utilities
 
 		inline void copy(const FixedSizeStack<T>& other)
 		{
-			if (other->top_ > N)
+			if (other->top_ >= N)
 			{
 				std::stringstream error_message;
 				error_message << "Utilities::FixedSizeStack::copy() - Stack overflow.  top = " << other->top_;
@@ -89,7 +89,7 @@ namespace Utilities
 
 		inline const_reference operator [] (int index) const
 		{
-			if (index > N)
+			if (index >= N)
 			{
 				std::stringstream error_message;
 				error_message << "const_reference Utilities::FixedSizeStack::operator [] - Stack overflow.  index = " << index;
@@ -101,7 +101,7 @@ namespace Utilities
 
 		inline reference operator [] (int index)
 		{
-			if (index > N)
+			if (index >= N)
 			{
 				std::stringstream error_message;
 				error_message << "reference Utilities::FixedSizeStack::operator [] - Stack overflow.  index = " << index;
@@ -158,7 +158,7 @@ namespace Utilities
 		// Pushes the given element value to the top of the stack.
 		inline void push(value_type& value)
 		{
-			if (top_ > N)
+			if (top_ >= N)
 			{
 				std::stringstream error_message;
 				error_message << "Utilities::FixedSizeStack::push() - Stack overflow.  top = " << top_;
@@ -173,7 +173,7 @@ namespace Utilities
 		// Pushes the given element value to the top of the stack.
 		inline void push(std::string& program)
 		{
-			if (top_ > N)
+			if (top_ >= N)
 			{
 				std::stringstream error_message;
 				error_message << "Utilities::FixedSizeStack::push() - Stack overflow.  top = " << top_;
@@ -207,7 +207,7 @@ namespace Utilities
 		//
 		inline void shove(FixedSizeStack<T>& other, int n)
 		{
-			if ((top_ + other.size()) > N)
+			if ((top_ + other.size()) >= N)
 			{
 				std::stringstream error_message;
 				error_message << "Utilities::FixedSizeStack::shove() - Stack overflow.";
@@ -234,12 +234,18 @@ namespace Utilities
 			return top_;
 		}
 
-		virtual unsigned int split(Utilities::FixedSizeStack<T> &left_half, 
-			Utilities::FixedSizeStack<T> &right_half, 
-			unsigned int split_position) 
-		{ 
-			return 0; 
-		};
+		// Returns the number of available elements in the underlying container
+		inline size_type free() const
+		{
+			return N - top_ - 1;
+		}
+
+		//virtual unsigned int split(Utilities::FixedSizeStack<T> &left_half,
+		//	Utilities::FixedSizeStack<T> &right_half, 
+		//	unsigned int split_position) 
+		//{ 
+		//	return 0; 
+		//};
 
 		// Returns constant reference to the top element in the stack. 
 		inline const_reference get_top() const

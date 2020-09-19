@@ -45,7 +45,7 @@ namespace Plush
 
 		inline Genome(Genome *other)
 		{
-			if (other->top_ > N)
+			if (other->top_ >= N)
 			{
 				std::stringstream error_message;
 				error_message << "Utilities::Genome::Genome() - Stack overflow.  top = " << other->top_;
@@ -93,7 +93,7 @@ namespace Plush
 		// Update so as to not be copying the genome
 		inline void set(Genome<T, N>& other)
 		{
-			if (other.top_ > N)
+			if (other.top_ >= N)
 			{
 				std::stringstream error_message;
 				error_message << "Utilities::Genome::set() - Stack overflow.  top = " << other.top_;
@@ -126,7 +126,7 @@ namespace Plush
 
 		inline const_reference operator [] (int index) const
 		{
-			if (index > N)
+			if (index >= N)
 			{
 				std::stringstream error_message;
 				error_message << "const_reference Utilities::Genome::operator [] - Stack overflow.  index = " << index;
@@ -139,7 +139,7 @@ namespace Plush
 
 		inline reference operator [] (int index)
 		{
-			if (index > N)
+			if (index >= N)
 			{
 				std::stringstream error_message;
 				error_message << "reference Utilities::Genome::operator [] - Stack overflow.  index = " << index;
@@ -1520,13 +1520,24 @@ namespace Plush
 			_genome_str = rest_atom(_genome_str);
 			Utilities::trim(_genome_str);
 
-			Atom atom(gene);
+			CodeAtom atom(gene);
+			push(atom);
 		}
 	}
 
 	template<class T, size_t N>
 	inline void Genome<T, N>::set(std::string _genome_string)
 	{
+		std::string genome_string = Utilities::trim_copy(_genome_string);
+
+		if (genome_string.length() == 0)
+		{
+			std::stringstream error_message;
+			error_message << "Genome::set() - Parameter empty.";
+
+			throw std::invalid_argument(error_message.str());
+		}
+
 		ingest_plush_genome(_genome_string);
 		convert_genome_to_string();
 	}

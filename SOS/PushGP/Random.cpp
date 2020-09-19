@@ -250,6 +250,6 @@ namespace pushGP
 
 	Plush::Genome<Plush::CodeAtom>& make_random_plush_genome(Plush::Genome<Plush::CodeAtom>& genome)
 	{
-		return random_plush_genome_with_size(genome, Utilities::random_integer(1, domain::argmap::max_genome_size_in_initial_program));
+		return random_plush_genome_with_size(genome, Utilities::random_integer(2, domain::argmap::max_genome_size_in_initial_program));
 	}
 }

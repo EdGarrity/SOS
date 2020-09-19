@@ -121,8 +121,6 @@ namespace pushGP
 
 						else
 							new_genome.push(Plush::CodeAtom(true));
-
-						new_genome.push(atom);
 					}
 
 					else
