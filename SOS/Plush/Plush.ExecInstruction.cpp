@@ -504,15 +504,18 @@ namespace Plush
 				if (i > n)
 					direction = -1;
 
-				_env.push<long>(i + direction);
-				_env.push<long>(n);
-
 				_env.pop<CodeAtom>(block_a);
-				_env.push<CodeAtom>(block_a);
 
-				_env.push<ExecAtom>(block_a);
+				if (_env.get_stack<ExecAtom>().free() > (block_a.size() * 2))
+				{
+					_env.push<long>(i + direction);
+					_env.push<long>(n);
 
-				_env.push<ExecAtom>(Atom("{:instruction CODE.DO*RANGE :close 1}"));
+					_env.push<CodeAtom>(block_a);
+					_env.push<ExecAtom>(block_a);
+
+					_env.push<ExecAtom>(Atom("{:instruction CODE.DO*RANGE :close 1}"));
+				}
 			}
 		}
 
@@ -562,20 +565,20 @@ namespace Plush
 		{
 			int index = std::abs(_env.pop<long>());	// index
 
-			unsigned int extra_first_blocks = 0;
-			unsigned int extra_second_bloxks = 0;
+			//unsigned int extra_first_blocks = 0;
+			//unsigned int extra_second_bloxks = 0;
 
 			Genome<CodeAtom> first_block;
-			Genome<CodeAtom> second_block;
+			//Genome<CodeAtom> second_block;
 			Genome<CodeAtom> left_half;
 			Genome<CodeAtom> right_half;
 			Genome<CodeAtom> indexed_block;
 			Genome<CodeAtom> rest_block;
 
-			Genome<CodeAtom> top_block;
-			Genome<CodeAtom> extracted_block;
-			Genome<CodeAtom> block_without_extracted;
-			Genome<CodeAtom> block_copy;
+			//Genome<CodeAtom> top_block;
+			//Genome<CodeAtom> extracted_block;
+			//Genome<CodeAtom> block_without_extracted;
+			//Genome<CodeAtom> block_copy;
 
 			if (index != 0)
 			{
@@ -594,8 +597,8 @@ namespace Plush
 					first_block.split(left_half, right_half, index, Genome<CodeAtom>::SPLIT_MODE::item);
 
 					// Compensate for extra blocks in the second item.
-					if (extra_second_bloxks > 0)
-						right_half.bottom().close_parenthesis += extra_second_bloxks;
+					//if (extra_second_bloxks > 0)
+					//	right_half.bottom().close_parenthesis += extra_second_bloxks;
 
 					// Get indexed block
 					right_half.split(indexed_block, rest_block, 1, Genome<CodeAtom>::SPLIT_MODE::item);
