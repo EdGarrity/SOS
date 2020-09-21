@@ -13,18 +13,14 @@ namespace Plush
 	{
 		if (_env.has_elements<ExecAtom>(1))
 		{
-			Genome<ExecAtom> code_block;
+			// Get top atom on EXEC stack
+			ExecAtom atom = _env.get_top<ExecAtom>();
 
-			int unmatched_a = _env.pop<ExecAtom>(code_block);
-
-			// Remove one closing paranthesis from block before pushing back on stack
-			ExecAtom atom = code_block.get_top();
-			code_block.pop();
-
+			// Remove one closing paranthesis
 			atom.close_parenthesis = (atom.close_parenthesis > 0) ? atom.close_parenthesis - 1 : atom.close_parenthesis;
-			code_block.push(atom);
 
-			_env.push<ExecAtom>(code_block);
+			// Set top atom
+			_env.set_top<ExecAtom>(atom);
 		}
 
 		return 0;
@@ -42,8 +38,6 @@ namespace Plush
 	{
 		if ((_env.has_elements<long>(2)) && (_env.has_elements<ExecAtom>(1)))
 		{
-			Genome<ExecAtom> block_a;
-
 			int n = _env.pop<long>();	// destination index
 			int i = _env.pop<long>();	// current index
 
@@ -57,15 +51,16 @@ namespace Plush
 				if (i > n)
 					direction = -1;
 
-				_env.pop(block_a);
-				_env.push<ExecAtom>(block_a);
-
 				// Check that the EXEC stack can hold another copy of Block A
-				if (_env.get_stack<ExecAtom>().free() > (block_a.size() * 2))
+				int s = _env.get_stack<ExecAtom>().number_of_atoms();
+
+				if (_env.get_stack<ExecAtom>().free() > (s * 2))
 				{
 					_env.push<long>(i + direction);
 					_env.push<long>(n);
-					_env.push<ExecAtom>(block_a);
+
+					_env.get_stack<ExecAtom>().shove(_env.get_stack<ExecAtom>(), 0, 0, s);
+
 					_env.push<ExecAtom>(Atom("{:instruction EXEC.DO*RANGE :close 0}"));
 				}
 				else
@@ -80,23 +75,13 @@ namespace Plush
 	{
 		if ((_env.has_elements<bool>(1)) && (_env.has_elements<ExecAtom>(2)))
 		{
-			Genome<ExecAtom> extracted_block_A;
-			Genome<ExecAtom> extracted_block_B;
-
 			// Get conditional boolean
 			bool s = _env.pop<bool>();
 
-			// Get first block from stack
-			_env.pop<ExecAtom>(extracted_block_A);
-
-			// Get second block from stack
-			_env.pop<ExecAtom>(extracted_block_B);
-
 			if (s)
-				_env.push<ExecAtom>(extracted_block_A);
-
+				_env.get_stack<ExecAtom>().remove_item(1);
 			else
-				_env.push<ExecAtom>(extracted_block_B);
+				_env.get_stack<ExecAtom>().remove_item(0);
 		}
 
 		return 1;
@@ -144,15 +129,11 @@ namespace Plush
 		if ((_env.has_elements<bool>(1)) && (_env.has_elements<ExecAtom>(1)))
 		{
 			bool flag = _env.pop<bool>();
-			Genome<ExecAtom> block_a;
-
-			_env.pop(block_a);
 
 			if (flag)
 			{
-				_env.push<ExecAtom>(block_a);
 				_env.push<ExecAtom>(Atom("{:instruction EXEC.WHILE :close 0}"));
-				_env.push<ExecAtom>(block_a);
+				_env.get_stack<ExecAtom>().yankdup_item(1);
 			}
 		}
 
@@ -163,12 +144,8 @@ namespace Plush
 	{
 		if (_env.has_elements<ExecAtom>(1))
 		{
-			Genome<ExecAtom> block_a;
-
-			_env.pop(block_a);
-			_env.push<ExecAtom>(block_a);
 			_env.push<ExecAtom>(Atom("{:instruction EXEC.WHILE :close 0}"));
-			_env.push<ExecAtom>(block_a);
+			_env.get_stack<ExecAtom>().yankdup_item(1);
 		}
 
 		return 1;
@@ -181,10 +158,7 @@ namespace Plush
 			bool flag = _env.pop<bool>();
 
 			if (!flag)
-			{
-				Genome<ExecAtom> block_a;
-				_env.pop(block_a);
-			}
+				_env.get_stack<ExecAtom>().remove_item(0);
 		}
 
 		return 1;
@@ -193,15 +167,7 @@ namespace Plush
 	unsigned exec_k(Environment & _env)
 	{
 		if (_env.has_elements<ExecAtom>(2))
-		{
-			Genome<ExecAtom> block_a;
-			Genome<ExecAtom> block_b;
-
-			_env.pop<ExecAtom>(block_a);
-			_env.pop<ExecAtom>(block_b);
-
-			_env.push<ExecAtom>(block_a);
-		}
+			_env.get_stack<ExecAtom>().remove_item(1);
 
 		return 1;
 	}
@@ -210,26 +176,81 @@ namespace Plush
 	{
 		if (_env.has_elements<ExecAtom>(3))
 		{
-			Genome<ExecAtom> block_a;
-			Genome<ExecAtom> block_b;
-			Genome<ExecAtom> block_c;
+			//Genome<ExecAtom> block_a;
+			//Genome<ExecAtom> block_b;
+			//Genome<ExecAtom> block_c;
 
 			// Pop three blocks from stack
-			_env.pop<ExecAtom>(block_a);
-			_env.pop<ExecAtom>(block_b);
-			_env.pop<ExecAtom>(block_c);
+			//_env.pop<ExecAtom>(block_a);
+			//_env.pop<ExecAtom>(block_b);
+			//_env.pop<ExecAtom>(block_c);
+
+			//// Push a list containing B and C back onto the EXEC stack
+			//_env.push<ExecAtom>(Atom("{:instruction EXEC.NOOP :close 1}"));
+			//_env.push<ExecAtom>(block_b);
+			//_env.push<ExecAtom>(block_c);
+			//_env.push<ExecAtom>(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+
+			//// Followed by another instance of C 
+			//_env.push<ExecAtom>(block_c);
+
+			//// Followed by another instance of A
+			//_env.push<ExecAtom>(block_a);
+
+			// A = 0
+			// B = 1
+			// C = 2
 
 			// Push a list containing B and C back onto the EXEC stack
 			_env.push<ExecAtom>(Atom("{:instruction EXEC.NOOP :close 1}"));
-			_env.push<ExecAtom>(block_b);
-			_env.push<ExecAtom>(block_c);
+
+			// A = 1
+			// B = 2
+			// C = 3
+
+			//_env.push<ExecAtom>(block_b);
+			_env.push<ExecAtom>(Atom("{:instruction EXEC.NOOP :close 1}"));
+
+			// A = 2
+			// B = 3
+			// C = 4
+
+			_env.get_stack<ExecAtom>().yankdup_item(3);
+
+			// A = 3
+			// B = 4
+			// C = 5
+
+			//_env.push<ExecAtom>(block_c);
+			_env.push<ExecAtom>(Atom("{:instruction EXEC.NOOP :close 1}"));
+
+			// A = 4
+			// B = 5
+			// C = 6
+
+			_env.get_stack<ExecAtom>().yankdup_item(6);
+
+			// A = 5
+			// B = 6
+			// C = 7
+
 			_env.push<ExecAtom>(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 
+			// A = 6
+			// B = 7
+			// C = 8
+
 			// Followed by another instance of C 
-			_env.push<ExecAtom>(block_c);
+			//_env.push<ExecAtom>(block_c);
+			_env.get_stack<ExecAtom>().yankdup_item(8);
+
+			// A = 7
+			// B = 8
+			// C = 9
 
 			// Followed by another instance of A
-			_env.push<ExecAtom>(block_a);
+			//_env.push<ExecAtom>(block_a);
+			_env.get_stack<ExecAtom>().yankdup_item(7);
 		}
 
 		return 1;

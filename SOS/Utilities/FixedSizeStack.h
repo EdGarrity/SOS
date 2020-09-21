@@ -126,36 +126,6 @@ namespace Utilities
 		}
 
 		// Pushes the given element value to the top of the stack.
-		//inline void push(const value_type& value)
-		//{
-		//	if (top_ >= N)
-		//	{
-		//		std::stringstream error_message;
-		//		error_message << "Utilities::FixedSizeStack::push() - Stack overflow.";
-
-		//		throw std::overflow_error(error_message.str());
-		//	}
-
-		//	stack_[top_] = value;
-		//	top_++;
-		//}
-
-		// Pushes the given element value to the top of the stack.
-		//inline void push(value_type&& value)
-		//{
-		//	if (top_ >= N)
-		//	{
-		//		std::stringstream error_message;
-		//		error_message << "Utilities::FixedSizeStack::push() - Stack overflow.";
-
-		//		throw std::overflow_error(error_message.str());
-		//	}
-
-		//	stack_[top_] = value;
-		//	top_++;
-		//}
-
-		// Pushes the given element value to the top of the stack.
 		inline void push(value_type& value)
 		{
 			if (top_ >= N)
@@ -207,7 +177,7 @@ namespace Utilities
 		//
 		inline void shove(FixedSizeStack<T>& other, int n)
 		{
-			if ((top_ + other.size()) >= N)
+			if ((top_ + other.size()) > N)
 			{
 				std::stringstream error_message;
 				error_message << "Utilities::FixedSizeStack::shove() - Stack overflow.";
@@ -226,6 +196,142 @@ namespace Utilities
 				stack_[i + n] = other[i];
 
 			top_ += other.size();
+		}
+
+		// Purpose: 
+		//   Insert section of provided stack deep in the stack
+		//
+		// Parameters:
+		//   other				- Reference to the other stack to insert
+		//   insert_position	- Positin where to insert the other stack.  0 or less refers to the top of the stack.  
+		//						  Values greater than the size of the stack will insert the other stack at the bottom.
+		//   offset				- Offset to start of section in other stack to insert
+		//   length				- Length of section to insert
+		//
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   Stack updated with inserted stack.
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline void shove(FixedSizeStack<T>& other, int insert_position, int offset, int length)
+		{
+			if ((top_ + length) > N)
+			{
+				std::stringstream error_message;
+				error_message << "Utilities::FixedSizeStack::shove() - Stack overflow.";
+
+				throw std::overflow_error(error_message.str());
+			}
+
+			insert_position = (insert_position < 0) ? 0 : insert_position;
+			insert_position = (insert_position > top_) ? top_ : insert_position;
+
+			// Make space in this stack for the other stack items
+			for (int i = 0, j = insert_position + length - 1, k = top_ + length - 1;
+				i < length;
+				i++, j--, k--)
+				stack_[k] = stack_[j];
+
+			int n2 = other.size() - offset;
+
+			// Copy the other stack items into this stack
+			for (int i = 0, j = other.size() - offset - length, k = top_ - insert_position; 
+				i < length; 
+				i++)
+				stack_[k] = other[j];
+
+			top_ += length;
+		}
+
+		// Purpose: 
+		//   Removes a section of the stack
+		//
+		// Parameters:
+		//   position	- Positin of first item to remove from the stack.  0 or less refers to the top of the stack.  
+		//				  Values greater than the size of the stack-length will remove items from the end.
+		//   length		- Length of section to remove
+		//
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline void remove_item(int position, int length)
+		{
+			if (position < 0)
+				position = 0;
+
+			if (length > top_)
+				length = top_;
+
+			if (position + length > top_)
+				position = top_ - length;
+
+			if (position > 0)
+			{
+				for (int j = position + length - 1, k = position - 1;
+					j < top_;
+					j++, k++)
+					stack_[k] = stack_[j];
+			}
+
+			top_ -= length;
+		}
+
+		// Purpose: 
+		//   Pushes a section of the stack on top of the stack
+		//
+		// Parameters:
+		//   position	- Positin of first item to copy from the stack.  0 or less refers to the top of the stack.  
+		//				  Values greater than the size of the stack-length will copy items from the end.
+		//   length		- Length of section to copy
+		//
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline void yankdup_item(int position, int length)
+		{
+			if (position < 0)
+				position = 0;
+
+			if (position > top_)
+				position = top_;
+
+			if (length < 0)
+				position = 0;
+
+			if (length > top_)
+				length = top_;
+
+			if (top_ - position - length >= 0)
+			{
+				for (int i = 0, j = top_ - position - length, k = top_;
+					(i < length) && (k < N);
+					i++, j++, k++)
+					stack_[k] = stack_[j];
+
+				top_ += length;
+			}
 		}
 
 		// Returns the number of elements in the underlying container

@@ -90,7 +90,7 @@ namespace Plush
 		void set(std::string _genome_string);
 		//void set(Atom& _genome_atoms);
 
-		// Update so as to not be copying the genome
+		// Need to update so as to not be copying the genome
 		inline void set(Genome<T, N>& other)
 		{
 			if (other.top_ >= N)
@@ -337,6 +337,102 @@ namespace Plush
 		}
 
 		// Purpose: 
+		//   Returns the number of atoms in the Nth item of the stack
+		//
+		//   For example, 
+		//		if N = 0 and the top genome is "( A B )" then this returns 2. 
+		//		If N = 0 and the top genome is "( ( A B ) C )" then this returns 3.
+		//		If N = 1 and the genome stack is  "( A )( ( A B ) C )" then this returns 3.
+		//		If N = 2 and the genome stack is  "( A B )( ( A B ) C )" then this returns 3.
+		//		If N = 1 and the genome stack is  "( A )()( ( A B ) C )" then this returns 0.
+		//
+		// Parameters:
+		//   item_number = Item number to count the number of atoms in.  0 is the first item on the stack.
+		// 
+		// Return value:
+		//   Number of atoms in the top genome
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline unsigned int number_of_atoms(int item_number = 0)
+		{
+			unsigned int wanted_blocks = 0;
+			unsigned int extra_blocks = 0;
+			std::stack<unsigned int> wanted_stack;
+			int atom_count = 0;
+			int starting_index = Utilities::FixedSizeStack<T>::size() - 1;
+
+			for (int item = 0; item <= item_number; item++)
+			{
+				atom_count = 0;
+
+				if (extra_blocks > 0)
+					extra_blocks--;
+
+				else
+				{
+					int ending_index = 0;
+
+					for (int i = starting_index; i >= 0; i--)
+					{
+						ending_index = i;
+
+						T atom;
+
+						if (extra_blocks == 0)
+						{
+							atom = Utilities::FixedSizeStack<T>::container()[i];
+							atom_count++;
+						}
+						else
+						{
+							atom = T("{:instruction EXEC.NOOP :close 1}");
+							extra_blocks--;
+						}
+
+						int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
+
+						if (closing < 0)
+						{
+							wanted_stack.push(wanted_blocks);
+							wanted_blocks = 0 - closing;
+						}
+
+						extra_blocks = (closing > 1) ? (closing - 1) : (0);
+
+						if (closing > 0)
+						{
+							if (wanted_blocks > 0)
+								wanted_blocks--;
+
+							else if ((wanted_blocks == 0) && (wanted_stack.size() == 0))
+								break;
+						}
+
+						if (wanted_blocks == 0)
+						{
+							if (wanted_stack.size() > 0)
+							{
+								wanted_blocks = wanted_stack.top();
+								wanted_stack.pop();
+							}
+						}
+					}
+
+					starting_index = ending_index - 1;
+				}
+			}
+
+			return atom_count;
+		};
+
+		// Purpose: 
 		//   Splits the genome in two
 		//
 		//   This function will split the genome into two parts at the split point provided by the caller.
@@ -438,6 +534,102 @@ namespace Plush
 			
 			return item_number;
 		}
+
+		// Purpose: 
+		//   Splice the genome in two
+		//
+		//   This function will split the genome into two parts at the split point provided by the caller.
+		//   The split point is zero - based; that is, a split point less than or equal to 0 represents a
+		//   point before the first item.  A split point greater than the number of items in the genome will 
+		//   represent a point after the last item.  The caller is expected to provide the two genomes to 
+		//   write the two haves to.  This function is non - destructive, that is, it will not destroy or 
+		//   alter the genome to be split.
+		//
+		//   When determining the split point, the genome is processed as a list object, i.e., an open 
+		//   parenthesis is assumed to exist before the first item on the stack.  This function counts 
+		//   items or blocks (depending on te mode) from the beginning of the genome to locate the split 
+		//   point; nested lists contribute only 1 to this count, no matter what they contain.  Closing 
+		//   parenthesis can either be interpreted as close instructions (to satisfy a block requirement 
+		//   in a nested list) or as close - open instructions (for the top level list).  Nested levels 
+		//   begin when an instruction requiring blocks is encountered in the list and end when all 
+		//   required blocks are found.
+		//
+		// Parameters:
+		//   split_position - Zero-based index of the split point in the genome list of items
+		//   mode			- Bolck or Item
+		//
+		// Return value:
+		//   N where N is the splice position within the genome stack.
+		//		Left = 0..N-1
+		//		Right = N..Size of genome
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		//unsigned int splice(	unsigned int split_position,
+		//	SPLIT_MODE mode)
+		//{
+		//	Genome<T> genome(this);
+		//	Genome<T> temp_left;
+		//	Genome<T> temp_right;
+
+		//	while ((genome.empty() == false) && (split_position-- > 0))
+		//	{
+		//		Genome<T> temp;
+
+		//		if (mode == SPLIT_MODE::block)
+		//			genome.pop_genome(temp);
+		//		else
+		//			genome.pop_item(temp);
+
+		//		temp_left.push_genome(temp);
+		//	}
+
+		//	while (genome.empty() == false)
+		//	{
+		//		Genome<T> temp;
+
+		//		if (mode == SPLIT_MODE::block)
+		//			genome.pop_genome(temp);
+		//		else
+		//			genome.pop_item(temp);
+
+		//		temp_right.push_genome(temp);
+		//	}
+
+		//	while (temp_left.empty() == false)
+		//	{
+		//		Genome<T> temp;
+
+		//		if (mode == SPLIT_MODE::block)
+		//			temp_left.pop_genome(temp);
+		//		else
+		//			temp_left.pop_item(temp);
+
+		//		left_half.push_genome(temp);
+		//	}
+
+		//	while (temp_right.empty() == false)
+		//	{
+		//		Genome<T> temp;
+
+		//		if (mode == SPLIT_MODE::block)
+		//			temp_right.pop_genome(temp);
+		//		else
+		//			temp_right.pop_item(temp);
+
+		//		right_half.push_genome(temp);
+		//	}
+
+		//	unsigned int item_number = 0;
+
+		//	return item_number;
+		//}
 
 		// Purpose: 
 		//   Push a genome on the back of the stack
@@ -710,7 +902,7 @@ namespace Plush
 		// Purpose: 
 		//   Pop a genome from the stack
 		//
-		//   For example, if the top genome "( A B )" then this returns "( A B )" (after popping the 
+		//   For example, if the top genome is "( A B )" then this returns "( A B )" (after popping the 
 		//   argument from the genome). If the top genome is "( ( A B ) C )" then this returns "( A B )".
 		//
 		//   Will push a NOOP on the stack with the approprieate number of close parenthesis if needed to 
@@ -743,7 +935,6 @@ namespace Plush
 
 			while (Utilities::FixedSizeStack<T>::empty() == false)
 			{
-//				Plush::Atom atom;
 				T atom;
 
 				if (extra_blocks == 0)
@@ -790,7 +981,6 @@ namespace Plush
 				}
 			}
 
-//			Plush::Atom first = temp.get_top();
 			T first = temp.get_top();
 			temp.pop();
 			first.close_parenthesis -= extra_blocks;
@@ -814,7 +1004,7 @@ namespace Plush
 		};
 
 		// Purpose: 
-		//   Pop first item from the genome
+		//   Pop first top-level item from the genome
 		//
 		//   For example, if the top genome "( A B )" then this returns "A" (after popping the argument 
 		//   from the genome). However, if the top genome is a block then that will be returned.  For 
@@ -1024,6 +1214,68 @@ namespace Plush
 		{
 			T& atom = Utilities::FixedSizeStack<T>::get_top();
 			return atom;
+		}
+
+		// Purpose: 
+		//   Removes a top level item from the stack
+		//
+		// Parameters:
+		//   item_index - Index of item to remove.  0 refers to the top item on the stack.
+		// 
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline void remove_item(int item_index)
+		{
+			int s = 0;
+			int l = 0;
+
+			for (int n = 0; n <= item_index; n++)
+			{
+				s += l;
+				l = number_of_atoms(n);
+			}
+
+			Utilities::FixedSizeStack<T>::remove_item(s, l);
+		}
+
+		// Purpose: 
+		//   Pushes a copy of item N on top of the stack.
+		//
+		// Parameters:
+		//   item_index - Index of item to copy.  0 refers to the top item on the stack.
+		// 
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline void yankdup_item(int item_index)
+		{
+			int s = 0;
+			int l = 0;
+
+			for (int n = 0; n <= item_index; n++)
+			{
+				s += l;
+				l = number_of_atoms(n);
+			}
+
+			Utilities::FixedSizeStack<T>::yankdup_item(s, l);
 		}
 
 		// Purpose: 
