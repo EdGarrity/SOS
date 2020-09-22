@@ -462,6 +462,38 @@ namespace Utilities
 			return stack_[top_ - 1];
 		}
 
+		inline const_reference get_item(int position) const
+		{
+			if (top_ == 0)
+			{
+				std::stringstream error_message;
+				error_message << "Utilities::FixedSizeStack::get_item() - Stack empty.";
+
+				throw std::underflow_error(error_message.str());
+			}
+
+			position = (position < 0) ? 0 : position;
+			position = (position >= top_) ? top_ - 1: position;
+
+			return stack_[top_ - position - 1];
+		}
+
+		inline reference get_item(int position) 
+		{
+			if (top_ == 0)
+			{
+				std::stringstream error_message;
+				error_message << "Utilities::FixedSizeStack::get_item() - Stack empty.";
+
+				throw std::underflow_error(error_message.str());
+			}
+
+			position = (position < 0) ? 0 : position;
+			position = (position >= top_) ? top_ - 1 : position;
+
+			return stack_[top_ - position - 1];
+		}
+
 	protected:
 		// Zero-based index to the first empty slot on the stack
 		size_type top_ = 0;

@@ -1219,6 +1219,39 @@ namespace Plush
 		}
 
 		// Purpose: 
+		//   Returns a reference to the bottom atom on the specified item
+		//
+		// Parameters:
+		//   position - Index of item to remove.  0 refers to the top item on the stack.
+		// 
+		// Return value:
+		//   Reference to CodeAtom or ExecAtom from the bottom of the item
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline T& get_bottom_item(int position)
+		{
+			int s = 0;
+			int l = 0;
+			int extra_blocks;
+
+			// Find index to top of item after target item
+			for (int n = 0; n <= position + 1; n++)
+			{
+				s += l;
+				l = number_of_atoms(n, extra_blocks);
+			}
+
+			return Utilities::FixedSizeStack<T>::get_item(s - 1);
+		}
+
+		// Purpose: 
 		//   Removes a top level item from the stack
 		//
 		// Parameters:

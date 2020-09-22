@@ -284,24 +284,49 @@ namespace Plush
 	{
 		if (_env.has_elements<CodeAtom>(2))
 		{
-			Genome<CodeAtom> block_a;
-			Genome<CodeAtom> block_b;
+			//Genome<CodeAtom> block_a;
+			//Genome<CodeAtom> block_b;
 
-			_env.pop(block_a);
-			_env.pop(block_b);
+			//_env.pop(block_a);
+			//_env.pop(block_b);
 
-			block_a.bottom().close_parenthesis
-				= (block_a.bottom().close_parenthesis > 0)
-				? block_a.bottom().close_parenthesis - 1
-				: block_a.bottom().close_parenthesis;
+			//block_a.bottom().close_parenthesis
+			//	= (block_a.bottom().close_parenthesis > 0)
+			//	? block_a.bottom().close_parenthesis - 1
+			//	: block_a.bottom().close_parenthesis;
 
-			block_b.bottom().close_parenthesis
-				= (block_b.bottom().close_parenthesis == 0)
-				? 1 
-				: block_b.bottom().close_parenthesis;
+			//block_b.bottom().close_parenthesis
+			//	= (block_b.bottom().close_parenthesis == 0)
+			//	? 1 
+			//	: block_b.bottom().close_parenthesis;
 
-			_env.push<CodeAtom>(block_b);
-			_env.push<CodeAtom>(block_a);
+			//_env.push<CodeAtom>(block_b);
+			//_env.push<CodeAtom>(block_a);
+
+
+			//_env.get_stack<CodeAtom>().get_bottom_item(0).close_parenthesis
+			//	= (_env.get_stack<CodeAtom>().get_bottom_item(0).close_parenthesis > 0)
+			//	? _env.get_stack<CodeAtom>().get_bottom_item(0).close_parenthesis - 1
+			//	: _env.get_stack<CodeAtom>().get_bottom_item(0).close_parenthesis;
+
+			//_env.get_stack<CodeAtom>().get_bottom_item(1).close_parenthesis
+			//	= (_env.get_stack<CodeAtom>().get_bottom_item(1).close_parenthesis == 0)
+			//	? 1 
+			//	: _env.get_stack<CodeAtom>().get_bottom_item(1).close_parenthesis;
+
+
+			Atom& atom_a = _env.get_stack<CodeAtom>().get_bottom_item(0);
+			Atom& atom_b = _env.get_stack<CodeAtom>().get_bottom_item(1);
+
+			atom_a.close_parenthesis
+				= (atom_a.close_parenthesis > 0)
+				? atom_a.close_parenthesis - 1
+				: atom_a.close_parenthesis;
+
+			atom_b.close_parenthesis
+				= (atom_b.close_parenthesis == 0)
+				? 1
+				: atom_b.close_parenthesis;
 		}
 
 		return 1;

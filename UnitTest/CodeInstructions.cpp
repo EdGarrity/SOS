@@ -101,6 +101,36 @@ namespace UnitTest
 				}));
 		}
 
+		TEST_METHOD(APPEND_WITH_TWO_LISTS_WITH_SUBLIST)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
+					{:instruction 10 :close 0}\
+					{:instruction 20 :close 1}\
+					{:instruction 30 :close 0}\
+					{:instruction 40 :close 1}\
+					{:instruction 50 :close 0}\
+					{:instruction 60 :close 1}\
+					{:instruction CODE.APPEND :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, { 10, 20, 30, 40, 50, 60 }, {}, {}, {},
+				{
+					CodeAtom("{:instruction CODE.APPEND :close 0}"),
+					CodeAtom("{:instruction 60 :close 1}"),
+					CodeAtom("{:instruction 50 :close 0}"),
+					CodeAtom("{:instruction 40 :close 0}"),
+					CodeAtom("{:instruction 30 :close 0}"),
+					CodeAtom("{:instruction 20 :close 1}"),
+					CodeAtom("{:instruction 10 :close 0}"),
+					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
+				}));
+		}
+
 		TEST_METHOD(ATOM_WITH_NO_PARAMETERS)
 		{
 			Environment env;
