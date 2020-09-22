@@ -160,6 +160,47 @@ namespace Utilities
 		//   Insert provided stack deep in the stack
 		//
 		// Parameters:
+		//   other	- Reference to the other item to insert
+		//   n		- Positin where to insert the other item.  0 or less refers to the top of the stack.  
+		//			  Values greater than the size of the stack will insert the other item at the bottom.
+		// 
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   Stack updated with inserted item.
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline void shove(T& other, int n)
+		{
+			if ((top_ + 1) > N)
+			{
+				std::stringstream error_message;
+				error_message << "Utilities::FixedSizeStack::shove() - Stack overflow.";
+
+				throw std::overflow_error(error_message.str());
+			}
+
+			n = (n < 0) ? 0 : n;
+			n = (n > top_) ? top_ : n;
+			n = top_ - n;
+
+			for (int i = top_; i >= n; i--)
+				stack_[i] = stack_[i - n];
+
+			stack_[n] = other;
+
+			top_++;
+		}
+
+		// Purpose: 
+		//   Insert provided stack deep in the stack
+		//
+		// Parameters:
 		//   other	- Reference to the other stack to insert
 		//   n		- Positin where to insert the other stack.  0 or less refers to the top of the stack.  
 		//			  Values greater than the size of the stack will insert the other stack at the bottom.
@@ -281,13 +322,53 @@ namespace Utilities
 
 			if (position > 0)
 			{
-				for (int j = position + length - 1, k = position - 1;
+				//for (int j = position + length - 1, k = position - 1;
+				//	j < top_;
+				//	j++, k++)
+				//	stack_[k] = stack_[j];
+
+				for (int j = top_ - position, k = (top_ - position - 1) - (length - 1);
 					j < top_;
 					j++, k++)
 					stack_[k] = stack_[j];
 			}
 
 			top_ -= length;
+		}
+
+		// Purpose: 
+		//   Replaces stack item with provided item
+		//
+		// Parameters:
+		//   other	- Reference to the other item to replace with
+		//   n		- Positin of item in stack to replace.  0 or less refers to the top of the stack.  
+		//			  Values greater than the size of the stack will replace the item at the bottom.
+		// 
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   Stack updated with inserted item.
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline void replace(T& other, int n)
+		{
+			if (n >= N)
+			{
+				std::stringstream error_message;
+				error_message << "reference Utilities::FixedSizeStack::replace() - Stack overflow.  index = " << n;
+
+				throw std::overflow_error(error_message.str());
+			}
+
+			n = (n < 0) ? 0 : n;
+			n = (n > top_) ? top_ - 1 : n;
+
+			stack_[top_ - n - 1] = other;
 		}
 
 		// Purpose: 

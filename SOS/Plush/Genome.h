@@ -360,7 +360,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline unsigned int number_of_atoms(int item_number = 0)
+		inline unsigned int number_of_atoms(int item_number, int& extra_blocks_returned)
 		{
 			unsigned int wanted_blocks = 0;
 			unsigned int extra_blocks = 0;
@@ -428,6 +428,8 @@ namespace Plush
 					starting_index = ending_index - 1;
 				}
 			}
+
+			extra_blocks_returned = extra_blocks;
 
 			return atom_count;
 		};
@@ -1237,14 +1239,29 @@ namespace Plush
 		{
 			int s = 0;
 			int l = 0;
+			int extra_blocks;
 
 			for (int n = 0; n <= item_index; n++)
 			{
 				s += l;
-				l = number_of_atoms(n);
+				l = number_of_atoms(n, extra_blocks);
 			}
 
-			Utilities::FixedSizeStack<T>::remove_item(s, l);
+			if (extra_blocks == 0)
+				Utilities::FixedSizeStack<T>::remove_item(s, l);
+
+			else
+			{
+				std::string atom_str = "{:instruction EXEC.NOOP :close ";
+				atom_str += std::to_string(extra_blocks);
+				atom_str += "}";
+				T atom(atom_str);
+
+				Utilities::FixedSizeStack<T>::replace(atom, s + l - 1);
+
+				if (l > 1)
+					Utilities::FixedSizeStack<T>::remove_item(s, l - 1);
+			}
 		}
 
 		// Purpose: 
@@ -1268,14 +1285,22 @@ namespace Plush
 		{
 			int s = 0;
 			int l = 0;
+			int extra_blocks = 0;
 
 			for (int n = 0; n <= item_index; n++)
 			{
 				s += l;
-				l = number_of_atoms(n);
+				l = number_of_atoms(n, extra_blocks);
 			}
 
-			Utilities::FixedSizeStack<T>::yankdup_item(s, l);
+			if (l > 0)
+				Utilities::FixedSizeStack<T>::yankdup_item(s, l);
+			
+			else 
+				push(Atom("{:instruction EXEC.NOOP :close 1}"));
+
+			if (Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::size() - l].close_parenthesis > extra_blocks)
+				Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::size() - l].close_parenthesis -= extra_blocks;
 		}
 
 		// Purpose: 

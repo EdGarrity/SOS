@@ -36,6 +36,8 @@ namespace Plush
 	// for possible access during the execution of the body of the loop
 	unsigned exec_do_range(Environment & _env)
 	{
+		int extra_blocks = 0;
+
 		if ((_env.has_elements<long>(2)) && (_env.has_elements<ExecAtom>(1)))
 		{
 			int n = _env.pop<long>();	// destination index
@@ -52,7 +54,7 @@ namespace Plush
 					direction = -1;
 
 				// Check that the EXEC stack can hold another copy of Block A
-				int s = _env.get_stack<ExecAtom>().number_of_atoms();
+				int s = _env.get_stack<ExecAtom>().number_of_atoms(0, extra_blocks);
 
 				if (_env.get_stack<ExecAtom>().free() > (s * 2))
 				{
@@ -201,56 +203,58 @@ namespace Plush
 			// B = 1
 			// C = 2
 
-			// Push a list containing B and C back onto the EXEC stack
-			_env.push<ExecAtom>(Atom("{:instruction EXEC.NOOP :close 1}"));
+			// Push a list
+//			_env.push<ExecAtom>(Atom("{:instruction EXEC.NOOP :close 1}"));
+
+			// A = 0
+			// B = 1
+			// C = 2
+
+			// containing B
+			_env.get_stack<ExecAtom>().yankdup_item(1);
 
 			// A = 1
 			// B = 2
 			// C = 3
 
-			//_env.push<ExecAtom>(block_b);
-			_env.push<ExecAtom>(Atom("{:instruction EXEC.NOOP :close 1}"));
-
-			// A = 2
-			// B = 3
-			// C = 4
-
+			// and C 
 			_env.get_stack<ExecAtom>().yankdup_item(3);
 
 			// A = 3
 			// B = 4
 			// C = 5
 
-			//_env.push<ExecAtom>(block_c);
-			_env.push<ExecAtom>(Atom("{:instruction EXEC.NOOP :close 1}"));
-
-			// A = 4
-			// B = 5
-			// C = 6
-
-			_env.get_stack<ExecAtom>().yankdup_item(6);
-
-			// A = 5
-			// B = 6
-			// C = 7
-
+			// back onto the EXEC stack
 			_env.push<ExecAtom>(Atom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 
-			// A = 6
-			// B = 7
-			// C = 8
+			// A = 1
+			// B = 2
+			// C = 3
+
+
+			//_env.get_stack<ExecAtom>().remove_item(1);
+			//_env.get_stack<ExecAtom>().remove_item(1);
+			//_env.get_stack<ExecAtom>().remove_item(1);
+
+
+
+
+
 
 			// Followed by another instance of C 
-			//_env.push<ExecAtom>(block_c);
-			_env.get_stack<ExecAtom>().yankdup_item(8);
+			_env.get_stack<ExecAtom>().yankdup_item(3);
 
-			// A = 7
-			// B = 8
-			// C = 9
+			// A = 2
+			// B = 3
+			// C = 4
 
 			// Followed by another instance of A
-			//_env.push<ExecAtom>(block_a);
-			_env.get_stack<ExecAtom>().yankdup_item(7);
+			_env.get_stack<ExecAtom>().yankdup_item(2);
+
+			// Remove original A B C from stack
+			_env.get_stack<ExecAtom>().remove_item(3);
+			_env.get_stack<ExecAtom>().remove_item(3);
+			_env.get_stack<ExecAtom>().remove_item(3);
 		}
 
 		return 1;
