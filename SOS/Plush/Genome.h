@@ -11,7 +11,7 @@
 // - An atoms is considered a single littoral or instruction.
 // - A block is zero or more atoms surrounded by parenthesis.
 // - An item is an atom or a block
-// - A genome is a list of one or more items
+// - A genome is a list of one or more items.  A genome must end in a block to mark the end of the genome if not the last genome.
 // - A genome is processed as a list object, i.e., an open parenthesis is assumed to exist before the first item on the stack.
 // - A genome block level starts at 0 (after first implied open parenthesis) and increments for each nested block
 // - Nested blocks begin with the item after a block requiring items
@@ -263,7 +263,8 @@ namespace Plush
 		//   when all required blocks are found.
 		//
 		// Parameters:
-		//   None
+		//   starting_position	- Position of first atom in genome for sub-genome search.  0 = top 
+		//                        of stack.  Do not provide for a top level search.
 		// 
 		// Return value:
 		//   Number of items and blocks in the top level of the list
@@ -276,13 +277,19 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		unsigned int number_of_items()
+		unsigned int number_of_items(int starting_position = -1)
 		{
 			unsigned int item_number = 0;
 			unsigned int wanted_blocks = 0;
 			unsigned int extra_blocks = 0;
 			std::stack<unsigned int> wanted_stack;
 			int n = Utilities::FixedSizeStack<T>::size() - 1;
+
+			if (starting_position > -1)
+			{
+				wanted_blocks = 1;
+				n -= starting_position;
+			}
 
 			while (n >= 0)
 			{
@@ -337,7 +344,7 @@ namespace Plush
 		}
 
 		// Purpose: 
-		//   Returns the number of atoms in the Nth item of the stack
+		//   Returns the number of atoms in the Nth top item of the stack
 		//
 		//   For example, 
 		//		if N = 0 and the top genome is "( A B )" then this returns 2. 
@@ -347,7 +354,10 @@ namespace Plush
 		//		If N = 1 and the genome stack is  "( A )()( ( A B ) C )" then this returns 0.
 		//
 		// Parameters:
-		//   item_number = Item number to count the number of atoms in.  0 is the first item on the stack.
+		//   extra_blocks		- Where to put the number of extra closing parenthesis at the end of the search
+		//   item_number		- Item number to count the number of atoms in.  0 is the first item on the stack.
+		//   starting_position	- Position of first atom in genome for sub-genome search.  0 = top 
+		//                        of stack.  Do not provide for a top level search.
 		// 
 		// Return value:
 		//   Number of atoms in the top genome
@@ -360,13 +370,19 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline unsigned int number_of_atoms(int item_number, int& extra_blocks_returned)
+		inline unsigned int number_of_atoms(int& extra_blocks_returned, int item_number = 0, int starting_position = -1)
 		{
 			unsigned int wanted_blocks = 0;
 			unsigned int extra_blocks = 0;
 			std::stack<unsigned int> wanted_stack;
 			int atom_count = 0;
-			int starting_index = Utilities::FixedSizeStack<T>::size() - 1;
+			int block_starting_index = Utilities::FixedSizeStack<T>::size() - 1;
+
+			if (starting_position > -1)
+			{
+				wanted_blocks = 0;
+				block_starting_index -= starting_position;
+			}
 
 			for (int item = 0; item <= item_number; item++)
 			{
@@ -377,11 +393,11 @@ namespace Plush
 
 				else
 				{
-					int ending_index = 0;
+					int block_ending_index = 0;
 
-					for (int i = starting_index; i >= 0; i--)
+					for (int i = block_starting_index; i >= 0; i--)
 					{
-						ending_index = i;
+						block_ending_index = i;
 
 						T atom;
 
@@ -425,7 +441,76 @@ namespace Plush
 						}
 					}
 
-					starting_index = ending_index - 1;
+					block_starting_index = block_ending_index - 1;
+				}
+			}
+
+			extra_blocks_returned = extra_blocks;
+
+			return atom_count;
+		};
+
+		unsigned int number_of_atoms_in_item(int& extra_blocks_returned, int starting_position = -1)
+		{
+			int atom_count = 0;
+			unsigned int item_number = 0;
+			unsigned int wanted_blocks = 0;
+			unsigned int extra_blocks = 0;
+			Utilities::FixedSizeStack<CodeAtom> temp;
+			std::stack<unsigned int> wanted_stack;
+
+			int block_starting_index = Utilities::FixedSizeStack<T>::size() - 1;
+
+			if (starting_position > -1)
+			{
+				wanted_blocks = 0;
+				block_starting_index -= starting_position;
+			}
+
+			for (int i = block_starting_index; i >= 0; i--)
+			{
+				T atom;
+
+				if (extra_blocks == 0)
+				{
+					atom = Utilities::FixedSizeStack<T>::container()[i];
+					atom_count++;
+				}
+				else
+				{
+					atom = T("{:instruction EXEC.NOOP :close 1}");
+					extra_blocks--;
+				}
+
+				int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
+
+				if (closing < 0)
+				{
+					wanted_stack.push(wanted_blocks);
+					wanted_blocks = 0 - closing;
+				}
+
+				extra_blocks = (closing > 1) ? (closing - 1) : (0);
+
+				if (closing > 0)
+				{
+					if (wanted_blocks > 0)
+						wanted_blocks--;
+
+					if ((wanted_blocks == 0) && (wanted_stack.size() == 1))
+						break;
+				}
+
+				if (wanted_blocks == 0)
+				{
+					if (wanted_stack.size() == 0)
+						break;
+
+					if (wanted_stack.size() > 0)
+					{
+						wanted_blocks = wanted_stack.top();
+						wanted_stack.pop();
+					}
 				}
 			}
 
@@ -1235,7 +1320,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline T& get_bottom_item(int position)
+		inline T& get_bottom_atom(int position)
 		{
 			int s = 0;
 			int l = 0;
@@ -1245,7 +1330,7 @@ namespace Plush
 			for (int n = 0; n <= position + 1; n++)
 			{
 				s += l;
-				l = number_of_atoms(n, extra_blocks);
+				l = number_of_atoms(extra_blocks, n);
 			}
 
 			return Utilities::FixedSizeStack<T>::get_item(s - 1);
@@ -1274,9 +1359,75 @@ namespace Plush
 			int extra_blocks;
 
 			for (int n = 0; n <= item_index; n++)
-				l = number_of_atoms(n, extra_blocks);
+				l = number_of_atoms(extra_blocks, n);
 
 			return l;
+		}
+
+		// Purpose: 
+		//   Returns starting position of item in the stack
+		//
+		// Parameters:
+		//   position - Index of item.  0 refers to the top item on the stack.
+		// 
+		// Return value:
+		//   Starting position
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline unsigned int item_starting_position(int position)
+		{
+			int s = 0;
+			int l = 0;
+			int extra_blocks;
+
+			// Find index to top of item after target item
+			for (int n = 0; n <= position + 1; n++)
+			{
+				s += l;
+				l = number_of_atoms(extra_blocks, n);
+			}
+
+			return s;
+		}
+
+		// Purpose: 
+		//   Returns starting position of item in the stack
+		//
+		// Parameters:
+		//   position - Index of item.  0 refers to the top item on the stack.
+		// 
+		// Return value:
+		//   Starting position
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline unsigned int subitem_starting_position(int position)
+		{
+			int s = 0;
+			int l = 0;
+			int extra_blocks;
+
+			// Find index to top of item after target item
+			for (int n = 0; n <= position + 1; n++)
+			{
+				s += l;
+				l = number_of_atoms_in_item(extra_blocks, n);
+			}
+
+			return s - l;
 		}
 
 		// Purpose: 
@@ -1305,11 +1456,11 @@ namespace Plush
 			for (int n = 0; n <= item_index; n++)
 			{
 				s += l;
-				l = number_of_atoms(n, extra_blocks);
+				l = number_of_atoms(extra_blocks, n);
 			}
 
 			if (extra_blocks == 0)
-				Utilities::FixedSizeStack<T>::remove_item(s, l);
+				Utilities::FixedSizeStack<T>::remove_items(s, l);
 
 			else
 			{
@@ -1321,7 +1472,7 @@ namespace Plush
 				Utilities::FixedSizeStack<T>::replace(atom, s + l - 1);
 
 				if (l > 1)
-					Utilities::FixedSizeStack<T>::remove_item(s, l - 1);
+					Utilities::FixedSizeStack<T>::remove_items(s, l - 1);
 			}
 		}
 
@@ -1351,7 +1502,7 @@ namespace Plush
 			for (int n = 0; n <= item_index; n++)
 			{
 				s += l;
-				l = number_of_atoms(n, extra_blocks);
+				l = number_of_atoms(extra_blocks, n);
 			}
 
 			if (l > 0)

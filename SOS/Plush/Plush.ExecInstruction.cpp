@@ -54,7 +54,7 @@ namespace Plush
 					direction = -1;
 
 				// Check that the EXEC stack can hold another copy of Block A
-				int s = _env.get_stack<ExecAtom>().number_of_atoms(0, extra_blocks);
+				int s = _env.get_stack<ExecAtom>().number_of_atoms(extra_blocks);
 
 				if (_env.get_stack<ExecAtom>().free() > (s * 2))
 				{
@@ -315,8 +315,8 @@ namespace Plush
 			//	: _env.get_stack<CodeAtom>().get_bottom_item(1).close_parenthesis;
 
 
-			Atom& atom_a = _env.get_stack<CodeAtom>().get_bottom_item(0);
-			Atom& atom_b = _env.get_stack<CodeAtom>().get_bottom_item(1);
+			Atom& atom_a = _env.get_stack<CodeAtom>().get_bottom_atom(0);
+			Atom& atom_b = _env.get_stack<CodeAtom>().get_bottom_atom(1);
 
 			atom_a.close_parenthesis
 				= (atom_a.close_parenthesis > 0)
@@ -365,19 +365,33 @@ namespace Plush
 	{
 		if (_env.has_elements<CodeAtom>(1))
 		{
-			Genome<CodeAtom> top_block;
-			_env.pop<CodeAtom>(top_block);
+			//Genome<CodeAtom> top_block;
+			//_env.pop<CodeAtom>(top_block);
 
-			if (top_block.size() > 1)
+			//if (top_block.size() > 1)
+			//{
+			//	Genome<CodeAtom> first_item;
+			//	top_block.pop_item(first_item);
+			//	first_item.bottom().close_parenthesis++;
+			//	_env.push<CodeAtom>(first_item);
+			//}
+
+			//else
+			//	_env.push<CodeAtom>(top_block);
+
+			int extra_blocks;
+			int n = _env.get_stack<CodeAtom>().number_of_atoms(extra_blocks, 0);
+
+			if (n > 1)
 			{
-				Genome<CodeAtom> first_item;
-				top_block.pop_item(first_item);
-				first_item.bottom().close_parenthesis++;
-				_env.push<CodeAtom>(first_item);
-			}
+				int s = _env.get_stack<CodeAtom>().subitem_starting_position(1);
+				int ns = _env.get_stack<CodeAtom>().number_of_atoms_in_item(extra_blocks, 1);
 
-			else
-				_env.push<CodeAtom>(top_block);
+				_env.get_stack<CodeAtom>().remove_items(s, n - ns);
+
+				Atom& atom_a = _env.get_stack<CodeAtom>().get_top_ref();
+				atom_a.close_parenthesis++;
+			}
 		}
 
 		return 1;

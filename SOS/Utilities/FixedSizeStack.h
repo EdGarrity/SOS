@@ -309,7 +309,7 @@ namespace Utilities
 		//
 		// Remarks:
 		//
-		inline void remove_item(int position, int length)
+		inline void remove_items(int position, int length)
 		{
 			if (position < 0)
 				position = 0;
