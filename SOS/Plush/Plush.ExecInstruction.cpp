@@ -264,13 +264,17 @@ namespace Plush
 	{
 		if (_env.has_elements<ExecAtom>(1))
 		{
-			Genome<ExecAtom> extracted_block;
+			//Genome<ExecAtom> extracted_block;
 
-			_env.pop<ExecAtom>(extracted_block);
+			//_env.pop<ExecAtom>(extracted_block);
 
-			_env.push<ExecAtom>(extracted_block);
+			//_env.push<ExecAtom>(extracted_block);
+			//_env.push<ExecAtom>(Atom("{:instruction EXEC.Y :close 0}"));
+			//_env.push<ExecAtom>(extracted_block);
+
 			_env.push<ExecAtom>(Atom("{:instruction EXEC.Y :close 0}"));
-			_env.push<ExecAtom>(extracted_block);
+
+			_env.get_stack<ExecAtom>().yankdup_item(1);
 		}
 
 		return 1;
