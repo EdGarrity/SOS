@@ -1252,6 +1252,34 @@ namespace Plush
 		}
 
 		// Purpose: 
+		//   Returns stack size of item
+		//
+		// Parameters:
+		//   item_index - Index of item.  0 refers to the top item on the stack.
+		// 
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline unsigned int item_size(int item_index)
+		{
+			int l = 0;
+			int extra_blocks;
+
+			for (int n = 0; n <= item_index; n++)
+				l = number_of_atoms(n, extra_blocks);
+
+			return l;
+		}
+
+		// Purpose: 
 		//   Removes a top level item from the stack
 		//
 		// Parameters:

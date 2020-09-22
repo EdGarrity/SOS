@@ -336,11 +336,22 @@ namespace Plush
 	{
 		if (_env.has_elements<CodeAtom>(1))
 		{
-			Genome<CodeAtom> block;
+			//Genome<CodeAtom> block;
 
-			_env.pop<CodeAtom>(block);
+			//_env.pop<CodeAtom>(block);
 
-			if (block.size() == 1)
+			//if (block.size() == 1)
+			//	_env.push<bool>(true);
+
+			//else
+			//	_env.push<bool>(false);
+
+
+			unsigned int block_size = _env.get_stack<CodeAtom>().item_size(0);
+
+			_env.get_stack<CodeAtom>().remove_item(0);
+
+			if (block_size == 1)
 				_env.push<bool>(true);
 
 			else
