@@ -385,9 +385,9 @@ namespace Plush
 			if (n > 1)
 			{
 				int s = _env.get_stack<CodeAtom>().subitem_starting_position(1);
-				int ns = _env.get_stack<CodeAtom>().number_of_atoms_in_item(extra_blocks, 0);
+				int ns = _env.get_stack<CodeAtom>().number_of_atoms_in_item(extra_blocks);
 
-				_env.get_stack<CodeAtom>().remove_items(s, n - ns);
+				_env.get_stack<CodeAtom>().remove_items(s - (n - ns), n - ns);
 
 				Atom& atom_a = _env.get_stack<CodeAtom>().get_top_ref();
 				atom_a.close_parenthesis++;
@@ -420,7 +420,7 @@ namespace Plush
 
 			if (n > 1)
 			{
-				int ns = _env.get_stack<CodeAtom>().number_of_atoms_in_item(extra_blocks, 0);
+				int ns = _env.get_stack<CodeAtom>().number_of_atoms_in_item(extra_blocks);
 				_env.get_stack<CodeAtom>().remove_items(0, ns);
 			}
 			else
@@ -437,16 +437,21 @@ namespace Plush
 	{
 		if (_env.has_elements<CodeAtom>(2))
 		{
-			Genome<CodeAtom> block_a;
-			Genome<CodeAtom> block_b;
+			//Genome<CodeAtom> block_a;
+			//Genome<CodeAtom> block_b;
 
-			_env.pop<CodeAtom>(block_a);
-			_env.pop<CodeAtom>(block_b);
+			//_env.pop<CodeAtom>(block_a);
+			//_env.pop<CodeAtom>(block_b);
 
-			block_b.bottom().close_parenthesis--;
-			
-			_env.push<CodeAtom>(block_a);
-			_env.push<CodeAtom>(block_b);
+			//block_b.bottom().close_parenthesis--;
+			//
+			//_env.push<CodeAtom>(block_a);
+			//_env.push<CodeAtom>(block_b);
+
+			_env.get_stack<CodeAtom>().yank_item(1);
+			int n = _env.get_stack<CodeAtom>().subitem_ending_position(0);
+			int s = _env.get_stack<CodeAtom>().size();
+			_env.get_stack<CodeAtom>()[s - n - 1].close_parenthesis--;
 		}
 
 		return 1;

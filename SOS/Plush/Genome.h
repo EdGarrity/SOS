@@ -463,7 +463,7 @@ namespace Plush
 
 			if (starting_position > -1)
 			{
-				wanted_blocks = 0;
+				wanted_blocks = 1;
 				block_starting_index -= starting_position;
 			}
 
@@ -1421,20 +1421,53 @@ namespace Plush
 			int extra_blocks;
 
 			// Find index to top of item after target item
-			for (int n = 0; n <= position + 1; n++)
+			for (int n = 0; n <= position; n++)
 			{
-				s += l;
 				l = number_of_atoms_in_item(extra_blocks, n);
+				s += l;
 			}
 
 			return s - l;
 		}
 
 		// Purpose: 
+		//   Returns position of last atom in an item
+		//
+		// Parameters:
+		//   position - Index of item.  0 refers to the top item on the stack.
+		// 
+		// Return value:
+		//   Starting position
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline unsigned int subitem_ending_position(int position)
+		{
+			int s = 0;
+			int l = 0;
+			int extra_blocks;
+
+			// Find index to top of item after target item
+			for (int n = 0; n <= position; n++)
+			{
+				l = number_of_atoms_in_item(extra_blocks, n);
+				s += l;
+			}
+
+			return s - 1;
+		}
+
+		// Purpose: 
 		//   Removes a top level item from the stack
 		//
 		// Parameters:
-		//   item_index - Index of item to remove.  0 refers to the top item on the stack.
+		//   item_position - Index of item to remove.  0 refers to the top item on the stack.
 		// 
 		// Return value:
 		//   None
@@ -1447,13 +1480,13 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline void remove_item(int item_index)
+		inline void remove_item(int item_position)
 		{
 			int s = 0;
 			int l = 0;
 			int extra_blocks;
 
-			for (int n = 0; n <= item_index; n++)
+			for (int n = 0; n <= item_position; n++)
 			{
 				s += l;
 				l = number_of_atoms(extra_blocks, n);
@@ -1480,7 +1513,7 @@ namespace Plush
 		//   Pushes a copy of item N on top of the stack.
 		//
 		// Parameters:
-		//   item_index - Index of item to copy.  0 refers to the top item on the stack.
+		//   item_position - Index of item to copy.  0 refers to the top item on the stack.
 		// 
 		// Return value:
 		//   None
@@ -1493,13 +1526,13 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline void yankdup_item(int item_index)
+		inline void yankdup_item(int item_position)
 		{
 			int s = 0;
 			int l = 0;
 			int extra_blocks = 0;
 
-			for (int n = 0; n <= item_index; n++)
+			for (int n = 0; n <= item_position; n++)
 			{
 				s += l;
 				l = number_of_atoms(extra_blocks, n);
@@ -1509,10 +1542,36 @@ namespace Plush
 				Utilities::FixedSizeStack<T>::yankdup_item(s, l);
 			
 			else 
-				push(Atom("{:instruction EXEC.NOOP :close 1}"));
+				push(T("{:instruction EXEC.NOOP :close 1}"));
 
 			if (Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::size() - l].close_parenthesis > extra_blocks)
 				Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::size() - l].close_parenthesis -= extra_blocks;
+		}
+
+		// Purpose: 
+		//   Moves item N to the top of the stack.
+		//
+		// Parameters:
+		//   item_position - Index of item to move.  0 refers to the top item on the stack.
+		// 
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline void yank_item(int item_position)
+		{
+			if (item_position > 0)
+			{
+				yankdup_item(item_position);
+				remove_item(item_position + 1);
+			}
 		}
 
 		// Purpose: 
