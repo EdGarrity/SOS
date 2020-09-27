@@ -36,7 +36,7 @@ namespace Plush
 	// for possible access during the execution of the body of the loop
 	unsigned exec_do_range(Environment & _env)
 	{
-		int extra_blocks = 0;
+		unsigned int extra_blocks = 0;
 
 		if ((_env.has_elements<long>(2)) && (_env.has_elements<ExecAtom>(1)))
 		{
@@ -379,13 +379,15 @@ namespace Plush
 			//else
 			//	_env.push<CodeAtom>(top_block);
 
-			int extra_blocks;
-			int n = _env.get_stack<CodeAtom>().number_of_atoms(extra_blocks, 0);
+			unsigned int extra_blocks;
+
+			// Get the number of items in the top block of the stack.
+			int n = _env.get_stack<CodeAtom>().number_of_atoms(extra_blocks);
 
 			if (n > 1)
 			{
 				int s = _env.get_stack<CodeAtom>().subitem_starting_position(1);
-				int ns = _env.get_stack<CodeAtom>().number_of_atoms_in_item(extra_blocks);
+				int ns = _env.get_stack<CodeAtom>().number_of_atoms_in_Nth_block(extra_blocks);
 
 				_env.get_stack<CodeAtom>().remove_items(s - (n - ns), n - ns);
 
@@ -415,12 +417,12 @@ namespace Plush
 			//	_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
 
 
-			int extra_blocks;
+			unsigned int extra_blocks;
 			int n = _env.get_stack<CodeAtom>().number_of_atoms(extra_blocks, 0);
 
 			if (n > 1)
 			{
-				int ns = _env.get_stack<CodeAtom>().number_of_atoms_in_item(extra_blocks);
+				int ns = _env.get_stack<CodeAtom>().number_of_atoms_in_Nth_block(extra_blocks);
 				_env.get_stack<CodeAtom>().remove_items(0, ns);
 			}
 			else
@@ -461,22 +463,49 @@ namespace Plush
 	{
 		if (_env.has_elements<CodeAtom>(2))
 		{
-			Genome<CodeAtom> extracted_block_A;
-			Genome<CodeAtom> extracted_block_B;
-			Genome<CodeAtom> modified_block_A;
-			Genome<CodeAtom> container_block;
+			//Genome<CodeAtom> extracted_block_A;
+			//Genome<CodeAtom> extracted_block_B;
+			//Genome<CodeAtom> modified_block_A;
+			//Genome<CodeAtom> container_block;
+
+			//// Get first block from stack
+			//_env.pop<CodeAtom>(extracted_block_A);
+
+			//// Get second block from stack
+			//_env.pop<CodeAtom>(extracted_block_B);
+
+			//if (extracted_block_A.container_of(extracted_block_B, container_block))
+			//	_env.push<CodeAtom>(container_block);
+
+			//else
+			//	_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
+
+			unsigned int container_block = 0;
 
 			// Get first block from stack
-			_env.pop<CodeAtom>(extracted_block_A);
+			unsigned int block_A_position = 0;
 
 			// Get second block from stack
-			_env.pop<CodeAtom>(extracted_block_B);
+			unsigned int block_B_position = _env.get_stack<CodeAtom>().item_starting_position(1);
+			unsigned int block_B_size = _env.get_stack<CodeAtom>().item_size(1);
 
-			if (extracted_block_A.container_of(extracted_block_B, container_block))
-				_env.push<CodeAtom>(container_block);
+			if (_env.get_stack<CodeAtom>().container_of(block_A_position, block_B_position, block_B_size, container_block))
+				_env.get_stack<CodeAtom>().yankdup_block(container_block);
 
 			else
 				_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
+
+
+
+
+
+
+			//if (_env.get_stack<CodeAtom>().item_size(1) == 1)
+			//{
+			//	unsigned int extra_blocks = 0;
+
+			//	for (int n = 0; n < _env.get_stack<CodeAtom>().number_of_atoms_in_Nth_block(extra_blocks, block_A_position);
+			//}
 		}
 
 		return 1;

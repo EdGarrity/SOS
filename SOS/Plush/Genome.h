@@ -24,6 +24,13 @@ namespace Plush
 	typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
 	extern Func2BlockWantsMapType Func2BlockWantsMap;
 
+	struct Genome_ref
+	{
+		unsigned int starting_position = 0;
+		unsigned int ending_position = 0;
+		unsigned int size = 0;
+	};
+
 	template <class T, size_t N = domain::argmap::maximum_stack_size>
 	class Genome : public Utilities::FixedSizeStack<T>
 	{
@@ -344,7 +351,7 @@ namespace Plush
 		}
 
 		// Purpose: 
-		//   Returns the number of atoms in the Nth top item of the stack
+		//   Returns the number of atoms in the Nth top level block on the stack
 		//
 		//   For example, 
 		//		if N = 0 and the top genome is "( A B )" then this returns 2. 
@@ -355,9 +362,10 @@ namespace Plush
 		//
 		// Parameters:
 		//   extra_blocks		- Where to put the number of extra closing parenthesis at the end of the search
-		//   item_number		- Item number to count the number of atoms in.  0 is the first item on the stack.
-		//   starting_position	- Position of first atom in genome for sub-genome search.  0 = top 
-		//                        of stack.  Do not provide for a top level search.
+		//   item_number		- Top block number to count the number of atoms in.  0 is the first block on 
+		//                        the stack.
+		//   starting_position	- Position of first atom in genome for sub-genome search.  0 = top of 
+		//                        stack.  Do not provide for a top level search.
 		// 
 		// Return value:
 		//   Number of atoms in the top genome
@@ -369,8 +377,11 @@ namespace Plush
 		//   Yes.  As long as no other thread attemps to write to the child.
 		//
 		// Remarks:
+		//   All callers of this method always use it for a top level search.  I.e, no callers ever 
+		//   provide the starting_position parameter.  I am keeping this parameter available in 
+		//   case I ever have a need for it.
 		//
-		inline unsigned int number_of_atoms(int& extra_blocks_returned, int item_number = 0, int starting_position = -1)
+		inline unsigned int number_of_atoms(unsigned int& extra_blocks_returned, int item_number = 0, int starting_position = -1)
 		{
 			unsigned int wanted_blocks = 0;
 			unsigned int extra_blocks = 0;
@@ -450,7 +461,26 @@ namespace Plush
 			return atom_count;
 		};
 
-		unsigned int number_of_atoms_in_item(int& extra_blocks_returned, int starting_position = -1)
+		// Purpose: 
+		//   Returns the number of atoms in the block which begins at the position in provided parameter 
+		//
+		// Parameters:
+		//   extra_blocks		- Where to put the number of extra closing parenthesis at the end of the search
+		//   starting_position	- Position of first atom in genome for sub-genome search.  0 = top 
+		//                        of stack.  Do not provide for a top level search.
+		// 
+		// Return value:
+		//   Number of atoms in the genome that starts at N
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		unsigned int number_of_atoms_in_Nth_block(unsigned int& extra_blocks_returned, int starting_position = -1)
 		{
 			int atom_count = 0;
 			unsigned int item_number = 0;
@@ -1307,7 +1337,7 @@ namespace Plush
 		//   Returns a reference to the bottom atom on the specified item
 		//
 		// Parameters:
-		//   position - Index of item to remove.  0 refers to the top item on the stack.
+		//   position - Index of item.  0 refers to the top item on the stack.
 		// 
 		// Return value:
 		//   Reference to CodeAtom or ExecAtom from the bottom of the item
@@ -1324,7 +1354,7 @@ namespace Plush
 		{
 			int s = 0;
 			int l = 0;
-			int extra_blocks;
+			unsigned int extra_blocks;
 
 			// Find index to top of item after target item
 			for (int n = 0; n <= position + 1; n++)
@@ -1356,10 +1386,9 @@ namespace Plush
 		inline unsigned int item_size(int item_index)
 		{
 			int l = 0;
-			int extra_blocks;
+			unsigned int extra_blocks;
 
-			for (int n = 0; n <= item_index; n++)
-				l = number_of_atoms(extra_blocks, n);
+			l = number_of_atoms(extra_blocks, item_index);
 
 			return l;
 		}
@@ -1385,7 +1414,7 @@ namespace Plush
 		{
 			int s = 0;
 			int l = 0;
-			int extra_blocks;
+			unsigned int extra_blocks;
 
 			// Find index to top of item after target item
 			for (int n = 0; n <= position + 1; n++)
@@ -1398,10 +1427,10 @@ namespace Plush
 		}
 
 		// Purpose: 
-		//   Returns starting position of item in the stack
+		//   Returns starting position of Nth item in the top level block of stack
 		//
 		// Parameters:
-		//   position - Index of item.  0 refers to the top item on the stack.
+		//   position - Index of item.  0 refers to the first item of the top block on the stack.
 		// 
 		// Return value:
 		//   Starting position
@@ -1418,12 +1447,12 @@ namespace Plush
 		{
 			int s = 0;
 			int l = 0;
-			int extra_blocks;
+			unsigned int extra_blocks;
 
-			// Find index to top of item after target item
+			// Find index to item after target item
 			for (int n = 0; n <= position; n++)
 			{
-				l = number_of_atoms_in_item(extra_blocks, n);
+				l = number_of_atoms_in_Nth_block(extra_blocks, n);
 				s += l;
 			}
 
@@ -1431,10 +1460,10 @@ namespace Plush
 		}
 
 		// Purpose: 
-		//   Returns position of last atom in an item
+		//   Returns position of last item of Nth item in the top level block of stack
 		//
 		// Parameters:
-		//   position - Index of item.  0 refers to the top item on the stack.
+		//   position - Index of item.  0 refers to the first item of the top block on the stack.
 		// 
 		// Return value:
 		//   Starting position
@@ -1451,12 +1480,12 @@ namespace Plush
 		{
 			int s = 0;
 			int l = 0;
-			int extra_blocks;
+			unsigned int extra_blocks;
 
 			// Find index to top of item after target item
 			for (int n = 0; n <= position; n++)
 			{
-				l = number_of_atoms_in_item(extra_blocks, n);
+				l = number_of_atoms_in_Nth_block(extra_blocks, n);
 				s += l;
 			}
 
@@ -1484,7 +1513,7 @@ namespace Plush
 		{
 			int s = 0;
 			int l = 0;
-			int extra_blocks;
+			unsigned int extra_blocks;
 
 			for (int n = 0; n <= item_position; n++)
 			{
@@ -1530,7 +1559,7 @@ namespace Plush
 		{
 			int s = 0;
 			int l = 0;
-			int extra_blocks = 0;
+			unsigned int extra_blocks = 0;
 
 			for (int n = 0; n <= item_position; n++)
 			{
@@ -1546,6 +1575,27 @@ namespace Plush
 
 			if (Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::size() - l].close_parenthesis > extra_blocks)
 				Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::size() - l].close_parenthesis -= extra_blocks;
+		}
+
+		// Purpose: 
+		//   Pushes a copy of block starting at N on top of the stack.
+		//
+		// Parameters:
+		//   item_position - Position of block to copy.  0 refers to the top block on the stack.
+		// 
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline void yankdup_block(unsigned int block_starting_position)
+		{
 		}
 
 		// Purpose: 
@@ -1610,6 +1660,21 @@ namespace Plush
 				if (atom_A != atom_B)
 					return false;
 			}
+		}
+		bool comp(Genome_ref genome_a, Genome_ref genome_b)
+		{
+			if (genome_a.size != genome_b.size)
+				return false;
+
+			for (unsigned int pos_a = genome_a.starting_position, unsigned int pos_b = genome_b.starting_position; pos_a >= genome_a.ending_position; pos_a--, pos_b--;)
+			{
+				T atom_a = Utilities::FixedSizeStack<T>::stack_[pos_a];
+				T atom_b = Utilities::FixedSizeStack<T>::stack_[pos_b];
+
+				if (atom_a != atom_b)
+					return false;
+			}
+
 		}
 
 		// Purpose: 
@@ -1906,135 +1971,150 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		bool container_of(Genome<T> &other_genome, Genome<T> &container)
+		//bool container_of(Genome<T> &other_genome, Genome<T> &container)
+		//{
+		//	bool found = false;
+		//	Genome<T> original_genome(this);
+		//	Genome<T> container_block;
+		//	Genome<T> container_block_canidate;
+		//	Genome<T> other_block;
+
+		//	if (Utilities::FixedSizeStack<T>::size() < other_genome.size())
+		//		return false;
+
+		//	// If searching for a single item
+		//	if (other_genome.size() == 1)
+		//	{
+		//		while (Utilities::FixedSizeStack<T>::empty() == false)
+		//		{
+		//			container_block_canidate.clear();
+		//			container_block_canidate.push_genome(other_block);
+
+		//			pop_item(other_block);	// May need to push back empty blocks if there were extra blocks returned by pop().
+
+		//			if (other_block == other_genome)
+		//			{
+		//				T atom = container.pop();
+		//				container.clear();
+		//				other_block.bottom().close_parenthesis = 1;
+		//				container.push_genome(other_block);
+		//				container.push(atom);
+
+		//				found = true;
+		//				break;
+		//			}
+		//			else
+		//			{
+		//				if (other_block.size() > 1)
+		//				{
+		//					T atom = other_block.pop();
+		//					container.clear();
+		//					container.push(atom);
+
+		//					if (other_block.container_of(other_genome, container))
+		//					{
+		//						found = true;
+		//						break;
+		//					}
+
+		//					other_block.push(atom);
+		//				}
+
+		//				else if (other_block.bottom().like(other_genome.bottom()))
+		//				{
+		//					T atom = container.pop();
+		//					container.clear();
+		//					other_block.bottom().close_parenthesis = 1;
+		//					container.push_genome(other_block);
+		//					container.push(atom);
+
+		//					found = true;
+		//					break;
+		//				}
+		//			}
+		//		}
+		//	}
+
+		//	// If searching for a block
+		//	else
+		//	{
+		//		while (Utilities::FixedSizeStack<T>::empty() == false)
+		//		{
+		//			container_block_canidate.clear();
+		//			container_block_canidate.push_genome(other_block);
+
+		//			pop_item(other_block);
+
+		//			// Normalliize to one block
+		//			int extra_blocks = 0;
+
+		//			if (other_block.bottom().close_parenthesis > other_genome.bottom().close_parenthesis)
+		//			{
+		//				extra_blocks = other_block.bottom().close_parenthesis - other_genome.bottom().close_parenthesis;
+		//				other_block.bottom().close_parenthesis = other_genome.bottom().close_parenthesis;
+		//			}
+
+		//			if (other_block == other_genome)
+		//			{
+		//				T atom = container.pop();
+		//				container.clear();
+		//				other_block.bottom().close_parenthesis = other_genome.bottom().close_parenthesis;
+		//				container.push_genome(other_block);
+		//				container.push(atom);
+
+		//				found = true;
+		//				break;
+		//			}
+
+		//			else
+		//			{
+		//				if (other_block.size() > 1)
+		//				{
+		//					T atom = other_block.pop();
+		//					container.clear();
+		//					container.push(atom);
+
+		//					if (other_block.container_of(other_genome, container))
+		//					{
+		//						found = true;
+		//						break;
+		//					}
+
+		//					other_block.push(atom);
+		//				}
+
+		//				else if (other_block.bottom().like(other_genome.bottom()))
+		//				{
+		//					T atom = container.pop();
+		//					container.clear();
+		//					other_block.bottom().close_parenthesis = other_genome.bottom().close_parenthesis;
+		//					container.push_genome(other_block);
+		//					container.push(atom);
+
+		//					found = true;
+		//					break;
+		//				}
+		//			}
+		//		}
+		//	}
+
+		//	Utilities::FixedSizeStack<T>::clear();
+		//	push_genome(original_genome);
+
+		//	return found;
+		//}
+		bool container_of(Genome_ref block_A, Genome_ref block_B, Genome_ref& container_block)
 		{
 			bool found = false;
-			Genome<T> original_genome(this);
-			Genome<T> container_block;
-			Genome<T> container_block_canidate;
-			Genome<T> other_block;
+			unsigned int extra_blocks = 0;
 
-			if (Utilities::FixedSizeStack<T>::size() < other_genome.size())
-				return false;
+			if (comp(block_A, block_B))
+				found = true;
 
-			// If searching for a single item
-			if (other_genome.size() == 1)
+			for (int n = 0; n < _env.get_stack<CodeAtom>().number_of_items_in_Nth_block(extra_blocks, block_A.starting_position)
 			{
-				while (Utilities::FixedSizeStack<T>::empty() == false)
-				{
-					container_block_canidate.clear();
-					container_block_canidate.push_genome(other_block);
-
-					pop_item(other_block);	// May need to push back empty blocks if there were extra blocks returned by pop().
-
-					if (other_block == other_genome)
-					{
-						T atom = container.pop();
-						container.clear();
-						other_block.bottom().close_parenthesis = 1;
-						container.push_genome(other_block);
-						container.push(atom);
-
-						found = true;
-						break;
-					}
-					else
-					{
-						if (other_block.size() > 1)
-						{
-							T atom = other_block.pop();
-							container.clear();
-							container.push(atom);
-
-							if (other_block.container_of(other_genome, container))
-							{
-								found = true;
-								break;
-							}
-
-							other_block.push(atom);
-						}
-
-						else if (other_block.bottom().like(other_genome.bottom()))
-						{
-							T atom = container.pop();
-							container.clear();
-							other_block.bottom().close_parenthesis = 1;
-							container.push_genome(other_block);
-							container.push(atom);
-
-							found = true;
-							break;
-						}
-					}
-				}
+				Genome_ref genome_ref = 
 			}
-
-			// If searching for a block
-			else
-			{
-				while (Utilities::FixedSizeStack<T>::empty() == false)
-				{
-					container_block_canidate.clear();
-					container_block_canidate.push_genome(other_block);
-
-					pop_item(other_block);
-
-					// Normalliize to one block
-					int extra_blocks = 0;
-
-					if (other_block.bottom().close_parenthesis > other_genome.bottom().close_parenthesis)
-					{
-						extra_blocks = other_block.bottom().close_parenthesis - other_genome.bottom().close_parenthesis;
-						other_block.bottom().close_parenthesis = other_genome.bottom().close_parenthesis;
-					}
-
-					if (other_block == other_genome)
-					{
-						T atom = container.pop();
-						container.clear();
-						other_block.bottom().close_parenthesis = other_genome.bottom().close_parenthesis;
-						container.push_genome(other_block);
-						container.push(atom);
-
-						found = true;
-						break;
-					}
-
-					else
-					{
-						if (other_block.size() > 1)
-						{
-							T atom = other_block.pop();
-							container.clear();
-							container.push(atom);
-
-							if (other_block.container_of(other_genome, container))
-							{
-								found = true;
-								break;
-							}
-
-							other_block.push(atom);
-						}
-
-						else if (other_block.bottom().like(other_genome.bottom()))
-						{
-							T atom = container.pop();
-							container.clear();
-							other_block.bottom().close_parenthesis = other_genome.bottom().close_parenthesis;
-							container.push_genome(other_block);
-							container.push(atom);
-
-							found = true;
-							break;
-						}
-					}
-				}
-			}
-
-			Utilities::FixedSizeStack<T>::clear();
-			push_genome(original_genome);
 
 			return found;
 		}
