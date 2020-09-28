@@ -63,14 +63,14 @@ namespace Plush
 				if ((!std::isnan(result)) && (!std::isinf(result)))
 				{
 					T another_first = _env.pop<T>();
-					_env.get_stack<T>().get_top_ref() += another_first;
+					_env.get_stack<T>().get_top() += another_first;
 				}
 			}
 
 			else
 			{
 				T another_first = _env.pop<T>();
-				_env.get_stack<T>().get_top_ref() += another_first;
+				_env.get_stack<T>().get_top() += another_first;
 			}
 		}
 
@@ -96,14 +96,14 @@ namespace Plush
 				if ((!std::isnan(result)) && (!std::isinf(result)))
 				{
 					T another_first = _env.pop<T>();
-					_env.get_stack<T>().get_top_ref() -= another_first;
+					_env.get_stack<T>().get_top() -= another_first;
 				}
 			}
 
 			else
 			{
 				T another_first = _env.pop<T>();
-				_env.get_stack<T>().get_top_ref() -= another_first;
+				_env.get_stack<T>().get_top() -= another_first;
 			}
 		}
 
@@ -129,14 +129,14 @@ namespace Plush
 				if ((!std::isnan(result)) && (!std::isinf(result)))
 				{
 					T another_first = _env.pop<T>();
-					_env.get_stack<T>().get_top_ref() *= another_first;
+					_env.get_stack<T>().get_top() *= another_first;
 				}
 			}
 
 			else
 			{
 				T another_first = _env.pop<T>();
-				_env.get_stack<T>().get_top_ref() *= another_first;
+				_env.get_stack<T>().get_top() *= another_first;
 			}
 		}
 
@@ -148,7 +148,7 @@ namespace Plush
 	{
 		if (_env.has_elements<T>(2))
 		{
-			if (_env.get_stack<T>().get_top_ref() == T())
+			if (_env.get_stack<T>().get_top() == T())
 				return 1;
 
 			T first = _env.pop<T>();
@@ -162,7 +162,7 @@ namespace Plush
 					return 1;
 			}
 
-			_env.get_stack<T>().get_top_ref() /= first;
+			_env.get_stack<T>().get_top() /= first;
 		}
 
 		return 1;

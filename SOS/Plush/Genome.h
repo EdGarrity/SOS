@@ -24,17 +24,96 @@ namespace Plush
 	typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
 	extern Func2BlockWantsMapType Func2BlockWantsMap;
 
-	struct Genome_ref
+	template <class T>
+	class Genome_section
 	{
+	public:
+		// Position of first atom in genome (0 = top)
 		unsigned int starting_position = 0;
+
+		// Position of last atom in genome (0 = top)
 		unsigned int ending_position = 0;
+
+		// Number of atomes in genome
 		unsigned int size = 0;
+
+		Genome_section()
+		{
+			this->starting_position = 0;
+			this->ending_position = 0;
+			this->size = 0;
+		}
+
+		Genome_section(const Genome_section<T>& other)
+		{
+			this->starting_position = other.starting_position;
+			this->ending_position = other.ending_position;
+			this->size = other.size;
+		}
+
+		Genome_section(unsigned int starting_position, unsigned int size)
+		{
+			if (starting_position >= size)
+			{
+				this->starting_position = starting_position;
+				this->ending_position = starting_position - size;
+				this->size = size;
+			}
+			else
+			{
+				this->starting_position = 0;
+				this->ending_position = 0;
+				this->size = 0;
+			}
+		}
+
+		const Genome_section<T> operator+ (int n)
+		{
+			if (size >= n)
+			{
+				std::stringstream error_message;
+				error_message << "const_reference Genome_ref::operator - Stack overflow.  n = " << n;
+
+				throw std::overflow_error(error_message.str());
+			}
+
+			return Genome_section<T>(starting_position + n, size - n);
+		}
+
+		Genome_section<T>& operator++ ()
+		{
+			if (size > 1)
+			{
+				starting_position++;
+				size--;
+			}
+
+			return *this;
+		}
+
+		Genome_section<T>& operator++ (int)
+		{
+			Genome_section<T> temp(*this);
+
+			if (size > 1)
+			{
+				starting_position++;
+				size--;
+			}
+
+			return temp;
+		}
 	};
 
 	template <class T, size_t N = domain::argmap::maximum_stack_size>
 	class Genome : public Utilities::FixedSizeStack<T>
 	{
 	private:
+		typedef typename std::array<T, N>::value_type value_type;
+		typedef typename std::array<T, N>::reference reference;
+		typedef typename std::array<T, N>::const_reference const_reference;
+		typedef typename std::array<T, N>::size_type size_type;
+
 		// Human readable version of the Plush genome
 		std::string genome_string_;
 
@@ -95,7 +174,6 @@ namespace Plush
 		}
 
 		void set(std::string _genome_string);
-		//void set(Atom& _genome_atoms);
 
 		// Need to update so as to not be copying the genome
 		inline void set(Genome<T, N>& other)
@@ -120,41 +198,19 @@ namespace Plush
 			genome_string_.clear();
 		};
 
-
-		typedef typename std::array<T, N>::value_type value_type;
-		typedef typename std::array<T, N>::reference reference;
-		typedef typename std::array<T, N>::const_reference const_reference;
-		typedef typename std::array<T, N>::size_type size_type;
-
 		inline const std::array<T, N>& get_atoms()
 		{
 			return Utilities::FixedSizeStack<T>::stack_;
 		}
 
-		inline const_reference operator [] (int index) const
+		inline const Genome_section<T> operator [] (unsigned int position) const
 		{
-			if (index >= N)
-			{
-				std::stringstream error_message;
-				error_message << "const_reference Utilities::Genome::operator [] - Stack overflow.  index = " << index;
-
-				throw std::overflow_error(error_message.str());
-			}
-
-			return Utilities::FixedSizeStack<T>::stack_[index];
+			return (Genome_section<T>(item_starting_position(position), item_size(position)));
 		}
 
-		inline reference operator [] (int index)
+		inline Genome_section<T> operator [] (unsigned int position)
 		{
-			if (index >= N)
-			{
-				std::stringstream error_message;
-				error_message << "reference Utilities::Genome::operator [] - Stack overflow.  index = " << index;
-
-				throw std::overflow_error(error_message.str());
-			}
-
-			return Utilities::FixedSizeStack<T>::stack_[index];
+			return (Genome_section<T>(item_starting_position(position), item_size(position)));
 		}
 
 		inline bool operator==(Genome<T> &other_genome) const
@@ -595,158 +651,62 @@ namespace Plush
 			unsigned int split_position, 
 			SPLIT_MODE mode)
 		{
-			Genome<T> genome(this);
-			Genome<T> temp_left;
-			Genome<T> temp_right;
+			//Genome<T> genome(this);
+			//Genome<T> temp_left;
+			//Genome<T> temp_right;
 
-			while ((genome.empty() == false) && (split_position-- > 0))
-			{
-				Genome<T> temp;
+			//while ((genome.empty() == false) && (split_position-- > 0))
+			//{
+			//	Genome<T> temp;
 
-				if (mode == SPLIT_MODE::block)
-					genome.pop_genome(temp);
-				else
-					genome.pop_item(temp);
+			//	if (mode == SPLIT_MODE::block)
+			//		genome.pop_genome(temp);
+			//	else
+			//		genome.pop_item(temp);
 
-				temp_left.push_genome(temp);
-			}
+			//	temp_left.push_genome(temp);
+			//}
 
-			while (genome.empty() == false)
-			{
-				Genome<T> temp;
+			//while (genome.empty() == false)
+			//{
+			//	Genome<T> temp;
 
-				if (mode == SPLIT_MODE::block)
-					genome.pop_genome(temp);
-				else
-					genome.pop_item(temp);
+			//	if (mode == SPLIT_MODE::block)
+			//		genome.pop_genome(temp);
+			//	else
+			//		genome.pop_item(temp);
 
-				temp_right.push_genome(temp);
-			}
+			//	temp_right.push_genome(temp);
+			//}
 
-			while (temp_left.empty() == false)
-			{
-				Genome<T> temp;
+			//while (temp_left.empty() == false)
+			//{
+			//	Genome<T> temp;
 
-				if (mode == SPLIT_MODE::block)
-					temp_left.pop_genome(temp);
-				else
-					temp_left.pop_item(temp);
+			//	if (mode == SPLIT_MODE::block)
+			//		temp_left.pop_genome(temp);
+			//	else
+			//		temp_left.pop_item(temp);
 
-				left_half.push_genome(temp);
-			}
+			//	left_half.push_genome(temp);
+			//}
 
-			while (temp_right.empty() == false)
-			{
-				Genome<T> temp;
+			//while (temp_right.empty() == false)
+			//{
+			//	Genome<T> temp;
 
-				if (mode == SPLIT_MODE::block)
-					temp_right.pop_genome(temp);
-				else
-					temp_right.pop_item(temp);
+			//	if (mode == SPLIT_MODE::block)
+			//		temp_right.pop_genome(temp);
+			//	else
+			//		temp_right.pop_item(temp);
 
-				right_half.push_genome(temp);
-			}
+			//	right_half.push_genome(temp);
+			//}
 
 			unsigned int item_number = 0;
 			
 			return item_number;
 		}
-
-		// Purpose: 
-		//   Splice the genome in two
-		//
-		//   This function will split the genome into two parts at the split point provided by the caller.
-		//   The split point is zero - based; that is, a split point less than or equal to 0 represents a
-		//   point before the first item.  A split point greater than the number of items in the genome will 
-		//   represent a point after the last item.  The caller is expected to provide the two genomes to 
-		//   write the two haves to.  This function is non - destructive, that is, it will not destroy or 
-		//   alter the genome to be split.
-		//
-		//   When determining the split point, the genome is processed as a list object, i.e., an open 
-		//   parenthesis is assumed to exist before the first item on the stack.  This function counts 
-		//   items or blocks (depending on te mode) from the beginning of the genome to locate the split 
-		//   point; nested lists contribute only 1 to this count, no matter what they contain.  Closing 
-		//   parenthesis can either be interpreted as close instructions (to satisfy a block requirement 
-		//   in a nested list) or as close - open instructions (for the top level list).  Nested levels 
-		//   begin when an instruction requiring blocks is encountered in the list and end when all 
-		//   required blocks are found.
-		//
-		// Parameters:
-		//   split_position - Zero-based index of the split point in the genome list of items
-		//   mode			- Bolck or Item
-		//
-		// Return value:
-		//   N where N is the splice position within the genome stack.
-		//		Left = 0..N-1
-		//		Right = N..Size of genome
-		//
-		// Side Effects:
-		//   None
-		//
-		// Thread Safe:
-		//   Yes.  As long as no other thread attemps to write to the child.
-		//
-		// Remarks:
-		//
-		//unsigned int splice(	unsigned int split_position,
-		//	SPLIT_MODE mode)
-		//{
-		//	Genome<T> genome(this);
-		//	Genome<T> temp_left;
-		//	Genome<T> temp_right;
-
-		//	while ((genome.empty() == false) && (split_position-- > 0))
-		//	{
-		//		Genome<T> temp;
-
-		//		if (mode == SPLIT_MODE::block)
-		//			genome.pop_genome(temp);
-		//		else
-		//			genome.pop_item(temp);
-
-		//		temp_left.push_genome(temp);
-		//	}
-
-		//	while (genome.empty() == false)
-		//	{
-		//		Genome<T> temp;
-
-		//		if (mode == SPLIT_MODE::block)
-		//			genome.pop_genome(temp);
-		//		else
-		//			genome.pop_item(temp);
-
-		//		temp_right.push_genome(temp);
-		//	}
-
-		//	while (temp_left.empty() == false)
-		//	{
-		//		Genome<T> temp;
-
-		//		if (mode == SPLIT_MODE::block)
-		//			temp_left.pop_genome(temp);
-		//		else
-		//			temp_left.pop_item(temp);
-
-		//		left_half.push_genome(temp);
-		//	}
-
-		//	while (temp_right.empty() == false)
-		//	{
-		//		Genome<T> temp;
-
-		//		if (mode == SPLIT_MODE::block)
-		//			temp_right.pop_genome(temp);
-		//		else
-		//			temp_right.pop_item(temp);
-
-		//		right_half.push_genome(temp);
-		//	}
-
-		//	unsigned int item_number = 0;
-
-		//	return item_number;
-		//}
 
 		// Purpose: 
 		//   Push a genome on the back of the stack
@@ -802,50 +762,6 @@ namespace Plush
 			Utilities::FixedSizeStack<T>::push(value);
 		}
 
-		//inline void push(const Atom atom)
-		//{
-		//	if (Utilities::FixedSizeStack<T>::top_ > 0)
-		//	{
-		//		T top_atom = Utilities::FixedSizeStack<T>::get_top();
-
-		//		if ((top_atom.instruction == "EXEC.NOOP")
-		//			&& (top_atom.type == Atom::AtomType::ins)
-		//			&& (Utilities::FixedSizeStack<T>::top_ > 0))
-		//		{
-		//			atom.close_parenthesis += top_atom.close_parenthesis;
-		//			Utilities::FixedSizeStack<T>::pop();
-		//		}
-
-		//		Utilities::FixedSizeStack<T>::push(atom);
-		//	}
-
-		//	else
-		//		Utilities::FixedSizeStack<T>::push(atom);
-		//}
-		
-//		void push(T atom);
-
-		//inline void push(Atom atom)
-		//{
-		//	if (Utilities::FixedSizeStack<T>::top_ > 0)
-		//	{
-		//		T top_atom = Utilities::FixedSizeStack<T>::get_top();
-
-		//		if ((top_atom.instruction == "EXEC.NOOP")
-		//			&& (top_atom.type == Atom::AtomType::ins)
-		//			&& (Utilities::FixedSizeStack<T>::top_ > 0))
-		//		{
-		//			atom.close_parenthesis += top_atom.close_parenthesis;
-		//			Utilities::FixedSizeStack<T>::pop();
-		//		}
-
-		//		Utilities::FixedSizeStack<T>::push(atom);
-		//	}
-
-		//	else
-		//		Utilities::FixedSizeStack<T>::push(atom);
-		//}
-
 		inline void push(CodeAtom atom)
 		{
 			if (Utilities::FixedSizeStack<T>::top_ > 0)
@@ -887,110 +803,6 @@ namespace Plush
 			else
 				Utilities::FixedSizeStack<T>::push(atom);
 		}
-
-		inline void push_genome(Genome<class CodeAtom>& genome)
-		{
-			if (genome.size() > 0)
-			{
-				for (int n = 0; n < genome.size(); n++)
-				{
-					T atom = genome[n];
-
-					if (Utilities::FixedSizeStack<T>::size() > 0)
-					{
-						T top_atom = Utilities::FixedSizeStack<T>::get_top();
-
-						if ((top_atom.instruction == "EXEC.NOOP")
-							&& (top_atom.type == Atom::AtomType::ins))
-						{
-							atom.close_parenthesis += top_atom.close_parenthesis;
-							Utilities::FixedSizeStack<T>::pop();
-						}
-					}
-
-					Utilities::FixedSizeStack<T>::push(atom);
-				}
-			}
-		}
-
-		inline void push_genome(Genome<ExecAtom>& genome)
-		{
-			if (genome.size() > 0)
-			{
-				for (int n = 0; n < genome.size(); n++)
-				{
-					ExecAtom atom = genome[n];
-
-					if (Utilities::FixedSizeStack<T>::size() > 0)
-					{
-						T top_atom = Utilities::FixedSizeStack<T>::get_top();
-
-						if ((top_atom.instruction == "EXEC.NOOP")
-							&& (top_atom.type == Atom::AtomType::ins))
-						{
-							atom.close_parenthesis += top_atom.close_parenthesis;
-							Utilities::FixedSizeStack<T>::pop();
-						}
-					}
-
-					//Utilities::FixedSizeStack<T>::push(T(atom));
-
-					T t(atom);
-
-					Utilities::FixedSizeStack<T>::push(t);
-				}
-			}
-		}
-
-		//inline void push(Genome<CodeAtom>& genome)
-		//{
-		//	if (genome.size() > 0)
-		//	{
-		//		for (int n = 0; n < genome.size(); n++)
-		//		{
-		//			T atom = genome[n];
-
-		//			if (Utilities::FixedSizeStack<T>::size() > 0)
-		//			{
-		//				T top_atom = Utilities::FixedSizeStack<T>::get_top();
-
-		//				if ((top_atom.instruction == "EXEC.NOOP")
-		//					&& (top_atom.type == Atom::AtomType::ins))
-		//				{
-		//					atom.close_parenthesis += top_atom.close_parenthesis;
-		//					Utilities::FixedSizeStack<T>::pop();
-		//				}
-		//			}
-
-		//			Utilities::FixedSizeStack<T>::push(atom);
-		//		}
-		//	}
-		//}
-
-		//inline void push(Genome<ExecAtom>& genome)
-		//{
-		//	if (genome.size() > 0)
-		//	{
-		//		for (int n = 0; n < genome.size(); n++)
-		//		{
-		//			T atom = genome[n];
-
-		//			if (Utilities::FixedSizeStack<T>::size() > 0)
-		//			{
-		//				T top_atom = Utilities::FixedSizeStack<T>::get_top();
-
-		//				if ((top_atom.instruction == "EXEC.NOOP")
-		//					&& (top_atom.type == Atom::AtomType::ins))
-		//				{
-		//					atom.close_parenthesis += top_atom.close_parenthesis;
-		//					Utilities::FixedSizeStack<T>::pop();
-		//				}
-		//			}
-
-		//			Utilities::FixedSizeStack<T>::push(atom);
-		//		}
-		//	}
-		//}
 
 		// Purpose: 
 		//   Pop an atom from the stack
@@ -1311,29 +1123,6 @@ namespace Plush
 		};
 
 		// Purpose: 
-		//   Returns a reference to the top atom on the stack
-		//
-		// Parameters:
-		//   None
-		// 
-		// Return value:
-		//   Reference to CodeAtom or ExecAtom from the top of the stack
-		//
-		// Side Effects:
-		//   None
-		//
-		// Thread Safe:
-		//   Yes.  As long as no other thread attemps to write to the child.
-		//
-		// Remarks:
-		//
-		inline T& get_top_ref()
-		{
-			T& atom = Utilities::FixedSizeStack<T>::get_top();
-			return atom;
-		}
-
-		// Purpose: 
 		//   Returns a reference to the bottom atom on the specified item
 		//
 		// Parameters:
@@ -1397,7 +1186,7 @@ namespace Plush
 		//   Returns starting position of item in the stack
 		//
 		// Parameters:
-		//   position - Index of item.  0 refers to the top item on the stack.
+		//   item_index - Index of item.  0 refers to the top item on the stack.
 		// 
 		// Return value:
 		//   Starting position
@@ -1410,14 +1199,14 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline unsigned int item_starting_position(int position)
+		inline unsigned int item_starting_position(int item_index)
 		{
 			int s = 0;
 			int l = 0;
 			unsigned int extra_blocks;
 
 			// Find index to top of item after target item
-			for (int n = 0; n <= position + 1; n++)
+			for (int n = 0; n <= item_index + 1; n++)
 			{
 				s += l;
 				l = number_of_atoms(extra_blocks, n);
@@ -1537,6 +1326,31 @@ namespace Plush
 					Utilities::FixedSizeStack<T>::remove_items(s, l - 1);
 			}
 		}
+		//inline void remove_block(Genome_ref& block)
+		//{
+		//	int s = 0;
+		//	int l = 0;
+		//	unsigned int extra_blocks;
+
+		//	s = block.starting_position;
+		//	l = number_of_atoms_in_Nth_block(extra_blocks, s);
+
+		//	if (extra_blocks == 0)
+		//		Utilities::FixedSizeStack<T>::remove_items(s, l);
+
+		//	else
+		//	{
+		//		std::string atom_str = "{:instruction EXEC.NOOP :close ";
+		//		atom_str += std::to_string(extra_blocks);
+		//		atom_str += "}";
+		//		T atom(atom_str);
+
+		//		Utilities::FixedSizeStack<T>::replace(atom, s + l - 1);
+
+		//		if (l > 1)
+		//			Utilities::FixedSizeStack<T>::remove_items(s, l - 1);
+		//	}
+		//}
 
 		// Purpose: 
 		//   Pushes a copy of item N on top of the stack.
@@ -1594,8 +1408,23 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline void yankdup_block(unsigned int block_starting_position)
+		inline void yankdup_block(Genome_section<T>& block)
 		{
+			int s = 0;
+			int l = 0;
+			unsigned int extra_blocks = 0;
+
+			s = block.starting_position;
+			l = number_of_atoms_in_Nth_block(extra_blocks, s);
+
+			if (l > 0)
+				Utilities::FixedSizeStack<T>::yankdup_item(s, l);
+
+			else
+				push(T("{:instruction EXEC.NOOP :close 1}"));
+
+			if (Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::size() - l].close_parenthesis > extra_blocks)
+				Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::size() - l].close_parenthesis -= extra_blocks;
 		}
 
 		// Purpose: 
@@ -1624,6 +1453,15 @@ namespace Plush
 			}
 		}
 
+		inline void yank_block(Genome_section<T>& block)
+		{
+			if (block.size > 0)
+			{
+				yankdup_block(block);
+				remove_item(block.ending_position + 1);
+			}
+		}
+
 		// Purpose: 
 		//   Compare genome with provided genome and return True if they match
 		//
@@ -1642,7 +1480,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		bool comp(Genome<T> &other_genome) const
+		inline bool comp(Genome<T> &other_genome) const
 		{
 			int size_A = Utilities::FixedSizeStack<T>::size();
 			int size_B = other_genome.size();
@@ -1661,13 +1499,16 @@ namespace Plush
 					return false;
 			}
 		}
-		bool comp(Genome_ref genome_a, Genome_ref genome_b)
+		inline bool comp(Genome_section<T> genome_a, Genome_section<T> genome_b)
 		{
 			if (genome_a.size != genome_b.size)
 				return false;
 
-			for (unsigned int pos_a = genome_a.starting_position, unsigned int pos_b = genome_b.starting_position; pos_a >= genome_a.ending_position; pos_a--, pos_b--;)
+			for (int n = 0; n < genome_a.size; n++)
 			{
+				unsigned int pos_a = genome_a.ending_position - n;
+				unsigned int pos_b = genome_b.ending_position - n;
+
 				T atom_a = Utilities::FixedSizeStack<T>::stack_[pos_a];
 				T atom_b = Utilities::FixedSizeStack<T>::stack_[pos_b];
 
@@ -1675,6 +1516,7 @@ namespace Plush
 					return false;
 			}
 
+			return true;
 		}
 
 		// Purpose: 
@@ -1695,136 +1537,137 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		bool subst(Genome<T> &first_genome, Genome<T> &second_genome)
+		inline bool subst(Genome<T> &first_genome, Genome<T> &second_genome)
 		{
 			bool found = false;
-			Genome<T> modified_block;
-			Genome<T> original_genome(this);
+			//Genome<T> modified_block;
+			//Genome<T> original_genome(this);
 
-			if ((first_genome.size() == 1) &&(second_genome.size() == 1))
-			{
-				while (Utilities::FixedSizeStack<T>::empty() == false)
-				{
-					Genome<T> temp_block;
+			//if ((first_genome.size() == 1) &&(second_genome.size() == 1))
+			//{
+			//	while (Utilities::FixedSizeStack<T>::empty() == false)
+			//	{
+			//		Genome<T> temp_block;
 
-					pop_item(temp_block);
+			//		pop_item(temp_block);
 
-					if (temp_block == second_genome)
-					{
-						Genome<T> modified_block_copy(modified_block);
+			//		if (temp_block == second_genome)
+			//		{
+			//			Genome<T> modified_block_copy(modified_block);
 
-						modified_block.clear();
+			//			modified_block.clear();
 
-						modified_block.push_genome(first_genome);
-						modified_block.push_genome(modified_block_copy);
+			//			modified_block.push_genome(first_genome);
+			//			modified_block.push_genome(modified_block_copy);
 
-						found = true;
-					}
-					else
-					{
-						if (temp_block.size() > 1)
-						{
-							T atom = temp_block.pop();
+			//			found = true;
+			//		}
+			//		else
+			//		{
+			//			if (temp_block.size() > 1)
+			//			{
+			//				T atom = temp_block.pop();
 
-							if (atom.like(second_genome.bottom()))
-								atom.instruction = first_genome.bottom().instruction;
+			//				if (atom.like(second_genome.bottom()))
+			//					atom.instruction = first_genome.bottom().instruction;
 
-							if (temp_block.subst(first_genome, second_genome))
-								found = true;
+			//				if (temp_block.subst(first_genome, second_genome))
+			//					found = true;
 
-							Genome<T> modified_block_copy(modified_block);
+			//				Genome<T> modified_block_copy(modified_block);
 
-							modified_block.clear();
-							modified_block.push_genome(temp_block);
-							modified_block.push(atom);
-							modified_block.push_genome(modified_block_copy);
-						}
+			//				modified_block.clear();
+			//				modified_block.push_genome(temp_block);
+			//				modified_block.push(atom);
+			//				modified_block.push_genome(modified_block_copy);
+			//			}
 
-						else if (temp_block.bottom().like(second_genome.bottom()))
-						{
-							temp_block.bottom().instruction = first_genome.bottom().instruction;
-							modified_block.push_genome(temp_block);
-							found = true;
-						}
+			//			else if (temp_block.bottom().like(second_genome.bottom()))
+			//			{
+			//				temp_block.bottom().instruction = first_genome.bottom().instruction;
+			//				modified_block.push_genome(temp_block);
+			//				found = true;
+			//			}
 
-						else
-							modified_block.push_genome(temp_block);
-					}
-				}
-			}
+			//			else
+			//				modified_block.push_genome(temp_block);
+			//		}
+			//	}
+			//}
 
-			else
-			{
-				while (Utilities::FixedSizeStack<T>::empty() == false)
-				{
-					Genome<T> temp_block;
-					Genome<T> temp_first_genome = first_genome;
+			//else
+			//{
+			//	while (Utilities::FixedSizeStack<T>::empty() == false)
+			//	{
+			//		Genome<T> temp_block;
+			//		Genome<T> temp_first_genome = first_genome;
 
-					pop_item(temp_block);
+			//		pop_item(temp_block);
 
-					// Normalliize to one block
-					int extra_blocks = 0;
+			//		// Normalliize to one block
+			//		int extra_blocks = 0;
 
-					if (temp_block.bottom().close_parenthesis > second_genome.bottom().close_parenthesis)
-					{
-						extra_blocks = temp_block.bottom().close_parenthesis - second_genome.bottom().close_parenthesis;
-						temp_block.bottom().close_parenthesis = second_genome.bottom().close_parenthesis;
-						temp_first_genome.bottom().close_parenthesis += extra_blocks;
-					}
+			//		if (temp_block.bottom().close_parenthesis > second_genome.bottom().close_parenthesis)
+			//		{
+			//			extra_blocks = temp_block.bottom().close_parenthesis - second_genome.bottom().close_parenthesis;
+			//			temp_block.bottom().close_parenthesis = second_genome.bottom().close_parenthesis;
+			//			temp_first_genome.bottom().close_parenthesis += extra_blocks;
+			//		}
 
-					if (temp_block == second_genome)
-					{
-						modified_block.push_genome(temp_first_genome);
-						found = true;
-					}
+			//		if (temp_block == second_genome)
+			//		{
+			//			modified_block.push_genome(temp_first_genome);
+			//			found = true;
+			//		}
 
-					else
-					{
-						if (temp_block.size() > 1)
-						{
-							T atom = temp_block.pop();
+			//		else
+			//		{
+			//			if (temp_block.size() > 1)
+			//			{
+			//				T atom = temp_block.pop();
 
-							if (atom == second_genome.bottom())
-								atom.instruction = temp_first_genome.bottom().instruction;
+			//				if (atom == second_genome.bottom())
+			//					atom.instruction = temp_first_genome.bottom().instruction;
 
-							if (temp_block.subst(temp_first_genome, second_genome))
-								found = true;
+			//				if (temp_block.subst(temp_first_genome, second_genome))
+			//					found = true;
 
-							Genome<T> modified_block_copy(modified_block);
+			//				Genome<T> modified_block_copy(modified_block);
 
-							modified_block.clear();
-							modified_block.push_genome(temp_block);
-							modified_block.push(atom);
-							modified_block.push_genome(modified_block_copy);
-						}
+			//				modified_block.clear();
+			//				modified_block.push_genome(temp_block);
+			//				modified_block.push(atom);
+			//				modified_block.push_genome(modified_block_copy);
+			//			}
 
-						else if (temp_block.bottom().like(second_genome.bottom()))
-						{
-							temp_block.bottom().instruction = temp_first_genome.bottom().instruction;
-							modified_block.push_genome(temp_block);
-							found = true;
-						}
+			//			else if (temp_block.bottom().like(second_genome.bottom()))
+			//			{
+			//				temp_block.bottom().instruction = temp_first_genome.bottom().instruction;
+			//				modified_block.push_genome(temp_block);
+			//				found = true;
+			//			}
 
-						else
-							modified_block.push_genome(temp_block);
-					}
-				}
-			}
+			//			else
+			//				modified_block.push_genome(temp_block);
+			//		}
+			//	}
+			//}
 
-			if (found)
-				push_genome(modified_block);
+			//if (found)
+			//	push_genome(modified_block);
 
-			else
-				push_genome(original_genome);
+			//else
+			//	push_genome(original_genome);
 
 			return found;
 		}
 
 		// Purpose: 
-		//   Returns the position of the provided item in the genome or -1 if not found.
+		//   Returns the position of Block B in Block A or -1 if not found.
 		//
 		// Parameters:
-		//   other_genome	- Genome to search for
+		//   block_a - Reference to Block A on the stack
+		//   block_b - Reference to Block B on the stack
 		// 
 		// Return value:
 		//   Position of the item or -1 if not found
@@ -1837,114 +1680,25 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		int contains(Genome<T> &other_genome)
+		inline Genome_section<T> contains(Genome_section<T> block_a, Genome_section<T> block_b)
 		{
-			bool found = false;
-			int position = -1;
-			Genome<T> original_genome(this);
+			unsigned int extra_blocks = 0;
 
-			if (Utilities::FixedSizeStack<T>::size() < other_genome.size())
-				return -1;
-
-			// If searching for a single item
-			if (other_genome.size() == 1)
+			// If length of Block A is less than Block B + 1, then it is too small to contain Block B
+			if (block_a.size > block_b.size)
 			{
-				while (Utilities::FixedSizeStack<T>::empty() == false)
+				for (unsigned int n = block_a.starting_position; n <= block_a.ending_position; n++)
 				{
-					Genome<T> temp_block;
+					unsigned int l = number_of_atoms_in_Nth_block(extra_blocks, n);
 
-					pop_item(temp_block);	// May need to push back empty blocks if there were extra blocks returned by pop().
+					Genome_section<T> sub_block(n, l);
 
-					position++;
-
-					if (temp_block == other_genome)
-					{
-						found = true;
-						break;
-					}
-
-					else
-					{
-						if (temp_block.size() > 1)
-						{
-							T atom = temp_block.pop();
-
-							if (temp_block.contains(other_genome) >= 0)
-							{
-								found = true;
-								break;
-							}
-
-							temp_block.push(atom);
-						}
-
-						else if (temp_block.bottom().like(other_genome.bottom()))
-						{
-							found = true;
-							break;
-						}
-					}
+					if (comp(sub_block, block_b))
+						return sub_block;
 				}
-			}
+			};
 
-			// If searching for a block
-			else
-			{
-				while (Utilities::FixedSizeStack<T>::empty() == false)
-				{
-					Genome<T> temp_block;
-
-					pop_item(temp_block);
-
-					position++;
-
-					// Normalliize to one block
-					int extra_blocks = 0;
-
-					if (temp_block.bottom().close_parenthesis > other_genome.bottom().close_parenthesis)
-					{
-						extra_blocks = temp_block.bottom().close_parenthesis - other_genome.bottom().close_parenthesis;
-						temp_block.bottom().close_parenthesis = other_genome.bottom().close_parenthesis;
-					}
-
-					if (temp_block == other_genome)
-					{
-						found = true;
-						break;
-					}
-
-					else
-					{
-						if (temp_block.size() > 1)
-						{
-							T atom = temp_block.pop();
-
-							if (temp_block.contains(other_genome) >= 0)
-							{
-								found = true;
-								break;
-							}
-
-							temp_block.push(atom);
-						}
-
-						else if (temp_block.bottom().like(other_genome.bottom()))
-						{
-							found = true;
-							break;
-						}
-					}
-				}
-			}
-
-			Utilities::FixedSizeStack<T>::clear();
-			push_genome(original_genome);
-
-			if (found)
-				return position;
-
-			else
-				return -1;
+			return Genome_section<T>(0, 0);
 		}
 
 		// Purpose: 
@@ -1971,150 +1725,34 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		//bool container_of(Genome<T> &other_genome, Genome<T> &container)
-		//{
-		//	bool found = false;
-		//	Genome<T> original_genome(this);
-		//	Genome<T> container_block;
-		//	Genome<T> container_block_canidate;
-		//	Genome<T> other_block;
-
-		//	if (Utilities::FixedSizeStack<T>::size() < other_genome.size())
-		//		return false;
-
-		//	// If searching for a single item
-		//	if (other_genome.size() == 1)
-		//	{
-		//		while (Utilities::FixedSizeStack<T>::empty() == false)
-		//		{
-		//			container_block_canidate.clear();
-		//			container_block_canidate.push_genome(other_block);
-
-		//			pop_item(other_block);	// May need to push back empty blocks if there were extra blocks returned by pop().
-
-		//			if (other_block == other_genome)
-		//			{
-		//				T atom = container.pop();
-		//				container.clear();
-		//				other_block.bottom().close_parenthesis = 1;
-		//				container.push_genome(other_block);
-		//				container.push(atom);
-
-		//				found = true;
-		//				break;
-		//			}
-		//			else
-		//			{
-		//				if (other_block.size() > 1)
-		//				{
-		//					T atom = other_block.pop();
-		//					container.clear();
-		//					container.push(atom);
-
-		//					if (other_block.container_of(other_genome, container))
-		//					{
-		//						found = true;
-		//						break;
-		//					}
-
-		//					other_block.push(atom);
-		//				}
-
-		//				else if (other_block.bottom().like(other_genome.bottom()))
-		//				{
-		//					T atom = container.pop();
-		//					container.clear();
-		//					other_block.bottom().close_parenthesis = 1;
-		//					container.push_genome(other_block);
-		//					container.push(atom);
-
-		//					found = true;
-		//					break;
-		//				}
-		//			}
-		//		}
-		//	}
-
-		//	// If searching for a block
-		//	else
-		//	{
-		//		while (Utilities::FixedSizeStack<T>::empty() == false)
-		//		{
-		//			container_block_canidate.clear();
-		//			container_block_canidate.push_genome(other_block);
-
-		//			pop_item(other_block);
-
-		//			// Normalliize to one block
-		//			int extra_blocks = 0;
-
-		//			if (other_block.bottom().close_parenthesis > other_genome.bottom().close_parenthesis)
-		//			{
-		//				extra_blocks = other_block.bottom().close_parenthesis - other_genome.bottom().close_parenthesis;
-		//				other_block.bottom().close_parenthesis = other_genome.bottom().close_parenthesis;
-		//			}
-
-		//			if (other_block == other_genome)
-		//			{
-		//				T atom = container.pop();
-		//				container.clear();
-		//				other_block.bottom().close_parenthesis = other_genome.bottom().close_parenthesis;
-		//				container.push_genome(other_block);
-		//				container.push(atom);
-
-		//				found = true;
-		//				break;
-		//			}
-
-		//			else
-		//			{
-		//				if (other_block.size() > 1)
-		//				{
-		//					T atom = other_block.pop();
-		//					container.clear();
-		//					container.push(atom);
-
-		//					if (other_block.container_of(other_genome, container))
-		//					{
-		//						found = true;
-		//						break;
-		//					}
-
-		//					other_block.push(atom);
-		//				}
-
-		//				else if (other_block.bottom().like(other_genome.bottom()))
-		//				{
-		//					T atom = container.pop();
-		//					container.clear();
-		//					other_block.bottom().close_parenthesis = other_genome.bottom().close_parenthesis;
-		//					container.push_genome(other_block);
-		//					container.push(atom);
-
-		//					found = true;
-		//					break;
-		//				}
-		//			}
-		//		}
-		//	}
-
-		//	Utilities::FixedSizeStack<T>::clear();
-		//	push_genome(original_genome);
-
-		//	return found;
-		//}
-		bool container_of(Genome_ref block_A, Genome_ref block_B, Genome_ref& container_block)
+		inline bool container_of(Genome_section<T> block_A, Genome_section<T> block_B, Genome_section<T>& container_block)
 		{
 			bool found = false;
-			unsigned int extra_blocks = 0;
+			//unsigned int extra_blocks = 0;
 
-			if (comp(block_A, block_B))
-				found = true;
+			//// If length of Block A is less than Block B + 1, then it is too small to contain Block B
+			//while (block_A.size > block_B.size)
+			//{
+			//	T& atom_a = Utilities::FixedSizeStack<T>::stack_[block_A.starting_position];
 
-			for (int n = 0; n < _env.get_stack<CodeAtom>().number_of_items_in_Nth_block(extra_blocks, block_A.starting_position)
-			{
-				Genome_ref genome_ref = 
-			}
+			//	// If the top atom of block A is the start of another block
+			//	if (Func2BlockWantsMap[atom_a.instruction] > 0)
+			//	{
+			//		// And the next item is block B
+			//		Genome_ref sub_block = block_A + 1;
+
+			//		// Then we are done.  Return the container of Block B
+			//		if (comp(sub_block, block_B))
+			//		{
+			//			container_block = block_A;
+			//			found = true;
+			//			break;
+			//		}
+			//	}
+
+			//	// Keep looking...
+			//	//block_A++;
+			//};
 
 			return found;
 		}
@@ -2168,21 +1806,17 @@ namespace Plush
 
 		ingest_plush_genome(_genome_string);
 		convert_genome_to_string();
-	}
-
-
-
-
-
-
-	//	for (int n = 0; n < Utilities::FixedSizeStack<T>::size(); n++)
-	//	{
-	//		genome_string_ += "{";
-	//		genome_string_ += ":instruction ";
-	//		genome_string_ += genome_atoms_[n].instruction;
-	//		genome_string_ += " :close  ";
-	//		genome_string_ += std::to_string(genome_atoms_[n].close_parentheses);
-	//		genome_string_ += "}";
-	//	}
-	//}
+	};
+	template <>
+	class Genome <long> : public Utilities::FixedSizeStack<long>
+	{
+	};
+	template <>
+	class Genome <double> : public Utilities::FixedSizeStack<double>
+	{
+	};
+	template <>
+	class Genome <bool> : public Utilities::FixedSizeStack<bool>
+	{
+	};
 }

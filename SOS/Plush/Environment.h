@@ -116,17 +116,25 @@ namespace Plush
 			get_stack<T>().push(value);
 		}
 
+		//template <class T>
+		//inline void push(Genome<CodeAtom>& genome)
+		//{
+		//	get_stack<T>().push_genome(genome);
+		//}
+		
+
 		template <class T>
-		inline void push(Genome<CodeAtom>& genome)
+		inline void push(Genome_section<CodeAtom>& genome)
 		{
 			get_stack<T>().push_genome(genome);
 		}
 		
-		template <class T>
-		inline void push(Genome<ExecAtom>& genome)
-		{
-			get_stack<T>().push_genome(genome);
-		}
+
+		//template <class T>
+		//inline void push(Genome<ExecAtom>& genome)
+		//{
+		//	get_stack<T>().push_genome(genome);
+		//}
 
 		//inline void push(CodeAtom genome)
 		//{
@@ -167,7 +175,7 @@ namespace Plush
 		template <typename T>
 		inline T set_top(T val)
 		{
-			get_stack<T>().get_top_ref() = val;
+			get_stack<T>().get_top() = val;
 			return val;
 		}
 

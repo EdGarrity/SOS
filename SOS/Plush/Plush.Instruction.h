@@ -111,8 +111,6 @@ namespace Plush
 				Genome<CodeAtom> modified_genome;
 
 				// Get count of sub-blocks
-//				Utilities::FixedSizeStack<CodeAtom>& stack = _env.get_stack<CodeAtom>();
-//				Genome<CodeAtom>& genome = dynamic_cast<Genome<CodeAtom>&>(stack);
 				Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
 
 				int number_of_blocks = genome.number_of_blocks();

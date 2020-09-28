@@ -391,8 +391,11 @@ namespace Plush
 
 				_env.get_stack<CodeAtom>().remove_items(s - (n - ns), n - ns);
 
-				Atom& atom_a = _env.get_stack<CodeAtom>().get_top_ref();
-				atom_a.close_parenthesis++;
+				//Atom& atom_a = _env.get_stack<CodeAtom>().get_top_ref();
+				//atom_a.close_parenthesis++;
+
+				unsigned int n = _env.get_stack<CodeAtom>()[0].starting_position;
+				_env.get_stack<CodeAtom>().container()[n].close_parenthesis++;
 			}
 		}
 
@@ -451,9 +454,13 @@ namespace Plush
 			//_env.push<CodeAtom>(block_b);
 
 			_env.get_stack<CodeAtom>().yank_item(1);
-			int n = _env.get_stack<CodeAtom>().subitem_ending_position(0);
-			int s = _env.get_stack<CodeAtom>().size();
-			_env.get_stack<CodeAtom>()[s - n - 1].close_parenthesis--;
+
+			//int n = _env.get_stack<CodeAtom>().subitem_ending_position(0);
+			//int s = _env.get_stack<CodeAtom>().size();
+			//_env.get_stack<CodeAtom>()[s - n - 1].close_parenthesis--;
+
+			unsigned n = _env.get_stack<CodeAtom>()[0].ending_position;
+			_env.get_stack<CodeAtom>().container()[n].close_parenthesis--;
 		}
 
 		return 1;
@@ -480,32 +487,19 @@ namespace Plush
 			//else
 			//	_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
 
-			unsigned int container_block = 0;
+			Genome_section<CodeAtom> container_block;
 
 			// Get first block from stack
-			unsigned int block_A_position = 0;
+			Genome_section<CodeAtom> block_A(_env.get_stack<CodeAtom>().item_starting_position(0), _env.get_stack<CodeAtom>().item_size(0));
 
 			// Get second block from stack
-			unsigned int block_B_position = _env.get_stack<CodeAtom>().item_starting_position(1);
-			unsigned int block_B_size = _env.get_stack<CodeAtom>().item_size(1);
+			Genome_section<CodeAtom> block_B(_env.get_stack<CodeAtom>().item_starting_position(1), _env.get_stack<CodeAtom>().item_size(1));
 
-			if (_env.get_stack<CodeAtom>().container_of(block_A_position, block_B_position, block_B_size, container_block))
+			if (_env.get_stack<CodeAtom>().container_of(block_A, block_B, container_block))
 				_env.get_stack<CodeAtom>().yankdup_block(container_block);
 
 			else
 				_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
-
-
-
-
-
-
-			//if (_env.get_stack<CodeAtom>().item_size(1) == 1)
-			//{
-			//	unsigned int extra_blocks = 0;
-
-			//	for (int n = 0; n < _env.get_stack<CodeAtom>().number_of_atoms_in_Nth_block(extra_blocks, block_A_position);
-			//}
 		}
 
 		return 1;
@@ -515,18 +509,28 @@ namespace Plush
 	{
 		if (_env.has_elements<CodeAtom>(2))
 		{
-			Genome<CodeAtom> extracted_block_A;
-			Genome<CodeAtom> extracted_block_B;
-			Genome<CodeAtom> modified_block_A;
+			//Genome<CodeAtom> extracted_block_A;
+			//Genome<CodeAtom> extracted_block_B;
+			//Genome<CodeAtom> modified_block_A;
+
+			//// Get first block from stack
+			//_env.pop<CodeAtom>(extracted_block_A);
+
+			//// Get second block from stack
+			//_env.pop<CodeAtom>(extracted_block_B);
+
+			//bool found = (extracted_block_B.contains(extracted_block_A) >= 0);
+			//_env.push<bool>(found);
+
 
 			// Get first block from stack
-			_env.pop<CodeAtom>(extracted_block_A);
+			Genome_section<CodeAtom> block_A(_env.get_stack<CodeAtom>().item_starting_position(0), _env.get_stack<CodeAtom>().item_size(0));
 
 			// Get second block from stack
-			_env.pop<CodeAtom>(extracted_block_B);
+			Genome_section<CodeAtom> block_B(_env.get_stack<CodeAtom>().item_starting_position(1), _env.get_stack<CodeAtom>().item_size(1));
 
-			bool found = (extracted_block_B.contains(extracted_block_A) >= 0);
-			_env.push<bool>(found);
+			Genome_section<CodeAtom> found = _env.get_stack<CodeAtom>().contains(block_A, block_B);
+			_env.push<bool>(found.size > 0);
 		}
 
 		return 1;
@@ -534,49 +538,49 @@ namespace Plush
 
 	unsigned code_discrepancy(Environment & _env)
 	{
-		if (_env.has_elements<CodeAtom>(2))
-		{
-			Genome<CodeAtom> block_a;
-			Genome<CodeAtom> block_b;
+		//if (_env.has_elements<CodeAtom>(2))
+		//{
+		//	Genome<CodeAtom> block_a;
+		//	Genome<CodeAtom> block_b;
 
-			_env.pop<CodeAtom>(block_a);
-			_env.pop<CodeAtom>(block_b);
+		//	_env.pop<CodeAtom>(block_a);
+		//	_env.pop<CodeAtom>(block_b);
 
-			std::set<std::string> atom_set;
+		//	std::set<std::string> atom_set;
 
-			if ((block_a.size() > 0) && (block_b.size() > 0))
-			{
-				for (int i = 0; i < block_a.size(); i++)
-					atom_set.insert(block_a[i].instruction);
+		//	if ((block_a.size() > 0) && (block_b.size() > 0))
+		//	{
+		//		for (int i = 0; i < block_a.size(); i++)
+		//			atom_set.insert(block_a[i].instruction);
 
-				for (int i = 0; i < block_b.size(); i++)
-					atom_set.insert(block_b[i].instruction);
+		//		for (int i = 0; i < block_b.size(); i++)
+		//			atom_set.insert(block_b[i].instruction);
 
-				int result = 0;
+		//		int result = 0;
 
-				for (std::string instruction : atom_set)
-				{
-					int count_a = 0;
-					int count_b = 0;
+		//		for (std::string instruction : atom_set)
+		//		{
+		//			int count_a = 0;
+		//			int count_b = 0;
 
-					for (int i = 0; i < block_a.size(); i++)
-					{
-						if (instruction == block_a[i].instruction)
-							count_a++;
-					}
+		//			for (int i = 0; i < block_a.size(); i++)
+		//			{
+		//				if (instruction == block_a[i].instruction)
+		//					count_a++;
+		//			}
 
-					for (int i = 0; i < block_b.size(); i++)
-					{
-						if (instruction == block_b[i].instruction)
-							count_b++;
-					}
+		//			for (int i = 0; i < block_b.size(); i++)
+		//			{
+		//				if (instruction == block_b[i].instruction)
+		//					count_b++;
+		//			}
 
-					result += std::abs(count_a - count_b);
-				}
+		//			result += std::abs(count_a - count_b);
+		//		}
 
-				_env.push<long>(result);
-			}
-		}
+		//		_env.push<long>(result);
+		//	}
+		//}
 
 		return 1;
 	}
@@ -585,12 +589,23 @@ namespace Plush
 	{
 		if (_env.has_elements<CodeAtom>(1))
 		{
-			Genome<CodeAtom> block_a;
+			//Genome<CodeAtom> block_a;
 
-			_env.pop<CodeAtom>(block_a);
-			_env.push<CodeAtom>(block_a);
-			_env.push<ExecAtom>(Atom("{:instruction CODE.POP :close 1}"));
-			_env.push<ExecAtom>(block_a);
+			//_env.pop<CodeAtom>(block_a);
+			//_env.push<CodeAtom>(block_a);
+			//_env.push<ExecAtom>(Atom("{:instruction CODE.POP :close 1}"));
+			//_env.push<ExecAtom>(block_a);
+
+
+
+			// Get reference to top block on code stack
+			Genome_section<CodeAtom> code_block(_env.get_stack<CodeAtom>().item_starting_position(0), _env.get_stack<CodeAtom>().item_size(0));
+
+			// Remove top code block after execution of block.
+			_env.push<ExecAtom>(ExecAtom("{:instruction CODE.POP :close 1}"));
+
+			// Push code block onto exec stack
+			_env.push<ExecAtom>(code_block);
 
 			return 1;
 		}
@@ -600,10 +615,20 @@ namespace Plush
 	{
 		if (_env.has_elements<CodeAtom>(1))
 		{
-			Genome<CodeAtom> block_a;
+			//Genome<CodeAtom> block_a;
 
-			_env.pop(block_a);
-			_env.push<ExecAtom>(block_a);
+			//_env.pop(block_a);
+			//_env.push<ExecAtom>(block_a);
+
+
+			// Get reference to top block on code stack
+			Genome_section<CodeAtom> code_block(_env.get_stack<CodeAtom>().item_starting_position(0), _env.get_stack<CodeAtom>().item_size(0));
+
+			// Push code block onto exec stack
+			_env.push<ExecAtom>(code_block);
+
+			// Remove top code block before execution of block.
+			_env.get_stack<CodeAtom>().remove_item(0);
 
 			return 1;
 		}
@@ -613,7 +638,7 @@ namespace Plush
 	{
 		if ((_env.has_elements<long>(2)) && (_env.has_elements<CodeAtom>(1)))
 		{
-			Genome<CodeAtom> block_a;
+			//Genome<CodeAtom> block_a;
 
 			int n = _env.pop<long>();	// destination index
 			int i = _env.pop<long>();	// current index
@@ -621,8 +646,17 @@ namespace Plush
 			if (n == i)
 			{
 				_env.push<long>(i);
-				_env.pop(block_a);
-				_env.push<ExecAtom>(block_a);
+				//_env.pop(block_a);
+				//_env.push<ExecAtom>(block_a);
+
+				// Get reference to top block on code stack
+				Genome_section<CodeAtom> code_block(_env.get_stack<CodeAtom>().item_starting_position(0), _env.get_stack<CodeAtom>().item_size(0));
+
+				// Push code block onto exec stack
+				_env.push<ExecAtom>(code_block);
+
+				// Remove top code block before execution of block.
+				_env.get_stack<CodeAtom>().remove_item(0);
 			}
 
 			else
@@ -632,15 +666,21 @@ namespace Plush
 				if (i > n)
 					direction = -1;
 
-				_env.pop<CodeAtom>(block_a);
+				//_env.pop<CodeAtom>(block_a);
 
-				if (_env.get_stack<ExecAtom>().free() > (block_a.size() * 2))
+				// Get reference to top block on code stack
+				Genome_section<CodeAtom> code_block(_env.get_stack<CodeAtom>().item_starting_position(0), _env.get_stack<CodeAtom>().item_size(0));
+
+				if (_env.get_stack<ExecAtom>().free() > (code_block.size * 2))
 				{
 					_env.push<long>(i + direction);
 					_env.push<long>(n);
 
-					_env.push<CodeAtom>(block_a);
-					_env.push<ExecAtom>(block_a);
+					//_env.push<CodeAtom>(block_a);
+					//_env.push<ExecAtom>(block_a);
+
+					// Push code block onto exec stack
+					_env.push<ExecAtom>(code_block);
 
 					_env.push<ExecAtom>(Atom("{:instruction CODE.DO*RANGE :close 1}"));
 				}
@@ -689,61 +729,61 @@ namespace Plush
 
 	unsigned code_extract(Environment & _env)
 	{
-		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
-		{
-			int index = std::abs(_env.pop<long>());	// index
+		//if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
+		//{
+		//	int index = std::abs(_env.pop<long>());	// index
 
-			//unsigned int extra_first_blocks = 0;
-			//unsigned int extra_second_bloxks = 0;
+		//	//unsigned int extra_first_blocks = 0;
+		//	//unsigned int extra_second_bloxks = 0;
 
-			Genome<CodeAtom> first_block;
-			//Genome<CodeAtom> second_block;
-			Genome<CodeAtom> left_half;
-			Genome<CodeAtom> right_half;
-			Genome<CodeAtom> indexed_block;
-			Genome<CodeAtom> rest_block;
+		//	Genome<CodeAtom> first_block;
+		//	//Genome<CodeAtom> second_block;
+		//	Genome<CodeAtom> left_half;
+		//	Genome<CodeAtom> right_half;
+		//	Genome<CodeAtom> indexed_block;
+		//	Genome<CodeAtom> rest_block;
 
-			//Genome<CodeAtom> top_block;
-			//Genome<CodeAtom> extracted_block;
-			//Genome<CodeAtom> block_without_extracted;
-			//Genome<CodeAtom> block_copy;
+		//	//Genome<CodeAtom> top_block;
+		//	//Genome<CodeAtom> extracted_block;
+		//	//Genome<CodeAtom> block_without_extracted;
+		//	//Genome<CodeAtom> block_copy;
 
-			if (index != 0)
-			{
-				// Get top block
-				_env.pop(first_block);
+		//	if (index != 0)
+		//	{
+		//		// Get top block
+		//		_env.pop(first_block);
 
-				// Get count items in first block
-				int number_of_items = first_block.number_of_items();
+		//		// Get count items in first block
+		//		int number_of_items = first_block.number_of_items();
 
-				if (number_of_items > 0)
-				{
-					// Take modulo the number of blocks to ensure that it is within the meaningful range.
-					index = std::abs(index - 1) % number_of_items;
+		//		if (number_of_items > 0)
+		//		{
+		//			// Take modulo the number of blocks to ensure that it is within the meaningful range.
+		//			index = std::abs(index - 1) % number_of_items;
 
-					// Split block at insertion point
-					first_block.split(left_half, right_half, index, Genome<CodeAtom>::SPLIT_MODE::item);
+		//			// Split block at insertion point
+		//			first_block.split(left_half, right_half, index, Genome<CodeAtom>::SPLIT_MODE::item);
 
-					// Compensate for extra blocks in the second item.
-					//if (extra_second_bloxks > 0)
-					//	right_half.bottom().close_parenthesis += extra_second_bloxks;
+		//			// Compensate for extra blocks in the second item.
+		//			//if (extra_second_bloxks > 0)
+		//			//	right_half.bottom().close_parenthesis += extra_second_bloxks;
 
-					// Get indexed block
-					right_half.split(indexed_block, rest_block, 1, Genome<CodeAtom>::SPLIT_MODE::item);
+		//			// Get indexed block
+		//			right_half.split(indexed_block, rest_block, 1, Genome<CodeAtom>::SPLIT_MODE::item);
 
-					// Close extracted item
-					if ((indexed_block.get_top_ref().instruction == "EXEC.NOOP_OPEN_PAREN") 
-						&& (indexed_block.get_top_ref().close_parenthesis == 0)
-						)
-						indexed_block.bottom().close_parenthesis = 2;
-					else
-						indexed_block.bottom().close_parenthesis = 1;
+		//			// Close extracted item
+		//			if ((indexed_block.get_top_ref().instruction == "EXEC.NOOP_OPEN_PAREN") 
+		//				&& (indexed_block.get_top_ref().close_parenthesis == 0)
+		//				)
+		//				indexed_block.bottom().close_parenthesis = 2;
+		//			else
+		//				indexed_block.bottom().close_parenthesis = 1;
 
-					// Replace top of stack with extracted item
-					_env.push<CodeAtom>(indexed_block);
-				}
-			}
-		}
+		//			// Replace top of stack with extracted item
+		//			_env.push<CodeAtom>(indexed_block);
+		//		}
+		//	}
+		//}
 
 		return 1;
 	}
@@ -792,23 +832,39 @@ namespace Plush
 	{
 		if ((_env.has_elements<bool>(1)) && (_env.has_elements<CodeAtom>(2)))
 		{
-			Genome<CodeAtom> extracted_block_A;
-			Genome<CodeAtom> extracted_block_B;
+			//Genome<CodeAtom> extracted_block_A;
+			//Genome<CodeAtom> extracted_block_B;
+
+			//// Get conditional boolean
+			//bool s = _env.pop<bool>();
+
+			//// Get first block from stack
+			//_env.pop<CodeAtom>(extracted_block_A);
+
+			//// Get second block from stack
+			//_env.pop<CodeAtom>(extracted_block_B);
+
+			//if (s)
+			//	_env.push<ExecAtom>(extracted_block_A);
+
+			//else
+			//	_env.push<ExecAtom>(extracted_block_B);
+
+
+			Genome_section<CodeAtom> code_block_a(_env.get_stack<CodeAtom>().item_starting_position(0), _env.get_stack<CodeAtom>().item_size(0));
+			Genome_section<CodeAtom> code_block_b(_env.get_stack<CodeAtom>().item_starting_position(1), _env.get_stack<CodeAtom>().item_size(1));
+
+			_env.get_stack<CodeAtom>().remove_item(0);
+			_env.get_stack<CodeAtom>().remove_item(0);
 
 			// Get conditional boolean
 			bool s = _env.pop<bool>();
 
-			// Get first block from stack
-			_env.pop<CodeAtom>(extracted_block_A);
-
-			// Get second block from stack
-			_env.pop<CodeAtom>(extracted_block_B);
-
 			if (s)
-				_env.push<ExecAtom>(extracted_block_A);
+				_env.push<ExecAtom>(code_block_a);
 
 			else
-				_env.push<ExecAtom>(extracted_block_B);
+				_env.push<ExecAtom>(code_block_b);
 		}
 
 		return 1;
@@ -906,17 +962,27 @@ namespace Plush
 	{
 		if (_env.has_elements<CodeAtom>(2))
 		{
-			Genome<CodeAtom> extracted_block_A;
-			Genome<CodeAtom> extracted_block_B;
+			//Genome<CodeAtom> extracted_block_A;
+			//Genome<CodeAtom> extracted_block_B;
+
+			//// Get first block from stack
+			//_env.pop<CodeAtom>(extracted_block_A);
+
+			//// Get second block from stack
+			//_env.pop<CodeAtom>(extracted_block_B);
+
+			//bool found = (extracted_block_A.contains(extracted_block_B) >= 0);
+			//_env.push<bool>(found);
+
 
 			// Get first block from stack
-			_env.pop<CodeAtom>(extracted_block_A);
+			Genome_section<CodeAtom> block_A(_env.get_stack<CodeAtom>().item_starting_position(0), _env.get_stack<CodeAtom>().item_size(0));
 
 			// Get second block from stack
-			_env.pop<CodeAtom>(extracted_block_B);
+			Genome_section<CodeAtom> block_B(_env.get_stack<CodeAtom>().item_starting_position(1), _env.get_stack<CodeAtom>().item_size(1));
 
-			bool found = (extracted_block_A.contains(extracted_block_B) >= 0);
-			_env.push<bool>(found);
+			Genome_section<CodeAtom> found = _env.get_stack<CodeAtom>().contains(block_B, block_A);
+			_env.push<bool>(found.size > 0);
 		}
 
 		return 1;
@@ -1034,17 +1100,26 @@ namespace Plush
 	{
 		if (_env.has_elements<CodeAtom>(2))
 		{
-			Genome<CodeAtom> extracted_block_A;
-			Genome<CodeAtom> extracted_block_B;
+			//Genome<CodeAtom> extracted_block_A;
+			//Genome<CodeAtom> extracted_block_B;
+
+			//// Get first block from stack
+			//_env.pop<CodeAtom>(extracted_block_A);
+
+			//// Get second block from stack
+			//_env.pop<CodeAtom>(extracted_block_B);
+
+			//int position = extracted_block_A.contains(extracted_block_B);
+			//_env.push<long>(position);
 
 			// Get first block from stack
-			_env.pop<CodeAtom>(extracted_block_A);
+			Genome_section<CodeAtom> block_A(_env.get_stack<CodeAtom>().item_starting_position(0), _env.get_stack<CodeAtom>().item_size(0));
 
 			// Get second block from stack
-			_env.pop<CodeAtom>(extracted_block_B);
+			Genome_section<CodeAtom> block_B(_env.get_stack<CodeAtom>().item_starting_position(1), _env.get_stack<CodeAtom>().item_size(1));
 
-			int position = extracted_block_A.contains(extracted_block_B);
-			_env.push<long>(position);
+			Genome_section<CodeAtom> found = _env.get_stack<CodeAtom>().contains(block_B, block_A);
+			_env.push<long>(found.starting_position);
 		}
 
 		return 1;
