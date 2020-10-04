@@ -496,7 +496,7 @@ namespace Plush
 			Genome_section<CodeAtom> block_B(_env.get_stack<CodeAtom>().item_starting_position(1), _env.get_stack<CodeAtom>().item_size(1));
 
 			if (_env.get_stack<CodeAtom>().container_of(block_A, block_B, container_block))
-				_env.get_stack<CodeAtom>().yankdup_block(container_block);
+				_env.get_stack<CodeAtom>().yankdup_stack_element(container_block);
 
 			else
 				_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
