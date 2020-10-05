@@ -291,6 +291,52 @@ namespace Utilities
 		}
 
 		// Purpose: 
+		//   Insert an atom deep in the stack
+		//
+		// Parameters:
+		//   atom				- Reference to Atom to insert
+		//   insert_position	- Positin where to insert the atom.  0 or less refers to the top of the stack.  
+		//						  Values greater than the size of the stack will insert the other stack at the bottom.
+		//
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   Stack updated with inserted stack.
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline void shove(T& atom, int insert_position)
+		{
+			if ((top_ + 1) > N)
+			{
+				std::stringstream error_message;
+				error_message << "Utilities::FixedSizeStack::shove() - Stack overflow.";
+
+				throw std::overflow_error(error_message.str());
+			}
+
+			insert_position = (insert_position < 0) ? 0 : insert_position;
+			insert_position = (insert_position > top_) ? top_ : insert_position;
+
+			// Make space in this stack for the other stack items
+			for (int i = 0, j = insert_position, k = top_;
+				i < 1;
+				i++, j--, k--)
+				stack_[k] = stack_[j];
+
+			int n2 = other.size();
+
+			// Copy the other stack items into this stack
+			stack_[top_ - insert_position] = atom;
+
+			top_ += 1;
+		}
+
+		// Purpose: 
 		//   Removes a section of the stack
 		//
 		// Parameters:

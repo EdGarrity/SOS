@@ -876,41 +876,74 @@ namespace Plush
 		{
 			int index = std::abs(_env.pop<long>());	// index
 
-			Genome<CodeAtom> first_block;
-			Genome<CodeAtom> second_block;
-			Genome<CodeAtom> left_half;
-			Genome<CodeAtom> right_half;
-			
-			// Get first block from stack
-			_env.pop<CodeAtom>(first_block);
+			//Genome<CodeAtom> first_block;
+			//Genome<CodeAtom> second_block;
+			//Genome<CodeAtom> left_half;
+			//Genome<CodeAtom> right_half;
+			//
+			//// Get first block from stack
+			//_env.pop<CodeAtom>(first_block);
 
-			// Get second block from stack
-			_env.pop<CodeAtom>(second_block);
+			//// Get second block from stack
+			//_env.pop<CodeAtom>(second_block);
 
-			// Put the second block in a list object
-			second_block.push(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+			//// Put the second block in a list object
+			//second_block.push(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+
+			//if (index == 0)
+			//{
+			//	// Insert secoond item into first item at position 0.
+			//	_env.push<CodeAtom>(first_block);
+			//	_env.push<CodeAtom>(second_block);
+			//}
+			//else
+			//{
+			//	// Get count items in first block
+			//	int number_of_items = first_block.number_of_items();
+
+			//	// Take modulo the number of blocks to ensure that it is within the meaningful range.
+			//	index = std::abs(index) % number_of_items;
+
+			//	// Split block at insertion point
+			//	first_block.split(left_half, right_half, index, Genome<CodeAtom>::SPLIT_MODE::item);
+
+			//	// Insert second block into first block at insertion point
+			//	_env.push<CodeAtom>(right_half);
+			//	_env.push<CodeAtom>(second_block);
+			//	_env.push<CodeAtom>(left_half);
+			//}
+
+			// Get reference to genome stack
+			Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
+
+			// Get reference to first block on stack
+			Genome_section<CodeAtom> block_a = genome[0];
+
+			// Get reference to second block on stack
+			Genome_section<CodeAtom> block_b = genome[1];
+
+			// Get count items in first block
+			int number_of_items = block_a.size;
+
+			// Take modulo the number of blocks to ensure that it is within the meaningful range.
+			index = std::abs(index) % number_of_items;
 
 			if (index == 0)
 			{
 				// Insert secoond item into first item at position 0.
-				_env.push<CodeAtom>(first_block);
-				_env.push<CodeAtom>(second_block);
+				genome.yank_stack_element(1);
+
+				// Put the second block in a list object
+				genome.push(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 			}
 			else
 			{
-				// Get count items in first block
-				int number_of_items = first_block.number_of_items();
+				// Move second block to position in first block
+				genome.shove(genome, index, block_b.starting_position, block_b.size);
 
-				// Take modulo the number of blocks to ensure that it is within the meaningful range.
-				index = std::abs(index) % number_of_items;
-
-				// Split block at insertion point
-				first_block.split(left_half, right_half, index, Genome<CodeAtom>::SPLIT_MODE::item);
-
-				// Insert second block into first block at insertion point
-				_env.push<CodeAtom>(right_half);
-				_env.push<CodeAtom>(second_block);
-				_env.push<CodeAtom>(left_half);
+				// Put the second block in a list object
+				CodeAtom code("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}");
+				genome.shove(code, index);
 			}
 		}
 
