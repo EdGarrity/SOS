@@ -1360,7 +1360,7 @@ namespace Plush
 		{
 			//unsigned int item_number = 0;
 			//unsigned int wanted_blocks = 0;
-			//unsigned int extra_blocks = 0;
+			unsigned int extra_blocks = 0;
 			//Utilities::FixedSizeStack<CodeAtom> temp;
 			//std::stack<unsigned int> wanted_stack;
 
@@ -1468,7 +1468,7 @@ namespace Plush
 		{
 			//unsigned int item_number = 0;
 			//unsigned int wanted_blocks = 0;
-			//unsigned int extra_blocks;
+			unsigned int extra_blocks;
 			//Utilities::FixedSizeStack<T> temp;
 			//std::stack<unsigned int> wanted_stack;
 
@@ -1652,6 +1652,39 @@ namespace Plush
 		}
 
 		// Purpose: 
+		//   Returns starting position of Nth item in the top level block of stack
+		//
+		// Parameters:
+		//   position - Index of item.  0 refers to the first item of the top block on the stack.
+		// 
+		// Return value:
+		//   Starting position
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline Genome_section<T> get_subitem(int position)
+		{
+			int s = 0;
+			int l = 0;
+			unsigned int extra_blocks;
+
+			// Find index to item after target item
+			for (int n = 0; n <= position; n++)
+			{
+				l = number_of_atoms_in_Nth_block(extra_blocks, n);
+				s += l;
+			}
+
+			return Genome_section<T>(s - l, l);
+		}
+
+		// Purpose: 
 		//   Returns position of last item of Nth item in the top level block of stack
 		//
 		// Parameters:
@@ -1777,7 +1810,7 @@ namespace Plush
 		//
 		inline void remove_stack_element(int element_pos)
 		{
-			Genome_section<T> section = [element_pos];
+			Genome_section<T> section = (*this)[element_pos];
 			Utilities::FixedSizeStack<T>::remove_items(section.starting_position, section.size);
 		}
 
@@ -1866,9 +1899,6 @@ namespace Plush
 
 			else
 				push(T("{:instruction EXEC.NOOP :close 1}"));
-
-			if (Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::size() - l].close_parenthesis > extra_blocks)
-				Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::size() - l].close_parenthesis -= extra_blocks;
 		}
 
 		// Purpose: 
@@ -1950,7 +1980,7 @@ namespace Plush
 		{
 //			inline void shove(FixedSizeStack<T>& other, int insert_position, int offset, int length)
 
-			Genome_section<T> section = [element_pos];
+			Genome_section<T> section = (*this)[element_pos];
 
 			shove(this, section.starting_position, 0, section.size);
 		}
@@ -2193,7 +2223,7 @@ namespace Plush
 			return found;
 		}
 
-		inline Genome_section<T> container_of(Genome_section<T> block_A, Genome_section<T> block_B)
+		inline Genome_section<T> container_of(Genome_section<T> block_a, Genome_section<T> block_b)
 		{
 			unsigned int extra_blocks = 0;
 			Genome_section<T>& container_block(0, 0);

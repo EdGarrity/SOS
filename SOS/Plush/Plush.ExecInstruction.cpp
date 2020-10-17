@@ -971,20 +971,38 @@ namespace Plush
 	{
 		if (_env.has_elements<CodeAtom>(2))
 		{
-			Genome<CodeAtom> extracted_block_A;
-			Genome<CodeAtom> extracted_block_B;
+			//Genome<CodeAtom> extracted_block_A;
+			//Genome<CodeAtom> extracted_block_B;
 
-			_env.pop<CodeAtom>(extracted_block_A);
+			//_env.pop<CodeAtom>(extracted_block_A);
 
-			// Get second block from stack
-			_env.pop<CodeAtom>(extracted_block_B);
+			//// Get second block from stack
+			//_env.pop<CodeAtom>(extracted_block_B);
+
+			//// Close combined list
+			//extracted_block_B.bottom().close_parenthesis++;
+
+			//_env.push<CodeAtom>(extracted_block_B);
+			//_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+			//_env.push<CodeAtom>(extracted_block_A);
+			//_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+
+
+			// Get reference to genome stack
+			Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
+
+			// Get reference to first block on stack
+			Genome_section<CodeAtom> block_a = genome[0];
+
+			// Get reference to second block on stack
+			Genome_section<CodeAtom> block_b = genome[1];
 
 			// Close combined list
-			extracted_block_B.bottom().close_parenthesis++;
+			genome.container()[block_b.ending_position - 1].close_parenthesis++;
 
-			_env.push<CodeAtom>(extracted_block_B);
-			_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
-			_env.push<CodeAtom>(extracted_block_A);
+			// Balance parenthesis
+			CodeAtom code("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}");
+			genome.shove(code, block_a.ending_position);
 			_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 		}
 
@@ -1027,50 +1045,67 @@ namespace Plush
 		{
 			int index = std::abs(_env.pop<long>());	// index
 
-			Genome<CodeAtom> top_block;
-			Genome<CodeAtom> left_half;
-			Genome<CodeAtom> right_half;
+			//Genome<CodeAtom> top_block;
+			//Genome<CodeAtom> left_half;
+			//Genome<CodeAtom> right_half;
 
-			// Get first block from stack
-			_env.pop(top_block);
+			//// Get first block from stack
+			//_env.pop(top_block);
 
-			if (top_block.size() == 0)
-				_env.push<CodeAtom>(top_block);
+			//if (top_block.size() == 0)
+			//	_env.push<CodeAtom>(top_block);
 
-			else
-			{
-				// Get count items in first block
-				int number_of_items = top_block.number_of_items();
+			//else
+			//{
+			//	// Get count items in first block
+			//	int number_of_items = top_block.number_of_items();
 
-				// Take modulo the number of blocks to ensure that it is within the meaningful range.
-				index = std::abs(index) % number_of_items;
+			//	// Take modulo the number of blocks to ensure that it is within the meaningful range.
+			//	index = std::abs(index) % number_of_items;
 
-				if (index == 0)
-				{
-					// Extract first item
-					top_block.split(left_half, right_half, 1, Genome<CodeAtom>::SPLIT_MODE::item);
+			//	if (index == 0)
+			//	{
+			//		// Extract first item
+			//		top_block.split(left_half, right_half, 1, Genome<CodeAtom>::SPLIT_MODE::item);
 
-					// Push extracted item back on the code stack
-					if ((index + 1) != number_of_items)
-						left_half.bottom().close_parenthesis++;
+			//		// Push extracted item back on the code stack
+			//		if ((index + 1) != number_of_items)
+			//			left_half.bottom().close_parenthesis++;
 
-					_env.push<CodeAtom>(left_half);
-				}
+			//		_env.push<CodeAtom>(left_half);
+			//	}
 
-				else
-				{
-					// Extract item N
-					top_block.split(left_half, right_half, index, Genome<CodeAtom>::SPLIT_MODE::item);
-					left_half.clear();
-					right_half.split(left_half, right_half, 1, Genome<CodeAtom>::SPLIT_MODE::item);
+			//	else
+			//	{
+			//		// Extract item N
+			//		top_block.split(left_half, right_half, index, Genome<CodeAtom>::SPLIT_MODE::item);
+			//		left_half.clear();
+			//		right_half.split(left_half, right_half, 1, Genome<CodeAtom>::SPLIT_MODE::item);
 
-					// Push extracted item back on the code stack
-					if ((index + 1) != number_of_items)
-						left_half.bottom().close_parenthesis++;
+			//		// Push extracted item back on the code stack
+			//		if ((index + 1) != number_of_items)
+			//			left_half.bottom().close_parenthesis++;
 	
-					_env.push<CodeAtom>(left_half);
-				}
-			}
+			//		_env.push<CodeAtom>(left_half);
+			//	}
+			//}
+
+			// Get reference to genome stack
+			Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
+
+			// Get reference to Nth item in the top level block of the CODE stack
+			Genome_section<CodeAtom> sub_block(genome.get_subitem(index));
+
+			// Balance closing parenthesis 
+			// *** This will cause remove_item to not be able to find the end of the item ***
+			if (sub_block.ending_position != genome.item_size(0))
+				genome.container()[sub_block.ending_position - 1].close_parenthesis++;
+
+			// Push sub_block on top of stack
+			genome.yankdup_stack_element(sub_block);
+
+			// Remove old item from stack.
+			genome.remove_item(1);
 		}
 		
 		return 1;
@@ -1082,24 +1117,36 @@ namespace Plush
 		{
 			int index = std::abs(_env.pop<long>());	// index
 
-			Genome<CodeAtom> extracted_block_A;
-			Genome<CodeAtom> left_half;
-			Genome<CodeAtom> right_half;
+			//Genome<CodeAtom> extracted_block_A;
+			//Genome<CodeAtom> left_half;
+			//Genome<CodeAtom> right_half;
 
-			// Get first block from stack
-			_env.pop<CodeAtom>(extracted_block_A);
+			//// Get first block from stack
+			//_env.pop<CodeAtom>(extracted_block_A);
 
-			// Get count items in first block
-			unsigned int extracted_block_A_size = extracted_block_A.number_of_items();
+			//// Get count items in first block
+			//unsigned int extracted_block_A_size = extracted_block_A.number_of_items();
+
+			//// Take modulo the number of blocks to ensure that it is within the meaningful range.
+			//index = std::abs(index) % extracted_block_A_size;
+
+			//// Remove unwanted items
+			//extracted_block_A.split(left_half, right_half, index, Genome<CodeAtom>::SPLIT_MODE::item);
+
+			//// Push remaining items back on the code stack
+			//_env.push<CodeAtom>(right_half);
+
+			// Get reference to genome stack
+			Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
+
+			// Get reference to top genome
+			Genome_section<CodeAtom> top_block = genome[0];
 
 			// Take modulo the number of blocks to ensure that it is within the meaningful range.
-			index = std::abs(index) % extracted_block_A_size;
+			index = std::abs(index) % top_block.size;
 
 			// Remove unwanted items
-			extracted_block_A.split(left_half, right_half, index, Genome<CodeAtom>::SPLIT_MODE::item);
 
-			// Push remaining items back on the code stack
-			_env.push<CodeAtom>(right_half);
 		}
 
 		return 1;
