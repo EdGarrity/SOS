@@ -383,7 +383,7 @@ namespace Utilities
 		}
 
 		// Purpose: 
-		//   Replaces stack item with provided item
+		//   Replaces stack atom with provided atom
 		//
 		// Parameters:
 		//   other	- Reference to the other item to replace with
@@ -415,6 +415,73 @@ namespace Utilities
 			n = (n > top_) ? top_ - 1 : n;
 
 			stack_[top_ - n - 1] = other;
+		}
+
+		// Purpose: 
+		//   Replaces stack section with provided section
+		//
+		// Parameters:
+		//   source_position	- Positin of first item to copy from the stack.  0 or less refers to the top of the stack.  
+		//   target_position	- Positin of where to copy the first item to.  0 or less refers to the top of the stack.  
+		//   length				- Length of section to copy
+		//
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline void replace_section(int source_position, int target_position, int length)
+		{
+			if (source_position < 0)
+			{
+				std::stringstream error_message;
+				error_message << "reference Utilities::FixedSizeStack::replace_section() - Stack underflow.  source_position = " << source_position;
+
+				throw std::underflow_error(error_message.str());
+			}
+
+			if (target_position < 0)
+			{
+				std::stringstream error_message;
+				error_message << "reference Utilities::FixedSizeStack::replace_section() - Stack underflow.  target_position = " << target_position;
+
+				throw std::underflow_error(error_message.str());
+			}
+
+			if ((source_position >= N) || (source_position >= top_))
+			{
+				std::stringstream error_message;
+				error_message << "reference Utilities::FixedSizeStack::replace_section() - Stack overflow.  source_position = " << source_position;
+
+				throw std::overflow_error(error_message.str());
+			}
+
+			if ((target_position >= N) || (target_position >= top_))
+			{
+				std::stringstream error_message;
+				error_message << "reference Utilities::FixedSizeStack::replace_section() - Stack overflow.  target_position = " << target_position;
+
+				throw std::overflow_error(error_message.str());
+			}
+
+			// Convert relative positions to absolute indexes
+			int source_index = top_ - source_position;
+			int target_index = top_ - target_position;
+
+			// Copy source to target
+			if (source_index > target_index)
+			{
+				for (int n = 0; n < length; n--)
+					stack_[target_index + n] = stack_[source_index + n];
+			}
+			 
+			top_ = target_index + length;
 		}
 
 		// Purpose: 

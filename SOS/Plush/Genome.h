@@ -810,6 +810,92 @@ namespace Plush
 		}
 
 		// Purpose: 
+		//   Returns the number of items in the genome stack. 
+		//
+		//   The genome is processed as a list object, i.e., an open parenthesis is assumed to exist 
+		//   before the first item on the stack.  This function returns the number of items in the top 
+		//   level of the list; that is, nested lists contribute only 1 to this count, no matter what 
+		//   they contain.  Closing parenthesis can either be interpreted as close instructions (to satisfy 
+		//   a block requirement in a nested list) or as close - open instructions (for the top level list).
+		//   Nested levels begin when an instruction requiring blocks is encountered in the list and end 
+		//   when all required blocks are found.
+		//
+		// Parameters:
+		//   starting_position	- Position of first atom in genome for sub-genome search.  0 = top 
+		//                        of stack.  Do not provide for a top level search.
+		// 
+		// Return value:
+		//   Number of items and blocks in the top level of the list
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		unsigned int number_of_items(Genome_section<T> section)
+		{
+			unsigned int item_number = 0;
+			unsigned int wanted_blocks = 0;
+			unsigned int extra_blocks = 0;
+			std::stack<unsigned int> wanted_stack;
+			int n = section.starting_position;
+
+			while (n >= 0)
+			{
+				Plush::Atom atom;
+
+				if (extra_blocks == 0)
+				{
+					atom = Utilities::FixedSizeStack<T>::stack_[n];
+					n--;
+				}
+				else
+					atom = Plush::Atom("{:instruction EXEC.NOOP :close 1}");
+
+				int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
+
+				if (n < 0)
+					closing = wanted_blocks;
+
+				if (closing < 0)
+				{
+					wanted_stack.push(wanted_blocks);
+					wanted_blocks = 0 - closing;
+				}
+
+				extra_blocks = (closing > 1) ? (closing - 1) : (0);
+
+				if (closing > 0)
+				{
+					if (wanted_blocks > 0)
+						wanted_blocks--;
+
+					else if ((wanted_blocks == 0) && (wanted_stack.size() == 0))
+						break;
+				}
+
+				if (wanted_blocks == 0)
+				{
+					if (wanted_stack.size() > 0)
+					{
+						wanted_blocks = wanted_stack.top();
+						wanted_stack.pop();
+					}
+					else
+						wanted_blocks = 0;
+
+					if (wanted_stack.size() == 0)
+						item_number++;
+				}
+			}
+
+			return item_number;
+		}
+
+		// Purpose: 
 		//   Returns the number of atoms in the Nth top level block on the stack
 		//
 		//   For example, 
@@ -1231,108 +1317,135 @@ namespace Plush
 			return atom;
 		}
 
+		//// Purpose: 
+		////   Pop a genome from the stack
+		////
+		////   For example, if the top genome is "( A B )" then this returns "( A B )" (after popping the 
+		////   argument from the genome). If the top genome is "( ( A B ) C )" then this returns "( A B )".
+		////
+		////   Will push a NOOP on the stack with the approprieate number of close parenthesis if needed to 
+		////   compensate for extra closing parenthesis in the poped genome.
+		////
+		//// Parameters:
+		////   genome	- Reference to buffer to copy poped genome into
+		//// 
+		//// Return value:
+		////   None
+		////
+		//// Side Effects:
+		////   The top genome is poped from the stack and copied to the provided buffer.  The provided 
+		////   genome buffer is cleared first.
+		////
+		//// Thread Safe:
+		////   Yes.  As long as no other thread attemps to write to the child.
+		////
+		//// Remarks:
+		////
+		//inline unsigned int pop_genome(Genome<T> &poped_item)
+		//{
+		//	//unsigned int item_number = 0;
+		//	//unsigned int wanted_blocks = 0;
+		//	//unsigned int extra_blocks = 0;
+		//	//Utilities::FixedSizeStack<T> temp;
+		//	//std::stack<unsigned int> wanted_stack;
+
+		//	//poped_item.clear();
+
+		//	//while (Utilities::FixedSizeStack<T>::empty() == false)
+		//	//{
+		//	//	T atom;
+
+		//	//	if (extra_blocks == 0)
+		//	//	{
+		//	//		atom = Utilities::FixedSizeStack<T>::get_top();
+		//	//		Utilities::FixedSizeStack<T>::pop();
+		//	//		temp.push(atom);
+		//	//	}
+		//	//	else
+		//	//	{
+		//	//		atom = T("{:instruction EXEC.NOOP :close 1}");
+		//	//		extra_blocks--;
+		//	//	}
+
+		//	//	int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
+
+		//	//	if (closing < 0)
+		//	//	{
+		//	//		wanted_stack.push(wanted_blocks);
+		//	//		wanted_blocks = 0 - closing;
+		//	//	}
+
+		//	//	extra_blocks = (closing > 1) ? (closing - 1) : (0);
+
+		//	//	if (closing > 0)
+		//	//	{
+		//	//		if (wanted_blocks > 0)
+		//	//			wanted_blocks--;
+
+		//	//		else if ((wanted_blocks == 0) && (wanted_stack.size() == 0))
+		//	//			break;
+		//	//	}
+
+		//	//	if (wanted_blocks == 0)
+		//	//	{
+		//	//		if (wanted_stack.size() == 0)
+		//	//			item_number++;
+
+		//	//		if (wanted_stack.size() > 0)
+		//	//		{
+		//	//			wanted_blocks = wanted_stack.top();
+		//	//			wanted_stack.pop();
+		//	//		}
+		//	//	}
+		//	//}
+
+		//	//T first = temp.get_top();
+		//	//temp.pop();
+		//	//first.close_parenthesis -= extra_blocks;
+		//	//temp.push(first);
+
+		//	//while (temp.size() > 0)
+		//	//{
+		//	//	T atom = temp.get_top();
+		//	//	temp.pop();
+		//	//	poped_item.push(atom);
+		//	//}
+
+		//	//if (extra_blocks > 0)
+		//	//{
+		//	//	std::string noop = "{:instruction EXEC.NOOP :close " + std::to_string(extra_blocks) + "}";
+
+		//	//	Utilities::FixedSizeStack<T>::push(noop);
+		//	//}
+
+		//	return 0;
+		//};
+
 		// Purpose: 
-		//   Pop a genome from the stack
-		//
-		//   For example, if the top genome is "( A B )" then this returns "( A B )" (after popping the 
-		//   argument from the genome). If the top genome is "( ( A B ) C )" then this returns "( A B )".
-		//
-		//   Will push a NOOP on the stack with the approprieate number of close parenthesis if needed to 
-		//   compensate for extra closing parenthesis in the poped genome.
+		//   Pop a genome from the stack and returns a reference to the poped genome.  Warning, the 
+		//   returned reference is only valid until the next stack manipulation operation.
 		//
 		// Parameters:
-		//   genome	- Reference to buffer to copy poped genome into
+		//   None
 		// 
 		// Return value:
-		//   None
+		//   Genome_section - Reference to poped genome.
 		//
 		// Side Effects:
-		//   The top genome is poped from the stack and copied to the provided buffer.  The provided 
-		//   genome buffer is cleared first.
+		//   The top genome is poped from the stack.
 		//
 		// Thread Safe:
 		//   Yes.  As long as no other thread attemps to write to the child.
 		//
 		// Remarks:
 		//
-		inline unsigned int pop_genome(Genome<T> &poped_item)
+		inline Genome_section<T> pop_genome()
 		{
-			//unsigned int item_number = 0;
-			//unsigned int wanted_blocks = 0;
-			//unsigned int extra_blocks = 0;
-			//Utilities::FixedSizeStack<T> temp;
-			//std::stack<unsigned int> wanted_stack;
+			Genome_section<T> block = (*this)[0];
+			
+			Utilities::FixedSizeStack<T>::top_ -= block.size;
 
-			//poped_item.clear();
-
-			//while (Utilities::FixedSizeStack<T>::empty() == false)
-			//{
-			//	T atom;
-
-			//	if (extra_blocks == 0)
-			//	{
-			//		atom = Utilities::FixedSizeStack<T>::get_top();
-			//		Utilities::FixedSizeStack<T>::pop();
-			//		temp.push(atom);
-			//	}
-			//	else
-			//	{
-			//		atom = T("{:instruction EXEC.NOOP :close 1}");
-			//		extra_blocks--;
-			//	}
-
-			//	int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
-
-			//	if (closing < 0)
-			//	{
-			//		wanted_stack.push(wanted_blocks);
-			//		wanted_blocks = 0 - closing;
-			//	}
-
-			//	extra_blocks = (closing > 1) ? (closing - 1) : (0);
-
-			//	if (closing > 0)
-			//	{
-			//		if (wanted_blocks > 0)
-			//			wanted_blocks--;
-
-			//		else if ((wanted_blocks == 0) && (wanted_stack.size() == 0))
-			//			break;
-			//	}
-
-			//	if (wanted_blocks == 0)
-			//	{
-			//		if (wanted_stack.size() == 0)
-			//			item_number++;
-
-			//		if (wanted_stack.size() > 0)
-			//		{
-			//			wanted_blocks = wanted_stack.top();
-			//			wanted_stack.pop();
-			//		}
-			//	}
-			//}
-
-			//T first = temp.get_top();
-			//temp.pop();
-			//first.close_parenthesis -= extra_blocks;
-			//temp.push(first);
-
-			//while (temp.size() > 0)
-			//{
-			//	T atom = temp.get_top();
-			//	temp.pop();
-			//	poped_item.push(atom);
-			//}
-
-			//if (extra_blocks > 0)
-			//{
-			//	std::string noop = "{:instruction EXEC.NOOP :close " + std::to_string(extra_blocks) + "}";
-
-			//	Utilities::FixedSizeStack<T>::push(noop);
-			//}
-
-			return 0;
+			return block;
 		};
 
 		// Purpose: 
@@ -1464,65 +1577,28 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		unsigned int get_top(Genome<T> &poped_item)
+//		};
+
+		// Purpose: 
+		//   Returns the top genome on the stack
+		//
+		// Parameters:
+		//   genome	- Reference to buffer to copy top genome into
+		// 
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   The provided genome buffer is cleared first.
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline T& get_top(Genome_section section)
 		{
-			//unsigned int item_number = 0;
-			//unsigned int wanted_blocks = 0;
-			unsigned int extra_blocks;
-			//Utilities::FixedSizeStack<T> temp;
-			//std::stack<unsigned int> wanted_stack;
-
-			//poped_item.clear();
-
-			//while (Utilities::FixedSizeStack<T>::empty() == false)
-			//{
-			//	T atom = Utilities::FixedSizeStack<T>::get_top();
-			//	Utilities::FixedSizeStack<T>::pop();
-
-			//	temp.push(atom);
-
-			//	int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
-
-			//	if (closing < 0)
-			//	{
-			//		wanted_stack.push(wanted_blocks);
-			//		wanted_blocks = 0 - closing;
-			//	}
-
-			//	if (closing > 0)
-			//	{
-			//		if (wanted_blocks > 0)
-			//			wanted_blocks--;
-
-			//		else if (wanted_blocks == 0)
-			//		{
-			//			extra_blocks = (closing > 1) ? (closing - 1) : (0);
-			//			break;
-			//		}
-			//	}
-
-			//	if (wanted_blocks == 0)
-			//	{
-			//		if (wanted_stack.size() == 0)
-			//			item_number++;
-
-			//		if (wanted_stack.size() > 0)
-			//		{
-			//			wanted_blocks = wanted_stack.top();
-			//			wanted_stack.pop();
-			//		}
-			//	}
-			//}
-
-			//while (temp.size() > 0)
-			//{
-			//	T atom = temp.get_top();
-			//	temp.pop();
-			//	poped_item.push(atom);
-			//	Utilities::FixedSizeStack<T>::push(atom);
-			//}
-
-			return extra_blocks;
+			return stack_[section];
 		};
 
 		// Purpose: 
