@@ -1238,7 +1238,7 @@ namespace Plush
 			// Get reference to top genome
 			Genome_section<ExecAtom> top_block = genome[0];
 
-			Genome_section<ExecAtom> top_block = _env.pop<ExecAtom>();
+			Genome_section<ExecAtom> top_block = _env.pop_genome<ExecAtom>();
 		}
 
 		return 1;
@@ -1248,14 +1248,22 @@ namespace Plush
 	{
 		if (_env.has_elements<CodeAtom>(1))
 		{
-			Genome<CodeAtom> top_block;
+			//Genome<CodeAtom> top_block;
 
-			// Get top block from stack
-			_env.pop<CodeAtom>(top_block);
+			//// Get top block from stack
+			//_env.pop<CodeAtom>(top_block);
 
-			// Get count of atoms
-			int size = top_block.size();
+			//// Get count of atoms
+			//int size = top_block.size();
 
+			//_env.push<long>(size);
+
+
+			// Get first block from stack
+			Genome_section<CodeAtom> top_block = _env.pop_genome<CodeAtom>();
+
+			// Get count items in first block
+			int size = top_block.size;
 			_env.push<long>(size);
 		}
 
@@ -1276,7 +1284,7 @@ namespace Plush
 			// Get second block from stack
 			_env.pop<CodeAtom>(extracted_block_B);
 
-			// Get second block from stack
+			// Get third block from stack
 			_env.pop<CodeAtom>(extracted_block_C);
 
 			extracted_block_A.subst(extracted_block_B, extracted_block_C);
