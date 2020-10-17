@@ -1236,9 +1236,8 @@ namespace Plush
 			Genome<ExecAtom>& genome = _env.get_stack<ExecAtom>();
 
 			// Get reference to top genome
-			Genome_section<ExecAtom> top_block = genome[0];
-
 			Genome_section<ExecAtom> top_block = _env.pop_genome<ExecAtom>();
+			_env.push<CodeAtom>(top_block);
 		}
 
 		return 1;
@@ -1274,22 +1273,40 @@ namespace Plush
 	{
 		if (_env.has_elements<CodeAtom>(3))
 		{
-			Genome<CodeAtom> extracted_block_A;
-			Genome<CodeAtom> extracted_block_B;
-			Genome<CodeAtom> extracted_block_C;
+			//Genome<CodeAtom> extracted_block_A;
+			//Genome<CodeAtom> extracted_block_B;
+			//Genome<CodeAtom> extracted_block_C;
+
+			//// Get first block from stack
+			//_env.pop<CodeAtom>(extracted_block_A);
+
+			//// Get second block from stack
+			//_env.pop<CodeAtom>(extracted_block_B);
+
+			//// Get third block from stack
+			//_env.pop<CodeAtom>(extracted_block_C);
+
+			//extracted_block_A.subst(extracted_block_B, extracted_block_C);
+
+			//_env.push<CodeAtom>(extracted_block_A);
+
+
+			Genome<CodeAtom>& stack = _env.get_stack<CodeAtom>();
 
 			// Get first block from stack
-			_env.pop<CodeAtom>(extracted_block_A);
+			Genome_section<CodeAtom> block_A = stack[0];
 
 			// Get second block from stack
-			_env.pop<CodeAtom>(extracted_block_B);
+			Genome_section<CodeAtom> block_B = stack[1];
 
 			// Get third block from stack
-			_env.pop<CodeAtom>(extracted_block_C);
+			Genome_section<CodeAtom> block_C = stack[2];
 
-			extracted_block_A.subst(extracted_block_B, extracted_block_C);
+			stack.subst(block_A, block_C, block_B);
 
-			_env.push<CodeAtom>(extracted_block_A);
+			stack.remove_item(1);
+			stack.remove_item(1);
+			stack.remove_item(1);
 		}
 
 		return 1;

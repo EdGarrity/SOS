@@ -1586,7 +1586,7 @@ namespace Plush
 		//   genome	- Reference to buffer to copy top genome into
 		// 
 		// Return value:
-		//   None
+		//   Top atom
 		//
 		// Side Effects:
 		//   The provided genome buffer is cleared first.
@@ -1596,9 +1596,9 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline T& get_top(Genome_section section)
+		inline T get_top(Genome_section<T> section)
 		{
-			return stack_[section];
+			return Utilities::FixedSizeStack::stack_[section.starting_position];
 		};
 
 		// Purpose: 
@@ -2079,9 +2079,10 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline bool subst(Genome<T> &first_genome, Genome<T> &second_genome)
-		{
-			bool found = false;
+		//inline bool subst(Genome<T> &first_genome, Genome<T> &second_genome)
+		//{
+		//	bool found = false;
+
 			//Genome<T> modified_block;
 			//Genome<T> original_genome(this);
 
@@ -2201,7 +2202,77 @@ namespace Plush
 			//else
 			//	push_genome(original_genome);
 
-			return found;
+			//return found;
+		//}
+
+		// Purpose: 
+		//   Substitute the first item with the second item 
+		//
+		// Parameters:
+		//   first - Reference to item to replace
+		//   second	- Reference to item to replace with
+		// 
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   The genome is modified if the first item is found
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline void subst(Genome_section<T> main_section, Genome_section<T> first_section, Genome_section<T> second_section)
+		{
+			for (int i = main_section.ending_position; i < main_section.starting_position; i++)
+			{
+				bool found = false;
+				int j = first_section.ending_position;
+				int extra_parenthesis = 0;
+
+				for (int n = 0; n = first_section.size; n++)
+				{
+					if (Utilities::FixedSizeStack::stack_[i + n].type != Utilities::FixedSizeStack::stack_[j + n].type)
+						break;
+
+					if (Utilities::FixedSizeStack::stack_[i + n].instruction != Utilities::FixedSizeStack::stack_[j + n].instruction)
+						break;
+
+					if (n > 0)
+					{
+						if (Utilities::FixedSizeStack::stack_[i + n].close_parenthesis != Utilities::FixedSizeStack::stack_[j + n].close_parenthesis)
+							break;
+					}
+					else
+					{
+						if (Utilities::FixedSizeStack::stack_[i + n].close_parenthesis < Utilities::FixedSizeStack::stack_[j + n].close_parenthesis)
+							break;
+
+						extra_parenthesis = Utilities::FixedSizeStack::stack_[i + n].close_parenthesis < Utilities::FixedSizeStack::stack_[j + n].close_parenthesis;
+					}
+
+					found = true;
+				}
+
+				if (found)
+				{
+					for (int k = second_section.ending_position; k < second_section.starting_position; k++)
+					{
+						T atom = Utilities::FixedSizeStack::stack_[k];
+
+						if (k == second_section.ending_position)
+							atom.close_parenthesis += extra_parenthesis;
+
+						Utilities::FixedSizeStack::push(atom);
+					}
+
+					i += first_section.size;
+				}
+
+				else
+					Utilities::FixedSizeStack::push(Utilities::FixedSizeStack::stack_[i]);
+			}
 		}
 
 		// Purpose: 
