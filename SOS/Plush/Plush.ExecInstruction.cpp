@@ -599,7 +599,7 @@ namespace Plush
 
 
 			// Get reference to top block on code stack
-			Genome_section<CodeAtom> code_block(_env.get_stack<CodeAtom>().item_starting_position(0), _env.get_stack<CodeAtom>().item_size(0));
+			Genome_section<ExecAtom> code_block(_env.peek_genome<CodeAtom>());
 
 			// Remove top code block after execution of block.
 			_env.push<ExecAtom>(ExecAtom("{:instruction CODE.POP :close 1}"));

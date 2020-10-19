@@ -195,6 +195,29 @@ namespace Plush
 			return get_stack<ExecAtom>().pop_genome();
 		}
 
+		template <class T>
+		inline Genome_section<T> peek_genome()
+		{
+			std::stringstream error_message;
+			error_message << "reference Environment::peek_genome() - Function not defined for this type of stack";
+
+			throw std::domain_error(error_message.str());
+
+			return;
+		}
+
+		template <>
+		inline Genome_section<CodeAtom> peek_genome<CodeAtom>()
+		{
+			return get_stack<CodeAtom>().peek_genome();
+		}
+
+		template <>
+		inline Genome_section<ExecAtom> peek_genome<ExecAtom>()
+		{
+			return get_stack<ExecAtom>().peek_genome();
+		}
+
 		//template <class T>
 		//inline unsigned int pop(Genome<T> &other_stack)
 		//{

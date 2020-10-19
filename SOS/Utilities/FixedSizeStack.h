@@ -87,6 +87,7 @@ namespace Utilities
 			copy(other);
 		}
 
+		// These need to be rewritten to reference stack from top, not absolute
 		inline const_reference operator [] (int index) const
 		{
 			if (index >= N)
@@ -108,6 +109,28 @@ namespace Utilities
 
 				throw std::overflow_error(error_message.str());
 			}
+			return stack_[index];
+		}
+
+		// Purpose: 
+		//   Returns a reference to the genome container (the atom array)
+		//
+		// Parameters:
+		//   None
+		// 
+		// Return value:
+		//   Reference to the genome's FixedSizeStack object
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  
+		//
+		// Remarks:
+		//
+		inline const T get_stack_element(int index)
+		{
 			return stack_[index];
 		}
 
@@ -286,6 +309,56 @@ namespace Utilities
 				i < length; 
 				i++)
 				stack_[k] = other[j];
+
+			top_ += length;
+		}
+
+		// Purpose: 
+		//   Insert section of provided stack section deep in the stack
+		//
+		// Parameters:
+		//   insert_position	- Positin where to insert the other stack.  0 or less refers to the top of the stack.  
+		//						  Values greater than the size of the stack will insert the other stack at the bottom.
+		//   offset				- Offset to start of section in other stack to insert
+		//   length				- Length of section to insert
+		//
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   Stack updated with inserted stack.
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline void shove(int insert_position, int offset, int length)
+		{
+			if ((top_ + length) > N)
+			{
+				std::stringstream error_message;
+				error_message << "Utilities::FixedSizeStack::shove() - Stack overflow.";
+
+				throw std::overflow_error(error_message.str());
+			}
+
+			insert_position = (insert_position < 0) ? 0 : insert_position;
+			insert_position = (insert_position > top_) ? top_ : insert_position;
+
+			// Make space in this stack for the other stack items
+			for (int i = 0, j = insert_position + length - 1, k = top_ + length - 1;
+				i < length;
+				i++, j--, k--)
+				stack_[k] = stack_[j];
+
+			int n2 = size() - offset;
+
+			// Copy the other stack items into this stack
+			for (int i = 0, j = size() - offset - length, k = top_ - insert_position;
+				i < length;
+				i++)
+				stack_[k] = stack_[j];
 
 			top_ += length;
 		}

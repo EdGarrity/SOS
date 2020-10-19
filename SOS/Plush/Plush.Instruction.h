@@ -22,12 +22,18 @@ namespace Plush
 	template <>
 	inline unsigned dup<CodeAtom>(Environment & _env)
 	{
-		Genome<CodeAtom> stack;
+		//Genome<CodeAtom> stack;
+
+		//if (_env.has_elements<CodeAtom>(1))
+		//{
+		//	_env.get_top<CodeAtom>(stack);
+		//	_env.push<CodeAtom>(stack);
+		//}
 
 		if (_env.has_elements<CodeAtom>(1))
 		{
-			_env.get_top<CodeAtom>(stack);
-			_env.push<CodeAtom>(stack);
+			Genome_section<CodeAtom> genome = _env.peek_genome<CodeAtom>();
+			_env.push<CodeAtom>(genome);
 		}
 
 		return 1;
@@ -35,12 +41,18 @@ namespace Plush
 	template <>
 	inline unsigned dup<ExecAtom>(Environment & _env)
 	{
-		Genome<ExecAtom> stack;
+		//Genome<ExecAtom> stack;
+
+		//if (_env.has_elements<ExecAtom>(1))
+		//{
+		//	_env.get_top<ExecAtom>(stack);
+		//	_env.push<ExecAtom>(stack);
+		//}
 
 		if (_env.has_elements<ExecAtom>(1))
 		{
-			_env.get_top<ExecAtom>(stack);
-			_env.push<ExecAtom>(stack);
+			Genome_section<ExecAtom> genome = _env.peek_genome<ExecAtom>();
+			_env.push<ExecAtom>(genome);
 		}
 
 		return 1;
