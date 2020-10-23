@@ -104,7 +104,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>C:\Users\egarrity\Documents\Source\Repo\SOS\SOS\x64\Debug;C:\Users\egarrity\OneDrive\Projects\Source\Repos\EdGarrity\SOS\SOS\x64\Debug;C:\Users\edgar\OneDrive\Projects\Source\Repos\EdGarrity\SOS\SOS\x64\Debug;$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\egarrity\source\repos\EdGarrity\SOS\SOS\x64\Debug;C:\Users\egarrity\Documents\Source\Repo\SOS\SOS\x64\Debug;C:\Users\egarrity\OneDrive\Projects\Source\Repos\EdGarrity\SOS\SOS\x64\Debug;C:\Users\edgar\OneDrive\Projects\Source\Repos\EdGarrity\SOS\SOS\x64\Debug;$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Atom.obj;Environment.obj;Genome;Plush.BooleanInstructions.obj;Plush.ExecInstruction.obj;Plush.FloatInstructions.obj;Plush.IntegerInstructions.obj;Plush.Instruction.obj;Plush.StaticInit.obj;Processor.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

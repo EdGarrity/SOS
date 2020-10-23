@@ -491,7 +491,7 @@ namespace UnitTest
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.CONTAINER :close 0}"),
-					CodeAtom("{:instruction FLOAT.+ :close 1}"),
+					CodeAtom("{:instruction FLOAT.+ :close 2}"),
 					CodeAtom("{:instruction EXEC.DO*RANGE :close 0}"),
 				}));
 		}
@@ -523,7 +523,7 @@ namespace UnitTest
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.CONTAINER :close 0}"),
-					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}")
+					CodeAtom("{:instruction EXEC.NOOP :close 1}")
 				}));
 		}
 
@@ -554,7 +554,7 @@ namespace UnitTest
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.CONTAINER :close 0}"),
-					CodeAtom("{:instruction FLOAT.+ :close 1}"),
+					CodeAtom("{:instruction FLOAT.+ :close 2}"),
 					CodeAtom("{:instruction EXEC.DO*RANGE :close 0}"),
 				}));
 		}
@@ -587,7 +587,7 @@ namespace UnitTest
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.CONTAINER :close 0}"),
-					CodeAtom("{:instruction FLOAT.+ :close 2}"),
+					CodeAtom("{:instruction FLOAT.+ :close 3}"),
 					CodeAtom("{:instruction EXEC.DO*RANGE :close 0}"),
 					CodeAtom("{:instruction EXEC.DO*COUNT :close 0}"),
 				}));
@@ -619,7 +619,7 @@ namespace UnitTest
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.CONTAINER :close 0}"),
-					CodeAtom("{:instruction FLOAT.+ :close 1}"),
+					CodeAtom("{:instruction FLOAT.+ :close 2}"),
 					CodeAtom("{:instruction EXEC.DO*RANGE :close 0}"),
 				}));
 		}

@@ -94,10 +94,10 @@ namespace Plush
 		//
 		Genome_section(unsigned int starting_position, unsigned int size)
 		{
-			if (starting_position >= size)
+			if (size > 0)
 			{
 				this->starting_position = starting_position;
-				this->ending_position = starting_position - size;
+				this->ending_position = starting_position + size - 1;
 				this->size = size;
 			}
 			else
@@ -128,10 +128,10 @@ namespace Plush
 		//
 		inline void set(unsigned int starting_position, unsigned int size)
 		{
-			if (starting_position >= size)
+			if (size > 0)
 			{
 				this->starting_position = starting_position;
-				this->ending_position = starting_position - size;
+				this->ending_position = starting_position + size - 1;
 				this->size = size;
 			}
 			else
@@ -140,6 +140,30 @@ namespace Plush
 				this->ending_position = 0;
 				this->size = 0;
 			}
+		}
+
+		// Purpose: 
+		//   Clears genome section
+		//
+		// Parameters:
+		//   None
+		// 
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  
+		//
+		// Remarks:
+		//
+		inline void clear()
+		{
+			this->starting_position = 0;
+			this->ending_position = 0;
+			this->size = 0;
 		}
 
 		// Purpose: 
@@ -456,7 +480,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline const T get_stack_element(int index)
+		inline const T& get_stack_element(int index)
 		{
 			return Utilities::FixedSizeStack<T>::stack_[index];
 		}
@@ -507,9 +531,23 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline const Genome_section<T> operator [] (unsigned int n) const
+		inline const Genome_section<T> operator [] (unsigned int item_position) const
 		{
-			return (Genome_section<T>(item_starting_position(n), item_size(n)));
+//			return (Genome_section<T>(item_starting_position(n), item_size(n)));
+
+			int s = 0;
+			int l = 0;
+			unsigned int extra_blocks;
+
+			// Find index to top of item after target item
+			for (int n = 0; n <= item_position; n++)
+			{
+				s += l;
+				l = number_of_atoms(extra_blocks, n);
+				l -= extra_blocks;
+			}
+
+			return Genome_section<T>(s, l);
 		}
 
 		// Purpose: 
@@ -536,9 +574,24 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline Genome_section<T> operator [] (unsigned int n)
+		inline Genome_section<T> operator [] (unsigned int item_position)
 		{
-			return (Genome_section<T>(item_starting_position(n), item_size(n)));
+//			return (Genome_section<T>(item_starting_position(n), item_size(n)));
+
+
+			int s = 0;
+			int l = 0;
+			unsigned int extra_blocks;
+
+			// Find index to top of item after target item
+			for (int n = 0; n <= item_position; n++)
+			{
+				s += l;
+				l = number_of_atoms(extra_blocks, n);
+				l -= extra_blocks;
+			}
+
+			return Genome_section<T>(s, l);
 		}
 
 		// Purpose: 
@@ -582,27 +635,27 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline bool comp(Genome<T> &other_genome) const
-		{
-			//int size_A = Utilities::FixedSizeStack<T>::size();
-			//int size_B = other_genome.size();
+		//inline bool comp(Genome<T> &other_genome) const
+		//{
+		//	//int size_A = Utilities::FixedSizeStack<T>::size();
+		//	//int size_B = other_genome.size();
 
-			//if (size_A != size_B)
-			//	return false;
+		//	//if (size_A != size_B)
+		//	//	return false;
 
-			//for (int n = 0; n < size_A; n++)
-			//{
-			//	//Atom atom_A = Utilities::FixedSizeStack<T>::stack_[n];
-			//	//Atom atom_B = other_genome[n];
-			//	T atom_A = Utilities::FixedSizeStack<T>::stack_[n];
-			//	T atom_B = other_genome[n];
+		//	//for (int n = 0; n < size_A; n++)
+		//	//{
+		//	//	//Atom atom_A = Utilities::FixedSizeStack<T>::stack_[n];
+		//	//	//Atom atom_B = other_genome[n];
+		//	//	T atom_A = Utilities::FixedSizeStack<T>::stack_[n];
+		//	//	T atom_B = other_genome[n];
 
-			//	if (atom_A != atom_B)
-			//		return false;
-			//}
+		//	//	if (atom_A != atom_B)
+		//	//		return false;
+		//	//}
 
-			return true;
-		}
+		//	return true;
+		//}
 
 		inline bool comp(Genome_section<T> genome_a, Genome_section<T> genome_b)
 		{
@@ -614,10 +667,11 @@ namespace Plush
 				unsigned int pos_a = genome_a.ending_position - n;
 				unsigned int pos_b = genome_b.ending_position - n;
 
-				T atom_a = Utilities::FixedSizeStack<T>::stack_[pos_a];
-				T atom_b = Utilities::FixedSizeStack<T>::stack_[pos_b];
+				T atom_a = Utilities::FixedSizeStack<T>::get_item(pos_a);
+				T atom_b = Utilities::FixedSizeStack<T>::get_item(pos_b);
 
-				if (atom_a != atom_b)
+//				if (atom_a != atom_b)
+				if (atom_a.like(atom_b) == false)
 					return false;
 			}
 
@@ -1004,6 +1058,8 @@ namespace Plush
 						{
 							atom = T("{:instruction EXEC.NOOP :close 1}");
 							extra_blocks--;
+							i++;
+							block_ending_index++;
 						}
 
 						int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
@@ -1014,7 +1070,7 @@ namespace Plush
 							wanted_blocks = 0 - closing;
 						}
 
-						extra_blocks = (closing > 1) ? (closing - 1) : (0);
+						extra_blocks += (closing > 1) ? (closing - 1) : (0);
 
 						if (closing > 0)
 						{
@@ -1036,6 +1092,7 @@ namespace Plush
 					}
 
 					block_starting_index = block_ending_index - 1;
+//					block_starting_index = block_ending_index;
 				}
 			}
 
@@ -1063,7 +1120,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		unsigned int number_of_atoms_in_Nth_block(unsigned int& extra_blocks_returned, int starting_position = -1)
+		unsigned int number_of_atoms_in_Nth_block(unsigned int& extra_blocks_returned, int starting_position = -1, bool top_block = false)
 		{
 			int atom_count = 0;
 			unsigned int item_number = 0;
@@ -1093,6 +1150,8 @@ namespace Plush
 				{
 					atom = T("{:instruction EXEC.NOOP :close 1}");
 					extra_blocks--;
+					i++;
+//					block_ending_index++;
 				}
 
 				int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
@@ -1103,14 +1162,15 @@ namespace Plush
 					wanted_blocks = 0 - closing;
 				}
 
-				extra_blocks = (closing > 1) ? (closing - 1) : (0);
+				extra_blocks += (closing > 1) ? (closing - 1) : (0);
 
 				if (closing > 0)
 				{
 					if (wanted_blocks > 0)
 						wanted_blocks--;
 
-					if ((wanted_blocks == 0) && (wanted_stack.size() == 1))
+//					if ((wanted_blocks == 0) && (wanted_stack.size() == 1))
+					if ((wanted_blocks == 0) && (wanted_stack.size() == (top_block ? 0 : 1)))
 						break;
 				}
 
@@ -1629,6 +1689,11 @@ namespace Plush
 			return atom;
 		}
 
+		inline T& get_top_ref()
+		{
+			return Utilities::FixedSizeStack<T>::get_top();
+		}
+
 		// Purpose: 
 		//   Returns the top genome on the stack
 		//
@@ -1726,6 +1791,7 @@ namespace Plush
 			unsigned int extra_blocks;
 
 			l = number_of_atoms(extra_blocks, item_index);
+			l -= extra_blocks;
 
 			return l;
 		}
@@ -1754,10 +1820,11 @@ namespace Plush
 			unsigned int extra_blocks;
 
 			// Find index to top of item after target item
-			for (int n = 0; n <= item_index + 1; n++)
+			for (int n = 0; n <= item_index; n++)
 			{
 				s += l;
 				l = number_of_atoms(extra_blocks, n);
+				l -= extra_blocks;
 			}
 
 			return s;
@@ -2368,7 +2435,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline Genome_section<T> contains(Genome_section<T> block_a, Genome_section<T> block_b)
+		inline Genome_section<T> contains(Genome_section<T> block_b, Genome_section<T> block_a)
 		{
 			unsigned int extra_blocks = 0;
 
@@ -2377,7 +2444,7 @@ namespace Plush
 			{
 				for (unsigned int n = block_a.starting_position; n <= block_a.ending_position; n++)
 				{
-					unsigned int l = number_of_atoms_in_Nth_block(extra_blocks, n);
+					unsigned int l = number_of_atoms_in_Nth_block(extra_blocks, n, true);
 
 					Genome_section<T> sub_block(n, l);
 
@@ -2447,8 +2514,9 @@ namespace Plush
 
 		inline Genome_section<T> container_of(Genome_section<T> block_a, Genome_section<T> block_b)
 		{
+			bool found = false;
 			unsigned int extra_blocks = 0;
-			Genome_section<T>& container_block(0, 0);
+			Genome_section<T> container_block(0, 0);
 
 			// If length of Block A is less than Block B + 1, then it is too small to contain Block B
 			if (block_a.size > block_b.size)
@@ -2460,11 +2528,17 @@ namespace Plush
 					Genome_section<T> sub_block(n, l);
 
 					if (comp(sub_block, block_b))
-						return sub_block;
+					{
+						found = true;
+						break;
+					}
 
 					container_block.set(n, l);
 				}
 			};
+
+			if (!found)
+				container_block.clear();
 
 			return container_block;
 		}

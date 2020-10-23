@@ -153,24 +153,23 @@ namespace Plush
 			return val;
 		}
 
-		template <>
-		inline CodeAtom pop<CodeAtom>()
-		{
-			std::stringstream error_message;
-			error_message << "reference Environment::pop<CodeAtom>() - Function not defined for this type of stack";
+		//template <>
+		//inline CodeAtom pop<CodeAtom>()
+		//{
+		//	std::stringstream error_message;
+		//	error_message << "reference Environment::pop<CodeAtom>() - Function not defined for this type of stack";
 
-			throw std::domain_error(error_message.str());
-		}
+		//	throw std::domain_error(error_message.str());
+		//}
 
-		template <>
-		inline ExecAtom pop<ExecAtom>()
-		{
-			std::stringstream error_message;
-			error_message << "reference Environment::pop<ExecAtom>() - Function not defined for this type of stack";
+		//template <>
+		//inline ExecAtom pop<ExecAtom>()
+		//{
+		//	std::stringstream error_message;
+		//	error_message << "reference Environment::pop<ExecAtom>() - Function not defined for this type of stack";
 
-			throw std::domain_error(error_message.str());
-		}
-
+		//	throw std::domain_error(error_message.str());
+		//}
 
 		template <class T>
 		inline Genome_section<T> pop_genome()
