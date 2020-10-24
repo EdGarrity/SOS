@@ -855,7 +855,7 @@ namespace UnitTest
 					{:instruction CODE.DISCREPANCY :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 4 }, {}, {}, {},
+			Assert::IsTrue(is_stack_state(env, { 5 }, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.DISCREPANCY :close 0}")
 				}));

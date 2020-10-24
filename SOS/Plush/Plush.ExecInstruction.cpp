@@ -333,11 +333,11 @@ namespace Plush
 			Genome_section<CodeAtom> section_A = _env.get_stack<CodeAtom>()[0];
 			Genome_section<CodeAtom> section_B = _env.get_stack<CodeAtom>()[1];
 
-			if (_env.get_stack<CodeAtom>().get_item(section_A.ending_position).close_parenthesis > 0)
-				_env.get_stack<CodeAtom>().get_item(section_A.ending_position).close_parenthesis--;
+			if (_env.get_stack<CodeAtom>().get_atom(section_A.ending_position).close_parenthesis > 0)
+				_env.get_stack<CodeAtom>().get_atom(section_A.ending_position).close_parenthesis--;
 
-			if (_env.get_stack<CodeAtom>().get_item(section_B.ending_position).close_parenthesis == 0)
-				_env.get_stack<CodeAtom>().get_item(section_B.ending_position).close_parenthesis = 1;
+			if (_env.get_stack<CodeAtom>().get_atom(section_B.ending_position).close_parenthesis == 0)
+				_env.get_stack<CodeAtom>().get_atom(section_B.ending_position).close_parenthesis = 1;
 		}
 
 		return 1;
@@ -473,7 +473,7 @@ namespace Plush
 
 			unsigned n = _env.get_stack<CodeAtom>()[0].ending_position;
 //			_env.get_stack<CodeAtom>().container()[n].close_parenthesis--;
-			_env.get_stack<CodeAtom>().get_item(n).close_parenthesis--;
+			_env.get_stack<CodeAtom>().get_atom(n).close_parenthesis--;
 		}
 
 		return 1;
@@ -519,7 +519,7 @@ namespace Plush
 				_env.get_stack<CodeAtom>().yankdup_stack_element(container_block);
 
 				if (container_block.starting_position == 0)
-					_env.get_stack<CodeAtom>().get_item(container_block.ending_position).close_parenthesis++;
+					_env.get_stack<CodeAtom>().get_atom(container_block.ending_position).close_parenthesis++;
 			}
 
 			else
@@ -614,6 +614,62 @@ namespace Plush
 		//	}
 		//}
 
+
+
+		if (_env.has_elements<CodeAtom>(2))
+		{
+			Genome_section<CodeAtom> block_a = _env.peek_genome<CodeAtom>(0);
+			Genome_section<CodeAtom> block_b = _env.peek_genome<CodeAtom>(1);
+			Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
+
+			std::set<std::string> atom_set;
+
+			if (block_a.size > 0)
+			{
+				for (int i = block_a.starting_position; i <= block_a.ending_position; i++)
+					atom_set.insert(genome.get_atom(i).instruction);
+			}
+
+			if (block_b.size > 0)
+			{
+				for (int i = block_b.starting_position; i <= block_b.ending_position; i++)
+					atom_set.insert(genome.get_atom(i).instruction);
+			}
+
+			int result = 0;
+
+			for (std::string instruction : atom_set)
+			{
+				int count_a = 0;
+				int count_b = 0;
+
+				if (block_a.size > 0)
+				{
+					for (int i = block_a.starting_position; i <= block_a.ending_position; i++)
+					{
+						if (instruction == genome.get_atom(i).instruction)
+							count_a++;
+					}
+				}
+
+				if (block_b.size > 0)
+				{
+					for (int i = block_b.starting_position; i <= block_b.ending_position; i++)
+					{
+						if (instruction == genome.get_atom(i).instruction)
+							count_b++;
+					}
+				}
+
+				result += std::abs(count_a - count_b);
+			}
+
+			_env.push<long>(result);
+				
+			_env.pop_genome<CodeAtom>();
+			_env.pop_genome<CodeAtom>();
+		}
+
 		return 1;
 	}
 
@@ -631,7 +687,7 @@ namespace Plush
 
 
 			// Get reference to top block on code stack
-			Genome_section<ExecAtom> code_block(_env.peek_genome<CodeAtom>());
+			Genome_section<ExecAtom> code_block(_env.peek_genome<CodeAtom>(0));
 
 			// Remove top code block after execution of block.
 			_env.push<ExecAtom>(ExecAtom("{:instruction CODE.POP :close 1}"));

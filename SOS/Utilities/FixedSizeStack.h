@@ -648,7 +648,7 @@ namespace Utilities
 			return stack_[top_ - 1];
 		}
 
-		inline const_reference get_item(int position) const
+		inline const_reference get_atom(int position) const
 		{
 			if (top_ == 0)
 			{
@@ -664,7 +664,7 @@ namespace Utilities
 			return stack_[top_ - position - 1];
 		}
 
-		inline reference get_item(int position) 
+		inline reference get_atom(int position) 
 		{
 			if (top_ == 0)
 			{

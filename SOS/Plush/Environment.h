@@ -195,7 +195,7 @@ namespace Plush
 		}
 
 		template <class T>
-		inline Genome_section<T> peek_genome()
+		inline Genome_section<T> peek_genome(unsigned int position)
 		{
 			std::stringstream error_message;
 			error_message << "reference Environment::peek_genome() - Function not defined for this type of stack";
@@ -206,15 +206,15 @@ namespace Plush
 		}
 
 		template <>
-		inline Genome_section<CodeAtom> peek_genome<CodeAtom>()
+		inline Genome_section<CodeAtom> peek_genome<CodeAtom>(unsigned int position)
 		{
-			return get_stack<CodeAtom>().peek_genome();
+			return get_stack<CodeAtom>()[position];
 		}
 
 		template <>
-		inline Genome_section<ExecAtom> peek_genome<ExecAtom>()
+		inline Genome_section<ExecAtom> peek_genome<ExecAtom>(unsigned int position)
 		{
-			return get_stack<ExecAtom>().peek_genome();
+			return get_stack<ExecAtom>()[position];
 		}
 
 		//template <class T>

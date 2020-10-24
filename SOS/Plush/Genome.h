@@ -544,7 +544,7 @@ namespace Plush
 			{
 				s += l;
 				l = number_of_atoms(extra_blocks, n);
-				l -= extra_blocks;
+	//			l -= extra_blocks;
 			}
 
 			return Genome_section<T>(s, l);
@@ -588,7 +588,7 @@ namespace Plush
 			{
 				s += l;
 				l = number_of_atoms(extra_blocks, n);
-				l -= extra_blocks;
+//				l -= extra_blocks;
 			}
 
 			return Genome_section<T>(s, l);
@@ -667,8 +667,8 @@ namespace Plush
 				unsigned int pos_a = genome_a.ending_position - n;
 				unsigned int pos_b = genome_b.ending_position - n;
 
-				T atom_a = Utilities::FixedSizeStack<T>::get_item(pos_a);
-				T atom_b = Utilities::FixedSizeStack<T>::get_item(pos_b);
+				T atom_a = Utilities::FixedSizeStack<T>::get_atom(pos_a);
+				T atom_b = Utilities::FixedSizeStack<T>::get_atom(pos_b);
 
 //				if (atom_a != atom_b)
 				if (atom_a.like(atom_b) == false)
@@ -1765,7 +1765,7 @@ namespace Plush
 				l = number_of_atoms(extra_blocks, n);
 			}
 
-			return Utilities::FixedSizeStack<T>::get_item(s - 1);
+			return Utilities::FixedSizeStack<T>::get_atom(s - 1);
 		}
 
 		// Purpose: 
@@ -1791,7 +1791,7 @@ namespace Plush
 			unsigned int extra_blocks;
 
 			l = number_of_atoms(extra_blocks, item_index);
-			l -= extra_blocks;
+//			l -= extra_blocks;
 
 			return l;
 		}
@@ -1824,7 +1824,7 @@ namespace Plush
 			{
 				s += l;
 				l = number_of_atoms(extra_blocks, n);
-				l -= extra_blocks;
+	//			l -= extra_blocks;
 			}
 
 			return s;

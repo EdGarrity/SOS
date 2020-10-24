@@ -32,7 +32,7 @@ namespace Plush
 
 		if (_env.has_elements<CodeAtom>(1))
 		{
-			Genome_section<CodeAtom> genome = _env.peek_genome<CodeAtom>();
+			Genome_section<CodeAtom> genome = _env.peek_genome<CodeAtom>(0);
 			_env.push<CodeAtom>(genome);
 		}
 
@@ -51,7 +51,7 @@ namespace Plush
 
 		if (_env.has_elements<ExecAtom>(1))
 		{
-			Genome_section<ExecAtom> genome = _env.peek_genome<ExecAtom>();
+			Genome_section<ExecAtom> genome = _env.peek_genome<ExecAtom>(0);
 			_env.push<ExecAtom>(genome);
 		}
 
