@@ -122,14 +122,6 @@ namespace Plush
 		//	get_stack<T>().push_genome(genome);
 		//}
 		
-
-		template <class T>
-		inline void push(Genome_section<T> genome_section)
-		{
-			get_stack<T>().push_genome(genome_section);
-		}
-		
-
 		//template <class T>
 		//inline void push(Genome<ExecAtom>& genome)
 		//{
@@ -144,6 +136,54 @@ namespace Plush
 		//{
 		//	get_stack<ExecAtom>().push(genome);
 		//}
+
+		//template <class T>
+		//inline void push(Genome_section<T> genome_section)
+		//{
+		//	get_stack<T>().push_genome(genome_section);
+		//}
+
+		template <class T>
+		inline void push(Genome_section<CodeAtom> genome_section)
+		{
+			Genome<CodeAtom> code_genome = get_stack<CodeAtom>();
+
+			if (genome_section.size == 0)
+			{
+				push(T("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
+			}
+			else
+			{
+				for (int n = genome_section.ending_position; n >= (int)genome_section.starting_position; n--)
+				{
+					CodeAtom code_atom = code_genome.get_atom(n);
+					T t_atom = T();
+					t_atom.set(code_atom.instruction, code_atom.close_parenthesis, code_atom.type);
+					push(t_atom);
+				}
+			}
+		}
+
+		template <class T>
+		inline void push(Genome_section<ExecAtom> genome_section)
+		{
+			Genome<ExecAtom> exec_genome = get_stack<ExecAtom>();
+
+			if (genome_section.size == 0)
+			{
+				push(T("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
+			}
+			else
+			{
+				for (int n = genome_section.ending_position; n >= (int)genome_section.starting_position; n--)
+				{
+					ExecAtom exec_atom = exec_genome.get_atom(n);
+					T t_atom = T();
+					t_atom.set(exec_atom.instruction, exec_atom.close_parenthesis, exec_atom.type);
+					push(t_atom);
+				}
+			}
+		}
 
 		template <typename T>
 		inline T pop()

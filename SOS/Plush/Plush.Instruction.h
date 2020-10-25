@@ -339,15 +339,31 @@ namespace Plush
 			//else
 			//	_env.push<bool>(false);
 
-			Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
 
-			Genome_section<CodeAtom> block_a = genome[0];
-			Genome_section<CodeAtom> block_b = genome[1];
+
+
+			//Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
+
+			//Genome_section<CodeAtom> block_a = genome[0];
+			//Genome_section<CodeAtom> block_b = genome[1];
+
+			//if (genome.comp(block_a, block_b))
+			//	_env.push<bool>(true);
+			//else
+			//	_env.push<bool>(false);
+
+
+			Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
+			Genome_section<CodeAtom> block_a = _env.peek_genome<CodeAtom>(0);
+			Genome_section<CodeAtom> block_b = _env.peek_genome<CodeAtom>(1);
 
 			if (genome.comp(block_a, block_b))
 				_env.push<bool>(true);
 			else
 				_env.push<bool>(false);
+
+			_env.pop_genome<CodeAtom>();
+			_env.pop_genome<CodeAtom>();
 		}
 
 		return 1;

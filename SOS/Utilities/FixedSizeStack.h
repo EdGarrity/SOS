@@ -129,7 +129,12 @@ namespace Utilities
 		//
 		// Remarks:
 		//
-		inline const T get_stack_element(int index)
+		inline const T& get_stack_element(int index)
+		{
+			return stack_[index];
+		}
+
+		inline T& get_stack_element_ref(int index)
 		{
 			return stack_[index];
 		}
@@ -198,7 +203,7 @@ namespace Utilities
 		//
 		// Remarks:
 		//
-		inline void shove(T& other, int n)
+		inline void shove_it(T& atom, int position)
 		{
 			if ((top_ + 1) > N)
 			{
@@ -208,59 +213,59 @@ namespace Utilities
 				throw std::overflow_error(error_message.str());
 			}
 
-			n = (n < 0) ? 0 : n;
-			n = (n > top_) ? top_ : n;
-			n = top_ - n;
+			position = (position < 0) ? 0 : position;
+			position = (position > top_) ? top_ : position;
+			int index = top_ - position;
 
-			for (int i = top_; i >= n; i--)
-				stack_[i] = stack_[i - n];
+			for (int i = top_; i >= index; i--)
+				stack_[i] = stack_[i - 1];
 
-			stack_[n] = other;
+			stack_[index] = atom;
 
 			top_++;
 		}
 
-		// Purpose: 
-		//   Insert provided stack deep in the stack
-		//
-		// Parameters:
-		//   other	- Reference to the other stack to insert
-		//   n		- Positin where to insert the other stack.  0 or less refers to the top of the stack.  
-		//			  Values greater than the size of the stack will insert the other stack at the bottom.
-		// 
-		// Return value:
-		//   None
-		//
-		// Side Effects:
-		//   Stack updated with inserted stack.
-		//
-		// Thread Safe:
-		//   Yes.  As long as no other thread attemps to write to the child.
-		//
-		// Remarks:
-		//
-		inline void shove(FixedSizeStack<T>& other, int n)
-		{
-			if ((top_ + other.size()) > N)
-			{
-				std::stringstream error_message;
-				error_message << "Utilities::FixedSizeStack::shove() - Stack overflow.";
+		//// Purpose: 
+		////   Insert provided stack deep in the stack
+		////
+		//// Parameters:
+		////   other	- Reference to the other stack to insert
+		////   n		- Positin where to insert the other stack.  0 or less refers to the top of the stack.  
+		////			  Values greater than the size of the stack will insert the other stack at the bottom.
+		//// 
+		//// Return value:
+		////   None
+		////
+		//// Side Effects:
+		////   Stack updated with inserted stack.
+		////
+		//// Thread Safe:
+		////   Yes.  As long as no other thread attemps to write to the child.
+		////
+		//// Remarks:
+		////
+		//inline void shove(FixedSizeStack<T>& other, int n)
+		//{
+		//	if ((top_ + other.size()) > N)
+		//	{
+		//		std::stringstream error_message;
+		//		error_message << "Utilities::FixedSizeStack::shove() - Stack overflow.";
 
-				throw std::overflow_error(error_message.str());
-			}
+		//		throw std::overflow_error(error_message.str());
+		//	}
 
-			n = (n < 0) ? 0 : n;
-			n = (n > top_) ? top_ : n;
-			n = n - top_;
+		//	n = (n < 0) ? 0 : n;
+		//	n = (n > top_) ? top_ : n;
+		//	n = n - top_;
 
-			for (int i = (top_ + other.size()); i > other.size() - 1; i--)
-				stack_[i] = stack_[i - top_ + 1];
+		//	for (int i = (top_ + other.size()); i > other.size() - 1; i--)
+		//		stack_[i] = stack_[i - top_ + 1];
 
-			for (int i = 0; i < other.size(); i++)
-				stack_[i + n] = other[i];
+		//	for (int i = 0; i < other.size(); i++)
+		//		stack_[i + n] = other[i];
 
-			top_ += other.size();
-		}
+		//	top_ += other.size();
+		//}
 
 		// Purpose: 
 		//   Insert section of provided stack deep in the stack
@@ -283,7 +288,7 @@ namespace Utilities
 		//
 		// Remarks:
 		//
-		inline void shove(FixedSizeStack<T>& other, int insert_position, int offset, int length)
+		inline void shove_it(int destination_position, int source_position, int length)
 		{
 			if ((top_ + length) > N)
 			{
@@ -293,75 +298,81 @@ namespace Utilities
 				throw std::overflow_error(error_message.str());
 			}
 
-			insert_position = (insert_position < 0) ? 0 : insert_position;
-			insert_position = (insert_position > top_) ? top_ : insert_position;
+			source_position = (source_position < 0) ? 0 : source_position;
+			source_position = (source_position > top_) ? top_ : source_position;
+
+			destination_position = (destination_position < 0) ? 0 : destination_position;
+			destination_position = (destination_position > top_) ? top_ : destination_position;
+
+			int source_index = top_ - source_position - 1;
+			int destination_index = top_ - destination_position - 1;
 
 			// Make space in this stack for the other stack items
-			for (int i = 0, j = insert_position + length - 1, k = top_ + length - 1;
+			for (int i = 0, j = destination_index + length - 1, k = top_ + length - 1;
 				i < length;
 				i++, j--, k--)
 				stack_[k] = stack_[j];
 
-			int n2 = other.size() - offset;
+//			int n2 = other.size() - source_position;
 
 			// Copy the other stack items into this stack
-			for (int i = 0, j = other.size() - offset - length, k = top_ - insert_position; 
+			for (int i = 0, j = source_index + length - 1, k = destination_index + length - 1;
 				i < length; 
-				i++)
-				stack_[k] = other[j];
-
-			top_ += length;
-		}
-
-		// Purpose: 
-		//   Insert section of provided stack section deep in the stack
-		//
-		// Parameters:
-		//   insert_position	- Positin where to insert the other stack.  0 or less refers to the top of the stack.  
-		//						  Values greater than the size of the stack will insert the other stack at the bottom.
-		//   offset				- Offset to start of section in other stack to insert
-		//   length				- Length of section to insert
-		//
-		// Return value:
-		//   None
-		//
-		// Side Effects:
-		//   Stack updated with inserted stack.
-		//
-		// Thread Safe:
-		//   Yes.  As long as no other thread attemps to write to the child.
-		//
-		// Remarks:
-		//
-		inline void shove(int insert_position, int offset, int length)
-		{
-			if ((top_ + length) > N)
-			{
-				std::stringstream error_message;
-				error_message << "Utilities::FixedSizeStack::shove() - Stack overflow.";
-
-				throw std::overflow_error(error_message.str());
-			}
-
-			insert_position = (insert_position < 0) ? 0 : insert_position;
-			insert_position = (insert_position > top_) ? top_ : insert_position;
-
-			// Make space in this stack for the other stack items
-			for (int i = 0, j = insert_position + length - 1, k = top_ + length - 1;
-				i < length;
 				i++, j--, k--)
 				stack_[k] = stack_[j];
 
-			int n2 = size() - offset;
-
-			// Copy the other stack items into this stack
-			for (int i = 0, j = size() - offset - length, k = top_ - insert_position;
-				i < length;
-				i++)
-				stack_[k] = stack_[j];
-
 			top_ += length;
 		}
+
+		//// Purpose: 
+		////   Insert section of provided stack section deep in the stack
+		////
+		//// Parameters:
+		////   insert_position	- Positin where to insert the other stack.  0 or less refers to the top of the stack.  
+		////						  Values greater than the size of the stack will insert the other stack at the bottom.
+		////   offset				- Offset to start of section in other stack to insert
+		////   length				- Length of section to insert
+		////
+		//// Return value:
+		////   None
+		////
+		//// Side Effects:
+		////   Stack updated with inserted stack.
+		////
+		//// Thread Safe:
+		////   Yes.  As long as no other thread attemps to write to the child.
+		////
+		//// Remarks:
+		////
+		//inline void shove(int insert_position, int offset, int length)
+		//{
+		//	if ((top_ + length) > N)
+		//	{
+		//		std::stringstream error_message;
+		//		error_message << "Utilities::FixedSizeStack::shove() - Stack overflow.";
+
+		//		throw std::overflow_error(error_message.str());
+		//	}
+
+		//	insert_position = (insert_position < 0) ? 0 : insert_position;
+		//	insert_position = (insert_position > top_) ? top_ : insert_position;
+
+		//	// Make space in this stack for the other stack items
+		//	for (int i = 0, j = insert_position + length - 1, k = top_ + length - 1;
+		//		i < length;
+		//		i++, j--, k--)
+		//		stack_[k] = stack_[j];
+
+		//	int n2 = size() - offset;
+
+		//	// Copy the other stack items into this stack
+		//	for (int i = 0, j = size() - offset - length, k = top_ - insert_position;
+		//		i < length;
+		//		i++)
+		//		stack_[k] = stack_[j];
+
+		//	top_ += length;
+		//}
 
 		//// Purpose: 
 		////   Insert an atom deep in the stack
@@ -679,6 +690,29 @@ namespace Utilities
 
 			return stack_[top_ - position - 1];
 		}
+
+		// Purpose: 
+		//   Returns a reference to the genome container (the atom array)
+		//
+		// Parameters:
+		//   None
+		// 
+		// Return value:
+		//   Reference to the genome's FixedSizeStack object
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  
+		//
+		// Remarks:
+		//
+		inline T& get_atom_ref(int position)
+		{
+			return get_atom(position);
+		}
+
 
 	protected:
 		// Zero-based index to the first empty slot on the stack
