@@ -3294,7 +3294,7 @@ namespace UnitTest
 					{:instruction CODE.POSITION :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 0 }, {}, {}, {},
+			Assert::IsTrue(is_stack_state(env, { 1 }, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.POSITION :close 0}"),
 				}));
@@ -3326,7 +3326,7 @@ namespace UnitTest
 					{:instruction CODE.POSITION :close 0}\
 				");
 
-			Assert::IsTrue(is_stack_state(env, { 1 }, {}, {}, {},
+			Assert::IsTrue(is_stack_state(env, { 2 }, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.POSITION :close 0}"),
 				}));
@@ -4508,7 +4508,8 @@ namespace UnitTest
 				{
 					CodeAtom("{:instruction CODE.YANK :close 1}"),
 					CodeAtom("{:instruction 1 :close 1}"),
-					CodeAtom("{:instruction 2.1 :close 2}"),
+					CodeAtom("{:instruction EXEC.NOOP :close 1}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
 					CodeAtom("{:instruction 2.0 :close 0}"),
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),
@@ -4539,7 +4540,8 @@ namespace UnitTest
 				{
 					CodeAtom("{:instruction CODE.YANK :close 1}"),
 					CodeAtom("{:instruction 2 :close 1}"),
-					CodeAtom("{:instruction 2.1 :close 2}"),
+					CodeAtom("{:instruction EXEC.NOOP :close 1}"),
+					CodeAtom("{:instruction 2.1 :close 1}"),
 					CodeAtom("{:instruction 2.0 :close 0}"),
 					CodeAtom("{:instruction 1.2 :close 1}"),
 					CodeAtom("{:instruction 1.1 :close 0}"),

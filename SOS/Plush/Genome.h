@@ -667,7 +667,6 @@ namespace Plush
 				T atom_a = Utilities::FixedSizeStack<T>::get_atom(pos_a);
 				T atom_b = Utilities::FixedSizeStack<T>::get_atom(pos_b);
 
-//				if (atom_a != atom_b)
 				if (atom_a.like(atom_b) == false)
 					return false;
 			}
@@ -1211,7 +1210,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		Genome_section<T> number_of_atoms_in_Nth_item(unsigned int& extra_blocks_returned, int item_number)
+		Genome_section<T> get_subitem(/*unsigned int& extra_blocks_returned,*/ int item_number)
 		{
 			Genome_section<T> subsection;
 			int atom_count = 0;
@@ -1285,9 +1284,9 @@ namespace Plush
 				search_starting_index -= item_length;
 			}
 
-			extra_blocks_returned = extra_blocks;
+//			extra_blocks_returned = extra_blocks;
 
-			subsection.set(item_ending_position - item_length, item_length);
+			subsection.set(item_ending_position - item_length, item_length, extra_blocks);
 			return subsection;
 		};
 
@@ -1830,10 +1829,10 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline T get_top(Genome_section<T> section)
-		{
-			return container()[section.starting_position];
-		};
+		//inline T get_top(Genome_section<T> section)
+		//{
+		//	return container()[section.starting_position];
+		//};
 
 		// Purpose: 
 		//   Returns a reference to the bottom atom on the specified item
@@ -1980,24 +1979,24 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline Genome_section<T> get_subitem(int n)
-		{
-			int s = 0;
-			int l = 0;
-			unsigned int extra_blocks;
+		//inline Genome_section<T> get_subitem(int n)
+		//{
+		//	int s = 0;
+		//	int l = 0;
+		//	unsigned int extra_blocks;
 
-			//for (int n = 0; n <= position; n++)
-			//{
-			//	l = number_of_atoms_in_Nth_item(extra_blocks, n);
-			//	s += l;
-			//}
+		//	//for (int n = 0; n <= position; n++)
+		//	//{
+		//	//	l = number_of_atoms_in_Nth_item(extra_blocks, n);
+		//	//	s += l;
+		//	//}
 
-			//return Genome_section<T>(s - l, l);
+		//	//return Genome_section<T>(s - l, l);
 
-			Genome_section<T> subsection = number_of_atoms_in_Nth_item(extra_blocks, n);
+		//	Genome_section<T> subsection = get_subitem(extra_blocks, n);
 
-			return subsection;
-		}
+		//	return subsection;
+		//}
 
 		// Purpose: 
 		//   Returns position of last item of Nth item in the top level block of stack
@@ -2127,6 +2126,13 @@ namespace Plush
 		{
 			Genome_section<T> section = (*this)[element_pos];
 			Utilities::FixedSizeStack<T>::remove_items(section.starting_position, section.size);
+
+			if (section.extra_parenthesis > 0)
+			{
+				T atom = T("{:instruction EXEC.NOOP :close 0}");
+				atom.close_parenthesis = section.extra_parenthesis;
+				push(atom);
+			}
 		}
 
 		// Purpose: 
@@ -2235,7 +2241,7 @@ namespace Plush
 		//
 		inline void yank_item(int item_position)
 		{
-			if (item_position > 0)
+			if (item_position >= 0)
 			{
 				yankdup_item(item_position);
 				remove_item(item_position + 1);

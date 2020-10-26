@@ -452,11 +452,6 @@ namespace Utilities
 
 			if (position > 0)
 			{
-				//for (int j = position + length - 1, k = position - 1;
-				//	j < top_;
-				//	j++, k++)
-				//	stack_[k] = stack_[j];
-
 				for (int j = top_ - position, k = (top_ - position - 1) - (length - 1);
 					j < top_;
 					j++, k++)
@@ -555,13 +550,13 @@ namespace Utilities
 			}
 
 			// Convert relative positions to absolute indexes
-			int source_index = top_ - source_position;
-			int target_index = top_ - target_position;
+			int source_index = top_ - source_position - 1;
+			int target_index = top_ - target_position - 1;
 
 			// Copy source to target
 			if (source_index > target_index)
 			{
-				for (int n = 0; n < length; n--)
+				for (int n = 0; n < length; n++)
 					stack_[target_index + n] = stack_[source_index + n];
 			}
 			 

@@ -153,8 +153,9 @@ namespace Plush
 			//	_env.push<CodeAtom>(target_block);
 
 				Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
-				genome.yank_stack_element(index);
-			}											
+//				genome.yank_stack_element(index);
+				genome.yank_item(index);
+			}
 		}
 
 		return 1;
