@@ -2060,7 +2060,15 @@ namespace Plush
 				l = number_of_atoms(extra_blocks, n);
 			}
 
-			if (extra_blocks == 0)
+			if ((l == 0) && (s > 0))
+			{
+				T& atom = Utilities::FixedSizeStack<T>::get_atom_ref(s - 1);
+
+				if (atom.close_parenthesis > 0)
+					atom.close_parenthesis--;
+			}
+
+			else if (extra_blocks == 0)
 				Utilities::FixedSizeStack<T>::remove_items(s, l);
 
 			else
