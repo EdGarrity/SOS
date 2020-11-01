@@ -839,6 +839,13 @@ namespace UnitTest
 				}));
 		}
 
+		//Example:
+		//	( EXEC.NOOP_OPEN_PAREN EXEC.DO*RANGE FLOAT.+)) (FLOAT.+))) FLOAT.+) CODE.DISCREPANCY
+
+		//	Interpretation:
+		//	2:                (FLOAT.+)
+		//	1:  (EXEC.DO*RANGE         )(FLOAT.+)             
+		//	0: (                                 )()(FLOAT.+)(CODE.DISCREPANCY)
 		TEST_METHOD(DISCREPANCY_WITH_TWO_PARAMETERS_1)
 		{
 			Environment env;
@@ -857,7 +864,8 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, { 5 }, {}, {}, {},
 				{
-					CodeAtom("{:instruction CODE.DISCREPANCY :close 0}")
+					CodeAtom("{:instruction CODE.DISCREPANCY :close 0}"),
+					CodeAtom("{:instruction FLOAT.+ :close 1}")
 				}));
 		}
 
@@ -3662,6 +3670,13 @@ namespace UnitTest
 
 		TEST_METHOD(SHOVE_WITH_POSITIVE_1A)
 		{
+			//Example:
+			//	( 1.0 1.1 1.2)(2.0 2.1)(3.0))(1)(CODE.SHOVE)
+
+			//	Interpretation:
+			//	2:               
+			//	1:   
+			//	0: ( 1.0 1.1 1.2)(2.0 2.1)(3.0)()(1)(CODE.SHOVE)
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
@@ -3677,6 +3692,10 @@ namespace UnitTest
 					{:instruction CODE.SHOVE :close 1}\
 				");
 
+			//	Answer:
+			//	2:               
+			//	1:   
+			//	0: (2.0 2.1)( 1.0 1.1 1.2)(3.0)()(1)(CODE.SHOVE)
 			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
 					CodeAtom("{:instruction CODE.SHOVE :close 1}"),
@@ -3692,6 +3711,13 @@ namespace UnitTest
 
 		TEST_METHOD(SHOVE_WITH_POSITIVE_1B)
 		{
+			//Example:
+			//	( ( 1.0 1.1 1.2) 2.0 2.1)(3.0))(1)(CODE.SHOVE)
+
+			//	Interpretation:
+			//	2:               
+			//	1:  (1.0 1.1 1.2)
+			//	0: (             2.0 2.1)(3.0)()(1)(CODE.SHOVE)
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
@@ -3708,6 +3734,10 @@ namespace UnitTest
 					{:instruction CODE.SHOVE :close 1}\
 				");
 
+			//	:
+			//	2:               
+			//	1:       (1.0 1.1 1.2)
+			//	0: (3.0)(             2.0 2.1)()(1)(CODE.SHOVE)
 			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
 				{
 					CodeAtom("{:instruction CODE.SHOVE :close 1}"),
@@ -3724,6 +3754,13 @@ namespace UnitTest
 
 		TEST_METHOD(SHOVE_WITH_POSITIVE_2A)
 		{
+			//Example:
+			//	( 1.0 1.1 1.2)( 2.0 2.1)( 3.0)()(2)(CODE.SHOVE)
+
+			//	Interpretation:
+			//	2:               
+			//	1:  
+			//	0: (1.0 1.1 1.2)(2.0 2.1)(3.0)()(2)(CODE.SHOVE)
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
@@ -3740,6 +3777,10 @@ namespace UnitTest
 				");
 
 			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
+				//	Interpretation:
+				//	2:               
+				//	1:  
+				//	0: (2.0 2.1)(3.0)(1.0 1.1 1.2)()(2)(CODE.SHOVE)
 				{
 					CodeAtom("{:instruction CODE.SHOVE :close 1}"),
 					CodeAtom("{:instruction 2 :close 1}"),
@@ -3754,6 +3795,13 @@ namespace UnitTest
 
 		TEST_METHOD(SHOVE_WITH_POSITIVE_2B)
 		{
+			//Example:
+			//	( (1.0 1.1 1.2) 2.0 2.1) 3.0))(2)(CODE.SHOVE)
+
+			//	Interpretation:
+			//	2:               
+			//	1:  (1.0 1.1 1.2) 2.0 2.1
+			//	0: (                      )(3.0)()(2)(CODE.SHOVE)
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
@@ -3771,6 +3819,10 @@ namespace UnitTest
 				");
 
 			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
+				//	Answer:
+				//	2:               
+				//	1:         (1.0 1.1 1.2) 2.0 2.1
+				//	0: (3.0)()(                     )(2)(CODE.SHOVE)
 				{
 					CodeAtom("{:instruction CODE.SHOVE :close 1}"),
 					CodeAtom("{:instruction 2 :close 1}"),
@@ -3848,6 +3900,13 @@ namespace UnitTest
 
 		TEST_METHOD(SHOVE_WITH_ZERO_PARAMETER_4A)
 		{
+			//Example:
+			//	( 1.0 1.1 1.2)( 2.0 2.1)( 3.0))(4)(CODE.SHOVE)
+
+			//	Interpretation:
+			//	2:               
+			//	1:  
+			//	0: (1.0 1.1 1.2)(2.0 2.1)(3.0)()(4)(CODE.SHOVE)
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
@@ -3864,6 +3923,10 @@ namespace UnitTest
 				");
 
 			Assert::IsTrue(is_stack_state(env, {}, { 1.0, 1.1, 1.2, 2.0, 2.1, 3.0 }, {}, {},
+				//	Answer:
+				//	2:               
+				//	1:         
+				//	0: (2.0 2.1)(3.0)()(4)(1.0 1.1 1.2)(CODE.SHOVE)
 				{
 					CodeAtom("{:instruction CODE.SHOVE :close 1}"),
 					CodeAtom("{:instruction 1.2 :close 1}"),
@@ -4073,6 +4136,13 @@ namespace UnitTest
 
 		TEST_METHOD(SUBST_1)
 		{
+			//Example:
+			//	( ( EXEC.DO*RANGE( FLOAT.+)) ( FLOAT.+)) FLOAT.-) FLOAT.+) CODE.SUBST
+
+			//	Interpretation:
+			//	2:                 ( FLOAT.+)
+			//	1:  ( EXEC.DO*RANGE          ) ( FLOAT.+)
+			//	0: (                                     )( FLOAT.-)( FLOAT.+)( CODE.SUBST
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
@@ -4089,6 +4159,10 @@ namespace UnitTest
 				");
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				//	Answer:
+				//	2:                 ( FLOAT.-)
+				//	1:  ( EXEC.DO*RANGE          ) ( FLOAT.-)
+				//	0: (                                     )( CODE.SUBST
 				{
 					CodeAtom("{:instruction CODE.SUBST :close 0}"),
 					CodeAtom("{:instruction FLOAT.- :close 2}"),

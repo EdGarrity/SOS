@@ -308,20 +308,25 @@ namespace Utilities
 			int destination_index = top_ - destination_position - 1;
 
 			// Make space in this stack for the other stack items
-			for (int i = 0, j = destination_index + length - 1, k = top_ + length - 1;
-				i < length;
-				i++, j--, k--)
+			for (int i = 0, j = destination_index, k = top_;
+				i < top_ - destination_index;
+				i++, j++, k++)
 				stack_[k] = stack_[j];
 
 //			int n2 = other.size() - source_position;
 
 			// Copy the other stack items into this stack
-			for (int i = 0, j = source_index + length - 1, k = destination_index + length - 1;
-				i < length; 
-				i++, j--, k--)
-				stack_[k] = stack_[j];
+			//for (int i = 0, j = source_index - length, k = destination_index;
+			//	i < source_index - destination_index + 1;
+			//	i++, j++, k++)
+			//	stack_[k] = stack_[j];
 
-			top_ += length;
+			for (int i = 0, j = top_ - length, k = destination_index;
+				i < source_index - destination_index + 1;
+				i++, j++, k++)
+				stack_[k] = stack_[j];
+			
+//			top_ += length;
 		}
 
 		//// Purpose: 

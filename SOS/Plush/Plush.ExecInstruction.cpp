@@ -1447,8 +1447,11 @@ namespace Plush
 				}
 			}
 
-			_env.get_stack<CodeAtom>().remove_stack_element(0);
-			_env.get_stack<CodeAtom>().remove_stack_element(0);
+			//_env.get_stack<CodeAtom>().remove_stack_element(0);
+			//_env.get_stack<CodeAtom>().remove_stack_element(0);
+
+			_env.pop_genome<CodeAtom>();
+			_env.pop_genome<CodeAtom>();
 
 			effort = block_A.size + block_B.size;
 			_env.push(return_val);

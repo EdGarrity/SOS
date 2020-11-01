@@ -79,6 +79,7 @@ namespace Plush
 		{
 			int index = pop_safe_index<T>(_env);
 
+			// Need to change to 0-based index
 			if (index > 0)
 			{
 				// Get item from deep in stack
@@ -114,48 +115,52 @@ namespace Plush
 	{
 		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
 		{
-			int index = _env.pop<long>();	// index
+//			int index = _env.pop<long>();	// index
+//
+//			if (index > 0)
+//			{
+//			//	Genome<CodeAtom> extracted_block;
+//			//	Genome<CodeAtom> target_block;
+//			//	Genome<CodeAtom> modified_genome;
+//
+//			//	// Get count of sub-blocks
+//			//	Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
+//
+//			//	int number_of_blocks = genome.number_of_blocks();
+//
+//			//	// If the index is larger than the size of the specified stack, then the deepest element is `yank`ed up to the top.
+//			//	index = (index > (number_of_blocks - 1)) ? (number_of_blocks - 1) : index;
+//			//	int n = 0;
+//
+//			//	while (_env.is_empty<CodeAtom>() == false)
+//			//	{
+//			//		_env.pop<CodeAtom>(extracted_block);
+//
+//			//		if (n == index)
+//			//			target_block.push_genome(extracted_block);
+//
+//			//		else
+//			//		{
+//			//			Genome<CodeAtom> modified_genome_copy(modified_genome);
+//			//			modified_genome.clear();
+//			//			modified_genome.push_genome(extracted_block);
+//			//			modified_genome.push_genome(modified_genome_copy);
+//			//		}
+//
+//			//		n++;
+//			//	}
+//
+//			//	_env.push<CodeAtom>(modified_genome);
+//			//	_env.push<CodeAtom>(target_block);
+//
+//				Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
+////				genome.yank_stack_element(index);
+//				genome.yank_item(index);
+//			}
 
-			if (index > 0)
-			{
-			//	Genome<CodeAtom> extracted_block;
-			//	Genome<CodeAtom> target_block;
-			//	Genome<CodeAtom> modified_genome;
-
-			//	// Get count of sub-blocks
-			//	Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
-
-			//	int number_of_blocks = genome.number_of_blocks();
-
-			//	// If the index is larger than the size of the specified stack, then the deepest element is `yank`ed up to the top.
-			//	index = (index > (number_of_blocks - 1)) ? (number_of_blocks - 1) : index;
-			//	int n = 0;
-
-			//	while (_env.is_empty<CodeAtom>() == false)
-			//	{
-			//		_env.pop<CodeAtom>(extracted_block);
-
-			//		if (n == index)
-			//			target_block.push_genome(extracted_block);
-
-			//		else
-			//		{
-			//			Genome<CodeAtom> modified_genome_copy(modified_genome);
-			//			modified_genome.clear();
-			//			modified_genome.push_genome(extracted_block);
-			//			modified_genome.push_genome(modified_genome_copy);
-			//		}
-
-			//		n++;
-			//	}
-
-			//	_env.push<CodeAtom>(modified_genome);
-			//	_env.push<CodeAtom>(target_block);
-
-				Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
-//				genome.yank_stack_element(index);
-				genome.yank_item(index);
-			}
+			int index = pop_safe_index<CodeAtom>(_env);
+			Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
+			genome.yank_item(index);
 		}
 
 		return 1;
@@ -166,46 +171,48 @@ namespace Plush
 	{
 		if ((_env.has_elements<long>(1)) && (_env.has_elements<ExecAtom>(1)))
 		{
-			int index = _env.pop<long>();	// index
+			//int index = _env.pop<long>();	// index
 
-			if (index > 0)
-			{
-				//Genome<ExecAtom> extracted_block;
-				//Genome<ExecAtom> target_block;
-				//Genome<ExecAtom> modified_genome;
+			//if (index > 0)
+			//{
+			//	//Genome<ExecAtom> extracted_block;
+			//	//Genome<ExecAtom> target_block;
+			//	//Genome<ExecAtom> modified_genome;
 
-				//// Get count of sub-blocks
-				//Genome<ExecAtom>& genome = _env.get_stack<ExecAtom>();
-				//int number_of_blocks = genome.number_of_blocks();
+			//	//// Get count of sub-blocks
+			//	//Genome<ExecAtom>& genome = _env.get_stack<ExecAtom>();
+			//	//int number_of_blocks = genome.number_of_blocks();
 
-				//// If the index is larger than the size of the specified stack, then the deepest element is `yank`ed up to the top.
-				//index = (index > (number_of_blocks - 1)) ? (number_of_blocks - 1) : index;
-				//int n = 0;
+			//	//// If the index is larger than the size of the specified stack, then the deepest element is `yank`ed up to the top.
+			//	//index = (index > (number_of_blocks - 1)) ? (number_of_blocks - 1) : index;
+			//	//int n = 0;
 
-				//while (_env.is_empty<ExecAtom>() == false)
-				//{
-				//	_env.pop<ExecAtom>(extracted_block);
+			//	//while (_env.is_empty<ExecAtom>() == false)
+			//	//{
+			//	//	_env.pop<ExecAtom>(extracted_block);
 
-				//	if (n == index)
-				//		target_block.push_genome(extracted_block);
+			//	//	if (n == index)
+			//	//		target_block.push_genome(extracted_block);
 
-				//	else
-				//	{
-				//		Genome<ExecAtom> modified_genome_copy(modified_genome);
-				//		modified_genome.clear();
-				//		modified_genome.push_genome(extracted_block);
-				//		modified_genome.push_genome(modified_genome_copy);
-				//	}
+			//	//	else
+			//	//	{
+			//	//		Genome<ExecAtom> modified_genome_copy(modified_genome);
+			//	//		modified_genome.clear();
+			//	//		modified_genome.push_genome(extracted_block);
+			//	//		modified_genome.push_genome(modified_genome_copy);
+			//	//	}
 
-				//	n++;
-				//}
+			//	//	n++;
+			//	//}
 
-				//_env.push<ExecAtom>(modified_genome);
-				//_env.push<ExecAtom>(target_block);
+			//	//_env.push<ExecAtom>(modified_genome);
+			//	//_env.push<ExecAtom>(target_block);
 
-				Genome<ExecAtom>& genome = _env.get_stack<ExecAtom>();
-				genome.yank_stack_element(index);
-			}
+			//}
+
+			int index = pop_safe_index<ExecAtom>(_env);
+			Genome<ExecAtom>& genome = _env.get_stack<ExecAtom>();
+			genome.yank_stack_element(index);
 		}
 
 		return 1;
@@ -231,37 +238,42 @@ namespace Plush
 	{
 		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
 		{
-			int index = _env.pop<long>();	// index
-			//Genome<CodeAtom> extracted_block;
-			//Genome<CodeAtom> temp_genome;
+			//	int index = _env.pop<long>();	// index
+			//	//Genome<CodeAtom> extracted_block;
+			//	//Genome<CodeAtom> temp_genome;
 
-			//// Get number of blocks on the stack
-			//int number_of_blocks = _env.length<CodeAtom>();
+			//	//// Get number of blocks on the stack
+			//	//int number_of_blocks = _env.length<CodeAtom>();
 
-			//// If the index is larger than the size of the specified stack, then the deepest element is `yank`ed up to the top.
-			//index = (index > (number_of_blocks - 1)) ? (number_of_blocks - 1) : index;
-			//index = (index < 0) ? 0 : index;
+			//	//// If the index is larger than the size of the specified stack, then the deepest element is `yank`ed up to the top.
+			//	//index = (index > (number_of_blocks - 1)) ? (number_of_blocks - 1) : index;
+			//	//index = (index < 0) ? 0 : index;
 
-			//while ((_env.is_empty<CodeAtom>() == false) && (index >= 0))
-			//{
-			//	_env.pop<CodeAtom>(extracted_block);
-			//	temp_genome.push_genome(extracted_block);
+			//	//while ((_env.is_empty<CodeAtom>() == false) && (index >= 0))
+			//	//{
+			//	//	_env.pop<CodeAtom>(extracted_block);
+			//	//	temp_genome.push_genome(extracted_block);
 
-			//	if ((index) == 0)
-			//		extracted_block.bottom().close_parenthesis = 1;
+			//	//	if ((index) == 0)
+			//	//		extracted_block.bottom().close_parenthesis = 1;
 
-			//	index--;
+			//	//	index--;
+			//	//}
+
+			//	//while (temp_genome.empty() == false)
+			//	//{
+			//	//	Genome<CodeAtom> temp_block;
+			//	//	temp_genome.pop_genome(temp_block);
+			//	//	_env.push<CodeAtom>(temp_block);
+			//	//}
+
+			//	//_env.push<CodeAtom>(extracted_block);
+
+			//	Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
+			//	genome.yankdup_stack_element(index);
 			//}
 
-			//while (temp_genome.empty() == false)
-			//{
-			//	Genome<CodeAtom> temp_block;
-			//	temp_genome.pop_genome(temp_block);
-			//	_env.push<CodeAtom>(temp_block);
-			//}
-
-			//_env.push<CodeAtom>(extracted_block);
-
+			int index = pop_safe_index<CodeAtom>(_env);
 			Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
 			genome.yankdup_stack_element(index);
 		}
@@ -274,37 +286,42 @@ namespace Plush
 	{
 		if ((_env.has_elements<long>(1)) && (_env.has_elements<ExecAtom>(1)))
 		{
-			int index = _env.pop<long>();	// index
-			//Genome<ExecAtom> extracted_block;
-			//Genome<ExecAtom> temp_genome;
+			//	int index = _env.pop<long>();	// index
+			//	//Genome<ExecAtom> extracted_block;
+			//	//Genome<ExecAtom> temp_genome;
 
-			//// Get number of blocks on the stack
-			//int number_of_blocks = _env.length<ExecAtom>();
+			//	//// Get number of blocks on the stack
+			//	//int number_of_blocks = _env.length<ExecAtom>();
 
-			//// If the index is larger than the size of the specified stack, then the deepest element is `yank`ed up to the top.
-			//index = (index > (number_of_blocks - 1)) ? (number_of_blocks - 1) : index;
-			//index = (index < 0) ? 0 : index;
+			//	//// If the index is larger than the size of the specified stack, then the deepest element is `yank`ed up to the top.
+			//	//index = (index > (number_of_blocks - 1)) ? (number_of_blocks - 1) : index;
+			//	//index = (index < 0) ? 0 : index;
 
-			//while ((_env.is_empty<ExecAtom>() == false) && (index >= 0))
-			//{
-			//	_env.pop<ExecAtom>(extracted_block);
-			//	temp_genome.push_genome(extracted_block);
+			//	//while ((_env.is_empty<ExecAtom>() == false) && (index >= 0))
+			//	//{
+			//	//	_env.pop<ExecAtom>(extracted_block);
+			//	//	temp_genome.push_genome(extracted_block);
 
-			//	if ((index) == 0)
-			//		extracted_block.bottom().close_parenthesis = 1;
+			//	//	if ((index) == 0)
+			//	//		extracted_block.bottom().close_parenthesis = 1;
 
-			//	index--;
+			//	//	index--;
+			//	//}
+
+			//	//while (temp_genome.empty() == false)
+			//	//{
+			//	//	Genome<ExecAtom> temp_block;
+			//	//	temp_genome.pop_genome(temp_block);
+			//	//	_env.push<ExecAtom>(temp_block);
+			//	//}
+
+			//	//_env.push<ExecAtom>(extracted_block);
+
+			//	Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
+			//	genome.yankdup_stack_element(index);
 			//}
 
-			//while (temp_genome.empty() == false)
-			//{
-			//	Genome<ExecAtom> temp_block;
-			//	temp_genome.pop_genome(temp_block);
-			//	_env.push<ExecAtom>(temp_block);
-			//}
-
-			//_env.push<ExecAtom>(extracted_block);
-
+			int index = pop_safe_index<ExecAtom>(_env);
 			Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
 			genome.yankdup_stack_element(index);
 		}
@@ -559,7 +576,7 @@ namespace Plush
 	{
 		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
 		{
-			int index = _env.pop<long>();	// index
+			int index = pop_safe_index<CodeAtom>(_env);
 
 			//Genome<CodeAtom> first_block;
 			//Genome<CodeAtom> top_block;
@@ -594,9 +611,10 @@ namespace Plush
 
 				if (section.size > 0)
 				{
-					genome.remove_stack_element(0);
+					//genome.remove_stack_element(0);
 
 					genome.shove_to_stack_element(index);
+//					_env.pop_genome<CodeAtom>();
 				}
 			}
 		}

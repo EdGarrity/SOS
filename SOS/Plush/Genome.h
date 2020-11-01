@@ -1644,11 +1644,18 @@ namespace Plush
 		//
 		inline Genome_section<T> pop_genome()
 		{
-			Genome_section<T> block = (*this)[0];
+			Genome_section<T> section = (*this)[0];
 			
-			Utilities::FixedSizeStack<T>::top_ -= block.size;
+			Utilities::FixedSizeStack<T>::top_ -= section.size;
 
-			return block;
+			if (section.extra_parenthesis > 0)
+			{
+				T atom = T("{:instruction EXEC.NOOP :close 0}");
+				atom.close_parenthesis = section.extra_parenthesis;
+				push(atom);
+			}
+
+			return section;
 		};
 
 		// Purpose: 
@@ -2135,11 +2142,27 @@ namespace Plush
 			Genome_section<T> section = (*this)[element_pos];
 			Utilities::FixedSizeStack<T>::remove_items(section.starting_position, section.size);
 
+			//if (section.extra_parenthesis > 0)
+			//{
+			//	T atom = T("{:instruction EXEC.NOOP :close 0}");
+			//	atom.close_parenthesis = section.extra_parenthesis;
+			//	push(atom);
+			//}
+
 			if (section.extra_parenthesis > 0)
 			{
-				T atom = T("{:instruction EXEC.NOOP :close 0}");
-				atom.close_parenthesis = section.extra_parenthesis;
-				push(atom);
+				T& atom = Utilities::FixedSizeStack<T>::get_atom_ref(section.starting_position - 1);
+				int new_close_parenthesis = atom.close_parenthesis + section.extra_parenthesis;
+				atom.close_parenthesis = new_close_parenthesis;
+			}
+
+			else if (section.size == 0)
+			{
+				T& atom = Utilities::FixedSizeStack<T>::get_atom_ref(section.starting_position - 1);
+				int new_close_parenthesis = atom.close_parenthesis - 1;
+
+				if (atom.close_parenthesis > section.extra_parenthesis)
+					atom.close_parenthesis = new_close_parenthesis;
 			}
 		}
 
@@ -2208,17 +2231,37 @@ namespace Plush
 			int l = 0;
 			unsigned int extra_blocks = 0;
 
-			s = element_pos;
-			l = number_of_atoms_in_Nth_block(extra_blocks, s);
+			//s = element_pos;
+			//l = number_of_atoms_in_Nth_block(extra_blocks, s);
 
-			if (l > 0)
-				Utilities::FixedSizeStack<T>::yankdup_item(s, l);
+			//if (l > 0)
+			//	Utilities::FixedSizeStack<T>::yankdup_item(s, l);
+
+			//else
+			//	push(T("{:instruction EXEC.NOOP :close 1}"));
+
+			//if (Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::size() - l].close_parenthesis > extra_blocks)
+			//	Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::size() - l].close_parenthesis -= extra_blocks;
+
+
+
+			Genome_section<T> section = (*this)[element_pos];
+
+			if (section.size > 0)
+				Utilities::FixedSizeStack<T>::yankdup_item(section.starting_position, section.size);
 
 			else
 				push(T("{:instruction EXEC.NOOP :close 1}"));
 
-			if (Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::size() - l].close_parenthesis > extra_blocks)
-				Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::size() - l].close_parenthesis -= extra_blocks;
+			//if (Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::size() - l].close_parenthesis > section.extra_parenthesis)
+			//	Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::size() - l].close_parenthesis -= section.extra_parenthesis;
+
+			int sz = Utilities::FixedSizeStack<T>::size();
+			T& atom = Utilities::FixedSizeStack<T>::get_stack_element_ref(sz - 1);
+			int new_close_parenthesis = atom.close_parenthesis - section.extra_parenthesis;
+
+			if (atom.close_parenthesis > section.extra_parenthesis)
+				atom.close_parenthesis = new_close_parenthesis;
 		}
 
 		inline void yankdup_stack_element(Genome_section<T> section)
@@ -2411,9 +2454,33 @@ namespace Plush
 		{
 //			inline void shove(FixedSizeStack<T>& other, int insert_position, int offset, int length)
 
-			Genome_section<T> section = (*this)[element_pos];
+			Genome_section<T> target = (*this)[element_pos];
+			Genome_section<T> pre_target = (*this)[element_pos - 1];
+			Genome_section<T> first = (*this)[0];
 
-		 	Utilities::FixedSizeStack<T>::shove_it(section.starting_position, 0, section.size);
+			int target_position = (target.size == 0) ? (target.ending_position - 1) : (target.ending_position);
+			int target_extra_parenthesis = (target.size == 0) ? (pre_target.extra_parenthesis) : (target.extra_parenthesis);
+
+		 	Utilities::FixedSizeStack<T>::shove_it(target_position, 0, first.size);
+
+			if (target_extra_parenthesis)
+			{
+				first = (*this)[element_pos - 1];
+				T& atom1 = Utilities::FixedSizeStack<T>::get_atom_ref(first.ending_position);
+
+				if (first.extra_parenthesis > 0)
+					atom1.close_parenthesis -= first.extra_parenthesis;
+
+				//				section = (*this)[element_pos + 1];
+				//				section = (*this)[element_pos];
+
+				if (first.extra_parenthesis > 0)
+				{
+					T& atom2 = Utilities::FixedSizeStack<T>::get_atom_ref(target.ending_position);
+					int new_close_parenthesis = atom2.close_parenthesis + target_extra_parenthesis;
+					atom2.close_parenthesis = new_close_parenthesis;
+				}
+			}
 		}
 
 		// Purpose: 
