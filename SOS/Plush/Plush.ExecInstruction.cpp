@@ -710,7 +710,9 @@ namespace Plush
 
 
 			// Get reference to top block on code stack
-			Genome_section<CodeAtom> code_block(_env.get_stack<CodeAtom>().item_starting_position(0), _env.get_stack<CodeAtom>().item_size(0));
+			//Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
+
+			Genome_section<CodeAtom> code_block(/*&genome,*/ _env.get_stack<CodeAtom>().item_starting_position(0), _env.get_stack<CodeAtom>().item_size(0));
 
 			// Push code block onto exec stack
 			_env.push<ExecAtom>(code_block);
