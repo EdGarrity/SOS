@@ -4206,7 +4206,7 @@ namespace UnitTest
 					{:instruction EXEC.DO*RANGE :close 0}\
 					{:instruction FLOAT.+ :close 2}\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
-					{:instruction FLOAT.+ :close 3}\
+					{:instruction FLOAT.+ :close 2}\
 \
 					{:instruction FLOAT.* :close 0}\
 					{:instruction FLOAT.- :close 1}\
@@ -4219,7 +4219,7 @@ namespace UnitTest
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
 					CodeAtom("{:instruction CODE.SUBST :close 0}"),
-					CodeAtom("{:instruction FLOAT.- :close 3}"),
+					CodeAtom("{:instruction FLOAT.- :close 2}"),
 					CodeAtom("{:instruction FLOAT.* :close 0}"),
 					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
 					CodeAtom("{:instruction FLOAT.- :close 2}"),
@@ -4250,7 +4250,8 @@ namespace UnitTest
 
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
 				{
-					CodeAtom("{:instruction FLOAT.+ :close 3}"),
+					CodeAtom("{:instruction CODE.SUBST :close 0}"),
+					CodeAtom("{:instruction FLOAT.+ :close 2}"),
 					CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"),
 					CodeAtom("{:instruction FLOAT.+ :close 2}"),
 					CodeAtom("{:instruction EXEC.DO*RANGE :close 0}"),

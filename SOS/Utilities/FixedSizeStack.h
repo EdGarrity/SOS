@@ -54,6 +54,29 @@ namespace Utilities
 			top_ = 0;
 		};
 
+		// Sets value of stack top.  Used when adding a block to the end of the stack.
+		inline void set_top(int new_top)
+		{
+			if (new_top >= N)
+			{
+				std::stringstream error_message;
+				error_message << "Utilities::FixedSizeStack::set() - Stack overflow.  new_top = " << new_top;
+
+				throw std::overflow_error(error_message.str());
+			}
+
+			top_ = new_top;
+		}
+
+		// Checks if seting new value of stack top will cause a stack overflow.
+		inline bool check_set_top(int new_top)
+		{
+			if (new_top >= N)
+				return false;
+			else
+				return true;
+		}
+
 		// Returns a reference to the underlying container
 		inline std::array<T, N>& container()
 		{

@@ -81,9 +81,9 @@ namespace Plush
 			bool s = _env.pop<bool>();
 
 			if (s)
-				_env.get_stack<ExecAtom>().remove_item(1);
+				_env.get_stack<ExecAtom>().remove_item_at_position(1);
 			else
-				_env.get_stack<ExecAtom>().remove_item(0);
+				_env.get_stack<ExecAtom>().remove_item_at_position(0);
 		}
 
 		return 1;
@@ -160,7 +160,7 @@ namespace Plush
 			bool flag = _env.pop<bool>();
 
 			if (!flag)
-				_env.get_stack<ExecAtom>().remove_item(0);
+				_env.get_stack<ExecAtom>().remove_item_at_position(0);
 		}
 
 		return 1;
@@ -169,7 +169,7 @@ namespace Plush
 	unsigned exec_k(Environment & _env)
 	{
 		if (_env.has_elements<ExecAtom>(2))
-			_env.get_stack<ExecAtom>().remove_item(1);
+			_env.get_stack<ExecAtom>().remove_item_at_position(1);
 
 		return 1;
 	}
@@ -252,9 +252,9 @@ namespace Plush
 			_env.get_stack<ExecAtom>().yankdup_item(2);
 
 			// Remove original A B C from stack
-			_env.get_stack<ExecAtom>().remove_item(3);
-			_env.get_stack<ExecAtom>().remove_item(3);
-			_env.get_stack<ExecAtom>().remove_item(3);
+			_env.get_stack<ExecAtom>().remove_item_at_position(3);
+			_env.get_stack<ExecAtom>().remove_item_at_position(3);
+			_env.get_stack<ExecAtom>().remove_item_at_position(3);
 		}
 
 		return 1;
@@ -360,7 +360,7 @@ namespace Plush
 
 			unsigned int block_size = _env.get_stack<CodeAtom>().item_size(0);
 
-			_env.get_stack<CodeAtom>().remove_item(0);
+			_env.get_stack<CodeAtom>().remove_item_at_position(0);
 
 			if (block_size == 1)
 				_env.push<bool>(true);
@@ -718,7 +718,7 @@ namespace Plush
 			_env.push<ExecAtom>(code_block);
 
 			// Remove top code block before execution of block.
-			_env.get_stack<CodeAtom>().remove_item(0);
+			_env.get_stack<CodeAtom>().remove_item_at_position(0);
 
 			return 1;
 		}
@@ -747,7 +747,7 @@ namespace Plush
 				_env.push<ExecAtom>(code_block);
 
 				// Remove top code block before execution of block.
-				_env.get_stack<CodeAtom>().remove_item(0);
+				_env.get_stack<CodeAtom>().remove_item_at_position(0);
 			}
 
 			else
@@ -911,7 +911,7 @@ namespace Plush
 						if (item_number != number_of_items)
 							genome.get_stack_element_ref(old_top).close_parenthesis++;
 
-						genome.remove_item(1);
+						genome.remove_item_at_position(1);
 					}
 				}
 			}
@@ -1017,8 +1017,8 @@ namespace Plush
 			else
 				_env.push<ExecAtom>(code_block_b);
 
-			_env.get_stack<CodeAtom>().remove_item(0);
-			_env.get_stack<CodeAtom>().remove_item(0);
+			_env.get_stack<CodeAtom>().remove_item_at_position(0);
+			_env.get_stack<CodeAtom>().remove_item_at_position(0);
 		}
 
 		return 1;
@@ -1545,9 +1545,9 @@ namespace Plush
 
 			stack.subst(block_A, block_C, block_B);
 
-			stack.remove_item(1);
-			stack.remove_item(1);
-			stack.remove_item(1);
+			stack.remove_item_at_position(1);
+			stack.remove_item_at_position(1);
+			stack.remove_item_at_position(1);
 		}
 
 		return 1;
