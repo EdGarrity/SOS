@@ -731,10 +731,10 @@ namespace Utilities
 		//
 		// Remarks:
 		//
-		inline T& get_atom_ref(int position)
-		{
-			return get_atom(position);
-		}
+		//inline T& get_atom_ref(int position)
+		//{
+		//	return get_atom(position);
+		//}
 
 
 	protected:

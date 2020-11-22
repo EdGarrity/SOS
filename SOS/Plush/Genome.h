@@ -1940,7 +1940,7 @@ namespace Plush
 
 			if ((l == 0) && (s > 0))
 			{
-				T& atom = Utilities::FixedSizeStack<T>::get_atom_ref(s - 1);
+				T& atom = Utilities::FixedSizeStack<T>::get_atom(s - 1);
 
 				if (atom.close_parenthesis > 0)
 					atom.close_parenthesis--;
@@ -1990,14 +1990,14 @@ namespace Plush
 
 			if (section.extra_parenthesis > 0)
 			{
-				T& atom = Utilities::FixedSizeStack<T>::get_atom_ref(section.starting_position - 1);
+				T& atom = Utilities::FixedSizeStack<T>::get_atom(section.starting_position - 1);
 				int new_close_parenthesis = atom.close_parenthesis + section.extra_parenthesis;
 				atom.close_parenthesis = new_close_parenthesis;
 			}
 
 			else if (section.size == 0)
 			{
-				T& atom = Utilities::FixedSizeStack<T>::get_atom_ref(section.starting_position - 1);
+				T& atom = Utilities::FixedSizeStack<T>::get_atom(section.starting_position - 1);
 				int new_close_parenthesis = atom.close_parenthesis - 1;
 
 				if (atom.close_parenthesis > section.extra_parenthesis)
@@ -2094,6 +2094,33 @@ namespace Plush
 			else
 				push(T("{:instruction EXEC.NOOP :close 1}"));
 		}
+
+		// Purpose: 
+		//   Pushes a copy of the genome at stack level N on top of the stack.
+		//
+		//   This is a stack operation.  Each element of the stack is a genome.  This function will copy 
+		//   the genome refernced by the genome section to the top of the stack.
+		//
+		// Parameters:
+		//   section = Reference to section of stack to push.  
+		// 
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		inline void push(Genome_section<T> section)
+		{
+			if (section.size > 0)
+				Utilities::FixedSizeStack<T>::yankdup_item(section.starting_position, section.size);
+		}
+
 
 		// Purpose: 
 		//   Moves item N to the top of the stack.
@@ -2286,14 +2313,14 @@ namespace Plush
 			if (target_extra_parenthesis)
 			{
 				first = (*this)[element_pos - 1];
-				T& atom1 = Utilities::FixedSizeStack<T>::get_atom_ref(first.ending_position);
+				T& atom1 = Utilities::FixedSizeStack<T>::get_atom(first.ending_position);
 
 				if (first.extra_parenthesis > 0)
 					atom1.close_parenthesis -= first.extra_parenthesis;
 
 				if (first.extra_parenthesis > 0)
 				{
-					T& atom2 = Utilities::FixedSizeStack<T>::get_atom_ref(target.ending_position);
+					T& atom2 = Utilities::FixedSizeStack<T>::get_atom(target.ending_position);
 					int new_close_parenthesis = atom2.close_parenthesis + target_extra_parenthesis;
 					atom2.close_parenthesis = new_close_parenthesis;
 				}
