@@ -36,8 +36,6 @@ namespace Plush
 	// for possible access during the execution of the body of the loop
 	unsigned exec_do_range(Environment & _env)
 	{
-		unsigned int extra_blocks = 0;
-
 		if ((_env.has_elements<long>(2)) && (_env.has_elements<ExecAtom>(1)))
 		{
 			int n = _env.pop<long>();	// destination index
@@ -53,20 +51,19 @@ namespace Plush
 				if (i > n)
 					direction = -1;
 
-				// Check that the EXEC stack can hold another copy of Block A
-				int s = _env.get_stack<ExecAtom>().number_of_atoms(extra_blocks);
+				// Get reference to top block on code stack
+				Genome_section<ExecAtom> code_block = _env.get_stack<ExecAtom>()[0];
 
-				if (_env.get_stack<ExecAtom>().free() > (s * 2))
+				if (_env.get_stack<ExecAtom>().free() > (code_block.size * 2))
 				{
 					_env.push<long>(i + direction);
 					_env.push<long>(n);
 
-					_env.get_stack<ExecAtom>().shove_it(0, 0, s);
+					// Push code block onto exec stack
+					_env.push<ExecAtom>(code_block);
 
 					_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.DO*RANGE :close 0}"));
 				}
-				else
-					_env.push<long>(i);
 			}
 		}
 

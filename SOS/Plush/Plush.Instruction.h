@@ -346,34 +346,9 @@ namespace Plush
 		// Check for valid parameters
 		if (_env.has_elements<CodeAtom>(2))
 		{
-			//Genome<CodeAtom> extracted_block_A;
-			//Genome<CodeAtom> extracted_block_B;
-
-			//_env.pop<CodeAtom>(extracted_block_A);
-			//_env.pop<CodeAtom>(extracted_block_B);
-
-			//if (extracted_block_A == extracted_block_B)
-			//	_env.push<bool>(true);
-			//else
-			//	_env.push<bool>(false);
-
-
-
-
-			//Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
-
-			//Genome_section<CodeAtom> block_a = genome[0];
-			//Genome_section<CodeAtom> block_b = genome[1];
-
-			//if (genome.comp(block_a, block_b))
-			//	_env.push<bool>(true);
-			//else
-			//	_env.push<bool>(false);
-
-
 			Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
-			Genome_section<CodeAtom> block_a = _env.peek_genome<CodeAtom>(0);
-			Genome_section<CodeAtom> block_b = _env.peek_genome<CodeAtom>(1);
+			Genome_section<CodeAtom> block_a = genome[0]; 
+			Genome_section<CodeAtom> block_b = genome[1]; 
 
 			if (genome.comp(block_a, block_b))
 				_env.push<bool>(true);
@@ -393,17 +368,6 @@ namespace Plush
 		// Check for valid parameters
 		if (_env.has_elements<ExecAtom>(2))
 		{
-			//Genome<ExecAtom> block_A;
-			//Genome<ExecAtom> block_B;
-
-			//_env.pop<ExecAtom>(block_A);
-			//_env.pop<ExecAtom>(block_B);
-
-			//if (block_A == block_B)
-			//	_env.push<bool>(true);
-			//else
-			//	_env.push<bool>(false);
-
 			Genome<ExecAtom>& genome = _env.get_stack<ExecAtom>();
 
 			Genome_section<ExecAtom> block_a = genome[0];
@@ -413,6 +377,9 @@ namespace Plush
 				_env.push<bool>(true);
 			else
 				_env.push<bool>(false);
+
+			_env.pop_genome<ExecAtom>();
+			_env.pop_genome<ExecAtom>();
 		}
 
 		return 1;
@@ -578,31 +545,6 @@ namespace Plush
 		{
 			int index = pop_safe_index<CodeAtom>(_env);
 
-			//Genome<CodeAtom> first_block;
-			//Genome<CodeAtom> top_block;
-			//Genome<CodeAtom> bottom_block;
-
-			//if (index > 0)
-			//{
-			//	// Get first block from stack
-			//	_env.pop<CodeAtom>(first_block);
-
-			//	if (first_block.size() == 0)
-			//		_env.push<CodeAtom>(first_block);
-
-			//	else
-			//	{
-			//		Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
-
-			//		genome.split(top_block, bottom_block, index, Genome<CodeAtom>::SPLIT_MODE::block);
-
-			//		_env.clear<CodeAtom>();
-			//		_env.push<CodeAtom>(bottom_block);
-			//		_env.push<CodeAtom>(first_block);
-			//		_env.push<CodeAtom>(top_block);
-			//	}
-			//}
-
 			if (index > 0)
 			{
 				Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
@@ -610,12 +552,7 @@ namespace Plush
 				Genome_section<CodeAtom> section = genome[0];
 
 				if (section.size > 0)
-				{
-					//genome.remove_stack_element(0);
-
 					genome.shove_to_stack_element(index);
-//					_env.pop_genome<CodeAtom>();
-				}
 			}
 		}
 
@@ -627,81 +564,7 @@ namespace Plush
 	{
 		if ((_env.has_elements<long>(1)) && (_env.has_elements<ExecAtom>(1)))
 		{
-			//int extra_blocks = 0;
-			//int simulated_closing_parenthesis = 0;
-			int index = _env.pop<long>();	// index
-
-			//Genome<ExecAtom> first_block;
-			//Genome<ExecAtom> top_half;
-			//Genome<ExecAtom> bottom_half;
-			//Genome<ExecAtom> top_block;
-			//Genome<ExecAtom> bottom_block;
-			//Genome<ExecAtom> genome;
-			//Genome<ExecAtom> temp_block;
-
-			//if (index > 0)
-			//{
-			//	// Get first block from stack
-			//	_env.pop<ExecAtom>(first_block);
-
-			//	if (first_block.size() == 0)
-			//		_env.push<ExecAtom>(first_block);
-
-			//	else
-			//	{
-			//		int n = 0;
-			//		while (_env.is_empty<ExecAtom>() == false)
-			//		{
-			//			if (simulated_closing_parenthesis == 0)
-			//				extra_blocks = _env.pop<ExecAtom>(genome);
-
-			//			if (simulated_closing_parenthesis > 0)
-			//			{
-			//				genome.clear();
-			//				ExecAtom atom = Plush::Atom("{:instruction EXEC.NOOP :close 1}");
-			//				genome.push(atom);
-
-			//				simulated_closing_parenthesis--;
-			//				extra_blocks = 0;
-			//			}
-
-			//			if (extra_blocks > 0)
-			//			{
-			//				if ((n + 1) == index)
-			//				{
-			//					simulated_closing_parenthesis = extra_blocks;
-			//					genome.bottom().close_parenthesis = 1;;
-			//				}
-
-			//				else
-			//					n += extra_blocks;
-			//			}
-
-			//			if (n < index)
-			//				top_half.push_genome(genome);
-			//			else
-			//				bottom_half.push_genome(genome);
-
-			//			n++;
-			//		}
-
-			//		while (top_half.empty() == false)
-			//		{
-			//			top_half.pop_genome(temp_block);
-			//			top_block.push_genome(temp_block);
-			//		}
-
-			//		while (bottom_half.empty() == false)
-			//		{
-			//			bottom_half.pop_genome(temp_block);
-			//			bottom_block.push_genome(temp_block);
-			//		}
-
-			//		_env.push<ExecAtom>(bottom_block);
-			//		_env.push<ExecAtom>(first_block);
-			//		_env.push<ExecAtom>(top_block);
-			//	}
-			//}
+			int index = pop_safe_index<ExecAtom>(_env);
 
 			if (index > 0)
 			{
@@ -710,11 +573,7 @@ namespace Plush
 				Genome_section<ExecAtom> section = genome[0];
 
 				if (section.size > 0)
-				{
-					genome.remove_stack_element(0);
-
 					genome.shove_to_stack_element(index);
-				}
 			}
 		}
 
