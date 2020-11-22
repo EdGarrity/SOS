@@ -821,64 +821,6 @@ namespace Plush
 
 	unsigned code_extract(Environment & _env)
 	{
-		//if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
-		//{
-		//	int index = std::abs(_env.pop<long>());	// index
-
-		//	//unsigned int extra_first_blocks = 0;
-		//	//unsigned int extra_second_bloxks = 0;
-
-		//	Genome<CodeAtom> first_block;
-		//	//Genome<CodeAtom> second_block;
-		//	Genome<CodeAtom> left_half;
-		//	Genome<CodeAtom> right_half;
-		//	Genome<CodeAtom> indexed_block;
-		//	Genome<CodeAtom> rest_block;
-
-		//	//Genome<CodeAtom> top_block;
-		//	//Genome<CodeAtom> extracted_block;
-		//	//Genome<CodeAtom> block_without_extracted;
-		//	//Genome<CodeAtom> block_copy;
-
-		//	if (index != 0)
-		//	{
-		//		// Get top block
-		//		_env.pop(first_block);
-
-		//		// Get count items in first block
-		//		int number_of_items = first_block.number_of_items();
-
-		//		if (number_of_items > 0)
-		//		{
-		//			// Take modulo the number of blocks to ensure that it is within the meaningful range.
-		//			index = std::abs(index - 1) % number_of_items;
-
-		//			// Split block at insertion point
-		//			first_block.split(left_half, right_half, index, Genome<CodeAtom>::SPLIT_MODE::item);
-
-		//			// Compensate for extra blocks in the second item.
-		//			//if (extra_second_bloxks > 0)
-		//			//	right_half.bottom().close_parenthesis += extra_second_bloxks;
-
-		//			// Get indexed block
-		//			right_half.split(indexed_block, rest_block, 1, Genome<CodeAtom>::SPLIT_MODE::item);
-
-		//			// Close extracted item
-		//			if ((indexed_block.get_top_ref().instruction == "EXEC.NOOP_OPEN_PAREN") 
-		//				&& (indexed_block.get_top_ref().close_parenthesis == 0)
-		//				)
-		//				indexed_block.bottom().close_parenthesis = 2;
-		//			else
-		//				indexed_block.bottom().close_parenthesis = 1;
-
-		//			// Replace top of stack with extracted item
-		//			_env.push<CodeAtom>(indexed_block);
-		//		}
-		//	}
-		//}
-
-
-
 		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
 		{
 			int item_number = std::abs(_env.pop<long>());	// index
