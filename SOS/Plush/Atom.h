@@ -123,28 +123,6 @@ namespace Plush
 
 		void compile(std::string _program_statement);
 
-		//inline bool operator==(Atom &other_atom) const
-		//{
-		//	if ((instruction == other_atom.instruction)
-		//		&& (close_parentheses == other_atom.close_parentheses)
-		//		&& (type == other_atom.type))
-		//		return true;
-
-		//	else
-		//		return false;
-		//}
-
-		//inline bool operator!=(Atom &other_atom) const
-		//{
-		//	if ((instruction == other_atom.instruction)
-		//		&& (close_parentheses == other_atom.close_parentheses)
-		//		&& (type == other_atom.type))
-		//		return false;
-
-		//	else
-		//		return true;
-		//}
-
 		// Purpose: 
 		//   Compare atom with provided atom and return True if they match
 		//
@@ -215,38 +193,6 @@ namespace Plush
 		}
 	};
 
-	//class ExecAtom : public Atom
-	//{
-	//private:
-
-	//public:
-	//	ExecAtom() : Atom()
-	//	{
-	//	};
-
-	//	ExecAtom(std::string _program_statement) : Atom(_program_statement)
-	//	{
-	//	};
-
-	//	ExecAtom(const Atom &atom) : Atom(atom)
-	//	{
-	//	};
-
-	//	~ExecAtom() {};
-
-	//	inline bool operator==(const ExecAtom& other)
-	//	{ 
-	//		return ((instruction == other.instruction)
-	//			&& (close_parenthesis == other.close_parenthesis)
-	//			&& (type == other.type));
-	//	};
-
-	//	inline bool operator!=(const ExecAtom& other) { return !(operator==(other)); };
-	//};
-
-//	extern class CodeAtom : public Atom;
-//	class CodeAtom : public Atom;
-
 	class ExecAtom : public Atom
 	{
 	private:
@@ -263,15 +209,6 @@ namespace Plush
 		explicit ExecAtom(Atom &other) : Atom(other) {};
 		explicit ExecAtom(const Atom* other) : Atom(other) {};
 		explicit ExecAtom(Atom* other) : Atom(other) {};
-//		explicit ExecAtom(CodeAtom& other) : Atom(other.instruction, other.close_parenthesis, other.type) {};
-
-
-		//explicit ExecAtom(CodeAtom& other) 
-		//{
-		//	this->instruction = other.instruction;
-		//	this->close_parenthesis = other.close_parenthesis;
-		//	this->type = other.type;
-		//};
 
 		~ExecAtom() {};
 
@@ -283,16 +220,8 @@ namespace Plush
 		};
 
 		inline bool operator!=(const ExecAtom& other) { return !(operator==(other)); };
-
-		//inline Atom to_atom(ExecAtom& exec_atom)
-		//{
-		//	//Atom atom(exec_atom.instruction, exec_atom.close_parenthesis, exec_atom.type);
-
-		//	//return (atom);
-
-		//	return Atom(exec_atom.instruction, exec_atom.close_parenthesis, exec_atom.type);
-		//};
 	};
+
 	class CodeAtom : public Atom
 	{
 	private:

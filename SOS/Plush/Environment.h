@@ -10,8 +10,6 @@ namespace Plush
 	typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
 	extern Func2BlockWantsMapType Func2BlockWantsMap;
 
-	//typedef combinable<Push::Env_detail> Env;
-
 	class Environment
 	{
 	private:
@@ -76,24 +74,24 @@ namespace Plush
 			return genome.number_of_blocks();
 		}
 
-		template <typename T> inline Genome<T> &get_stack(){}
-		template <> inline Genome<ExecAtom> &get_stack()
+		template <typename T> inline Genome<T>& get_stack(){}
+		template <> inline Genome<ExecAtom>& get_stack()
 		{
 			return exec_stack_;
 		}
-		template <> inline Genome<CodeAtom> &get_stack()
+		template <> inline Genome<CodeAtom>& get_stack()
 		{
 			return code_stack_;
 		}
-		template <> inline Genome<long> &get_stack()
+		template <> inline Genome<long>& get_stack()
 		{
 			return int_stack_;
 		}
-		template <> inline Genome<double> &get_stack()
+		template <> inline Genome<double>& get_stack()
 		{
 			return double_stack_;
 		}
-		template <> inline Genome<bool> &get_stack()
+		template <> inline Genome<bool>& get_stack()
 		{
 			return bool_stack_;
 		}
@@ -116,72 +114,39 @@ namespace Plush
 			get_stack<T>().push(value);
 		}
 
-		//template <class T>
-		//inline void push(Genome<CodeAtom>& genome)
-		//{
-		//	get_stack<T>().push_genome(genome);
-		//}
-		
-		//template <class T>
-		//inline void push(Genome<ExecAtom>& genome)
-		//{
-		//	get_stack<T>().push_genome(genome);
-		//}
-
-		//inline void push(CodeAtom genome)
-		//{
-		//	get_stack<CodeAtom>().push(genome);
-		//}
-		//inline void push(ExecAtom genome)
-		//{
-		//	get_stack<ExecAtom>().push(genome);
-		//}
-
-		//template <class T>
-		//inline void push(Genome_section<T> genome_section)
-		//{
-		//	get_stack<T>().push_genome(genome_section);
-		//}
-
 		template <class T>
 		inline void push(Genome_section<CodeAtom> genome_section)
 		{
-			Genome<CodeAtom> code_genome = get_stack<CodeAtom>();
+			Genome<CodeAtom>& code_stack = get_stack<CodeAtom>();
 
 			if (genome_section.size == 0)
-			{
 				push(T("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
-			}
+
 			else
 			{
-				for (int n = genome_section.ending_position; n >= (int)genome_section.starting_position; n--)
-				{
-					CodeAtom code_atom = code_genome.get_atom(n);
-					T t_atom = T();
-					t_atom.set(code_atom.instruction, code_atom.close_parenthesis, code_atom.type);
-					push(t_atom);
-				}
+				int starting_index = code_stack.position_to_index(genome_section.ending_position);
+				int ending_index = code_stack.position_to_index(genome_section.starting_position) + 1;
+
+				for (int n = starting_index; n < ending_index; n++)
+					push(T(code_stack.get_stack_element(n)));
 			}
 		}
 
 		template <class T>
 		inline void push(Genome_section<ExecAtom> genome_section)
 		{
-			Genome<ExecAtom> exec_genome = get_stack<ExecAtom>();
+			Genome<ExecAtom>& stack = get_stack<ExecAtom>();
 
 			if (genome_section.size == 0)
-			{
 				push(T("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
-			}
+
 			else
 			{
-				for (int n = genome_section.ending_position; n >= (int)genome_section.starting_position; n--)
-				{
-					ExecAtom exec_atom = exec_genome.get_atom(n);
-					T t_atom = T();
-					t_atom.set(exec_atom.instruction, exec_atom.close_parenthesis, exec_atom.type);
-					push(t_atom);
-				}
+				int starting_index = stack.position_to_index(genome_section.ending_position);
+				int ending_index = stack.position_to_index(genome_section.starting_position) + 1;
+
+				for (int n = starting_index; n < ending_index; n++)
+					push(T(stack.get_stack_element(n)));
 			}
 		}
 
@@ -192,24 +157,6 @@ namespace Plush
 			get_stack<T>().pop();
 			return val;
 		}
-
-		//template <>
-		//inline CodeAtom pop<CodeAtom>()
-		//{
-		//	std::stringstream error_message;
-		//	error_message << "reference Environment::pop<CodeAtom>() - Function not defined for this type of stack";
-
-		//	throw std::domain_error(error_message.str());
-		//}
-
-		//template <>
-		//inline ExecAtom pop<ExecAtom>()
-		//{
-		//	std::stringstream error_message;
-		//	error_message << "reference Environment::pop<ExecAtom>() - Function not defined for this type of stack";
-
-		//	throw std::domain_error(error_message.str());
-		//}
 
 		template <class T>
 		inline Genome_section<T> pop_genome()
@@ -256,12 +203,6 @@ namespace Plush
 		{
 			return get_stack<ExecAtom>()[position];
 		}
-
-		//template <class T>
-		//inline unsigned int pop(Genome<T> &other_stack)
-		//{
-		//	return get_stack<T>().pop_genome(other_stack);
-		//}
 
 		template <typename T>
 		inline T get_top()
@@ -317,13 +258,18 @@ namespace Plush
 		}
 
 		template <typename T>
-		inline T peek_index(unsigned index)
+		inline T& get_atom(unsigned position)
 		{
-			if (has_elements<T>(index + 1))
-				return get_stack<T>()[get_stack<T>().size() - index - 1];
+			if (has_elements<T>(position + 1))
+				return get_stack<T>().get_atom(position);
 
 			else
-				throw;
+			{
+				std::stringstream error_message;
+				error_message << "Environment::get_atom() - Stack overflow.  position = " << position;
+
+				throw std::overflow_error(error_message.str());
+			}
 		}
 	};
 }

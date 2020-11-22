@@ -32,9 +32,6 @@ namespace Plush
 	template <class T>
 	class Genome_section
 	{
-	//private:
-	//	Utilities::FixedSizeStack<T>& stack_ = (*nullptr);
-
 	public:
 		// Position of first atom in genome (0 = top)
 		unsigned int starting_position = 0;
@@ -56,14 +53,6 @@ namespace Plush
 			this->size = 0;
 			this->extra_parenthesis = 0;
 		}
-
-		// Copy constructor
-		//Genome_section(const Genome_section<T>& other)
-		//{
-		//	this->starting_position = other.starting_position;
-		//	this->ending_position = other.ending_position;
-		//	this->size = other.size;
-		//}
 
 		// Copy constructor (From CodeAtom)
 		Genome_section(const Genome_section<CodeAtom>& other)
@@ -281,34 +270,6 @@ namespace Plush
 
 			return temp;
 		}
-
-		// Purpose: 
-		//   Returns a reference to the genome atom in element Nth of the stack. 
-		//
-		//   If N is less than or equal to 0, then a reference to the atom at the top of the stack is 
-		//   returned.  If N is greater than the number of atoms in the stack, then a reference to the
-		//   genome at the bottom of the stack is returned. 
-		//
-		// Parameters:
-		//   n - Stack element to return (zero-based).
-		// 
-		// Return value:
-		//   Reference to atom in requested stack element
-		//
-		// Side Effects:
-		//   None
-		//
-		// Thread Safe:
-		//   Yes.  
-		//
-		// Remarks:
-		//
-//		inline const T operator [] (unsigned int item_position) const
-//		{
-//			Genome<T>& stack = _env.get_stack<T>();
-//			int item_index = stack.size() - item_position - 1;
-//			return Utilities::FixedSizeStack<T>::get_atom(item_index);
-//		}
 	};
 
 	template <class T, size_t N = domain::argmap::maximum_stack_size>
@@ -514,50 +475,6 @@ namespace Plush
 		};
 
 		// Purpose: 
-		//   Returns a reference to the genome container (the atom array)
-		//
-		// Parameters:
-		//   None
-		// 
-		// Return value:
-		//   Reference to the genome's FixedSizeStack object
-		//
-		// Side Effects:
-		//   None
-		//
-		// Thread Safe:
-		//   Yes.  
-		//
-		// Remarks:
-		//
-		inline const T& get_stack_element(int index)
-		{
-			return Utilities::FixedSizeStack<T>::stack_[index];
-		}
-
-		// Purpose: 
-		//   Returns a reference to the genome container (the atom array)
-		//
-		// Parameters:
-		//   None
-		// 
-		// Return value:
-		//   Reference to the genome's FixedSizeStack object
-		//
-		// Side Effects:
-		//   None
-		//
-		// Thread Safe:
-		//   Yes.  
-		//
-		// Remarks:
-		//
-		inline const std::array<T, N>& get_atoms()
-		{
-			return Utilities::FixedSizeStack<T>::stack_;
-		}
-
-		// Purpose: 
 		//   Returns a reference to the genome in element Nth of the stack. 
 		//
 		//   This is a stack operation.  Each element of the stack is a genome.  This function will return 
@@ -634,7 +551,7 @@ namespace Plush
 				l = number_of_atoms(extra_closing_parenthesis, n);
 			}
 
-			return Genome_section<T>(/*this,*/ s, l, extra_closing_parenthesis);
+			return Genome_section<T>(s, l, extra_closing_parenthesis);
 		}
 
 		// Purpose: 
@@ -756,6 +673,9 @@ namespace Plush
 		//   a block requirement in a nested list) or as close - open instructions (for the top level list).
 		//   Nested levels begin when an instruction requiring blocks is encountered in the list and end 
 		//   when all required blocks are found.
+		//
+		//   This is equivalent to the Push Stack level.  Each block on the FixedSize stack is a 
+		//   level on the Push Stack.
 		//
 		// Parameters:
 		//   None
@@ -1323,7 +1243,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		Genome_section<T> get_item_at_position(int search_starting_position)
+		Genome_section<T> get_item_that_starts_at_position(int search_starting_position)
 		{
 			Genome_section<T> subsection;
 			int atom_count = 0;
@@ -1396,131 +1316,6 @@ namespace Plush
 			subsection.set(search_starting_position, item_length, extra_blocks);
 			return subsection;
 		};
-
-		// Purpose: 
-		//   Splits the genome in two
-		//
-		//   This function will split the genome into two parts at the split point provided by the caller.
-		//   The split point is zero - based; that is, a split point less than or equal to 0 represents a
-		//   point before the first item.  A split point greater than the number of items in the genome will 
-		//   represent a point after the last item.  The caller is expected to provide the two genomes to 
-		//   write the two haves to.  This function is non - destructive, that is, it will not destroy or 
-		//   alter the genome to be split.
-		//
-		//   When determining the split point, the genome is processed as a list object, i.e., an open 
-		//   parenthesis is assumed to exist before the first item on the stack.  This function counts 
-		//   items or blocks (depending on the mode) from the beginning of the genome to locate the split 
-		//   point; nested lists contribute only 1 to this count, no matter what they contain.  Closing 
-		//   parenthesis can either be interpreted as close instructions (to satisfy a block requirement 
-		//   in a nested list) or as close - open instructions (for the top level list).  Nested levels 
-		//   begin when an instruction requiring blocks is encountered in the list and end when all 
-		//   required blocks are found.
-		//
-		// Parameters:
-		//   left_half		- Reference to buffer to write genome items located before the split point
-		//   right_half		- Reference to buffer to write genome items located after the split point
-		//   split_position - Zero-based index of the split point in the genome list of items
-		//   mode			- Bolck or Item
-		//
-		// Return value:
-		//   Number if items in the top level of the list
-		//
-		// Side Effects:
-		//   None
-		//
-		// Thread Safe:
-		//   Yes.  As long as no other thread attemps to write to the child.
-		//
-		// Remarks:
-		//
-		enum SPLIT_MODE
-		{
-			block,
-			item
-		};
-		unsigned int split(Genome<T> &left_half, 
-			Genome<T> &right_half, 
-			unsigned int split_position, 
-			SPLIT_MODE mode)
-		{
-			//Genome<T> genome(this);
-			//Genome<T> temp_left;
-			//Genome<T> temp_right;
-
-			//while ((genome.empty() == false) && (split_position-- > 0))
-			//{
-			//	Genome<T> temp;
-
-			//	if (mode == SPLIT_MODE::block)
-			//		genome.pop_genome(temp);
-			//	else
-			//		genome.pop_item(temp);
-
-			//	temp_left.push_genome(temp);
-			//}
-
-			//while (genome.empty() == false)
-			//{
-			//	Genome<T> temp;
-
-			//	if (mode == SPLIT_MODE::block)
-			//		genome.pop_genome(temp);
-			//	else
-			//		genome.pop_item(temp);
-
-			//	temp_right.push_genome(temp);
-			//}
-
-			//while (temp_left.empty() == false)
-			//{
-			//	Genome<T> temp;
-
-			//	if (mode == SPLIT_MODE::block)
-			//		temp_left.pop_genome(temp);
-			//	else
-			//		temp_left.pop_item(temp);
-
-			//	left_half.push_genome(temp);
-			//}
-
-			//while (temp_right.empty() == false)
-			//{
-			//	Genome<T> temp;
-
-			//	if (mode == SPLIT_MODE::block)
-			//		temp_right.pop_genome(temp);
-			//	else
-			//		temp_right.pop_item(temp);
-
-			//	right_half.push_genome(temp);
-			//}
-
-			unsigned int item_number = 0;
-			
-			return item_number;
-		}
-
-		// Purpose: 
-		//   Push a genome on the back of the stack
-		//
-		// Parameters:
-		//   genome	- Reference to genome to push
-		// 
-		// Return value:
-		//   None
-		//
-		// Side Effects:
-		//   Stack updated with provided genome at the bottom of the stack.
-		//
-		// Thread Safe:
-		//   Yes.  As long as no other thread attemps to write to the child.
-		//
-		// Remarks:
-		//
-		//inline void push_back(Genome<T> &genome)
-		//{
-		//	Utilities::FixedSizeStack<T>::shove(genome, Utilities::FixedSizeStack<T>::size());
-		//}
 
 		// Purpose: 
 		//   Push an atom on the stack
@@ -1824,21 +1619,21 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline unsigned int subitem_starting_position(int position)
-		{
-			int s = 0;
-			int l = 0;
-			unsigned int extra_blocks;
+		//inline unsigned int subitem_starting_position(int position)
+		//{
+		//	int s = 0;
+		//	int l = 0;
+		//	unsigned int extra_blocks;
 
-			// Find index to item after target item
-			for (int n = 0; n <= position; n++)
-			{
-				l = number_of_atoms_in_Nth_block(extra_blocks, n);
-				s += l;
-			}
+		//	// Find index to item after target item
+		//	for (int n = 0; n <= position; n++)
+		//	{
+		//		l = number_of_atoms_in_Nth_block(extra_blocks, n);
+		//		s += l;
+		//	}
 
-			return s - l;
-		}
+		//	return s - l;
+		//}
 
 		// Purpose: 
 		//   Returns starting position of Nth item in the top level block of stack
@@ -1893,21 +1688,21 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline unsigned int subitem_ending_position(int position)
-		{
-			int s = 0;
-			int l = 0;
-			unsigned int extra_blocks;
+		//inline unsigned int subitem_ending_position(int position)
+		//{
+		//	int s = 0;
+		//	int l = 0;
+		//	unsigned int extra_blocks;
 
-			// Find index to top of item after target item
-			for (int n = 0; n <= position; n++)
-			{
-				l = number_of_atoms_in_Nth_block(extra_blocks, n);
-				s += l;
-			}
+		//	// Find index to top of item after target item
+		//	for (int n = 0; n <= position; n++)
+		//	{
+		//		l = number_of_atoms_in_Nth_block(extra_blocks, n);
+		//		s += l;
+		//	}
 
-			return s - 1;
-		}
+		//	return s - 1;
+		//}
 
 		// Purpose: 
 		//   Removes a top level item from the stack
@@ -2327,12 +2122,6 @@ namespace Plush
 			}
 		}
 
-		// Returns a reference to the underlying container
-		inline std::array<T, N>& container()
-		{
-			return Utilities::FixedSizeStack<T>::stack_;
-		}
-
 		// Purpose: 
 		//   Substitute the first item with the second item 
 		//
@@ -2361,7 +2150,7 @@ namespace Plush
 					main_section_position <= main_section.ending_position; 
 					main_section_position++)
 				{
-					Genome_section<T> item = get_item_at_position(main_section_position);
+					Genome_section<T> item = get_item_that_starts_at_position(main_section_position);
 
 					if (comp(item, first_section))
 					{
@@ -2444,14 +2233,14 @@ namespace Plush
 			// If length of Block A is less than Block B + 1, then it is too small to contain Block B
 			if (block_a.size > block_b.size)
 			{
-				for (unsigned int n = block_a.starting_position; n <= block_a.ending_position; n++)
+				for (int block_a_section_position = block_a.starting_position;
+					block_a_section_position <= block_a.ending_position;
+					block_a_section_position++)
 				{
-					unsigned int l = number_of_atoms_in_Nth_block(extra_blocks, n, true);
+					Genome_section<T> item = get_item_that_starts_at_position(block_a_section_position);
 
-					Genome_section<T> sub_block(n, l);
-
-					if (comp(sub_block, block_b))
-						return sub_block;
+					if (comp(item, block_b))
+						return item;
 				}
 			};
 
@@ -2482,37 +2271,37 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline bool container_of(Genome_section<T> block_A, Genome_section<T> block_B, Genome_section<T>& container_block)
-		{
-			bool found = false;
-			//unsigned int extra_blocks = 0;
+		//inline bool container_of(Genome_section<T> block_A, Genome_section<T> block_B, Genome_section<T>& container_block)
+		//{
+		//	bool found = false;
+		//	//unsigned int extra_blocks = 0;
 
-			//// If length of Block A is less than Block B + 1, then it is too small to contain Block B
-			//while (block_A.size > block_B.size)
-			//{
-			//	T& atom_a = Utilities::FixedSizeStack<T>::stack_[block_A.starting_position];
+		//	//// If length of Block A is less than Block B + 1, then it is too small to contain Block B
+		//	//while (block_A.size > block_B.size)
+		//	//{
+		//	//	T& atom_a = Utilities::FixedSizeStack<T>::stack_[block_A.starting_position];
 
-			//	// If the top atom of block A is the start of another block
-			//	if (Func2BlockWantsMap[atom_a.instruction] > 0)
-			//	{
-			//		// And the next item is block B
-			//		Genome_ref sub_block = block_A + 1;
+		//	//	// If the top atom of block A is the start of another block
+		//	//	if (Func2BlockWantsMap[atom_a.instruction] > 0)
+		//	//	{
+		//	//		// And the next item is block B
+		//	//		Genome_ref sub_block = block_A + 1;
 
-			//		// Then we are done.  Return the container of Block B
-			//		if (comp(sub_block, block_B))
-			//		{
-			//			container_block = block_A;
-			//			found = true;
-			//			break;
-			//		}
-			//	}
+		//	//		// Then we are done.  Return the container of Block B
+		//	//		if (comp(sub_block, block_B))
+		//	//		{
+		//	//			container_block = block_A;
+		//	//			found = true;
+		//	//			break;
+		//	//		}
+		//	//	}
 
-			//	// Keep looking...
-			//	//block_A++;
-			//};
+		//	//	// Keep looking...
+		//	//	//block_A++;
+		//	//};
 
-			return found;
-		}
+		//	return found;
+		//}
 
 		inline Genome_section<T> container_of(Genome_section<T> block_a, Genome_section<T> block_b)
 		{
@@ -2523,20 +2312,39 @@ namespace Plush
 			// If length of Block A is less than Block B + 1, then it is too small to contain Block B
 			if (block_a.size > block_b.size)
 			{
-				for (unsigned int n = block_a.starting_position; n <= block_a.ending_position; n++)
+				//for (unsigned int n = block_a.starting_position; n <= block_a.ending_position; n++)
+				//{
+				//	unsigned int l = number_of_atoms_in_Nth_block(extra_blocks, n);
+
+				//	Genome_section<T> sub_block(n, l);
+
+				//	if (comp(sub_block, block_b))
+				//	{
+				//		found = true;
+				//		break;
+				//	}
+
+				//	container_block.set(n, l);
+				//}
+
+
+
+				for (int block_a_section_position = block_a.starting_position;
+					block_a_section_position <= block_a.ending_position;
+					block_a_section_position++)
 				{
-					unsigned int l = number_of_atoms_in_Nth_block(extra_blocks, n);
+					Genome_section<T> item = get_item_that_starts_at_position(block_a_section_position);
 
-					Genome_section<T> sub_block(n, l);
-
-					if (comp(sub_block, block_b))
+					if (comp(item, block_b))
 					{
 						found = true;
 						break;
 					}
 
-					container_block.set(n, l);
+					container_block = item;
 				}
+
+
 			};
 
 			if (!found)

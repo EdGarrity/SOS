@@ -92,7 +92,7 @@ namespace pushGP
 
 		new_genome.clear();
 
-		for (const Plush::CodeAtom& atom : old_genome.get_atoms())
+		for (const Plush::CodeAtom& atom : old_genome.container())
 		{
 			if (Utilities::random_double(0.0, 1.0) < domain::argmap::uniform_mutation_rate)
 			{

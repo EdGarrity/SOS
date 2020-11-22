@@ -77,7 +77,23 @@ namespace Utilities
 				return true;
 		}
 
-		// Returns a reference to the underlying container
+		// Purpose: 
+		//   Returns a reference to the underlying container
+		//
+		// Parameters:
+		//   None
+		// 
+		// Return value:
+		//   Reference to the FixedSizeStack stack object
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  
+		//
+		// Remarks:
+		//
 		inline std::array<T, N>& container()
 		{
 			return stack_;
@@ -248,48 +264,6 @@ namespace Utilities
 			top_++;
 		}
 
-		//// Purpose: 
-		////   Insert provided stack deep in the stack
-		////
-		//// Parameters:
-		////   other	- Reference to the other stack to insert
-		////   n		- Positin where to insert the other stack.  0 or less refers to the top of the stack.  
-		////			  Values greater than the size of the stack will insert the other stack at the bottom.
-		//// 
-		//// Return value:
-		////   None
-		////
-		//// Side Effects:
-		////   Stack updated with inserted stack.
-		////
-		//// Thread Safe:
-		////   Yes.  As long as no other thread attemps to write to the child.
-		////
-		//// Remarks:
-		////
-		//inline void shove(FixedSizeStack<T>& other, int n)
-		//{
-		//	if ((top_ + other.size()) > N)
-		//	{
-		//		std::stringstream error_message;
-		//		error_message << "Utilities::FixedSizeStack::shove() - Stack overflow.";
-
-		//		throw std::overflow_error(error_message.str());
-		//	}
-
-		//	n = (n < 0) ? 0 : n;
-		//	n = (n > top_) ? top_ : n;
-		//	n = n - top_;
-
-		//	for (int i = (top_ + other.size()); i > other.size() - 1; i--)
-		//		stack_[i] = stack_[i - top_ + 1];
-
-		//	for (int i = 0; i < other.size(); i++)
-		//		stack_[i + n] = other[i];
-
-		//	top_ += other.size();
-		//}
-
 		// Purpose: 
 		//   Insert section of provided stack deep in the stack
 		//
@@ -336,117 +310,11 @@ namespace Utilities
 				i++, j++, k++)
 				stack_[k] = stack_[j];
 
-//			int n2 = other.size() - source_position;
-
-			// Copy the other stack items into this stack
-			//for (int i = 0, j = source_index - length, k = destination_index;
-			//	i < source_index - destination_index + 1;
-			//	i++, j++, k++)
-			//	stack_[k] = stack_[j];
-
 			for (int i = 0, j = top_ - length, k = destination_index;
 				i < source_index - destination_index + 1;
 				i++, j++, k++)
 				stack_[k] = stack_[j];
-			
-//			top_ += length;
 		}
-
-		//// Purpose: 
-		////   Insert section of provided stack section deep in the stack
-		////
-		//// Parameters:
-		////   insert_position	- Positin where to insert the other stack.  0 or less refers to the top of the stack.  
-		////						  Values greater than the size of the stack will insert the other stack at the bottom.
-		////   offset				- Offset to start of section in other stack to insert
-		////   length				- Length of section to insert
-		////
-		//// Return value:
-		////   None
-		////
-		//// Side Effects:
-		////   Stack updated with inserted stack.
-		////
-		//// Thread Safe:
-		////   Yes.  As long as no other thread attemps to write to the child.
-		////
-		//// Remarks:
-		////
-		//inline void shove(int insert_position, int offset, int length)
-		//{
-		//	if ((top_ + length) > N)
-		//	{
-		//		std::stringstream error_message;
-		//		error_message << "Utilities::FixedSizeStack::shove() - Stack overflow.";
-
-		//		throw std::overflow_error(error_message.str());
-		//	}
-
-		//	insert_position = (insert_position < 0) ? 0 : insert_position;
-		//	insert_position = (insert_position > top_) ? top_ : insert_position;
-
-		//	// Make space in this stack for the other stack items
-		//	for (int i = 0, j = insert_position + length - 1, k = top_ + length - 1;
-		//		i < length;
-		//		i++, j--, k--)
-		//		stack_[k] = stack_[j];
-
-		//	int n2 = size() - offset;
-
-		//	// Copy the other stack items into this stack
-		//	for (int i = 0, j = size() - offset - length, k = top_ - insert_position;
-		//		i < length;
-		//		i++)
-		//		stack_[k] = stack_[j];
-
-		//	top_ += length;
-		//}
-
-		//// Purpose: 
-		////   Insert an atom deep in the stack
-		////
-		//// Parameters:
-		////   atom				- Reference to Atom to insert
-		////   insert_position	- Positin where to insert the atom.  0 or less refers to the top of the stack.  
-		////						  Values greater than the size of the stack will insert the other stack at the bottom.
-		////
-		//// Return value:
-		////   None
-		////
-		//// Side Effects:
-		////   Stack updated with inserted stack.
-		////
-		//// Thread Safe:
-		////   Yes.  As long as no other thread attemps to write to the child.
-		////
-		//// Remarks:
-		////
-		//inline void shove(T& atom, int insert_position)
-		//{
-		//	if ((top_ + 1) > N)
-		//	{
-		//		std::stringstream error_message;
-		//		error_message << "Utilities::FixedSizeStack::shove() - Stack overflow.";
-
-		//		throw std::overflow_error(error_message.str());
-		//	}
-
-		//	insert_position = (insert_position < 0) ? 0 : insert_position;
-		//	insert_position = (insert_position > top_) ? top_ : insert_position;
-
-		//	// Make space in this stack for the other stack items
-		//	for (int i = 0, j = insert_position, k = top_;
-		//		i < 1;
-		//		i++, j--, k--)
-		//		stack_[k] = stack_[j];
-
-		//	int n2 = other.size();
-
-		//	// Copy the other stack items into this stack
-		//	stack_[top_ - insert_position] = atom;
-
-		//	top_ += 1;
-		//}
 
 		// Purpose: 
 		//   Removes a section of the stack
@@ -487,6 +355,11 @@ namespace Utilities
 			}
 
 			top_ -= length;
+		}
+
+		inline int position_to_index(int position)
+		{
+			return top_ - position - 1;
 		}
 
 		// Purpose: 
@@ -647,13 +520,6 @@ namespace Utilities
 			return N - top_ - 1;
 		}
 
-		//virtual unsigned int split(Utilities::FixedSizeStack<T> &left_half,
-		//	Utilities::FixedSizeStack<T> &right_half, 
-		//	unsigned int split_position) 
-		//{ 
-		//	return 0; 
-		//};
-
 		// Returns constant reference to the top element in the stack. 
 		inline const_reference get_top() const
 		{
@@ -713,29 +579,6 @@ namespace Utilities
 
 			return stack_[top_ - position - 1];
 		}
-
-		// Purpose: 
-		//   Returns a reference to the genome container (the atom array)
-		//
-		// Parameters:
-		//   None
-		// 
-		// Return value:
-		//   Reference to the genome's FixedSizeStack object
-		//
-		// Side Effects:
-		//   None
-		//
-		// Thread Safe:
-		//   Yes.  
-		//
-		// Remarks:
-		//
-		//inline T& get_atom_ref(int position)
-		//{
-		//	return get_atom(position);
-		//}
-
 
 	protected:
 		// Zero-based index to the first empty slot on the stack
