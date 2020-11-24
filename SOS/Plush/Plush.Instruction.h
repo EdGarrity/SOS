@@ -65,8 +65,8 @@ namespace Plush
 			unsigned int index = pop_safe_index<T>(_env);
 
 			// Need to change to 0-based index
-			//if (index > 0)
-			//{
+			if (index > 0)
+			{
 				// Get item from deep in stack
 				T v = _env.get_atom<T>(index);
 
@@ -89,7 +89,7 @@ namespace Plush
 
 				// Push removed item to top of stack
 				stack[stack_size - 1] = v;
-			//}
+			}
 		}
 
 		return effort;
