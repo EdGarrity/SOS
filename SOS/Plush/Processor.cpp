@@ -1,3 +1,4 @@
+#include <vector>
 #include "Processor.h"
 #include "Plush.StaticInit.h"
 #include "..\Domain\Arguments.h"
@@ -10,22 +11,37 @@ namespace Plush
 
 	extern 	Func2CodeMapType Func2CodeMap;
 
-	unsigned int run(Environment& env, std::string _program)
+	extern std::vector<double> null_input;
+
+
+	// Run provided program without inputs
+	unsigned int run(Environment& env, std::string program)
+	{
+		return run(env, program, null_input);
+	}
+
+	// Run provided program with inputs
+	unsigned int run(Environment& env, std::string program, std::vector<double>& input)
 	{
 		std::string gene;
 		Utilities::FixedSizeStack<Atom> program_stack;
 
-		while (_program.length() > 0)
+		// Load program into temp
+		while (program.length() > 0)
 		{
-			gene = first_atom(_program);
-			_program = rest_atom(_program);
-			Utilities::trim(_program);
+			gene = first_atom(program);
+			program = rest_atom(program);
+			Utilities::trim(program);
 
 			Atom atom(gene);
 
 			program_stack.push(atom);
 		}
 
+		// Load inputs
+		env.initialize(input);
+
+		// Load program on CODE and EXEC stacks
 		while (!program_stack.empty())
 		{
 			env.get_stack<CodeAtom>().push(CodeAtom(program_stack.get_top()));
@@ -33,9 +49,11 @@ namespace Plush
 			program_stack.pop();
 		}
 
+		// Execute
 		return run(env, domain::argmap::max_point_evaluations);
 	}
 
+	// Run program on the EXEC stack
 	unsigned int run(Environment& env, unsigned _max_effort)
 	{
 		// The basic pop-exec cycle

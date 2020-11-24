@@ -55,7 +55,7 @@ namespace Utilities
 		};
 
 		// Sets value of stack top.  Used when adding a block to the end of the stack.
-		inline void set_top(int new_top)
+		inline void set_top(unsigned int new_top)
 		{
 			if (new_top >= N)
 			{
@@ -69,7 +69,7 @@ namespace Utilities
 		}
 
 		// Checks if seting new value of stack top will cause a stack overflow.
-		inline bool check_set_top(int new_top)
+		inline bool check_set_top(unsigned int new_top)
 		{
 			if (new_top >= N)
 				return false;
@@ -117,7 +117,7 @@ namespace Utilities
 
 			top_ = other->top_;
 
-			for (int n = 0; n < top_; n++)
+			for (unsigned int n = 0; n < top_; n++)
 				stack_[n] = other->stack_[n];
 		}
 
@@ -127,7 +127,7 @@ namespace Utilities
 		}
 
 		// These need to be rewritten to reference stack from top, not absolute
-		inline const_reference operator [] (int index) const
+		inline const_reference operator [] (unsigned int index) const
 		{
 			if (index >= N)
 			{
@@ -139,7 +139,7 @@ namespace Utilities
 			return stack_[index];
 		}
 
-		inline reference operator [] (int index)
+		inline reference operator [] (unsigned int index)
 		{
 			if (index >= N)
 			{
@@ -168,13 +168,27 @@ namespace Utilities
 		//
 		// Remarks:
 		//
-		inline const T& get_stack_element(int index)
+		inline const T& get_stack_element(unsigned int index)
 		{
+			if (index >= N)
+			{
+				std::stringstream error_message;
+				error_message << "reference Utilities::FixedSizeStack::get_stack_element() - Stack overflow.  index = " << index;
+
+				throw std::overflow_error(error_message.str());
+			}
 			return stack_[index];
 		}
 
-		inline T& get_stack_element_ref(int index)
+		inline T& get_stack_element_ref(unsigned int index)
 		{
+			if (index >= N)
+			{
+				std::stringstream error_message;
+				error_message << "reference Utilities::FixedSizeStack::get_stack_element_ref() - Stack overflow.  index = " << index;
+
+				throw std::overflow_error(error_message.str());
+			}
 			return stack_[index];
 		}
 
@@ -242,7 +256,7 @@ namespace Utilities
 		//
 		// Remarks:
 		//
-		inline void shove_it(T& atom, int position)
+		inline void shove_it(T& atom, unsigned int position)
 		{
 			if ((top_ + 1) > N)
 			{
@@ -252,11 +266,12 @@ namespace Utilities
 				throw std::overflow_error(error_message.str());
 			}
 
-			position = (position < 0) ? 0 : position;
-			position = (position > top_) ? top_ : position;
-			int index = top_ - position;
+//			position = (position < 0) ? 0 : position;
+			position = (position >= top_) ? top_ - 1: position;
 
-			for (int i = top_; i >= index; i--)
+			unsigned int index = top_ - position;
+
+			for (unsigned int i = top_; i >= index; i--)
 				stack_[i] = stack_[i - 1];
 
 			stack_[index] = atom;
@@ -285,7 +300,7 @@ namespace Utilities
 		//
 		// Remarks:
 		//
-		inline void shove_it(int destination_position, int source_position, int length)
+		inline void shove_it(unsigned int destination_position, unsigned int source_position, unsigned int length)
 		{
 			if ((top_ + length) > N)
 			{
@@ -295,22 +310,22 @@ namespace Utilities
 				throw std::overflow_error(error_message.str());
 			}
 
-			source_position = (source_position < 0) ? 0 : source_position;
-			source_position = (source_position > top_) ? top_ : source_position;
+//			source_position = (source_position < 0) ? 0 : source_position;
+			source_position = (source_position >= top_) ? top_ - 1: source_position;
 
-			destination_position = (destination_position < 0) ? 0 : destination_position;
-			destination_position = (destination_position > top_) ? top_ : destination_position;
+//			destination_position = (destination_position < 0) ? 0 : destination_position;
+			destination_position = (destination_position >= top_) ? top_ - 1: destination_position;
 
-			int source_index = top_ - source_position - 1;
-			int destination_index = top_ - destination_position - 1;
+			unsigned int source_index = top_ - source_position - 1;
+			unsigned int destination_index = top_ - destination_position - 1;
 
 			// Make space in this stack for the other stack items
-			for (int i = 0, j = destination_index, k = top_;
+			for (unsigned int i = 0, j = destination_index, k = top_;
 				i < top_ - destination_index;
 				i++, j++, k++)
 				stack_[k] = stack_[j];
 
-			for (int i = 0, j = top_ - length, k = destination_index;
+			for (unsigned int i = 0, j = top_ - length, k = destination_index;
 				i < source_index - destination_index + 1;
 				i++, j++, k++)
 				stack_[k] = stack_[j];
@@ -335,10 +350,10 @@ namespace Utilities
 		//
 		// Remarks:
 		//
-		inline void remove_items(int position, int length)
+		inline void remove_items(unsigned int position, unsigned int length)
 		{
-			if (position < 0)
-				position = 0;
+			//if (position < 0)
+			//	position = 0;
 
 			if (length > top_)
 				length = top_;
@@ -348,7 +363,7 @@ namespace Utilities
 
 			if (position > 0)
 			{
-				for (int j = top_ - position, k = (top_ - position - 1) - (length - 1);
+				for (unsigned int j = top_ - position, k = (top_ - position - 1) - (length - 1);
 					j < top_;
 					j++, k++)
 					stack_[k] = stack_[j];
@@ -357,9 +372,16 @@ namespace Utilities
 			top_ -= length;
 		}
 
-		inline int position_to_index(int position)
+		inline unsigned int position_to_index(unsigned int position)
 		{
-			return top_ - position - 1;
+			position = (position >= top_) ? top_ - 1 : position;
+
+			if ((position > 0) && (top_ > 0))
+				return top_ - position - 1;
+			else if (top_ > 0)
+				return top_ - 1;
+			else
+				return 0;
 		}
 
 		// Purpose: 
@@ -381,7 +403,7 @@ namespace Utilities
 		//
 		// Remarks:
 		//
-		inline void replace(T& other, int n)
+		inline void replace(T& other, unsigned int n)
 		{
 			if (n >= N)
 			{
@@ -391,8 +413,8 @@ namespace Utilities
 				throw std::overflow_error(error_message.str());
 			}
 
-			n = (n < 0) ? 0 : n;
-			n = (n > top_) ? top_ - 1 : n;
+//			n = (n < 0) ? 0 : n;
+			n = (n >= top_) ? top_ - 1 : n;
 
 			stack_[top_ - n - 1] = other;
 		}
@@ -416,23 +438,23 @@ namespace Utilities
 		//
 		// Remarks:
 		//
-		inline void replace_section(int source_position, int target_position, int length)
+		inline void replace_section(unsigned int source_position, unsigned int target_position, unsigned int length)
 		{
-			if (source_position < 0)
-			{
-				std::stringstream error_message;
-				error_message << "reference Utilities::FixedSizeStack::replace_section() - Stack underflow.  source_position = " << source_position;
+			//if (source_position < 0)
+			//{
+			//	std::stringstream error_message;
+			//	error_message << "reference Utilities::FixedSizeStack::replace_section() - Stack underflow.  source_position = " << source_position;
 
-				throw std::underflow_error(error_message.str());
-			}
+			//	throw std::underflow_error(error_message.str());
+			//}
 
-			if (target_position < 0)
-			{
-				std::stringstream error_message;
-				error_message << "reference Utilities::FixedSizeStack::replace_section() - Stack underflow.  target_position = " << target_position;
+			//if (target_position < 0)
+			//{
+			//	std::stringstream error_message;
+			//	error_message << "reference Utilities::FixedSizeStack::replace_section() - Stack underflow.  target_position = " << target_position;
 
-				throw std::underflow_error(error_message.str());
-			}
+			//	throw std::underflow_error(error_message.str());
+			//}
 
 			if ((source_position >= N) || (source_position >= top_))
 			{
@@ -451,13 +473,13 @@ namespace Utilities
 			}
 
 			// Convert relative positions to absolute indexes
-			int source_index = top_ - source_position - 1;
-			int target_index = top_ - target_position - 1;
+			unsigned int source_index = top_ - source_position - 1;
+			unsigned int target_index = top_ - target_position - 1;
 
 			// Copy source to target
 			if (source_index > target_index)
 			{
-				for (int n = 0; n < length; n++)
+				for (unsigned int n = 0; n < length; n++)
 					stack_[target_index + n] = stack_[source_index + n];
 			}
 			 
@@ -483,23 +505,23 @@ namespace Utilities
 		//
 		// Remarks:
 		//
-		inline void yankdup_item(int position, int length)
+		inline void yankdup_item(unsigned int position, unsigned int length)
 		{
-			if (position < 0)
-				position = 0;
+			//if (position < 0)
+			//	position = 0;
 
-			if (position > top_)
-				position = top_;
+			if (position >= top_)
+				position = top_ - 1;
 
-			if (length < 0)
-				position = 0;
+			//if (length < 0)
+			//	position = 0;
 
 			if (length > top_)
 				length = top_;
 
 			if (top_ - position - length >= 0)
 			{
-				for (int i = 0, j = top_ - position - length, k = top_;
+				for (unsigned int i = 0, j = top_ - position - length, k = top_;
 					(i < length) && (k < N);
 					i++, j++, k++)
 					stack_[k] = stack_[j];
@@ -517,7 +539,12 @@ namespace Utilities
 		// Returns the number of available elements in the underlying container
 		inline size_type free() const
 		{
-			return N - top_ - 1;
+			unsigned int free = N - top_ - 1;
+
+			if (free > N)
+				free = N;
+
+			return free;
 		}
 
 		// Returns constant reference to the top element in the stack. 
@@ -548,7 +575,7 @@ namespace Utilities
 			return stack_[top_ - 1];
 		}
 
-		inline const_reference get_atom(int position) const
+		inline const_reference get_atom(unsigned int position) const
 		{
 			if (top_ == 0)
 			{
@@ -558,13 +585,13 @@ namespace Utilities
 				throw std::underflow_error(error_message.str());
 			}
 
-			position = (position < 0) ? 0 : position;
+//			position = (position < 0) ? 0 : position;
 			position = (position >= top_) ? top_ - 1: position;
 
 			return stack_[top_ - position - 1];
 		}
 
-		inline reference get_atom(int position) 
+		inline reference get_atom(unsigned int position)
 		{
 			if (top_ == 0)
 			{
@@ -574,7 +601,7 @@ namespace Utilities
 				throw std::underflow_error(error_message.str());
 			}
 
-			position = (position < 0) ? 0 : position;
+//			position = (position < 0) ? 0 : position;
 			position = (position >= top_) ? top_ - 1 : position;
 
 			return stack_[top_ - position - 1];

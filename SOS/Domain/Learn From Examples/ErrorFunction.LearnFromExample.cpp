@@ -45,7 +45,7 @@ namespace domain
 			if (Utilities::trim_copy(program).length() > 0)
 			{
 				// Evaluate
-				Plush::run(env, program);
+				Plush::run(env, program, example_problem);
 
 				// Calculate error
 				double sum_of_error_squared = 0;

@@ -10,6 +10,8 @@ namespace Plush
 	typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
 	extern Func2BlockWantsMapType Func2BlockWantsMap;
 
+	extern std::vector<double> null_input;
+
 	class Environment
 	{
 	private:
@@ -19,8 +21,6 @@ namespace Plush
 		Genome<long> int_stack_;
 		Genome<double> double_stack_;
 		Genome<bool> bool_stack_;
-
-		std::vector<double> null_input;
 
 	public:
 		Environment()
@@ -44,7 +44,7 @@ namespace Plush
 			double_stack_.clear();
 		}
 
-		virtual void initialize(std::vector<double> & _input, unsigned _reserve = 1000)
+		virtual void initialize(std::vector<double> & _input)
 		{
 			clear_stacks();
 			input = _input;
@@ -124,10 +124,10 @@ namespace Plush
 
 			else
 			{
-				int starting_index = code_stack.position_to_index(genome_section.ending_position);
-				int ending_index = code_stack.position_to_index(genome_section.starting_position) + 1;
+				unsigned int starting_index = code_stack.position_to_index(genome_section.ending_position);
+				unsigned int ending_index = code_stack.position_to_index(genome_section.starting_position) + 1;
 
-				for (int n = starting_index; n < ending_index; n++)
+				for (unsigned int n = starting_index; n < ending_index; n++)
 					push(T(code_stack.get_stack_element(n)));
 			}
 		}
@@ -142,10 +142,10 @@ namespace Plush
 
 			else
 			{
-				int starting_index = stack.position_to_index(genome_section.ending_position);
-				int ending_index = stack.position_to_index(genome_section.starting_position) + 1;
+				unsigned int starting_index = stack.position_to_index(genome_section.ending_position);
+				unsigned int ending_index = stack.position_to_index(genome_section.starting_position) + 1;
 
-				for (int n = starting_index; n < ending_index; n++)
+				for (unsigned int n = starting_index; n < ending_index; n++)
 					push(T(stack.get_stack_element(n)));
 			}
 		}
@@ -258,7 +258,7 @@ namespace Plush
 		}
 
 		template <typename T>
-		inline T& get_atom(unsigned position)
+		inline T& get_atom(unsigned int position)
 		{
 			if (has_elements<T>(position + 1))
 				return get_stack<T>().get_atom(position);

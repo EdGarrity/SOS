@@ -2,6 +2,8 @@
 
 namespace Plush
 {
+	std::vector<double> null_input;
+
 //	std::vector<double> null_input;
 	
 //	// Purpose: 
