@@ -168,6 +168,15 @@
     <ClInclude Include="PushGP\Utilities.h">
       <Filter>Header Files\PushGP</Filter>
     </ClInclude>
+    <ClInclude Include="Plush\Type.h">
+      <Filter>Header Files\Plush</Filter>
+    </ClInclude>
+    <ClInclude Include="Plush\TypedAtom.h">
+      <Filter>Header Files\Plush</Filter>
+    </ClInclude>
+    <ClInclude Include="Plush\TypeDef.h">
+      <Filter>Header Files\Plush</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -265,6 +274,9 @@
     </ClCompile>
     <ClCompile Include="PushGP\Utilities.cpp">
       <Filter>Source Files\PushGP</Filter>
+    </ClCompile>
+    <ClCompile Include="Plush\Type.cpp">
+      <Filter>Source Files\Plush</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

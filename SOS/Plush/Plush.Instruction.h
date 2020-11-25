@@ -3,9 +3,43 @@
 #include <vector>
 #include "Processor.h"
 #include "Plush.StaticInit.h"
+#include "TypedAtom.h"
 
 namespace Plush
 {
+	class Instruction : public TypedAtom
+	{
+
+	};
+
+
+	inline void push_make_instruction(Operator op, std::string type, std::string name, Type in)
+	{
+		static_initializer.register_pushfunc(op, type, name);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	void initGenerics();
 
 	/* generic functions */
