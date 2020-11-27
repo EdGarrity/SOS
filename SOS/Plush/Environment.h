@@ -46,19 +46,9 @@ namespace Plush
 			double_stack_.clear();
 		}
 
-		/* Needed for type checking of preconditions */
-		inline unsigned int get_stack_size(unsigned int which) const
-		{
-			switch (which) 
-			{
-			case EXEC_STACK: return exec_stack_.size();
-			case INTEGER_STACK: return int_stack_.size();
-			case CODE_STACK: return code_stack_.size();
-			case BOOL_STACK: return bool_stack_.size();
-			case FLOAT_STACK: return double_stack_.size();
-			}
-			return 0;
-		}
+		//Genome<CodeAtom>& genome = get_stack<CodeAtom>();
+
+		//if (genome.number_of_blocks() < sz)
 
 		virtual void initialize(std::vector<double> & _input)
 		{
@@ -282,12 +272,28 @@ namespace Plush
 			else
 			{
 				std::stringstream error_message;
-				error_message << "Environment::get_atom() - Stack overflow.  position = " << position;
+				error_message << "Environment::get_atom() - Index out of range.  position = " << position;
 
-				throw std::overflow_error(error_message.str());
+				throw std::out_of_range(error_message.str());
 			}
 		}
 
 		virtual Type make_type() const;
+
+		/* Needed for type checking of preconditions */
+		inline size_t get_stack_size(unsigned int which) //const
+		{
+			switch (which)
+			{
+			case EXEC_STACK: return length<ExecAtom>();
+			case INTEGER_STACK: return int_stack_.size();
+			case CODE_STACK: return length<CodeAtom>();
+
+			case BOOL_STACK: return bool_stack_.size();
+			case FLOAT_STACK: return double_stack_.size();
+			}
+			return 0;
+		}
+
 	};
 }

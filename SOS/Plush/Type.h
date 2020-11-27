@@ -1,4 +1,6 @@
 #pragma once
+//#define NOMINMAX
+//#include <algorithm>
 #include <vector>
 
 namespace Plush
@@ -9,7 +11,7 @@ namespace Plush
 
 	class Type
 	{
-		std::vector<int> type;
+		std::vector<size_t> type;
 		unsigned _start;
 	public:
 
@@ -17,13 +19,17 @@ namespace Plush
 		{
 			postc();
 		}
-		Type(size_t len, size_t which, int value = 1) : type(len)
+		Type(size_t len, size_t which, size_t value = 1) : type(len)
 		{
 			type[which] = value;
 			postc();
 		}
+		Type(const Type& other) : type(other.type), _start(other._start)
+		{		
+			postc();
+		}
 
-		typedef std::vector<int> TypeVec;
+		typedef std::vector<size_t> TypeVec;
 
 		const TypeVec &get() const
 		{
@@ -52,8 +58,8 @@ namespace Plush
 			return *this;
 		}
 
-		bool operator==(const Type &other) const;
-		bool can_pop_from(const Environment &env) const;
+		bool operator==(/*const*/ Type &other); // const;
+		bool can_pop_from(/*const*/ Environment &env); // const;
 
 		int operator[](unsigned i) const
 		{
@@ -80,23 +86,23 @@ namespace Plush
 			return true;
 		}
 
+		Type make_equal_length(const Type &org);
 	private:
-		Type make_equal_length(const Type &org)
-		{
-			if (type.size() == org.type.size()) return org;
+		//{
+		//	if (type.size() == org.type.size()) return org;
 
-			size_t len = std::max(type.size(), org.type.size());
-			type.resize(len, 0);
+		//	size_t len = std::max(type.size(), org.type.size());
+		//	type.resize(len, 0);
 
-			if (org.type.size() != len)
-			{
-				Type org2 = org;
-				org2.type.resize(len, 0);
-				return org2;
-			}
+		//	if (org.type.size() != len)
+		//	{
+		//		Type org2 = org;
+		//		org2.type.resize(len, 0);
+		//		return org2;
+		//	}
 
-			return org;
-		}
+		//	return org;
+		//}
 
 		void shorten()
 		{
@@ -137,5 +143,11 @@ namespace Plush
 		return Type(a) *= b;
 	}
 
+	extern Type execType; //(EXEC_STACK+1,EXEC_STACK,1);
+	extern Type integerType; //(INTEGER_STACK+1,INTEGER_STACK,1);
+	extern Type codeType; //(CODE_STACK+1, CODE_STACK,1);
+	extern Type boolType; //(BOOL_STACK+1, BOOL_STACK,1);
+	extern Type floatType; //(FLOAT_STACK+1, FLOAT_STACK,1);
+	extern Type nullType;
 
-} // namespace push
+}

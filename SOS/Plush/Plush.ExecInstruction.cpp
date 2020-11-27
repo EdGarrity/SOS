@@ -11,8 +11,8 @@ namespace Plush
 	// Expand inner block
 	unsigned noop_open_paren(Environment & _env)
 	{
-		if (_env.has_elements<ExecAtom>(1))
-		{
+		//if (_env.has_elements<ExecAtom>(1))
+		//{
 			// Get top atom on EXEC stack
 			ExecAtom atom = _env.get_top<ExecAtom>();
 
@@ -21,7 +21,7 @@ namespace Plush
 
 			// Set top atom
 			_env.set_top<ExecAtom>(atom);
-		}
+		//}
 
 		return 0;
 	}
@@ -36,8 +36,8 @@ namespace Plush
 	// for possible access during the execution of the body of the loop
 	unsigned exec_do_range(Environment & _env)
 	{
-		if ((_env.has_elements<long>(2)) && (_env.has_elements<ExecAtom>(1)))
-		{
+		//if ((_env.has_elements<long>(2)) && (_env.has_elements<ExecAtom>(1)))
+		//{
 			int n = _env.pop<long>();	// destination index
 			int i = _env.pop<long>();	// current index
 
@@ -65,15 +65,15 @@ namespace Plush
 					_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.DO*RANGE :close 0}"));
 				}
 			}
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned exec_if(Environment & _env)
 	{
-		if ((_env.has_elements<bool>(1)) && (_env.has_elements<ExecAtom>(2)))
-		{
+		//if ((_env.has_elements<bool>(1)) && (_env.has_elements<ExecAtom>(2)))
+		//{
 			// Get conditional boolean
 			bool s = _env.pop<bool>();
 
@@ -81,15 +81,15 @@ namespace Plush
 				_env.get_stack<ExecAtom>().remove_item_at_position(1);
 			else
 				_env.get_stack<ExecAtom>().remove_item_at_position(0);
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned exec_do_count(Environment & _env)
 	{
-		if ((_env.has_elements<long>(1)) && (_env.has_elements<ExecAtom>(1)))
-		{
+		//if ((_env.has_elements<long>(1)) && (_env.has_elements<ExecAtom>(1)))
+		//{
 			int n = _env.pop<long>();	// destination index
 
 			if (n > 0)
@@ -99,15 +99,15 @@ namespace Plush
 
 				_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.DO*RANGE :close 0}"));
 			}
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned exec_do_times(Environment & _env)
 	{
-		if ((_env.has_elements<long>(1)) && (_env.has_elements<ExecAtom>(1)))
-		{
+		//if ((_env.has_elements<long>(1)) && (_env.has_elements<ExecAtom>(1)))
+		//{
 			int n = _env.pop<long>();	// destination index
 
 			if (n > 0)
@@ -118,15 +118,15 @@ namespace Plush
 				_env.push<ExecAtom>(ExecAtom("{:instruction INTEGER.POP :close 0}"));
 				_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.DO*RANGE :close 0}"));
 			}
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned exec_while(Environment & _env)
 	{
-		if ((_env.has_elements<bool>(1)) && (_env.has_elements<ExecAtom>(1)))
-		{
+		//if ((_env.has_elements<bool>(1)) && (_env.has_elements<ExecAtom>(1)))
+		//{
 			bool flag = _env.pop<bool>();
 
 			if (flag)
@@ -134,38 +134,38 @@ namespace Plush
 				_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.WHILE :close 0}"));
 				_env.get_stack<ExecAtom>().yankdup_item(1);
 			}
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned do_while(Environment & _env)
 	{
-		if (_env.has_elements<ExecAtom>(1))
-		{
+		//if (_env.has_elements<ExecAtom>(1))
+		//{
 			_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.WHILE :close 0}"));
 			_env.get_stack<ExecAtom>().yankdup_item(1);
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned exec_when(Environment & _env)
 	{
-		if ((_env.has_elements<bool>(1)) && (_env.has_elements<ExecAtom>(1)))
-		{
+		//if ((_env.has_elements<bool>(1)) && (_env.has_elements<ExecAtom>(1)))
+		//{
 			bool flag = _env.pop<bool>();
 
 			if (!flag)
 				_env.get_stack<ExecAtom>().remove_item_at_position(0);
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned exec_k(Environment & _env)
 	{
-		if (_env.has_elements<ExecAtom>(2))
+		//if (_env.has_elements<ExecAtom>(2))
 			_env.get_stack<ExecAtom>().remove_item_at_position(1);
 
 		return 1;
@@ -173,8 +173,8 @@ namespace Plush
 
 	unsigned exec_s(Environment & _env)
 	{
-		if (_env.has_elements<ExecAtom>(3))
-		{
+		//if (_env.has_elements<ExecAtom>(3))
+		//{
 			// containing B
 			_env.get_stack<ExecAtom>().yankdup_item(1);
 
@@ -194,26 +194,26 @@ namespace Plush
 			_env.get_stack<ExecAtom>().remove_item_at_position(3);
 			_env.get_stack<ExecAtom>().remove_item_at_position(3);
 			_env.get_stack<ExecAtom>().remove_item_at_position(3);
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned exec_y(Environment & _env)
 	{
-		if (_env.has_elements<ExecAtom>(1))
-		{
+		//if (_env.has_elements<ExecAtom>(1))
+		//{
 			_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.Y :close 0}"));
 			_env.get_stack<ExecAtom>().yankdup_item(1);
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned code_append(Environment & _env)
 	{
-		if (_env.has_elements<CodeAtom>(2))
-		{
+		//if (_env.has_elements<CodeAtom>(2))
+		//{
 			Genome_section<CodeAtom> section_A = _env.get_stack<CodeAtom>()[0];
 			Genome_section<CodeAtom> section_B = _env.get_stack<CodeAtom>()[1];
 
@@ -222,15 +222,15 @@ namespace Plush
 
 			if (_env.get_stack<CodeAtom>().get_atom(section_B.ending_position).close_parenthesis == 0)
 				_env.get_stack<CodeAtom>().get_atom(section_B.ending_position).close_parenthesis = 1;
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned code_atom(Environment & _env)
 	{
-		if (_env.has_elements<CodeAtom>(1))
-		{
+		//if (_env.has_elements<CodeAtom>(1))
+		//{
 			Genome_section<CodeAtom> item = _env.get_stack<CodeAtom>().pop_genome();
 
 			if (item.size == 1)
@@ -238,15 +238,15 @@ namespace Plush
 
 			else
 				_env.push<bool>(false);
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned code_car(Environment & _env)
 	{
-		if (_env.has_elements<CodeAtom>(1))
-		{
+		//if (_env.has_elements<CodeAtom>(1))
+		//{
 			Genome_section<CodeAtom> item = _env.peek_genome<CodeAtom>(0);
 
 			if (item.size > 1)
@@ -258,15 +258,15 @@ namespace Plush
 				_env.get_stack<CodeAtom>().container()[old_top].close_parenthesis++;
 				_env.get_stack<CodeAtom>().remove_item_at_position(1);
 			}
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned code_cdr(Environment & _env)
 	{
-		if (_env.has_elements<CodeAtom>(1))
-		{
+		//if (_env.has_elements<CodeAtom>(1))
+		//{
 			Genome<CodeAtom>& stack = _env.get_stack<CodeAtom>();
 			Genome_section<CodeAtom> block_a = stack[0];
 
@@ -280,28 +280,28 @@ namespace Plush
 				_env.pop<CodeAtom>();
 				_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 1}"));
 			}
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned code_cons(Environment & _env)
 	{
-		if (_env.has_elements<CodeAtom>(2))
-		{
+		//if (_env.has_elements<CodeAtom>(2))
+		//{
 			_env.get_stack<CodeAtom>().yank_item(1);
 
 			unsigned n = _env.get_stack<CodeAtom>()[0].ending_position;
 			_env.get_stack<CodeAtom>().get_atom(n).close_parenthesis--;
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned code_container(Environment & _env)
 	{
-		if (_env.has_elements<CodeAtom>(2))
-		{
+		//if (_env.has_elements<CodeAtom>(2))
+		//{
 			Genome_section<CodeAtom> container_block;
 
 			// Get first block from stack
@@ -325,15 +325,15 @@ namespace Plush
 
 			_env.get_stack<CodeAtom>().remove_stack_element(1);
 			_env.get_stack<CodeAtom>().remove_stack_element(1);
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned code_contains(Environment & _env)
 	{
-		if (_env.has_elements<CodeAtom>(2))
-		{
+		//if (_env.has_elements<CodeAtom>(2))
+		//{
 			// Get first block from stack
 			Genome_section<CodeAtom> block_A = _env.peek_genome<CodeAtom>(0);
 
@@ -345,15 +345,15 @@ namespace Plush
 
 			_env.get_stack<CodeAtom>().remove_stack_element(0);
 			_env.get_stack<CodeAtom>().remove_stack_element(0);
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned code_discrepancy(Environment & _env)
 	{
-		if (_env.has_elements<CodeAtom>(2))
-		{
+		//if (_env.has_elements<CodeAtom>(2))
+		//{
 			Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
 			Genome_section<CodeAtom> block_a = genome[0];
 			Genome_section<CodeAtom> block_b = genome[1];
@@ -404,15 +404,15 @@ namespace Plush
 				
 			_env.pop_genome<CodeAtom>();
 			_env.pop_genome<CodeAtom>();
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned code_do(Environment & _env)
 	{
-		if (_env.has_elements<CodeAtom>(1))
-		{
+		//if (_env.has_elements<CodeAtom>(1))
+		//{
 			// Get reference to top block on code stack
 			Genome_section<CodeAtom> code_block(_env.peek_genome<CodeAtom>(0));
 
@@ -423,13 +423,13 @@ namespace Plush
 			_env.push<ExecAtom>(code_block);
 
 			return 1;
-		}
+		//}
 	}
 
 	unsigned code_do_star(Environment & _env)
 	{
-		if (_env.has_elements<CodeAtom>(1))
-		{
+		//if (_env.has_elements<CodeAtom>(1))
+		//{
 			// Get reference to top block on code stack
 			Genome_section<CodeAtom> code_block(_env.peek_genome<CodeAtom>(0));
 
@@ -440,13 +440,13 @@ namespace Plush
 			_env.get_stack<CodeAtom>().pop_genome();
 
 			return 1;
-		}
+		//}
 	}
 
 	unsigned code_do_range(Environment & _env)
 	{
-		if ((_env.has_elements<long>(2)) && (_env.has_elements<CodeAtom>(1)))
-		{
+		//if ((_env.has_elements<long>(2)) && (_env.has_elements<CodeAtom>(1)))
+		//{
 			int n = _env.pop<long>();	// destination index
 			int i = _env.pop<long>();	// current index
 
@@ -485,15 +485,15 @@ namespace Plush
 					_env.push<ExecAtom>(ExecAtom("{:instruction CODE.DO*RANGE :close 1}"));
 				}
 			}
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned code_do_count(Environment & _env)
 	{
-		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
-		{
+		//if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
+		//{
 			int n = _env.pop<long>();	// destination index
 
 			if (n > 0)
@@ -503,15 +503,15 @@ namespace Plush
 
 				_env.push<ExecAtom>(ExecAtom("{:instruction CODE.DO*RANGE :close 1}"));
 			}
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned code_do_times(Environment & _env)
 	{
-		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
-		{
+		//if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
+		//{
 			int n = _env.pop<long>();	// destination index
 
 			if (n > 0)
@@ -522,15 +522,15 @@ namespace Plush
 				_env.push<ExecAtom>(ExecAtom("{:instruction INTEGER.POP :close 1}"));
 				_env.push<ExecAtom>(ExecAtom("{:instruction CODE.DO*RANGE :close 1}"));
 			}
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned code_extract(Environment & _env)
 	{
-		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
-		{
+		//if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
+		//{
 			unsigned int item_number = std::abs(_env.pop<long>());	// index
 
 			if (item_number != 0)
@@ -566,15 +566,15 @@ namespace Plush
 					}
 				}
 			}
-		}
+		//}
 
 		return 1;
 	}
 
 	inline unsigned bool2code(Environment & _env)
 	{
-		if (_env.has_elements<bool>(1))
-		{
+		//if (_env.has_elements<bool>(1))
+		//{
 			bool val = _env.pop<bool>();
 
 			if (val)
@@ -582,39 +582,39 @@ namespace Plush
 
 			else
 				_env.push<CodeAtom>(CodeAtom("{:instruction FALSE :close 1}"));
-		}
+		//}
 
 		return 1;
 	}
 
 	inline unsigned float2code(Environment & _env)
 	{
-		if (_env.has_elements<double>(1))
-		{
+		//if (_env.has_elements<double>(1))
+		//{
 			double val = _env.pop<double>();
 			std::string instruction = Utilities::string_format("{:instruction %f :close 1}", val);
 			_env.push<CodeAtom>(CodeAtom(instruction));
-		}
+		//}
 
 		return 1;
 	}
 
 	inline unsigned int2code(Environment & _env)
 	{
-		if (_env.has_elements<long>(1))
-		{
+		//if (_env.has_elements<long>(1))
+		//{
 			long val = _env.pop<long>();
 			std::string instruction = Utilities::string_format("{:instruction %d :close 1}", val);
 			_env.push<CodeAtom>(CodeAtom(instruction));
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned code_if(Environment & _env)
 	{
-		if ((_env.has_elements<bool>(1)) && (_env.has_elements<CodeAtom>(2)))
-		{
+		//if ((_env.has_elements<bool>(1)) && (_env.has_elements<CodeAtom>(2)))
+		//{
 			// Get blocks
 			Genome_section<CodeAtom> code_block_a = _env.peek_genome<CodeAtom>(0);
 			Genome_section<CodeAtom> code_block_b = _env.peek_genome<CodeAtom>(1);
@@ -630,15 +630,15 @@ namespace Plush
 
 			_env.get_stack<CodeAtom>().pop_genome();
 			_env.get_stack<CodeAtom>().pop_genome();
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned code_insert(Environment & _env)
 	{
-		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(2)))
-		{
+		//if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(2)))
+		//{
 			unsigned int item_number = std::abs(_env.pop<long>());	// index
 
 			// Get reference to genome stack
@@ -678,15 +678,15 @@ namespace Plush
 				// Move second block to position in first block
 				genome.shove(item_number, block_b);
 			}
-		}
+		//}
 
 		return 1;
 	}
 
 	inline unsigned code_length(Environment & _env)
 	{
-		if (_env.has_elements<CodeAtom>(1))
-		{
+		//if (_env.has_elements<CodeAtom>(1))
+		//{
 			// Get reference to genome stack
 			Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
 
@@ -697,15 +697,15 @@ namespace Plush
 			unsigned int number_of_items = genome.number_of_items(top_block);
 			_env.push<long>(number_of_items);
 			_env.pop_genome<CodeAtom>();
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned code_list(Environment & _env)
 	{
-		if (_env.has_elements<CodeAtom>(2))
-		{
+		//if (_env.has_elements<CodeAtom>(2))
+		//{
 			// Get reference to genome stack
 			Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
 
@@ -723,15 +723,15 @@ namespace Plush
 			genome.shove_it(code, block_b.starting_position);
 
 			_env.push<CodeAtom>(CodeAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned code_member(Environment & _env)
 	{
-		if (_env.has_elements<CodeAtom>(2))
-		{
+		//if (_env.has_elements<CodeAtom>(2))
+		//{
 			// Get reference to genome stack
 			Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
 
@@ -746,15 +746,15 @@ namespace Plush
 
 			_env.pop_genome<CodeAtom>();
 			_env.pop_genome<CodeAtom>();
-		}
+		//}
 
 		return 1;
 	}
 
 	unsigned code_nth(Environment & _env)
 	{
-		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
-		{
+		//if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
+		//{
 			unsigned int index = std::abs(_env.pop<long>());	// index
 
 			// Get reference to genome stack
@@ -779,15 +779,15 @@ namespace Plush
 
 			// Replace top genome with subsection
 			genome.replace_section(sub_block.ending_position, block.ending_position, sub_block.size);
-		}
+		//}
 		
 		return 1;
 	}
 
 	unsigned code_nthcdr(Environment & _env)
 	{
-		if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
-		{
+		//if ((_env.has_elements<long>(1)) && (_env.has_elements<CodeAtom>(1)))
+		//{
 			unsigned int item_number = std::abs(_env.pop<long>());	// index
 
 			// Get reference to genome stack
@@ -812,15 +812,15 @@ namespace Plush
 					genome.remove_items(0, keep.ending_position + 1);
 				}
 			}
-		}
+		//}
 
 		return 1;
 	}
 
 	inline unsigned code_null(Environment & _env)
 	{
-		if (_env.has_elements<CodeAtom>(1))
-		{
+		//if (_env.has_elements<CodeAtom>(1))
+		//{
 			Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
 			Genome_section<CodeAtom> top_block = genome[0];
 
@@ -835,7 +835,7 @@ namespace Plush
 				_env.push<bool>(false);
 
 			_env.pop_genome<CodeAtom>();
-		}
+		//}
 
 		return 1;
 	}
@@ -844,8 +844,8 @@ namespace Plush
 	{
 		unsigned int effort = 1;
 
-		if (_env.has_elements<CodeAtom>(2))
-		{
+		//if (_env.has_elements<CodeAtom>(2))
+		//{
 			long return_val = -1;
 
 			// Get first block from stack
@@ -885,15 +885,15 @@ namespace Plush
 
 			effort = block_A.size + block_B.size;
 			_env.push(return_val);
-		}
+		//}
 
 		return effort;
 	}
 
 	unsigned code_quote(Environment & _env)
 	{
-		if (_env.has_elements<ExecAtom>(1))
-		{
+		//if (_env.has_elements<ExecAtom>(1))
+		//{
 			// Get reference to genome stack
 			Genome<ExecAtom>& genome = _env.get_stack<ExecAtom>();
 
@@ -901,30 +901,30 @@ namespace Plush
 			Genome_section<ExecAtom> top_block = genome[0]; 
 			_env.push<CodeAtom>(top_block);
 			_env.pop_genome<ExecAtom>();
-		}
+		//}
 
 		return 1;
 	}
 
 	inline unsigned code_size(Environment & _env)
 	{
-		if (_env.has_elements<CodeAtom>(1))
-		{
+		//if (_env.has_elements<CodeAtom>(1))
+		//{
 			// Get first block from stack
 			Genome_section<CodeAtom> top_block = _env.pop_genome<CodeAtom>();
 
 			// Get count items in first block
 			unsigned int size = top_block.size;
 			_env.push<long>(size);
-		}
+		//}
 
 		return 1;
 	}
 
 	inline unsigned code_subst(Environment & _env)
 	{
-		if (_env.has_elements<CodeAtom>(3))
-		{
+		//if (_env.has_elements<CodeAtom>(3))
+		//{
 			Genome<CodeAtom>& stack = _env.get_stack<CodeAtom>();
 
 			// Get first block from stack
@@ -941,7 +941,7 @@ namespace Plush
 			stack.remove_item_at_position(1);
 			stack.remove_item_at_position(1);
 			stack.remove_item_at_position(1);
-		}
+		//}
 
 		return 1;
 	}
@@ -1048,19 +1048,35 @@ namespace Plush
 
 		initialized = true;
 
-		make_instruction((Operator)exec_k, "EXEC", "K");
-		make_instruction((Operator)exec_s, "EXEC", "S");
-		make_instruction((Operator)exec_y, "EXEC", "Y");
-		make_instruction((Operator)exec_if, "EXEC", "IF");
-		make_instruction((Operator)exec_do_range, "EXEC", "DO*RANGE");
-		make_instruction((Operator)exec_do_count, "EXEC", "DO*COUNT");
-		make_instruction((Operator)exec_do_times, "EXEC", "DO*TIMES");
-		make_instruction((Operator)exec_while, "EXEC", "WHILE");
-		make_instruction((Operator)do_while, "EXEC", "DO*WHILE");
-		make_instruction((Operator)exec_when, "EXEC", "DO*WHEN");
+		//make_instruction((Operator)exec_k, "EXEC", "K");
+		//make_instruction((Operator)exec_s, "EXEC", "S");
+		//make_instruction((Operator)exec_y, "EXEC", "Y");
+		//make_instruction((Operator)exec_if, "EXEC", "IF");
+		//make_instruction((Operator)exec_do_range, "EXEC", "DO*RANGE");
+		//make_instruction((Operator)exec_do_count, "EXEC", "DO*COUNT");
+		//make_instruction((Operator)exec_do_times, "EXEC", "DO*TIMES");
+		//make_instruction((Operator)exec_while, "EXEC", "WHILE");
+		//make_instruction((Operator)do_while, "EXEC", "DO*WHILE");
+		//make_instruction((Operator)exec_when, "EXEC", "DO*WHEN");
 
-		make_instruction((Operator)noop_open_paren, "EXEC", "NOOP_OPEN_PAREN");
-		make_instruction((Operator)noop, "EXEC", "NOOP");
+		//make_instruction((Operator)noop_open_paren, "EXEC", "NOOP_OPEN_PAREN");
+		//make_instruction((Operator)noop, "EXEC", "NOOP");
+
+		push_make_instruction((Operator)exec_k, "EXEC", "K", execType + execType);
+		push_make_instruction((Operator)exec_s, "EXEC", "S", execType + execType + execType);
+		push_make_instruction((Operator)exec_y, "EXEC", "Y", execType);
+		push_make_instruction((Operator)exec_if, "EXEC", "IF", execType + execType + boolType);
+		push_make_instruction((Operator)exec_do_range, "EXEC", "DO*RANGE", integerType + integerType + execType);
+		push_make_instruction((Operator)exec_do_count, "EXEC", "DO*COUNT", integerType + execType);
+		push_make_instruction((Operator)exec_do_times, "EXEC", "DO*TIMES", integerType + execType);
+		push_make_instruction((Operator)exec_while, "EXEC", "WHILE", integerType + execType);
+		push_make_instruction((Operator)do_while, "EXEC", "DO*WHILE", execType);
+		push_make_instruction((Operator)exec_when, "EXEC", "DO*WHEN", boolType + execType);
+
+		push_make_instruction((Operator)noop_open_paren, "EXEC", "NOOP_OPEN_PAREN", execType);
+		push_make_instruction((Operator)noop, "EXEC", "NOOP", nullType);
+
+
 
 		set_parentheses("EXEC", "DO*COUNT", 1);
 		set_parentheses("EXEC", "DO*RANGE", 1);
@@ -1077,35 +1093,35 @@ namespace Plush
 		set_parentheses("EXEC", "SWAP", 2);
 		set_parentheses("EXEC", "Y", 1);
 
-		make_instruction((Operator)code_append, "CODE", "APPEND");
-		make_instruction((Operator)code_atom, "CODE", "ATOM");
-		make_instruction((Operator)code_car, "CODE", "CAR");
-		make_instruction((Operator)code_cdr, "CODE", "CDR");
-		make_instruction((Operator)code_cons, "CODE", "CONS");
-		make_instruction((Operator)code_container, "CODE", "CONTAINER");
-		make_instruction((Operator)code_contains, "CODE", "CONTAINS");
-		make_instruction((Operator)code_discrepancy, "CODE", "DISCREPANCY");
-		make_instruction((Operator)code_do, "CODE", "DO");
-		make_instruction((Operator)code_do_star, "CODE", "DO*");
-		make_instruction((Operator)code_do_range, "CODE", "DO*RANGE");
-		make_instruction((Operator)code_do_count, "CODE", "DO*COUNT");
-		make_instruction((Operator)code_do_times, "CODE", "DO*TIMES");
-		make_instruction((Operator)code_extract, "CODE", "EXTRACT");
-		make_instruction((Operator)bool2code, "CODE", "FROMBOOLEAN");
-		make_instruction((Operator)float2code, "CODE", "FROMFLOAT");
-		make_instruction((Operator)int2code, "CODE", "FROMINTEGER");
-		make_instruction((Operator)code_if, "CODE", "IF");
-		make_instruction((Operator)code_insert, "CODE", "INSERT");
-		make_instruction((Operator)code_length, "CODE", "LENGTH");
-		make_instruction((Operator)code_list, "CODE", "LIST");
-		make_instruction((Operator)code_member, "CODE", "MEMBER");
-		make_instruction((Operator)code_nth, "CODE", "NTH");
-		make_instruction((Operator)code_nthcdr, "CODE", "NTHCDR");
-		make_instruction((Operator)code_null, "CODE", "NULL");
-		make_instruction((Operator)code_position, "CODE", "POSITION");
-		make_instruction((Operator)code_quote, "CODE", "QUOTE");
-		make_instruction((Operator)code_size, "CODE", "SIZE");
-		make_instruction((Operator)code_subst, "CODE", "SUBST");
+		push_make_instruction((Operator)code_append, "CODE", "APPEND", codeType + codeType);
+		push_make_instruction((Operator)code_atom, "CODE", "ATOM", codeType);
+		push_make_instruction((Operator)code_car, "CODE", "CAR", codeType);
+		push_make_instruction((Operator)code_cdr, "CODE", "CDR", codeType);
+		push_make_instruction((Operator)code_cons, "CODE", "CONS", codeType + codeType);
+		push_make_instruction((Operator)code_container, "CODE", "CONTAINER", codeType + codeType);
+		push_make_instruction((Operator)code_contains, "CODE", "CONTAINS", codeType + codeType);
+		push_make_instruction((Operator)code_discrepancy, "CODE", "DISCREPANCY", codeType + codeType);
+		push_make_instruction((Operator)code_do, "CODE", "DO", codeType);
+		push_make_instruction((Operator)code_do_star, "CODE", "DO*", codeType);
+		push_make_instruction((Operator)code_do_range, "CODE", "DO*RANGE", codeType + integerType + integerType);
+		push_make_instruction((Operator)code_do_count, "CODE", "DO*COUNT", codeType + integerType);
+		push_make_instruction((Operator)code_do_times, "CODE", "DO*TIMES", codeType + integerType);
+		push_make_instruction((Operator)code_extract, "CODE", "EXTRACT", codeType + integerType);
+		push_make_instruction((Operator)bool2code, "CODE", "FROMBOOLEAN", boolType);
+		push_make_instruction((Operator)float2code, "CODE", "FROMFLOAT", floatType);
+		push_make_instruction((Operator)int2code, "CODE", "FROMINTEGER", integerType);
+		push_make_instruction((Operator)code_if, "CODE", "IF", codeType + codeType + boolType);
+		push_make_instruction((Operator)code_insert, "CODE", "INSERT", codeType + codeType + integerType);
+		push_make_instruction((Operator)code_length, "CODE", "LENGTH", codeType);
+		push_make_instruction((Operator)code_list, "CODE", "LIST", codeType + codeType);
+		push_make_instruction((Operator)code_member, "CODE", "MEMBER", codeType + codeType);
+		push_make_instruction((Operator)code_nth, "CODE", "NTH", codeType + integerType);
+		push_make_instruction((Operator)code_nthcdr, "CODE", "NTHCDR", codeType + integerType);
+		push_make_instruction((Operator)code_null, "CODE", "NULL", codeType);
+		push_make_instruction((Operator)code_position, "CODE", "POSITION", codeType + codeType);
+		push_make_instruction((Operator)code_quote, "CODE", "QUOTE", execType);
+		push_make_instruction((Operator)code_size, "CODE", "SIZE", codeType);
+		push_make_instruction((Operator)code_subst, "CODE", "SUBST", codeType + codeType + codeType);
 
 		set_parentheses("CODE", "QUOTE", 1);
 	}

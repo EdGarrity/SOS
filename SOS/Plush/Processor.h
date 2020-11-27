@@ -4,13 +4,14 @@
 #include <utility>
 #include "Environment.h"
 #include "Atom.h"
+#include "Plush.Instruction.h"
 
 namespace Plush
 {
-	typedef unsigned(*Operator)(Environment&);
+	typedef unsigned(*Operator)(Environment&); // Move to Instruction.h
 
-	typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
-	extern Func2BlockWantsMapType Func2BlockWantsMap;
+	//typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
+	//extern Func2BlockWantsMapType Func2BlockWantsMap;
 
 
 

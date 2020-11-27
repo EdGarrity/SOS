@@ -10,7 +10,7 @@ namespace Plush
 
 	void Atom::compile(std::string _atom_string) 
 	{
-		std::size_t index, start_of_optional_tokens, start_of_optional_value, end_of_optional_value;
+		std::size_t index, start_of_optional_tokens, start_of_optional_value; // , end_of_optional_value;
 
 		// Convert to lower case
 		std::transform(_atom_string.begin(), _atom_string.end(), _atom_string.begin(),

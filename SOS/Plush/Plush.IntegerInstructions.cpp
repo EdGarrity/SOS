@@ -26,20 +26,37 @@ namespace Plush
 		//make_instruction((Operator)inallrev<int>, "INTEGER.INALLREV", nullType, integerType);
 		//make_instruction((Operator)out<int>, "INTEGER.OUT", binaryInt, nullType);
 
-		make_instruction((Operator)plus<long>, "INTEGER", "+");
-		make_instruction((Operator)minus<long>, "INTEGER", "-");
-		make_instruction((Operator)multiplies<long>, "INTEGER", "*");
-		make_instruction((Operator)divides<long>, "INTEGER", "/");
-		make_instruction((Operator)bool2int, "INTEGER", "FROMBOOLEAN");
-		make_instruction((Operator)float2int, "INTEGER", "FROMFLOAT");
-		make_instruction((Operator)int_mod, "INTEGER", "%");
-		make_instruction((Operator)smaller<long>, "INTEGER", "<");
-		make_instruction((Operator)greater<long>, "INTEGER", ">");
-		make_instruction((Operator)_max<long>, "INTEGER", "MAX");
-		make_instruction((Operator)_min<long>, "INTEGER", "MIN");
-		make_instruction((Operator)in<long>, "INTEGER", "IN");
-		make_instruction((Operator)inall<long>, "INTEGER", "INALL");
-		make_instruction((Operator)inallrev<long>, "INTEGER", "INALLREV");
-		make_instruction((Operator)out<long>, "INTEGER", "OUT");
+		//make_instruction((Operator)plus<long>, "INTEGER", "+");
+		//make_instruction((Operator)minus<long>, "INTEGER", "-");
+		//make_instruction((Operator)multiplies<long>, "INTEGER", "*");
+		//make_instruction((Operator)divides<long>, "INTEGER", "/");
+		//make_instruction((Operator)bool2int, "INTEGER", "FROMBOOLEAN");
+		//make_instruction((Operator)float2int, "INTEGER", "FROMFLOAT");
+		//make_instruction((Operator)int_mod, "INTEGER", "%");
+		//make_instruction((Operator)smaller<long>, "INTEGER", "<");
+		//make_instruction((Operator)greater<long>, "INTEGER", ">");
+		//make_instruction((Operator)_max<long>, "INTEGER", "MAX");
+		//make_instruction((Operator)_min<long>, "INTEGER", "MIN");
+		//make_instruction((Operator)in<long>, "INTEGER", "IN");
+		//make_instruction((Operator)inall<long>, "INTEGER", "INALL");
+		//make_instruction((Operator)inallrev<long>, "INTEGER", "INALLREV");
+		//make_instruction((Operator)out<long>, "INTEGER", "OUT");
+
+
+		push_make_instruction((Operator)plus<long>, "INTEGER", "+", integerType + integerType);
+		push_make_instruction((Operator)minus<long>, "INTEGER", "-", integerType + integerType);
+		push_make_instruction((Operator)multiplies<long>, "INTEGER", "*", integerType + integerType);
+		push_make_instruction((Operator)divides<long>, "INTEGER", "/", integerType + integerType);
+		push_make_instruction((Operator)bool2int, "INTEGER", "FROMBOOLEAN", boolType);
+		push_make_instruction((Operator)float2int, "INTEGER", "FROMFLOAT", floatType);
+		push_make_instruction((Operator)int_mod, "INTEGER", "%", integerType + integerType);
+		push_make_instruction((Operator)smaller<long>, "INTEGER", "<", integerType + integerType);
+		push_make_instruction((Operator)greater<long>, "INTEGER", ">", integerType + integerType);
+		push_make_instruction((Operator)_max<long>, "INTEGER", "MAX", integerType + integerType);
+		push_make_instruction((Operator)_min<long>, "INTEGER", "MIN", integerType + integerType);
+		push_make_instruction((Operator)in<long>, "INTEGER", "IN", integerType);
+		push_make_instruction((Operator)inall<long>, "INTEGER", "INALL", nullType);
+		push_make_instruction((Operator)inallrev<long>, "INTEGER", "INALLREV", nullType);
+		push_make_instruction((Operator)out<long>, "INTEGER", "OUT", out_in<long>());
 	}
 }

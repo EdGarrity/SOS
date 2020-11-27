@@ -34,4 +34,9 @@ namespace Plush
 		return make_type<T>() + make_type<U>();
 	}
 
+	template <typename T1, typename T2, typename T3> 
+	inline Type make_type() 
+	{
+		return make_type<T1>() + make_type<T2, T3>();
+	}
 }

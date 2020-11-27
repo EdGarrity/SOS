@@ -5,20 +5,38 @@
 
 namespace Plush
 {
-	bool Type::can_pop_from(const Environment & env) const
+	Type Type::make_equal_length(const Type &org)
 	{
-		for (unsigned i = _start; i < type.size(); ++i)
+		if (type.size() == org.type.size()) return org;
+
+		size_t len = std::max(type.size(), org.type.size());
+		type.resize(len, 0);
+
+		if (org.type.size() != len)
+		{
+			Type org2 = org;
+			org2.type.resize(len, 0);
+			return org2;
+		}
+
+		return org;
+	}
+
+	bool Type::can_pop_from(/*const*/ Environment & env) // const
+	{
+		for (unsigned int i = _start; i < type.size(); ++i)
 		{
 			unsigned int s = env.get_stack_size(i);
 
-			if ((type[i] > 0) && (s < static_cast<unsigned>(type[i])))
+//			if ((type[i] > 0) && (s < static_cast<unsigned>(type[i])))
+			if ((type[i] > 0) && (s < type[i]))
 				return false;
 		}
 
 		return true;
 	}
 
-	bool Type::operator==(const Type & other) const
+	bool Type::operator==(/*const*/ Type & other) // const
 	{
 		unsigned mins = std::min(type.size(), other.type.size());
 
@@ -40,9 +58,9 @@ namespace Plush
 		return true;
 	}
 
-	void Type::abs()
-	{
-		for (unsigned i = 0; i < type.size(); ++i)
-			type[i] = std::abs(type[i]);
-	}
+	//void Type::abs()
+	//{
+	//	for (unsigned i = 0; i < type.size(); ++i)
+	//		type[i] = std::abs(type[i]);
+	//}
 }

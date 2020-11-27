@@ -27,10 +27,13 @@
     <ClCompile Include="Utilities\HelperFunctions.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="StackInstructions.cpp">
+    <ClCompile Include="BooleanInstructions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BooleanInstructions.cpp">
+    <ClCompile Include="IntegerInstructions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FloatInstructions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CodeInstructions.cpp">

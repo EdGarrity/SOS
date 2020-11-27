@@ -55,7 +55,7 @@ namespace database
 			InitProperties[0].dwOptions = DBPROPOPTIONS_REQUIRED;
 			InitProperties[0].colid = DB_NULLID;
 
-			OLECHAR c;
+//			OLECHAR c;
 
 			// Database.  
 			InitProperties[1].dwPropertyID = DBPROP_INIT_CATALOG;

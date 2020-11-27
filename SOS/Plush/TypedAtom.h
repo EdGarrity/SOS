@@ -5,7 +5,7 @@
 
 namespace Plush {
 
-	class TypedAtom : public CodeAtom {
+	class TypedAtom : public Atom {
 
 	public:
 

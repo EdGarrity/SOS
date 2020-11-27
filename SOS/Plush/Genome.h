@@ -965,7 +965,7 @@ namespace Plush
 			unsigned int wanted_blocks = 0;
 			unsigned int extra_blocks = 0;
 			std::stack<unsigned int> wanted_stack;
-			unsigned  int atom_count = 0;
+			unsigned int atom_count = 0;
 			int block_starting_index = Utilities::FixedSizeStack<T>::size() - 1;
 
 			if (starting_position > -1)

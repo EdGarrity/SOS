@@ -177,6 +177,9 @@
     <ClInclude Include="Plush\TypeDef.h">
       <Filter>Header Files\Plush</Filter>
     </ClInclude>
+    <ClInclude Include="Plush\GenericInstructions.h">
+      <Filter>Header Files\Plush</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

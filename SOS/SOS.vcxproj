@@ -170,6 +170,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Plush\Atom.h" />
     <ClInclude Include="Plush\Environment.h" />
+    <ClInclude Include="Plush\GenericInstructions.h" />
     <ClInclude Include="Plush\Genome.h" />
     <ClInclude Include="Plush\Plush.BooleanInstructions.h" />
     <ClInclude Include="Plush\Plush.BoolOps.h" />

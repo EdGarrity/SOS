@@ -7,7 +7,7 @@ namespace Plush
 	template <class From, class To>
 	inline unsigned push_cast(Environment & _env)
 	{
-		if (_env.has_elements<From>(1))
+		//if (_env.has_elements<From>(1))
 			_env.push<To>(static_cast<To>(_env.pop<From>()));
 
 		return 1;
@@ -47,8 +47,8 @@ namespace Plush
 	template <class T>
 	inline unsigned plus(Environment & _env)
 	{
-		if (_env.has_elements<T>(2))
-		{
+		//if (_env.has_elements<T>(2))
+		//{
 			double first = 0.0;
 			double second = 0.0;
 			double result = 0.0;
@@ -72,7 +72,7 @@ namespace Plush
 				T another_first = _env.pop<T>();
 				_env.get_stack<T>().get_top() += another_first;
 			}
-		}
+		//}
 
 		return 1;
 	}
@@ -80,8 +80,8 @@ namespace Plush
 	template <class T>
 	inline unsigned minus(Environment & _env)
 	{
-		if (_env.has_elements<T>(2))
-		{
+		//if (_env.has_elements<T>(2))
+		//{
 			double first = 0.0;
 			double second = 0.0;
 			double result = 0.0;
@@ -105,7 +105,7 @@ namespace Plush
 				T another_first = _env.pop<T>();
 				_env.get_stack<T>().get_top() -= another_first;
 			}
-		}
+		//}
 
 		return 1;
 	}
@@ -113,8 +113,8 @@ namespace Plush
 	template <class T>
 	inline unsigned multiplies(Environment & _env)
 	{
-		if (_env.has_elements<T>(2))
-		{
+		//if (_env.has_elements<T>(2))
+		//{
 			double first = 0.0;
 			double second = 0.0;
 			double result = 0.0;
@@ -138,7 +138,7 @@ namespace Plush
 				T another_first = _env.pop<T>();
 				_env.get_stack<T>().get_top() *= another_first;
 			}
-		}
+		//}
 
 		return 1;
 	}
@@ -146,8 +146,8 @@ namespace Plush
 	template <class T>
 	inline unsigned divides(Environment & _env)
 	{
-		if (_env.has_elements<T>(2))
-		{
+		//if (_env.has_elements<T>(2))
+		//{
 			if (_env.get_stack<T>().get_top() == T())
 				return 1;
 
@@ -163,7 +163,7 @@ namespace Plush
 			}
 
 			_env.get_stack<T>().get_top() /= first;
-		}
+		//}
 
 		return 1;
 	}
@@ -171,12 +171,12 @@ namespace Plush
 	template <class T>
 	inline unsigned smaller(Environment & _env)
 	{
-		if (_env.has_elements<T>(2))
-		{
+		//if (_env.has_elements<T>(2))
+		//{
 			T first = _env.pop<T>();
 			T second = _env.pop<T>();
 			_env.push<bool>(second < first);
-		}
+		//}
 
 		return 1;
 	}
@@ -184,12 +184,12 @@ namespace Plush
 	template <class T>
 	inline unsigned greater(Environment & _env)
 	{
-		if (_env.has_elements<T>(2))
-		{
+		//if (_env.has_elements<T>(2))
+		//{
 			T first = _env.pop<T>();
 			T second = _env.pop<T>();
 			_env.push<bool>(second > first);
-		}
+		//}
 
 		return 1;
 	}
@@ -197,12 +197,12 @@ namespace Plush
 	template <class T>
 	inline unsigned _max(Environment & _env)
 	{
-		if (_env.has_elements<T>(2))
-		{
+		//if (_env.has_elements<T>(2))
+		//{
 			T first = _env.pop<T>();
 			T second = _env.pop<T>();
 			_env.push<T>(std::max(first, second));
-		}
+		//}
 
 		return 1;
 	}
@@ -210,12 +210,12 @@ namespace Plush
 	template <class T>
 	inline unsigned _min(Environment & _env)
 	{
-		if (_env.has_elements<T>(2))
-		{
+		//if (_env.has_elements<T>(2))
+		//{
 			T first = _env.pop<T>();
 			T second = _env.pop<T>();
 			_env.push<T>(std::min(first, second));
-		}
+		//}
 
 		return 1;
 	}
@@ -408,6 +408,11 @@ namespace Plush
 	//   then a NO-OP is executed instead. If N >= the size of the output array then the number is 
 	//   copied to the element after the last element of the output array.
 	//
+	template <typename T> Type out_in()
+	{
+		return make_type<T, int>();
+	}
+
 	template <class T>
 	inline unsigned out(Environment & _env)
 	{

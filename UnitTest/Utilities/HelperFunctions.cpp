@@ -18,6 +18,8 @@ namespace UnitTest
 					return false;
 			}
 		}
+
+		return true;
 	}
 
 	// long, double, bool, ExecAtom, CodeAtom

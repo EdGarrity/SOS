@@ -361,7 +361,7 @@ namespace database
 
 	void SQLCommand::execute()
 	{
-		IRowset*	pIRowset;
+//		IRowset*	pIRowset;
 		DBPARAMS	Params;
 		DBORDINAL	nCols;
 				
@@ -538,7 +538,7 @@ namespace database
 	bool SQLCommand::fetch_next()
 	{
 		HROW*           pRows = &rghRows_[0];   // Pointer to the row 
-		ULONG           nCol;
+//		ULONG           nCol;
 
 		if ( (cRowsObtained_ == 0) || (iRow_ >= cRowsObtained_ ) )
 		{

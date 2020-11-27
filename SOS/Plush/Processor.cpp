@@ -1,3 +1,5 @@
+#include <exception>
+#include <iostream>
 #include <vector>
 #include "Processor.h"
 #include "Plush.StaticInit.h"
@@ -7,7 +9,8 @@
 namespace Plush
 {
 	typedef unsigned(*Operator)(Environment &env);
-	typedef std::map<std::string, Operator> Func2CodeMapType;
+//	typedef std::map<std::string, Operator> Func2CodeMapType;
+//	typedef std::map<std::string, Instruction*> Func2CodeMapType;
 
 	extern 	Func2CodeMapType Func2CodeMap;
 
@@ -61,56 +64,79 @@ namespace Plush
 
 		while ((!env.is_empty<ExecAtom>()) && (effort < _max_effort))
 		{
-			unsigned unit = 0;
-
-			ExecAtom atom = env.pop<ExecAtom>();
-
-			switch (atom.type)
+			try
 			{
-			case Atom::AtomType::integer:
-				env.push<long>(std::stol(atom.instruction));
-				unit = 1;
-				break;
-			case Atom::AtomType::floating_point:
-				env.push<double>(std::stod(atom.instruction));
-				unit = 1;
-				break;
-			case Atom::AtomType::boolean:
-				env.push<bool>(atom.instruction == Plush::Atom::boolean_true);
-				unit = 1;
-				break;
-			case Atom::AtomType::ins:
-				// Push open parenthesis onto stack if instruction expects any blocks
+				unsigned unit = 0;
 
-				int blocks_needed = Func2BlockWantsMap[atom.instruction];
-				int blocks_closed = atom.close_parenthesis;
+				ExecAtom atom = env.pop<ExecAtom>();
 
-				// Close expected blocks for each block the instruction is expecting if the instruction closes that block.
-				if (atom.instruction != "EXEC.NOOP")
+				switch (atom.type)
 				{
-					if (atom.instruction.substr(0, 5) == "EXEC.")
+				case Atom::AtomType::integer:
+					env.push<long>(std::stol(atom.instruction));
+					unit = 1;
+					break;
+				case Atom::AtomType::floating_point:
+					env.push<double>(std::stod(atom.instruction));
+					unit = 1;
+					break;
+				case Atom::AtomType::boolean:
+					env.push<bool>(atom.instruction == Plush::Atom::boolean_true);
+					unit = 1;
+					break;
+				case Atom::AtomType::ins:
+					// Push open parenthesis onto stack if instruction expects any blocks
+
+					//int blocks_needed = Func2BlockWantsMap[atom.instruction];
+					int blocks_closed = atom.close_parenthesis;
+
+					// Close expected blocks for each block the instruction is expecting if the instruction closes that block.
+					if (atom.instruction != "EXEC.NOOP")
 					{
-						if (blocks_closed > 0)
+						if (atom.instruction.substr(0, 5) == "EXEC.")
 						{
-							std::string noop = "{:instruction EXEC.NOOP :close " + std::to_string(blocks_closed) + "}";
-							env.push<ExecAtom>(ExecAtom(noop));
+							if (blocks_closed > 0)
+							{
+								std::string noop = "{:instruction EXEC.NOOP :close " + std::to_string(blocks_closed) + "}";
+								env.push<ExecAtom>(ExecAtom(noop));
+							}
 						}
 					}
+
+					// Execute the instruction
+					auto search = Func2CodeMap.find(atom.instruction);
+
+					if (search != Func2CodeMap.end())
+					{
+						//					Operator op = Func2CodeMap[atom.instruction];
+						Instruction * pI = Func2CodeMap[atom.instruction];
+
+						if (pI->can_run(env))
+						{
+							Operator op = pI->get_op();
+							unit = op(env);
+						}
+					}
+
+					break;
 				}
 
-				// Execute the instruction
-				auto search = Func2CodeMap.find(atom.instruction);
-
-				if (search != Func2CodeMap.end())
-				{
-					Operator op = Func2CodeMap[atom.instruction];
-					unit = op(env);
-				}
-
-				break;
+				effort += (1u) > (unit) ? (1u) : (unit);
 			}
-
-			effort += (1u) > (unit) ? (1u) : (unit);
+			catch (std::underflow_error& e)
+			{
+				std::cerr << "Underflow exception caught" << std::endl;
+				std::cerr << e.what() << std::endl;
+			}
+			catch (std::exception& e)
+			{
+				std::cerr << "Unknown std exception caught" << std::endl;
+				std::cerr << e.what() << std::endl;
+			}
+			catch (...)
+			{
+				std::cerr << "Unknown exception caught" << std::endl;
+			}
 		}
 
 		return effort;
