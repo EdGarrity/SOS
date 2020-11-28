@@ -1,9 +1,7 @@
 #pragma once
 
 #include <vector>
-//#include "Processor.h"
 #include "Type.h"
-//#include "Plush.StaticInit.h"
 
 namespace Plush
 {
@@ -14,44 +12,19 @@ namespace Plush
 		const Operator op_; // const, so the compiler might be able to inline the call
 		std::string name_;
 		Type intype_;
+		Type outtype_;
 
 	public:
-		Instruction(Operator op, std::string name, Type intype) : op_(op), name_(name), intype_(intype) {}
+		Instruction(Operator op, std::string name, Type intype, Type outtype) : op_(op), name_(name), intype_(intype), outtype_(outtype) {}
 
-		virtual bool can_run(/*const*/ Environment& env) /*const*/ { return intype_.can_pop_from(env); }
+		virtual bool can_run(/*const*/ Environment& env) /*const*/ 
+		{ 
+			return intype_.can_pop_from(env) && outtype_.can_push_to(env);
+		}
+
 		std::string to_string() const { return name_; }
 		Operator get_op() const { return op_; }
 	};
-
-
-	//extern StaticInit static_initializer;
-
-	//inline void push_make_instruction(Operator op, std::string type, std::string name, Type in)
-	//{
-	//	static_initializer.push_register_pushfunc(new Instruction(op, type + "." + name, in));
-	//}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	void initGenerics();
 

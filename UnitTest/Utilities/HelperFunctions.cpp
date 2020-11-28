@@ -14,7 +14,7 @@ namespace UnitTest
 			{
 				Genome<S1> S1_Stack = env.get_stack<S1>();
 
-				if (s2[n] != S1_Stack.get_stack_element(n))
+				if (s2[n] != S1_Stack.get_atom_at_index(n))
 					return false;
 			}
 		}

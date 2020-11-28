@@ -47,8 +47,8 @@ namespace Plush
 		// Load program on CODE and EXEC stacks
 		while (!program_stack.empty())
 		{
-			env.get_stack<CodeAtom>().push(CodeAtom(program_stack.get_top()));
-			env.get_stack<ExecAtom>().push(ExecAtom(program_stack.get_top()));
+			env.get_stack<CodeAtom>().push(CodeAtom(program_stack.get_top_atom()));
+			env.get_stack<ExecAtom>().push(ExecAtom(program_stack.get_top_atom()));
 			program_stack.pop();
 		}
 

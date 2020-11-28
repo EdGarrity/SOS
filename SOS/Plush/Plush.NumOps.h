@@ -55,7 +55,7 @@ namespace Plush
 
 			if (typeid(T) == typeid(double))
 			{
-				first = _env.get_stack<double>().get_top();
+				first = _env.get_stack<double>().get_top_atom();
 				second = _env.get_stack<double>()[_env.get_stack<double>().size() - 2];
 
 				result = second + first;
@@ -63,14 +63,14 @@ namespace Plush
 				if ((!std::isnan(result)) && (!std::isinf(result)))
 				{
 					T another_first = _env.pop<T>();
-					_env.get_stack<T>().get_top() += another_first;
+					_env.get_stack<T>().get_top_atom() += another_first;
 				}
 			}
 
 			else
 			{
 				T another_first = _env.pop<T>();
-				_env.get_stack<T>().get_top() += another_first;
+				_env.get_stack<T>().get_top_atom() += another_first;
 			}
 		//}
 
@@ -88,7 +88,7 @@ namespace Plush
 
 			if (typeid(T) == typeid(double))
 			{
-				first = _env.get_stack<double>().get_top();
+				first = _env.get_stack<double>().get_top_atom();
 				second = _env.get_stack<double>()[_env.get_stack<double>().size() - 2];
 
 				result = second - first;
@@ -96,14 +96,14 @@ namespace Plush
 				if ((!std::isnan(result)) && (!std::isinf(result)))
 				{
 					T another_first = _env.pop<T>();
-					_env.get_stack<T>().get_top() -= another_first;
+					_env.get_stack<T>().get_top_atom() -= another_first;
 				}
 			}
 
 			else
 			{
 				T another_first = _env.pop<T>();
-				_env.get_stack<T>().get_top() -= another_first;
+				_env.get_stack<T>().get_top_atom() -= another_first;
 			}
 		//}
 
@@ -121,7 +121,7 @@ namespace Plush
 
 			if (typeid(T) == typeid(double))
 			{
-				first = _env.get_stack<double>().get_top();
+				first = _env.get_stack<double>().get_top_atom();
 				second = _env.get_stack<double>()[_env.get_stack<double>().size() - 2];
 
 				result = second * first;
@@ -129,14 +129,14 @@ namespace Plush
 				if ((!std::isnan(result)) && (!std::isinf(result)))
 				{
 					T another_first = _env.pop<T>();
-					_env.get_stack<T>().get_top() *= another_first;
+					_env.get_stack<T>().get_top_atom() *= another_first;
 				}
 			}
 
 			else
 			{
 				T another_first = _env.pop<T>();
-				_env.get_stack<T>().get_top() *= another_first;
+				_env.get_stack<T>().get_top_atom() *= another_first;
 			}
 		//}
 
@@ -148,7 +148,7 @@ namespace Plush
 	{
 		//if (_env.has_elements<T>(2))
 		//{
-			if (_env.get_stack<T>().get_top() == T())
+			if (_env.get_stack<T>().get_top_atom() == T())
 				return 1;
 
 			T first = _env.pop<T>();
@@ -156,13 +156,13 @@ namespace Plush
 			T a;
 			if (typeid(a) == typeid(int))
 			{
-				T second = _env.get_stack<T>().get_top();
+				T second = _env.get_stack<T>().get_top_atom();
 
 				if (second == INT_MIN)
 					return 1;
 			}
 
-			_env.get_stack<T>().get_top() /= first;
+			_env.get_stack<T>().get_top_atom() /= first;
 		//}
 
 		return 1;
@@ -238,15 +238,20 @@ namespace Plush
 	// Remarks:
 	//   N is popped from the Integer stack. If N < 0, or if N >= size of input array, the mod of N is used.
 	//
+	template <typename T> Type in_out()
+	{
+		return make_type<T>();
+	}
+
 	template <class T>
 	inline unsigned in(Environment & _env)
 	{
 		if (_env.input.size() > 0)
 		{
-			int index = _env.pop<long>();
+			long index = _env.pop<long>();
 
-			index = std::abs((int)(index % _env.input.size()));
-			T value = _env.input[index];
+			size_t i = std::abs((long)(index % _env.input.size()));
+			T value = _env.input[i];
 			_env.push<T>(value);
 		}
 
@@ -344,10 +349,13 @@ namespace Plush
 	{
 		if (_env.input.size() > 0)
 		{
-			for (int index = 0; index < _env.input.size(); index++)
+			if (_env.has_elements<T>(_env.input.size()))
 			{
-				T value = _env.input[index];
-				_env.push<T>(value);
+				for (size_t index = 0; index < _env.input.size(); index++)
+				{
+					T value = _env.input[index];
+					_env.push<T>(value);
+				}
 			}
 		}
 
@@ -377,10 +385,13 @@ namespace Plush
 	{
 		if (_env.input.size() > 0)
 		{
-			for (int index = _env.input.size() - 1; index >= 0; index--)
+			if (_env.has_elements<T>(_env.input.size()))
 			{
-				T value = _env.input[index];
-				_env.push<T>(value);
+				for (long long index = _env.input.size() - 1; index >= 0; index--)
+				{
+					T value = _env.input[index];
+					_env.push<T>(value);
+				}
 			}
 		}
 
@@ -410,23 +421,23 @@ namespace Plush
 	//
 	template <typename T> Type out_in()
 	{
-		return make_type<T, int>();
+		return make_type<T, long>();
 	}
 
 	template <class T>
 	inline unsigned out(Environment & _env)
 	{
-		if ((_env.has_elements<T>(1)) && (_env.has_elements<long>(1)))
-		{
+		//if ((_env.has_elements<T>(1)) && (_env.has_elements<long>(1)))
+		//{
 			T value = _env.pop<T>();
-			int index = std::abs((int)_env.pop<long>());
+			size_t index = std::abs(_env.pop<long>());
 
 			if (index < _env.output.size())
 				_env.output[index] = value;
 
 			else
 				_env.output.push_back(value);
-		}
+		//}
 
 		return 1;
 	}

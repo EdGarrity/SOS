@@ -48,23 +48,23 @@ namespace Plush
 		//make_instruction((Operator)out<double>, "FLOAT", "OUT");
 
 
-		push_make_instruction((Operator)plus<double>, "FLOAT", "+", floatType + floatType);
-		push_make_instruction((Operator)minus<double>, "FLOAT", "-", floatType + floatType);
-		push_make_instruction((Operator)multiplies<double>, "FLOAT", "*", floatType + floatType);
-		push_make_instruction((Operator)divides<double>, "FLOAT", "/", floatType + floatType);
-		push_make_instruction((Operator)bool2float, "FLOAT", "FROMBOOLEAN", boolType);
-		push_make_instruction((Operator)int2float, "FLOAT", "FROMINTEGER", integerType);
-		push_make_instruction((Operator)_fmod, "FLOAT", "%", floatType + floatType);
-		push_make_instruction((Operator)smaller<double>, "FLOAT", "<", floatType + floatType);
-		push_make_instruction((Operator)greater<double>, "FLOAT", ">", floatType + floatType);
-		push_make_instruction((Operator)_max<double>, "FLOAT", "MAX", floatType + floatType);
-		push_make_instruction((Operator)_min<double>, "FLOAT", "MIN", floatType + floatType);
-		push_make_instruction((Operator)_cos, "FLOAT", "COS", floatType);
-		push_make_instruction((Operator)_sin, "FLOAT", "SIN", floatType);
-		push_make_instruction((Operator)_tan, "FLOAT", "TAN", floatType);
-		push_make_instruction((Operator)in<double>, "FLOAT", "IN", integerType);
-		push_make_instruction((Operator)inall<double>, "FLOAT", "INALL", nullType);
-		push_make_instruction((Operator)inallrev<double>, "FLOAT", "INALLREV", nullType);
-		push_make_instruction((Operator)out<double>, "FLOAT", "OUT", out_in<double>());
+		push_make_instruction((Operator)plus<double>, "FLOAT", "+", floatType + floatType, nullType);
+		push_make_instruction((Operator)minus<double>, "FLOAT", "-", floatType + floatType, nullType);
+		push_make_instruction((Operator)multiplies<double>, "FLOAT", "*", floatType + floatType, nullType);
+		push_make_instruction((Operator)divides<double>, "FLOAT", "/", floatType + floatType, nullType);
+		push_make_instruction((Operator)bool2float, "FLOAT", "FROMBOOLEAN", boolType, floatType);
+		push_make_instruction((Operator)int2float, "FLOAT", "FROMINTEGER", integerType, floatType);
+		push_make_instruction((Operator)_fmod, "FLOAT", "%", floatType + floatType, nullType);
+		push_make_instruction((Operator)smaller<double>, "FLOAT", "<", floatType + floatType, boolType);
+		push_make_instruction((Operator)greater<double>, "FLOAT", ">", floatType + floatType, boolType);
+		push_make_instruction((Operator)_max<double>, "FLOAT", "MAX", floatType + floatType, nullType);
+		push_make_instruction((Operator)_min<double>, "FLOAT", "MIN", floatType + floatType, nullType);
+		push_make_instruction((Operator)_cos, "FLOAT", "COS", floatType, nullType);
+		push_make_instruction((Operator)_sin, "FLOAT", "SIN", floatType, nullType);
+		push_make_instruction((Operator)_tan, "FLOAT", "TAN", floatType, nullType);
+		push_make_instruction((Operator)in<double>, "FLOAT", "IN", integerType, in_out<double>());
+		push_make_instruction((Operator)inall<double>, "FLOAT", "INALL", nullType, nullType);
+		push_make_instruction((Operator)inallrev<double>, "FLOAT", "INALLREV", nullType, nullType);
+		push_make_instruction((Operator)out<double>, "FLOAT", "OUT", out_in<double>(), nullType);
 	}
 }

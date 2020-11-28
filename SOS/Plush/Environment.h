@@ -46,10 +46,6 @@ namespace Plush
 			double_stack_.clear();
 		}
 
-		//Genome<CodeAtom>& genome = get_stack<CodeAtom>();
-
-		//if (genome.number_of_blocks() < sz)
-
 		virtual void initialize(std::vector<double> & _input)
 		{
 			clear_stacks();
@@ -60,21 +56,21 @@ namespace Plush
 		/* Helper Functions */
 
 		template<typename T>
-		unsigned int length()
+		size_t length()
 		{
 			Genome<T>& stack = get_stack<T>();
 			return stack.size();
 		}
 
 		template<>
-		unsigned int length<CodeAtom>()
+		size_t length<CodeAtom>()
 		{
 			Genome<CodeAtom>& genome = get_stack<CodeAtom>();
 			return genome.number_of_blocks();
 		}
 
 		template<>
-		unsigned int length<ExecAtom>()
+		size_t length<ExecAtom>()
 		{
 			Genome<ExecAtom>& genome = get_stack<ExecAtom>();
 			return genome.number_of_blocks();
@@ -130,11 +126,11 @@ namespace Plush
 
 			else
 			{
-				unsigned int starting_index = code_stack.position_to_index(genome_section.ending_position);
-				unsigned int ending_index = code_stack.position_to_index(genome_section.starting_position) + 1;
+				size_t starting_index = code_stack.position_to_index(genome_section.ending_position);
+				size_t ending_index = code_stack.position_to_index(genome_section.starting_position) + 1;
 
-				for (unsigned int n = starting_index; n < ending_index; n++)
-					push(T(code_stack.get_stack_element(n)));
+				for (size_t n = starting_index; n < ending_index; n++)
+					push(T(code_stack.get_atom_at_index(n)));
 			}
 		}
 
@@ -148,18 +144,18 @@ namespace Plush
 
 			else
 			{
-				unsigned int starting_index = stack.position_to_index(genome_section.ending_position);
-				unsigned int ending_index = stack.position_to_index(genome_section.starting_position) + 1;
+				size_t starting_index = stack.position_to_index(genome_section.ending_position);
+				size_t ending_index = stack.position_to_index(genome_section.starting_position) + 1;
 
-				for (unsigned int n = starting_index; n < ending_index; n++)
-					push(T(stack.get_stack_element(n)));
+				for (size_t n = starting_index; n < ending_index; n++)
+					push(T(stack.get_atom_at_index(n)));
 			}
 		}
 
 		template <typename T>
 		inline T pop()
 		{
-			T val = get_stack<T>().get_top();
+			T val = get_stack<T>().get_top_atom();
 			get_stack<T>().pop();
 			return val;
 		}
@@ -211,27 +207,21 @@ namespace Plush
 		}
 
 		template <typename T>
-		inline T get_top()
+		inline T get_top_atom()
 		{
-			T val = get_stack<T>().get_top();
+			T val = get_stack<T>().get_top_atom();
 			return val;
-		}
-
-		template <class T>
-		inline unsigned int get_top(Genome<T> &other_stack)
-		{
-			return get_stack<T>().get_top(other_stack);
 		}
 
 		template <typename T>
 		inline T set_top(T val)
 		{
-			get_stack<T>().get_top() = val;
+			get_stack<T>().get_top_atom() = val;
 			return val;
 		}
 
 		template <typename T>
-		inline bool has_elements(unsigned sz)
+		inline bool has_elements(size_t sz)
 		{
 			if (get_stack<T>().size() < sz)
 				return false;
@@ -239,35 +229,11 @@ namespace Plush
 				return true;
 		}
 
-		template <>
-		inline bool has_elements<CodeAtom>(unsigned sz)
-		{
-			Genome<CodeAtom>& genome = get_stack<CodeAtom>();
-
-			if (genome.number_of_blocks() < sz)
-				return false;
-
-			else
-				return true;
-		}
-
-		template <>
-		inline bool has_elements<ExecAtom>(unsigned sz)
-		{
-			Genome<ExecAtom>& genome = get_stack<ExecAtom>();
-
-			if (genome.number_of_blocks() < sz)
-				return false;
-
-			else
-				return true;
-		}
-
 		template <typename T>
-		inline T& get_atom(unsigned int position)
+		inline T& get_atom_at_position(size_t position)
 		{
 			if (has_elements<T>(position + 1))
-				return get_stack<T>().get_atom(position);
+				return get_stack<T>().get_atom_at_position(position);
 
 			else
 			{
@@ -288,12 +254,30 @@ namespace Plush
 			case EXEC_STACK: return length<ExecAtom>();
 			case INTEGER_STACK: return int_stack_.size();
 			case CODE_STACK: return length<CodeAtom>();
-
 			case BOOL_STACK: return bool_stack_.size();
 			case FLOAT_STACK: return double_stack_.size();
 			}
 			return 0;
 		}
 
+		/* Needed for type checking of post conditions */
+		inline size_t get_stack_free(unsigned int which) //const
+		{
+			switch (which)
+			{
+			case EXEC_STACK: return exec_stack_.free();
+			case INTEGER_STACK: return int_stack_.free();
+			case CODE_STACK: return code_stack_.free();
+			case BOOL_STACK: return bool_stack_.free();
+			case FLOAT_STACK: return double_stack_.free();
+			}
+			return 0;
+		}
+
+		template <typename T>
+		inline size_t position_to_index(size_t position)
+		{
+			return get_stack<T>().position_to_index(position);
+		}
 	};
 }

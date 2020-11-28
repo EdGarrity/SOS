@@ -92,8 +92,11 @@ namespace pushGP
 
 		new_genome.clear();
 
-		for (const Plush::CodeAtom& atom : old_genome.container())
+//		for (const Plush::CodeAtom& atom : old_genome.container())
+		for (size_t i = 0; i < old_genome.size(); i++)
 		{
+			Plush::CodeAtom& atom = old_genome.get_atom_at_index(i);
+
 			if (Utilities::random_double(0.0, 1.0) < domain::argmap::uniform_mutation_rate)
 			{
 				if (Utilities::random_double(0.0, 1.0) < domain::argmap::uniform_mutation_constant_tweak_rate)
@@ -192,7 +195,7 @@ namespace pushGP
 
 			else
 			{
-				result_genome.push(use_s1 ? s1.get_stack_element(i) : s2.get_stack_element(i));
+				result_genome.push(use_s1 ? s1.get_atom_at_index(i) : s2.get_atom_at_index(i));
 
 				iteration_budget--;
 				i++;

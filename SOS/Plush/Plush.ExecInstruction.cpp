@@ -14,7 +14,7 @@ namespace Plush
 		//if (_env.has_elements<ExecAtom>(1))
 		//{
 			// Get top atom on EXEC stack
-			ExecAtom atom = _env.get_top<ExecAtom>();
+			ExecAtom atom = _env.get_top_atom<ExecAtom>();
 
 			// Remove one closing paranthesis
 			atom.close_parenthesis = (atom.close_parenthesis > 0) ? atom.close_parenthesis - 1 : atom.close_parenthesis;
@@ -217,11 +217,11 @@ namespace Plush
 			Genome_section<CodeAtom> section_A = _env.get_stack<CodeAtom>()[0];
 			Genome_section<CodeAtom> section_B = _env.get_stack<CodeAtom>()[1];
 
-			if (_env.get_stack<CodeAtom>().get_atom(section_A.ending_position).close_parenthesis > 0)
-				_env.get_stack<CodeAtom>().get_atom(section_A.ending_position).close_parenthesis--;
+			if (_env.get_stack<CodeAtom>().get_atom_at_position(section_A.ending_position).close_parenthesis > 0)
+				_env.get_stack<CodeAtom>().get_atom_at_position(section_A.ending_position).close_parenthesis--;
 
-			if (_env.get_stack<CodeAtom>().get_atom(section_B.ending_position).close_parenthesis == 0)
-				_env.get_stack<CodeAtom>().get_atom(section_B.ending_position).close_parenthesis = 1;
+			if (_env.get_stack<CodeAtom>().get_atom_at_position(section_B.ending_position).close_parenthesis == 0)
+				_env.get_stack<CodeAtom>().get_atom_at_position(section_B.ending_position).close_parenthesis = 1;
 		//}
 
 		return 1;
@@ -252,10 +252,11 @@ namespace Plush
 			if (item.size > 1)
 			{
 				Genome_section<CodeAtom> first_item = _env.get_stack<CodeAtom>().get_subitem(1);
-				unsigned int old_top = _env.get_stack<CodeAtom>().size();
+				size_t old_top = _env.get_stack<CodeAtom>().size();
 
 				_env.get_stack<CodeAtom>().push(first_item);
-				_env.get_stack<CodeAtom>().container()[old_top].close_parenthesis++;
+//				_env.get_stack<CodeAtom>().container()[old_top].close_parenthesis++;
+				_env.get_stack<CodeAtom>().get_atom_at_index(old_top).close_parenthesis++;
 				_env.get_stack<CodeAtom>().remove_item_at_position(1);
 			}
 		//}
@@ -292,7 +293,7 @@ namespace Plush
 			_env.get_stack<CodeAtom>().yank_item(1);
 
 			unsigned n = _env.get_stack<CodeAtom>()[0].ending_position;
-			_env.get_stack<CodeAtom>().get_atom(n).close_parenthesis--;
+			_env.get_stack<CodeAtom>().get_atom_at_position(n).close_parenthesis--;
 		//}
 
 		return 1;
@@ -317,7 +318,7 @@ namespace Plush
 				_env.get_stack<CodeAtom>().yankdup_stack_element(container_block);
 
 				if (container_block.starting_position == 0)
-					_env.get_stack<CodeAtom>().get_atom(container_block.ending_position).close_parenthesis++;
+					_env.get_stack<CodeAtom>().get_atom_at_position(container_block.ending_position).close_parenthesis++;
 			}
 
 			else
@@ -362,14 +363,14 @@ namespace Plush
 
 			if (block_a.size > 0)
 			{
-				for (unsigned int i = block_a.starting_position; i <= block_a.ending_position; i++)
-					atom_set.insert(genome.get_atom(i).instruction);
+				for (size_t i = block_a.starting_position; i <= block_a.ending_position; i++)
+					atom_set.insert(genome.get_atom_at_position(i).instruction);
 			}
 
 			if (block_b.size > 0)
 			{
-				for (unsigned int i = block_b.starting_position; i <= block_b.ending_position; i++)
-					atom_set.insert(genome.get_atom(i).instruction);
+				for (size_t i = block_b.starting_position; i <= block_b.ending_position; i++)
+					atom_set.insert(genome.get_atom_at_position(i).instruction);
 			}
 
 			int result = 0;
@@ -381,18 +382,18 @@ namespace Plush
 
 				if (block_a.size > 0)
 				{
-					for (unsigned int i = block_a.starting_position; i <= block_a.ending_position; i++)
+					for (size_t i = block_a.starting_position; i <= block_a.ending_position; i++)
 					{
-						if (instruction == genome.get_atom(i).instruction)
+						if (instruction == genome.get_atom_at_position(i).instruction)
 							count_a++;
 					}
 				}
 
 				if (block_b.size > 0)
 				{
-					for (unsigned int i = block_b.starting_position; i <= block_b.ending_position; i++)
+					for (size_t i = block_b.starting_position; i <= block_b.ending_position; i++)
 					{
-						if (instruction == genome.get_atom(i).instruction)
+						if (instruction == genome.get_atom_at_position(i).instruction)
 							count_b++;
 					}
 				}
@@ -560,7 +561,7 @@ namespace Plush
 
 						// Close extracted item if not last item in original top block
 						if (item_number != number_of_items)
-							genome.get_stack_element_ref(old_top).close_parenthesis++;
+							genome.get_atom_at_index(old_top).close_parenthesis++;
 
 						genome.remove_item_at_position(1);
 					}
@@ -716,7 +717,7 @@ namespace Plush
 			Genome_section<CodeAtom> block_b = genome[1];
 
 			// Close combined list
-			genome.get_atom(block_b.ending_position).close_parenthesis++;
+			genome.get_atom_at_position(block_b.ending_position).close_parenthesis++;
 
 			// Balance parenthesis
 			CodeAtom code("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}");
@@ -775,7 +776,7 @@ namespace Plush
 
 			// Blance closing parenthesis
 			if ((number_of_items > 0) && (index < number_of_items - 1))
-				genome.get_atom(sub_block.ending_position).close_parenthesis++;
+				genome.get_atom_at_position(sub_block.ending_position).close_parenthesis++;
 
 			// Replace top genome with subsection
 			genome.replace_section(sub_block.ending_position, block.ending_position, sub_block.size);
@@ -828,8 +829,8 @@ namespace Plush
 				_env.push<bool>(true);
 			
 			else if ((top_block.size == 1) 
-				&& (genome.get_atom(top_block.starting_position).instruction == "CODE.NOOP")
-					&& (genome.get_atom(top_block.starting_position).close_parenthesis > 0))
+				&& (genome.get_atom_at_position(top_block.starting_position).instruction == "CODE.NOOP")
+					&& (genome.get_atom_at_position(top_block.starting_position).close_parenthesis > 0))
 					_env.push<bool>(true);
 			else
 				_env.push<bool>(false);
@@ -1062,19 +1063,19 @@ namespace Plush
 		//make_instruction((Operator)noop_open_paren, "EXEC", "NOOP_OPEN_PAREN");
 		//make_instruction((Operator)noop, "EXEC", "NOOP");
 
-		push_make_instruction((Operator)exec_k, "EXEC", "K", execType + execType);
-		push_make_instruction((Operator)exec_s, "EXEC", "S", execType + execType + execType);
-		push_make_instruction((Operator)exec_y, "EXEC", "Y", execType);
-		push_make_instruction((Operator)exec_if, "EXEC", "IF", execType + execType + boolType);
-		push_make_instruction((Operator)exec_do_range, "EXEC", "DO*RANGE", integerType + integerType + execType);
-		push_make_instruction((Operator)exec_do_count, "EXEC", "DO*COUNT", integerType + execType);
-		push_make_instruction((Operator)exec_do_times, "EXEC", "DO*TIMES", integerType + execType);
-		push_make_instruction((Operator)exec_while, "EXEC", "WHILE", integerType + execType);
-		push_make_instruction((Operator)do_while, "EXEC", "DO*WHILE", execType);
-		push_make_instruction((Operator)exec_when, "EXEC", "DO*WHEN", boolType + execType);
+		push_make_instruction((Operator)exec_k, "EXEC", "K", execType + execType, nullType);
+		push_make_instruction((Operator)exec_s, "EXEC", "S", execType + execType + execType, execType);
+		push_make_instruction((Operator)exec_y, "EXEC", "Y", execType, execType);
+		push_make_instruction((Operator)exec_if, "EXEC", "IF", execType + execType + boolType, nullType);
+		push_make_instruction((Operator)exec_do_range, "EXEC", "DO*RANGE", integerType + integerType + execType, nullType);
+		push_make_instruction((Operator)exec_do_count, "EXEC", "DO*COUNT", integerType + execType, integerType + execType);
+		push_make_instruction((Operator)exec_do_times, "EXEC", "DO*TIMES", integerType + execType, integerType + execType + execType);
+		push_make_instruction((Operator)exec_while, "EXEC", "WHILE", integerType + execType, execType + execType);
+		push_make_instruction((Operator)do_while, "EXEC", "DO*WHILE", execType, execType + execType);
+		push_make_instruction((Operator)exec_when, "EXEC", "DO*WHEN", boolType + execType, nullType);
 
-		push_make_instruction((Operator)noop_open_paren, "EXEC", "NOOP_OPEN_PAREN", execType);
-		push_make_instruction((Operator)noop, "EXEC", "NOOP", nullType);
+		push_make_instruction((Operator)noop_open_paren, "EXEC", "NOOP_OPEN_PAREN", execType, nullType);
+		push_make_instruction((Operator)noop, "EXEC", "NOOP", nullType, nullType);
 
 
 
@@ -1093,35 +1094,35 @@ namespace Plush
 		set_parentheses("EXEC", "SWAP", 2);
 		set_parentheses("EXEC", "Y", 1);
 
-		push_make_instruction((Operator)code_append, "CODE", "APPEND", codeType + codeType);
-		push_make_instruction((Operator)code_atom, "CODE", "ATOM", codeType);
-		push_make_instruction((Operator)code_car, "CODE", "CAR", codeType);
-		push_make_instruction((Operator)code_cdr, "CODE", "CDR", codeType);
-		push_make_instruction((Operator)code_cons, "CODE", "CONS", codeType + codeType);
-		push_make_instruction((Operator)code_container, "CODE", "CONTAINER", codeType + codeType);
-		push_make_instruction((Operator)code_contains, "CODE", "CONTAINS", codeType + codeType);
-		push_make_instruction((Operator)code_discrepancy, "CODE", "DISCREPANCY", codeType + codeType);
-		push_make_instruction((Operator)code_do, "CODE", "DO", codeType);
-		push_make_instruction((Operator)code_do_star, "CODE", "DO*", codeType);
-		push_make_instruction((Operator)code_do_range, "CODE", "DO*RANGE", codeType + integerType + integerType);
-		push_make_instruction((Operator)code_do_count, "CODE", "DO*COUNT", codeType + integerType);
-		push_make_instruction((Operator)code_do_times, "CODE", "DO*TIMES", codeType + integerType);
-		push_make_instruction((Operator)code_extract, "CODE", "EXTRACT", codeType + integerType);
-		push_make_instruction((Operator)bool2code, "CODE", "FROMBOOLEAN", boolType);
-		push_make_instruction((Operator)float2code, "CODE", "FROMFLOAT", floatType);
-		push_make_instruction((Operator)int2code, "CODE", "FROMINTEGER", integerType);
-		push_make_instruction((Operator)code_if, "CODE", "IF", codeType + codeType + boolType);
-		push_make_instruction((Operator)code_insert, "CODE", "INSERT", codeType + codeType + integerType);
-		push_make_instruction((Operator)code_length, "CODE", "LENGTH", codeType);
-		push_make_instruction((Operator)code_list, "CODE", "LIST", codeType + codeType);
-		push_make_instruction((Operator)code_member, "CODE", "MEMBER", codeType + codeType);
-		push_make_instruction((Operator)code_nth, "CODE", "NTH", codeType + integerType);
-		push_make_instruction((Operator)code_nthcdr, "CODE", "NTHCDR", codeType + integerType);
-		push_make_instruction((Operator)code_null, "CODE", "NULL", codeType);
-		push_make_instruction((Operator)code_position, "CODE", "POSITION", codeType + codeType);
-		push_make_instruction((Operator)code_quote, "CODE", "QUOTE", execType);
-		push_make_instruction((Operator)code_size, "CODE", "SIZE", codeType);
-		push_make_instruction((Operator)code_subst, "CODE", "SUBST", codeType + codeType + codeType);
+		push_make_instruction((Operator)code_append, "CODE", "APPEND", codeType + codeType, nullType);
+		push_make_instruction((Operator)code_atom, "CODE", "ATOM", codeType, boolType);
+		push_make_instruction((Operator)code_car, "CODE", "CAR", codeType, codeType);
+		push_make_instruction((Operator)code_cdr, "CODE", "CDR", codeType, nullType);
+		push_make_instruction((Operator)code_cons, "CODE", "CONS", codeType + codeType, nullType);
+		push_make_instruction((Operator)code_container, "CODE", "CONTAINER", codeType + codeType, codeType);
+		push_make_instruction((Operator)code_contains, "CODE", "CONTAINS", codeType + codeType, boolType);
+		push_make_instruction((Operator)code_discrepancy, "CODE", "DISCREPANCY", codeType + codeType, integerType);
+		push_make_instruction((Operator)code_do, "CODE", "DO", codeType, execType + execType);
+		push_make_instruction((Operator)code_do_star, "CODE", "DO*", codeType, execType);
+		push_make_instruction((Operator)code_do_range, "CODE", "DO*RANGE", codeType + integerType + integerType, codeType);
+		push_make_instruction((Operator)code_do_count, "CODE", "DO*COUNT", codeType + integerType, codeType + integerType);
+		push_make_instruction((Operator)code_do_times, "CODE", "DO*TIMES", codeType + integerType, execType + execType);
+		push_make_instruction((Operator)code_extract, "CODE", "EXTRACT", codeType + integerType, nullType);
+		push_make_instruction((Operator)bool2code, "CODE", "FROMBOOLEAN", boolType, codeType);
+		push_make_instruction((Operator)float2code, "CODE", "FROMFLOAT", floatType, codeType);
+		push_make_instruction((Operator)int2code, "CODE", "FROMINTEGER", integerType, codeType);
+		push_make_instruction((Operator)code_if, "CODE", "IF", codeType + codeType + boolType, execType);
+		push_make_instruction((Operator)code_insert, "CODE", "INSERT", codeType + codeType + integerType, codeType);
+		push_make_instruction((Operator)code_length, "CODE", "LENGTH", codeType, integerType);
+		push_make_instruction((Operator)code_list, "CODE", "LIST", codeType + codeType, codeType);
+		push_make_instruction((Operator)code_member, "CODE", "MEMBER", codeType + codeType, boolType);
+		push_make_instruction((Operator)code_nth, "CODE", "NTH", codeType + integerType, nullType);
+		push_make_instruction((Operator)code_nthcdr, "CODE", "NTHCDR", codeType + integerType, nullType);
+		push_make_instruction((Operator)code_null, "CODE", "NULL", codeType, boolType);
+		push_make_instruction((Operator)code_position, "CODE", "POSITION", codeType + codeType, integerType);
+		push_make_instruction((Operator)code_quote, "CODE", "QUOTE", execType, codeType);
+		push_make_instruction((Operator)code_size, "CODE", "SIZE", codeType, integerType);
+		push_make_instruction((Operator)code_subst, "CODE", "SUBST", codeType + codeType + codeType, nullType);
 
 		set_parentheses("CODE", "QUOTE", 1);
 	}

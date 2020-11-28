@@ -62,5 +62,5 @@ namespace Plush
 		static_initializer.set_parentheses(name, block_wants);
 	}
 
-	void push_make_instruction(Operator op, std::string type, std::string name, Type in);
+	void push_make_instruction(Operator op, std::string type, std::string name, Type in, Type out);
 }

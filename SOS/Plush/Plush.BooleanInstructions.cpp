@@ -35,17 +35,17 @@ namespace Plush
 
 		Type binaryBool = boolType + boolType;
 
-		push_make_instruction((Operator)_and, "BOOLEAN", "AND", binaryBool);
-		push_make_instruction((Operator)_or, "BOOLEAN", "OR", binaryBool);
-		push_make_instruction((Operator)_not, "BOOLEAN", "NOT", boolType);
-		push_make_instruction((Operator)_nand, "BOOLEAN", "NAND", binaryBool);
-		push_make_instruction((Operator)_nor, "BOOLEAN", "NOR", binaryBool);
-		push_make_instruction((Operator)float2bool, "BOOLEAN", "FROMFLOAT", floatType);
-		push_make_instruction((Operator)int2bool, "BOOLEAN", "FROMINTEGER", integerType);
-		push_make_instruction((Operator)in<bool>, "BOOLEAN", "IN", integerType);
-		push_make_instruction((Operator)inall<bool>, "BOOLEAN", "INALL", nullType);
-		push_make_instruction((Operator)inallrev<bool>, "BOOLEAN", "INALLREV", nullType);
-		push_make_instruction((Operator)out<bool>, "BOOLEAN", "OUT", out_in<bool>());
+		push_make_instruction((Operator)_and, "BOOLEAN", "AND", binaryBool, nullType);
+		push_make_instruction((Operator)_or, "BOOLEAN", "OR", binaryBool, nullType);
+		push_make_instruction((Operator)_not, "BOOLEAN", "NOT", boolType, nullType);
+		push_make_instruction((Operator)_nand, "BOOLEAN", "NAND", binaryBool, nullType);
+		push_make_instruction((Operator)_nor, "BOOLEAN", "NOR", binaryBool, nullType);
+		push_make_instruction((Operator)float2bool, "BOOLEAN", "FROMFLOAT", floatType, boolType);
+		push_make_instruction((Operator)int2bool, "BOOLEAN", "FROMINTEGER", integerType, boolType);
+		push_make_instruction((Operator)in<bool>, "BOOLEAN", "IN", integerType, in_out<bool>());
+		push_make_instruction((Operator)inall<bool>, "BOOLEAN", "INALL", nullType, nullType);
+		push_make_instruction((Operator)inallrev<bool>, "BOOLEAN", "INALLREV", nullType, nullType);
+		push_make_instruction((Operator)out<bool>, "BOOLEAN", "OUT", out_in<bool>(), nullType);
 	}
 
 }

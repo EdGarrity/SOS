@@ -9,7 +9,7 @@ namespace Plush
 	{
 		if (_env.has_elements<double>(1))
 		{
-			double value = _env.get_top<double>();
+			double value = _env.get_top_atom<double>();
 
 			if (value > 0.0)
 				_env.set_top<double>(std::log(value));
@@ -22,7 +22,7 @@ namespace Plush
 	{
 		// Check for valid parameters
 		//if ((_env.has_elements<double>(2)) && (_env.get_top<double>() != 0.0))
-		if (_env.get_top<double>() != 0.0)
+		if (_env.get_top_atom<double>() != 0.0)
 		{
 			double first = _env.pop<double>();
 			double second = _env.pop<double>();
@@ -36,7 +36,7 @@ namespace Plush
 	inline unsigned _cos(Environment & _env)
 	{
 		//if (_env.has_elements<double>(1))
-			_env.set_top<double>(cos(_env.get_top<double>()));
+			_env.set_top<double>(cos(_env.get_top_atom<double>()));
 
 		return 1;
 	}
@@ -44,7 +44,7 @@ namespace Plush
 	inline unsigned _sin(Environment & _env)
 	{
 		//if (_env.has_elements<double>(1))
-			_env.set_top<double>(sin(_env.get_top<double>()));
+			_env.set_top<double>(sin(_env.get_top_atom<double>()));
 
 		return 1;
 	}
@@ -53,7 +53,7 @@ namespace Plush
 	{
 		//if (_env.has_elements<double>(1))
 		{
-			double val = _env.get_top<double>();
+			double val = _env.get_top_atom<double>();
 
 			if (val != 0.0)
 				_env.set_top<double>(tan(val));

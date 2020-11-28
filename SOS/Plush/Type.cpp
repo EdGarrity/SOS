@@ -28,8 +28,20 @@ namespace Plush
 		{
 			unsigned int s = env.get_stack_size(i);
 
-//			if ((type[i] > 0) && (s < static_cast<unsigned>(type[i])))
 			if ((type[i] > 0) && (s < type[i]))
+				return false;
+		}
+
+		return true;
+	}
+
+	bool Type::can_push_to(/*const*/ Environment & env) // const
+	{
+		for (unsigned int i = _start; i < type.size(); ++i)
+		{
+			size_t f = env.get_stack_free(i);
+
+			if ((type[i] > 0) && (f < type[i]))
 				return false;
 		}
 

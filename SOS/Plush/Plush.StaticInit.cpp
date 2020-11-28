@@ -81,8 +81,8 @@ namespace Plush
 		return function_names[function_index];
 	}
 
-	void push_make_instruction(Operator op, std::string type, std::string name, Type in)
+	void push_make_instruction(Operator op, std::string type, std::string name, Type in, Type out)
 	{
-		static_initializer.push_register_pushfunc(new Instruction(op, type + "." + name, in));
+		static_initializer.push_register_pushfunc(new Instruction(op, type + "." + name, in, out));
 	}
 }
