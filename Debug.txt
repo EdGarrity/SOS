@@ -40,3 +40,6 @@ Plush.StaticInit.obj
 Processor.obj
 
 
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	C2662	'unsigned int Plush::Environment::length<Plush::CodeAtom>(void)': cannot convert 'this' pointer from 'const Plush::Environment' to 'Plush::Environment &'	SOS	c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\plush\environment.h	293	
+

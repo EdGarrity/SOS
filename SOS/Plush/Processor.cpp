@@ -61,12 +61,13 @@ namespace Plush
 	{
 		// The basic pop-exec cycle
 		unsigned effort = 0;
+		unsigned unit = 0;
 
 		while ((!env.is_empty<ExecAtom>()) && (effort < _max_effort))
 		{
 			try
 			{
-				unsigned unit = 0;
+				unit = 0;
 
 				ExecAtom atom = env.pop<ExecAtom>();
 
@@ -120,23 +121,32 @@ namespace Plush
 
 					break;
 				}
-
-				effort += (1u) > (unit) ? (1u) : (unit);
 			}
 			catch (std::underflow_error& e)
 			{
-				std::cerr << "Underflow exception caught" << std::endl;
+				effort++;
+				std::cerr << "Underflow exception caught.  effort = " << effort << std::endl;
+				std::cerr << e.what() << std::endl;
+			}
+			catch (std::overflow_error& e)
+			{
+				effort++;
+				std::cerr << "Overflow exception caught.  effort = " << effort << std::endl;
 				std::cerr << e.what() << std::endl;
 			}
 			catch (std::exception& e)
 			{
-				std::cerr << "Unknown std exception caught" << std::endl;
+				effort++;
+				std::cerr << "Unknown std exception caught.  effort = " << effort << std::endl;
 				std::cerr << e.what() << std::endl;
 			}
 			catch (...)
 			{
-				std::cerr << "Unknown exception caught" << std::endl;
+				effort++;
+				std::cerr << "Unknown exception caught.  effort = " << effort << std::endl;
 			}
+
+			effort += (1u) > (unit) ? (1u) : (unit);
 		}
 
 		return effort;
