@@ -691,6 +691,7 @@ namespace domain
 
 			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			{
+	//individual_index = 39;
 				int error_count_for_individual = 0;
 				double avg_error_for_individual = 0.0;
 
@@ -699,6 +700,7 @@ namespace domain
 
 				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
 				{
+	//example_case = 19;
 					std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
 					std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
 

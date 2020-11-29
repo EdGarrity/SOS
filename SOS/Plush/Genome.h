@@ -1660,7 +1660,8 @@ namespace Plush
 
 			if (l > 0)
 			{
-				if (s >= Utilities::FixedSizeStack<T>::free())
+				//if (s >= Utilities::FixedSizeStack<T>::free())
+				if (l >= Utilities::FixedSizeStack<T>::free())
 				{
 					std::stringstream error_message;
 					error_message << "yankdup_item() - Stack overflow.  s = " << s << " free = " << Utilities::FixedSizeStack<T>::free();

@@ -173,6 +173,7 @@
     <ClCompile Include="ExecInstructions.cpp" />
     <ClCompile Include="FloatInstructions.cpp" />
     <ClCompile Include="IntegerInstructions.cpp" />
+    <ClCompile Include="TestCases.cpp" />
     <ClCompile Include="UnitTest.cpp" />
     <ClCompile Include="Utilities\HelperFunctions.cpp" />
   </ItemGroup>
