@@ -465,18 +465,20 @@ namespace Utilities
 			size_t destination_index = position_to_index(destination_position); // top_ - destination_position - 1;
 
 			// Make space in this stack for the other stack items
-			for (size_t /*i = 0,*/ j = destination_index, k = top_;
+			for (size_t i = 0, j = top_ - 1 /*destination_index*/, k = top_ - 1 + length /*top_*/;
 				//i < top_ - destination_index;
 				//i < length;
-				j < top_ - length;
-				/*i++, */j++, k++)
+				//j < top_ - length;
+				i < top_ - destination_index;
+				i++, j--, k--)
 				stack_[k] = stack_[j];
 
-			for (size_t /*i = 0, */j = top_ - length, k = destination_index;
+			for (size_t i = 0, j = top_ /*- length*/, k = destination_index;
 				//i < source_index - destination_index + 1;
-				k < top_;
 				//i < top_;
-				/*i++, */j++, k++)
+				//k < top_;
+				i < length;
+				i++, j++, k++)
 				stack_[k] = stack_[j];
 		}
 
