@@ -59,14 +59,14 @@ namespace pushGP
 		void init();
 
 	public:
-//		Individual();
-//		Individual(const Individual & other) = delete;
-//		Individual& operator = (const Individual &other) = delete;
-//
-//		//const std::string get_program()	// Push programs are obsolete.  Use Plush Genomes instead.
-//		//{
-//		//	return genome_.get_program();
-//		//}
+		Individual();
+		Individual(const Individual & other) = delete;
+		Individual& operator = (const Individual &other) = delete;
+
+		//const std::string get_program()	// Push programs are obsolete.  Use Plush Genomes instead.
+		//{
+		//	return genome_.get_program();
+		//}
 
 		const std::string get_genome_string()
 		{
@@ -99,9 +99,9 @@ namespace pushGP
 
 		void copy(Individual & other);
 
-//		void record_family_tree(Individual& parent);
+		void record_family_tree(Individual& parent);
 		void record_family_tree(unsigned int parent);
-//		void record_family_tree(Individual& parent1, Individual& parent2);
+		void record_family_tree(Individual& parent1, Individual& parent2);
 		void record_family_tree(unsigned int parent1, unsigned int parent2);
 		void record_family_tree(const GUID Parent_1, const GUID Parent_2, const GUID Parent_1_1, const GUID Parent_1_2, const GUID Parent_2_1, const GUID Parent_2_2, const GUID Parent_1_1_1, const GUID Parent_1_1_2, const GUID Parent_1_2_1, const GUID Parent_1_2_2, const GUID Parent_2_1_1, const GUID Parent_2_1_2, const GUID Parent_2_2_1, const GUID Parent_2_2_2);
 

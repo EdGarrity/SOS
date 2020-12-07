@@ -80,59 +80,59 @@ namespace pushGP
 		greatgrandparents_.clear();
 	}
 
-//	// Purpose: 
-//	//   Default Constructor
-//	//
-//	// Parameters:
-//	//   None
-//	// 
-//	// Return value:
-//	//   None
-//	//
-//	// Side Effects:
-//	//   The individual's mamber variables are reset
-//	//
-//	// Thread Safe:
-//	//   Yes.  Although this function calls unsafe functions to initialize the individual, 
-//	//   this function is safe because no other thread can access the fields of this indivudal 
-//	//   until the constructor terminates.
-//	//
-//	// Remarks:
-//	//   This function calls the init() member function to initialize the member variables
-//	//
-//	Individual::Individual()
-//	{
-//		init();
-//	}
-//
-//	// Purpose: 
-//	//   Records individual's ancestry for single parent individuals
-//	//
-//	// Parameters:
-//	//   parent - Referenceto the parent
-//	// 
-//	// Return value:
-//	//   None
-//	//
-//	// Side Effects:
-//	//   The ancestry fields are updated
-//	//
-//	// Thread Safe:
-//	//   No.  Lock individual to prevent access to member fields during update
-//	//
-//	// Remarks:
-//	//   This function is used to track an individual's ancestory to help ensure population divdersity.
-//	//
-//	void Individual::record_family_tree(Individual & parent)
-//	{
-//		parents_.clear();
-//		grandparents_.clear();
-//		greatgrandparents_.clear();
-//
-//		parents_.insert(parent.get_id());
-//		grandparents_.insert(parent.get_parents().begin(), parent.get_parents().end());
-//		greatgrandparents_.insert(parent.get_grandparents().begin(), parent.get_grandparents().end());
-//	}
+	// Purpose: 
+	//   Default Constructor
+	//
+	// Parameters:
+	//   None
+	// 
+	// Return value:
+	//   None
+	//
+	// Side Effects:
+	//   The individual's mamber variables are reset
+	//
+	// Thread Safe:
+	//   Yes.  Although this function calls unsafe functions to initialize the individual, 
+	//   this function is safe because no other thread can access the fields of this indivudal 
+	//   until the constructor terminates.
+	//
+	// Remarks:
+	//   This function calls the init() member function to initialize the member variables
+	//
+	Individual::Individual()
+	{
+		init();
+	}
+
+	// Purpose: 
+	//   Records individual's ancestry for single parent individuals
+	//
+	// Parameters:
+	//   parent - Referenceto the parent
+	// 
+	// Return value:
+	//   None
+	//
+	// Side Effects:
+	//   The ancestry fields are updated
+	//
+	// Thread Safe:
+	//   No.  Lock individual to prevent access to member fields during update
+	//
+	// Remarks:
+	//   This function is used to track an individual's ancestory to help ensure population divdersity.
+	//
+	void Individual::record_family_tree(Individual & parent)
+	{
+		parents_.clear();
+		grandparents_.clear();
+		greatgrandparents_.clear();
+
+		parents_.insert(parent.get_id());
+		grandparents_.insert(parent.get_parents().begin(), parent.get_parents().end());
+		greatgrandparents_.insert(parent.get_grandparents().begin(), parent.get_grandparents().end());
+	}
 
 	// Purpose: 
 	//   Records individual's ancestry for single parent individuals
@@ -167,39 +167,39 @@ namespace pushGP
 			globals::population_agents[parent].get_grandparents().end());
 	}
 
-//	// Purpose: 
-//	//   Records individual's ancestry for dual parent individuals
-//	//
-//	// Parameters:
-//	//   parent1 - Referenceto the parent 1
-//	//   parent2 - Referenceto the parent 2
-//	// 
-//	// Return value:
-//	//   None
-//	//
-//	// Side Effects:
-//	//   The ancestry fields are updated
-//	//
-//	// Thread Safe:
-//	//   No.  Lock individual to prevent access to member fields during update
-//	//
-//	// Remarks:
-//	//   This function is used to track an individual's ancestory to help ensure population divdersity.
-//	//
-//	void Individual::record_family_tree(Individual & parent1, Individual & parent2)
-//	{
-//		parents_.clear();
-//		grandparents_.clear();
-//		greatgrandparents_.clear();
-//
-//		parents_.insert(parent1.get_id());
-//		grandparents_.insert(parent1.get_parents().begin(), parent1.get_parents().end());
-//		greatgrandparents_.insert(parent1.get_grandparents().begin(), parent1.get_grandparents().end());
-//
-//		parents_.insert(parent2.get_id());
-//		grandparents_.insert(parent2.get_parents().begin(), parent2.get_parents().end());
-//		greatgrandparents_.insert(parent2.get_grandparents().begin(), parent2.get_grandparents().end());
-//	}
+	// Purpose: 
+	//   Records individual's ancestry for dual parent individuals
+	//
+	// Parameters:
+	//   parent1 - Referenceto the parent 1
+	//   parent2 - Referenceto the parent 2
+	// 
+	// Return value:
+	//   None
+	//
+	// Side Effects:
+	//   The ancestry fields are updated
+	//
+	// Thread Safe:
+	//   No.  Lock individual to prevent access to member fields during update
+	//
+	// Remarks:
+	//   This function is used to track an individual's ancestory to help ensure population divdersity.
+	//
+	void Individual::record_family_tree(Individual & parent1, Individual & parent2)
+	{
+		parents_.clear();
+		grandparents_.clear();
+		greatgrandparents_.clear();
+
+		parents_.insert(parent1.get_id());
+		grandparents_.insert(parent1.get_parents().begin(), parent1.get_parents().end());
+		greatgrandparents_.insert(parent1.get_grandparents().begin(), parent1.get_grandparents().end());
+
+		parents_.insert(parent2.get_id());
+		grandparents_.insert(parent2.get_parents().begin(), parent2.get_parents().end());
+		greatgrandparents_.insert(parent2.get_grandparents().begin(), parent2.get_grandparents().end());
+	}
 
 	// Purpose: 
 	//   Records individual's ancestry for dual parent individuals

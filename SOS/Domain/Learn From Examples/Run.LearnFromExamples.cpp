@@ -691,7 +691,7 @@ namespace domain
 
 			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			{
-	individual_index = 39;
+	//individual_index = 39;
 				int error_count_for_individual = 0;
 				double avg_error_for_individual = 0.0;
 
