@@ -678,7 +678,7 @@ namespace domain
 		}
 
 		std::tuple<int, double, double> compute_training_errors(Plush::Environment& _env,
-			std::function<double(Plush::Environment& _env,
+			std::function<double(/*Plush::Environment& _env,*/
 				unsigned int _individual_index,
 				std::vector<double>& _input_list,
 				std::vector<double>& _output_list)> _run_individual_program,
@@ -705,7 +705,7 @@ namespace domain
 					std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
 
 					// Run program
-					double error = _run_individual_program(_env, individual_index, example_problem, example_solution);
+					double error = _run_individual_program(/*_env,*/ individual_index, example_problem, example_solution);
 
 					if (error > 0.0)
 						error_count_for_individual++;
@@ -748,7 +748,7 @@ namespace domain
 		}
 
 		std::tuple<int, double, double> parallel_compute_training_errors(Plush::Environment& _env,
-			std::function<double(Plush::Environment& _env,
+			std::function<double(/*Plush::Environment& _env,*/
 				unsigned int _individual_index,
 				std::vector<double>& _input_list,
 				std::vector<double>& _output_list)> _run_individual_program,
@@ -773,7 +773,7 @@ namespace domain
 						std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
 
 						// Run program
-						double error = _run_individual_program(_env, individual_index, example_problem, example_solution);
+						double error = _run_individual_program(/*_env,*/ individual_index, example_problem, example_solution);
 
 						if (error > 0.0)
 							error_count_for_individual++;
@@ -811,7 +811,7 @@ namespace domain
 		}
 
 		double compute_test_errors(Plush::Environment& _env,
-			std::function<double(Plush::Environment& _env,
+			std::function<double(/*Plush::Environment& _env,*/
 				unsigned int _individual_index,
 				std::vector<double>& _example_problem,
 				std::vector<double>& _example_solution)> _run_individual_program,
@@ -827,7 +827,7 @@ namespace domain
 				std::vector<double> example_problem(test_cases_problem[example_case].begin(), test_cases_problem[example_case].end());
 				std::vector<double> example_solution(test_cases_solution[example_case].begin(), test_cases_solution[example_case].end());
 
-				double example_case_error = _run_individual_program(_env, _individual_index, example_problem, example_solution);
+				double example_case_error = _run_individual_program(/*_env,*/ _individual_index, example_problem, example_solution);
 
 				if (example_case_error > 0.0)
 					error_count++;

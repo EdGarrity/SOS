@@ -10,6 +10,8 @@ namespace domain
 {
 	namespace learn_from_examples
 	{
+		__declspec(thread) Plush::Environment env_local;
+
 		// Purpose: 
 		//   Run a Push prgram and calculates error result
 		//
@@ -34,7 +36,7 @@ namespace domain
 		//     Where:
 		//       X = 0 or more doubles.
 		//
-		double run_program(Plush::Environment& env,
+		double run_program(/*Plush::Environment& env,*/
 			std::string program,
 			std::vector<double>& example_problem,
 			std::vector<double>& example_solution)
@@ -45,14 +47,14 @@ namespace domain
 			if (Utilities::trim_copy(program).length() > 0)
 			{
 				// Evaluate
-				Plush::run(env, program, example_problem);
+				Plush::run(env_local, program, example_problem);
 
 				// Calculate error
 				double sum_of_error_squared = 0;
 
-				int digits_imbalance = example_solution.size() - env.output.size();
+				int digits_imbalance = example_solution.size() - env_local.output.size();
 
-				int digits = std::min(example_solution.size(), env.output.size());
+				int digits = std::min(example_solution.size(), env_local.output.size());
 
 				if (digits > 0)
 				{
@@ -60,7 +62,7 @@ namespace domain
 					{
 						double distance = 0.0;
 
-						distance = fabs(example_solution[n] - (isnan(env.output[n]) ? 0.0 : env.output[n]));
+						distance = fabs(example_solution[n] - (isnan(env_local.output[n]) ? 0.0 : env_local.output[n]));
 
 						if (distance < (std::numeric_limits<double>::epsilon() + std::numeric_limits<double>::epsilon()))
 							distance = 0.0;
@@ -79,7 +81,7 @@ namespace domain
 				error += std::abs(digits_imbalance);
 
 				// Cleanup Push Stacks to release memory
-				env.clear_stacks();
+				env_local.clear_stacks();
 
 				// Cap error
 				if (error > 10000000.0)
@@ -120,7 +122,7 @@ namespace domain
 		//       N = number of integers in the example
 		//       X = 0 or more integers.  The number of integers must be equal to N
 		//
-		double run_individual(Plush::Environment& _env,
+		double run_individual(/*Plush::Environment& _env,*/
 			unsigned int _individual_index,
 			std::vector<double>& _example_problem,
 			std::vector<double>& _example_solution)
@@ -129,7 +131,7 @@ namespace domain
 
 			std::string program = pushGP::globals::population_agents[_individual_index].get_genome_string();
 
-			error = run_program(_env, program, _example_problem, _example_solution);
+			error = run_program(/*_env,*/ program, _example_problem, _example_solution);
 
 			return error;
 		}
