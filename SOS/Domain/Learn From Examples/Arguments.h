@@ -22,7 +22,7 @@ namespace domain
 		const bool use_PPL = true;
 		//const bool use_PPL = false;
 		const unsigned int number_of_cores_to_reserve = 4;
-		const unsigned thread_chunk_size = 100;  // Number of threads per chunk.
+		const unsigned thread_chunk_size = 1; // 100;  // Number of threads per chunk.
 
 		// CPU temperature monitoring
 		const std::string GetCpuTemperatureCmd = "C:\\Users\\edgar\\OneDrive\\Projects\\Source\\Repos\\EdGarrity\\SOS\\Debug\\GetCpuTemperature.exe";
@@ -57,7 +57,7 @@ namespace domain
 		//		;; The instructions that pushgp will use in random code.
 
 		// Number of individuals in the population.
-		const unsigned int population_size = 2000; // 200'000;
+		const unsigned int population_size = 20; // 2000; // 200'000;
 
 		// The maximum number of generations to run GP.
 		const unsigned int max_generations_in_one_session = 10'000;
