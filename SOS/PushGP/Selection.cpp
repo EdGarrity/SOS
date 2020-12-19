@@ -1,13 +1,9 @@
 #include <algorithm>
 #include <chrono>
 #include <random>
-#include <ppl.h>
 #include "Selection.h"
-#include "Random.h"
-#include "Globals.h"
-#include "..\Utilities\Random.Utilities.h"
-
-using namespace concurrency;
+//#include "Random.h"
+//#include "..\Utilities\Random.Utilities.h"
 
 namespace pushGP
 {
@@ -153,7 +149,7 @@ namespace pushGP
 
 	unsigned int epsilon_lexicase_selection(int _number_of_example_cases, 
 		std::unordered_set<int> _black_list,
-		combinable<struct pushGP::globals::Training_case_min_error> & _training_case_min_error)
+		combinable<pushGP::globals::Training_case_min_error_type> & _training_case_min_error)
 	{
 		unsigned int chosen = 0;
 		unsigned individual_index = 0;

@@ -1,12 +1,16 @@
 #pragma once
 
 #include <forward_list>
-#include <vector>
 #include <functional>
+#include <ppl.h>
 #include <unordered_set>
-#include "Individual.h"
-#include "..\Domain\Arguments.h"
-#include "..\PushGP\Globals.h"
+#include <vector>
+//#include <unordered_set>
+//#include "Individual.h"
+//#include "..\Domain\Arguments.h"
+#include "Globals.h"
+
+using namespace concurrency;
 
 namespace pushGP
 {

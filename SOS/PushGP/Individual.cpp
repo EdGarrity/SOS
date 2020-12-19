@@ -1,10 +1,7 @@
 #include <string.h>
 
 #include "Individual.h"
-#include "..\PushP\Instruction.h"
-#include "..\PushP\Env.h"
-#include "..\PushP\Literal.h"
-#include "Utilities.h"
+//#include "Utilities.h"
 #include "Globals.h"
 
 // Purpose: 
@@ -51,7 +48,7 @@
 
 namespace pushGP
 {
-	using namespace Push;
+////	using namespace Push;
 
 	// Purpose: 
 	//   Erase individual's genome and all member fields
@@ -163,10 +160,10 @@ namespace pushGP
 
 		parents_.insert(globals::population_agents[parent].get_id());
 
-		grandparents_.insert(globals::population_agents[parent].get_parents().begin(), 
+		grandparents_.insert(globals::population_agents[parent].get_parents().begin(),
 			globals::population_agents[parent].get_parents().end());
 
-		greatgrandparents_.insert(globals::population_agents[parent].get_grandparents().begin(), 
+		greatgrandparents_.insert(globals::population_agents[parent].get_grandparents().begin(),
 			globals::population_agents[parent].get_grandparents().end());
 	}
 
@@ -258,20 +255,20 @@ namespace pushGP
 	//   This function is used to track an individual's ancestory to help ensure population divdersity.
 	//
 	void Individual::record_family_tree(const GUID Parent_1,
-										const GUID Parent_2,
-										const GUID Parent_1_1,
-										const GUID Parent_1_2,
-										const GUID Parent_2_1,
-										const GUID Parent_2_2,
-										const GUID Parent_1_1_1,
-										const GUID Parent_1_1_2,
-										const GUID Parent_1_2_1,
-										const GUID Parent_1_2_2,
-										const GUID Parent_2_1_1,
-										const GUID Parent_2_1_2,
-										const GUID Parent_2_2_1,
-										const GUID Parent_2_2_2
-										)
+		const GUID Parent_2,
+		const GUID Parent_1_1,
+		const GUID Parent_1_2,
+		const GUID Parent_2_1,
+		const GUID Parent_2_2,
+		const GUID Parent_1_1_1,
+		const GUID Parent_1_1_2,
+		const GUID Parent_1_2_1,
+		const GUID Parent_1_2_2,
+		const GUID Parent_2_1_1,
+		const GUID Parent_2_1_2,
+		const GUID Parent_2_2_1,
+		const GUID Parent_2_2_2
+	)
 	{
 		UUID NilUuid;
 
@@ -369,7 +366,7 @@ namespace pushGP
 	// Remarks:
 	//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
 	//
-	void Individual::set_genome(std::vector<struct Genome::Atom> _genome)
+	void Individual::set_genome(Plush::Genome<Plush::CodeAtom>& _genome)
 	{
 		init();
 		genome_.set(_genome);
@@ -416,10 +413,11 @@ namespace pushGP
 	// Remarks:
 	//   Sets individual's member fields to the values of the other individual
 	//
-	void Individual::copy(Individual & other)
+	void Individual::copy(Individual& other)
 	{
 		init();
 
+		// May need to created copy constructor and operator to Genome and FixedSizeStack.
 		genome_ = other.genome_;
 		id_ = other.id_;
 
@@ -469,30 +467,30 @@ namespace pushGP
 		return genome_.to_string();
 	}
 
-		//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
+//	//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
+//
+////void pushGP::Individual::translate_plush_genome_to_push_program()
+////{
+////	program_ = pushGP::translate_plush_genome_to_push_program(genome_);
+////}
 
-	//void pushGP::Individual::translate_plush_genome_to_push_program()
-	//{
-	//	program_ = pushGP::translate_plush_genome_to_push_program(genome_);
-	//}
-
-	// Purpose: 
-	//   Returns a stream which representation of the individual's genome
-	//
-	// Parameters:
-	//   None
-	// 
-	// Return value:
-	//   The individul's genome as a stream
-	//
-	// Side Effects:
-	//   None
-	//
-	// Thread Safe:
-	//   Yes
-	//
-	// Remarks:
-	//
+// Purpose: 
+//   Returns a stream which representation of the individual's genome
+//
+// Parameters:
+//   None
+// 
+// Return value:
+//   The individul's genome as a stream
+//
+// Side Effects:
+//   None
+//
+// Thread Safe:
+//   Yes
+//
+// Remarks:
+//
 	std::ostream& operator<<(std::ostream& os, Individual& individual)
 	{
 		os << individual.get_genome_as_string();

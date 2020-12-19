@@ -1,10 +1,14 @@
 #pragma once
+
 #include <forward_list>
 #include <functional>
+#include <ppl.h>
 #include "Individual.h"
 #include "../Domain/Arguments.h"
 #include "..\PushGP\Globals.h"
 #include "..\PushGP\SimulatedAnnealing.h"
+
+using namespace concurrency;
 
 namespace pushGP
 {

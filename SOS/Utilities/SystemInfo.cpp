@@ -33,30 +33,32 @@ namespace Utilities
 	//
 	double GetCpuTemperature()
 	{
-		double temperature = (std::numeric_limits<double>::max)();
-		
-		std::array<char, 128> buffer;
-		std::string result;
-		std::unique_ptr<FILE, decltype(&_pclose)> pipe(_popen(domain::argmap::GetCpuTemperatureCmd.c_str(), "r"), _pclose);
+		//double temperature = (std::numeric_limits<double>::max)();
+		//
+		//std::array<char, 128> buffer;
+		//std::string result;
+		//std::unique_ptr<FILE, decltype(&_pclose)> pipe(_popen(domain::argmap::GetCpuTemperatureCmd.c_str(), "r"), _pclose);
 
-		if (!pipe) 
-		{
-			std::stringstream error("GetCpuTemperature() - ");
-			
-			error << "popen() failed";
-			
-			std::cerr << error.str() << std::endl;
-			throw MyException(error);
-		}
+		//if (!pipe) 
+		//{
+		//	std::stringstream error("GetCpuTemperature() - ");
+		//	
+		//	error << "popen() failed";
+		//	
+		//	std::cerr << error.str() << std::endl;
+		//	throw MyException(error);
+		//}
 
-		while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) 
-		{
-			result += buffer.data();
-		}
+		//while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) 
+		//{
+		//	result += buffer.data();
+		//}
 
-		temperature = stod(result);
+		//temperature = stod(result);
 
-		return temperature;
+		//return temperature;
+
+		return 0;
 	}
 
 	// Purpose: 

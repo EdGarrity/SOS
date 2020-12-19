@@ -5,6 +5,11 @@ namespace domain
 {
 	namespace argmap
 	{
+		// Default maximum size of the stack buffer.  Must be greater than max_points
+		const unsigned int maximum_stack_size = 2000;
+
+		const unsigned int maximum_stack_dept = 100;
+
 		const double PI = 3.141592653589793238463;
 
 		//	;; ----------------------------------------
@@ -15,8 +20,9 @@ namespace domain
 		//	;; When true, will only use a single thread.
 		const bool use_multithreading = false;
 		const bool use_PPL = true;
+		//const bool use_PPL = false;
 		const unsigned int number_of_cores_to_reserve = 4;
-		const unsigned thread_chunk_size = 100;  // Number of threads per chunk.
+		const unsigned thread_chunk_size = 1; // 100;  // Number of threads per chunk.
 
 		// CPU temperature monitoring
 		const std::string GetCpuTemperatureCmd = "C:\\Users\\edgar\\OneDrive\\Projects\\Source\\Repos\\EdGarrity\\SOS\\Debug\\GetCpuTemperature.exe";
@@ -51,7 +57,7 @@ namespace domain
 		//		;; The instructions that pushgp will use in random code.
 
 		// Number of individuals in the population.
-		const unsigned int population_size = 200'000;
+		const unsigned int population_size = 20; // 2000; // 200'000;
 
 		// The maximum number of generations to run GP.
 		const unsigned int max_generations_in_one_session = 10'000;
@@ -67,7 +73,7 @@ namespace domain
 		// Maximum size of push programs and push code, as counted by points
 		// in the program. 1 / 4 this limit is used as the limit for sizes of
 		// Plush genomes.
-		const unsigned int max_points = 2'000;
+		const unsigned int max_points = maximum_stack_size - 1;
 
 		// Maximum size of initial Plush genomes in generation 0. Keep in mind
 		// that genome lengths will otherwise be limited by 1 / 4 of :max - points.

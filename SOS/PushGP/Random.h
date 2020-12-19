@@ -3,16 +3,13 @@
 #include <string>
 #include <vector>
 #include <stack> 
-#include "../Plush/Atom.h"
+#include "../Plush/Genome.h"
 
 namespace pushGP
 {
-//	double random_double(double m = 1.0);
-//	unsigned long random_integer(unsigned long m);
-
 	unsigned int random_closes();
-	struct Genome::Atom random_atom();
-	std::vector<struct Genome::Atom> random_plush_genome_with_size(unsigned int genome_size);
-	std::vector<struct Genome::Atom> random_plush_genome();
+	Plush::CodeAtom& random_atom(Plush::CodeAtom& atom);
+	Plush::Genome<Plush::CodeAtom>& random_plush_genome_with_size(Plush::Genome<Plush::CodeAtom>& genome, unsigned int genome_size);
+	Plush::Genome<Plush::CodeAtom>& make_random_plush_genome(Plush::Genome<Plush::CodeAtom>& genome); // Modify to not return genome on stack
 }
 

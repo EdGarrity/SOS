@@ -1,21 +1,19 @@
+#define NOMINMAX
+
 #include <string.h>
 #include <random>
 #include <chrono>
 
 #include "Random.h"
 #include "Individual.h"
-//#include "..\Domain\Stock Forecaster\Globals.StockForecaster.h"
 #include "..\Domain\Arguments.h"
-#include "..\PushP\Code.h"
-#include "..\PushP\CodeUtils.h"
-#include "..\PushP\RNG.h"
-#include "..\PushP\Literal.h"
 #include "..\Utilities\Conversion.h"
 #include "..\Utilities\Random.Utilities.h"
+#include "..\Utilities\MyException.h"
 
 namespace pushGP
 {
-	using namespace Push;
+//	using namespace Push;
 
 	//double random_double(double m)
 	//{
@@ -54,10 +52,8 @@ namespace pushGP
 		return n;
 	}
 
-	struct Genome::Atom random_atom()
+	Plush::CodeAtom& random_atom(Plush::CodeAtom& gene)
 	{
-		struct Genome::Atom gene;
-
 		if (Utilities::random_double(0.0, 1.0) < domain::argmap::probability_of_generating_a_constant_Plush_atom)
 		{
 			unsigned int r = Utilities::random_integer(3);
@@ -67,25 +63,25 @@ namespace pushGP
 				{
 					double r = Utilities::random_double(domain::argmap::float_min, domain::argmap::float_max);
 					gene.instruction = toString(r);
-					gene.type = Genome::Atom::AtomType::floating_point;
+					gene.type = Plush::Atom::AtomType::floating_point;
 					break;
 				}
 				case 1:
 				{
 					int r = Utilities::random_integer(domain::argmap::int_min, domain::argmap::int_max);
 					gene.instruction = toString(r);
-					gene.type = Genome::Atom::AtomType::integer;
+					gene.type = Plush::Atom::AtomType::integer;
 					break;
 				}
 				case 2:
 				{
 					if (Utilities::random_double(0.0, 1.0) < 0.5)
-						gene.instruction = "True";
+						gene.instruction = Plush::Atom::boolean_true;
 
 					else
-						gene.instruction = "False";
+						gene.instruction = Plush::Atom::boolean_false;
 
-					gene.type = Genome::Atom::AtomType::boolean;
+					gene.type = Plush::Atom::AtomType::boolean;
 					break;
 				}
 				default:
@@ -97,25 +93,26 @@ namespace pushGP
 
 		else
 		{
-			gene.instruction = make_terminal();	// gets a random instruction.
-			gene.type = Genome::Atom::ins;
+			gene.instruction = Individual::make_terminal();	// gets a random instruction.
+			gene.type = Plush::Atom::ins;
 		}
 
 		return gene;
 	}
 
-	void append_genome(std::vector<struct Genome::Atom>& a, const std::vector<struct Genome::Atom>& b)
+	void append_genome(std::vector<Plush::CodeAtom>& a, const std::vector<Plush::CodeAtom>& b)
 	{
 		a.reserve(a.size() + b.size());
 		a.insert(a.end(), b.begin(), b.end());  // std::move(b.begin(), b.end(), std::back_inserter(a));
 	}
 
-	std::vector<struct Genome::Atom> random_plush_genome_with_size(unsigned int genome_size)
+	Plush::Genome<Plush::CodeAtom>& random_plush_genome_with_size(Plush::Genome<Plush::CodeAtom>& genome, unsigned int genome_size)
 	{
 		int n = genome_size;	
-		struct Genome::Atom atom;
+		Plush::CodeAtom atom;
+		Plush::CodeAtom temp_atom;
 
-		std::vector<struct Genome::Atom> genome;
+		genome.clear();
 
 		while (--n > 0)
 		{
@@ -128,109 +125,109 @@ namespace pushGP
 				{
 				case 0:
 					atom.instruction = toString(r);
-					atom.type = Genome::Atom::AtomType::integer;
-					genome.push_back(atom);
+					atom.type = Plush::Atom::AtomType::integer;
+					genome.push(atom);
 
 					atom.instruction = "INTEGER.IN";
-					atom.type = Genome::Atom::AtomType::ins;
-					genome.push_back(atom);
+					atom.type = Plush::Atom::AtomType::ins;
+					genome.push(atom);
 
 					break;
 
 				case 1:
 					atom.instruction = toString(r);
-					atom.type = Genome::Atom::AtomType::integer;
-					genome.push_back(atom);
+					atom.type = Plush::Atom::AtomType::integer;
+					genome.push(atom);
 
 					atom.instruction = "FLOAT.IN";
-					atom.type = Genome::Atom::AtomType::ins;
-					genome.push_back(atom);
+					atom.type = Plush::Atom::AtomType::ins;
+					genome.push(atom);
 
 					break;
 
 				case 2:
 					atom.instruction = toString(r);
-					atom.type = Genome::Atom::AtomType::integer;
-					genome.push_back(atom);
+					atom.type = Plush::Atom::AtomType::integer;
+					genome.push(atom);
 
 					atom.instruction = "BOOLEAN.IN";
-					atom.type = Genome::Atom::AtomType::ins;
-					genome.push_back(atom);
+					atom.type = Plush::Atom::AtomType::ins;
+					genome.push(atom);
 
 					break;
 
 				case 3:
 					atom.instruction = "INTEGER.INALL";
-					atom.type = Genome::Atom::AtomType::ins;
-					genome.push_back(atom);
+					atom.type = Plush::Atom::AtomType::ins;
+					genome.push(atom);
 
 					break;
 
 				case 4:
 					atom.instruction = "FLOAT.INALL";
-					atom.type = Genome::Atom::AtomType::ins;
-					genome.push_back(atom);
+					atom.type = Plush::Atom::AtomType::ins;
+					genome.push(atom);
 
 					break;
 
 				case 5:
 					atom.instruction = "BOOLEAN.INALL";
-					atom.type = Genome::Atom::AtomType::ins;
-					genome.push_back(atom);
+					atom.type = Plush::Atom::AtomType::ins;
+					genome.push(atom);
 
 					break;
 
 				case 6:
 					atom.instruction = "INTEGER.INALLREV";
-					atom.type = Genome::Atom::AtomType::ins;
-					genome.push_back(atom);
+					atom.type = Plush::Atom::AtomType::ins;
+					genome.push(atom);
 
 					break;
 
 				case 7:
 					atom.instruction = "FLOAT.INALLREV";
-					atom.type = Genome::Atom::AtomType::ins;
-					genome.push_back(atom);
+					atom.type = Plush::Atom::AtomType::ins;
+					genome.push(atom);
 
 					break;
 
 				case 8:
 					atom.instruction = "BOOLEAN.INALLREV";
-					atom.type = Genome::Atom::AtomType::ins;
-					genome.push_back(atom);
+					atom.type = Plush::Atom::AtomType::ins;
+					genome.push(atom);
 
 					break;
 
 				case 9:
 					atom.instruction = toString(r);
-					atom.type = Genome::Atom::AtomType::integer;
-					genome.push_back(atom);
+					atom.type = Plush::Atom::AtomType::integer;
+					genome.push(atom);
 
 					atom.instruction = "INTEGER.OUT";
-					atom.type = Genome::Atom::AtomType::ins;
-					genome.push_back(atom);
+					atom.type = Plush::Atom::AtomType::ins;
+					genome.push(atom);
 
 					break;
 
 				case 10:
 					atom.instruction = toString(r);
-					atom.type = Genome::Atom::AtomType::integer;
-					genome.push_back(atom);
+					atom.type = Plush::Atom::AtomType::integer;
+					genome.push(atom);
 
 					atom.instruction = "FLOAT.OUT";
-					atom.type = Genome::Atom::AtomType::ins;
-					genome.push_back(atom);
+					atom.type = Plush::Atom::AtomType::ins;
+					genome.push(atom);
 
 					break;
 
 				case 11:
 					atom.instruction = toString(r);
-					atom.type = Genome::Atom::AtomType::integer;
-					genome.push_back(atom);
+					atom.type = Plush::Atom::AtomType::integer;
+					genome.push(atom);
 
 					atom.instruction = "BOOLEAN.OUT";
-					atom.type = Genome::Atom::AtomType::ins;
-					genome.push_back(atom);
+					atom.type = Plush::Atom::AtomType::ins;
+					genome.push(atom);
 
 					break;
 
@@ -241,18 +238,18 @@ namespace pushGP
 
 			else
 			{
-				atom = random_atom();
-				atom.parentheses = random_closes();
+				atom = random_atom(temp_atom);
+				atom.close_parenthesis = random_closes();
 
-				genome.push_back(atom);
+				genome.push(atom);
 			}
 		}
 
 		return genome;
 	}
 
-	std::vector<struct Genome::Atom> random_plush_genome()
+	Plush::Genome<Plush::CodeAtom>& make_random_plush_genome(Plush::Genome<Plush::CodeAtom>& genome)
 	{
-		return random_plush_genome_with_size(Utilities::random_integer(1, domain::argmap::max_genome_size_in_initial_program));
+		return random_plush_genome_with_size(genome, Utilities::random_integer(2, domain::argmap::max_genome_size_in_initial_program));
 	}
 }

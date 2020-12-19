@@ -1,13 +1,16 @@
 #pragma once
 
+#define NOMINMAX
+
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
 #include <stack> 
 #include <unordered_set>
-#include "..\PushP\Code.h"
 #include "..\Plush\Genome.h"
+#include "..\Plush\Plush.StaticInit.h"
+#include "..\Utilities\Random.Utilities.h"
 
 // For UUID
 #include <Rpc.h>
@@ -41,7 +44,7 @@ namespace pushGP
 	class Individual
 	{
 		// Genome
-		Genome::Genome genome_;
+		Plush::Genome<Plush::CodeAtom> genome_;
 
 		// Uniquely identify the indivudal to track genealogy
 		// See (https://stackoverflow.com/questions/1327157/whats-the-c-version-of-guid-newguid)
@@ -59,34 +62,39 @@ namespace pushGP
 		Individual();
 		Individual(const Individual & other) = delete;
 		Individual& operator = (const Individual &other) = delete;
-		
-		const std::string get_program()
-		{
-			return genome_.get_program();
-		}
 
-		const std::string get_genome()
+		//const std::string get_program()	// Push programs are obsolete.  Use Plush Genomes instead.
+		//{
+		//	return genome_.get_program();
+		//}
+
+		const std::string get_genome_string()
 		{
 			return genome_.to_string();
 		}
 
-		const unsigned int get_genome_size()
+		Plush::Genome<Plush::CodeAtom>& get_genome()
 		{
-			return genome_.size();
+			return genome_;
 		}
 
-		const std::vector<struct Genome::Atom> get_genome_atoms()
+		const unsigned int get_genome_point_estimate()
 		{
-			return genome_.get_atoms();
+			return 0; // This needs to be coded.  For now, return 0.  It use to do this: genome_.size();
 		}
 
-		//const unsigned int get_program_points()
-		//{
-		//	return genome_.get_points();
-		//}
-
+//		//const std::vector<Plush::Atom> get_genome_atoms()	// Push programs are obsolete.  Use Plush Genomes instead.
+//		//{
+//		//	return genome_.get_atoms();
+//		//}
+//
+//		//const unsigned int get_program_points()
+//		//{
+//		//	return genome_.get_points();
+//		//}
+//
 		void set_genome(std::string _genome);
-		void set_genome(std::vector<struct Genome::Atom> _genome);
+		void set_genome(Plush::Genome<Plush::CodeAtom>& _genome);
 		void clear_genome();
 
 		void copy(Individual & other);
@@ -100,7 +108,7 @@ namespace pushGP
 		std::string get_genome_as_string();
 
 		// conversion operator to std::string
-		operator std::string() 
+		operator std::string()
 		{
 			return get_genome_as_string();
 		}
@@ -124,6 +132,17 @@ namespace pushGP
 		{
 			return greatgrandparents_;
 		}
+
+		inline static std::string make_terminal()
+		{
+			//unsigned int r = Utilities::random_integer(0, Push::detail::function_names.size() - 1);
+			//return (Push::detail::function_names[r]);
+
+			int n = Plush::static_initializer.number_of_functions() - 1;
+			unsigned int r = Utilities::random_integer(0, n);
+			return (Plush::static_initializer.get_function_name(r));
+		}
+
 	};
 
 	// Helper functions
