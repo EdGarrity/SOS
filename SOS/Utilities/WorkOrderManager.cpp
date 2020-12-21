@@ -1,16 +1,19 @@
+#include <iostream>
+#include <chrono>
+#include <thread>
 #include "WorkOrderManager.h"
 #include "..\Domain\Arguments.h"
 #include "..\Domain\Learn From Examples\ErrorFunction.LearnFromExample.h"
-#include "synchapi.h"
-#include <chrono>
+#include "..\PushGP\Globals.h"
+//#include "synchapi.h"
 
 namespace Utilities
 {
-	WorkOrderManager::WorkOrderManager() : work_order_queue_(), work_order_mutex_(), work_in_process_queue_(), work_in_process_mutex_(), data_condition_(), accept_functions_(true)
+	WorkOrderManager::WorkOrderManager() : work_order_queue_(), work_order_mutex_(), /*work_in_process_queue_(),*/ work_in_process_mutex_(), data_condition_(), accept_functions_(true)
 	{
 	}
 
-	WorkOrderManager::WorkOrderManager(unsigned int num_threads) : work_order_queue_(), work_order_mutex_(), work_in_process_queue_(), work_in_process_mutex_(), data_condition_(), accept_functions_(true)
+	WorkOrderManager::WorkOrderManager(unsigned int num_threads) : work_order_queue_(), work_order_mutex_(), /*work_in_process_queue_(),*/ work_in_process_mutex_(), data_condition_(), accept_functions_(true)
 	{
 		initialize(num_threads);
 	}
@@ -37,6 +40,11 @@ namespace Utilities
 
 	void WorkOrderManager::initialize(unsigned int num_threads)
 	{
+		if ((num_threads_ > 0) || (!env_queue_.empty()))
+		{
+			throw std::runtime_error(" WorkOrderManager::initialize() Function called when already initialized.");
+		}
+
 		num_threads_ = num_threads;
 
 		if (num_threads > 0)
@@ -59,10 +67,10 @@ namespace Utilities
 		work_order.example_solution = output_list;
 
 		std::unique_lock<std::mutex> work_in_process_lock(work_in_process_mutex_);
-		auto success = work_in_process_queue_.insert(key);
+		//auto success = work_in_process_queue_.insert(key);
 
-		if (success.second)
-		{
+		//if (success.second)
+		//{
 			std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
 			work_order_queue_.push_front(work_order);
 
@@ -71,17 +79,17 @@ namespace Utilities
 			work_in_process_lock.unlock();
 
 			data_condition_.notify_one();
-		}
+		//}
 
-		else
-		{
-			work_in_process_lock.unlock();
+		//else
+		//{
+		//	work_in_process_lock.unlock();
 
-			std::stringstream warning_message;
-			warning_message << "WorkOrderManager::push() - unable to insert work into queue.  key = " << key;
+		//	std::stringstream warning_message;
+		//	warning_message << "WorkOrderManager::push() - unable to insert work into queue.  key = " << key;
 
-			throw std::runtime_error(warning_message.str());
-		}
+		//	throw std::runtime_error(warning_message.str());
+		//}
 	}
 
 	void WorkOrderManager::process_work_orders(const unsigned int env_index)
@@ -126,11 +134,14 @@ namespace Utilities
 					//release the lock
 				}
 
-				// Ingest the file specified in the work order
+				// Process the individual example case specified in the work order
 				try
 				{
 					Plush::Environment* envp = env_queue_[env_index];
-					domain::learn_from_examples::run_program(*envp);					
+
+					double error = domain::learn_from_examples::run_individual_threadsafe(*envp, work_order.individual_index, work_order.example_problem, work_order.example_solution);
+
+					pushGP::globals::error_matrix[work_order.example_case][work_order.individual_index] = error;
 				}
 				catch (const std::exception& e)
 				{
@@ -165,6 +176,39 @@ namespace Utilities
 			warning_message << "WorkOrderManager::process_work_orders() - Outer while loop - An unknown error has occured.  env_index = " << env_index;
 
 			throw std::runtime_error(warning_message.str());
+		}
+	}
+
+	void WorkOrderManager::wait_for_all_threads_to_complete()
+	{
+		using namespace std::chrono_literals;
+
+		if (num_threads_ > 0)
+		{
+			int queue_size = 0;
+
+			do
+			{
+				std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
+				queue_size = work_order_queue_.size();
+				work_order_lock.unlock();
+
+				std::this_thread::sleep_for(1min);
+			} while (queue_size > 0);
+
+			std::unique_lock<std::mutex> lock(work_order_mutex_);
+			accept_functions_ = false;
+			lock.unlock();
+
+			// when we send the notification immediately, the consumer will try to get the lock, so unlock asap
+			data_condition_.notify_all();
+
+			//notify all waiting threads.
+			for (unsigned int i = 0; i < thread_pool_.size(); i++)
+				if (thread_pool_[i].joinable())
+				{
+					thread_pool_[i].join();
+				}
 		}
 	}
 }

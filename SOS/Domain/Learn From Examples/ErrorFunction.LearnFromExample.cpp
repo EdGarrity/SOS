@@ -62,7 +62,7 @@ namespace domain
 					{
 						double distance = 0.0;
 
-						distance = fabs(example_solution[n] - (isnan(env.output[n]) ? 0.0 : env_local.output[n]));
+						distance = fabs(example_solution[n] - (isnan(env.output[n]) ? 0.0 : env.output[n]));
 
 						if (distance < (std::numeric_limits<double>::epsilon() + std::numeric_limits<double>::epsilon()))
 							distance = 0.0;
@@ -122,7 +122,23 @@ namespace domain
 		//       N = number of integers in the example
 		//       X = 0 or more integers.  The number of integers must be equal to N
 		//
-		double run_individual(
+		//double run_individual(
+		//	unsigned int _individual_index,
+		//	std::vector<double>& _example_problem,
+		//	std::vector<double>& _example_solution)
+		//{
+		//	double error = 0.0;
+		//	Plush::Environment* envp_local = new Plush::Environment;
+
+		//	std::string program = pushGP::globals::population_agents[_individual_index].get_genome_string();
+
+		//	error = run_program(*envp_local, program, _example_problem, _example_solution);
+
+		//	delete envp_local;
+
+		//	return error;
+		//}
+		double run_individual_threadsafe(Plush::Environment& env,
 			unsigned int _individual_index,
 			std::vector<double>& _example_problem,
 			std::vector<double>& _example_solution)
@@ -131,7 +147,7 @@ namespace domain
 
 			std::string program = pushGP::globals::population_agents[_individual_index].get_genome_string();
 
-			error = run_program(program, _example_problem, _example_solution);
+			error = run_program(env, program, _example_problem, _example_solution);
 
 			return error;
 		}

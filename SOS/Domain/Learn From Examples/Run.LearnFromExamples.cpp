@@ -25,6 +25,7 @@
 #include "../../PushGP/Breed.h"
 #include "../../PushGP/AsyncBreed.h"
 #include "../../PushGP/Random.h"
+#include "..\..\Utilities\WorkOrderManager.h"
 
 // Correction for Syntax error with std::numeric_limits::max compiler error
 // See https://stackoverflow.com/questions/27442885/syntax-error-with-stdnumeric-limitsmax
@@ -678,7 +679,7 @@ namespace domain
 		}
 
 		std::tuple<int, double, double> compute_training_errors(Plush::Environment& _env,
-			std::function<double(/*Plush::Environment& _env,*/
+			std::function<double(Plush::Environment& _env,
 				unsigned int _individual_index,
 				std::vector<double>& _input_list,
 				std::vector<double>& _output_list)> _run_individual_program,
@@ -688,6 +689,8 @@ namespace domain
 			int individual_with_best_score = -1;
 			double min_error = (std::numeric_limits<double>::max)();
 			double min_score = (std::numeric_limits<double>::max)();
+
+			Plush::Environment* envp_local = new Plush::Environment;
 
 			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			{
@@ -703,7 +706,7 @@ namespace domain
 					std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
 
 					// Run program
-					double error = _run_individual_program(individual_index, example_problem, example_solution);
+					double error = _run_individual_program(*envp_local, individual_index, example_problem, example_solution);
 
 					if (error > 0.0)
 						error_count_for_individual++;
@@ -734,6 +737,7 @@ namespace domain
 					std::cout << std::endl;
 			}
 
+			delete envp_local;
 
 			std::cout << std::endl;
 
@@ -746,7 +750,7 @@ namespace domain
 		}
 
 		std::tuple<int, double, double> parallel_compute_training_errors(Plush::Environment& _env,
-			std::function<double(/*Plush::Environment& _env,*/
+			std::function<double(Plush::Environment& _env,
 				unsigned int _individual_index,
 				std::vector<double>& _input_list,
 				std::vector<double>& _output_list)> _run_individual_program,
@@ -771,7 +775,7 @@ namespace domain
 						std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
 
 						// Run program
-						double error = _run_individual_program(/*_env,*/ individual_index, example_problem, example_solution);
+						double error = run_individual_threadsafe(_env, individual_index, example_problem, example_solution);
 
 						if (error > 0.0)
 							error_count_for_individual++;
@@ -808,8 +812,94 @@ namespace domain
 			);
 		}
 
+		std::tuple<int, double, double> compute_training_errors_treah_safe(Plush::Environment& _env,
+			std::function<double(Plush::Environment& _env,
+				unsigned int _individual_index,
+				std::vector<double>& _input_list,
+				std::vector<double>& _output_list)> _run_individual_program,
+			int _number_of_example_cases)
+		{
+			int individual_with_least_error = -1;
+			int individual_with_best_score = -1;
+			double min_error = (std::numeric_limits<double>::max)();
+			double min_score = (std::numeric_limits<double>::max)();
+
+			Utilities::WorkOrderManager work_order_manager;
+
+			work_order_manager.initialize();
+
+			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
+			{
+				if ((individual_index % 100) == 0)
+					std::cout << individual_index;
+
+				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
+				{
+					std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
+					std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
+
+					work_order_manager.push(individual_index, example_problem, example_solution);
+				}
+
+				if ((individual_index % 100) == 0)
+					std::cout << std::endl;
+			}
+
+			work_order_manager.wait_for_all_threads_to_complete();
+
+			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
+			{
+				int error_count_for_individual = 0;
+				double avg_error_for_individual = 0.0;
+
+				if ((individual_index % 100) == 0)
+					std::cout << individual_index;
+
+				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
+				{
+					double error = pushGP::globals::error_matrix[example_case][individual_index];
+
+					if (error > 0.0)
+						error_count_for_individual++;
+
+					avg_error_for_individual += error;
+
+					pushGP::globals::error_matrix[example_case][individual_index] = error;
+				}
+
+				// Calculate the average error for all example cases
+				avg_error_for_individual /= (double)_number_of_example_cases;
+
+				double score = (double)error_count_for_individual / (double)_number_of_example_cases;
+
+				if ((score < 1.0) && (score < min_score))
+				{
+					min_score = score;
+					individual_with_best_score = individual_index;
+				}
+
+				if (avg_error_for_individual < min_error)
+				{
+					min_error = avg_error_for_individual;
+					individual_with_least_error = individual_index;
+				}
+
+				if ((individual_index % 100) == 0)
+					std::cout << std::endl;
+			}
+
+			std::cout << std::endl;
+
+			return std::make_tuple
+			(
+				(individual_with_best_score == -1) ? individual_with_least_error : individual_with_best_score,
+				min_score,
+				min_error
+			);
+		}
+
 		double compute_test_errors(Plush::Environment& _env,
-			std::function<double(/*Plush::Environment& _env,*/
+			std::function<double(Plush::Environment& _env,
 				unsigned int _individual_index,
 				std::vector<double>& _example_problem,
 				std::vector<double>& _example_solution)> _run_individual_program,
@@ -825,7 +915,7 @@ namespace domain
 				std::vector<double> example_problem(test_cases_problem[example_case].begin(), test_cases_problem[example_case].end());
 				std::vector<double> example_solution(test_cases_solution[example_case].begin(), test_cases_solution[example_case].end());
 
-				double example_case_error = _run_individual_program(/*_env,*/ _individual_index, example_problem, example_solution);
+				double example_case_error = _run_individual_program(_env, _individual_index, example_problem, example_solution);
 
 				if (example_case_error > 0.0)
 					error_count++;
@@ -1179,10 +1269,10 @@ namespace domain
 					if (argmap::use_PPL)
 						best_individual_score_error = parallel_compute_training_errors(
 							env, 
-							run_individual, 
+							run_individual_threadsafe,
 							argmap::number_of_training_cases);
 					else
-						best_individual_score_error = compute_training_errors(env, run_individual, argmap::number_of_training_cases);
+						best_individual_score_error = compute_training_errors(env, run_individual_threadsafe, argmap::number_of_training_cases);
 
 					best_individual = std::get<0>(best_individual_score_error);
 					best_individual_score = std::get<1>(best_individual_score_error);
@@ -1209,7 +1299,7 @@ namespace domain
 					std::cout << "best_individual = " << best_individual << std::endl;
 					std::cout << "genome = " << genome << std::endl;
 
-					double test_case_score = compute_test_errors(env, run_individual, best_individual);
+					double test_case_score = compute_test_errors(env, run_individual_threadsafe, best_individual);
 
 					std::cout << "test_case_error = " << test_case_score << std::endl;
 					std::cout << std::endl;
