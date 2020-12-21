@@ -1,6 +1,6 @@
 #include "HelperFunctions.h"
 
-namespace UnitTest
+namespace PlushUnitTest
 {
 	template <typename S1>
 	bool match(Environment & env, std::vector<S1> s2)

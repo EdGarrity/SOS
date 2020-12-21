@@ -20,8 +20,8 @@ namespace domain
 		//	;; When true, will only use a single thread.
 		const bool use_multithreading = false;
 		const bool use_PPL = true;
-		//const bool use_PPL = false;
 		const unsigned int number_of_cores_to_reserve = 4;
+		const unsigned int max_threads = 8;
 		const unsigned thread_chunk_size = 1; // 100;  // Number of threads per chunk.
 
 		// CPU temperature monitoring

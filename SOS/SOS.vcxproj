@@ -203,6 +203,7 @@
     <ClInclude Include="Utilities\MyException.h" />
     <ClInclude Include="Utilities\Random.Utilities.h" />
     <ClInclude Include="Utilities\Singleton.h" />
+    <ClInclude Include="Utilities\WorkOrderManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Database\SQLCommand.cpp" />
@@ -243,6 +244,7 @@
     <ClCompile Include="Utilities\SystemInfo.cpp" />
     <ClCompile Include="Utilities\MyException.cpp" />
     <ClCompile Include="Utilities\Random.Utilities.cpp" />
+    <ClCompile Include="Utilities\WorkOrderManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

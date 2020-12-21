@@ -4,7 +4,7 @@
 
 using namespace Plush;
 
-namespace UnitTest
+namespace PlushUnitTest
 {
 	bool is_stack_state(Environment & env,
 		std::vector<long> int_array,
