@@ -40,7 +40,7 @@ namespace Utilities
 
 		void initialize();
 		void initialize(unsigned int _num_threads);
-		void push(size_t individual_index, std::vector<double>& input_list, std::vector<double>& output_list);
+		void push(size_t individual_index, int example_case, std::vector<double>& input_list, std::vector<double>& output_list);
 		void process_work_orders(const unsigned int env_index);
 		//void wait_for_all_jobs_to_complete();
 		void wait_for_all_threads_to_complete();

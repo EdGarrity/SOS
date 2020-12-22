@@ -812,7 +812,7 @@ namespace domain
 			);
 		}
 
-		std::tuple<int, double, double> compute_training_errors_treah_safe(Plush::Environment& _env,
+		std::tuple<int, double, double> compute_training_errors_thread_safe(Plush::Environment& _env,
 			std::function<double(Plush::Environment& _env,
 				unsigned int _individual_index,
 				std::vector<double>& _input_list,
@@ -838,7 +838,7 @@ namespace domain
 					std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
 					std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
 
-					work_order_manager.push(individual_index, example_problem, example_solution);
+					work_order_manager.push(individual_index, example_case, example_problem, example_solution);
 				}
 
 				if ((individual_index % 100) == 0)
@@ -863,8 +863,6 @@ namespace domain
 						error_count_for_individual++;
 
 					avg_error_for_individual += error;
-
-					pushGP::globals::error_matrix[example_case][individual_index] = error;
 				}
 
 				// Calculate the average error for all example cases
@@ -1266,9 +1264,14 @@ namespace domain
 
 					std::tuple<int, double, double> best_individual_score_error;
 
-					if (argmap::use_PPL)
-						best_individual_score_error = parallel_compute_training_errors(
+					if (argmap::use_multithreading)
+						best_individual_score_error = compute_training_errors_thread_safe(
 							env, 
+							run_individual_threadsafe,
+							argmap::number_of_training_cases);
+					else if (argmap::use_PPL)
+						best_individual_score_error = parallel_compute_training_errors(
+							env,
 							run_individual_threadsafe,
 							argmap::number_of_training_cases);
 					else

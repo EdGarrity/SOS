@@ -42,7 +42,7 @@ namespace Utilities
 	{
 		if ((num_threads_ > 0) || (!env_queue_.empty()))
 		{
-			throw std::runtime_error(" WorkOrderManager::initialize() Function called when already initialized.");
+			throw std::runtime_error("WorkOrderManager::initialize() Function called when already initialized.");
 		}
 
 		num_threads_ = num_threads;
@@ -58,11 +58,12 @@ namespace Utilities
 		}
 	}
 
-	void WorkOrderManager::push(size_t individual_index, std::vector<double>& input_list, std::vector<double>& output_list)
+	void WorkOrderManager::push(size_t individual_index, int example_case, std::vector<double>& input_list, std::vector<double>& output_list)
 	{
 		WorkOrder work_order;
 
 		work_order.individual_index = individual_index;
+		work_order.example_case = example_case;
 		work_order.example_problem = input_list;
 		work_order.example_solution = output_list;
 
@@ -139,7 +140,10 @@ namespace Utilities
 				{
 					Plush::Environment* envp = env_queue_[env_index];
 
-					double error = domain::learn_from_examples::run_individual_threadsafe(*envp, work_order.individual_index, work_order.example_problem, work_order.example_solution);
+					double error = domain::learn_from_examples::run_individual_threadsafe(*envp, 
+						work_order.individual_index, 
+						work_order.example_problem, 
+						work_order.example_solution);
 
 					pushGP::globals::error_matrix[work_order.example_case][work_order.individual_index] = error;
 				}
