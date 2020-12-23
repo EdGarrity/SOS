@@ -76,6 +76,31 @@ namespace Plush
 			return genome.number_of_blocks();
 		}
 
+		template<typename T>
+		bool assert_length(unsigned int needed)
+		{
+			Genome<T>& stack = get_stack<T>();
+			return stack.size() >= needed;
+		}
+
+		template<>
+		bool assert_length<CodeAtom>(unsigned int needed)
+		{
+			Genome<CodeAtom>& genome = get_stack<CodeAtom>();
+			//return genome.number_of_blocks() >= needed;
+
+			return genome.number_of_blocks_at_least(needed);
+		}
+
+		template<>
+		bool assert_length<ExecAtom>(unsigned int needed)
+		{
+			Genome<ExecAtom>& genome = get_stack<ExecAtom>();
+			//return genome.number_of_blocks() >= needed;
+
+			return genome.number_of_blocks_at_least(needed);
+		}
+
 		template <typename T> inline Genome<T>& get_stack(){}
 		template <> inline Genome<ExecAtom>& get_stack()
 		{
@@ -258,6 +283,20 @@ namespace Plush
 			case FLOAT_STACK: return double_stack_.size();
 			}
 			return 0;
+		}
+
+		/* Needed for type checking of preconditions */
+		inline bool check_stack_size_at_least(unsigned int which, unsigned int size_needed) //const
+		{
+			switch (which)
+			{
+			case EXEC_STACK: return assert_length<ExecAtom>(size_needed);
+			case INTEGER_STACK: return int_stack_.size() >= size_needed;
+			case CODE_STACK: return assert_length<CodeAtom>(size_needed);
+			case BOOL_STACK: return bool_stack_.size() >= size_needed;
+			case FLOAT_STACK: return double_stack_.size() >= size_needed;
+			}
+			return false;
 		}
 
 		/* Needed for type checking of post conditions */

@@ -753,6 +753,95 @@ namespace Plush
 		}
 
 		// Purpose: 
+		//   Asserts that the number of blocks is at least the required number. 
+		//
+		//   The genome is processed as a list object, i.e., an open parenthesis is assumed to exist 
+		//   before the first item on the stack.  This function returns the number of items in the top 
+		//   level of the list; that is, nested lists contribute only 1 to this count, no matter what 
+		//   they contain.  Closing parenthesis can either be interpreted as close instructions (to satisfy 
+		//   a block requirement in a nested list) or as close - open instructions (for the top level list).
+		//   Nested levels begin when an instruction requiring blocks is encountered in the list and end 
+		//   when all required blocks are found.
+		//
+		//   This is equivalent to the Push Stack level.  Each block on the FixedSize stack is a 
+		//   level on the Push Stack.
+		//
+		// Parameters:
+		//   required - Number of required blocks
+		// 
+		// Return value:
+		//   True if the number of blocks is at least the number required.
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes.  As long as no other thread attemps to write to the child.
+		//
+		// Remarks:
+		//
+		bool number_of_blocks_at_least(unsigned int required)
+		{
+			unsigned int item_number = 0;
+			unsigned int wanted_blocks = 1;	// Assume all genomes begin as a block.
+			unsigned int extra_blocks = 0;
+			std::stack<unsigned int> wanted_stack;
+			int n = Utilities::FixedSizeStack<T>::size() - 1;
+
+			while ((n >= 0) || (extra_blocks > 0))
+			{
+				Plush::Atom atom;
+
+				if (extra_blocks == 0)
+				{
+					atom = Utilities::FixedSizeStack<T>::stack_[n];
+					n--;
+				}
+				else
+				{
+					atom = Plush::Atom("{:instruction EXEC.NOOP :close 1}");
+					extra_blocks--;
+				}
+
+				if ((n < 0) && (extra_blocks <= 0) && (atom.close_parenthesis == 0))
+					atom.close_parenthesis = 1;
+
+				int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
+
+				if (closing < 0)
+				{
+					wanted_stack.push(wanted_blocks);
+					wanted_blocks = 0 - closing;
+				}
+
+				extra_blocks = (closing > 1) ? (closing - 1) : (0);
+
+				if (closing > 0)
+				{
+					if (wanted_blocks > 0)
+						wanted_blocks--;
+				}
+
+				if (wanted_blocks == 0)
+				{
+					if (wanted_stack.size() == 0)
+						item_number++;
+
+					if (item_number >= required)
+						break;
+
+					if (wanted_stack.size() > 0)
+					{
+						wanted_blocks = wanted_stack.top();
+						wanted_stack.pop();
+					}
+				}
+			}
+
+			return item_number >= required;
+		}
+
+		// Purpose: 
 		//   Returns the number of items in the genome stack. 
 		//
 		//   The genome is processed as a list object, i.e., an open parenthesis is assumed to exist 
