@@ -201,28 +201,22 @@ namespace Plush
 
 	unsigned exec_y(Environment & _env)
 	{
-		//if (_env.has_elements<ExecAtom>(1))
-		//{
-			_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.Y :close 0}"));
-			_env.get_stack<ExecAtom>().yankdup_item(1);
-		//}
+		_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.Y :close 0}"));
+		_env.get_stack<ExecAtom>().yankdup_item(1);
 
 		return 1;
 	}
 
 	unsigned code_append(Environment & _env)
 	{
-		//if (_env.has_elements<CodeAtom>(2))
-		//{
-			Genome_section<CodeAtom> section_A = _env.get_stack<CodeAtom>()[0];
-			Genome_section<CodeAtom> section_B = _env.get_stack<CodeAtom>()[1];
+		Genome_section<CodeAtom> section_A = _env.get_stack<CodeAtom>()[0];
+		Genome_section<CodeAtom> section_B = _env.get_stack<CodeAtom>()[1];
 
-			if (_env.get_stack<CodeAtom>().get_atom_at_position(section_A.ending_position).close_parenthesis > 0)
-				_env.get_stack<CodeAtom>().get_atom_at_position(section_A.ending_position).close_parenthesis--;
+		if (_env.get_stack<CodeAtom>().get_atom_at_position(section_A.ending_position).close_parenthesis > 0)
+			_env.get_stack<CodeAtom>().get_atom_at_position(section_A.ending_position).close_parenthesis--;
 
-			if (_env.get_stack<CodeAtom>().get_atom_at_position(section_B.ending_position).close_parenthesis == 0)
-				_env.get_stack<CodeAtom>().get_atom_at_position(section_B.ending_position).close_parenthesis = 1;
-		//}
+		if (_env.get_stack<CodeAtom>().get_atom_at_position(section_B.ending_position).close_parenthesis == 0)
+			_env.get_stack<CodeAtom>().get_atom_at_position(section_B.ending_position).close_parenthesis = 1;
 
 		return 1;
 	}
