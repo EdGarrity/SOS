@@ -827,6 +827,7 @@ namespace domain
 			Utilities::WorkOrderManager work_order_manager;
 
 			work_order_manager.initialize();
+			work_order_manager.stop();
 
 			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			{

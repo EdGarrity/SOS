@@ -25,12 +25,22 @@ namespace Plush
 		Genome<bool> bool_stack_;
 
 	public:
+		// State of Worker Thread
+		enum RunningState
+		{
+			Idle = 0,
+			Waiting,
+			Running
+		} running_state;
+
 		Environment()
 		{
 			clear_stacks();
 			null_input.clear();
 			input = null_input;
 			output.clear();
+
+			running_state = Idle;
 		}
 
 		// Pointer to input & output data
