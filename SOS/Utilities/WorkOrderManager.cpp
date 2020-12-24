@@ -131,7 +131,8 @@ namespace Utilities
 			}
 
 			// Remove trailing new-line character
-			buffer[sizeof(buffer) - 1] = '\0';
+			if (strlen(buffer) > 2)
+				buffer[strlen(buffer) - 1] = '\0';
 
 			std::cout << buffer << ",Thread=" << env_index << ",Status=" << status << std::endl;
 		}
@@ -163,7 +164,8 @@ namespace Utilities
 			}
 
 			// Remove trailing new-line character
-			buffer[sizeof(buffer) - 1] = '\0';
+			if (strlen(buffer) > 2)
+				buffer[strlen(buffer) - 1] = '\0';
 
 			std::cout << buffer 
 				<< ",Thread=" << env_index
@@ -284,11 +286,14 @@ namespace Utilities
 
 			do
 			{
-				std::this_thread::sleep_for(1min);
+				std::this_thread::sleep_for(10min);
 
 				std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
 				queue_size = work_order_queue_.size();
 				work_order_lock.unlock();
+
+				debug_message = "Thread=main,Status=wait_for_queue_to_empty,queue_size=" + std::to_string(queue_size);
+				debug_log(-1, debug_message);
 			} while (queue_size > 0);
 
 			debug_message = "Thread=main,Status=wait_for_all_threads_to_finish,thread_pool_.size()=" + std::to_string(thread_pool_.size());
