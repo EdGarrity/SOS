@@ -845,6 +845,7 @@ namespace domain
 					std::cout << std::endl;
 			}
 
+			work_order_manager.start();
 			work_order_manager.wait_for_all_threads_to_complete();
 
 			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
