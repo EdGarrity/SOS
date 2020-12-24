@@ -130,6 +130,9 @@ namespace Utilities
 				std::cout << error_message << std::endl;
 			}
 
+			// Remove trailing new-line character
+			buffer[sizeof(buffer) - 1] = '\0';
+
 			std::cout << buffer << ",Thread=" << env_index << ",Status=" << status << std::endl;
 		}
 	}
@@ -158,6 +161,9 @@ namespace Utilities
 					+ ",error_code=" + std::to_string((int)errNum);
 				std::cout << error_message << std::endl;
 			}
+
+			// Remove trailing new-line character
+			buffer[sizeof(buffer) - 1] = '\0';
 
 			std::cout << buffer 
 				<< ",Thread=" << env_index
