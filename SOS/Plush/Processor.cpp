@@ -67,6 +67,7 @@ namespace Plush
 		{
 			try
 			{
+				env.current_effort = effort;
 				unit = 0;
 
 				ExecAtom atom = env.pop<ExecAtom>();

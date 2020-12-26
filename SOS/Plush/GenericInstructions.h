@@ -305,14 +305,12 @@ namespace Plush
 	template<>
 	inline unsigned swap<CodeAtom>(Environment & _env)
 	{
-		_env.get_stack<CodeAtom>().yank_stack_element(1);
-		return 1;
+		return _env.get_stack<CodeAtom>().yank_stack_element(1);
 	}
 
 	template<>
 	inline unsigned swap<ExecAtom>(Environment & _env)
 	{
-		_env.get_stack<ExecAtom>().yank_stack_element(1);
-		return 1;
+		return _env.get_stack<ExecAtom>().yank_stack_element(1);
 	}
 }

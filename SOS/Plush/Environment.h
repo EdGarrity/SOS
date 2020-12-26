@@ -50,6 +50,7 @@ namespace Plush
 
 		// Debug - Rember current state
 		std::string current_instruction;
+		unsigned int current_effort;
 
 		virtual void clear_stacks()
 		{
@@ -60,6 +61,7 @@ namespace Plush
 			double_stack_.clear();
 
 			current_instruction.clear();
+			current_effort = 0;
 		}
 
 		virtual void initialize(std::vector<double> & _input)
@@ -75,6 +77,7 @@ namespace Plush
 			std::string debug_msg;
 
 			debug_msg = "Instruction=" + current_instruction;
+			debug_msg += ",effort=" + std::to_string(current_effort);
 			debug_msg += ",exec_stack_size=" + std::to_string(exec_stack_.size());
 			debug_msg += ",code_stack_=" + std::to_string(code_stack_.size());
 			debug_msg += ",int_stack_=" + std::to_string(int_stack_.size());

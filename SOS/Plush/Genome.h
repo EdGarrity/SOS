@@ -1768,7 +1768,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline void remove_item_at_position(unsigned int item_position)
+		inline unsigned int remove_item_at_position(unsigned int item_position)
 		{
 			unsigned int s = 0;
 			unsigned int l = 0;
@@ -1809,6 +1809,8 @@ namespace Plush
 				if (l > 1)
 					Utilities::FixedSizeStack<T>::remove_items(s, l - 1);
 			}
+
+			return genome_section.size;
 		}
 
 		// Purpose: 
@@ -1831,7 +1833,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline void remove_stack_element(unsigned int element_pos)
+		inline unsigned int remove_stack_element(unsigned int element_pos)
 		{
 			Genome_section<T> section = (*this)[element_pos];
 			Utilities::FixedSizeStack<T>::remove_items(section.starting_position, section.size);
@@ -1851,6 +1853,8 @@ namespace Plush
 				if (atom.close_parenthesis > section.extra_parenthesis)
 					atom.close_parenthesis = new_close_parenthesis;
 			}
+
+			return section.size;
 		}
 
 		// Purpose: 
@@ -1938,7 +1942,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline void yankdup_stack_element(unsigned int element_pos)
+		inline unsigned int yankdup_stack_element(unsigned int element_pos)
 		{
 			unsigned int s = 0;
 			unsigned int l = 0;
@@ -1960,9 +1964,11 @@ namespace Plush
 
 			if (atom.close_parenthesis > section.extra_parenthesis)
 				atom.close_parenthesis = new_close_parenthesis;
+
+			return section.size;
 		}
 
-		inline void yankdup_stack_element(Genome_section<T> section)
+		inline unsigned int yankdup_stack_element(Genome_section<T> section)
 		{
 			if (section.size > Utilities::FixedSizeStack<T>::free())
 			{
@@ -1977,6 +1983,8 @@ namespace Plush
 
 			else
 				push(T("{:instruction EXEC.NOOP :close 1}"));
+
+			return section.size;
 		}
 
 		// Purpose: 
@@ -2060,13 +2068,17 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline void yank_stack_element(unsigned int element_pos)
+		inline unsigned int yank_stack_element(unsigned int element_pos)
 		{
+			unsigned int effort = 0;
+
 			if (element_pos > 0)
 			{
-				yankdup_stack_element(element_pos);
-				remove_stack_element(element_pos + 1);
+				effort = yankdup_stack_element(element_pos);
+				effort += remove_stack_element(element_pos + 1);
 			}
+
+			return effort;
 		}
 
 		// Purpose: 
@@ -2086,13 +2098,17 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline void yank_stack_element(Genome_section<T> section)
+		inline unsigned int yank_stack_element(Genome_section<T> section)
 		{
+			unsigned int effort = 0;
+
 			if (section.size > 0)
 			{
-				yankdup_stack_element(section);
-				Utilities::FixedSizeStack<T>::remove_items(section.starting_position, section.size);
+				effort = yankdup_stack_element(section);
+				effort += Utilities::FixedSizeStack<T>::remove_items(section.starting_position, section.size);
 			}
+
+			return effort;
 		}
 
 		// Purpose: 
