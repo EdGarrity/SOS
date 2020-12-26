@@ -1874,7 +1874,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline void yankdup_item(unsigned int item_position)
+		inline unsigned int yankdup_item(unsigned int item_position)
 		{
 			unsigned int s = 0;
 			unsigned int l = 0;
@@ -1920,6 +1920,8 @@ namespace Plush
 			if (Utilities::FixedSizeStack<T>::size() > 0)
 				if (Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::size() - l].close_parenthesis > extra_blocks)
 					Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::size() - l].close_parenthesis -= extra_blocks;
+
+			return genome_section.size;
 		}
 
 		// Purpose: 
@@ -2039,13 +2041,17 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline void yank_item(unsigned int item_position)
+		inline unsigned int yank_item(unsigned int item_position)
 		{
+			unsigned int effort = 0;
+
 			if (item_position > 0)
 			{
-				yankdup_item(item_position);
-				remove_item_at_position(item_position + 1);
+				effort = yankdup_item(item_position);
+				effort += remove_item_at_position(item_position + 1);
 			}
+
+			return effort;
 		}
 
 		// Purpose: 

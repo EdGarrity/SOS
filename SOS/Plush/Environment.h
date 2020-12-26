@@ -170,9 +170,10 @@ namespace Plush
 		/* pushing and popping */
 
 		template <typename T>
-		inline void push(T value)
+		inline unsigned int push(T value)
 		{
 			get_stack<T>().push(value);
+			return 1;
 		}
 
 		template <class T>

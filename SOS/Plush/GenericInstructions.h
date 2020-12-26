@@ -77,41 +77,31 @@ namespace Plush
 	template<>
 	inline unsigned yank<CodeAtom>(Environment & _env)
 	{
-		_env.get_stack<CodeAtom>().yank_item(pop_safe_position<CodeAtom>(_env));
-
-		return 1;
+		return _env.get_stack<CodeAtom>().yank_item(pop_safe_position<CodeAtom>(_env));
 	}
 
 	template<>
 	inline unsigned yank<ExecAtom>(Environment & _env)
 	{
-		_env.get_stack<ExecAtom>().yank_item(pop_safe_position<ExecAtom>(_env));
-
-		return 1;
+		return _env.get_stack<ExecAtom>().yank_item(pop_safe_position<ExecAtom>(_env));
 	}
 
 	template <class T>
 	inline unsigned yankdup(Environment & _env)
 	{
-		_env.push<T>(_env.get_atom_at_position<T>(pop_safe_position<T>(_env)));
-
-		return 1;
+		return _env.push<T>(_env.get_atom_at_position<T>(pop_safe_position<T>(_env)));
 	}
 
 	template<>
 	inline unsigned yankdup<CodeAtom>(Environment & _env)
 	{
-		_env.get_stack<CodeAtom>().yankdup_stack_element(pop_safe_position<CodeAtom>(_env));
-
-		return 1;
+		return _env.get_stack<CodeAtom>().yankdup_stack_element(pop_safe_position<CodeAtom>(_env));
 	}
 
 	template<>
 	inline unsigned yankdup<ExecAtom>(Environment & _env)
 	{
-		_env.get_stack<CodeAtom>().yankdup_stack_element(pop_safe_position<ExecAtom>(_env));
-
-		return 1;
+		return _env.get_stack<CodeAtom>().yankdup_stack_element(pop_safe_position<ExecAtom>(_env));
 	}
 
 	template <typename T>
