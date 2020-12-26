@@ -105,7 +105,7 @@ namespace Utilities
 	struct tm newtime;
 	__time32_t aclock;
 
-	void WorkOrderManager::debug_log(const unsigned int env_index, std::string status)
+	void WorkOrderManager::debug_log(const int env_index, std::string status)
 	{
 		static std::string prev_status = "";
 
@@ -138,7 +138,7 @@ namespace Utilities
 		}
 	}
 
-	void WorkOrderManager::debug_log(const unsigned int env_index, std::string status, unsigned int individual_index, unsigned int example_case)
+	void WorkOrderManager::debug_log(const int env_index, std::string status, unsigned int individual_index, unsigned int example_case)
 	{
 		static std::string prev_status = "";
 
@@ -315,8 +315,10 @@ namespace Utilities
 				{
 					if (env_queue_[i]->running_state == Plush::Environment::Running)
 					{
+						Plush::Environment* envp = env_queue_[i];
+
 						all_done = false;
-						debug_message = "Thread=main,Status=wait_for_all_threads_to_finish,waiting_for_thread=" + std::to_string(i);
+						debug_message = "Thread=main,Status=wait_for_all_threads_to_finish,waiting_for_thread=" + std::to_string(i) + "," + envp->print_state();
 						debug_log(-1, debug_message);
 						break;
 					}

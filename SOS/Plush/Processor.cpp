@@ -71,6 +71,9 @@ namespace Plush
 
 				ExecAtom atom = env.pop<ExecAtom>();
 
+				// Debug - Remember current instruction
+				env.current_instruction = atom.instruction;
+
 				switch (atom.type)
 				{
 				case Atom::AtomType::integer:

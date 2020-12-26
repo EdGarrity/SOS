@@ -829,9 +829,9 @@ namespace domain
 			work_order_manager.initialize();
 			work_order_manager.stop();
 
-			//for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
-			//{
-int individual_index = 547;
+			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
+			{
+//int individual_index = 547;
 				if ((individual_index % 100) == 0)
 					std::cout << individual_index;
 
@@ -845,7 +845,7 @@ int individual_index = 547;
 
 				if ((individual_index % 100) == 0)
 					std::cout << std::endl;
-			//}
+			}
 
 			work_order_manager.start();
 			work_order_manager.wait_for_all_threads_to_complete();

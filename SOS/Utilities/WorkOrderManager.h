@@ -38,8 +38,8 @@ namespace Utilities
 		std::deque<Plush::Environment*> env_queue_;
 
 		std::mutex work_order_print_;
-		void debug_log(const unsigned int env_index, std::string status);
-		void debug_log(const unsigned int env_index, std::string status, unsigned int individual_index, unsigned int example_case);
+		void debug_log(const int env_index, std::string status);
+		void debug_log(const int env_index, std::string status, unsigned int individual_index, unsigned int example_case);
 
 	public:
 		WorkOrderManager();

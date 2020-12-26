@@ -24,6 +24,7 @@ namespace Plush
 		Genome<double> double_stack_;
 		Genome<bool> bool_stack_;
 
+
 	public:
 		// State of Worker Thread
 		enum RunningState
@@ -47,6 +48,9 @@ namespace Plush
 		std::vector<double> input = null_input;
 		std::vector<double> output;
 
+		// Debug - Rember current state
+		std::string current_instruction;
+
 		virtual void clear_stacks()
 		{
 			exec_stack_.clear();
@@ -54,6 +58,8 @@ namespace Plush
 			code_stack_.clear();
 			bool_stack_.clear();
 			double_stack_.clear();
+
+			current_instruction.clear();
 		}
 
 		virtual void initialize(std::vector<double> & _input)
@@ -61,6 +67,21 @@ namespace Plush
 			clear_stacks();
 			input = _input;
 			output.clear();
+		}
+
+		/* Debug functions */
+		inline std::string print_state()
+		{
+			std::string debug_msg;
+
+			debug_msg = "Instruction=" + current_instruction;
+			debug_msg += ",exec_stack_size=" + std::to_string(exec_stack_.size());
+			debug_msg += ",code_stack_=" + std::to_string(code_stack_.size());
+			debug_msg += ",int_stack_=" + std::to_string(int_stack_.size());
+			debug_msg += ",double_stack_=" + std::to_string(double_stack_.size());
+			debug_msg += ",bool_stack_=" + std::to_string(bool_stack_.size());
+
+			return debug_msg;
 		}
 
 		/* Helper Functions */
