@@ -91,9 +91,15 @@ namespace Utilities
 		work_order.example_problem = input_list;
 		work_order.example_solution = output_list;
 
+		std::string debug_message = "Thread=main,Status=WorkOrderManager::push::requesting_lock";
+		debug_log(-1, debug_message);
+
 		std::unique_lock<std::mutex> work_in_process_lock(work_in_process_mutex_);
 		std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
 		work_order_queue_.push_front(work_order);
+
+		debug_message = "Thread=main,Status=WorkOrderManager::push::releasing_lock";
+		debug_log(-1, debug_message);
 
 		// when we send the notification immediately, the consumer will try to get the lock, so unlock asap
 		work_order_lock.unlock();
@@ -127,7 +133,7 @@ namespace Utilities
 					+ std::to_string(env_index)
 					+ ",status=" + status
 					+ ",error_code=" + std::to_string((int)errNum);
-				std::cout << error_message << std::endl;
+				std::cerr << error_message << std::endl;
 			}
 
 			// Remove trailing new-line character
@@ -160,7 +166,7 @@ namespace Utilities
 					+ std::to_string(env_index)
 					+ ",status=" + status
 					+ ",error_code=" + std::to_string((int)errNum);
-				std::cout << error_message << std::endl;
+				std::cerr << error_message << std::endl;
 			}
 
 			// Remove trailing new-line character
@@ -195,15 +201,19 @@ namespace Utilities
 
 					env_queue_[env_index]->running_state = Plush::Environment::Waiting;
 
+					std::string debug_message = "Thread=main,Status=WorkOrderManager::process_work_orders::requesting_lock";
+					debug_log(-1, debug_message);
+
 					std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
 
-					data_condition_.wait_for(work_order_lock, 5min, [this]()
+					data_condition_.wait_for(work_order_lock, 1min, [this]()
 					{
 						return !work_order_queue_.empty();
 					});
 
 					if (work_order_queue_.empty())
 					{
+						work_order_lock.unlock();
 						debug_log(env_index, "WorkOrderQueue_Empty");
 						continue;
 					}
@@ -214,6 +224,8 @@ namespace Utilities
 					debug_log(env_index, "WorkOrderQueue_Not_Empty", work_order.individual_index, work_order.example_case);
 
 					//release the lock
+					debug_message = "Thread=main,Status=WorkOrderManager::process_work_orders::releasing_lock";
+					debug_log(-1, debug_message);
 				}
 
 				// Process the individual example case specified in the work order
@@ -287,6 +299,9 @@ namespace Utilities
 			do
 			{
 				std::this_thread::sleep_for(10min);
+
+				debug_message = "Thread=main,Status=WorkOrderManager::wait_for_all_threads_to_complete::requesting_lock";
+				debug_log(-1, debug_message);
 
 				std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
 				queue_size = work_order_queue_.size();
