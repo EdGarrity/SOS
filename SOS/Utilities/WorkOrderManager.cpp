@@ -32,6 +32,9 @@ namespace Utilities
 
 	WorkOrderManager::~WorkOrderManager()
 	{
+		std::string debug_message = "Thread=main,Status=WorkOrderManager::destructor()";
+		debug_log(-1, debug_message);
+
 		wait_for_all_threads_to_complete();
 
 		if (num_threads_ > 0)
@@ -72,13 +75,15 @@ namespace Utilities
 
 	void WorkOrderManager::start()
 	{
-		std::cout << "WorkOrderManager::start()" << std::endl;
+		std::string debug_message = "Thread=main,Status=WorkOrderManager::start()";
+		debug_log(-1, debug_message);
 		queue_state = Running;
 	}
 
 	void WorkOrderManager::stop()
 	{
-		std::cout << "WorkOrderManager::start()" << std::endl;
+		std::string debug_message = "Thread=main,Status=WorkOrderManager::stop()";
+		debug_log(-1, debug_message);
 		queue_state = Stopped;
 	}
 
@@ -289,6 +294,9 @@ namespace Utilities
 		using namespace std::chrono_literals;
 
 		std::string debug_message;
+
+		debug_message = "Thread=main,Status=WorkOrderManager::wait_for_all_threads_to_complete::entry_point";
+		debug_log(-1, debug_message);
 
 		if (num_threads_ > 0)
 		{
