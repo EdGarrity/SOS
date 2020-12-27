@@ -5,17 +5,15 @@
 #include "Plush.StaticInit.h"
 #include "..\Domain\Arguments.h"
 #include "..\Utilities\String.h"
+#include "..\Utilities\WorkOrderManager.h"
+
+extern bool debug_push;
 
 namespace Plush
 {
 	typedef unsigned(*Operator)(Environment &env);
-//	typedef std::map<std::string, Operator> Func2CodeMapType;
-//	typedef std::map<std::string, Instruction*> Func2CodeMapType;
-
 	extern 	Func2CodeMapType Func2CodeMap;
-
 	extern std::vector<double> null_input;
-
 
 	// Run provided program without inputs
 	unsigned int run(Environment& env, std::string program)
@@ -74,6 +72,12 @@ namespace Plush
 
 				// Debug - Remember current instruction
 				env.current_instruction = atom.instruction;
+
+				if (debug_push)
+				{
+					std::string debug = "Processor::run::atom," + env.print_state();
+					Utilities::work_order_manager.debug_log(-2, debug);
+				}
 
 				switch (atom.type)
 				{

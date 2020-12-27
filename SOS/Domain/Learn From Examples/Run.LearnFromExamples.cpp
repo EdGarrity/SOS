@@ -824,10 +824,9 @@ namespace domain
 			double min_error = (std::numeric_limits<double>::max)();
 			double min_score = (std::numeric_limits<double>::max)();
 
-			Utilities::WorkOrderManager work_order_manager;
-
-			work_order_manager.initialize();
-			work_order_manager.stop();
+//			Utilities::WorkOrderManager work_order_manager;
+//			work_order_manager.initialize();
+			Utilities::work_order_manager.stop();
 
 			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			{
@@ -840,15 +839,15 @@ namespace domain
 					std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
 					std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
 
-					work_order_manager.push(individual_index, example_case, example_problem, example_solution);
+					Utilities::work_order_manager.push(individual_index, example_case, example_problem, example_solution);
 				}
 
 				if ((individual_index % 100) == 0)
 					std::cout << std::endl;
 			}
 
-			work_order_manager.start();
-			work_order_manager.wait_for_all_threads_to_complete();
+			Utilities::work_order_manager.start();
+			Utilities::work_order_manager.wait_for_all_threads_to_complete();
 
 			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			{

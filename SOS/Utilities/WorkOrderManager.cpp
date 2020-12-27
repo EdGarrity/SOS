@@ -9,8 +9,12 @@
 #include "..\PushGP\Globals.h"
 //#include "synchapi.h"
 
+bool debug_push = false;
+
 namespace Utilities
 {
+	WorkOrderManager work_order_manager(domain::argmap::max_threads);
+
 	WorkOrderManager::WorkOrderManager() : 
 		work_order_queue_(), 
 		work_order_mutex_(), 
@@ -48,10 +52,10 @@ namespace Utilities
 		}
 	}
 
-	void WorkOrderManager::initialize()
-	{
-		initialize(domain::argmap::max_threads);
-	}
+	//void WorkOrderManager::initialize()
+	//{
+	//	initialize(domain::argmap::max_threads);
+	//}
 
 	void WorkOrderManager::initialize(unsigned int num_threads)
 	{
@@ -113,8 +117,30 @@ namespace Utilities
 		data_condition_.notify_one();
 	}
 
-	struct tm newtime;
-	__time32_t aclock;
+	std::string getCurrentTimestamp()
+	{
+		using std::chrono::system_clock;
+		auto currentTime = std::chrono::system_clock::now();
+		char buffer[80];
+
+		auto transformed = currentTime.time_since_epoch().count() / 1000000;
+
+		auto millis = transformed % 1000;
+
+		std::time_t tt;
+		tt = system_clock::to_time_t(currentTime);
+
+		struct tm newtime;
+		localtime_s(&newtime, &tt);
+
+		strftime(buffer, 80, "%F %H:%M:%S", &newtime);
+		sprintf_s(buffer, "%s:%03d", buffer, (int)millis);
+
+		return std::string(buffer);
+	}
+
+	//struct tm newtime;
+	//__time32_t aclock;
 
 	void WorkOrderManager::debug_log(const int env_index, std::string status)
 	{
@@ -126,26 +152,28 @@ namespace Utilities
 
 			std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
 
-			char buffer[32];
-			errno_t errNum;
-			_time32(&aclock);					// Get time in seconds.
-			_localtime32_s(&newtime, &aclock);	// Convert time to struct tm form.
+			//char buffer[32];
+			//errno_t errNum;
+			//_time32(&aclock);					// Get time in seconds.
+			//_localtime32_s(&newtime, &aclock);	// Convert time to struct tm form.
 
-			errNum = asctime_s(buffer, 32, &newtime);
-			if (errNum)
-			{
-				std::string error_message = "WorkOrderManager::debug_log(env_index="
-					+ std::to_string(env_index)
-					+ ",status=" + status
-					+ ",error_code=" + std::to_string((int)errNum);
-				std::cerr << error_message << std::endl;
-			}
+			//errNum = asctime_s(buffer, 32, &newtime);
+			//if (errNum)
+			//{
+			//	std::string error_message = "WorkOrderManager::debug_log(env_index="
+			//		+ std::to_string(env_index)
+			//		+ ",status=" + status
+			//		+ ",error_code=" + std::to_string((int)errNum);
+			//	std::cerr << error_message << std::endl;
+			//}
 
-			// Remove trailing new-line character
-			if (strlen(buffer) > 2)
-				buffer[strlen(buffer) - 1] = '\0';
+			//// Remove trailing new-line character
+			//if (strlen(buffer) > 2)
+			//	buffer[strlen(buffer) - 1] = '\0';
 
-			std::cout << buffer << ",Thread=" << env_index << ",Status=" << status << std::endl;
+			//std::cout << buffer << ",Thread=" << env_index << ",Status=" << status << std::endl;
+
+			std::cout << getCurrentTimestamp() << ",Thread=" << env_index << ",Status=" << status << std::endl;
 		}
 	}
 
@@ -159,26 +187,32 @@ namespace Utilities
 
 			std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
 
-			char buffer[32];
-			errno_t errNum;
-			_time32(&aclock);					// Get time in seconds.
-			_localtime32_s(&newtime, &aclock);	// Convert time to struct tm form.
+			//char buffer[32];
+			//errno_t errNum;
+			//_time32(&aclock);					// Get time in seconds.
+			//_localtime32_s(&newtime, &aclock);	// Convert time to struct tm form.
 
-			errNum = asctime_s(buffer, 32, &newtime);
-			if (errNum)
-			{
-				std::string error_message = "WorkOrderManager::debug_log(env_index="
-					+ std::to_string(env_index)
-					+ ",status=" + status
-					+ ",error_code=" + std::to_string((int)errNum);
-				std::cerr << error_message << std::endl;
-			}
+			//errNum = asctime_s(buffer, 32, &newtime);
+			//if (errNum)
+			//{
+			//	std::string error_message = "WorkOrderManager::debug_log(env_index="
+			//		+ std::to_string(env_index)
+			//		+ ",status=" + status
+			//		+ ",error_code=" + std::to_string((int)errNum);
+			//	std::cerr << error_message << std::endl;
+			//}
 
-			// Remove trailing new-line character
-			if (strlen(buffer) > 2)
-				buffer[strlen(buffer) - 1] = '\0';
+			//// Remove trailing new-line character
+			//if (strlen(buffer) > 2)
+			//	buffer[strlen(buffer) - 1] = '\0';
 
-			std::cout << buffer 
+			//std::cout << buffer 
+			//	<< ",Thread=" << env_index
+			//	<< ",Status=" << status 
+			//	<< ",work_order.individual_index = " << individual_index 
+			//	<< ",work_order.example_case=" << example_case << std::endl;
+
+			std::cout << getCurrentTimestamp()
 				<< ",Thread=" << env_index
 				<< ",Status=" << status 
 				<< ",work_order.individual_index = " << individual_index 
@@ -361,11 +395,15 @@ namespace Utilities
 				if (all_done == false)
 					std::this_thread::sleep_for(10min);
 
+				int count = 0;
+
 				for (int i = 0; i < num_threads_; i++)
 				{
 					if (env_queue_[i]->running_state == Plush::Environment::Running)
 					{
 						Plush::Environment* envp = env_queue_[i];
+
+						count++;
 
 						all_done = false;
 						debug_message = "WorkOrderManager::wait_for_all_threads_to_complete::wait_for_all_threads_to_finish,waiting_for_thread=" + std::to_string(i) + "," + envp->print_state();
@@ -375,6 +413,13 @@ namespace Utilities
 
 					all_done = true;
 				}
+
+				if (count == 1)
+					debug_push = true;
+
+				else
+					debug_push = false;
+
 			} while (all_done == false);
 
 			debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete::all_threads_finished");
