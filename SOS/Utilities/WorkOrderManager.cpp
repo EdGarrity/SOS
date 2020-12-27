@@ -36,7 +36,7 @@ namespace Utilities
 
 	WorkOrderManager::~WorkOrderManager()
 	{
-		std::string debug_message = "Thread=main,Status=WorkOrderManager::destructor()";
+		std::string debug_message = "WorkOrderManager::destructor()";
 		debug_log(-1, debug_message);
 
 		wait_for_all_threads_to_complete();
@@ -79,14 +79,14 @@ namespace Utilities
 
 	void WorkOrderManager::start()
 	{
-		std::string debug_message = "Thread=main,Status=WorkOrderManager::start()";
+		std::string debug_message = "WorkOrderManager::start()";
 		debug_log(-1, debug_message);
 		queue_state = Running;
 	}
 
 	void WorkOrderManager::stop()
 	{
-		std::string debug_message = "Thread=main,Status=WorkOrderManager::stop()";
+		std::string debug_message = "WorkOrderManager::stop()";
 		debug_log(-1, debug_message);
 		queue_state = Stopped;
 	}
@@ -100,14 +100,14 @@ namespace Utilities
 		work_order.example_problem = input_list;
 		work_order.example_solution = output_list;
 
-		std::string debug_message = "Thread=main,Status=WorkOrderManager::push::requesting_lock";
+		std::string debug_message = "WorkOrderManager::push::requesting_lock";
 		debug_log(-1, debug_message);
 
 		std::unique_lock<std::mutex> work_in_process_lock(work_in_process_mutex_);
 		std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
 		work_order_queue_.push_front(work_order);
 
-		debug_message = "Thread=main,Status=WorkOrderManager::push::releasing_lock";
+		debug_message = "WorkOrderManager::push::releasing_lock";
 		debug_log(-1, debug_message);
 
 		// when we send the notification immediately, the consumer will try to get the lock, so unlock asap
@@ -125,7 +125,8 @@ namespace Utilities
 
 		auto transformed = currentTime.time_since_epoch().count() / 1000000;
 
-		auto millis = transformed % 1000;
+		//auto millis = transformed % 1000;
+		unsigned long nano_seconds = transformed % 1000000000;
 
 		std::time_t tt;
 		tt = system_clock::to_time_t(currentTime);
@@ -134,13 +135,15 @@ namespace Utilities
 		localtime_s(&newtime, &tt);
 
 		strftime(buffer, 80, "%F %H:%M:%S", &newtime);
-		sprintf_s(buffer, "%s:%03d", buffer, (int)millis);
+		sprintf_s(buffer, "%s.%06ld", buffer, nano_seconds);
 
 		return std::string(buffer);
 	}
 
 	//struct tm newtime;
 	//__time32_t aclock;
+
+	unsigned long line_number = 0;
 
 	void WorkOrderManager::debug_log(const int env_index, std::string status)
 	{
@@ -173,7 +176,11 @@ namespace Utilities
 
 			//std::cout << buffer << ",Thread=" << env_index << ",Status=" << status << std::endl;
 
-			std::cout << getCurrentTimestamp() << ",Thread=" << env_index << ",Status=" << status << std::endl;
+			std::cout << getCurrentTimestamp() 
+				<< ",LineNumber=" << std::to_string(line_number++) 
+				<< ",Thread=" << env_index 
+				<< ",Status=" << status 
+				<< std::endl;
 		}
 	}
 
@@ -213,10 +220,12 @@ namespace Utilities
 			//	<< ",work_order.example_case=" << example_case << std::endl;
 
 			std::cout << getCurrentTimestamp()
+				<< ",LineNumber=" << std::to_string(line_number++) 
 				<< ",Thread=" << env_index
 				<< ",Status=" << status 
 				<< ",work_order.individual_index = " << individual_index 
-				<< ",work_order.example_case=" << example_case << std::endl;
+				<< ",work_order.example_case=" << example_case 
+				<< std::endl;
 		}
 	}
 
