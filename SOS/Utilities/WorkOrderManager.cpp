@@ -295,14 +295,14 @@ namespace Utilities
 
 		std::string debug_message;
 
-		debug_message = "Thread=main,Status=WorkOrderManager::wait_for_all_threads_to_complete::entry_point";
+		debug_message = "WorkOrderManager::wait_for_all_threads_to_complete::entry_point";
 		debug_log(-1, debug_message);
 
 		if (num_threads_ > 0)
 		{
 			int queue_size = 0;
 
-			debug_log(-1, "wait_for_queue_to_empty");
+			debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete::wait_for_queue_to_empty");
 
 			do
 			{
@@ -315,7 +315,7 @@ namespace Utilities
 				queue_size = work_order_queue_.size();
 				work_order_lock.unlock();
 
-				debug_message = "wait_for_queue_to_empty,queue_size=" + std::to_string(queue_size);
+				debug_message = "WorkOrderManager::wait_for_all_threads_to_complete::wait_for_queue_to_empty,queue_size=" + std::to_string(queue_size);
 				debug_log(-1, debug_message);
 
 				for (int i = 0; i < num_threads_; i++)
@@ -324,29 +324,29 @@ namespace Utilities
 
 					if (env_queue_[i]->running_state == Plush::Environment::Running)
 					{
-						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + "," + envp->print_state();
+						debug_message = "WorkOrderManager::wait_for_all_threads_to_complete::wait_for_queue_to_empty,thread=" + std::to_string(i) + "," + envp->print_state();
 						debug_log(-1, debug_message);
 					}
 					else if (env_queue_[i]->running_state == Plush::Environment::Idle)
 					{
-						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Idle";
+						debug_message = "WorkOrderManager::wait_for_all_threads_to_complete::wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Idle";
 						debug_log(-1, debug_message);
 					}
 					else if (env_queue_[i]->running_state == Plush::Environment::Waiting)
 					{
-						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Waiting";
+						debug_message = "WorkOrderManager::wait_for_all_threads_to_complete::wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Waiting";
 						debug_log(-1, debug_message);
 					}
 					else
 					{
-						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Unknown(" + std::to_string(env_queue_[i]->running_state) + ")";
+						debug_message = "WorkOrderManager::wait_for_all_threads_to_complete::wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Unknown(" + std::to_string(env_queue_[i]->running_state) + ")";
 						debug_log(-1, debug_message);
 					}
 				}
 
 			} while (queue_size > 0);
 
-			debug_message = "wait_for_all_threads_to_finish,thread_pool_.size()=" + std::to_string(thread_pool_.size());
+			debug_message = "WorkOrderManager::wait_for_all_threads_to_complete::wait_for_all_threads_to_finish,thread_pool_.size()=" + std::to_string(thread_pool_.size());
 			debug_log(-1, debug_message);
 
 			// when we send the notification immediately, the consumer will try to get the lock, so unlock asap
@@ -368,7 +368,7 @@ namespace Utilities
 						Plush::Environment* envp = env_queue_[i];
 
 						all_done = false;
-						debug_message = "wait_for_all_threads_to_finish,waiting_for_thread=" + std::to_string(i) + "," + envp->print_state();
+						debug_message = "WorkOrderManager::wait_for_all_threads_to_complete::wait_for_all_threads_to_finish,waiting_for_thread=" + std::to_string(i) + "," + envp->print_state();
 						debug_log(-1, debug_message);
 						break;
 					}
@@ -377,7 +377,7 @@ namespace Utilities
 				}
 			} while (all_done == false);
 
-			debug_log(-1, "all_threads_finished");
+			debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete::all_threads_finished");
 		}
 	}
 }
