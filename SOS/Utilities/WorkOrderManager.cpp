@@ -206,8 +206,8 @@ namespace Utilities
 
 					env_queue_[env_index]->running_state = Plush::Environment::Waiting;
 
-					std::string debug_message = "Thread=main,Status=WorkOrderManager::process_work_orders::requesting_lock";
-					debug_log(-1, debug_message);
+					std::string debug_message = "WorkOrderManager::process_work_orders::requesting_lock";
+					debug_log(env_index, debug_message);
 
 					std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
 
@@ -229,8 +229,8 @@ namespace Utilities
 					debug_log(env_index, "WorkOrderQueue_Not_Empty", work_order.individual_index, work_order.example_case);
 
 					//release the lock
-					debug_message = "Thread=main,Status=WorkOrderManager::process_work_orders::releasing_lock";
-					debug_log(-1, debug_message);
+					debug_message = "WorkOrderManager::process_work_orders::releasing_lock";
+					debug_log(env_index, debug_message);
 				}
 
 				// Process the individual example case specified in the work order
@@ -302,20 +302,20 @@ namespace Utilities
 		{
 			int queue_size = 0;
 
-			debug_log(-1, "Thread=main,Status=wait_for_queue_to_empty");
+			debug_log(-1, "wait_for_queue_to_empty");
 
 			do
 			{
 				std::this_thread::sleep_for(10min);
 
-				debug_message = "Thread=main,Status=WorkOrderManager::wait_for_all_threads_to_complete::requesting_lock";
+				debug_message = "WorkOrderManager::wait_for_all_threads_to_complete::requesting_lock";
 				debug_log(-1, debug_message);
 
 				std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
 				queue_size = work_order_queue_.size();
 				work_order_lock.unlock();
 
-				debug_message = "Thread=main,Status=wait_for_queue_to_empty,queue_size=" + std::to_string(queue_size);
+				debug_message = "wait_for_queue_to_empty,queue_size=" + std::to_string(queue_size);
 				debug_log(-1, debug_message);
 
 				for (int i = 0; i < num_threads_; i++)
@@ -324,19 +324,29 @@ namespace Utilities
 
 					if (env_queue_[i]->running_state == Plush::Environment::Running)
 					{
-						debug_message = "Thread=main,Status=wait_for_queue_to_empty,thread=" + std::to_string(i) + "," + envp->print_state();
+						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + "," + envp->print_state();
+						debug_log(-1, debug_message);
+					}
+					else if (env_queue_[i]->running_state == Plush::Environment::Idle)
+					{
+						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Idle";
+						debug_log(-1, debug_message);
+					}
+					else if (env_queue_[i]->running_state == Plush::Environment::Waiting)
+					{
+						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Waiting";
 						debug_log(-1, debug_message);
 					}
 					else
 					{
-						debug_message = "Thread=main,Status=wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state" + std::to_string(env_queue_[i]->running_state);
+						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Unknown(" + std::to_string(env_queue_[i]->running_state) + ")";
 						debug_log(-1, debug_message);
 					}
 				}
 
 			} while (queue_size > 0);
 
-			debug_message = "Thread=main,Status=wait_for_all_threads_to_finish,thread_pool_.size()=" + std::to_string(thread_pool_.size());
+			debug_message = "wait_for_all_threads_to_finish,thread_pool_.size()=" + std::to_string(thread_pool_.size());
 			debug_log(-1, debug_message);
 
 			// when we send the notification immediately, the consumer will try to get the lock, so unlock asap
@@ -358,7 +368,7 @@ namespace Utilities
 						Plush::Environment* envp = env_queue_[i];
 
 						all_done = false;
-						debug_message = "Thread=main,Status=wait_for_all_threads_to_finish,waiting_for_thread=" + std::to_string(i) + "," + envp->print_state();
+						debug_message = "wait_for_all_threads_to_finish,waiting_for_thread=" + std::to_string(i) + "," + envp->print_state();
 						debug_log(-1, debug_message);
 						break;
 					}
@@ -367,7 +377,7 @@ namespace Utilities
 				}
 			} while (all_done == false);
 
-			debug_log(-1, "Thread=main,Status=all_threads_finished");
+			debug_log(-1, "all_threads_finished");
 		}
 	}
 }
