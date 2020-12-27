@@ -317,6 +317,23 @@ namespace Utilities
 
 				debug_message = "Thread=main,Status=wait_for_queue_to_empty,queue_size=" + std::to_string(queue_size);
 				debug_log(-1, debug_message);
+
+				for (int i = 0; i < num_threads_; i++)
+				{
+					Plush::Environment* envp = env_queue_[i];
+
+					if (env_queue_[i]->running_state == Plush::Environment::Running)
+					{
+						debug_message = "Thread=main,Status=wait_for_queue_to_empty,thread=" + std::to_string(i) + "," + envp->print_state();
+						debug_log(-1, debug_message);
+					}
+					else
+					{
+						debug_message = "Thread=main,Status=wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state" + std::to_string(env_queue_[i]->running_state);
+						debug_log(-1, debug_message);
+					}
+				}
+
 			} while (queue_size > 0);
 
 			debug_message = "Thread=main,Status=wait_for_all_threads_to_finish,thread_pool_.size()=" + std::to_string(thread_pool_.size());
