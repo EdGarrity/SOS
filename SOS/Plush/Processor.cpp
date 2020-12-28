@@ -75,8 +75,8 @@ namespace Plush
 
 				if (debug_push)
 				{
-					std::string debug = "Processor::run::atom," + env.print_state();
-					Utilities::work_order_manager.debug_log(-2, debug);
+					std::string debug = "atom," + env.print_state();
+					Utilities::work_order_manager.debug_log(-2, "Processor::run", debug);
 				}
 
 				switch (atom.type)

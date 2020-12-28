@@ -36,8 +36,7 @@ namespace Utilities
 
 	WorkOrderManager::~WorkOrderManager()
 	{
-		std::string debug_message = "WorkOrderManager::destructor()";
-		debug_log(-1, debug_message);
+		debug_log(-1, "WorkOrderManager::~WorkOrderManager", "destructor");
 
 		wait_for_all_threads_to_complete();
 
@@ -51,11 +50,6 @@ namespace Utilities
 			}
 		}
 	}
-
-	//void WorkOrderManager::initialize()
-	//{
-	//	initialize(domain::argmap::max_threads);
-	//}
 
 	void WorkOrderManager::initialize(unsigned int num_threads)
 	{
@@ -79,15 +73,13 @@ namespace Utilities
 
 	void WorkOrderManager::start()
 	{
-		std::string debug_message = "WorkOrderManager::start()";
-		debug_log(-1, debug_message);
+		debug_log(-1, "WorkOrderManager::start", "start");
 		queue_state = Running;
 	}
 
 	void WorkOrderManager::stop()
 	{
-		std::string debug_message = "WorkOrderManager::stop()";
-		debug_log(-1, debug_message);
+		debug_log(-1, "WorkOrderManager::stop", "stop");
 		queue_state = Stopped;
 	}
 
@@ -100,15 +92,13 @@ namespace Utilities
 		work_order.example_problem = input_list;
 		work_order.example_solution = output_list;
 
-		std::string debug_message = "WorkOrderManager::push::requesting_lock";
-		debug_log(-1, debug_message);
+		debug_log(-1, "WorkOrderManager::push", "requesting_lock");
 
 		std::unique_lock<std::mutex> work_in_process_lock(work_in_process_mutex_);
 		std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
 		work_order_queue_.push_front(work_order);
 
-		debug_message = "WorkOrderManager::push::releasing_lock";
-		debug_log(-1, debug_message);
+		debug_log(-1, "WorkOrderManager::push", "releasing_lock");
 
 		// when we send the notification immediately, the consumer will try to get the lock, so unlock asap
 		work_order_lock.unlock();
@@ -140,12 +130,9 @@ namespace Utilities
 		return std::string(buffer);
 	}
 
-	//struct tm newtime;
-	//__time32_t aclock;
-
 	unsigned long line_number = 0;
 
-	void WorkOrderManager::debug_log(const int env_index, std::string status)
+	void WorkOrderManager::debug_log(const int env_index, std::string function, std::string status)
 	{
 		static std::string prev_status = "";
 
@@ -154,37 +141,17 @@ namespace Utilities
 			prev_status = status;
 
 			std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
-
-			//char buffer[32];
-			//errno_t errNum;
-			//_time32(&aclock);					// Get time in seconds.
-			//_localtime32_s(&newtime, &aclock);	// Convert time to struct tm form.
-
-			//errNum = asctime_s(buffer, 32, &newtime);
-			//if (errNum)
-			//{
-			//	std::string error_message = "WorkOrderManager::debug_log(env_index="
-			//		+ std::to_string(env_index)
-			//		+ ",status=" + status
-			//		+ ",error_code=" + std::to_string((int)errNum);
-			//	std::cerr << error_message << std::endl;
-			//}
-
-			//// Remove trailing new-line character
-			//if (strlen(buffer) > 2)
-			//	buffer[strlen(buffer) - 1] = '\0';
-
-			//std::cout << buffer << ",Thread=" << env_index << ",Status=" << status << std::endl;
 
 			std::cout << getCurrentTimestamp() 
 				<< ",LineNumber=" << std::to_string(line_number++) 
 				<< ",Thread=" << env_index 
-				<< ",Status=" << status 
+				<< ",Function=" << function 
+				<< ",Status=" << status
 				<< std::endl;
 		}
 	}
 
-	void WorkOrderManager::debug_log(const int env_index, std::string status, unsigned int individual_index, unsigned int example_case)
+	void WorkOrderManager::debug_log(const int env_index, std::string function, std::string status, unsigned int individual_index, unsigned int example_case)
 	{
 		static std::string prev_status = "";
 
@@ -194,35 +161,11 @@ namespace Utilities
 
 			std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
 
-			//char buffer[32];
-			//errno_t errNum;
-			//_time32(&aclock);					// Get time in seconds.
-			//_localtime32_s(&newtime, &aclock);	// Convert time to struct tm form.
-
-			//errNum = asctime_s(buffer, 32, &newtime);
-			//if (errNum)
-			//{
-			//	std::string error_message = "WorkOrderManager::debug_log(env_index="
-			//		+ std::to_string(env_index)
-			//		+ ",status=" + status
-			//		+ ",error_code=" + std::to_string((int)errNum);
-			//	std::cerr << error_message << std::endl;
-			//}
-
-			//// Remove trailing new-line character
-			//if (strlen(buffer) > 2)
-			//	buffer[strlen(buffer) - 1] = '\0';
-
-			//std::cout << buffer 
-			//	<< ",Thread=" << env_index
-			//	<< ",Status=" << status 
-			//	<< ",work_order.individual_index = " << individual_index 
-			//	<< ",work_order.example_case=" << example_case << std::endl;
-
 			std::cout << getCurrentTimestamp()
 				<< ",LineNumber=" << std::to_string(line_number++) 
 				<< ",Thread=" << env_index
-				<< ",Status=" << status 
+				<< ",Function=" << function
+				<< ",Status=" << status
 				<< ",work_order.individual_index = " << individual_index 
 				<< ",work_order.example_case=" << example_case 
 				<< std::endl;
@@ -243,14 +186,13 @@ namespace Utilities
 				{
 					if (queue_state == Stopped)
 					{
-						debug_log(env_index, "Not_Running");
+						debug_log(env_index, "WorkOrderManager::process_work_orders", "Not_Running");
 						continue;
 					}
 
 					env_queue_[env_index]->running_state = Plush::Environment::Waiting;
 
-					std::string debug_message = "WorkOrderManager::process_work_orders::requesting_lock";
-					debug_log(env_index, debug_message);
+					debug_log(env_index, "WorkOrderManager::process_work_orders", "requesting_lock");
 
 					std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
 
@@ -262,18 +204,17 @@ namespace Utilities
 					if (work_order_queue_.empty())
 					{
 						work_order_lock.unlock();
-						debug_log(env_index, "WorkOrderQueue_Empty");
+						debug_log(env_index, "WorkOrderManager::process_work_orders", "WorkOrderQueue_Empty");
 						continue;
 					}
 
 					work_order = work_order_queue_.back();
 					work_order_queue_.pop_back();
 
-					debug_log(env_index, "WorkOrderQueue_Not_Empty", work_order.individual_index, work_order.example_case);
+					debug_log(env_index, "WorkOrderManager::process_work_orders", "WorkOrderQueue_Not_Empty", work_order.individual_index, work_order.example_case);
 
 					//release the lock
-					debug_message = "WorkOrderManager::process_work_orders::releasing_lock";
-					debug_log(env_index, debug_message);
+					debug_log(env_index, "WorkOrderManager::process_work_orders", "releasing_lock");
 				}
 
 				// Process the individual example case specified in the work order
@@ -283,7 +224,7 @@ namespace Utilities
 
 					envp->running_state = Plush::Environment::Running;
 
-					debug_log(env_index, "run_start", work_order.individual_index, work_order.example_case);
+					debug_log(env_index, "WorkOrderManager::process_work_orders", "run_start", work_order.individual_index, work_order.example_case);
 
 					double error = domain::learn_from_examples::run_individual_threadsafe(*envp,
 						work_order.individual_index, 
@@ -294,13 +235,13 @@ namespace Utilities
 
 					envp->running_state = Plush::Environment::Waiting;
 
-					debug_log(env_index, "run_finished", work_order.individual_index, work_order.example_case);
+					debug_log(env_index, "WorkOrderManager::process_work_orders", "run_finished", work_order.individual_index, work_order.example_case);
 				}
 				catch (const std::exception& e)
 				{
 					// Log exception
 					std::stringstream warning_message;
-					warning_message << "WorkOrderManager::process_work_orders() - unable to insert work into queue.  env_index = " << env_index;
+					warning_message << "WorkOrderManager::process_work_orders() - unable to insert work into queue.  env_index=" << env_index;
 
 					throw std::runtime_error(warning_message.str());
 				}
@@ -308,7 +249,7 @@ namespace Utilities
 				{
 					// Log exception
 					std::stringstream warning_message;
-					warning_message << "WorkOrderManager::process_work_orders() - An unknown error has occured.  env_index = " << env_index;
+					warning_message << "WorkOrderManager::process_work_orders() - An unknown error has occured.  env_index=" << env_index;
 
 					throw std::runtime_error(warning_message.str());
 				}
@@ -318,7 +259,10 @@ namespace Utilities
 		{
 			// Log exception
 			std::stringstream warning_message;
-			warning_message << "WorkOrderManager::process_work_orders() - Outer while loop.  env_index = " << env_index;
+			warning_message << "WorkOrderManager::process_work_orders() - Outer while loop.  env_index=" << env_index;
+
+			std::string debug_message = "Outer while loop.  env_index= " + std::to_string(env_index) + ",Exception=" + e.what();
+			debug_log(env_index, "WorkOrderManager::process_work_orders", debug_message);
 
 			throw std::runtime_error(warning_message.str());
 		}
@@ -326,7 +270,10 @@ namespace Utilities
 		{
 			// Log exception
 			std::stringstream warning_message;
-			warning_message << "WorkOrderManager::process_work_orders() - Outer while loop - An unknown error has occured.  env_index = " << env_index;
+			warning_message << "WorkOrderManager::process_work_orders() - Outer while loop - An unknown error has occured.  env_index=" << env_index;
+
+			std::string debug_message = "An unknown error has occured.  env_index= " + std::to_string(env_index);
+			debug_log(env_index, "WorkOrderManager::process_work_orders", debug_message);
 
 			throw std::runtime_error(warning_message.str());
 		}
@@ -338,28 +285,26 @@ namespace Utilities
 
 		std::string debug_message;
 
-		debug_message = "WorkOrderManager::wait_for_all_threads_to_complete::entry_point";
-		debug_log(-1, debug_message);
+		debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", "entry_point");
 
 		if (num_threads_ > 0)
 		{
 			int queue_size = 0;
 
-			debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete::wait_for_queue_to_empty");
+			debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", "wait_for_queue_to_empty");
 
 			do
 			{
 				std::this_thread::sleep_for(10min);
 
-				debug_message = "WorkOrderManager::wait_for_all_threads_to_complete::requesting_lock";
-				debug_log(-1, debug_message);
+				debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", "requesting_lock");
 
 				std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
 				queue_size = work_order_queue_.size();
 				work_order_lock.unlock();
 
-				debug_message = "WorkOrderManager::wait_for_all_threads_to_complete::wait_for_queue_to_empty,queue_size=" + std::to_string(queue_size);
-				debug_log(-1, debug_message);
+				debug_message = "wait_for_queue_to_empty,queue_size=" + std::to_string(queue_size);
+				debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 
 				for (int i = 0; i < num_threads_; i++)
 				{
@@ -367,30 +312,30 @@ namespace Utilities
 
 					if (env_queue_[i]->running_state == Plush::Environment::Running)
 					{
-						debug_message = "WorkOrderManager::wait_for_all_threads_to_complete::wait_for_queue_to_empty,thread=" + std::to_string(i) + "," + envp->print_state();
-						debug_log(-1, debug_message);
+						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + "," + envp->print_state();
+						debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 					}
 					else if (env_queue_[i]->running_state == Plush::Environment::Idle)
 					{
-						debug_message = "WorkOrderManager::wait_for_all_threads_to_complete::wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Idle";
-						debug_log(-1, debug_message);
+						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Idle";
+						debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 					}
 					else if (env_queue_[i]->running_state == Plush::Environment::Waiting)
 					{
-						debug_message = "WorkOrderManager::wait_for_all_threads_to_complete::wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Waiting";
-						debug_log(-1, debug_message);
+						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Waiting";
+						debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 					}
 					else
 					{
-						debug_message = "WorkOrderManager::wait_for_all_threads_to_complete::wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Unknown(" + std::to_string(env_queue_[i]->running_state) + ")";
-						debug_log(-1, debug_message);
+						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Unknown(" + std::to_string(env_queue_[i]->running_state) + ")";
+						debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 					}
 				}
 
 			} while (queue_size > 0);
 
-			debug_message = "WorkOrderManager::wait_for_all_threads_to_complete::wait_for_all_threads_to_finish,thread_pool_.size()=" + std::to_string(thread_pool_.size());
-			debug_log(-1, debug_message);
+			debug_message = "wait_for_all_threads_to_finish,thread_pool_.size()=" + std::to_string(thread_pool_.size());
+			debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 
 			// when we send the notification immediately, the consumer will try to get the lock, so unlock asap
 			data_condition_.notify_all();
@@ -415,8 +360,8 @@ namespace Utilities
 						count++;
 
 						all_done = false;
-						debug_message = "WorkOrderManager::wait_for_all_threads_to_complete::wait_for_all_threads_to_finish,waiting_for_thread=" + std::to_string(i) + "," + envp->print_state();
-						debug_log(-1, debug_message);
+						debug_message = "wait_for_all_threads_to_finish,waiting_for_thread=" + std::to_string(i) + "," + envp->print_state();
+						debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 						break;
 					}
 
@@ -431,7 +376,7 @@ namespace Utilities
 
 			} while (all_done == false);
 
-			debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete::all_threads_finished");
+			debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", "all_threads_finished");
 		}
 	}
 }
