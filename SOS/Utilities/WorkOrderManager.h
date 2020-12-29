@@ -35,7 +35,7 @@ namespace Utilities
 		std::deque<WorkOrder> work_order_queue_;
 		std::condition_variable data_condition_;
 		std::mutex work_in_process_mutex_;
-		std::deque<Plush::Environment*> env_queue_;
+		//std::deque<Plush::Environment*> env_queue_;
 
 		std::mutex work_order_print_;
 

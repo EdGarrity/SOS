@@ -511,14 +511,14 @@ namespace Utilities
 
 			if (position > 0)
 			{
-				//for (size_t j = top_ - position, k = (top_ - position - 1) - (length - 1);
-				//	j < top_;
-				//	j++, k++)
-				//	stack_[k] = stack_[j];
+				for (size_t j = top_ - position, k = (top_ - position - 1) - (length - 1);
+					j < top_;
+					j++, k++)
+					stack_[k] = stack_[j];
 
-				size_t k = (top_ - position - 1) - (length - 1);
-				size_t j = top_ - position;
-				std::copy(stack_.data() + j, stack_.data() + top_, stack_.data() + k);
+				//size_t k = (top_ - position - 1) - (length - 1);
+				//size_t j = top_ - position;
+				//std::copy(stack_.data() + j, stack_.data() + top_, stack_.data() + k);
 			}
 
 			top_ -= length;
@@ -526,7 +526,7 @@ namespace Utilities
 			return position;
 		}
 
-		size_t position_to_index(size_t position)
+		inline size_t position_to_index(size_t position)
 		{
 			position = (position >= top_) ? top_ - 1 : position;
 
@@ -652,14 +652,14 @@ namespace Utilities
 
 			if ((top_ - position - length >= 0) && ((top_ + length) < N))
 			{
-				//for (size_t i = 0, j = top_ - position - length, k = top_;
-				//	(i < length) && (k < N);
-				//	i++, j++, k++)
-				//	stack_[k] = stack_[j];
+				for (size_t i = 0, j = top_ - position - length, k = top_;
+					(i < length) && (k < N);
+					i++, j++, k++)
+					stack_[k] = stack_[j];
 
-				size_t k = top_;
-				size_t j = top_ - position - length;
-				std::copy(stack_.data() + j, stack_.data() + j + length, stack_.data() + k);
+				//size_t k = top_;
+				//size_t j = top_ - position - length;
+				//std::copy(stack_.data() + j, stack_.data() + j + length, stack_.data() + k);
 
 				set_top(top_ + length);
 			}

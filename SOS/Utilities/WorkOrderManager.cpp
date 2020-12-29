@@ -14,6 +14,7 @@ bool debug_push = false;
 namespace Utilities
 {
 	WorkOrderManager work_order_manager(domain::argmap::max_threads);
+	Plush::Environment env_array[domain::argmap::max_threads];
 
 	WorkOrderManager::WorkOrderManager() : 
 		work_order_queue_(), 
@@ -40,20 +41,21 @@ namespace Utilities
 
 		wait_for_all_threads_to_complete();
 
-		if (num_threads_ > 0)
-		{
-			for (int i = 0; i < num_threads_; i++)
-			{
-				Plush::Environment* env = env_queue_.back();
-				delete env;
-				env_queue_.pop_back();
-			}
-		}
+		//if (num_threads_ > 0)
+		//{
+		//	for (int i = 0; i < num_threads_; i++)
+		//	{
+		//		Plush::Environment* env = env_queue_.back();
+		//		delete env;
+		//		env_queue_.pop_back();
+		//	}
+		//}
 	}
 
 	void WorkOrderManager::initialize(unsigned int num_threads)
 	{
-		if ((num_threads_ > 0) || (!env_queue_.empty()))
+		//if ((num_threads_ > 0) || (!env_queue_.empty()))
+		if (num_threads_ > 0)
 		{
 			throw std::runtime_error("WorkOrderManager::initialize() Function called when already initialized.");
 		}
@@ -66,7 +68,7 @@ namespace Utilities
 			{
 				for (int i = 0; i < num_threads; i++)
 				{
-					env_queue_.push_front(new Plush::Environment);
+					//env_queue_.push_front(new Plush::Environment);
 
 					thread_pool_.push_front(std::thread(&WorkOrderManager::process_work_orders, this, i));
 				}
@@ -183,8 +185,6 @@ namespace Utilities
 
 		try
 		{
-			env_queue_[env_index]->current_thread = env_index;
-
 			while (true)
 			{
 				// Get a work order from the queue
@@ -195,8 +195,8 @@ namespace Utilities
 						continue;
 					}
 
-					env_queue_[env_index]->running_state = Plush::Environment::Waiting;
-
+					//env_queue_[env_index]->running_state = Plush::Environment::Waiting;
+					env_array[env_index].running_state = Plush::Environment::Waiting;
 					debug_log(env_index, "WorkOrderManager::process_work_orders", "requesting_lock");
 
 					std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
@@ -225,11 +225,14 @@ namespace Utilities
 				// Process the individual example case specified in the work order
 				try
 				{
-					Plush::Environment* envp = env_queue_[env_index];
+					Plush::Environment* envp = &env_array[env_index]; /*env_queue_[env_index];*/
 
 					envp->running_state = Plush::Environment::Running;
 
 					debug_log(env_index, "WorkOrderManager::process_work_orders", "run_start", work_order.individual_index, work_order.example_case);
+
+					//env_queue_[env_index]->current_thread = env_index;
+					env_array[env_index].current_thread = env_index;
 
 					double error = domain::learn_from_examples::run_individual_threadsafe(*envp,
 						work_order.individual_index, 
@@ -313,30 +316,29 @@ namespace Utilities
 
 				for (int i = 0; i < num_threads_; i++)
 				{
-					Plush::Environment* envp = env_queue_[i];
+					Plush::Environment* envp = &env_array[i]; /*env_queue_[i];*/
 
-					if (env_queue_[i]->running_state == Plush::Environment::Running)
+					if (env_array[i]./*env_queue_[i]->*/running_state == Plush::Environment::Running)
 					{
 						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + "," + envp->print_state();
 						debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 					}
-					else if (env_queue_[i]->running_state == Plush::Environment::Idle)
+					else if (env_array[i]./*env_queue_[i]->*/running_state == Plush::Environment::Idle)
 					{
 						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Idle";
 						debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 					}
-					else if (env_queue_[i]->running_state == Plush::Environment::Waiting)
+					else if (env_array[i]./*env_queue_[i]->*/running_state == Plush::Environment::Waiting)
 					{
 						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Waiting";
 						debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 					}
 					else
 					{
-						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Unknown(" + std::to_string(env_queue_[i]->running_state) + ")";
+						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Unknown(" + std::to_string(env_array[i]./*env_queue_[i]->*/running_state) + ")";
 						debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 					}
 				}
-
 			} while (queue_size > 0);
 
 			debug_message = "wait_for_all_threads_to_finish,thread_pool_.size()=" + std::to_string(thread_pool_.size());
@@ -358,9 +360,9 @@ namespace Utilities
 
 				for (int i = 0; i < num_threads_; i++)
 				{
-					if (env_queue_[i]->running_state == Plush::Environment::Running)
+					if (env_array[i]./*env_queue_[i]->*/running_state == Plush::Environment::Running)
 					{
-						Plush::Environment* envp = env_queue_[i];
+						Plush::Environment* envp = &env_array[i]; /*env_queue_[i];*/
 
 						count++;
 

@@ -62,10 +62,10 @@ namespace Plush
 			bool_stack_.clear();
 			double_stack_.clear();
 
-			current_instruction.clear();
-			current_effort = 0;
-			current_unit = 0;
-			current_thread = -99;
+			//current_instruction.clear();
+			//current_effort = 0;
+			//current_unit = 0;
+			//current_thread = -99;
 		}
 
 		virtual void initialize(std::vector<double> & _input)
