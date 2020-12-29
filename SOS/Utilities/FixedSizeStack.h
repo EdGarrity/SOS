@@ -644,12 +644,16 @@ namespace Utilities
 			if (length > top_)
 				length = top_;
 
-			if (top_ - position - length >= 0)
+			if ((top_ - position - length >= 0) && ((top_ + length) < N))
 			{
-				for (size_t i = 0, j = top_ - position - length, k = top_;
-					(i < length) && (k < N);
-					i++, j++, k++)
-					stack_[k] = stack_[j];
+				//for (size_t i = 0, j = top_ - position - length, k = top_;
+				//	(i < length) && (k < N);
+				//	i++, j++, k++)
+				//	stack_[k] = stack_[j];
+
+				size_t k = top_;
+				size_t j = top_ - position - length;
+				std::copy(stack_.data() + j, stack_.data() + j + length, stack_.data() + k);
 
 				set_top(top_ + length);
 			}

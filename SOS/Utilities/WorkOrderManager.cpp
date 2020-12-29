@@ -58,15 +58,18 @@ namespace Utilities
 			throw std::runtime_error("WorkOrderManager::initialize() Function called when already initialized.");
 		}
 
-		num_threads_ = num_threads;
-
-		if (num_threads > 0)
+		if (domain::argmap::use_multithreading)
 		{
-			for (int i = 0; i < num_threads; i++)
-			{
-				env_queue_.push_front(new Plush::Environment);
+			num_threads_ = num_threads;
 
-				thread_pool_.push_front(std::thread(&WorkOrderManager::process_work_orders, this, i));
+			if (num_threads > 0)
+			{
+				for (int i = 0; i < num_threads; i++)
+				{
+					env_queue_.push_front(new Plush::Environment);
+
+					thread_pool_.push_front(std::thread(&WorkOrderManager::process_work_orders, this, i));
+				}
 			}
 		}
 	}
