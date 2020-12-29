@@ -501,7 +501,7 @@ namespace Utilities
 		//
 		// Remarks:
 		//
-		inline void remove_items(size_t position, size_t length)
+		inline size_t remove_items(size_t position, size_t length)
 		{
 			if (length > top_)
 				length = top_;
@@ -511,13 +511,19 @@ namespace Utilities
 
 			if (position > 0)
 			{
-				for (size_t j = top_ - position, k = (top_ - position - 1) - (length - 1);
-					j < top_;
-					j++, k++)
-					stack_[k] = stack_[j];
+				//for (size_t j = top_ - position, k = (top_ - position - 1) - (length - 1);
+				//	j < top_;
+				//	j++, k++)
+				//	stack_[k] = stack_[j];
+
+				size_t k = (top_ - position - 1) - (length - 1);
+				size_t j = top_ - position;
+				std::copy(stack_.data() + j, stack_.data() + top_, stack_.data() + k);
 			}
 
 			top_ -= length;
+
+			return position;
 		}
 
 		size_t position_to_index(size_t position)

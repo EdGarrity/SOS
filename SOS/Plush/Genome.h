@@ -499,19 +499,6 @@ namespace Plush
 		//
 		inline const Genome_section<T> operator [] (unsigned int item_position) const
 		{
-			//unsigned int s = 0;
-			//unsigned int l = 0;
-			//unsigned int extra_closing_parenthesis;
-
-			// Find index to top of item after target item
-			//for (unsigned int n = 0; n <= item_position; n++)
-			//{
-			//	s += l;
-			//	l = number_of_atoms(extra_closing_parenthesis, n);
-			//}
-
-			//return Genome_section<T>(s, l, extra_closing_parenthesis);
-
 			return get_item(item_position);
 		}
 
@@ -541,19 +528,6 @@ namespace Plush
 		//
 		inline Genome_section<T> operator [] (unsigned int item_position)
 		{
-			//unsigned int s = 0;
-			//unsigned int l = 0;
-			//unsigned int extra_closing_parenthesis;
-
-			// //Find index to top of item after target item
-			//for (unsigned int n = 0; n <= item_position; n++)
-			//{
-			//	s += l;
-			//	l = number_of_atoms(extra_closing_parenthesis, n);
-			//}
-
-			//return Genome_section<T>(s, l, extra_closing_parenthesis);
-
 			return get_item(item_position);
 		}
 
@@ -1327,22 +1301,11 @@ namespace Plush
 						}
 					}
 
-					//item_length = block_starting_index - block_ending_index + 1;
-					//item_ending_position += item_length;
-
-//					search_starting_index -= item_length;
-
 					block_starting_index = block_ending_index - 1;
 				}
 
 				item_ending_position += atom_count;
 			}
-
-//			extra_blocks_returned = extra_blocks;
-
-//			return atom_count;
-
-			//subsection.set(block_ending_index - item_length, item_length, extra_blocks);
 
 			subsection.set(item_ending_position - atom_count, atom_count, extra_blocks);
 			return subsection;
@@ -1768,7 +1731,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline unsigned int remove_item_at_position(unsigned int item_position)
+		inline size_t remove_item_at_position(unsigned int item_position)
 		{
 			unsigned int s = 0;
 			unsigned int l = 0;
@@ -1833,7 +1796,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline unsigned int remove_stack_element(unsigned int element_pos)
+		inline size_t remove_stack_element(unsigned int element_pos)
 		{
 			Genome_section<T> section = (*this)[element_pos];
 			Utilities::FixedSizeStack<T>::remove_items(section.starting_position, section.size);
@@ -1874,17 +1837,11 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline unsigned int yankdup_item(unsigned int item_position)
+		inline size_t yankdup_item(unsigned int item_position)
 		{
 			unsigned int s = 0;
 			unsigned int l = 0;
 			unsigned int extra_blocks = 0;
-
-			//for (unsigned int n = 0; n <= item_position; n++)
-			//{
-			//	s += l;
-			//	l = number_of_atoms(extra_blocks, n);
-			//}
 
 			Genome_section<T> genome_section = get_item(item_position);
 
@@ -1944,7 +1901,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline unsigned int yankdup_stack_element(unsigned int element_pos)
+		inline size_t yankdup_stack_element(unsigned int element_pos)
 		{
 			unsigned int s = 0;
 			unsigned int l = 0;
@@ -1970,7 +1927,7 @@ namespace Plush
 			return section.size;
 		}
 
-		inline unsigned int yankdup_stack_element(Genome_section<T> section)
+		inline size_t yankdup_stack_element(Genome_section<T> section)
 		{
 			if (section.size > Utilities::FixedSizeStack<T>::free())
 			{
@@ -2041,9 +1998,9 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline unsigned int yank_item(unsigned int item_position)
+		inline size_t yank_item(unsigned int item_position)
 		{
-			unsigned int effort = 0;
+			size_t effort = 0;
 
 			if (item_position > 0)
 			{
@@ -2074,9 +2031,9 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline unsigned int yank_stack_element(unsigned int element_pos)
+		inline size_t yank_stack_element(unsigned int element_pos)
 		{
-			unsigned int effort = 0;
+			size_t effort = 0;
 
 			if (element_pos > 0)
 			{
@@ -2104,9 +2061,9 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline unsigned int yank_stack_element(Genome_section<T> section)
+		inline size_t yank_stack_element(Genome_section<T> section)
 		{
-			unsigned int effort = 0;
+			size_t effort = 0;
 
 			if (section.size > 0)
 			{

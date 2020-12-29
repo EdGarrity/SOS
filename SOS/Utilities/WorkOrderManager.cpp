@@ -183,6 +183,8 @@ namespace Utilities
 
 		try
 		{
+			env_queue_[env_index]->current_thread = env_index;
+
 			while (true)
 			{
 				// Get a work order from the queue

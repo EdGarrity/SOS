@@ -58,14 +58,15 @@ namespace Plush
 	unsigned int run(Environment& env, unsigned _max_effort)
 	{
 		// The basic pop-exec cycle
-		unsigned effort = 0;
-		unsigned unit = 0;
+		size_t effort = 0;
+		size_t unit = 0;
 
 		while ((!env.is_empty<ExecAtom>()) && (effort < _max_effort))
 		{
 			try
 			{
 				env.current_effort = effort;
+				env.current_unit = unit;
 				unit = 0;
 
 				ExecAtom atom = env.pop<ExecAtom>();
@@ -75,8 +76,8 @@ namespace Plush
 
 				if (debug_push)
 				{
-					std::string debug = "atom," + env.print_state();
-					Utilities::work_order_manager.debug_log(-2, "Processor::run", debug);
+					std::string debug = "pre_run," + env.print_state();
+					Utilities::work_order_manager.debug_log(env.current_thread, "Processor::run", debug);
 				}
 
 				switch (atom.type)
@@ -155,6 +156,12 @@ namespace Plush
 			}
 
 			effort += (1u) > (unit) ? (1u) : (unit);
+
+			if (debug_push)
+			{
+				std::string debug = "post_run," + env.print_state();
+				Utilities::work_order_manager.debug_log(env.current_thread, "Processor::run", debug);
+			}
 		}
 
 		return effort;
