@@ -126,8 +126,11 @@ namespace Plush
 							Operator op = pI->get_op();
 							unit = op(env);
 
-							std::string debug = "unit=" + std::to_string(unit) + "," + env.print_state();
-							Utilities::work_order_manager.debug_log(env.current_thread, "Processor::run", debug);
+							if (debug_push)
+							{
+								std::string debug = "unit=" + std::to_string(unit) + "," + env.print_state();
+								Utilities::work_order_manager.debug_log(env.current_thread, "Processor::run", debug);
+							}
 						}
 					}
 
