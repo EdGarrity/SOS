@@ -32,7 +32,7 @@ namespace Plush
 			Idle = 0,
 			Waiting,
 			Running
-		} running_state;
+		}; //running_state;
 
 		Environment()
 		{
@@ -41,7 +41,7 @@ namespace Plush
 			input = null_input;
 			output.clear();
 
-			running_state = Idle;
+			//running_state = Idle;
 		}
 
 		// Pointer to input & output data

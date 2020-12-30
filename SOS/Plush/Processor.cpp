@@ -8,6 +8,8 @@
 #include "..\Utilities\WorkOrderManager.h"
 
 extern bool debug_push;
+extern bool print_push;
+extern std::string env_state[domain::argmap::max_threads];
 
 namespace Plush
 {
@@ -79,6 +81,9 @@ namespace Plush
 					std::string debug = "pre_run," + env.print_state();
 					Utilities::work_order_manager.debug_log(env.current_thread, "Processor::run", debug);
 				}
+
+				if (print_push)
+					env_state[env.current_thread] = env.print_state();
 
 				switch (atom.type)
 				{
@@ -168,6 +173,9 @@ namespace Plush
 				std::string debug = "post_run," + env.print_state();
 				Utilities::work_order_manager.debug_log(env.current_thread, "Processor::run", debug);
 			}
+
+			if (print_push)
+				env_state[env.current_thread] = env.print_state();
 		}
 
 		return effort;

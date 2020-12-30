@@ -1129,6 +1129,8 @@ namespace domain
 
 		int run()
 		{
+			std::string debug_message;
+
 			pushGP::SimulatedAnnealing sa;
 
 			// Check if CPU is too hot and if so, wait for it to cool down.
@@ -1252,7 +1254,7 @@ namespace domain
 					}
 
 					// Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
-					std::cout << "Reset variables which track the minimum error for this test case and the individual who achived the minimum error " << std::endl;
+					//std::cout << "Reset variables which track the minimum error for this test case and the individual who achived the minimum error " << std::endl;
 
 					for (int ind = 0; ind < argmap::population_size; ind++)
 					{
@@ -1260,11 +1262,18 @@ namespace domain
 							pushGP::globals::error_matrix[training_case_index][ind] = 0.0;
 					}
 
-					std::cout << "Generation " << generation_number << std::endl;
-					std::cout << "Session " << generations_completed_this_session << std::endl;
+					//std::cout << "Generation " << generation_number << std::endl;
+					//std::cout << "Session " << generations_completed_this_session << std::endl;
+
+					debug_message = "Reset variables which track the minimum error for this test case and the individual who achived the minimum error";
+					debug_message += ",Generation=," + std::to_string(generation_number);
+					debug_message += ",Session=" + std::to_string(generations_completed_this_session);
+					Utilities::work_order_manager.debug_log(-1, "run", debug_message);
+
 					save_generation();
 
-					std::cout << "Run Programs with Training Cases" << std::endl;
+					//std::cout << "Run Programs with Training Cases" << std::endl;
+					Utilities::work_order_manager.debug_log(-1, "run", "Run Programs with Training Cases");
 
 					std::tuple<int, double, double> best_individual_score_error;
 
@@ -1285,7 +1294,8 @@ namespace domain
 					best_individual_score = std::get<1>(best_individual_score_error);
 					best_individual_error = std::get<2>(best_individual_score_error);
 
-					std::cout << "Produce New Offspring" << std::endl;
+					//std::cout << "Produce New Offspring" << std::endl;
+					Utilities::work_order_manager.debug_log(-1, "run", "Produce New Offspring");
 
 					if (argmap::use_PPL)
 						parallel_produce_new_offspring(argmap::number_of_training_cases,
@@ -1299,19 +1309,30 @@ namespace domain
 							sa,
 							include_best_individual_in_breeding_pool);
 
-					std::cout << "Run Best Individual's Program with Test Cases" << std::endl;
+					//std::cout << "Run Best Individual's Program with Test Cases" << std::endl;
 
 					std::string genome = pushGP::globals::population_agents[best_individual].get_genome_as_string();
 
-					std::cout << "best_individual = " << best_individual << std::endl;
-					std::cout << "genome = " << genome << std::endl;
+					//std::cout << "best_individual = " << best_individual << std::endl;
+					//std::cout << "genome = " << genome << std::endl;
+
+					debug_message = "Run Best Individual's Program with Test Cases";
+					debug_message += ",best_individual=" + std::to_string(best_individual);
+					debug_message += ",genome=" + genome;
+					Utilities::work_order_manager.debug_log(-1, "run", debug_message);
 
 					double test_case_score = compute_test_errors(env, run_individual_threadsafe, best_individual);
 
-					std::cout << "test_case_error = " << test_case_score << std::endl;
-					std::cout << std::endl;
+					//std::cout << "test_case_error = " << test_case_score << std::endl;
+					//std::cout << std::endl;
 
-					std::cout << "Generate Status Report" << std::endl;
+					debug_message = "compute_test_errors";
+					debug_message += ",test_case_error=" + std::to_string(test_case_score);
+					Utilities::work_order_manager.debug_log(-1, "run", debug_message);
+
+					//std::cout << "Generate Status Report" << std::endl;
+
+					Utilities::work_order_manager.debug_log(-1, "run", "Generate Status Report");
 
 					double average_traiing_error = 0.0;
 					for (int ind = 0; ind < argmap::population_size; ind++)
@@ -1347,7 +1368,10 @@ namespace domain
 						pushGP::globals::population_agents[best_individual]
 					);
 
-					std::cout << "Install New Generation" << std::endl;
+					//std::cout << "Install New Generation" << std::endl;
+
+					Utilities::work_order_manager.debug_log(-1, "run", "Install New Generation");
+
 					install_next_generation();
 					generation_number++;
 					generations_completed_this_session++;

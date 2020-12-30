@@ -10,12 +10,15 @@
 //#include "synchapi.h"
 
 bool debug_push = false;
+bool print_push = false;
+std::string env_state[domain::argmap::max_threads];
 
 namespace Utilities
 {
 	WorkOrderManager work_order_manager(domain::argmap::max_threads);
 	//Plush::Environment env_array[domain::argmap::max_threads];
 	std::thread myThreads[domain::argmap::max_threads];
+	Plush::Environment::RunningState running_state[domain::argmap::max_threads];
 
 	WorkOrderManager::WorkOrderManager() : 
 		work_order_queue_(), 
@@ -202,7 +205,7 @@ namespace Utilities
 
 					//env_queue_[env_index]->running_state = Plush::Environment::Waiting;
 					//env_array[env_index].running_state = Plush::Environment::Waiting;
-					env.running_state = Plush::Environment::Waiting;
+					running_state[env_index] = Plush::Environment::Waiting;
 					debug_log(env_index, "WorkOrderManager::process_work_orders", "requesting_lock");
 
 					std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
@@ -235,7 +238,7 @@ namespace Utilities
 
 					//envp->running_state = Plush::Environment::Running;
 					//env_array[env_index].running_state = Plush::Environment::Running;
-					env.running_state = Plush::Environment::Running;
+					running_state[env_index] = Plush::Environment::Running;
 
 					debug_log(env_index, "WorkOrderManager::process_work_orders", "run_start", work_order.individual_index, work_order.example_case);
 
@@ -260,7 +263,7 @@ namespace Utilities
 
 					//envp->running_state = Plush::Environment::Waiting;
 					//env_array[env_index].running_state = Plush::Environment::Waiting;
-					env.running_state = Plush::Environment::Waiting;
+					running_state[env_index] = Plush::Environment::Waiting;
 
 					debug_log(env_index, "WorkOrderManager::process_work_orders", "run_finished", work_order.individual_index, work_order.example_case);
 				}
@@ -335,26 +338,24 @@ namespace Utilities
 
 				for (int i = 0; i < num_threads_; i++)
 				{
-					//Plush::Environment* envp = &env_array[i]; /*env_queue_[i];*/
-
-					if (env_array[i]./*env_queue_[i]->*/running_state == Plush::Environment::Running)
+					if (running_state[i] == Plush::Environment::Running)
 					{
-						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + "," + env_array[i]./*envp->*/print_state();
+						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + "," + env_state[i];
 						debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 					}
-					else if (env_array[i]./*env_queue_[i]->*/running_state == Plush::Environment::Idle)
+					else if (running_state[i] == Plush::Environment::Idle)
 					{
 						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Idle";
 						debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 					}
-					else if (env_array[i]./*env_queue_[i]->*/running_state == Plush::Environment::Waiting)
+					else if (running_state[i] == Plush::Environment::Waiting)
 					{
 						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Waiting";
 						debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 					}
 					else
 					{
-						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Unknown(" + std::to_string(env_array[i]./*env_queue_[i]->*/running_state) + ")";
+						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Unknown(" + std::to_string(running_state[i]) + ")";
 						debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 					}
 				}
@@ -380,14 +381,14 @@ namespace Utilities
 
 				for (int i = 0; i < num_threads_; i++)
 				{
-					if (env_array[i]./*env_queue_[i]->*/running_state == Plush::Environment::Running)
+					if (running_state[i] == Plush::Environment::Running)
 					{
-						Plush::Environment* envp = &env_array[i]; /*env_queue_[i];*/
+						//Plush::Environment* envp = &env_array[i]; /*env_queue_[i];*/
 
 						count++;
 
 						all_done = false;
-						debug_message = "wait_for_all_threads_to_finish,waiting_for_thread=" + std::to_string(i) + "," + envp->print_state();
+						debug_message = "wait_for_all_threads_to_finish,waiting_for_thread=" + std::to_string(i) + "," + env_state[i];
 						debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 						break;
 					}
@@ -403,8 +404,8 @@ namespace Utilities
 
 				// When only one thread is left, it seems to take a very long time to complete.  
 				// To compensate for this bug, we will abort when all but one thread is finished.
-				if (count <= 1)
-					all_done = true;
+				//if (count <= 1)
+				//	all_done = true;
 
 			} while (all_done == false);
 
