@@ -142,8 +142,6 @@ namespace Utilities
 
 	void WorkOrderManager::debug_log(const int env_index, std::string function, std::string status)
 	{
-		return;
-
 		static std::string prev_status = "";
 
 		if (prev_status != status)
@@ -163,8 +161,6 @@ namespace Utilities
 
 	void WorkOrderManager::debug_log(const int env_index, std::string function, std::string status, unsigned int individual_index, unsigned int example_case)
 	{
-		return;
-
 		static std::string prev_status = "";
 
 		if (prev_status != status)
