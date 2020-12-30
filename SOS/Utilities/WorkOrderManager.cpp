@@ -142,6 +142,8 @@ namespace Utilities
 
 	void WorkOrderManager::debug_log(const int env_index, std::string function, std::string status)
 	{
+		return;
+
 		static std::string prev_status = "";
 
 		if (prev_status != status)
@@ -161,6 +163,8 @@ namespace Utilities
 
 	void WorkOrderManager::debug_log(const int env_index, std::string function, std::string status, unsigned int individual_index, unsigned int example_case)
 	{
+		return;
+
 		static std::string prev_status = "";
 
 		if (prev_status != status)
@@ -391,6 +395,11 @@ namespace Utilities
 
 				else
 					debug_push = false;
+
+				// When only one thread is left, it seems to take a very long time to complete.  
+				// To compensate for this bug, we will abort when all but one thread is finished.
+				if (count <= 1)
+					all_done = true;
 
 			} while (all_done == false);
 

@@ -830,7 +830,6 @@ namespace domain
 
 			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			{
-//int individual_index = 547;
 				if ((individual_index % 100) == 0)
 					std::cout << individual_index;
 
