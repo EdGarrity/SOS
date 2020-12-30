@@ -225,23 +225,30 @@ namespace Utilities
 				// Process the individual example case specified in the work order
 				try
 				{
-					Plush::Environment* envp = &env_array[env_index]; /*env_queue_[env_index];*/
+					//Plush::Environment* envp = &env_array[env_index]; /*env_queue_[env_index];*/
 
-					envp->running_state = Plush::Environment::Running;
+					//envp->running_state = Plush::Environment::Running;
+
+					env_array[env_index].running_state = Plush::Environment::Running;
 
 					debug_log(env_index, "WorkOrderManager::process_work_orders", "run_start", work_order.individual_index, work_order.example_case);
 
 					//env_queue_[env_index]->current_thread = env_index;
 					env_array[env_index].current_thread = env_index;
 
-					double error = domain::learn_from_examples::run_individual_threadsafe(*envp,
-						work_order.individual_index, 
-						work_order.example_problem, 
+					//double error = domain::learn_from_examples::run_individual_threadsafe(*envp,
+					//	work_order.individual_index, 
+					//	work_order.example_problem, 
+					//	work_order.example_solution);
+					double error = domain::learn_from_examples::run_individual_threadsafe(env_array[env_index],
+						work_order.individual_index,
+						work_order.example_problem,
 						work_order.example_solution);
 
 					pushGP::globals::error_matrix[work_order.example_case][work_order.individual_index] = error;
 
-					envp->running_state = Plush::Environment::Waiting;
+					//envp->running_state = Plush::Environment::Waiting;
+					env_array[env_index].running_state = Plush::Environment::Waiting;
 
 					debug_log(env_index, "WorkOrderManager::process_work_orders", "run_finished", work_order.individual_index, work_order.example_case);
 				}
