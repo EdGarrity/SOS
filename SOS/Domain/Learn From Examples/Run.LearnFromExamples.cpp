@@ -828,21 +828,32 @@ namespace domain
 //			work_order_manager.initialize();
 			Utilities::work_order_manager.stop();
 
-			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
-			{
-				if ((individual_index % 100) == 0)
-					std::cout << individual_index;
+			//for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
+			//{
+			//	if ((individual_index % 100) == 0)
+			//		std::cout << individual_index;
 
-				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
+			//	for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
+			//	{
+			//		std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
+			//		std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
+
+			//		Utilities::work_order_manager.push(individual_index, example_case, example_problem, example_solution);
+			//	}
+
+			//	if ((individual_index % 100) == 0)
+			//		std::cout << std::endl;
+			//}
+
+			for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
+			{
+				for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 				{
 					std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
 					std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
 
 					Utilities::work_order_manager.push(individual_index, example_case, example_problem, example_solution);
 				}
-
-				if ((individual_index % 100) == 0)
-					std::cout << std::endl;
 			}
 
 			Utilities::work_order_manager.start();
@@ -852,9 +863,6 @@ namespace domain
 			{
 				int error_count_for_individual = 0;
 				double avg_error_for_individual = 0.0;
-
-				if ((individual_index % 100) == 0)
-					std::cout << individual_index;
 
 				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
 				{
@@ -882,12 +890,7 @@ namespace domain
 					min_error = avg_error_for_individual;
 					individual_with_least_error = individual_index;
 				}
-
-				if ((individual_index % 100) == 0)
-					std::cout << std::endl;
 			}
-
-			std::cout << std::endl;
 
 			return std::make_tuple
 			(

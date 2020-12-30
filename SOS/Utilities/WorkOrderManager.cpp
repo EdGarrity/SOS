@@ -14,7 +14,7 @@ bool debug_push = false;
 namespace Utilities
 {
 	WorkOrderManager work_order_manager(domain::argmap::max_threads);
-	Plush::Environment env_array[domain::argmap::max_threads];
+	//Plush::Environment env_array[domain::argmap::max_threads];
 	std::thread myThreads[domain::argmap::max_threads];
 
 	WorkOrderManager::WorkOrderManager() : 
@@ -186,6 +186,8 @@ namespace Utilities
 
 		struct WorkOrder work_order;
 
+		Plush::Environment env;
+
 		try
 		{
 			while (true)
@@ -199,7 +201,8 @@ namespace Utilities
 					}
 
 					//env_queue_[env_index]->running_state = Plush::Environment::Waiting;
-					env_array[env_index].running_state = Plush::Environment::Waiting;
+					//env_array[env_index].running_state = Plush::Environment::Waiting;
+					env.running_state = Plush::Environment::Waiting;
 					debug_log(env_index, "WorkOrderManager::process_work_orders", "requesting_lock");
 
 					std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
@@ -231,19 +234,24 @@ namespace Utilities
 					//Plush::Environment* envp = &env_array[env_index]; /*env_queue_[env_index];*/
 
 					//envp->running_state = Plush::Environment::Running;
-
-					env_array[env_index].running_state = Plush::Environment::Running;
+					//env_array[env_index].running_state = Plush::Environment::Running;
+					env.running_state = Plush::Environment::Running;
 
 					debug_log(env_index, "WorkOrderManager::process_work_orders", "run_start", work_order.individual_index, work_order.example_case);
 
 					//env_queue_[env_index]->current_thread = env_index;
-					env_array[env_index].current_thread = env_index;
+					//env_array[env_index].current_thread = env_index;
+					env.current_thread = env_index;
 
 					//double error = domain::learn_from_examples::run_individual_threadsafe(*envp,
 					//	work_order.individual_index, 
 					//	work_order.example_problem, 
 					//	work_order.example_solution);
-					double error = domain::learn_from_examples::run_individual_threadsafe(env_array[env_index],
+					//double error = domain::learn_from_examples::run_individual_threadsafe(env_array[env_index],
+					//	work_order.individual_index,
+					//	work_order.example_problem,
+					//	work_order.example_solution);
+					double error = domain::learn_from_examples::run_individual_threadsafe(env,
 						work_order.individual_index,
 						work_order.example_problem,
 						work_order.example_solution);
@@ -251,7 +259,8 @@ namespace Utilities
 					pushGP::globals::error_matrix[work_order.example_case][work_order.individual_index] = error;
 
 					//envp->running_state = Plush::Environment::Waiting;
-					env_array[env_index].running_state = Plush::Environment::Waiting;
+					//env_array[env_index].running_state = Plush::Environment::Waiting;
+					env.running_state = Plush::Environment::Waiting;
 
 					debug_log(env_index, "WorkOrderManager::process_work_orders", "run_finished", work_order.individual_index, work_order.example_case);
 				}
