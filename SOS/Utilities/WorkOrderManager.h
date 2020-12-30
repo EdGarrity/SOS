@@ -31,7 +31,7 @@ namespace Utilities
 
 		unsigned int num_threads_;
 		std::mutex work_order_mutex_;
-		std::deque<std::thread> thread_pool_;
+		//std::deque<std::thread> thread_pool_;
 		std::deque<WorkOrder> work_order_queue_;
 		std::condition_variable data_condition_;
 		std::mutex work_in_process_mutex_;

@@ -15,6 +15,7 @@ namespace Utilities
 {
 	WorkOrderManager work_order_manager(domain::argmap::max_threads);
 	Plush::Environment env_array[domain::argmap::max_threads];
+	std::thread myThreads[domain::argmap::max_threads];
 
 	WorkOrderManager::WorkOrderManager() : 
 		work_order_queue_(), 
@@ -70,7 +71,9 @@ namespace Utilities
 				{
 					//env_queue_.push_front(new Plush::Environment);
 
-					thread_pool_.push_front(std::thread(&WorkOrderManager::process_work_orders, this, i));
+					//thread_pool_.push_front(std::thread(&WorkOrderManager::process_work_orders, this, i));
+
+					myThreads[i] = std::thread(&WorkOrderManager::process_work_orders, this, i);
 				}
 			}
 		}
@@ -323,11 +326,11 @@ namespace Utilities
 
 				for (int i = 0; i < num_threads_; i++)
 				{
-					Plush::Environment* envp = &env_array[i]; /*env_queue_[i];*/
+					//Plush::Environment* envp = &env_array[i]; /*env_queue_[i];*/
 
 					if (env_array[i]./*env_queue_[i]->*/running_state == Plush::Environment::Running)
 					{
-						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + "," + envp->print_state();
+						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + "," + env_array[i]./*envp->*/print_state();
 						debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 					}
 					else if (env_array[i]./*env_queue_[i]->*/running_state == Plush::Environment::Idle)
@@ -348,7 +351,8 @@ namespace Utilities
 				}
 			} while (queue_size > 0);
 
-			debug_message = "wait_for_all_threads_to_finish,thread_pool_.size()=" + std::to_string(thread_pool_.size());
+			//debug_message = "wait_for_all_threads_to_finish,thread_pool_.size()=" + std::to_string(thread_pool_.size());
+			debug_message = "wait_for_all_threads_to_finish,thread_pool_.size()=" + std::to_string(domain::argmap::max_threads);
 			debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 
 			// when we send the notification immediately, the consumer will try to get the lock, so unlock asap
