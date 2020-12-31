@@ -681,7 +681,7 @@ namespace domain
 				else
 					sqlcmd_insert_new_individual->set_as_GUID(16, NilUuid);
 
-				Utilities::work_order_manager.debug_log(-1, "save_generation", "sqlcmd");
+				//Utilities::work_order_manager.debug_log(-1, "save_generation", "sqlcmd");
 				sqlcmd_insert_new_individual->execute();
 			}
 
