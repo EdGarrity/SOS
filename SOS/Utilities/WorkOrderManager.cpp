@@ -162,26 +162,26 @@ namespace Utilities
 		}
 	}
 
-	//void WorkOrderManager::debug_log(const int env_index, std::string function, std::string status, unsigned int individual_index, unsigned int example_case)
-	//{
-	//	static std::string prev_status = "";
+	void WorkOrderManager::debug_log(const int env_index, std::string function, std::string status, unsigned int individual_index, unsigned int example_case)
+	{
+		static std::string prev_status = "";
 
-	//	if (prev_status != status)
-	//	{
-	//		prev_status = status;
+		if (prev_status != status)
+		{
+			prev_status = status;
 
-	//		std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
+			std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
 
-	//		std::cout << getCurrentTimestamp()
-	//			<< ",LineNumber=" << std::to_string(line_number++) 
-	//			<< ",Thread=" << env_index
-	//			<< ",Function=" << function
-	//			<< ",Status=" << status
-	//			<< ",work_order.individual_index = " << individual_index 
-	//			<< ",work_order.example_case=" << example_case 
-	//			<< std::endl;
-	//	}
-	//}
+			std::cout << getCurrentTimestamp()
+				<< ",LineNumber=" << std::to_string(line_number++) 
+				<< ",Thread=" << env_index
+				<< ",Function=" << function
+				<< ",Status=" << status
+				<< ",work_order.individual_index = " << individual_index 
+				<< ",work_order.example_case=" << example_case 
+				<< std::endl;
+		}
+	}
 
 	void WorkOrderManager::process_work_orders(const unsigned int env_index)
 	{
@@ -200,13 +200,14 @@ namespace Utilities
 					if (queue_state == Stopped)
 					{
 						debug_log(env_index, "WorkOrderManager::process_work_orders", "Not_Running");
+						std::this_thread::sleep_for(1s);
 						continue;
 					}
 
 					//env_queue_[env_index]->running_state = Plush::Environment::Waiting;
 					//env_array[env_index].running_state = Plush::Environment::Waiting;
 					running_state[env_index] = Plush::Environment::Waiting;
-					//debug_log(env_index, "WorkOrderManager::process_work_orders", "requesting_lock");
+					debug_log(env_index, "WorkOrderManager::process_work_orders", "waiting");
 
 					std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
 
@@ -240,7 +241,7 @@ namespace Utilities
 					//env_array[env_index].running_state = Plush::Environment::Running;
 					running_state[env_index] = Plush::Environment::Running;
 
-					//debug_log(env_index, "WorkOrderManager::process_work_orders", "run_start", work_order.individual_index, work_order.example_case);
+					debug_log(env_index, "WorkOrderManager::process_work_orders", "run_start", work_order.individual_index, work_order.example_case);
 
 					//env_queue_[env_index]->current_thread = env_index;
 					//env_array[env_index].current_thread = env_index;
@@ -265,7 +266,7 @@ namespace Utilities
 					//env_array[env_index].running_state = Plush::Environment::Waiting;
 					running_state[env_index] = Plush::Environment::Waiting;
 
-					//debug_log(env_index, "WorkOrderManager::process_work_orders", "run_finished", work_order.individual_index, work_order.example_case);
+					debug_log(env_index, "WorkOrderManager::process_work_orders", "run_finished", work_order.individual_index, work_order.example_case);
 				}
 				catch (const std::exception& e)
 				{
@@ -334,8 +335,8 @@ namespace Utilities
 				queue_size = work_order_queue_.size();
 				work_order_lock.unlock();
 
-				//debug_message = "wait_for_queue_to_empty,queue_size=" + std::to_string(queue_size);
-				//debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
+				debug_message = "wait_for_queue_to_empty,queue_size=" + std::to_string(queue_size);
+				debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 
 				//for (int i = 0; i < num_threads_; i++)
 				//{
