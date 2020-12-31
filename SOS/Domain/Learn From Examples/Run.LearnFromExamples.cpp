@@ -1134,6 +1134,28 @@ namespace domain
 			sqlcmd_save_status_report->set_as_integer(21, _include_best_individual_in_breeding_pool);
 
 			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "sqlcmd");
+			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_generation_number=" + std::to_string(_generation_number));
+			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_generations_completed_this_session=" + std::to_string(_generations_completed_this_session));
+			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_best_individual_id=" + std::to_string(_best_individual_id));
+			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_best_individual_training_score=" + std::to_string(_best_individual_training_score));
+			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_best_individual_training_error=" + std::to_string(_best_individual_training_error));
+			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_average_traiing_error=" + std::to_string(_average_traiing_error));
+			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_standard_deviation=" + std::to_string(_standard_deviation));
+			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_best_individual_test_score=" + std::to_string(_best_individual_test_score));
+			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "argmap::number_of_training_cases=" + std::to_string(argmap::number_of_training_cases));
+			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "argmap::number_of_test_cases=" + std::to_string(argmap::number_of_test_cases));
+			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_best_gnome=" + _best_gnome);
+			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "argmap::population_size=" + std::to_string(argmap::population_size));
+			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "argmap::alternation_rate=" + std::to_string(argmap::alternation_rate));
+			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "argmap::uniform_mutation_rate=" + std::to_string(argmap::uniform_mutation_rate));
+			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "argmap::example_case_max_length=" + std::to_string(argmap::example_case_max_length));
+			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "argmap::example_case_upper_range=" + std::to_string(argmap::example_case_upper_range));
+			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_temperature=" + std::to_string(_temperature));
+			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_best_individual_prev_training_error=" + std::to_string(_best_individual_prev_training_error));
+			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_stalled_count=" + std::to_string(_stalled_count));
+			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_cool_down_count=" + std::to_string(_cool_down_count));
+			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_include_best_individual_in_breeding_pool=" + std::to_string(_include_best_individual_in_breeding_pool));
+
 			sqlcmd_save_status_report->execute();
 
 			delete sqlcmd_save_status_report;
