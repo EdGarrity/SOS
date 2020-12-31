@@ -62,15 +62,6 @@ namespace Utilities
 			top_ = new_top;
 		}
 
-		// Checks if seting new value of stack top will cause a stack overflow.
-		//inline bool check_set_top(unsigned int new_top)
-		//{
-		//	if (new_top >= N)
-		//		return false;
-		//	else
-		//		return true;
-		//}
-
 		// Purpose: 
 		//   Returns a reference to the underlying container
 		//
@@ -99,7 +90,7 @@ namespace Utilities
 			return top_ == 0;
 		}
 
-		inline void copy(const FixedSizeStack<T>& other)
+		inline size_t copy(const FixedSizeStack<T>& other)
 		{
 			if (other->top_ >= N)
 			{
@@ -113,6 +104,8 @@ namespace Utilities
 
 			for (size_t n = 0; n < top_; n++)
 				stack_[n] = other->stack_[n];
+
+			return top_;
 		}
 
 		FixedSizeStack operator= (const FixedSizeStack& other)
@@ -160,63 +153,6 @@ namespace Utilities
 			}
 			return stack_[index];
 		}
-
-		// Purpose: 
-		//   Returns a reference to the genome container (the atom array)
-		//
-		// Parameters:
-		//   None
-		// 
-		// Return value:
-		//   Reference to the genome's FixedSizeStack object
-		//
-		// Side Effects:
-		//   None
-		//
-		// Thread Safe:
-		//   Yes.  
-		//
-		// Remarks:
-		//
-		//inline const T& get_stack_element(unsigned int index)
-		//{
-		//	if (index >= N)
-		//	{
-		//		std::stringstream error_message;
-		//		error_message << "reference Utilities::FixedSizeStack::const T& get_stack_element - Stack overflow.  index = " << index;
-
-		//		throw std::overflow_error(error_message.str());
-		//	}
-		//	if (index >= top_)
-		//	{
-		//		std::stringstream error_message;
-		//		error_message << "reference Utilities::FixedSizeStack::const T& get_stack_element - Index Out Of Range.  index = " << index
-		//			<< " top = " << top_;
-
-		//		throw std::out_of_range(error_message.str());
-		//	}
-		//	return stack_[index];
-		//}
-
-		//inline T& get_stack_element_ref(unsigned int index)
-		//{
-		//	if (index >= N)
-		//	{
-		//		std::stringstream error_message;
-		//		error_message << "reference Utilities::FixedSizeStack::get_stack_element_ref() - Stack overflow.  index = " << index;
-
-		//		throw std::overflow_error(error_message.str());
-		//	}
-		//	if (index >= top_)
-		//	{
-		//		std::stringstream error_message;
-		//		error_message << "reference Utilities::FixedSizeStack::get_stack_element_ref() - Index Out Of Range.  index = " << index
-		//			<< " top = " << top_;
-
-		//		throw std::out_of_range(error_message.str());
-		//	}
-		//	return stack_[index];
-		//}
 
 		// Returns the number of elements in the underlying container
 		inline size_type size() const
@@ -349,7 +285,7 @@ namespace Utilities
 		}
 
 		// Removes the top element from the stack
-		inline void pop()
+		inline size_t pop()
 		{
 			if (top_ == 0)
 			{
@@ -360,10 +296,12 @@ namespace Utilities
 			}
 
 			top_--;
+
+			return 1;
 		}
 
 		// Pushes the given element value to the top of the stack.
-		inline void push(value_type& value)
+		inline size_t push(value_type& value)
 		{
 			if (top_ >= N)
 			{
@@ -375,10 +313,12 @@ namespace Utilities
 
 			stack_[top_] = value;
 			top_++;
+
+			return 1;
 		}
 
 		// Pushes the given element value to the top of the stack.
-		inline void push(std::string& program)
+		inline size_t push(std::string& program)
 		{
 			if (top_ >= N)
 			{
@@ -391,6 +331,8 @@ namespace Utilities
 			value_type value(program);
 			stack_[top_] = value;
 			top_++;
+
+			return 1;
 		}
 
 		// Purpose: 
@@ -412,7 +354,7 @@ namespace Utilities
 		//
 		// Remarks:
 		//
-		inline void shove_it(T& atom, size_t position)
+		inline size_t shove_it(T& atom, size_t position)
 		{
 			if ((top_ + 1) > N)
 			{
@@ -432,6 +374,8 @@ namespace Utilities
 			stack_[index] = atom;
 
 			top_++;
+
+			return position;
 		}
 
 		// Purpose: 
@@ -455,7 +399,7 @@ namespace Utilities
 		//
 		// Remarks:
 		//
-		inline void shove_it(size_t destination_position, size_t source_position, size_t length)
+		inline size_t shove_it(size_t destination_position, size_t source_position, size_t length)
 		{
 			if ((top_ + length) > N)
 			{
@@ -481,6 +425,8 @@ namespace Utilities
 				i < length;
 				i++, j++, k++)
 				stack_[k] = stack_[j];
+
+			return top_ - destination_index + length;
 		}
 
 		// Purpose: 
@@ -585,7 +531,7 @@ namespace Utilities
 		//
 		// Remarks:
 		//
-		inline void replace(T& other, size_t n)
+		inline size_t replace(T& other, size_t n)
 		{
 			if (n >= N)
 			{
@@ -598,6 +544,8 @@ namespace Utilities
 			n = (n >= top_) ? top_ - 1 : n;
 
 			stack_[top_ - n - 1] = other;
+
+			return 1;
 		}
 
 		// Purpose: 
@@ -619,7 +567,7 @@ namespace Utilities
 		//
 		// Remarks:
 		//
-		inline void replace_section(size_t source_position, size_t target_position, size_t length)
+		inline size_t replace_section(size_t source_position, size_t target_position, size_t length)
 		{
 			if ((source_position >= N) || (source_position >= top_))
 			{
@@ -649,6 +597,8 @@ namespace Utilities
 			}
 			 
 			set_top(target_index + length);
+
+			return length;
 		}
 
 		// Purpose: 
@@ -670,7 +620,7 @@ namespace Utilities
 		//
 		// Remarks:
 		//
-		inline void yankdup_item(size_t position, size_t length)
+		inline size_t yankdup_item(size_t position, size_t length)
 		{
 			if (debug_push)
 			{
@@ -711,6 +661,8 @@ namespace Utilities
 
 				set_top(top_ + length);
 			}
+			else
+				length = 0;
 
 			if (debug_push)
 			{
@@ -719,6 +671,8 @@ namespace Utilities
 					+ ",top_=" + std::to_string(top_);
 				Utilities::debug_log(current_thread, "FixedSizeStack::yankdup_item", debug);
 			}
+
+			return length;
 		}
 
 	protected:

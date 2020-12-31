@@ -374,7 +374,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline void copy(const Genome& other)
+		inline size_t copy(const Genome& other)
 		{
 			if (other.top_ >= N)
 			{
@@ -386,10 +386,12 @@ namespace Plush
 
 			Utilities::FixedSizeStack<T>::top_ = other.top_;
 
-			for (unsigned int n = 0; n < Utilities::FixedSizeStack<T>::top_; n++)
+			for (size_t n = 0; n < Utilities::FixedSizeStack<T>::top_; n++)
 				Utilities::FixedSizeStack<T>::stack_[n] = other.stack_[n];
 
 			genome_string_ = other.genome_string_;
+
+			return Utilities::FixedSizeStack<T>::top_;
 		}
 
 		// Purpose: 
@@ -434,7 +436,7 @@ namespace Plush
 		void set(std::string genome_string);
 
 		// Same as the copy method
-		inline void set(Genome<T, N>& other)
+		inline size_t set(Genome<T, N>& other)
 		{
 			if (other.top_ >= N)
 			{
@@ -446,8 +448,10 @@ namespace Plush
 
 			Utilities::FixedSizeStack<T>::top_ = other.top_;
 
-			for (unsigned int n = 0; n < Utilities::FixedSizeStack<T>::top_; n++)
+			for (size_t n = 0; n < Utilities::FixedSizeStack<T>::top_; n++)
 				Utilities::FixedSizeStack<T>::stack_[n] = other.stack_[n];
+
+			return Utilities::FixedSizeStack<T>::top_;
 		}
 
 		// Purpose: 
@@ -467,10 +471,12 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline void clear()
+		inline size_t clear()
 		{
 			Utilities::FixedSizeStack<T>::clear();
 			genome_string_.clear();
+
+			return 1;
 		};
 
 		// Purpose: 
@@ -754,7 +760,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		bool number_of_blocks_at_least(unsigned int required)
+		inline bool number_of_blocks_at_least(unsigned int required)
 		{
 			unsigned int item_number = 0;
 			unsigned int wanted_blocks = 1;	// Assume all genomes begin as a block.
@@ -841,7 +847,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		unsigned int number_of_items(int starting_position = -1)
+		inline unsigned int number_of_items(int starting_position = -1)
 		{
 			unsigned int item_number = 0;
 			unsigned int wanted_blocks = 0;
@@ -932,7 +938,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		unsigned int number_of_items(Genome_section<T> section)
+		inline unsigned int number_of_items(Genome_section<T> section)
 		{
 			unsigned int item_number = 0;
 			unsigned int wanted_blocks = 0;
@@ -996,119 +1002,6 @@ namespace Plush
 		}
 
 		// Purpose: 
-		//   Returns the number of atoms in the Nth top level block on the stack
-		//
-		//   For example, 
-		//		if N = 0 and the top genome is "( A B )" then this returns 2. 
-		//		If N = 0 and the top genome is "( ( A B ) C )" then this returns 3.
-		//		If N = 1 and the genome stack is  "( A )( ( A B ) C )" then this returns 3.
-		//		If N = 2 and the genome stack is  "( A B )( ( A B ) C )" then this returns 3.
-		//		If N = 1 and the genome stack is  "( A )()( ( A B ) C )" then this returns 0.
-		//
-		// Parameters:
-		//   extra_blocks		- Where to put the number of extra closing parenthesis at the end of the search
-		//   item_number		- Top block number to count the number of atoms in.  0 is the first block on 
-		//                        the stack.
-		//   starting_position	- Position of first atom in genome for sub-genome search.  0 = top of 
-		//                        stack.  Do not provide for a top level search.
-		// 
-		// Return value:
-		//   Number of atoms in the top genome
-		//
-		// Side Effects:
-		//   None
-		//
-		// Thread Safe:
-		//   Yes.  As long as no other thread attemps to write to the child.
-		//
-		// Remarks:
-		//   All callers of this method always use it for a top level search.  I.e, no callers ever 
-		//   provide the starting_position parameter.  I am keeping this parameter available in 
-		//   case I ever have a need for it.
-		//
-		//inline unsigned int number_of_atoms(unsigned int& extra_blocks_returned, unsigned int item_number = 0, int starting_position = -1)
-		//{
-		//	unsigned int wanted_blocks = 0;
-		//	unsigned int extra_blocks = 0;
-		//	std::stack<unsigned int> wanted_stack;
-		//	unsigned int atom_count = 0;
-		//	int block_starting_index = Utilities::FixedSizeStack<T>::size() - 1;
-
-		//	if (starting_position > -1)
-		//	{
-		//		wanted_blocks = 0;
-		//		block_starting_index -= starting_position;
-		//	}
-
-		//	for (unsigned int item = 0; item <= item_number; item++)
-		//	{
-		//		atom_count = 0;
-
-		//		if (extra_blocks > 0)
-		//			extra_blocks--;
-
-		//		else
-		//		{
-		//			int block_ending_index = 0;
-
-		//			for (int i = block_starting_index; i >= 0; i--)
-		//			{
-		//				block_ending_index = i;
-
-		//				T atom;
-
-		//				if (extra_blocks == 0)
-		//				{
-		//					atom = Utilities::FixedSizeStack<T>::get_atom_at_index(i);
-		//					atom_count++;
-		//				}
-		//				else
-		//				{
-		//					atom = T("{:instruction EXEC.NOOP :close 1}");
-		//					extra_blocks--;
-		//					i++;
-		//					block_ending_index++;
-		//				}
-
-		//				int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
-
-		//				if (closing < 0)
-		//				{
-		//					wanted_stack.push(wanted_blocks);
-		//					wanted_blocks = 0 - closing;
-		//				}
-
-		//				extra_blocks += (closing > 1) ? (closing - 1) : (0);
-
-		//				if (closing > 0)
-		//				{
-		//					if (wanted_blocks > 0)
-		//						wanted_blocks--;
-
-		//					else if ((wanted_blocks == 0) && (wanted_stack.size() == 0))
-		//						break;
-		//				}
-
-		//				if (wanted_blocks == 0)
-		//				{
-		//					if (wanted_stack.size() > 0)
-		//					{
-		//						wanted_blocks = wanted_stack.top();
-		//						wanted_stack.pop();
-		//					}
-		//				}
-		//			}
-
-		//			block_starting_index = block_ending_index - 1;
-		//		}
-		//	}
-
-		//	extra_blocks_returned = extra_blocks;
-
-		//	return atom_count;
-		//};
-
-		// Purpose: 
 		//   Returns the number of atoms in the block which begins at the position in provided parameter 
 		//
 		// Parameters:
@@ -1127,7 +1020,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		unsigned int number_of_atoms_in_Nth_block(unsigned int& extra_blocks_returned, int starting_position = -1, bool top_block = false)
+		inline unsigned int number_of_atoms_in_Nth_block(unsigned int& extra_blocks_returned, int starting_position = -1, bool top_block = false)
 		{
 			int atom_count = 0;
 			unsigned int item_number = 0;
@@ -1328,7 +1221,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		Genome_section<T> get_subitem(unsigned int item_number)
+		inline Genome_section<T> get_subitem(unsigned int item_number)
 		{
 			Genome_section<T> subsection;
 			int atom_count = 0;
@@ -1423,7 +1316,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		Genome_section<T> get_item_that_starts_at_position(size_t search_starting_position)
+		inline Genome_section<T> get_item_that_starts_at_position(size_t search_starting_position)
 		{
 			Genome_section<T> subsection;
 			int atom_count = 0;
@@ -1514,22 +1407,22 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline void push(long value)
+		inline size_t push(long value)
 		{
-			Utilities::FixedSizeStack<T>::push(value);
+			return Utilities::FixedSizeStack<T>::push(value);
 		}
 
-		inline void push(double value)
+		inline size_t push(double value)
 		{
-			Utilities::FixedSizeStack<T>::push(value);
+			return Utilities::FixedSizeStack<T>::push(value);
 		}
 
-		inline void push(bool value)
+		inline size_t push(bool value)
 		{
-			Utilities::FixedSizeStack<T>::push(value);
+			return Utilities::FixedSizeStack<T>::push(value);
 		}
 
-		inline void push(CodeAtom atom)
+		inline size_t push(CodeAtom atom)
 		{
 			if (Utilities::FixedSizeStack<T>::top_ > 0)
 			{
@@ -1548,9 +1441,11 @@ namespace Plush
 
 			else
 				Utilities::FixedSizeStack<T>::push(atom);
+
+			return 1;
 		}
 
-		inline void push(ExecAtom atom)
+		inline size_t push(ExecAtom atom)
 		{
 			if (Utilities::FixedSizeStack<T>::top_ > 0)
 			{
@@ -1569,6 +1464,8 @@ namespace Plush
 
 			else
 				Utilities::FixedSizeStack<T>::push(atom);
+
+			return 1;
 		}
 
 		// Purpose: 
@@ -1655,33 +1552,6 @@ namespace Plush
 		};
 
 		// Purpose: 
-		//   Returns stack size of item
-		//
-		// Parameters:
-		//   item_index - Index of item.  0 refers to the top item on the stack.
-		// 
-		// Return value:
-		//   None
-		//
-		// Side Effects:
-		//   None
-		//
-		// Thread Safe:
-		//   Yes.  As long as no other thread attemps to write to the child.
-		//
-		// Remarks:
-		//
-		//inline unsigned int item_size(unsigned int item_index)
-		//{
-		//	unsigned int l = 0;
-		//	unsigned int extra_blocks;
-
-		//	l = number_of_atoms(extra_blocks, item_index);
-
-		//	return l;
-		//}
-
-		// Purpose: 
 		//   Returns starting position of item in the stack
 		//
 		// Parameters:
@@ -1698,21 +1568,21 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline unsigned int item_starting_position(unsigned int item_index)
-		{
-			unsigned int s = 0;
-			unsigned int l = 0;
-			unsigned int extra_blocks;
+		//inline unsigned int item_starting_position(unsigned int item_index)
+		//{
+		//	unsigned int s = 0;
+		//	unsigned int l = 0;
+		//	unsigned int extra_blocks;
 
-			// Find index to top of item after target item
-			for (unsigned int n = 0; n <= item_index; n++)
-			{
-				s += l;
-				l = number_of_atoms(extra_blocks, n);
-			}
+		//	// Find index to top of item after target item
+		//	for (unsigned int n = 0; n <= item_index; n++)
+		//	{
+		//		s += l;
+		//		l = number_of_atoms(extra_blocks, n);
+		//	}
 
-			return s;
-		}
+		//	return s;
+		//}
 
 		// Purpose: 
 		//   Removes a top level item from the stack
@@ -1842,6 +1712,7 @@ namespace Plush
 			unsigned int s = 0;
 			unsigned int l = 0;
 			unsigned int extra_blocks = 0;
+			size_t effort = 0;
 
 			Genome_section<T> genome_section = get_item(item_position);
 
@@ -1859,7 +1730,7 @@ namespace Plush
 					throw std::overflow_error(error_message.str());
 				}
 
-				Utilities::FixedSizeStack<T>::yankdup_item(s, l);
+				effort = Utilities::FixedSizeStack<T>::yankdup_item(s, l);
 			}
 			else
 			{
@@ -1872,13 +1743,15 @@ namespace Plush
 				}
 
 				push(T("{:instruction EXEC.NOOP :close 1}"));
+
+				effort = 1;
 			}
 
 			if (Utilities::FixedSizeStack<T>::size() > 0)
 				if (Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::size() - l].close_parenthesis > extra_blocks)
 					Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::size() - l].close_parenthesis -= extra_blocks;
 
-			return genome_section.size;
+			return effort;
 		}
 
 		// Purpose: 
@@ -1906,11 +1779,12 @@ namespace Plush
 			unsigned int s = 0;
 			unsigned int l = 0;
 			unsigned int extra_blocks = 0;
+			size_t effort = 1;
 
 			Genome_section<T> section = (*this)[element_pos];
 
 			if (section.size > 0)
-				Utilities::FixedSizeStack<T>::yankdup_item(section.starting_position, section.size);
+				effort = Utilities::FixedSizeStack<T>::yankdup_item(section.starting_position, section.size);
 
 			else
 				push(T("{:instruction EXEC.NOOP :close 1}"));
@@ -1924,7 +1798,7 @@ namespace Plush
 			if (atom.close_parenthesis > section.extra_parenthesis)
 				atom.close_parenthesis = new_close_parenthesis;
 
-			return section.size;
+			return effort;
 		}
 
 		inline size_t yankdup_stack_element(Genome_section<T> section)
@@ -1966,8 +1840,10 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline void push(Genome_section<T> section)
+		inline size_t push(Genome_section<T> section)
 		{
+			size_t effort = 0;
+
 			if (section.size > Utilities::FixedSizeStack<T>::free())
 			{
 				std::stringstream error_message;
@@ -1977,7 +1853,9 @@ namespace Plush
 			}
 
 			if (section.size > 0)
-				Utilities::FixedSizeStack<T>::yankdup_item(section.starting_position, section.size);
+				effort = Utilities::FixedSizeStack<T>::yankdup_item(section.starting_position, section.size);
+
+			return effort;
 		}
 
 
@@ -2004,8 +1882,8 @@ namespace Plush
 
 			if (item_position > 0)
 			{
-				effort = yankdup_item(item_position);
-				effort += remove_item_at_position(item_position + 1);
+				if (effort = yankdup_item(item_position) > 0)
+					effort += remove_item_at_position(item_position + 1);
 			}
 
 			return effort;
@@ -2037,8 +1915,8 @@ namespace Plush
 
 			if (element_pos > 0)
 			{
-				effort = yankdup_stack_element(element_pos);
-				effort += remove_stack_element(element_pos + 1);
+				if (effort = yankdup_stack_element(element_pos) > 0)
+					effort += remove_stack_element(element_pos + 1);
 			}
 
 			return effort;
@@ -2067,8 +1945,8 @@ namespace Plush
 
 			if (section.size > 0)
 			{
-				effort = yankdup_stack_element(section);
-				effort += Utilities::FixedSizeStack<T>::remove_items(section.starting_position, section.size);
+				if (effort = yankdup_stack_element(section) > 0)
+					effort += Utilities::FixedSizeStack<T>::remove_items(section.starting_position, section.size);
 			}
 
 			return effort;
@@ -2094,7 +1972,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline void shove(size_t destination_position, Genome_section<T> source_section)
+		inline size_t shove(size_t destination_position, Genome_section<T> source_section)
 		{
 			T atom;
 			std::array<T, N>& stack = Utilities::FixedSizeStack<T>::stack_;
@@ -2150,6 +2028,8 @@ namespace Plush
 
 			// Update stack top pointer
 			Utilities::FixedSizeStack<T>::top_++;
+
+			return source_section.size + destination_position;
 		}
 
 		// Purpose: 
@@ -2172,8 +2052,10 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline void shove_to_stack_element(size_t element_pos)
+		inline size_t shove_to_stack_element(size_t element_pos)
 		{
+			size_t effort = 0;
+
 			if (element_pos > 0)
 			{
 				Genome_section<T> target = (*this)[element_pos];
@@ -2183,7 +2065,7 @@ namespace Plush
 				size_t target_position = (target.size == 0) ? (target.ending_position - 1) : (target.ending_position);
 				size_t target_extra_parenthesis = (target.size == 0) ? (pre_target.extra_parenthesis) : (target.extra_parenthesis);
 
-				Utilities::FixedSizeStack<T>::shove_it(target_position, 0, first.size);
+				effort = Utilities::FixedSizeStack<T>::shove_it(target_position, 0, first.size);
 
 				if (target_extra_parenthesis)
 				{
@@ -2201,6 +2083,8 @@ namespace Plush
 					}
 				}
 			}
+
+			return effort;
 		}
 
 		// Purpose: 
@@ -2221,8 +2105,10 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline void subst(Genome_section<T> main_section, Genome_section<T> first_section, Genome_section<T> second_section)
+		inline size_t subst(Genome_section<T> main_section, Genome_section<T> first_section, Genome_section<T> second_section)
 		{
+			size_t effort = 0;
+
 			if (Utilities::FixedSizeStack<T>::free() <= second_section.size)
 			{
 				std::stringstream error_message;
@@ -2253,6 +2139,8 @@ namespace Plush
 
 						Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(new_top) = atom;
 						new_top++;
+
+						effort++;
 					}
 				}
 
@@ -2262,6 +2150,8 @@ namespace Plush
 
 					Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(new_top) = atom;
 					new_top++;
+
+					effort++;
 				}
 			}
 
@@ -2276,6 +2166,7 @@ namespace Plush
 
 				i++;
 				j--;
+				effort++;
 			};
 
 			Utilities::FixedSizeStack<T>::set_top(new_top);
@@ -2287,6 +2178,8 @@ namespace Plush
 				T& atom = Utilities::FixedSizeStack<T>::get_atom_at_position(item.ending_position);
 				atom.close_parenthesis -= item.extra_parenthesis;
 			}
+
+			return effort;
 		}
 
 		// Purpose: 

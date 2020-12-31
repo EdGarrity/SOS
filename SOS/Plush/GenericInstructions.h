@@ -189,23 +189,19 @@ namespace Plush
 		_env.push<T>(x);
 		_env.push<T>(z);
 
-		return 1;
+		return 3;
 	}
 
 	template<>
 	inline size_t rot<CodeAtom>(Environment & _env)
 	{
-		_env.get_stack<CodeAtom>().yank_stack_element(2);
-		
-		return 1;
+		return _env.get_stack<CodeAtom>().yank_stack_element(2);
 	}
 
 	template<>
 	inline size_t rot<ExecAtom>(Environment & _env)
 	{
-		_env.get_stack<ExecAtom>().yank_stack_element(2);
-
-		return 1;
+		return _env.get_stack<ExecAtom>().yank_stack_element(2);
 	}
 
 	template <class T>
