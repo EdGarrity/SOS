@@ -45,7 +45,7 @@ namespace Utilities
 		~WorkOrderManager();
 
 		void debug_log(const int env_index, std::string function, std::string status);
-		void debug_log(const int env_index, std::string function, std::string status, unsigned int individual_index, unsigned int example_case);
+		//void debug_log(const int env_index, std::string function, std::string status, unsigned int individual_index, unsigned int example_case);
 
 //		void initialize();
 		void initialize(unsigned int _num_threads);

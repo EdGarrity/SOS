@@ -103,13 +103,13 @@ namespace Utilities
 		work_order.example_problem = input_list;
 		work_order.example_solution = output_list;
 
-		debug_log(-1, "WorkOrderManager::push", "requesting_lock");
+		//debug_log(-1, "WorkOrderManager::push", "requesting_lock");
 
 		std::unique_lock<std::mutex> work_in_process_lock(work_in_process_mutex_);
 		std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
 		work_order_queue_.push_front(work_order);
 
-		debug_log(-1, "WorkOrderManager::push", "releasing_lock");
+		//debug_log(-1, "WorkOrderManager::push", "releasing_lock");
 
 		// when we send the notification immediately, the consumer will try to get the lock, so unlock asap
 		work_order_lock.unlock();
@@ -162,26 +162,26 @@ namespace Utilities
 		}
 	}
 
-	void WorkOrderManager::debug_log(const int env_index, std::string function, std::string status, unsigned int individual_index, unsigned int example_case)
-	{
-		static std::string prev_status = "";
+	//void WorkOrderManager::debug_log(const int env_index, std::string function, std::string status, unsigned int individual_index, unsigned int example_case)
+	//{
+	//	static std::string prev_status = "";
 
-		if (prev_status != status)
-		{
-			prev_status = status;
+	//	if (prev_status != status)
+	//	{
+	//		prev_status = status;
 
-			std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
+	//		std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
 
-			std::cout << getCurrentTimestamp()
-				<< ",LineNumber=" << std::to_string(line_number++) 
-				<< ",Thread=" << env_index
-				<< ",Function=" << function
-				<< ",Status=" << status
-				<< ",work_order.individual_index = " << individual_index 
-				<< ",work_order.example_case=" << example_case 
-				<< std::endl;
-		}
-	}
+	//		std::cout << getCurrentTimestamp()
+	//			<< ",LineNumber=" << std::to_string(line_number++) 
+	//			<< ",Thread=" << env_index
+	//			<< ",Function=" << function
+	//			<< ",Status=" << status
+	//			<< ",work_order.individual_index = " << individual_index 
+	//			<< ",work_order.example_case=" << example_case 
+	//			<< std::endl;
+	//	}
+	//}
 
 	void WorkOrderManager::process_work_orders(const unsigned int env_index)
 	{
@@ -206,7 +206,7 @@ namespace Utilities
 					//env_queue_[env_index]->running_state = Plush::Environment::Waiting;
 					//env_array[env_index].running_state = Plush::Environment::Waiting;
 					running_state[env_index] = Plush::Environment::Waiting;
-					debug_log(env_index, "WorkOrderManager::process_work_orders", "requesting_lock");
+					//debug_log(env_index, "WorkOrderManager::process_work_orders", "requesting_lock");
 
 					std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
 
@@ -225,10 +225,10 @@ namespace Utilities
 					work_order = work_order_queue_.back();
 					work_order_queue_.pop_back();
 
-					debug_log(env_index, "WorkOrderManager::process_work_orders", "WorkOrderQueue_Not_Empty", work_order.individual_index, work_order.example_case);
+					//debug_log(env_index, "WorkOrderManager::process_work_orders", "WorkOrderQueue_Not_Empty", work_order.individual_index, work_order.example_case);
 
 					//release the lock
-					debug_log(env_index, "WorkOrderManager::process_work_orders", "releasing_lock");
+					//debug_log(env_index, "WorkOrderManager::process_work_orders", "releasing_lock");
 				}
 
 				// Process the individual example case specified in the work order
@@ -240,7 +240,7 @@ namespace Utilities
 					//env_array[env_index].running_state = Plush::Environment::Running;
 					running_state[env_index] = Plush::Environment::Running;
 
-					debug_log(env_index, "WorkOrderManager::process_work_orders", "run_start", work_order.individual_index, work_order.example_case);
+					//debug_log(env_index, "WorkOrderManager::process_work_orders", "run_start", work_order.individual_index, work_order.example_case);
 
 					//env_queue_[env_index]->current_thread = env_index;
 					//env_array[env_index].current_thread = env_index;
@@ -265,7 +265,7 @@ namespace Utilities
 					//env_array[env_index].running_state = Plush::Environment::Waiting;
 					running_state[env_index] = Plush::Environment::Waiting;
 
-					debug_log(env_index, "WorkOrderManager::process_work_orders", "run_finished", work_order.individual_index, work_order.example_case);
+					//debug_log(env_index, "WorkOrderManager::process_work_orders", "run_finished", work_order.individual_index, work_order.example_case);
 				}
 				catch (const std::exception& e)
 				{
@@ -325,40 +325,41 @@ namespace Utilities
 
 			do
 			{
-				std::this_thread::sleep_for(10min);
+				//std::this_thread::sleep_for(10min);
+				std::this_thread::sleep_for(10s);
 
-				debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", "requesting_lock");
+				//debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", "requesting_lock");
 
 				std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
 				queue_size = work_order_queue_.size();
 				work_order_lock.unlock();
 
-				debug_message = "wait_for_queue_to_empty,queue_size=" + std::to_string(queue_size);
-				debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
+				//debug_message = "wait_for_queue_to_empty,queue_size=" + std::to_string(queue_size);
+				//debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 
-				for (int i = 0; i < num_threads_; i++)
-				{
-					if (running_state[i] == Plush::Environment::Running)
-					{
-						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + "," + env_state[i];
-						debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
-					}
-					else if (running_state[i] == Plush::Environment::Idle)
-					{
-						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Idle";
-						debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
-					}
-					else if (running_state[i] == Plush::Environment::Waiting)
-					{
-						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Waiting";
-						debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
-					}
-					else
-					{
-						debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Unknown(" + std::to_string(running_state[i]) + ")";
-						debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
-					}
-				}
+				//for (int i = 0; i < num_threads_; i++)
+				//{
+				//	if (running_state[i] == Plush::Environment::Running)
+				//	{
+				//		debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + "," + env_state[i];
+				//		debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
+				//	}
+				//	else if (running_state[i] == Plush::Environment::Idle)
+				//	{
+				//		debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Idle";
+				//		debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
+				//	}
+				//	else if (running_state[i] == Plush::Environment::Waiting)
+				//	{
+				//		debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Waiting";
+				//		debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
+				//	}
+				//	else
+				//	{
+				//		debug_message = "wait_for_queue_to_empty,thread=" + std::to_string(i) + ",running_state=Unknown(" + std::to_string(running_state[i]) + ")";
+				//		debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
+				//	}
+				//}
 			} while (queue_size > 0);
 
 			//debug_message = "wait_for_all_threads_to_finish,thread_pool_.size()=" + std::to_string(thread_pool_.size());
@@ -375,7 +376,7 @@ namespace Utilities
 			{
 				// Don't do the first time.
 				if (all_done == false)
-					std::this_thread::sleep_for(10min);
+					std::this_thread::sleep_for(10s);
 
 				int count = 0;
 
@@ -388,8 +389,8 @@ namespace Utilities
 						count++;
 
 						all_done = false;
-						debug_message = "wait_for_all_threads_to_finish,waiting_for_thread=" + std::to_string(i) + "," + env_state[i];
-						debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
+						//debug_message = "wait_for_all_threads_to_finish,waiting_for_thread=" + std::to_string(i) + "," + env_state[i];
+						//debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 						break;
 					}
 
