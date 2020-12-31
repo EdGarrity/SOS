@@ -1375,7 +1375,15 @@ namespace domain
 					for (int ind = 0; ind < argmap::population_size; ind++)
 					{
 						for (int training_case_index = 0; training_case_index < argmap::number_of_training_cases; training_case_index++)
+						{
+							debug_message = "error_matrix";
+							debug_message += ",training_case_index=" + std::to_string(training_case_index);
+							debug_message += ",ind=" + std::to_string(ind);
+							debug_message += ",error=" + std::to_string(pushGP::globals::error_matrix[training_case_index][ind]);
+							Utilities::work_order_manager.debug_log(-1, "run", debug_message);
+
 							average_traiing_error += pushGP::globals::error_matrix[training_case_index][ind];
+						}
 					}
 					average_traiing_error /= (double)(domain::argmap::population_size * argmap::number_of_training_cases);
 
