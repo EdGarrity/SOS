@@ -111,6 +111,8 @@ namespace domain
 
 			sqlcmd_get_last_saved_generation_number = new database::SQLCommand(&con, sqlstmt_get_last_saved_generation_number);
 
+			Utilities::work_order_manager.debug_log(-1, "get_last_saved_generation_number", "sqlcmd");
+
 			sqlcmd_get_last_saved_generation_number->execute();
 
 			if (sqlcmd_get_last_saved_generation_number->fetch_next())
@@ -129,6 +131,7 @@ namespace domain
 
 			sqlcmd_get_last_saved_temperature = new database::SQLCommand(&con, sqlstmt_get_last_saved_temperature);
 
+			Utilities::work_order_manager.debug_log(-1, "get_last_saved_temperature", "sqlcmd");
 			sqlcmd_get_last_saved_temperature->execute();
 
 			if (sqlcmd_get_last_saved_temperature->fetch_next())
@@ -147,6 +150,7 @@ namespace domain
 
 			sqlcmd_get_last_best_individual_error = new database::SQLCommand(&con, sqlstmt_get_last_best_individual_error);
 
+			Utilities::work_order_manager.debug_log(-1, "get_last_best_individual_error", "sqlcmd");
 			sqlcmd_get_last_best_individual_error->execute();
 
 			if (sqlcmd_get_last_best_individual_error->fetch_next())
@@ -165,6 +169,7 @@ namespace domain
 
 			sqlcmd_get_last_prev_best_individual_error = new database::SQLCommand(&con, sqlstmt_get_last_prev_best_individual_error);
 
+			Utilities::work_order_manager.debug_log(-1, "get_last_prev_best_individual_error", "sqlcmd");
 			sqlcmd_get_last_prev_best_individual_error->execute();
 
 			if (sqlcmd_get_last_prev_best_individual_error->fetch_next())
@@ -183,6 +188,7 @@ namespace domain
 
 			sqlcmd_get_last_stalled_count = new database::SQLCommand(&con, sqlstmt_get_last_stalled_count);
 
+			Utilities::work_order_manager.debug_log(-1, "get_last_stalled_count", "sqlcmd");
 			sqlcmd_get_last_stalled_count->execute();
 
 			if (sqlcmd_get_last_stalled_count->fetch_next())
@@ -201,6 +207,7 @@ namespace domain
 
 			sqlcmd_get_last_cool_down_count = new database::SQLCommand(&con, sqlstmt_get_last_cool_down_count);
 
+			Utilities::work_order_manager.debug_log(-1, "get_last_cool_down_count", "sqlcmd");
 			sqlcmd_get_last_cool_down_count->execute();
 
 			if (sqlcmd_get_last_cool_down_count->fetch_next())
@@ -220,6 +227,7 @@ namespace domain
 
 			sqlcmd_get_include_best_individual_in_breeding_pool = new database::SQLCommand(&con, sqlstmt_get_include_best_individual_in_breeding_pool);
 
+			Utilities::work_order_manager.debug_log(-1, "get_include_best_individual_in_breeding_pool", "sqlcmd");
 			sqlcmd_get_include_best_individual_in_breeding_pool->execute();
 
 			if (sqlcmd_get_include_best_individual_in_breeding_pool->fetch_next())
@@ -249,6 +257,7 @@ namespace domain
 
 			try
 			{
+				Utilities::work_order_manager.debug_log(-1, "load_example_cases", "sqlcmd");
 				sqlcmd_get_example_cases->execute();
 
 				if (sqlcmd_get_example_cases->is_result_set())
@@ -445,6 +454,8 @@ namespace domain
 
 				sqlcmd_insert_new_example_case->set_as_string(1, training_case_input_str);
 				sqlcmd_insert_new_example_case->set_as_string(2, training_case_output_str);
+
+				Utilities::work_order_manager.debug_log(-1, "save_example_cases", "sqlcmd");
 				sqlcmd_insert_new_example_case->execute();
 			}
 
@@ -476,6 +487,7 @@ namespace domain
 
 				sqlcmd_insert_new_example_case->set_as_string(1, test_case_input_str);
 				sqlcmd_insert_new_example_case->set_as_string(2, test_case_output_str);
+				Utilities::work_order_manager.debug_log(-1, "save_example_cases", "sqlcmd2");
 				sqlcmd_insert_new_example_case->execute();
 			}
 
@@ -495,6 +507,7 @@ namespace domain
 
 			try
 			{
+				Utilities::work_order_manager.debug_log(-1, "load_pop_agents", "sqlcmd");
 				sqlcmd_get_individuals->execute();
 
 				if (sqlcmd_get_individuals->is_result_set())
@@ -668,6 +681,7 @@ namespace domain
 				else
 					sqlcmd_insert_new_individual->set_as_GUID(16, NilUuid);
 
+				Utilities::work_order_manager.debug_log(-1, "save_generation", "sqlcmd");
 				sqlcmd_insert_new_individual->execute();
 			}
 
@@ -1119,6 +1133,7 @@ namespace domain
 			sqlcmd_save_status_report->set_as_integer(20, _cool_down_count);
 			sqlcmd_save_status_report->set_as_integer(21, _include_best_individual_in_breeding_pool);
 
+			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "sqlcmd");
 			sqlcmd_save_status_report->execute();
 
 			delete sqlcmd_save_status_report;
