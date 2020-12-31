@@ -6,6 +6,7 @@
 #include "..\Domain\Arguments.h"
 #include "..\Utilities\String.h"
 #include "..\Utilities\WorkOrderManager.h"
+#include "..\Utilities\Debug.h"
 
 extern bool debug_push;
 extern bool print_push;
@@ -79,7 +80,7 @@ namespace Plush
 				if (debug_push)
 				{
 					std::string debug = "pre_run," + env.print_state();
-					Utilities::work_order_manager.debug_log(env.current_thread, "Processor::run", debug);
+					Utilities::debug_log(env.current_thread, "Processor::run", debug);
 				}
 
 				if (print_push)
@@ -134,7 +135,7 @@ namespace Plush
 							if (debug_push)
 							{
 								std::string debug = "unit=" + std::to_string(unit) + "," + env.print_state();
-								Utilities::work_order_manager.debug_log(env.current_thread, "Processor::run", debug);
+								Utilities::debug_log(env.current_thread, "Processor::run", debug);
 							}
 						}
 					}
@@ -171,7 +172,7 @@ namespace Plush
 			if (debug_push)
 			{
 				std::string debug = "post_run," + env.print_state();
-				Utilities::work_order_manager.debug_log(env.current_thread, "Processor::run", debug);
+				Utilities::debug_log(env.current_thread, "Processor::run", debug);
 			}
 
 			if (print_push)

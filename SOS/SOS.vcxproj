@@ -197,6 +197,7 @@
     <ClInclude Include="Utilities\Conversion.h" />
     <ClInclude Include="Utilities\CoreTemp\GetCoreTempInfo.h" />
     <ClInclude Include="Utilities\CSVIterator.h" />
+    <ClInclude Include="Utilities\Debug.h" />
     <ClInclude Include="Utilities\FixedSizeStack.h" />
     <ClInclude Include="Utilities\String.h" />
     <ClInclude Include="Utilities\SystemInfo.h" />
@@ -239,6 +240,7 @@
     <ClCompile Include="PushGP\Utilities.cpp" />
     <ClCompile Include="Utilities\AtomicFunctions.cpp" />
     <ClCompile Include="Utilities\Conversion.cpp" />
+    <ClCompile Include="Utilities\Debug.cpp" />
     <ClCompile Include="Utilities\FixedSizeStack.cpp" />
     <ClCompile Include="Utilities\String.cpp" />
     <ClCompile Include="Utilities\SystemInfo.cpp" />

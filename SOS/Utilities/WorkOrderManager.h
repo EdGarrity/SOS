@@ -37,15 +37,15 @@ namespace Utilities
 		std::mutex work_in_process_mutex_;
 		//std::deque<Plush::Environment*> env_queue_;
 
-		std::mutex work_order_print_;
+//		std::mutex work_order_print_;
 
 	public:
 		WorkOrderManager();
 		WorkOrderManager(unsigned int _num_threads);
 		~WorkOrderManager();
 
-		void debug_log(const int env_index, std::string function, std::string status);
-		void debug_log(const int env_index, std::string function, std::string status, unsigned int individual_index, unsigned int example_case);
+		//void debug_log(const int env_index, std::string function, std::string status);
+		//void debug_log(const int env_index, std::string function, std::string status, unsigned int individual_index, unsigned int example_case);
 
 //		void initialize();
 		void initialize(unsigned int _num_threads);

@@ -54,6 +54,17 @@ namespace Plush
 		size_t current_unit;
 		int current_thread;
 
+		inline void set_current_thread(int new_current_thread)
+		{
+			current_thread = new_current_thread;
+
+			exec_stack_.set_current_thread(new_current_thread);
+			int_stack_.set_current_thread(new_current_thread);
+			code_stack_.set_current_thread(new_current_thread);
+			bool_stack_.set_current_thread(new_current_thread);
+			double_stack_.set_current_thread(new_current_thread);
+		};
+
 		virtual void clear_stacks()
 		{
 			exec_stack_.clear();

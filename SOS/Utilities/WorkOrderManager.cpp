@@ -7,7 +7,7 @@
 #include "..\Domain\Arguments.h"
 #include "..\Domain\Learn From Examples\ErrorFunction.LearnFromExample.h"
 #include "..\PushGP\Globals.h"
-//#include "synchapi.h"
+#include "Debug.h"
 
 bool debug_push = false;
 bool print_push = false;
@@ -118,70 +118,70 @@ namespace Utilities
 		data_condition_.notify_one();
 	}
 
-	std::string getCurrentTimestamp()
-	{
-		using std::chrono::system_clock;
-		auto currentTime = std::chrono::system_clock::now();
-		char buffer[80];
+	//std::string getCurrentTimestamp()
+	//{
+	//	using std::chrono::system_clock;
+	//	auto currentTime = std::chrono::system_clock::now();
+	//	char buffer[80];
 
-		auto transformed = currentTime.time_since_epoch().count() / 1000000;
+	//	auto transformed = currentTime.time_since_epoch().count() / 1000000;
 
-		//auto millis = transformed % 1000;
-		unsigned long nano_seconds = transformed % 1000000000;
+	//	//auto millis = transformed % 1000;
+	//	unsigned long nano_seconds = transformed % 1000000000;
 
-		std::time_t tt;
-		tt = system_clock::to_time_t(currentTime);
+	//	std::time_t tt;
+	//	tt = system_clock::to_time_t(currentTime);
 
-		struct tm newtime;
-		localtime_s(&newtime, &tt);
+	//	struct tm newtime;
+	//	localtime_s(&newtime, &tt);
 
-		strftime(buffer, 80, "%F %H:%M:%S", &newtime);
-		sprintf_s(buffer, "%s.%06ld", buffer, nano_seconds);
+	//	strftime(buffer, 80, "%F %H:%M:%S", &newtime);
+	//	sprintf_s(buffer, "%s.%06ld", buffer, nano_seconds);
 
-		return std::string(buffer);
-	}
+	//	return std::string(buffer);
+	//}
 
-	unsigned long line_number = 0;
+	//unsigned long line_number = 0;
 
-	void WorkOrderManager::debug_log(const int env_index, std::string function, std::string status)
-	{
-		static std::string prev_status = "";
+	//void WorkOrderManager::debug_log(const int env_index, std::string function, std::string status)
+	//{
+	//	static std::string prev_status = "";
 
-		if (prev_status != status)
-		{
-			prev_status = status;
+	//	if (prev_status != status)
+	//	{
+	//		prev_status = status;
 
-			std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
+	//		std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
 
-			std::cout << getCurrentTimestamp() 
-				<< ",LineNumber=" << std::to_string(line_number++) 
-				<< ",Thread=" << env_index 
-				<< ",Function=" << function 
-				<< ",Status=" << status
-				<< std::endl;
-		}
-	}
+	//		std::cout << getCurrentTimestamp() 
+	//			<< ",LineNumber=" << std::to_string(line_number++) 
+	//			<< ",Thread=" << env_index 
+	//			<< ",Function=" << function 
+	//			<< ",Status=" << status
+	//			<< std::endl;
+	//	}
+	//}
 
-	void WorkOrderManager::debug_log(const int env_index, std::string function, std::string status, unsigned int individual_index, unsigned int example_case)
-	{
-		static std::string prev_status = "";
+	//void WorkOrderManager::debug_log(const int env_index, std::string function, std::string status, unsigned int individual_index, unsigned int example_case)
+	//{
+	//	static std::string prev_status = "";
 
-		if (prev_status != status)
-		{
-			prev_status = status;
+	//	if (prev_status != status)
+	//	{
+	//		prev_status = status;
 
-			std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
+	//		std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
 
-			std::cout << getCurrentTimestamp()
-				<< ",LineNumber=" << std::to_string(line_number++) 
-				<< ",Thread=" << env_index
-				<< ",Function=" << function
-				<< ",Status=" << status
-				<< ",work_order.individual_index = " << individual_index 
-				<< ",work_order.example_case=" << example_case 
-				<< std::endl;
-		}
-	}
+	//		std::cout << getCurrentTimestamp()
+	//			<< ",LineNumber=" << std::to_string(line_number++) 
+	//			<< ",Thread=" << env_index
+	//			<< ",Function=" << function
+	//			<< ",Status=" << status
+	//			<< ",work_order.individual_index = " << individual_index 
+	//			<< ",work_order.example_case=" << example_case 
+	//			<< std::endl;
+	//	}
+	//}
 
 	void WorkOrderManager::process_work_orders(const unsigned int env_index)
 	{
@@ -245,7 +245,8 @@ namespace Utilities
 
 					//env_queue_[env_index]->current_thread = env_index;
 					//env_array[env_index].current_thread = env_index;
-					env.current_thread = env_index;
+					//env.current_thread = env_index;
+					env.set_current_thread(env_index);
 
 					//double error = domain::learn_from_examples::run_individual_threadsafe(*envp,
 					//	work_order.individual_index, 

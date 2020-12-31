@@ -26,6 +26,7 @@
 #include "../../PushGP/AsyncBreed.h"
 #include "../../PushGP/Random.h"
 #include "..\..\Utilities\WorkOrderManager.h"
+#include "..\..\Utilities\Debug.h"
 
 // Correction for Syntax error with std::numeric_limits::max compiler error
 // See https://stackoverflow.com/questions/27442885/syntax-error-with-stdnumeric-limitsmax
@@ -111,7 +112,7 @@ namespace domain
 
 			sqlcmd_get_last_saved_generation_number = new database::SQLCommand(&con, sqlstmt_get_last_saved_generation_number);
 
-			Utilities::work_order_manager.debug_log(-1, "get_last_saved_generation_number", "sqlcmd");
+			Utilities::debug_log(-1, "get_last_saved_generation_number", "sqlcmd");
 
 			sqlcmd_get_last_saved_generation_number->execute();
 
@@ -131,7 +132,7 @@ namespace domain
 
 			sqlcmd_get_last_saved_temperature = new database::SQLCommand(&con, sqlstmt_get_last_saved_temperature);
 
-			Utilities::work_order_manager.debug_log(-1, "get_last_saved_temperature", "sqlcmd");
+			Utilities::debug_log(-1, "get_last_saved_temperature", "sqlcmd");
 			sqlcmd_get_last_saved_temperature->execute();
 
 			if (sqlcmd_get_last_saved_temperature->fetch_next())
@@ -150,7 +151,7 @@ namespace domain
 
 			sqlcmd_get_last_best_individual_error = new database::SQLCommand(&con, sqlstmt_get_last_best_individual_error);
 
-			Utilities::work_order_manager.debug_log(-1, "get_last_best_individual_error", "sqlcmd");
+			Utilities::debug_log(-1, "get_last_best_individual_error", "sqlcmd");
 			sqlcmd_get_last_best_individual_error->execute();
 
 			if (sqlcmd_get_last_best_individual_error->fetch_next())
@@ -169,7 +170,7 @@ namespace domain
 
 			sqlcmd_get_last_prev_best_individual_error = new database::SQLCommand(&con, sqlstmt_get_last_prev_best_individual_error);
 
-			Utilities::work_order_manager.debug_log(-1, "get_last_prev_best_individual_error", "sqlcmd");
+			Utilities::debug_log(-1, "get_last_prev_best_individual_error", "sqlcmd");
 			sqlcmd_get_last_prev_best_individual_error->execute();
 
 			if (sqlcmd_get_last_prev_best_individual_error->fetch_next())
@@ -188,7 +189,7 @@ namespace domain
 
 			sqlcmd_get_last_stalled_count = new database::SQLCommand(&con, sqlstmt_get_last_stalled_count);
 
-			Utilities::work_order_manager.debug_log(-1, "get_last_stalled_count", "sqlcmd");
+			Utilities::debug_log(-1, "get_last_stalled_count", "sqlcmd");
 			sqlcmd_get_last_stalled_count->execute();
 
 			if (sqlcmd_get_last_stalled_count->fetch_next())
@@ -207,7 +208,7 @@ namespace domain
 
 			sqlcmd_get_last_cool_down_count = new database::SQLCommand(&con, sqlstmt_get_last_cool_down_count);
 
-			Utilities::work_order_manager.debug_log(-1, "get_last_cool_down_count", "sqlcmd");
+			Utilities::debug_log(-1, "get_last_cool_down_count", "sqlcmd");
 			sqlcmd_get_last_cool_down_count->execute();
 
 			if (sqlcmd_get_last_cool_down_count->fetch_next())
@@ -227,7 +228,7 @@ namespace domain
 
 			sqlcmd_get_include_best_individual_in_breeding_pool = new database::SQLCommand(&con, sqlstmt_get_include_best_individual_in_breeding_pool);
 
-			Utilities::work_order_manager.debug_log(-1, "get_include_best_individual_in_breeding_pool", "sqlcmd");
+			Utilities::debug_log(-1, "get_include_best_individual_in_breeding_pool", "sqlcmd");
 			sqlcmd_get_include_best_individual_in_breeding_pool->execute();
 
 			if (sqlcmd_get_include_best_individual_in_breeding_pool->fetch_next())
@@ -257,7 +258,7 @@ namespace domain
 
 			try
 			{
-				Utilities::work_order_manager.debug_log(-1, "load_example_cases", "sqlcmd");
+				Utilities::debug_log(-1, "load_example_cases", "sqlcmd");
 				sqlcmd_get_example_cases->execute();
 
 				if (sqlcmd_get_example_cases->is_result_set())
@@ -455,7 +456,7 @@ namespace domain
 				sqlcmd_insert_new_example_case->set_as_string(1, training_case_input_str);
 				sqlcmd_insert_new_example_case->set_as_string(2, training_case_output_str);
 
-				Utilities::work_order_manager.debug_log(-1, "save_example_cases", "sqlcmd");
+				Utilities::debug_log(-1, "save_example_cases", "sqlcmd");
 				sqlcmd_insert_new_example_case->execute();
 			}
 
@@ -487,7 +488,7 @@ namespace domain
 
 				sqlcmd_insert_new_example_case->set_as_string(1, test_case_input_str);
 				sqlcmd_insert_new_example_case->set_as_string(2, test_case_output_str);
-				Utilities::work_order_manager.debug_log(-1, "save_example_cases", "sqlcmd2");
+				Utilities::debug_log(-1, "save_example_cases", "sqlcmd2");
 				sqlcmd_insert_new_example_case->execute();
 			}
 
@@ -507,7 +508,7 @@ namespace domain
 
 			try
 			{
-				Utilities::work_order_manager.debug_log(-1, "load_pop_agents", "sqlcmd");
+				Utilities::debug_log(-1, "load_pop_agents", "sqlcmd");
 				sqlcmd_get_individuals->execute();
 
 				if (sqlcmd_get_individuals->is_result_set())
@@ -681,7 +682,7 @@ namespace domain
 				else
 					sqlcmd_insert_new_individual->set_as_GUID(16, NilUuid);
 
-				//Utilities::work_order_manager.debug_log(-1, "save_generation", "sqlcmd");
+				//Utilities::debug_log(-1, "save_generation", "sqlcmd");
 				sqlcmd_insert_new_individual->execute();
 			}
 
@@ -1133,28 +1134,28 @@ namespace domain
 			sqlcmd_save_status_report->set_as_integer(20, _cool_down_count);
 			sqlcmd_save_status_report->set_as_integer(21, _include_best_individual_in_breeding_pool);
 
-			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "sqlcmd");
-			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_generation_number=" + std::to_string(_generation_number));
-			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_generations_completed_this_session=" + std::to_string(_generations_completed_this_session));
-			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_best_individual_id=" + std::to_string(_best_individual_id));
-			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_best_individual_training_score=" + std::to_string(_best_individual_training_score));
-			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_best_individual_training_error=" + std::to_string(_best_individual_training_error));
-			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_average_traiing_error=" + std::to_string(_average_traiing_error));
-			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_standard_deviation=" + std::to_string(_standard_deviation));
-			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_best_individual_test_score=" + std::to_string(_best_individual_test_score));
-			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "argmap::number_of_training_cases=" + std::to_string(argmap::number_of_training_cases));
-			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "argmap::number_of_test_cases=" + std::to_string(argmap::number_of_test_cases));
-			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_best_gnome=" + _best_gnome);
-			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "argmap::population_size=" + std::to_string(argmap::population_size));
-			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "argmap::alternation_rate=" + std::to_string(argmap::alternation_rate));
-			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "argmap::uniform_mutation_rate=" + std::to_string(argmap::uniform_mutation_rate));
-			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "argmap::example_case_max_length=" + std::to_string(argmap::example_case_max_length));
-			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "argmap::example_case_upper_range=" + std::to_string(argmap::example_case_upper_range));
-			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_temperature=" + std::to_string(_temperature));
-			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_best_individual_prev_training_error=" + std::to_string(_best_individual_prev_training_error));
-			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_stalled_count=" + std::to_string(_stalled_count));
-			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_cool_down_count=" + std::to_string(_cool_down_count));
-			Utilities::work_order_manager.debug_log(-1, "generate_status_report", "_include_best_individual_in_breeding_pool=" + std::to_string(_include_best_individual_in_breeding_pool));
+			Utilities::debug_log(-1, "generate_status_report", "sqlcmd");
+			Utilities::debug_log(-1, "generate_status_report", "_generation_number=" + std::to_string(_generation_number));
+			Utilities::debug_log(-1, "generate_status_report", "_generations_completed_this_session=" + std::to_string(_generations_completed_this_session));
+			Utilities::debug_log(-1, "generate_status_report", "_best_individual_id=" + std::to_string(_best_individual_id));
+			Utilities::debug_log(-1, "generate_status_report", "_best_individual_training_score=" + std::to_string(_best_individual_training_score));
+			Utilities::debug_log(-1, "generate_status_report", "_best_individual_training_error=" + std::to_string(_best_individual_training_error));
+			Utilities::debug_log(-1, "generate_status_report", "_average_traiing_error=" + std::to_string(_average_traiing_error));
+			Utilities::debug_log(-1, "generate_status_report", "_standard_deviation=" + std::to_string(_standard_deviation));
+			Utilities::debug_log(-1, "generate_status_report", "_best_individual_test_score=" + std::to_string(_best_individual_test_score));
+			Utilities::debug_log(-1, "generate_status_report", "argmap::number_of_training_cases=" + std::to_string(argmap::number_of_training_cases));
+			Utilities::debug_log(-1, "generate_status_report", "argmap::number_of_test_cases=" + std::to_string(argmap::number_of_test_cases));
+			Utilities::debug_log(-1, "generate_status_report", "_best_gnome=" + _best_gnome);
+			Utilities::debug_log(-1, "generate_status_report", "argmap::population_size=" + std::to_string(argmap::population_size));
+			Utilities::debug_log(-1, "generate_status_report", "argmap::alternation_rate=" + std::to_string(argmap::alternation_rate));
+			Utilities::debug_log(-1, "generate_status_report", "argmap::uniform_mutation_rate=" + std::to_string(argmap::uniform_mutation_rate));
+			Utilities::debug_log(-1, "generate_status_report", "argmap::example_case_max_length=" + std::to_string(argmap::example_case_max_length));
+			Utilities::debug_log(-1, "generate_status_report", "argmap::example_case_upper_range=" + std::to_string(argmap::example_case_upper_range));
+			Utilities::debug_log(-1, "generate_status_report", "_temperature=" + std::to_string(_temperature));
+			Utilities::debug_log(-1, "generate_status_report", "_best_individual_prev_training_error=" + std::to_string(_best_individual_prev_training_error));
+			Utilities::debug_log(-1, "generate_status_report", "_stalled_count=" + std::to_string(_stalled_count));
+			Utilities::debug_log(-1, "generate_status_report", "_cool_down_count=" + std::to_string(_cool_down_count));
+			Utilities::debug_log(-1, "generate_status_report", "_include_best_individual_in_breeding_pool=" + std::to_string(_include_best_individual_in_breeding_pool));
 
 			sqlcmd_save_status_report->execute();
 
@@ -1305,12 +1306,12 @@ namespace domain
 					debug_message = "Reset variables which track the minimum error for this test case and the individual who achived the minimum error";
 					debug_message += ",Generation=," + std::to_string(generation_number);
 					debug_message += ",Session=" + std::to_string(generations_completed_this_session);
-					Utilities::work_order_manager.debug_log(-1, "run", debug_message);
+					Utilities::debug_log(-1, "run", debug_message);
 
 					save_generation();
 
 					//std::cout << "Run Programs with Training Cases" << std::endl;
-					Utilities::work_order_manager.debug_log(-1, "run", "Run Programs with Training Cases");
+					Utilities::debug_log(-1, "run", "Run Programs with Training Cases");
 
 					std::tuple<int, double, double> best_individual_score_error;
 
@@ -1332,7 +1333,7 @@ namespace domain
 					best_individual_error = std::get<2>(best_individual_score_error);
 
 					//std::cout << "Produce New Offspring" << std::endl;
-					Utilities::work_order_manager.debug_log(-1, "run", "Produce New Offspring");
+					Utilities::debug_log(-1, "run", "Produce New Offspring");
 
 					if (argmap::use_PPL)
 						parallel_produce_new_offspring(argmap::number_of_training_cases,
@@ -1356,7 +1357,7 @@ namespace domain
 					debug_message = "Run Best Individual's Program with Test Cases";
 					debug_message += ",best_individual=" + std::to_string(best_individual);
 					debug_message += ",genome=" + genome;
-					Utilities::work_order_manager.debug_log(-1, "run", debug_message);
+					Utilities::debug_log(-1, "run", debug_message);
 
 					double test_case_score = compute_test_errors(env, run_individual_threadsafe, best_individual);
 
@@ -1365,11 +1366,11 @@ namespace domain
 
 					debug_message = "compute_test_errors";
 					debug_message += ",test_case_error=" + std::to_string(test_case_score);
-					Utilities::work_order_manager.debug_log(-1, "run", debug_message);
+					Utilities::debug_log(-1, "run", debug_message);
 
 					//std::cout << "Generate Status Report" << std::endl;
 
-					Utilities::work_order_manager.debug_log(-1, "run", "Generate Status Report");
+					Utilities::debug_log(-1, "run", "Generate Status Report");
 
 					double average_traiing_error = 0.0;
 					for (int ind = 0; ind < argmap::population_size; ind++)
@@ -1380,7 +1381,7 @@ namespace domain
 							debug_message += ",training_case_index=" + std::to_string(training_case_index);
 							debug_message += ",ind=" + std::to_string(ind);
 							debug_message += ",error=" + std::to_string(pushGP::globals::error_matrix[training_case_index][ind]);
-							Utilities::work_order_manager.debug_log(-1, "run", debug_message);
+							Utilities::debug_log(-1, "run", debug_message);
 
 							average_traiing_error += pushGP::globals::error_matrix[training_case_index][ind];
 						}
@@ -1415,7 +1416,7 @@ namespace domain
 
 					//std::cout << "Install New Generation" << std::endl;
 
-					Utilities::work_order_manager.debug_log(-1, "run", "Install New Generation");
+					Utilities::debug_log(-1, "run", "Install New Generation");
 
 					install_next_generation();
 					generation_number++;
