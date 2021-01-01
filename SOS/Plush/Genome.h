@@ -1714,11 +1714,25 @@ namespace Plush
 			unsigned int extra_blocks = 0;
 			size_t effort = 0;
 
+			if (debug_push)
+			{
+				std::string debug = "entry,item_position=" + std::to_string(item_position);
+				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::yankdup_item", debug);
+			}
+
 			Genome_section<T> genome_section = get_item(item_position);
 
 			s = genome_section.starting_position;
 			l = genome_section.size;
 			extra_blocks = genome_section.extra_parenthesis;
+
+			if (debug_push)
+			{
+				std::string debug = "post_get_item,s=" + std::to_string(s)
+					+ ",l=" + std::to_string(l)
+					+ ",extra_blocks=" + std::to_string(extra_blocks);
+				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::yankdup_item", debug);
+			}
 
 			if (l > 0)
 			{
