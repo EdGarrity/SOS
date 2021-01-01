@@ -114,72 +114,70 @@ namespace Plush
 	inline size_t exec_while(Environment & _env)
 	{
 		bool flag = _env.pop<bool>();
+		size_t effort = 1;
 
 		if (flag)
 		{
 			_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.WHILE :close 0}"));
-			_env.get_stack<ExecAtom>().yankdup_item(1);
+			effort = _env.get_stack<ExecAtom>().yankdup_item(1);
 		}
 
-		return 1;
+		return effort;
 	}
 
 	inline size_t do_while(Environment & _env)
 	{
 		_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.WHILE :close 0}"));
-		_env.get_stack<ExecAtom>().yankdup_item(1);
-
-		return 1;
+		return _env.get_stack<ExecAtom>().yankdup_item(1);
 	}
 
 	inline size_t exec_when(Environment & _env)
 	{
+		size_t effort = 1;
 		bool flag = _env.pop<bool>();
 
 		if (!flag)
-			_env.get_stack<ExecAtom>().remove_item_at_position(0);
+			effort = _env.get_stack<ExecAtom>().remove_item_at_position(0);
 
-		return 1;
+		return effort;
 	}
 
 	inline size_t exec_k(Environment & _env)
 	{
-		_env.get_stack<ExecAtom>().remove_item_at_position(1);
-
-		return 1;
+		return _env.get_stack<ExecAtom>().remove_item_at_position(1);
 	}
 
 	inline size_t exec_s(Environment & _env)
 	{
+		size_t effort = 0;
+
 		// containing B
-		_env.get_stack<ExecAtom>().yankdup_item(1);
+		effort += _env.get_stack<ExecAtom>().yankdup_item(1);
 
 		// and C 
-		_env.get_stack<ExecAtom>().yankdup_item(3);
+		effort += _env.get_stack<ExecAtom>().yankdup_item(3);
 
 		// back onto the EXEC stack
-		_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
+		effort += _env.push<ExecAtom>(ExecAtom("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}"));
 
 		// Followed by another instance of C 
-		_env.get_stack<ExecAtom>().yankdup_item(3);
+		effort += _env.get_stack<ExecAtom>().yankdup_item(3);
 
 		// Followed by another instance of A
-		_env.get_stack<ExecAtom>().yankdup_item(2);
+		effort += _env.get_stack<ExecAtom>().yankdup_item(2);
 
 		// Remove original A B C from stack
-		_env.get_stack<ExecAtom>().remove_item_at_position(3);
-		_env.get_stack<ExecAtom>().remove_item_at_position(3);
-		_env.get_stack<ExecAtom>().remove_item_at_position(3);
+		effort += _env.get_stack<ExecAtom>().remove_item_at_position(3);
+		effort += _env.get_stack<ExecAtom>().remove_item_at_position(3);
+		effort += _env.get_stack<ExecAtom>().remove_item_at_position(3);
 
-		return 1;
+		return effort;
 	}
 
 	inline size_t exec_y(Environment & _env)
 	{
 		_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.Y :close 0}"));
-		_env.get_stack<ExecAtom>().yankdup_item(1);
-
-		return 1;
+		return _env.get_stack<ExecAtom>().yankdup_item(1);
 	}
 
 	inline size_t code_append(Environment & _env)
