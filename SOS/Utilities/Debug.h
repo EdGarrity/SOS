@@ -52,6 +52,8 @@ namespace Utilities
 				<< ",Function=" << function
 				<< ",Status=" << status
 				<< std::endl;
+
+			work_order_print_lock.unlock();
 		}
 	}
 
@@ -77,6 +79,8 @@ namespace Utilities
 				<< ",work_order.individual_index = " << individual_index
 				<< ",work_order.example_case=" << example_case
 				<< std::endl;
+
+			work_order_print_lock.unlock();
 		}
 	};
 
