@@ -8,6 +8,7 @@
 #include <thread>
 #include <set>
 #include <vector>
+#include <atomic>
 #include "..\Plush\Environment.h"
 
 namespace Utilities
@@ -27,7 +28,9 @@ namespace Utilities
 		{
 			Stopped = 0,
 			Running
-		} queue_state;
+		};
+
+		std::atomic<QueueState> queue_state;
 
 		unsigned int num_threads_;
 		std::mutex work_order_mutex_;

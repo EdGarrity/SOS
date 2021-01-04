@@ -1,6 +1,7 @@
 #include <exception>
 #include <iostream>
 #include <vector>
+#include <atomic>
 #include "Processor.h"
 #include "Plush.StaticInit.h"
 #include "..\Domain\Arguments.h"
@@ -8,9 +9,9 @@
 #include "..\Utilities\WorkOrderManager.h"
 #include "..\Utilities\Debug.h"
 
-extern bool debug_push;
-extern bool print_push;
-extern std::string env_state[domain::argmap::max_threads];
+extern std::atomic_bool debug_push;
+//extern std::atomic_bool print_push;
+//extern std::string env_state[domain::argmap::max_threads];
 
 namespace Plush
 {
@@ -77,14 +78,14 @@ namespace Plush
 				// Debug - Remember current instruction
 				env.current_instruction = atom.instruction;
 
-				if (debug_push)
+				if (debug_push.load(std::memory_order_acquire))
 				{
 					std::string debug = "pre_run," + env.print_state();
 					Utilities::debug_log(env.current_thread, "Processor::run", debug);
 				}
 
-				if (print_push)
-					env_state[env.current_thread] = env.print_state();
+				//if (print_push.load(std::memory_order_acquire))
+				//	env_state[env.current_thread] = env.print_state();
 
 				switch (atom.type)
 				{
@@ -132,7 +133,7 @@ namespace Plush
 							Operator op = pI->get_op();
 							unit = op(env);
 
-							if (debug_push)
+							if (debug_push.load(std::memory_order_acquire))
 							{
 								std::string debug = "unit=" + std::to_string(unit) + "," + env.print_state();
 								Utilities::debug_log(env.current_thread, "Processor::run", debug);
@@ -169,14 +170,14 @@ namespace Plush
 
 			effort += (1u) > (unit) ? (1u) : (unit);
 
-			if (debug_push)
+			if (debug_push.load(std::memory_order_acquire))
 			{
 				std::string debug = "post_run," + env.print_state();
 				Utilities::debug_log(env.current_thread, "Processor::run", debug);
 			}
 
-			if (print_push)
-				env_state[env.current_thread] = env.print_state();
+			//if (print_push.load(std::memory_order_acquire))
+			//	env_state[env.current_thread] = env.print_state();
 		}
 
 		return effort;

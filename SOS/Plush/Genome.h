@@ -1714,7 +1714,7 @@ namespace Plush
 			unsigned int extra_blocks = 0;
 			size_t effort = 0;
 
-			if (debug_push)
+			if (debug_push.load(std::memory_order_acquire))
 			{
 				std::string debug = "entry,item_position=" + std::to_string(item_position);
 				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::yankdup_item", debug);
@@ -1726,7 +1726,7 @@ namespace Plush
 			l = genome_section.size;
 			extra_blocks = genome_section.extra_parenthesis;
 
-			if (debug_push)
+			if (debug_push.load(std::memory_order_acquire))
 			{
 				std::string debug = "post_get_item,s=" + std::to_string(s)
 					+ ",l=" + std::to_string(l)

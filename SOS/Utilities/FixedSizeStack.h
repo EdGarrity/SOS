@@ -2,11 +2,12 @@
 #include <array>
 #include <stdexcept>
 #include <sstream>
+#include <atomic>
 #include "../Domain/Arguments.h"
 #include "..\Plush\Atom.h"
 #include "..\Utilities\Debug.h"
 
-extern bool debug_push;
+extern std::atomic_bool debug_push;
 
 // Purpose: 
 //   Impliments a fixed-sized stack (FIFO)
@@ -450,7 +451,7 @@ namespace Utilities
 		//
 		inline size_t remove_items(size_t position, size_t length)
 		{
-			if (debug_push)
+			if (debug_push.load(std::memory_order_acquire))
 			{
 				std::string debug = "entry,position=" + std::to_string(position) 
 					+ ",length=" + std::to_string(length) 
@@ -467,7 +468,7 @@ namespace Utilities
 			if (position > 0)
 			{
 				size_t j = top_ - position, k = (top_ - position - 1) - (length - 1);
-				if (debug_push)
+				if (debug_push.load(std::memory_order_acquire))
 				{
 					std::string debug = "for,position=" + std::to_string(position)
 						+ ",length=" + std::to_string(length)
@@ -489,7 +490,7 @@ namespace Utilities
 
 			top_ -= length;
 
-			if (debug_push)
+			if (debug_push.load(std::memory_order_acquire))
 			{
 				std::string debug = "exit,position=" + std::to_string(position)
 					+ ",length=" + std::to_string(length)
@@ -622,7 +623,7 @@ namespace Utilities
 		//
 		inline size_t yankdup_item(size_t position, size_t length)
 		{
-			if (debug_push)
+			if (debug_push.load(std::memory_order_acquire))
 			{
 				std::string debug = "entry,position=" + std::to_string(position)
 					+ ",length=" + std::to_string(length)
@@ -639,7 +640,7 @@ namespace Utilities
 			if ((top_ - position - length >= 0) && ((top_ + length) < N))
 			{
 				size_t i = 0, j = top_ - position - length, k = top_;
-				if (debug_push)
+				if (debug_push.load(std::memory_order_acquire))
 				{
 					std::string debug = "entry,position=" + std::to_string(position)
 						+ ",length=" + std::to_string(length)
@@ -664,7 +665,7 @@ namespace Utilities
 			else
 				length = 0;
 
-			if (debug_push)
+			if (debug_push.load(std::memory_order_acquire))
 			{
 				std::string debug = "exit,position=" + std::to_string(position)
 					+ ",length=" + std::to_string(length)
