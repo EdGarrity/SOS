@@ -1110,6 +1110,13 @@ namespace domain
 		{
 			database::SQLCommand* sqlcmd_save_status_report;
 
+			// Normalize data
+			if (_average_traiing_error > 1000.0)
+				_average_traiing_error = 1000.0;
+
+			if (_standard_deviation > 1000.0)
+				_standard_deviation = 1000.0;
+
 			sqlcmd_save_status_report = new database::SQLCommand(&con, sqlstmt_save_status_report);
 
 			sqlcmd_save_status_report->set_as_integer(1, _generation_number);
@@ -1160,6 +1167,8 @@ namespace domain
 			sqlcmd_save_status_report->execute();
 
 			delete sqlcmd_save_status_report;
+
+			Utilities::debug_log(-1, "generate_status_report", "Exit.");
 		}
 
 		// May need to move to thread local.
@@ -1427,6 +1436,10 @@ namespace domain
 			}
 			catch (const std::exception& e)
 			{
+				std::string err_msg = "Standard exception: ";
+				err_msg += e.what();
+				Utilities::debug_log(-1, "run", err_msg);
+
 				env.clear_stacks();
 
 				std::cerr << "Standard exception: " << e.what() << std::endl;
@@ -1434,6 +1447,7 @@ namespace domain
 			}
 			catch (...)
 			{
+				Utilities::debug_log(-1, "run", "Exception occurred");
 				env.clear_stacks();
 
 				std::cerr << "Exception occurred" << std::endl;
