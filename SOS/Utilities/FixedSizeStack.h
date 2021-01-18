@@ -673,6 +673,12 @@ namespace Utilities
 				Utilities::debug_log(current_thread, "FixedSizeStack::yankdup_item", debug);
 			}
 
+			if (debug_push.load(std::memory_order_acquire))
+			{
+				std::string debug = "exit,length=" + std::to_string(length);
+				Utilities::debug_log(current_thread, "FixedSizeStack::yankdup_item", debug);
+			}
+
 			return length;
 		}
 

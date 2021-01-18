@@ -1123,6 +1123,12 @@ namespace Plush
 		//
 		inline Genome_section<T> get_item(unsigned int item_number = 0)
 		{
+			if (debug_push.load(std::memory_order_acquire))
+			{
+				std::string debug = "entry,item_number=" + std::to_string(item_number);
+				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::get_item", debug);
+			}
+
 			Genome_section<T> subsection;
 
 			int block_ending_index = 0;
@@ -1201,6 +1207,15 @@ namespace Plush
 			}
 
 			subsection.set(item_ending_position - atom_count, atom_count, extra_blocks);
+
+			if (debug_push.load(std::memory_order_acquire))
+			{
+				std::string debug = "exit,starting_position=" + std::to_string(subsection.starting_position);
+				debug += ",size=" + std::to_string(subsection.size);
+				debug += ",extra_parenthesis=" + std::to_string(subsection.extra_parenthesis);
+				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::get_item", debug);
+			}
+
 			return subsection;
 		};
 
@@ -1668,6 +1683,12 @@ namespace Plush
 		//
 		inline size_t remove_stack_element(unsigned int element_pos)
 		{
+			if (debug_push.load(std::memory_order_acquire))
+			{
+				std::string debug = "entry,element_pos=" + std::to_string(element_pos);
+				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::remove_stack_element", debug);
+			}
+
 			Genome_section<T> section = (*this)[element_pos];
 			Utilities::FixedSizeStack<T>::remove_items(section.starting_position, section.size);
 
@@ -1685,6 +1706,12 @@ namespace Plush
 
 				if (atom.close_parenthesis > section.extra_parenthesis)
 					atom.close_parenthesis = new_close_parenthesis;
+			}
+
+			if (debug_push.load(std::memory_order_acquire))
+			{
+				std::string debug = "exit,section.size=" + std::to_string(section.size);
+				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::remove_stack_element", debug);
 			}
 
 			return section.size;
@@ -1761,9 +1788,15 @@ namespace Plush
 				effort = 1;
 			}
 
-			if (Utilities::FixedSizeStack<T>::size() > 0)
+			if ((Utilities::FixedSizeStack<T>::size() > 0) && (extra_blocks > 0))
 				if (Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::size() - l].close_parenthesis > extra_blocks)
 					Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::size() - l].close_parenthesis -= extra_blocks;
+
+			if (debug_push.load(std::memory_order_acquire))
+			{
+				std::string debug = "exit,effort=" + std::to_string(effort);
+				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::yankdup_item", debug);
+			}
 
 			return effort;
 		}
@@ -1790,6 +1823,12 @@ namespace Plush
 		//
 		inline size_t yankdup_stack_element(unsigned int element_pos)
 		{
+			if (debug_push.load(std::memory_order_acquire))
+			{
+				std::string debug = "entry,element_pos=" + std::to_string(element_pos);
+				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::yankdup_stack_element", debug);
+			}
+
 			unsigned int s = 0;
 			unsigned int l = 0;
 			unsigned int extra_blocks = 0;
@@ -1811,6 +1850,12 @@ namespace Plush
 
 			if (atom.close_parenthesis > section.extra_parenthesis)
 				atom.close_parenthesis = new_close_parenthesis;
+
+			if (debug_push.load(std::memory_order_acquire))
+			{
+				std::string debug = "exit,effort=" + std::to_string(effort);
+				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::yankdup_stack_element", debug);
+			}
 
 			return effort;
 		}
@@ -1925,12 +1970,24 @@ namespace Plush
 		//
 		inline size_t yank_stack_element(unsigned int element_pos)
 		{
+			if (debug_push.load(std::memory_order_acquire))
+			{
+				std::string debug = "entry,element_pos=" + std::to_string(element_pos);
+				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::yank_stack_element", debug);
+			}
+
 			size_t effort = 0;
 
 			if (element_pos > 0)
 			{
 				if (effort = yankdup_stack_element(element_pos) > 0)
 					effort += remove_stack_element(element_pos + 1);
+			}
+
+			if (debug_push.load(std::memory_order_acquire))
+			{
+				std::string debug = "exit,effort=" + std::to_string(effort);
+				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::yank_stack_element", debug);
 			}
 
 			return effort;

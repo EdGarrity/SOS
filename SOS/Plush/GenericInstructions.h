@@ -291,12 +291,22 @@ namespace Plush
 	template<>
 	inline size_t swap<CodeAtom>(Environment & _env)
 	{
+		if (debug_push.load(std::memory_order_acquire))
+		{
+			Utilities::debug_log(_env.current_thread, "GenericInstructions::swap<CodeAtom>", "entry");
+		}
+
 		return _env.get_stack<CodeAtom>().yank_stack_element(1);
 	}
 
 	template<>
 	inline size_t swap<ExecAtom>(Environment & _env)
 	{
+		if (debug_push.load(std::memory_order_acquire))
+		{
+			Utilities::debug_log(_env.current_thread, "GenericInstructions::swap<ExecAtom>", "entry");
+		}
+
 		return _env.get_stack<ExecAtom>().yank_stack_element(1);
 	}
 }
