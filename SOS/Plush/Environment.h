@@ -37,9 +37,9 @@ namespace Plush
 		Environment()
 		{
 			clear_stacks();
-			null_input.clear();
-			input = null_input;
-			output.clear();
+			//null_input.clear();
+			//input = null_input;
+			//output.clear();
 
 			//running_state = Idle;
 		}
@@ -72,6 +72,10 @@ namespace Plush
 			code_stack_.clear();
 			bool_stack_.clear();
 			double_stack_.clear();
+
+			null_input.clear();
+			input = null_input;
+			output.clear();
 
 			//current_instruction.clear();
 			//current_effort = 0;

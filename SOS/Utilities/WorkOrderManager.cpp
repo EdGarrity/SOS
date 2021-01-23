@@ -101,7 +101,7 @@ namespace Utilities
 
 		struct WorkOrder work_order;
 
-		Plush::Environment env;
+		static thread_local Plush::Environment env;
 
 		try
 		{

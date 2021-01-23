@@ -31,6 +31,9 @@ namespace Plush
 		std::string gene;
 		Utilities::FixedSizeStack<Atom> program_stack;
 
+		// Initialize environment
+		env.clear_stacks();
+
 		// Load program into temp
 		while (program.length() > 0)
 		{
