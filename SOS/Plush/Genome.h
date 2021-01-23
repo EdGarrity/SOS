@@ -3,6 +3,7 @@
 #include <vector>
 #include <stack>
 #include <map>
+#include "Plush.StaticInit.h"
 #include "..\Utilities\FixedSizeStack.h"
 #include "..\Utilities\String.h"
 
@@ -20,8 +21,8 @@
 
 namespace Plush
 {
-	typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
-	extern Func2BlockWantsMapType Func2BlockWantsMap;
+	//typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
+	//extern Func2BlockWantsMapType Func2BlockWantsMap;
 
 	// Purpose: 
 	//   Returns a reference to a section of the genome.
@@ -700,7 +701,8 @@ namespace Plush
 				if ((n < 0) && (extra_blocks <= 0) && (atom.close_parenthesis == 0))
 					atom.close_parenthesis = 1;
 
-				int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
+				//int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
+				int closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction);
 
 				if (closing < 0)
 				{
@@ -786,7 +788,8 @@ namespace Plush
 				if ((n < 0) && (extra_blocks <= 0) && (atom.close_parenthesis == 0))
 					atom.close_parenthesis = 1;
 
-				int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
+				//int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
+				int closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction);
 
 				if (closing < 0)
 				{
@@ -873,7 +876,8 @@ namespace Plush
 				else
 					atom = Plush::Atom("{:instruction EXEC.NOOP :close 1}");
 
-				int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
+				//int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
+				int closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction);
 
 				if (n < 0)
 					closing = wanted_blocks;
@@ -958,7 +962,8 @@ namespace Plush
 				else
 					atom = Plush::Atom("{:instruction EXEC.NOOP :close 1}");
 
-				int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
+				//int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
+				int closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction);
 
 				if (n < 0)
 					closing = wanted_blocks;
@@ -1053,7 +1058,8 @@ namespace Plush
 					i++;
 				}
 
-				int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
+				//int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
+				int closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction);
 
 				if (closing < 0)
 				{
@@ -1171,7 +1177,8 @@ namespace Plush
 							block_ending_index++;
 						}
 
-						int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
+						//int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
+						int closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction);
 
 						if (closing < 0)
 						{
@@ -1272,7 +1279,8 @@ namespace Plush
 						i++;
 					}
 
-					int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
+					//int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
+					int closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction);
 
 					if (closing < 0)
 					{
@@ -1364,7 +1372,8 @@ namespace Plush
 
 				search_ending_index = i;
 
-				int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
+				//int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
+				int closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction);
 
 				if (closing < 0)
 				{

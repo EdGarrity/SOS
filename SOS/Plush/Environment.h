@@ -9,8 +9,8 @@
 
 namespace Plush
 {
-	typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
-	extern Func2BlockWantsMapType Func2BlockWantsMap;
+	//typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
+	//extern Func2BlockWantsMapType Func2BlockWantsMap;
 
 	extern std::vector<double> null_input;
 

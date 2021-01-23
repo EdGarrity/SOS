@@ -16,7 +16,7 @@ extern std::atomic_bool debug_push;
 namespace Plush
 {
 	typedef unsigned(*Operator)(Environment &env);
-	extern 	Func2CodeMapType Func2CodeMap;
+	//extern 	Func2CodeMapType Func2CodeMap;
 	extern std::vector<double> null_input;
 
 	// Run provided program without inputs
@@ -121,12 +121,13 @@ namespace Plush
 					}
 
 					// Execute the instruction
-					auto search = Func2CodeMap.find(atom.instruction);
+					//auto search = Func2CodeMap.find(atom.instruction);
 
-					if (search != Func2CodeMap.end())
+					//if (search != Func2CodeMap.end())
+					if (static_initializer.is_function_supported(atom.instruction))
 					{
-						//					Operator op = Func2CodeMap[atom.instruction];
-						Instruction * pI = Func2CodeMap[atom.instruction];
+						//Instruction * pI = Func2CodeMap[atom.instruction];
+						Instruction * pI = static_initializer.get_function(atom.instruction);
 
 						if (pI->can_run(env))
 						{

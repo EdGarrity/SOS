@@ -2,8 +2,9 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <thread>
+#include <map>
 #include "Plush.Instruction.h"
-//#include "Processor.h"
 
 namespace Plush
 {
@@ -11,46 +12,35 @@ namespace Plush
 
 	typedef unsigned(*Operator)(Environment &env);
 
-	typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
-	extern Func2BlockWantsMapType Func2BlockWantsMap;
-	
-//	typedef std::map<std::string, Operator> Func2CodeMapType;
-
-	typedef std::map<std::string, Instruction*> Func2CodeMapType;
-	extern 	Func2CodeMapType Func2CodeMap;
-
-//	typedef std::vector<std::string> Names;
-//	extern Names function_names;
-//	extern std::vector<std::string> function_names;
-
-	// Declared in Processor.h
-	//typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
-	//extern Func2BlockWantsMapType Func2BlockWantsMap;
 
 	class StaticInit
 	{
 	private:
 		std::vector<std::string> function_names;
 
+		typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
+		Func2BlockWantsMapType Func2BlockWantsMap;
+
+		typedef std::map<std::string, Instruction*> Func2CodeMapType;
+		Func2CodeMapType Func2CodeMap;
+
 	public:
 		StaticInit();
 
-		/* Registers a function and makes it globally available through the 'instructions' Code */
+		// Registers a function and makes it globally available through the 'instructions' Code 
 		void push_register_pushfunc(Instruction* pInstruction);
-		//void register_pushfunc(Operator op, std::string type, std::string name);
 		void set_parentheses(std::string type, std::string name, unsigned int block_wants);
 		void set_parentheses(std::string name, unsigned int block_wants);
 
+		// Helper functions
 		unsigned int number_of_functions();
 		std::string get_function_name(unsigned int function_index);
+		unsigned int get_function_block_wants(std::string function_name);
+		Instruction* get_function(std::string function_name);
+		bool is_function_supported(std::string function_name);
 	};
 
-	extern StaticInit static_initializer;
-
-	//inline void make_instruction(Operator op, std::string type, std::string name)
-	//{
-	//	static_initializer.register_pushfunc(op, type, name);
-	//}
+	extern thread_local StaticInit static_initializer;
 
 	inline void set_parentheses(std::string type, std::string name, unsigned int block_wants)
 	{
