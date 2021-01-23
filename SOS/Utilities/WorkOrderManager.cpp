@@ -226,8 +226,8 @@ namespace Utilities
 				debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 			} while (queue_size > 0);
 
-			debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", "waiting_10_minutes");
-			std::this_thread::sleep_for(10min);
+			debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", "waiting_2_minutes");
+			std::this_thread::sleep_for(2min);
 
 			debug_message = "wait_for_all_threads_to_finish,thread_pool_.size()=" + std::to_string(domain::argmap::max_threads);
 			debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
