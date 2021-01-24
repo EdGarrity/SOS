@@ -1,21 +1,23 @@
 #include <exception>
 #include <iostream>
 #include <vector>
+#include <atomic>
 #include "Processor.h"
 #include "Plush.StaticInit.h"
 #include "..\Domain\Arguments.h"
 #include "..\Utilities\String.h"
+#include "..\Utilities\WorkOrderManager.h"
+#include "..\Utilities\Debug.h"
+
+extern std::atomic_bool debug_push;
+//extern std::atomic_bool print_push;
+//extern std::string env_state[domain::argmap::max_threads];
 
 namespace Plush
 {
 	typedef unsigned(*Operator)(Environment &env);
-//	typedef std::map<std::string, Operator> Func2CodeMapType;
-//	typedef std::map<std::string, Instruction*> Func2CodeMapType;
-
-	extern 	Func2CodeMapType Func2CodeMap;
-
+	//extern 	Func2CodeMapType Func2CodeMap;
 	extern std::vector<double> null_input;
-
 
 	// Run provided program without inputs
 	unsigned int run(Environment& env, std::string program)
@@ -28,6 +30,9 @@ namespace Plush
 	{
 		std::string gene;
 		Utilities::FixedSizeStack<Atom> program_stack;
+
+		// Initialize environment
+		env.clear_stacks();
 
 		// Load program into temp
 		while (program.length() > 0)
@@ -60,16 +65,30 @@ namespace Plush
 	unsigned int run(Environment& env, unsigned _max_effort)
 	{
 		// The basic pop-exec cycle
-		unsigned effort = 0;
-		unsigned unit = 0;
+		size_t effort = 0;
+		size_t unit = 0;
 
 		while ((!env.is_empty<ExecAtom>()) && (effort < _max_effort))
 		{
 			try
 			{
+				env.current_effort = effort;
+				env.current_unit = unit;
 				unit = 0;
 
 				ExecAtom atom = env.pop<ExecAtom>();
+
+				// Debug - Remember current instruction
+				env.current_instruction = atom.instruction;
+
+				if (debug_push.load(std::memory_order_acquire))
+				{
+					std::string debug = "pre_run," + env.print_state();
+					Utilities::debug_log(env.current_thread, "Processor::run", debug);
+				}
+
+				//if (print_push.load(std::memory_order_acquire))
+				//	env_state[env.current_thread] = env.print_state();
 
 				switch (atom.type)
 				{
@@ -105,17 +124,24 @@ namespace Plush
 					}
 
 					// Execute the instruction
-					auto search = Func2CodeMap.find(atom.instruction);
+					//auto search = Func2CodeMap.find(atom.instruction);
 
-					if (search != Func2CodeMap.end())
+					//if (search != Func2CodeMap.end())
+					if (static_initializer.is_function_supported(atom.instruction))
 					{
-						//					Operator op = Func2CodeMap[atom.instruction];
-						Instruction * pI = Func2CodeMap[atom.instruction];
+						//Instruction * pI = Func2CodeMap[atom.instruction];
+						Instruction * pI = static_initializer.get_function(atom.instruction);
 
 						if (pI->can_run(env))
 						{
 							Operator op = pI->get_op();
 							unit = op(env);
+
+							if (debug_push.load(std::memory_order_acquire))
+							{
+								std::string debug = "unit=" + std::to_string(unit) + "," + env.print_state();
+								Utilities::debug_log(env.current_thread, "Processor::run", debug);
+							}
 						}
 					}
 
@@ -147,6 +173,15 @@ namespace Plush
 			}
 
 			effort += (1u) > (unit) ? (1u) : (unit);
+
+			if (debug_push.load(std::memory_order_acquire))
+			{
+				std::string debug = "post_run," + env.print_state();
+				Utilities::debug_log(env.current_thread, "Processor::run", debug);
+			}
+
+			//if (print_push.load(std::memory_order_acquire))
+			//	env_state[env.current_thread] = env.print_state();
 		}
 
 		return effort;

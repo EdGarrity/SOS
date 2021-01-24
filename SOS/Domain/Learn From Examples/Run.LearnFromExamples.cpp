@@ -25,6 +25,8 @@
 #include "../../PushGP/Breed.h"
 #include "../../PushGP/AsyncBreed.h"
 #include "../../PushGP/Random.h"
+#include "..\..\Utilities\WorkOrderManager.h"
+#include "..\..\Utilities\Debug.h"
 
 // Correction for Syntax error with std::numeric_limits::max compiler error
 // See https://stackoverflow.com/questions/27442885/syntax-error-with-stdnumeric-limitsmax
@@ -110,6 +112,8 @@ namespace domain
 
 			sqlcmd_get_last_saved_generation_number = new database::SQLCommand(&con, sqlstmt_get_last_saved_generation_number);
 
+			Utilities::debug_log(-1, "get_last_saved_generation_number", "sqlcmd");
+
 			sqlcmd_get_last_saved_generation_number->execute();
 
 			if (sqlcmd_get_last_saved_generation_number->fetch_next())
@@ -128,6 +132,7 @@ namespace domain
 
 			sqlcmd_get_last_saved_temperature = new database::SQLCommand(&con, sqlstmt_get_last_saved_temperature);
 
+			Utilities::debug_log(-1, "get_last_saved_temperature", "sqlcmd");
 			sqlcmd_get_last_saved_temperature->execute();
 
 			if (sqlcmd_get_last_saved_temperature->fetch_next())
@@ -146,6 +151,7 @@ namespace domain
 
 			sqlcmd_get_last_best_individual_error = new database::SQLCommand(&con, sqlstmt_get_last_best_individual_error);
 
+			Utilities::debug_log(-1, "get_last_best_individual_error", "sqlcmd");
 			sqlcmd_get_last_best_individual_error->execute();
 
 			if (sqlcmd_get_last_best_individual_error->fetch_next())
@@ -164,6 +170,7 @@ namespace domain
 
 			sqlcmd_get_last_prev_best_individual_error = new database::SQLCommand(&con, sqlstmt_get_last_prev_best_individual_error);
 
+			Utilities::debug_log(-1, "get_last_prev_best_individual_error", "sqlcmd");
 			sqlcmd_get_last_prev_best_individual_error->execute();
 
 			if (sqlcmd_get_last_prev_best_individual_error->fetch_next())
@@ -182,6 +189,7 @@ namespace domain
 
 			sqlcmd_get_last_stalled_count = new database::SQLCommand(&con, sqlstmt_get_last_stalled_count);
 
+			Utilities::debug_log(-1, "get_last_stalled_count", "sqlcmd");
 			sqlcmd_get_last_stalled_count->execute();
 
 			if (sqlcmd_get_last_stalled_count->fetch_next())
@@ -200,6 +208,7 @@ namespace domain
 
 			sqlcmd_get_last_cool_down_count = new database::SQLCommand(&con, sqlstmt_get_last_cool_down_count);
 
+			Utilities::debug_log(-1, "get_last_cool_down_count", "sqlcmd");
 			sqlcmd_get_last_cool_down_count->execute();
 
 			if (sqlcmd_get_last_cool_down_count->fetch_next())
@@ -219,6 +228,7 @@ namespace domain
 
 			sqlcmd_get_include_best_individual_in_breeding_pool = new database::SQLCommand(&con, sqlstmt_get_include_best_individual_in_breeding_pool);
 
+			Utilities::debug_log(-1, "get_include_best_individual_in_breeding_pool", "sqlcmd");
 			sqlcmd_get_include_best_individual_in_breeding_pool->execute();
 
 			if (sqlcmd_get_include_best_individual_in_breeding_pool->fetch_next())
@@ -248,6 +258,7 @@ namespace domain
 
 			try
 			{
+				Utilities::debug_log(-1, "load_example_cases", "sqlcmd");
 				sqlcmd_get_example_cases->execute();
 
 				if (sqlcmd_get_example_cases->is_result_set())
@@ -444,6 +455,8 @@ namespace domain
 
 				sqlcmd_insert_new_example_case->set_as_string(1, training_case_input_str);
 				sqlcmd_insert_new_example_case->set_as_string(2, training_case_output_str);
+
+				Utilities::debug_log(-1, "save_example_cases", "sqlcmd");
 				sqlcmd_insert_new_example_case->execute();
 			}
 
@@ -475,6 +488,7 @@ namespace domain
 
 				sqlcmd_insert_new_example_case->set_as_string(1, test_case_input_str);
 				sqlcmd_insert_new_example_case->set_as_string(2, test_case_output_str);
+				Utilities::debug_log(-1, "save_example_cases", "sqlcmd2");
 				sqlcmd_insert_new_example_case->execute();
 			}
 
@@ -494,6 +508,7 @@ namespace domain
 
 			try
 			{
+				Utilities::debug_log(-1, "load_pop_agents", "sqlcmd");
 				sqlcmd_get_individuals->execute();
 
 				if (sqlcmd_get_individuals->is_result_set())
@@ -667,6 +682,7 @@ namespace domain
 				else
 					sqlcmd_insert_new_individual->set_as_GUID(16, NilUuid);
 
+				//Utilities::debug_log(-1, "save_generation", "sqlcmd");
 				sqlcmd_insert_new_individual->execute();
 			}
 
@@ -678,7 +694,7 @@ namespace domain
 		}
 
 		std::tuple<int, double, double> compute_training_errors(Plush::Environment& _env,
-			std::function<double(/*Plush::Environment& _env,*/
+			std::function<double(Plush::Environment& _env,
 				unsigned int _individual_index,
 				std::vector<double>& _input_list,
 				std::vector<double>& _output_list)> _run_individual_program,
@@ -689,9 +705,10 @@ namespace domain
 			double min_error = (std::numeric_limits<double>::max)();
 			double min_score = (std::numeric_limits<double>::max)();
 
+			Plush::Environment* envp_local = new Plush::Environment;
+
 			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			{
-	//individual_index = 39;
 				int error_count_for_individual = 0;
 				double avg_error_for_individual = 0.0;
 
@@ -700,19 +717,18 @@ namespace domain
 
 				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
 				{
-	//example_case = 19;
 					std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
 					std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
 
 					// Run program
-					double error = _run_individual_program(/*_env,*/ individual_index, example_problem, example_solution);
+					double error = _run_individual_program(*envp_local, individual_index, example_problem, example_solution);
 
 					if (error > 0.0)
 						error_count_for_individual++;
 
 					avg_error_for_individual += error;
 
-					pushGP::globals::error_matrix[example_case][individual_index] = error;
+					pushGP::globals::error_matrix[example_case][individual_index].store(error, std::memory_order_release);
 				}
 
 				// Calculate the average error for all example cases
@@ -736,6 +752,7 @@ namespace domain
 					std::cout << std::endl;
 			}
 
+			delete envp_local;
 
 			std::cout << std::endl;
 
@@ -748,7 +765,7 @@ namespace domain
 		}
 
 		std::tuple<int, double, double> parallel_compute_training_errors(Plush::Environment& _env,
-			std::function<double(/*Plush::Environment& _env,*/
+			std::function<double(Plush::Environment& _env,
 				unsigned int _individual_index,
 				std::vector<double>& _input_list,
 				std::vector<double>& _output_list)> _run_individual_program,
@@ -773,14 +790,14 @@ namespace domain
 						std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
 
 						// Run program
-						double error = _run_individual_program(/*_env,*/ individual_index, example_problem, example_solution);
+						double error = run_individual_threadsafe(_env, individual_index, example_problem, example_solution);
 
 						if (error > 0.0)
 							error_count_for_individual++;
 
 						avg_error_for_individual += error;
 
-						pushGP::globals::error_matrix[example_case][individual_index] = error;
+						pushGP::globals::error_matrix[example_case][individual_index].store(error, std::memory_order_release);
 					}
 
 					// Calculate the average error for all example cases
@@ -810,8 +827,96 @@ namespace domain
 			);
 		}
 
+		std::tuple<int, double, double> compute_training_errors_thread_safe(Plush::Environment& _env,
+			std::function<double(Plush::Environment& _env,
+				unsigned int _individual_index,
+				std::vector<double>& _input_list,
+				std::vector<double>& _output_list)> _run_individual_program,
+			int _number_of_example_cases)
+		{
+			int individual_with_least_error = -1;
+			int individual_with_best_score = -1;
+			double min_error = (std::numeric_limits<double>::max)();
+			double min_score = (std::numeric_limits<double>::max)();
+
+//			Utilities::WorkOrderManager work_order_manager;
+//			work_order_manager.initialize();
+			Utilities::work_order_manager.stop();
+
+			//for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
+			//{
+			//	if ((individual_index % 100) == 0)
+			//		std::cout << individual_index;
+
+			//	for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
+			//	{
+			//		std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
+			//		std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
+
+			//		Utilities::work_order_manager.push(individual_index, example_case, example_problem, example_solution);
+			//	}
+
+			//	if ((individual_index % 100) == 0)
+			//		std::cout << std::endl;
+			//}
+
+			for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
+			{
+				for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
+				{
+					std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
+					std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
+
+					Utilities::work_order_manager.push(individual_index, example_case, example_problem, example_solution);
+				}
+			}
+
+			Utilities::work_order_manager.start();
+			Utilities::work_order_manager.wait_for_all_threads_to_complete();
+
+			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
+			{
+				int error_count_for_individual = 0;
+				double avg_error_for_individual = 0.0;
+
+				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
+				{
+					double error = pushGP::globals::error_matrix[example_case][individual_index].load(std::memory_order_acquire);
+
+					if (error > 0.0)
+						error_count_for_individual++;
+
+					avg_error_for_individual += error;
+				}
+
+				// Calculate the average error for all example cases
+				avg_error_for_individual /= (double)_number_of_example_cases;
+
+				double score = (double)error_count_for_individual / (double)_number_of_example_cases;
+
+				if ((score < 1.0) && (score < min_score))
+				{
+					min_score = score;
+					individual_with_best_score = individual_index;
+				}
+
+				if (avg_error_for_individual < min_error)
+				{
+					min_error = avg_error_for_individual;
+					individual_with_least_error = individual_index;
+				}
+			}
+
+			return std::make_tuple
+			(
+				(individual_with_best_score == -1) ? individual_with_least_error : individual_with_best_score,
+				min_score,
+				min_error
+			);
+		}
+
 		double compute_test_errors(Plush::Environment& _env,
-			std::function<double(/*Plush::Environment& _env,*/
+			std::function<double(Plush::Environment& _env,
 				unsigned int _individual_index,
 				std::vector<double>& _example_problem,
 				std::vector<double>& _example_solution)> _run_individual_program,
@@ -827,7 +932,7 @@ namespace domain
 				std::vector<double> example_problem(test_cases_problem[example_case].begin(), test_cases_problem[example_case].end());
 				std::vector<double> example_solution(test_cases_solution[example_case].begin(), test_cases_solution[example_case].end());
 
-				double example_case_error = _run_individual_program(/*_env,*/ _individual_index, example_problem, example_solution);
+				double example_case_error = _run_individual_program(_env, _individual_index, example_problem, example_solution);
 
 				if (example_case_error > 0.0)
 					error_count++;
@@ -1005,6 +1110,13 @@ namespace domain
 		{
 			database::SQLCommand* sqlcmd_save_status_report;
 
+			// Normalize data
+			if (_average_traiing_error > 1000.0)
+				_average_traiing_error = 1000.0;
+
+			if (_standard_deviation > 1000.0)
+				_standard_deviation = 1000.0;
+
 			sqlcmd_save_status_report = new database::SQLCommand(&con, sqlstmt_save_status_report);
 
 			sqlcmd_save_status_report->set_as_integer(1, _generation_number);
@@ -1029,9 +1141,34 @@ namespace domain
 			sqlcmd_save_status_report->set_as_integer(20, _cool_down_count);
 			sqlcmd_save_status_report->set_as_integer(21, _include_best_individual_in_breeding_pool);
 
+			Utilities::debug_log(-1, "generate_status_report", "sqlcmd");
+			Utilities::debug_log(-1, "generate_status_report", "_generation_number=" + std::to_string(_generation_number));
+			Utilities::debug_log(-1, "generate_status_report", "_generations_completed_this_session=" + std::to_string(_generations_completed_this_session));
+			Utilities::debug_log(-1, "generate_status_report", "_best_individual_id=" + std::to_string(_best_individual_id));
+			Utilities::debug_log(-1, "generate_status_report", "_best_individual_training_score=" + std::to_string(_best_individual_training_score));
+			Utilities::debug_log(-1, "generate_status_report", "_best_individual_training_error=" + std::to_string(_best_individual_training_error));
+			Utilities::debug_log(-1, "generate_status_report", "_average_traiing_error=" + std::to_string(_average_traiing_error));
+			Utilities::debug_log(-1, "generate_status_report", "_standard_deviation=" + std::to_string(_standard_deviation));
+			Utilities::debug_log(-1, "generate_status_report", "_best_individual_test_score=" + std::to_string(_best_individual_test_score));
+			Utilities::debug_log(-1, "generate_status_report", "argmap::number_of_training_cases=" + std::to_string(argmap::number_of_training_cases));
+			Utilities::debug_log(-1, "generate_status_report", "argmap::number_of_test_cases=" + std::to_string(argmap::number_of_test_cases));
+			Utilities::debug_log(-1, "generate_status_report", "_best_gnome=" + _best_gnome);
+			Utilities::debug_log(-1, "generate_status_report", "argmap::population_size=" + std::to_string(argmap::population_size));
+			Utilities::debug_log(-1, "generate_status_report", "argmap::alternation_rate=" + std::to_string(argmap::alternation_rate));
+			Utilities::debug_log(-1, "generate_status_report", "argmap::uniform_mutation_rate=" + std::to_string(argmap::uniform_mutation_rate));
+			Utilities::debug_log(-1, "generate_status_report", "argmap::example_case_max_length=" + std::to_string(argmap::example_case_max_length));
+			Utilities::debug_log(-1, "generate_status_report", "argmap::example_case_upper_range=" + std::to_string(argmap::example_case_upper_range));
+			Utilities::debug_log(-1, "generate_status_report", "_temperature=" + std::to_string(_temperature));
+			Utilities::debug_log(-1, "generate_status_report", "_best_individual_prev_training_error=" + std::to_string(_best_individual_prev_training_error));
+			Utilities::debug_log(-1, "generate_status_report", "_stalled_count=" + std::to_string(_stalled_count));
+			Utilities::debug_log(-1, "generate_status_report", "_cool_down_count=" + std::to_string(_cool_down_count));
+			Utilities::debug_log(-1, "generate_status_report", "_include_best_individual_in_breeding_pool=" + std::to_string(_include_best_individual_in_breeding_pool));
+
 			sqlcmd_save_status_report->execute();
 
 			delete sqlcmd_save_status_report;
+
+			Utilities::debug_log(-1, "generate_status_report", "Exit.");
 		}
 
 		// May need to move to thread local.
@@ -1039,6 +1176,8 @@ namespace domain
 
 		int run()
 		{
+			std::string debug_message;
+
 			pushGP::SimulatedAnnealing sa;
 
 			// Check if CPU is too hot and if so, wait for it to cool down.
@@ -1162,35 +1301,48 @@ namespace domain
 					}
 
 					// Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
-					std::cout << "Reset variables which track the minimum error for this test case and the individual who achived the minimum error " << std::endl;
+					//std::cout << "Reset variables which track the minimum error for this test case and the individual who achived the minimum error " << std::endl;
 
 					for (int ind = 0; ind < argmap::population_size; ind++)
 					{
 						for (int training_case_index = 0; training_case_index < argmap::number_of_training_cases; training_case_index++)
-							pushGP::globals::error_matrix[training_case_index][ind] = 0.0;
+							pushGP::globals::error_matrix[training_case_index][ind].store(0.0, std::memory_order_release);
 					}
 
-					std::cout << "Generation " << generation_number << std::endl;
-					std::cout << "Session " << generations_completed_this_session << std::endl;
+					//std::cout << "Generation " << generation_number << std::endl;
+					//std::cout << "Session " << generations_completed_this_session << std::endl;
+
+					debug_message = "Reset variables which track the minimum error for this test case and the individual who achived the minimum error";
+					debug_message += ",Generation=," + std::to_string(generation_number);
+					debug_message += ",Session=" + std::to_string(generations_completed_this_session);
+					Utilities::debug_log(-1, "run", debug_message);
+
 					save_generation();
 
-					std::cout << "Run Programs with Training Cases" << std::endl;
+					//std::cout << "Run Programs with Training Cases" << std::endl;
+					Utilities::debug_log(-1, "run", "Run Programs with Training Cases");
 
 					std::tuple<int, double, double> best_individual_score_error;
 
-					if (argmap::use_PPL)
-						best_individual_score_error = parallel_compute_training_errors(
+					if (argmap::use_multithreading)
+						best_individual_score_error = compute_training_errors_thread_safe(
 							env, 
-							run_individual, 
+							run_individual_threadsafe,
+							argmap::number_of_training_cases);
+					else if (argmap::use_PPL)
+						best_individual_score_error = parallel_compute_training_errors(
+							env,
+							run_individual_threadsafe,
 							argmap::number_of_training_cases);
 					else
-						best_individual_score_error = compute_training_errors(env, run_individual, argmap::number_of_training_cases);
+						best_individual_score_error = compute_training_errors(env, run_individual_threadsafe, argmap::number_of_training_cases);
 
 					best_individual = std::get<0>(best_individual_score_error);
 					best_individual_score = std::get<1>(best_individual_score_error);
 					best_individual_error = std::get<2>(best_individual_score_error);
 
-					std::cout << "Produce New Offspring" << std::endl;
+					//std::cout << "Produce New Offspring" << std::endl;
+					Utilities::debug_log(-1, "run", "Produce New Offspring");
 
 					if (argmap::use_PPL)
 						parallel_produce_new_offspring(argmap::number_of_training_cases,
@@ -1204,25 +1356,44 @@ namespace domain
 							sa,
 							include_best_individual_in_breeding_pool);
 
-					std::cout << "Run Best Individual's Program with Test Cases" << std::endl;
+					//std::cout << "Run Best Individual's Program with Test Cases" << std::endl;
 
 					std::string genome = pushGP::globals::population_agents[best_individual].get_genome_as_string();
 
-					std::cout << "best_individual = " << best_individual << std::endl;
-					std::cout << "genome = " << genome << std::endl;
+					//std::cout << "best_individual = " << best_individual << std::endl;
+					//std::cout << "genome = " << genome << std::endl;
 
-					double test_case_score = compute_test_errors(env, run_individual, best_individual);
+					debug_message = "Run Best Individual's Program with Test Cases";
+					debug_message += ",best_individual=" + std::to_string(best_individual);
+					debug_message += ",genome=" + genome;
+					Utilities::debug_log(-1, "run", debug_message);
 
-					std::cout << "test_case_error = " << test_case_score << std::endl;
-					std::cout << std::endl;
+					double test_case_score = compute_test_errors(env, run_individual_threadsafe, best_individual);
 
-					std::cout << "Generate Status Report" << std::endl;
+					//std::cout << "test_case_error = " << test_case_score << std::endl;
+					//std::cout << std::endl;
+
+					debug_message = "compute_test_errors";
+					debug_message += ",test_case_error=" + std::to_string(test_case_score);
+					Utilities::debug_log(-1, "run", debug_message);
+
+					//std::cout << "Generate Status Report" << std::endl;
+
+					Utilities::debug_log(-1, "run", "Generate Status Report");
 
 					double average_traiing_error = 0.0;
 					for (int ind = 0; ind < argmap::population_size; ind++)
 					{
 						for (int training_case_index = 0; training_case_index < argmap::number_of_training_cases; training_case_index++)
-							average_traiing_error += pushGP::globals::error_matrix[training_case_index][ind];
+						{
+							debug_message = "error_matrix";
+							debug_message += ",training_case_index=" + std::to_string(training_case_index);
+							debug_message += ",ind=" + std::to_string(ind);
+							debug_message += ",error=" + std::to_string(pushGP::globals::error_matrix[training_case_index][ind].load(std::memory_order_acquire));
+							Utilities::debug_log(-1, "run", debug_message);
+
+							average_traiing_error += pushGP::globals::error_matrix[training_case_index][ind].load(std::memory_order_acquire);
+						}
 					}
 					average_traiing_error /= (double)(domain::argmap::population_size * argmap::number_of_training_cases);
 
@@ -1230,8 +1401,10 @@ namespace domain
 					for (int ind = 0; ind < argmap::population_size; ind++)
 					{
 						for (int training_case_index = 0; training_case_index < argmap::number_of_training_cases; training_case_index++)
-							standard_deviation += (pushGP::globals::error_matrix[training_case_index][ind] - average_traiing_error)
-							* (pushGP::globals::error_matrix[training_case_index][ind] - average_traiing_error);
+						{
+							double error = pushGP::globals::error_matrix[training_case_index][ind].load(std::memory_order_acquire);
+							standard_deviation += (error - average_traiing_error) * (error - average_traiing_error);
+						}
 					}
 					standard_deviation /= (double)(domain::argmap::population_size * argmap::number_of_training_cases);
 					standard_deviation = std::sqrt(standard_deviation);
@@ -1252,7 +1425,10 @@ namespace domain
 						pushGP::globals::population_agents[best_individual]
 					);
 
-					std::cout << "Install New Generation" << std::endl;
+					//std::cout << "Install New Generation" << std::endl;
+
+					Utilities::debug_log(-1, "run", "Install New Generation");
+
 					install_next_generation();
 					generation_number++;
 					generations_completed_this_session++;
@@ -1260,6 +1436,10 @@ namespace domain
 			}
 			catch (const std::exception& e)
 			{
+				std::string err_msg = "Standard exception: ";
+				err_msg += e.what();
+				Utilities::debug_log(-1, "run", err_msg);
+
 				env.clear_stacks();
 
 				std::cerr << "Standard exception: " << e.what() << std::endl;
@@ -1267,6 +1447,7 @@ namespace domain
 			}
 			catch (...)
 			{
+				Utilities::debug_log(-1, "run", "Exception occurred");
 				env.clear_stacks();
 
 				std::cerr << "Exception occurred" << std::endl;

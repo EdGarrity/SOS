@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <limits>
+#include <atomic>
 #include "../Domain/Arguments.h"
 #include "Individual.h"
 
@@ -24,7 +25,7 @@ namespace pushGP
 
 		//*******************************************************
 		// Globals for Elite Lexicase Selection
-		extern double error_matrix[domain::argmap::number_of_training_cases][domain::argmap::population_size];
+		extern std::atomic<double> error_matrix[domain::argmap::number_of_training_cases][domain::argmap::population_size];
 		//		extern double minimum_error_array_by_individual[domain::argmap::population_size];
 				//extern double minimum_error_array_by_example_case[domain::argmap::number_of_training_cases];
 				//extern unsigned int individual_with_minimum_error_for_training_case[domain::argmap::number_of_training_cases];

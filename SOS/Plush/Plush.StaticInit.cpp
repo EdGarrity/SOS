@@ -4,9 +4,9 @@
 
 namespace Plush
 {
-	Func2CodeMapType Func2CodeMap;
-	Func2BlockWantsMapType Func2BlockWantsMap;
-	StaticInit static_initializer;
+	//thread_local Func2CodeMapType Func2CodeMap;
+	//thread_local Func2BlockWantsMapType Func2BlockWantsMap;
+	thread_local StaticInit static_initializer;
 //	Names function_names;
 //	std::vector<std::string> function_names;
 
@@ -79,6 +79,21 @@ namespace Plush
 	std::string StaticInit::get_function_name(unsigned int function_index)
 	{
 		return function_names[function_index];
+	}
+
+	unsigned int StaticInit::get_function_block_wants(std::string function_name)
+	{
+		return Func2BlockWantsMap[function_name];
+	}
+
+	Instruction * StaticInit::get_function(std::string function_name)
+	{
+		return Func2CodeMap[function_name];
+	}
+
+	bool StaticInit::is_function_supported(std::string function_name)
+	{
+		return Func2CodeMap.find(function_name) != Func2CodeMap.end();
 	}
 
 	void push_make_instruction(Operator op, std::string type, std::string name, Type in, Type out)

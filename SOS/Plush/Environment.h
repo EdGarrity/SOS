@@ -9,8 +9,8 @@
 
 namespace Plush
 {
-	typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
-	extern Func2BlockWantsMapType Func2BlockWantsMap;
+	//typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
+	//extern Func2BlockWantsMapType Func2BlockWantsMap;
 
 	extern std::vector<double> null_input;
 
@@ -24,18 +24,46 @@ namespace Plush
 		Genome<double> double_stack_;
 		Genome<bool> bool_stack_;
 
+
 	public:
+		// State of Worker Thread
+		enum RunningState
+		{
+			Idle = 0,
+			Waiting,
+			Running
+		}; //running_state;
+
 		Environment()
 		{
 			clear_stacks();
-			null_input.clear();
-			input = null_input;
-			output.clear();
+			//null_input.clear();
+			//input = null_input;
+			//output.clear();
+
+			//running_state = Idle;
 		}
 
 		// Pointer to input & output data
 		std::vector<double> input = null_input;
 		std::vector<double> output;
+
+		// Debug - Rember current state
+		std::string current_instruction;
+		size_t current_effort;
+		size_t current_unit;
+		int current_thread;
+
+		inline void set_current_thread(int new_current_thread)
+		{
+			current_thread = new_current_thread;
+
+			exec_stack_.set_current_thread(new_current_thread);
+			int_stack_.set_current_thread(new_current_thread);
+			code_stack_.set_current_thread(new_current_thread);
+			bool_stack_.set_current_thread(new_current_thread);
+			double_stack_.set_current_thread(new_current_thread);
+		};
 
 		virtual void clear_stacks()
 		{
@@ -44,6 +72,15 @@ namespace Plush
 			code_stack_.clear();
 			bool_stack_.clear();
 			double_stack_.clear();
+
+			null_input.clear();
+			input = null_input;
+			output.clear();
+
+			//current_instruction.clear();
+			//current_effort = 0;
+			//current_unit = 0;
+			//current_thread = -99;
 		}
 
 		virtual void initialize(std::vector<double> & _input)
@@ -51,6 +88,24 @@ namespace Plush
 			clear_stacks();
 			input = _input;
 			output.clear();
+		}
+
+		/* Debug functions */
+		inline std::string print_state()
+		{
+			std::string debug_msg;
+
+			debug_msg = "Instruction=" + current_instruction;
+			debug_msg += ",effort=" + std::to_string(current_effort);
+			debug_msg += ",unit=" + std::to_string(current_unit);
+			debug_msg += ",current_thread=" + std::to_string(current_thread);
+			debug_msg += ",exec_stack_size=" + std::to_string(exec_stack_.size());
+			debug_msg += ",code_stack_size=" + std::to_string(code_stack_.size());
+			debug_msg += ",int_stack_size=" + std::to_string(int_stack_.size());
+			debug_msg += ",double_stack_size=" + std::to_string(double_stack_.size());
+			debug_msg += ",bool_stack_size=" + std::to_string(bool_stack_.size());
+
+			return debug_msg;
 		}
 
 		/* Helper Functions */
@@ -74,6 +129,31 @@ namespace Plush
 		{
 			Genome<ExecAtom>& genome = get_stack<ExecAtom>();
 			return genome.number_of_blocks();
+		}
+
+		template<typename T>
+		bool assert_length(unsigned int needed)
+		{
+			Genome<T>& stack = get_stack<T>();
+			return stack.size() >= needed;
+		}
+
+		template<>
+		bool assert_length<CodeAtom>(unsigned int needed)
+		{
+			Genome<CodeAtom>& genome = get_stack<CodeAtom>();
+			//return genome.number_of_blocks() >= needed;
+
+			return genome.number_of_blocks_at_least(needed);
+		}
+
+		template<>
+		bool assert_length<ExecAtom>(unsigned int needed)
+		{
+			Genome<ExecAtom>& genome = get_stack<ExecAtom>();
+			//return genome.number_of_blocks() >= needed;
+
+			return genome.number_of_blocks_at_least(needed);
 		}
 
 		template <typename T> inline Genome<T>& get_stack(){}
@@ -111,9 +191,10 @@ namespace Plush
 		/* pushing and popping */
 
 		template <typename T>
-		inline void push(T value)
+		inline unsigned int push(T value)
 		{
 			get_stack<T>().push(value);
+			return 1;
 		}
 
 		template <class T>
@@ -258,6 +339,20 @@ namespace Plush
 			case FLOAT_STACK: return double_stack_.size();
 			}
 			return 0;
+		}
+
+		/* Needed for type checking of preconditions */
+		inline bool check_stack_size_at_least(unsigned int which, unsigned int size_needed) //const
+		{
+			switch (which)
+			{
+			case EXEC_STACK: return assert_length<ExecAtom>(size_needed);
+			case INTEGER_STACK: return int_stack_.size() >= size_needed;
+			case CODE_STACK: return assert_length<CodeAtom>(size_needed);
+			case BOOL_STACK: return bool_stack_.size() >= size_needed;
+			case FLOAT_STACK: return double_stack_.size() >= size_needed;
+			}
+			return false;
 		}
 
 		/* Needed for type checking of post conditions */

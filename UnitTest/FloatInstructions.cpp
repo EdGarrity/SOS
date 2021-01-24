@@ -4,7 +4,7 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace Plush;
 
-namespace UnitTest
+namespace PlushUnitTest
 {
 	TEST_CLASS(FloatInstructions)
 	{

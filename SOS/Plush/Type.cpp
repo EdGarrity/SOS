@@ -24,12 +24,26 @@ namespace Plush
 
 	bool Type::can_pop_from(/*const*/ Environment & env) // const
 	{
+		//for (unsigned int i = _start; i < type.size(); ++i)
+		//{
+		//	unsigned int s = env.get_stack_size(i);
+
+		//	if ((type[i] > 0) && (s < type[i]))
+		//		return false;
+		//}
+
 		for (unsigned int i = _start; i < type.size(); ++i)
 		{
-			unsigned int s = env.get_stack_size(i);
+			if (type[i] > 0)
+			{
+				//unsigned int s = env.check_stack_size_at_least(i, type[i]);
 
-			if ((type[i] > 0) && (s < type[i]))
-				return false;
+				//if (s < type[i])
+				//	return false;
+
+				if (env.check_stack_size_at_least(i, type[i]) == false)
+					return false;
+			}
 		}
 
 		return true;
@@ -37,12 +51,23 @@ namespace Plush
 
 	bool Type::can_push_to(/*const*/ Environment & env) // const
 	{
+		//for (unsigned int i = _start; i < type.size(); ++i)
+		//{
+		//	size_t f = env.get_stack_free(i);
+
+		//	if ((type[i] > 0) && (f < type[i]))
+		//		return false;
+		//}
+
 		for (unsigned int i = _start; i < type.size(); ++i)
 		{
-			size_t f = env.get_stack_free(i);
+			if (type[i] > 0)
+			{
+				size_t f = env.get_stack_free(i);
 
-			if ((type[i] > 0) && (f < type[i]))
-				return false;
+				if (f < type[i])
+					return false;
+			}
 		}
 
 		return true;

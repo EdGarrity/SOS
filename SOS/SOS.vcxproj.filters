@@ -180,6 +180,12 @@
     <ClInclude Include="Plush\GenericInstructions.h">
       <Filter>Header Files\Plush</Filter>
     </ClInclude>
+    <ClInclude Include="Utilities\WorkOrderManager.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Debug.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -280,6 +286,12 @@
     </ClCompile>
     <ClCompile Include="Plush\Type.cpp">
       <Filter>Source Files\Plush</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\WorkOrderManager.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\Debug.cpp">
+      <Filter>Source Files\Utilities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

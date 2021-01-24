@@ -88,23 +88,8 @@ namespace Plush
 		}
 
 		Type make_equal_length(const Type &org);
+
 	private:
-		//{
-		//	if (type.size() == org.type.size()) return org;
-
-		//	size_t len = std::max(type.size(), org.type.size());
-		//	type.resize(len, 0);
-
-		//	if (org.type.size() != len)
-		//	{
-		//		Type org2 = org;
-		//		org2.type.resize(len, 0);
-		//		return org2;
-		//	}
-
-		//	return org;
-		//}
-
 		void shorten()
 		{
 			while (type.size() && type.back() == 0) type.pop_back();
