@@ -22,7 +22,8 @@ namespace pushGP
 		// General GP storage variables
 		//extern Individual population_agents[domain::argmap::population_size];
 		extern Individual *population_agents;
-		extern Individual child_agents[domain::argmap::population_size];
+		//extern Individual child_agents[domain::argmap::population_size];
+		extern Individual *child_agents;
 
 		//*******************************************************
 		// Globals for Elite Lexicase Selection

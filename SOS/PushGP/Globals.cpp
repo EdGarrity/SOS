@@ -15,7 +15,8 @@ namespace pushGP
 
 		//Individual population_agents[domain::argmap::population_size];
 		Individual *population_agents;
-		Individual child_agents[domain::argmap::population_size];
+		//Individual child_agents[domain::argmap::population_size];
+		Individual *child_agents;
 
 		//*******************************************************
 		// Globals for Elite Lexicase Selection
