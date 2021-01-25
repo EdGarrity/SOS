@@ -154,7 +154,7 @@ namespace Plush
 			T first = _env.pop<T>();
 
 			T a;
-			if (typeid(a) == typeid(int))
+			if (typeid(a) == typeid(long))
 			{
 				T second = _env.get_stack<T>().get_top_atom();
 
