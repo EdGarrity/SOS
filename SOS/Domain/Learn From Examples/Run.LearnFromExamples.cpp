@@ -1210,6 +1210,10 @@ namespace domain
 				unsigned int agents_created = 0;
 				bool done = false;
 
+				// Allocate meneory for Individuals (See https://stackoverflow.com/questions/19803162/array-size-error-x64-process)
+				size_t sz = domain::argmap::population_size;
+				pushGP::globals::population_agents = new pushGP::Individual[sz];
+
 				// Initialize database connection
 				con.connect(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
 
@@ -1433,9 +1437,13 @@ namespace domain
 					generation_number++;
 					generations_completed_this_session++;
 				}
+
+				delete[] pushGP::globals::population_agents;
 			}
 			catch (const std::exception& e)
 			{
+				delete[] pushGP::globals::population_agents;
+
 				std::string err_msg = "Standard exception: ";
 				err_msg += e.what();
 				Utilities::debug_log(-1, "run", err_msg);
@@ -1447,6 +1455,8 @@ namespace domain
 			}
 			catch (...)
 			{
+				delete[] pushGP::globals::population_agents;
+
 				Utilities::debug_log(-1, "run", "Exception occurred");
 				env.clear_stacks();
 

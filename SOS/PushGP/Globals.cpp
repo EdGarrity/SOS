@@ -13,7 +13,8 @@ namespace pushGP
 		//*******************************************************
 		// General GP storage variables
 
-		Individual population_agents[domain::argmap::population_size];
+		//Individual population_agents[domain::argmap::population_size];
+		Individual *population_agents;
 		Individual child_agents[domain::argmap::population_size];
 
 		//*******************************************************
