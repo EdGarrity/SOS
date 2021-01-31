@@ -1,5 +1,6 @@
 #pragma once
-#include <vector>
+//#include <vector>
+#include <array>
 #include <limits>
 #include <atomic>
 #include "../Domain/Arguments.h"
@@ -9,15 +10,6 @@ namespace pushGP
 {
 	namespace globals
 	{
-		// Number of training cases for elite lexicase selection
-//		extern unsigned int number_of_training_cases;
-
-		// Brokeage account opening balance
-//		extern double opening_balance;
-
-		// Load data Plush instruction
-//			extern std::vector<struct Atom> load_data_genome;
-
 		//*******************************************************
 		// General GP storage variables
 		//extern Individual population_agents[domain::argmap::population_size];
@@ -27,10 +19,9 @@ namespace pushGP
 
 		//*******************************************************
 		// Globals for Elite Lexicase Selection
-		extern std::atomic<double> error_matrix[domain::argmap::number_of_training_cases][domain::argmap::population_size];
-		//		extern double minimum_error_array_by_individual[domain::argmap::population_size];
-				//extern double minimum_error_array_by_example_case[domain::argmap::number_of_training_cases];
-				//extern unsigned int individual_with_minimum_error_for_training_case[domain::argmap::number_of_training_cases];
+		//extern std::atomic<double> error_matrix[domain::argmap::number_of_training_cases][domain::argmap::population_size];
+		//extern std::vector<std::vector<double>> error_matrix(domain::argmap::number_of_training_cases, std::vector<double>(domain::argmap::population_size, 0));
+		extern std::array<std::array<double, domain::argmap::number_of_training_cases>, domain::argmap::population_size> error_matrix;
 
 		struct Training_case_min_error
 		{

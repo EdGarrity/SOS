@@ -20,7 +20,9 @@ namespace pushGP
 
 		//*******************************************************
 		// Globals for Elite Lexicase Selection
-		std::atomic<double> error_matrix[domain::argmap::number_of_training_cases][domain::argmap::population_size];
+		//std::atomic<double> error_matrix[domain::argmap::number_of_training_cases][domain::argmap::population_size];
+		//std::vector<std::vector<double>> error_matrix(domain::argmap::number_of_training_cases,std::vector<double>(domain::argmap::population_size, 0));
+		std::array<std::array<double, domain::argmap::number_of_training_cases>, domain::argmap::population_size> error_matrix;
 
 		// Used in epsilon lexicase. Only calculated once per population
 		std::vector<double> epsilons;
