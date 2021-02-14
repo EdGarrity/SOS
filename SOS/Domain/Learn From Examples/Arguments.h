@@ -18,7 +18,7 @@ namespace domain
 
 		//	:use - single - thread false
 		//	;; When true, will only use a single thread.
-		const bool use_multithreading = true;
+		const bool use_multithreading = false; // true;
 		const bool use_PPL = false;
 		const unsigned int number_of_cores_to_reserve = 4;
 		const unsigned int max_threads = 24;
