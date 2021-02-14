@@ -38,23 +38,23 @@ namespace Utilities
 
 	inline void debug_log(const int env_index, std::string function, std::string status)
 	{
-		//static std::string prev_status = "";
+		static std::string prev_status = "";
 
-		//if (prev_status != status)
-		//{
-		//	prev_status = status;
+		if (prev_status != status)
+		{
+			prev_status = status;
 
-		//	std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
+			std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
 
-		//	std::cout << getCurrentTimestamp()
-		//		<< ",LineNumber=" << std::to_string(line_number++)
-		//		<< ",Thread=" << env_index
-		//		<< ",Function=" << function
-		//		<< ",Status=" << status
-		//		<< std::endl;
+			std::cout << getCurrentTimestamp()
+				<< ",LineNumber=" << std::to_string(line_number++)
+				<< ",Thread=" << env_index
+				<< ",Function=" << function
+				<< ",Status=" << status
+				<< std::endl;
 
-		//	work_order_print_lock.unlock();
-		//}
+			work_order_print_lock.unlock();
+		}
 	}
 
 	inline void debug_log(const int env_index, 
@@ -63,25 +63,25 @@ namespace Utilities
 		unsigned int individual_index, 
 		unsigned int example_case)
 	{
-		//static std::string prev_status = "";
+		static std::string prev_status = "";
 
-		//if (prev_status != status)
-		//{
-		//	prev_status = status;
+		if (prev_status != status)
+		{
+			prev_status = status;
 
-		//	std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
+			std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
 
-		//	std::cout << getCurrentTimestamp()
-		//		<< ",LineNumber=" << std::to_string(line_number++)
-		//		<< ",Thread=" << env_index
-		//		<< ",Function=" << function
-		//		<< ",Status=" << status
-		//		<< ",work_order.individual_index = " << individual_index
-		//		<< ",work_order.example_case=" << example_case
-		//		<< std::endl;
+			std::cout << getCurrentTimestamp()
+				<< ",LineNumber=" << std::to_string(line_number++)
+				<< ",Thread=" << env_index
+				<< ",Function=" << function
+				<< ",Status=" << status
+				<< ",work_order.individual_index = " << individual_index
+				<< ",work_order.example_case=" << example_case
+				<< std::endl;
 
-		//	work_order_print_lock.unlock();
-		//}
+			work_order_print_lock.unlock();
+		}
 	};
 
 }
