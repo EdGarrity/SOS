@@ -18,7 +18,7 @@ namespace domain
 
 		//	:use - single - thread false
 		//	;; When true, will only use a single thread.
-		const bool use_multithreading = false; // true;
+		const bool use_multithreading = true;
 		const bool use_PPL = false;
 		const unsigned int number_of_cores_to_reserve = 4;
 		const unsigned int max_threads = 24;
@@ -57,7 +57,7 @@ namespace domain
 		//		;; The instructions that pushgp will use in random code.
 
 		// Number of individuals in the population.
-		const unsigned int population_size = 100000; // 200'000;
+		const unsigned int population_size = 20000; // 200'000;
 
 		// The maximum number of generations to run GP.
 		const unsigned int max_generations_in_one_session = 10'000;
