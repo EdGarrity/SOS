@@ -24,7 +24,8 @@ namespace pushGP
 		//std::vector<std::vector<double>> error_matrix(domain::argmap::number_of_training_cases,std::vector<double>(domain::argmap::population_size, 0));
 		//std::array<std::array<double, domain::argmap::number_of_training_cases>, domain::argmap::population_size> error_matrix;
 		//Utilities::ThreadSafeArray_2D<double, domain::argmap::number_of_training_cases, domain::argmap::population_size> error_matrix;
-		std::array<std::array<std::atomic<double>, domain::argmap::population_size>, domain::argmap::number_of_training_cases> error_matrix;
+		//std::array<std::array<std::atomic<double>, domain::argmap::population_size>, domain::argmap::number_of_training_cases> error_matrix;
+		Utilities::ThreadSafeArray_2D<double, domain::argmap::number_of_training_cases, domain::argmap::population_size> error_matrix;
 
 		// Used in epsilon lexicase. Only calculated once per population
 		std::vector<double> epsilons;

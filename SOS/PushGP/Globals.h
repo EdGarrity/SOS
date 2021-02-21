@@ -24,7 +24,8 @@ namespace pushGP
 		//extern std::vector<std::vector<double>> error_matrix(domain::argmap::number_of_training_cases, std::vector<double>(domain::argmap::population_size, 0));
 		//extern std::array<std::array<double, domain::argmap::number_of_training_cases>, domain::argmap::population_size> error_matrix;
 		//extern Utilities::ThreadSafeArray_2D<double, domain::argmap::number_of_training_cases, domain::argmap::population_size> error_matrix;
-		extern std::array<std::array<std::atomic<double>, domain::argmap::population_size>, domain::argmap::number_of_training_cases> error_matrix;
+		//extern std::array<std::array<std::atomic<double>, domain::argmap::population_size>, domain::argmap::number_of_training_cases> error_matrix;
+		extern Utilities::ThreadSafeArray_2D<double, domain::argmap::number_of_training_cases, domain::argmap::population_size> error_matrix;
 
 		struct Training_case_min_error
 		{

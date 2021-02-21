@@ -21,37 +21,13 @@ namespace PlushUnitTest
 			Assert::IsTrue(true);
 		}
 
-		TEST_METHOD(ThreadSafeArray_Test)
-		{
-			Utilities::ThreadSafeArray<double, 10> test_array;
-
-			for (int i = 0; i < 10; i++)
-				test_array.store(i, i);
-
-			bool pass = true;
-
-			for (int i = 0; i < 10; i++)
-			{
-				double answer = test_array.load(i);
-					
-				if (answer != i)
-				{
-					pass = false;
-					break;
-				}
-			}
-
-			Assert::IsTrue(pass);
-		}
-
-
 		TEST_METHOD(ThreadSafeArray2D_Test)
 		{
 			Utilities::ThreadSafeArray_2D<double, 10, 5> test_array;
 
 			for (int i = 0; i < 10; i++)
 				for (int j = 0; j < 5; j++)
-					test_array.store(i, j, i * 5 + j);
+					test_array.store(-1, i, j, i * 5 + j);
 
 			bool pass = true;
 

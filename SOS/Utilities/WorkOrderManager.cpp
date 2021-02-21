@@ -154,7 +154,8 @@ namespace Utilities
 					//pushGP::globals::error_matrix[work_order.example_case][work_order.individual_index].store(error, std::memory_order_release);
 					//pushGP::globals::error_matrix[work_order.example_case][work_order.individual_index] = error;
 					//pushGP::globals::error_matrix.store(work_order.example_case, work_order.individual_index, error);
-					pushGP::globals::error_matrix[work_order.example_case][work_order.individual_index].store(error, std::memory_order_release);
+					//pushGP::globals::error_matrix[work_order.example_case][work_order.individual_index].store(error, std::memory_order_release);
+					pushGP::globals::error_matrix.store(env_index, work_order.example_case, work_order.individual_index, error);
 
 					running_state[env_index].store(Plush::Environment::Waiting, std::memory_order_release);
 
