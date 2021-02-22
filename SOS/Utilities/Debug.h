@@ -8,6 +8,8 @@
 #include <time.h>
 #include <ctime>
 
+#include "SystemInfo.h"
+
 namespace Utilities
 {
 	extern std::mutex work_order_print_;
@@ -46,8 +48,11 @@ namespace Utilities
 
 			std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
 
+			unsigned long percent_memory_use = GetMemoryLoad();
+
 			std::cout << getCurrentTimestamp()
 				<< ",LineNumber=" << std::to_string(line_number++)
+				<< ",Percent_Free_Memory=" << std::to_string(percent_memory_use)
 				<< ",Thread=" << env_index
 				<< ",Function=" << function
 				<< ",Status=" << status
@@ -71,8 +76,11 @@ namespace Utilities
 
 			std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
 
+			unsigned long percent_memory_use = GetMemoryLoad();
+
 			std::cout << getCurrentTimestamp()
 				<< ",LineNumber=" << std::to_string(line_number++)
+				<< ",Percent_Free_Memory=" << std::to_string(percent_memory_use)
 				<< ",Thread=" << env_index
 				<< ",Function=" << function
 				<< ",Status=" << status

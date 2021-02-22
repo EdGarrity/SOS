@@ -1290,10 +1290,10 @@ namespace domain
 					// Check if there is enough memory to continue
 					unsigned long percent_memory_use = Utilities::GetMemoryLoad();
 
-					debug_message = "Percent_Free_Memory=" + std::to_string(percent_memory_use);
-					debug_message += ",Generation=" + std::to_string(generation_number);
-					debug_message += ",Session=" + std::to_string(generations_completed_this_session);
-					Utilities::debug_log(-1, "run", debug_message);
+					//debug_message = ",Percent_Free_Memory=" + std::to_string(percent_memory_use);
+					//debug_message += ",Generation=" + std::to_string(generation_number);
+					//debug_message += ",Session=" + std::to_string(generations_completed_this_session);
+					//Utilities::debug_log(-1, "run", debug_message);
 
 					if (percent_memory_use > argmap::percent_memory_cap)
 					{

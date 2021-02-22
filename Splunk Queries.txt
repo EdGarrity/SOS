@@ -12,3 +12,7 @@ index=sos_logs source="C:\\Users\\edgar\\Documents\\Logs\\sos210215155600.out"
 index=sos_logs source="C:\\Users\\edgar\\Documents\\Logs\\sos210215155600.out" 
 | stats latest(_raw) as _raw by Thread
 | sort Thread
+
+sourcetype=sos_logs_st source="C:\\Users\\edgar\\Documents\\Logs\\sos210221134600.out" Percent_Free_Memory
+| rex "Percent_Free_Memory=(?<Percent_Free_Memory>\d+)"
+| table _time Percent_Free_Memory

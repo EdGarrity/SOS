@@ -112,6 +112,9 @@ namespace Utilities
 	template<class T, size_t N1, size_t N2>
 	inline ThreadSafeArray_2D<T, N1, N2>::ThreadSafeArray_2D()
 	{
+		std::string debug_message = "Allocating,N1=" + std::to_string(N1) + ",N2=" + std::to_string(N2);
+		Utilities::debug_log(-1, "ThreadSafeArray_2D", debug_message);
+
 		data_array = (double*)calloc(N1 * N2, sizeof(double));
 		n1 = N1;
 		n2 = N2;
@@ -133,6 +136,9 @@ namespace Utilities
 	template<class T, size_t N1, size_t N2>
 	inline ThreadSafeArray_2D<T, N1, N2>::~ThreadSafeArray_2D(void)
 	{
+		std::string debug_message = "Deallocating,N1=" + std::to_string(N1) + ",N2=" + std::to_string(N2);
+		Utilities::debug_log(-1, "ThreadSafeArray_2D", debug_message);
+
 		free(data_array);
 	}
 	template<class T, size_t N1, size_t N2>
