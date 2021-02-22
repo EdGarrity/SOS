@@ -62,7 +62,27 @@ namespace Utilities
 		}
 	}
 
-	inline void debug_log(const int env_index, 
+	inline void debug_log_nolock(const int env_index, std::string function, std::string status)
+	{
+		static std::string prev_status = "";
+
+		if (prev_status != status)
+		{
+			prev_status = status;
+
+			unsigned long percent_memory_use = GetMemoryLoad();
+
+			std::cout << getCurrentTimestamp()
+				<< ",LineNumber=" << std::to_string(line_number++)
+				<< ",Percent_Free_Memory=" << std::to_string(percent_memory_use)
+				<< ",Thread=" << env_index
+				<< ",Function=" << function
+				<< ",Status=" << status
+				<< std::endl;
+		}
+	}
+
+	inline void debug_log(const int env_index,
 		std::string function, 
 		std::string status, 
 		unsigned int individual_index, 

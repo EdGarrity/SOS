@@ -113,7 +113,7 @@ namespace Utilities
 	inline ThreadSafeArray_2D<T, N1, N2>::ThreadSafeArray_2D()
 	{
 		std::string debug_message = "Allocating,N1=" + std::to_string(N1) + ",N2=" + std::to_string(N2);
-		Utilities::debug_log(-1, "ThreadSafeArray_2D", debug_message);
+		Utilities::debug_log_nolock(-1, "ThreadSafeArray_2D", debug_message);
 
 		data_array = (double*)calloc(N1 * N2, sizeof(double));
 		n1 = N1;
@@ -137,7 +137,7 @@ namespace Utilities
 	inline ThreadSafeArray_2D<T, N1, N2>::~ThreadSafeArray_2D(void)
 	{
 		std::string debug_message = "Deallocating,N1=" + std::to_string(N1) + ",N2=" + std::to_string(N2);
-		Utilities::debug_log(-1, "ThreadSafeArray_2D", debug_message);
+		Utilities::debug_log_nolock(-1, "ThreadSafeArray_2D", debug_message);
 
 		free(data_array);
 	}
@@ -157,6 +157,7 @@ namespace Utilities
 
 		std::unique_lock<std::mutex> array_access_lock(array_access_);
 		T data = data_array[y * n2 + x];
+		array_access_lock.unlock();
 
 		return data;
 	}
@@ -176,5 +177,6 @@ namespace Utilities
 
 		std::unique_lock<std::mutex> array_access_lock(array_access_);
 		data_array[y * n2 + x] = d;
+		array_access_lock.unlock();
 	}
 }
