@@ -728,7 +728,11 @@ namespace domain
 
 					avg_error_for_individual += error;
 
-					pushGP::globals::error_matrix[example_case][individual_index].store(error, std::memory_order_release);
+					//pushGP::globals::error_matrix[example_case][individual_index].store(error, std::memory_order_release);
+					//pushGP::globals::error_matrix[example_case][individual_index] = error;
+					//pushGP::globals::error_matrix.store(example_case, individual_index, error);
+					//pushGP::globals::error_matrix[example_case][individual_index].store(error, std::memory_order_release);
+					pushGP::globals::error_matrix.store(-1, example_case, individual_index, error);
 				}
 
 				// Calculate the average error for all example cases
@@ -797,7 +801,11 @@ namespace domain
 
 						avg_error_for_individual += error;
 
-						pushGP::globals::error_matrix[example_case][individual_index].store(error, std::memory_order_release);
+						//pushGP::globals::error_matrix[example_case][individual_index].store(error, std::memory_order_release);
+						//pushGP::globals::error_matrix[example_case][individual_index] = error;
+						//pushGP::globals::error_matrix.store(example_case, individual_index, error);
+						//pushGP::globals::error_matrix[example_case][individual_index].store(error, std::memory_order_release);
+						pushGP::globals::error_matrix.store(-1, example_case, individual_index, error);
 					}
 
 					// Calculate the average error for all example cases
@@ -839,26 +847,7 @@ namespace domain
 			double min_error = (std::numeric_limits<double>::max)();
 			double min_score = (std::numeric_limits<double>::max)();
 
-//			Utilities::WorkOrderManager work_order_manager;
-//			work_order_manager.initialize();
 			Utilities::work_order_manager.stop();
-
-			//for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
-			//{
-			//	if ((individual_index % 100) == 0)
-			//		std::cout << individual_index;
-
-			//	for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
-			//	{
-			//		std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
-			//		std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
-
-			//		Utilities::work_order_manager.push(individual_index, example_case, example_problem, example_solution);
-			//	}
-
-			//	if ((individual_index % 100) == 0)
-			//		std::cout << std::endl;
-			//}
 
 			for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
 			{
@@ -881,7 +870,11 @@ namespace domain
 
 				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
 				{
-					double error = pushGP::globals::error_matrix[example_case][individual_index].load(std::memory_order_acquire);
+					//double error = pushGP::globals::error_matrix[example_case][individual_index].load(std::memory_order_acquire);
+					//double error = pushGP::globals::error_matrix[example_case][individual_index];
+					//double error = pushGP::globals::error_matrix.load(example_case, individual_index);
+					//double error = pushGP::globals::error_matrix[example_case][individual_index].load(std::memory_order_acquire);
+					double error = pushGP::globals::error_matrix.load(example_case, individual_index);
 
 					if (error > 0.0)
 						error_count_for_individual++;
@@ -1196,6 +1189,9 @@ namespace domain
 
 				std::cerr << error.str() << std::endl;
 
+				debug_message = error.str();
+				Utilities::debug_log(-1, "run", debug_message);
+
 				return 1;
 			}
 
@@ -1209,6 +1205,11 @@ namespace domain
 				unsigned int generations_completed_this_session = 0;
 				unsigned int agents_created = 0;
 				bool done = false;
+
+				// Allocate meneory for Individuals (See https://stackoverflow.com/questions/19803162/array-size-error-x64-process)
+				size_t sz = domain::argmap::population_size;
+				pushGP::globals::population_agents = new pushGP::Individual[sz];
+				pushGP::globals::child_agents = new pushGP::Individual[sz];
 
 				// Initialize database connection
 				con.connect(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
@@ -1289,6 +1290,11 @@ namespace domain
 					// Check if there is enough memory to continue
 					unsigned long percent_memory_use = Utilities::GetMemoryLoad();
 
+					//debug_message = ",Percent_Free_Memory=" + std::to_string(percent_memory_use);
+					//debug_message += ",Generation=" + std::to_string(generation_number);
+					//debug_message += ",Session=" + std::to_string(generations_completed_this_session);
+					//Utilities::debug_log(-1, "run", debug_message);
+
 					if (percent_memory_use > argmap::percent_memory_cap)
 					{
 						std::stringstream error;
@@ -1296,6 +1302,11 @@ namespace domain
 						error << "Not enough free memory to continue.  Percent used = " << percent_memory_use;
 
 						std::cerr << error.str() << std::endl;
+
+						debug_message = error.str();
+						debug_message += ",Generation=" + std::to_string(generation_number);
+						debug_message += ",Session=" + std::to_string(generations_completed_this_session);
+						Utilities::debug_log(-1, "run", debug_message);
 
 						return 1;
 					}
@@ -1306,14 +1317,18 @@ namespace domain
 					for (int ind = 0; ind < argmap::population_size; ind++)
 					{
 						for (int training_case_index = 0; training_case_index < argmap::number_of_training_cases; training_case_index++)
-							pushGP::globals::error_matrix[training_case_index][ind].store(0.0, std::memory_order_release);
+							//pushGP::globals::error_matrix[training_case_index][ind].store(0.0, std::memory_order_release);
+							//pushGP::globals::error_matrix[training_case_index][ind] = 0;
+							//pushGP::globals::error_matrix.store(training_case_index, ind, 0);
+							//pushGP::globals::error_matrix[training_case_index][ind].store(0.0, std::memory_order_release);
+							pushGP::globals::error_matrix.store(-1, training_case_index, ind, 0);
 					}
 
 					//std::cout << "Generation " << generation_number << std::endl;
 					//std::cout << "Session " << generations_completed_this_session << std::endl;
 
 					debug_message = "Reset variables which track the minimum error for this test case and the individual who achived the minimum error";
-					debug_message += ",Generation=," + std::to_string(generation_number);
+					debug_message += ",Generation=" + std::to_string(generation_number);
 					debug_message += ",Session=" + std::to_string(generations_completed_this_session);
 					Utilities::debug_log(-1, "run", debug_message);
 
@@ -1389,10 +1404,19 @@ namespace domain
 							debug_message = "error_matrix";
 							debug_message += ",training_case_index=" + std::to_string(training_case_index);
 							debug_message += ",ind=" + std::to_string(ind);
-							debug_message += ",error=" + std::to_string(pushGP::globals::error_matrix[training_case_index][ind].load(std::memory_order_acquire));
+							//debug_message += ",error=" + std::to_string(pushGP::globals::error_matrix[training_case_index][ind].load(std::memory_order_acquire));
+							//debug_message += ",error=" + std::to_string(pushGP::globals::error_matrix[training_case_index][ind]);
+							//debug_message += ",error=" + std::to_string(pushGP::globals::error_matrix.load(training_case_index, ind));
+							//debug_message += ",error=" + std::to_string(pushGP::globals::error_matrix[training_case_index][ind].load(std::memory_order_acquire));
+							debug_message += ",error=" + std::to_string(pushGP::globals::error_matrix.load(training_case_index, ind));
+
 							Utilities::debug_log(-1, "run", debug_message);
 
-							average_traiing_error += pushGP::globals::error_matrix[training_case_index][ind].load(std::memory_order_acquire);
+							//average_traiing_error += pushGP::globals::error_matrix[training_case_index][ind].load(std::memory_order_acquire);
+							//average_traiing_error += pushGP::globals::error_matrix[training_case_index][ind];
+							//average_traiing_error += pushGP::globals::error_matrix.load(training_case_index, ind);
+							//average_traiing_error += pushGP::globals::error_matrix[training_case_index][ind].load(std::memory_order_acquire);
+							average_traiing_error += pushGP::globals::error_matrix.load(training_case_index, ind);
 						}
 					}
 					average_traiing_error /= (double)(domain::argmap::population_size * argmap::number_of_training_cases);
@@ -1402,7 +1426,12 @@ namespace domain
 					{
 						for (int training_case_index = 0; training_case_index < argmap::number_of_training_cases; training_case_index++)
 						{
-							double error = pushGP::globals::error_matrix[training_case_index][ind].load(std::memory_order_acquire);
+							//double error = pushGP::globals::error_matrix[training_case_index][ind].load(std::memory_order_acquire);
+							//double error = pushGP::globals::error_matrix[training_case_index][ind];
+							//double error = pushGP::globals::error_matrix.load(training_case_index, ind);
+							//double error = pushGP::globals::error_matrix[training_case_index][ind].load(std::memory_order_acquire);
+							double error = pushGP::globals::error_matrix.load(training_case_index, ind);
+
 							standard_deviation += (error - average_traiing_error) * (error - average_traiing_error);
 						}
 					}
@@ -1433,24 +1462,51 @@ namespace domain
 					generation_number++;
 					generations_completed_this_session++;
 				}
+
+				delete[] pushGP::globals::population_agents;
+				delete[] pushGP::globals::child_agents;
 			}
 			catch (const std::exception& e)
 			{
+				delete[] pushGP::globals::population_agents;
+				delete[] pushGP::globals::child_agents;
+
 				std::string err_msg = "Standard exception: ";
 				err_msg += e.what();
 				Utilities::debug_log(-1, "run", err_msg);
 
 				env.clear_stacks();
 
-				std::cerr << "Standard exception: " << e.what() << std::endl;
+//				std::cerr << "Standard exception: " << e.what() << std::endl;
+				std::stringstream error;
+
+				error << "Standard exception: " << e.what();
+
+				std::cerr << error.str() << std::endl;
+
+				debug_message = error.str();
+				Utilities::debug_log(-1, "run", debug_message);
+
 				throw;
 			}
 			catch (...)
 			{
+				delete[] pushGP::globals::population_agents;
+				delete[] pushGP::globals::child_agents;
+
 				Utilities::debug_log(-1, "run", "Exception occurred");
 				env.clear_stacks();
 
-				std::cerr << "Exception occurred" << std::endl;
+//				std::cerr << "Exception occurred" << std::endl;
+				std::stringstream error;
+
+				error << "Exception occurred";
+
+				std::cerr << error.str() << std::endl;
+
+				debug_message = error.str();
+				Utilities::debug_log(-1, "run", debug_message);
+
 				throw;
 			}
 

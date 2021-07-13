@@ -187,7 +187,11 @@ namespace pushGP
 
 			for (unsigned int survivor_index : survivors_index)
 			{
-				double error = pushGP::globals::error_matrix[example_case][survivor_index].load(std::memory_order_acquire);
+				//double error = pushGP::globals::error_matrix[example_case][survivor_index].load(std::memory_order_acquire);
+				//double error = pushGP::globals::error_matrix[example_case][individual_index];
+				//double error = pushGP::globals::error_matrix.load(example_case, survivor_index);
+				//double error = pushGP::globals::error_matrix[example_case][survivor_index].load(std::memory_order_acquire);
+				double error = pushGP::globals::error_matrix.load(example_case, survivor_index);
 
 				test_case_errors.push_back(error);
 

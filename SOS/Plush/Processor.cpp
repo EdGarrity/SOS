@@ -163,13 +163,33 @@ namespace Plush
 			catch (std::exception& e)
 			{
 				effort++;
-				std::cerr << "Unknown std exception caught.  effort = " << effort << std::endl;
-				std::cerr << e.what() << std::endl;
+				//std::cerr << "Unknown std exception caught.  effort = " << effort << std::endl;
+				//std::cerr << e.what() << std::endl;
+
+				std::stringstream error;
+
+				error << "Unknown std exception caught.effort = " << effort << std::endl << e.what() << std::endl;
+
+				std::cerr << error.str();
+				std::string debug_message;
+
+				debug_message = error.str();
+				Utilities::debug_log(-1, "run", debug_message);
 			}
 			catch (...)
 			{
 				effort++;
-				std::cerr << "Unknown exception caught.  effort = " << effort << std::endl;
+				//std::cerr << "Unknown exception caught.  effort = " << effort << std::endl;
+
+				std::stringstream error;
+
+				error << "Unknown exception caught.  effort = " << effort << std::endl;
+
+				std::cerr << error.str();
+				std::string debug_message;
+
+				debug_message = error.str();
+				Utilities::debug_log(-1, "run", debug_message);
 			}
 
 			effort += (1u) > (unit) ? (1u) : (unit);
