@@ -367,6 +367,48 @@ namespace domain
 			unsigned int training_cases_created = 0;
 			unsigned int test_cases_created = 0;
 
+			//// Simple sorting test cases
+			//if (_example_cases_loaded < argmap::number_of_training_cases)
+			//{
+			//	for (int i = _example_cases_loaded; i < argmap::number_of_training_cases; i++)
+			//	{
+			//		int training_case_length = Utilities::random_integer(argmap::example_case_min_length, argmap::example_case_max_length);
+
+			//		for (int j = 0; j < training_case_length; j++)
+			//		{
+			//			int n = Utilities::random_integer(argmap::example_case_upper_range);
+
+			//			training_cases_problem[i].push_back(n);
+			//			training_cases_solution[i].push_back(n);
+			//		}
+
+			//		std::sort(training_cases_solution[i].begin(), training_cases_solution[i].end());
+
+			//		training_cases_created++;
+			//	}
+			//}
+
+			//if ((_example_cases_loaded + training_cases_created) < argmap::number_of_training_cases + argmap::number_of_test_cases)
+			//{
+			//	for (int i = _example_cases_loaded + training_cases_created - argmap::number_of_training_cases; i < argmap::number_of_test_cases; i++)
+			//	{
+			//		int test_case_length = Utilities::random_integer(argmap::example_case_min_length, argmap::example_case_max_length);
+
+			//		for (int j = 0; j < test_case_length; j++)
+			//		{
+			//			int n = Utilities::random_integer(argmap::example_case_upper_range);
+
+			//			test_cases_problem[i].push_back(n);
+			//			test_cases_solution[i].push_back(n);
+			//		}
+
+			//		std::sort(test_cases_solution[i].begin(), test_cases_solution[i].end());
+
+			//		test_cases_created++;
+			//	}
+			//}
+
+			// Simple addition test cases
 			if (_example_cases_loaded < argmap::number_of_training_cases)
 			{
 				for (int i = _example_cases_loaded; i < argmap::number_of_training_cases; i++)
@@ -378,10 +420,15 @@ namespace domain
 						int n = Utilities::random_integer(argmap::example_case_upper_range);
 
 						training_cases_problem[i].push_back(n);
-						training_cases_solution[i].push_back(n);
 					}
 
-					std::sort(training_cases_solution[i].begin(), training_cases_solution[i].end());
+					int sum = 0;
+					training_cases_solution[i].clear();
+
+					for (int i : training_cases_problem[i])
+						sum += i;
+
+					training_cases_solution[i].push_back(sum);
 
 					training_cases_created++;
 				}
@@ -398,10 +445,15 @@ namespace domain
 						int n = Utilities::random_integer(argmap::example_case_upper_range);
 
 						test_cases_problem[i].push_back(n);
-						test_cases_solution[i].push_back(n);
 					}
 
-					std::sort(test_cases_solution[i].begin(), test_cases_solution[i].end());
+					int sum = 0;
+					test_cases_solution[i].clear();
+
+					for (int i : test_cases_problem[i])
+						sum += i;
+
+					test_cases_solution[i].push_back(sum);
 
 					test_cases_created++;
 				}
