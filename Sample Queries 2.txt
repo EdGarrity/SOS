@@ -1,0 +1,10 @@
+{:instruction INTEGER.INALL :close  0}{:instruction INTEGER.INALLREV :close  1}{:instruction INTEGER.+ :close  0}{:instruction INTEGER.OUT :close  0}
+{:instruction INTEGER.INALL :close  0}{:instruction INTEGER.INALLREV :close  1}{:instruction INTEGER.IN :close  1}{:instruction INTEGER.OUT :close  1}
+{:instruction INTEGER.INALLREV :close  1}{:instruction INTEGER.IN :close  0}{:instruction INTEGER.OUT :close  0}
+{:instruction INTEGER.INALLREV :close  1}{:instruction INTEGER.INALLREV :close  0}{:instruction INTEGER.OUT :close  0}
+
+
+
+
+{:instruction 144988573 :close  0}{:instruction INTEGER.INALL :close  0}
+

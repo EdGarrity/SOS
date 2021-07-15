@@ -408,7 +408,7 @@ namespace domain
 			//	}
 			//}
 
-			// Simple addition test cases
+			// Simple addition test cases using random length integers to add.
 			if (_example_cases_loaded < argmap::number_of_training_cases)
 			{
 				for (int i = _example_cases_loaded; i < argmap::number_of_training_cases; i++)
@@ -1013,12 +1013,15 @@ namespace domain
 
 				// Keep the best individual
 //				std::cout << "  Keep the best individual" << std::endl;
-				if ((_include_best_individual_in_breeding_pool) && (individual_index == _best_individual))
+				if ((!_include_best_individual_in_breeding_pool) && (individual_index == _best_individual))
 					pushGP::globals::child_agents[individual_index].copy(pushGP::globals::population_agents[individual_index]);
 
 				else
 				{
-					std::cout << "  breed(" << individual_index << ")" << std::endl;
+//					std::cout << "  breed(" << individual_index << ")" << std::endl;
+					if (individual_index%100==0)
+						std::cout << "B";
+
 					pushGP::breed(individual_index,
 						_number_of_example_cases,
 						training_case_min_error,
@@ -1037,10 +1040,12 @@ namespace domain
 				}
 			}
 
+			std::cout << std::endl;
+
 			// Keep the best individuals for each test case
 //			std::cout << "  Keep the best individuals for each test case" << std::endl;
 			std::cout << ".";
-			if (_include_best_individual_in_breeding_pool)
+			if (!_include_best_individual_in_breeding_pool)
 			{
 				for (unsigned int training_case = 0; training_case < domain::argmap::number_of_training_cases; training_case++)
 				{

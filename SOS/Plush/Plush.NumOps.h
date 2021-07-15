@@ -349,14 +349,14 @@ namespace Plush
 	{
 		if (_env.input.size() > 0)
 		{
-			if (_env.has_elements<T>(_env.input.size()))
-			{
+			//if (_env.has_elements<T>(_env.input.size()))
+			//{
 				for (size_t index = 0; index < _env.input.size(); index++)
 				{
 					T value = _env.input[index];
 					_env.push<T>(value);
 				}
-			}
+			//}
 		}
 
 		return 1;
@@ -385,14 +385,14 @@ namespace Plush
 	{
 		if (_env.input.size() > 0)
 		{
-			if (_env.has_elements<T>(_env.input.size()))
-			{
+			//if (_env.has_elements<T>(_env.input.size()))
+			//{
 				for (long long index = _env.input.size() - 1; index >= 0; index--)
 				{
 					T value = _env.input[index];
 					_env.push<T>(value);
 				}
-			}
+			//}
 		}
 
 		return 1;
