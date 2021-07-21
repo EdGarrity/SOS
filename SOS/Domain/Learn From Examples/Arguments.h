@@ -89,7 +89,7 @@ namespace domain
 		const long int example_case_min_length = 2;
 
 		// Maximum length of an example case
-		const long int example_case_max_length = 2;
+		const long int example_case_max_length = 4;
 		
 		// Upper range of values in the example case
 		const long int example_case_upper_range = 1'000;

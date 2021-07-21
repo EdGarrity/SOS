@@ -42,7 +42,7 @@ namespace Utilities
 	{
 		//static std::string prev_status = "";
 
-		//if (prev_status != status)
+		//if ((prev_status != status) && (env_index == -1))
 		//{
 		//	prev_status = status;
 
@@ -66,7 +66,7 @@ namespace Utilities
 	{
 		//static std::string prev_status = "";
 
-		//if (prev_status != status)
+		//if ((prev_status != status) && (env_index == -1))
 		//{
 		//	prev_status = status;
 
@@ -90,7 +90,7 @@ namespace Utilities
 	{
 		//static std::string prev_status = "";
 
-		//if (prev_status != status)
+		//if ((prev_status != status) && (env_index == -1))
 		//{
 		//	prev_status = status;
 
