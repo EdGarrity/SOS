@@ -37,7 +37,7 @@ namespace Plush
 	{
 		init_types();
 
-//		initGenerics();
+		initGenerics();
 //		initBool();
 ////		initCode();
 //		initExec();
