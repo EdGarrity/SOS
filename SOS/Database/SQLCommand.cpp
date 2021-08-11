@@ -365,7 +365,7 @@ namespace database
 		DBPARAMS	Params;
 		DBORDINAL	nCols;
 
-		Utilities::debug_log(-1, "SQLCommand::execute", "Entry");
+//		Utilities::debug_log(-1, "SQLCommand::execute", "Entry");
 
 		// The command requires the actual text as well as an indicator
 		// of its language and dialect.
@@ -375,14 +375,14 @@ namespace database
 		if (number_of_parameters_in_command_ > 0)
 		{
 			// Set the parameters information.  
-			Utilities::debug_log(-1, "SQLCommand::execute", "Set_the_parameters_information");
+//			Utilities::debug_log(-1, "SQLCommand::execute", "Set_the_parameters_information");
 			if (FAILED(pICommandText_->QueryInterface(IID_ICommandWithParameters, (void**)&pICommandWithParams_)))
 			{
 				throw MyException("failed to obtain ICommandWithParameters");
 			}
 
 			// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms725393(v=vs.85)"
-			Utilities::debug_log(-1, "SQLCommand::execute", "See1");
+//			Utilities::debug_log(-1, "SQLCommand::execute", "See1");
 			hr_ = pICommandWithParams_->SetParameterInfo(number_of_parameters_in_command_, ParamOrdinals_, ParamBindInfo_);
 			if (FAILED(hr_))
 			{
@@ -390,13 +390,13 @@ namespace database
 			}  
 
 			// Let us create an accessor from the above set of bindings.  
-			Utilities::debug_log(-1, "SQLCommand::execute", "Let_us_create_an_accessor_from_the_above_set_of_bindings");
+//			Utilities::debug_log(-1, "SQLCommand::execute", "Let_us_create_an_accessor_from_the_above_set_of_bindings");
 			hr_ = pICommandWithParams_->QueryInterface(IID_IAccessor, (void**)&pIAccessor_);
 			if (FAILED(hr_))
 				throw MyException("Failed to get IAccessor interface");
 
 			// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms720969(v%3Dvs.85)"
-			Utilities::debug_log(-1, "SQLCommand::execute", "See2");
+//			Utilities::debug_log(-1, "SQLCommand::execute", "See2");
 			hr_ = pIAccessor_->CreateAccessor(DBACCESSOR_PARAMETERDATA,
 				number_of_parameters_in_command_,
 				rgBindings_,
@@ -408,23 +408,23 @@ namespace database
 
 			// Initialize DBPARAMS structure for command execution. DBPARAMS specifies the  
 			// parameter values in the command.  DBPARAMS is then passed to Execute.  
-			Utilities::debug_log(-1, "SQLCommand::execute", "Initialize_DBPARAMS");
+//			Utilities::debug_log(-1, "SQLCommand::execute", "Initialize_DBPARAMS");
 			Params.pData = sprocparams;
 			Params.cParamSets = 1; //number_of_parameters_in_command_;
 			Params.hAccessor = hAccessor_;
 
 			// Execute the command.
-			Utilities::debug_log(-1, "SQLCommand::execute", "Execute_the_command");
+//			Utilities::debug_log(-1, "SQLCommand::execute", "Execute_the_command");
 			hr_ = pICommandText_->Execute(NULL, IID_IRowset, &Params, &cRowsAffected_, (IUnknown**)&pIRowset_);
 
 			// Clear parameter buffer.
-			Utilities::debug_log(-1, "SQLCommand::execute", "Clear_parameter_buffer");
+//			Utilities::debug_log(-1, "SQLCommand::execute", "Clear_parameter_buffer");
 			memset(sprocparams, 0, MAX_ROW_LENGTH);
 			dwOffset_ = 0;
 		}
 		else
 		{
-			Utilities::debug_log(-1, "SQLCommand::execute", "pICommandText_Execute");
+//			Utilities::debug_log(-1, "SQLCommand::execute", "pICommandText_Execute");
 			hr_ = pICommandText_->Execute(NULL, IID_IRowset, NULL, &cRowsAffected_, (IUnknown**)&pIRowset_);
 		}
 
@@ -437,17 +437,17 @@ namespace database
 		else
 		{
 			// Get the description of the rowset for use in binding structure creation.
-			Utilities::debug_log(-1, "SQLCommand::execute", "Get_the_description_of_the_rowset_for_use_in_binding_structure_creation");
+//			Utilities::debug_log(-1, "SQLCommand::execute", "Get_the_description_of_the_rowset_for_use_in_binding_structure_creation");
 			if (FAILED(myGetColumnsInfo(pIRowset_, &nCols, &pColumnsInfo_, &pColumnStrings_)))
 				throw MyException("Failed to get the description of the rowset for use in binding structure creation.");
 
 			// Create the binding structures.
-			Utilities::debug_log(-1, "SQLCommand::execute", "Create_the_binding_structures");
+//			Utilities::debug_log(-1, "SQLCommand::execute", "Create_the_binding_structures");
 			myCreateDBBindings(nCols, pColumnsInfo_, &pDBBindings_, &pRowValues_);
 			pDBBindStatus_ = new DBBINDSTATUS[nCols];
 
 			// Create the accessor.
-			Utilities::debug_log(-1, "SQLCommand::execute", "Create_the_accessor");
+//			Utilities::debug_log(-1, "SQLCommand::execute", "Create_the_accessor");
 			pIRowset_->QueryInterface(IID_IAccessor, (void**)&pIAccessor_);
 			pIAccessor_->CreateAccessor(
 				DBACCESSOR_ROWDATA,		// Accessor will be used to retrieve row data.
@@ -462,7 +462,7 @@ namespace database
 		iRow_ = 0;
 		cRowsObtained_ = 0;
 
-		Utilities::debug_log(-1, "SQLCommand::execute", "Exit");
+//		Utilities::debug_log(-1, "SQLCommand::execute", "Exit");
 	}
 
 	void SQLCommand::execute(const std::string _command)
