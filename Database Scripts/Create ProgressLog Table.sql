@@ -29,7 +29,9 @@ CREATE TABLE [dbo].[ProgressLog](
 	[Example_Case_Upper_Range] [int] NOT NULL,
 	[Tempareture] [float] NOT NULL,
 	[BestIndividual_Prev_Training_Error] [float] NOT NULL,
-	[Stalled_Count] [int] NOT NULL
+	[Stalled_Count] [int] NOT NULL,
+	[Cool_Down_Count] [int] NOT NULL,
+	[Include_Best_Individual_In_Breeding_Pool] [int] NOT NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 

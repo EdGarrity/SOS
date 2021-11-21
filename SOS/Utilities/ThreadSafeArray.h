@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include <sstream>
 #include <mutex>
+#include "Debug.h"
 
 namespace Utilities
 {

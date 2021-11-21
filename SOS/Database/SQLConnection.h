@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 #include <string>
-//#include "C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\184\SDK\Include\msoledbsql.h"
+//#include "C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\184\SDK\Include\msoledbsql.h" // See https://docs.microsoft.com/en-us/sql/ssdt/download-sql-server-data-tools-ssdt?view=sql-server-ver15
 #include <msoledbsql.h>
 #include "..\Utilities\MyException.h"
 

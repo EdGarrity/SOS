@@ -38,10 +38,10 @@ namespace Plush
 		init_types();
 
 		initGenerics();
-//		initBool();
-////		initCode();
-//		initExec();
-//		initFloat();
+		initBool();
+//		initCode();
+		initExec();
+		initFloat();
 		initInt();
 	};
 
