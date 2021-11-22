@@ -24,6 +24,9 @@ namespace Plush
 		Genome<double> double_stack_;
 		Genome<bool> bool_stack_;
 
+		// Knowledge
+		typedef std::map<std::string, Instruction*> KnownInstructionsMapType;
+		KnownInstructionsMapType KnownInstructionsMap;
 
 	public:
 		// State of Worker Thread
