@@ -81,6 +81,15 @@ namespace Plush
 		return function_names[function_index % number_of_functions()];
 	}
 
+	int StaticInit::get_function_index(std::string function_name)
+	{
+		for (int n = 0; n < function_names.size(); n++)
+			if (function_names[n] == function_name)
+				return n;
+
+		return -1;
+	}
+
 	unsigned int StaticInit::get_function_block_wants(std::string function_name)
 	{
 		return Func2BlockWantsMap[function_name];

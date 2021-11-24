@@ -35,6 +35,7 @@ namespace Plush
 		// Helper functions
 		unsigned int number_of_functions();
 		std::string get_function_name(unsigned int function_index);
+		int get_function_index(std::string function_name);
 		unsigned int get_function_block_wants(std::string function_name);
 		Instruction* get_function(std::string function_name);
 		bool is_function_supported(std::string function_name);

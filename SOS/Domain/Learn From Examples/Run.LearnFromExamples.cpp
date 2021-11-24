@@ -464,7 +464,7 @@ namespace domain
 
 		void save_example_cases()
 		{
-			char buffer[33];
+			char buffer[33] = "";
 
 			database::SQLCommand* sqlcmd_insert_new_example_case;
 

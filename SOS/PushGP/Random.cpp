@@ -312,6 +312,38 @@ namespace pushGP
 		atom.type = Plush::Atom::AtomType::ins;
 		genome.push(atom);
 
+		atom.instruction = toString(Plush::static_initializer.get_function_index("INTEGER.IN"));
+		atom.type = Plush::Atom::AtomType::integer;
+		genome.push(atom);
+
+		atom.instruction = "EXEC.ENABLE*INSTRUCTION";
+		atom.type = Plush::Atom::AtomType::ins;
+		genome.push(atom);
+
+		atom.instruction = toString(Plush::static_initializer.get_function_index("INTEGER.INALL"));
+		atom.type = Plush::Atom::AtomType::integer;
+		genome.push(atom);
+
+		atom.instruction = "EXEC.ENABLE*INSTRUCTION";
+		atom.type = Plush::Atom::AtomType::ins;
+		genome.push(atom);
+
+		atom.instruction = toString(Plush::static_initializer.get_function_index("INTEGER.INALLREV"));
+		atom.type = Plush::Atom::AtomType::integer;
+		genome.push(atom);
+
+		atom.instruction = "EXEC.ENABLE*INSTRUCTION";
+		atom.type = Plush::Atom::AtomType::ins;
+		genome.push(atom);
+
+		atom.instruction = toString(Plush::static_initializer.get_function_index("INTEGER.OUT"));
+		atom.type = Plush::Atom::AtomType::integer;
+		genome.push(atom);
+
+		atom.instruction = "EXEC.ENABLE*INSTRUCTION";
+		atom.type = Plush::Atom::AtomType::ins;
+		genome.push(atom);
+
 		return genome;
 	}
 
