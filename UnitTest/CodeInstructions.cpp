@@ -44,6 +44,9 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("FLOAT.=");
+			env.enable_function("CODE.APPEND");
+
 			Plush::run(env, \
 				"\
 					{:instruction FLOAT.= :close 1}\
@@ -61,6 +64,10 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("FLOAT.+");
+			env.enable_function("FLOAT.=");
+			env.enable_function("CODE.APPEND");
 
 			Plush::run(env, \
 				"\
@@ -81,6 +88,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.+");
+			env.enable_function("CODE.APPEND");
 
 			Plush::run(env, \
 				"\
@@ -105,6 +115,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.APPEND");
 
 			Plush::run(env, \
 				"\
@@ -136,6 +149,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.ATOM");
+
 			Plush::run(env, \
 				"\
 					{:instruction CODE.ATOM :close 0}\
@@ -150,6 +165,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("FLOAT.=");
+			env.enable_function("CODE.ATOM");
 
 			Plush::run(env, \
 				"\
@@ -167,6 +185,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.ATOM");
 
 			Plush::run(env, \
 				"\
@@ -218,6 +239,10 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("FLOAT.+");
+			env.enable_function("FLOAT.=");
+			env.enable_function("CODE.CAR");
+
 			Plush::run(env, \
 				"\
 					{:instruction FLOAT.+ :close 0}\
@@ -236,6 +261,11 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("FLOAT.+");
+			env.enable_function("FLOAT.*");
+			env.enable_function("FLOAT.=");
+			env.enable_function("CODE.CAR");
 
 			Plush::run(env, \
 				"\
@@ -257,6 +287,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.CDR");
+
 			Plush::run(env, \
 				"\
 					{:instruction CODE.CDR :close 0}\
@@ -272,6 +304,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("FLOAT.=");
+			env.enable_function("CODE.CDR");
 
 			Plush::run(env, \
 				"\
@@ -291,6 +326,10 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("FLOAT.+");
+			env.enable_function("FLOAT.=");
+			env.enable_function("CODE.CDR");
+
 			Plush::run(env, \
 				"\
 					{:instruction FLOAT.+ :close 0}\
@@ -309,6 +348,11 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("FLOAT.+");
+			env.enable_function("FLOAT.*");
+			env.enable_function("FLOAT.=");
+			env.enable_function("CODE.CDR");
 
 			Plush::run(env, \
 				"\
@@ -407,6 +451,11 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("FLOAT.+");
+			env.enable_function("FLOAT.*");
+			env.enable_function("FLOAT.=");
+			env.enable_function("CODE.CONS");
+
 			Plush::run(env, \
 				"\
 					{:instruction FLOAT.+ :close 0}\
@@ -428,6 +477,12 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("FLOAT.+");
+			env.enable_function("FLOAT.*");
+			env.enable_function("FLOAT.-");
+			env.enable_function("FLOAT.=");
+			env.enable_function("CODE.CONS");
 
 			Plush::run(env, \
 				"\
@@ -477,6 +532,11 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("EXEC.DO*RANGE");
+			env.enable_function("FLOAT.+");
+			env.enable_function("CODE.CONTAINER");
+
 			Plush::run(env, \
 				"\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
@@ -509,6 +569,12 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("EXEC.DO*RANGE");
+			env.enable_function("FLOAT.+");
+			env.enable_function("FLOAT.-");
+			env.enable_function("CODE.CONTAINER");
+
 			Plush::run(env, \
 				"\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
@@ -539,6 +605,12 @@ namespace PlushUnitTest
 
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("EXEC.DO*RANGE");
+			env.enable_function("FLOAT.+");
+			env.enable_function("EXEC.DO*COUNT");
+			env.enable_function("CODE.CONTAINER");
 
 			Plush::run(env, \
 				"\
@@ -571,6 +643,12 @@ namespace PlushUnitTest
 
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("EXEC.DO*RANGE");
+			env.enable_function("FLOAT.+");
+			env.enable_function("EXEC.DO*COUNT");
+			env.enable_function("CODE.CONTAINER");
 
 			Plush::run(env, \
 				"\
@@ -605,6 +683,11 @@ namespace PlushUnitTest
 
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("EXEC.DO*RANGE");
+			env.enable_function("FLOAT.+");
+			env.enable_function("CODE.CONTAINER");
 
 			Plush::run(env, \
 				"\
@@ -653,6 +736,11 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("EXEC.DO*RANGE");
+			env.enable_function("FLOAT.+");
+			env.enable_function("CODE.CONTAINS");
+
 			Plush::run(env, \
 				"\
 					{:instruction FLOAT.+ :close 1}\
@@ -683,6 +771,13 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("EXEC.DO*RANGE");
+			env.enable_function("FLOAT.+");
+			env.enable_function("FLOAT.-");
+			env.enable_function("EXEC.DO*COUNT");
+			env.enable_function("CODE.CONTAINS");
+
 			Plush::run(env, \
 				"\
 					{:instruction FLOAT.- :close 1}\
@@ -712,6 +807,13 @@ namespace PlushUnitTest
 
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("EXEC.DO*RANGE");
+			env.enable_function("FLOAT.+");
+			env.enable_function("FLOAT.-");
+			env.enable_function("EXEC.DO*COUNT");
+			env.enable_function("CODE.CONTAINS");
 
 			Plush::run(env, \
 				"\
@@ -744,6 +846,13 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("EXEC.DO*RANGE");
+			env.enable_function("FLOAT.+");
+			env.enable_function("FLOAT.-");
+			env.enable_function("EXEC.DO*COUNT");
+			env.enable_function("CODE.CONTAINS");
+
 			Plush::run(env, \
 				"\
 					{:instruction EXEC.DO*RANGE :close 0}\
@@ -774,6 +883,13 @@ namespace PlushUnitTest
 
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("EXEC.DO*RANGE");
+			env.enable_function("FLOAT.+");
+			env.enable_function("FLOAT.-");
+			env.enable_function("EXEC.DO*COUNT");
+			env.enable_function("CODE.CONTAINS");
 
 			Plush::run(env, \
 				"\
@@ -822,6 +938,12 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("EXEC.DO*RANGE");
+			env.enable_function("FLOAT.+");
+			env.enable_function("FLOAT.-");
+			env.enable_function("CODE.DISCREPANCY");
+
 			Plush::run(env, \
 				"\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
@@ -851,6 +973,12 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("EXEC.DO*RANGE");
+			env.enable_function("FLOAT.+");
+			env.enable_function("EXEC.DO*COUNT");
+			env.enable_function("CODE.DISCREPANCY");
+
 			Plush::run(env, \
 				"\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
@@ -874,6 +1002,9 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.POP");
+			env.enable_function("CODE.DO");
+
 			Plush::run(env, \
 				"\
 					{:instruction CODE.POP :close 0}\
@@ -889,6 +1020,11 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.POP");
+			env.enable_function("CODE.DO");
+			env.enable_function("INTEGER.DUP");
+			env.enable_function("INTEGER.+");
 
 			Plush::run(env, \
 				"\
@@ -909,6 +1045,12 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.POP");
+			env.enable_function("CODE.DO");
+			env.enable_function("CODE.DUP");
+			env.enable_function("INTEGER.DUP");
+			env.enable_function("INTEGER.+");
 
 			Plush::run(env, \
 				"\
@@ -937,6 +1079,9 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.POP");
+			env.enable_function("CODE.DO*");
+
 			Plush::run(env, \
 				"\
 					{:instruction CODE.POP :close 0}\
@@ -952,6 +1097,11 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.POP");
+			env.enable_function("CODE.DO*");
+			env.enable_function("INTEGER.DUP");
+			env.enable_function("INTEGER.+");
 
 			Plush::run(env, \
 				"\
@@ -973,6 +1123,12 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.POP");
+			env.enable_function("CODE.DO*");
+			env.enable_function("CODE.DUP");
+			env.enable_function("INTEGER.DUP");
+			env.enable_function("INTEGER.+");
 
 			Plush::run(env, \
 				"\
@@ -1001,6 +1157,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.DO*RANGE");
+
 			Plush::run(env, "\
 							 {:instruction true :close 1}\
 							 {:instruction 1 :close 0}\
@@ -1020,6 +1178,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.DO*RANGE");
 
 			Plush::run(env, "\
 							 {:instruction false :close 0}\
@@ -1042,6 +1202,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.DO*RANGE");
+
 			Plush::run(env, "\
 							 {:instruction CODE.DO*RANGE :close 0}\
 							 {:instruction true :close 1}\
@@ -1058,6 +1220,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.DO*COUNT");
+			env.enable_function("CODE.DO*RANGE");
 
 			Plush::run(env, "\
 							 {:instruction true :close 1}\
@@ -1076,6 +1241,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.DO*COUNT");
+			env.enable_function("CODE.DO*RANGE");
 
 			Plush::run(env, "\
 							 {:instruction false :close 0}\
@@ -1096,6 +1264,9 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.DO*COUNT");
+			env.enable_function("CODE.DO*RANGE");
+
 			Plush::run(env, "\
 							 {:instruction CODE.DO*COUNT :close 0}\
 							 {:instruction true :close 1}\
@@ -1112,6 +1283,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.DO*COUNT");
+			env.enable_function("CODE.DO*RANGE");
 
 			Plush::run(env, "\
 							 {:instruction -3 :close 0}\
@@ -1132,6 +1306,11 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.DO*COUNT");
+			env.enable_function("CODE.DO*RANGE");
+			env.enable_function("CODE.DO*TIMES");
+			env.enable_function("INTEGER.POP");
+
 			Plush::run(env, "\
 							 {:instruction true :close 1}\
 							 {:instruction 3 :close 0}\
@@ -1149,6 +1328,11 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.DO*COUNT");
+			env.enable_function("CODE.DO*RANGE");
+			env.enable_function("CODE.DO*TIMES");
+			env.enable_function("INTEGER.POP");
 
 			Plush::run(env, "\
 							 {:instruction false :close 0}\
@@ -1169,6 +1353,11 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.DO*COUNT");
+			env.enable_function("CODE.DO*RANGE");
+			env.enable_function("CODE.DO*TIMES");
+			env.enable_function("INTEGER.POP");
+
 			Plush::run(env, "\
 							 {:instruction CODE.DO*TIMES :close 0}\
 							 {:instruction true :close 1}\
@@ -1185,6 +1374,11 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.DO*COUNT");
+			env.enable_function("CODE.DO*RANGE");
+			env.enable_function("CODE.DO*TIMES");
+			env.enable_function("INTEGER.POP");
 
 			Plush::run(env, "\
 							 {:instruction -3 :close 0}\
@@ -1205,6 +1399,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.DUP");
+
 			Plush::run(env, "\
 							 {:instruction true :close 1}\
 							 {:instruction 3 :close 0}\
@@ -1224,6 +1420,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.DUP");
 
 			Plush::run(env, "\
 							 {:instruction false :close 0}\
@@ -1248,6 +1446,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.DUP");
+
 			Plush::run(env, "\
 							 {:instruction CODE.DUP :close 0}\
 							 {:instruction true :close 1}\
@@ -1266,6 +1466,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.DUP");
 
 			Plush::run(env, "\
 							 {:instruction -3 :close 0}\
@@ -1289,6 +1491,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.=");
+
 			Plush::run(env, \
 				"\
 					{:instruction CODE.= :close 0}\
@@ -1305,6 +1509,9 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("FLOAT.=");
+			env.enable_function("CODE.=");
+
 			Plush::run(env, \
 				"\
 					{:instruction FLOAT.= :close 1}\
@@ -1320,6 +1527,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("FLOAT.=");
+			env.enable_function("CODE.=");
 
 			Plush::run(env, \
 				"\
@@ -1339,6 +1549,10 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("FLOAT.+");
+			env.enable_function("FLOAT.=");
+			env.enable_function("CODE.=");
+
 			Plush::run(env, \
 				"\
 					{:instruction FLOAT.+ :close 1}\
@@ -1356,6 +1570,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.+");
+			env.enable_function("CODE.=");
 
 			Plush::run(env, \
 				"\
@@ -1377,6 +1594,9 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.+");
+			env.enable_function("CODE.=");
+
 			Plush::run(env, \
 				"\
 					{:instruction 10 :close 0}\
@@ -1397,6 +1617,9 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.+");
+			env.enable_function("CODE.=");
+
 			Plush::run(env, \
 				"\
 					{:instruction INTEGER.+ :close 1}\
@@ -1415,6 +1638,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.+");
+			env.enable_function("CODE.=");
 
 			Plush::run(env, \
 				"\
@@ -1435,6 +1661,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.EXTRACT");
+
 			Plush::run(env, \
 				"\
 					{:instruction CODE.EXTRACT :close 0}\
@@ -1450,6 +1678,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.EXTRACT");
 
 			Plush::run(env, \
 				"\
@@ -1468,6 +1698,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.EXTRACT");
 
 			Plush::run(env, \
 				"\
@@ -1496,6 +1728,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.EXTRACT");
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
 
 			Plush::run(env, \
 				"\
@@ -1529,6 +1764,9 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.EXTRACT");
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+
 			Plush::run(env, \
 				"\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
@@ -1557,6 +1795,9 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.EXTRACT");
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+
 			Plush::run(env, \
 				"\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
@@ -1583,6 +1824,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.EXTRACT");
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
 
 			Plush::run(env, \
 				"\
@@ -1612,6 +1856,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.EXTRACT");
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
 
 			Plush::run(env, \
 				"\
@@ -1645,6 +1892,12 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.NOOP_OPEN_PAREN");
+			env.enable_function("INTEGER.+");
+			env.enable_function("INTEGER.-");
+			env.enable_function("CODE.=");
+			env.enable_function("CODE.FLUSH");
+
 			Plush::run(env, \
 				"\
 					{:instruction CODE.NOOP.OPEN.PAREN :close 0}\
@@ -1665,6 +1918,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.FROMBOOLEAN");
+
 			Plush::run(env, \
 				"\
 					{:instruction CODE.FROMBOOLEAN :close 1}\
@@ -1680,6 +1935,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.FROMBOOLEAN");
 
 			Plush::run(env, \
 				"\
@@ -1699,6 +1956,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.FROMBOOLEAN");
 
 			Plush::run(env, \
 				"\
@@ -1721,6 +1980,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.FROMFLOAT");
+
 			Plush::run(env, \
 				"\
 					{:instruction CODE.FROMFLOAT :close 1}\
@@ -1736,6 +1997,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.FROMFLOAT");
 
 			Plush::run(env, \
 				"\
@@ -1755,6 +2018,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.FROMFLOAT");
 
 			Plush::run(env, \
 				"\
@@ -1777,6 +2042,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.FROMINTEGER");
+
 			Plush::run(env, \
 				"\
 					{:instruction CODE.FROMINTEGER :close 1}\
@@ -1792,6 +2059,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.FROMINTEGER");
 
 			Plush::run(env, \
 				"\
@@ -1811,6 +2080,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.FROMINTEGER");
 
 			Plush::run(env, \
 				"\
@@ -1833,6 +2104,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.IF");
+
 			Plush::run(env, "\
 							 {:instruction CODE.IF :close 0}\
 							");
@@ -1847,6 +2120,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.IF");
+			env.enable_function("INTEGER.+");
 
 			Plush::run(env,
 				"\
@@ -1870,6 +2146,9 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.IF");
+			env.enable_function("INTEGER.+");
+
 			Plush::run(env,
 				"\
 					{:instruction 10 :close 0}\
@@ -1888,6 +2167,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.IF");
+			env.enable_function("INTEGER.+");
 
 			Plush::run(env,
 				"\
@@ -1910,6 +2192,9 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.IF");
+			env.enable_function("INTEGER.+");
+
 			Plush::run(env,
 				"\
 					{:instruction 10 :close 0}\
@@ -1928,6 +2213,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.IF");
+			env.enable_function("INTEGER.+");
 
 			Plush::run(env,
 				"\
@@ -1950,6 +2238,9 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.IF");
+			env.enable_function("INTEGER.+");
+
 			Plush::run(env,
 				"\
 					{:instruction 10 :close 0}\
@@ -1970,6 +2261,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.IF");
+			env.enable_function("INTEGER.+");
 
 			Plush::run(env,
 				"\
@@ -1995,6 +2289,9 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.IF");
+			env.enable_function("INTEGER.+");
+
 			Plush::run(env,
 				"\
 					{:instruction 10 :close 0}\
@@ -2019,6 +2316,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.INSERT");
+
 			Plush::run(env, \
 				"\
 					{:instruction CODE.INSERT :close 0}\
@@ -2034,6 +2333,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.INSERT");
 
 			Plush::run(env, \
 				"\
@@ -2053,6 +2354,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.INSERT");
 
 			Plush::run(env, \
 				"\
@@ -2094,6 +2397,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.INSERT");
+
 			Plush::run(env, \
 				"\
 					{:instruction 1.0 :close 0}\
@@ -2133,6 +2438,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.INSERT");
+
 			Plush::run(env, \
 				"\
 					{:instruction 1.0 :close 0}\
@@ -2171,6 +2478,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.INSERT");
 
 			Plush::run(env, \
 				"\
@@ -2216,6 +2525,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.INSERT");
+
 			Plush::run(env, \
 				"\
 					{:instruction 1.0 :close 0}\
@@ -2254,6 +2565,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.INSERT");
 
 			Plush::run(env, \
 				"\
@@ -2294,6 +2607,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.INSERT");
+
 			Plush::run(env, \
 				"\
 					{:instruction 1.0 :close 0}\
@@ -2332,6 +2647,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.INSERT");
 
 			Plush::run(env, \
 				"\
@@ -2372,6 +2689,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.INSERT");
+
 			Plush::run(env, \
 				"\
 					{:instruction 1.0 :close 0}\
@@ -2410,6 +2729,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.INSERT");
 
 			Plush::run(env, \
 				"\
@@ -2450,6 +2771,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.LENGTH");
+
 			Plush::run(env,
 				"\
 					{:instruction CODE.LENGTH :close 1}\
@@ -2464,6 +2787,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.LENGTH");
 
 			Plush::run(env, \
 				"\
@@ -2500,6 +2825,9 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.LENGTH");
+
 			Plush::run(env, \
 				"\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
@@ -2534,6 +2862,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.LIST");
+
 			Plush::run(env,
 				"\
 					{:instruction CODE.LIST :close 1}\
@@ -2549,6 +2879,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.LIST");
 
 			Plush::run(env, \
 				"\
@@ -2592,6 +2924,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.MEMBER");
+
 			Plush::run(env, \
 				"\
 					{:instruction CODE.MEMBER :close 0}\
@@ -2607,6 +2941,11 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.MEMBER");
+			env.enable_function("EXEC.DO*RANGE");
+			env.enable_function("FLOAT.+");
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
 
 			Plush::run(env, \
 				"\
@@ -2634,6 +2973,12 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.MEMBER");
+			env.enable_function("EXEC.DO*RANGE");
+			env.enable_function("FLOAT.+");
+			env.enable_function("FLOAT.-");
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+
 			Plush::run(env, \
 				"\
 					{:instruction EXEC.DO*RANGE :close 0}\
@@ -2660,6 +3005,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.NOOP");
+
 			Plush::run(env, \
 				"\
 					{:instruction CODE.NOOP :close 1}\
@@ -2676,6 +3023,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.NTH");
+
 			Plush::run(env, \
 				"\
 					{:instruction CODE.NTH :close 0}\
@@ -2691,6 +3040,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.NTH");
 
 			Plush::run(env, \
 				"\
@@ -2709,6 +3060,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.NTH");
 
 			Plush::run(env, \
 				"\
@@ -2741,6 +3095,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.NTH");
+
 			Plush::run(env, \
 				"\
 					{:instruction 1.0 :close 0}\
@@ -2769,6 +3125,9 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.NTH");
+
 			Plush::run(env, \
 				"\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
@@ -2795,6 +3154,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.NTH");
 
 			Plush::run(env, \
 				"\
@@ -2824,6 +3185,9 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.NTH");
+
 			Plush::run(env, \
 				"\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
@@ -2850,6 +3214,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.NTH");
 
 			Plush::run(env, \
 				"\
@@ -2881,6 +3248,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.NTHCDR");
+
 			Plush::run(env, \
 				"\
 					{:instruction CODE.NTHCDR :close 0}\
@@ -2896,6 +3265,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.NTHCDR");
 
 			Plush::run(env, \
 				"\
@@ -2914,6 +3285,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.NTHCDR");
 
 			Plush::run(env, \
 				"\
@@ -2942,6 +3316,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.NTHCDR");
 
 			Plush::run(env, \
 				"\
@@ -2972,6 +3348,9 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.NTHCDR");
+
 			Plush::run(env, \
 				"\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
@@ -2998,6 +3377,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.NTHCDR");
 
 			Plush::run(env, \
 				"\
@@ -3031,6 +3413,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.NULL");
+
 			Plush::run(env, \
 				"\
 					{:instruction 0 :close 1}\
@@ -3047,6 +3431,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.NOOP");
+			env.enable_function("CODE.NULL");
 
 			Plush::run(env, \
 				"\
@@ -3067,6 +3454,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.POP");
+
 			Plush::run(env, \
 				"\
 					{:instruction CODE.POP :close 1}\
@@ -3081,6 +3470,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.POP");
 
 			Plush::run(env, \
 				"\
@@ -3098,6 +3489,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.POP");
 
 			Plush::run(env, \
 				"\
@@ -3117,6 +3510,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.POP");
 
 			Plush::run(env, \
 				"\
@@ -3140,6 +3535,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.POSITION");
 
 			Plush::run(env, \
 				"\
@@ -3165,6 +3562,11 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("EXEC.DO*RANGE");
+			env.enable_function("FLOAT.+");
+			env.enable_function("CODE.POSITION");
+
 			Plush::run(env, \
 				"\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
@@ -3189,6 +3591,12 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("EXEC.DO*RANGE");
+			env.enable_function("FLOAT.+");
+			env.enable_function("FLOAT.-");
+			env.enable_function("CODE.POSITION");
 
 			Plush::run(env, \
 				"\
@@ -3223,6 +3631,12 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("EXEC.DO*RANGE");
+			env.enable_function("FLOAT.+");
+			env.enable_function("FLOAT.-");
+			env.enable_function("CODE.POSITION");
+
 			Plush::run(env, \
 				"\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
@@ -3255,6 +3669,12 @@ namespace PlushUnitTest
 
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("EXEC.DO*RANGE");
+			env.enable_function("FLOAT.+");
+			env.enable_function("FLOAT.-");
+			env.enable_function("CODE.POSITION");
 
 			Plush::run(env, \
 				"\
@@ -3290,6 +3710,11 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("EXEC.DO*RANGE");
+			env.enable_function("FLOAT.+");
+			env.enable_function("CODE.POSITION");
+
 			Plush::run(env, \
 				"\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
@@ -3321,6 +3746,12 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("EXEC.DO*RANGE");
+			env.enable_function("FLOAT.+");
+			env.enable_function("FLOAT.*");
+			env.enable_function("CODE.POSITION");
+
 			Plush::run(env, \
 				"\
 					{:instruction FLOAT.* :close 0}\
@@ -3345,6 +3776,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.QUOTE");
+
 			Plush::run(env, \
 				"\
 					{:instruction CODE.QUOTE :close 0}\
@@ -3360,6 +3793,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.QUOTE");
+			env.enable_function("INTEGER.+");
 
 			Plush::run(env, \
 				"\
@@ -3383,6 +3819,10 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.QUOTE");
+			env.enable_function("INTEGER.+");
+			env.enable_function("INTEGER.-");
 
 			Plush::run(env, \
 				"\
@@ -3409,6 +3849,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.ROT");
 
 			Plush::run(env, \
 				"\
@@ -3440,6 +3882,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.ROT");
+
 			Plush::run(env, \
 				"\
 					{:instruction 1.0 :close 0}\
@@ -3469,6 +3913,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.ROT");
 
 			Plush::run(env, \
 				"\
@@ -3502,6 +3949,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.ROT");
 
 			Plush::run(env, \
 				"\
@@ -3548,6 +3998,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.ROT");
+
 			Plush::run(env, \
 				"\
 					{:instruction 1.0 :close 0}\
@@ -3577,6 +4029,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.ROT");
 
 			Plush::run(env, \
 				"\
@@ -3611,6 +4066,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.SHOVE");
+
 			Plush::run(env, \
 				"\
 					{:instruction 1.0 :close 0}\
@@ -3640,6 +4097,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.SHOVE");
 
 			Plush::run(env, \
 				"\
@@ -3679,6 +4139,8 @@ namespace PlushUnitTest
 			//	0: ( 1.0 1.1 1.2)(2.0 2.1)(3.0)()(1)(CODE.SHOVE)
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.SHOVE");
 
 			Plush::run(env, \
 				"\
@@ -3720,6 +4182,9 @@ namespace PlushUnitTest
 			//	0: (             2.0 2.1)(3.0)()(1)(CODE.SHOVE)
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.SHOVE");
 
 			Plush::run(env, \
 				"\
@@ -3764,6 +4229,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.SHOVE");
+
 			Plush::run(env, \
 				"\
 					{:instruction 1.0 :close 0}\
@@ -3805,6 +4272,9 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.SHOVE");
+
 			Plush::run(env, \
 				"\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
@@ -3841,6 +4311,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.SHOVE");
+
 			Plush::run(env, \
 				"\
 					{:instruction 1.0 :close 0}\
@@ -3870,6 +4342,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.SHOVE");
 
 			Plush::run(env, \
 				"\
@@ -3910,6 +4385,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.SHOVE");
+
 			Plush::run(env, \
 				"\
 					{:instruction 1.0 :close 0}\
@@ -3944,6 +4421,9 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.SHOVE");
+
 			Plush::run(env, \
 				"\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
@@ -3975,6 +4455,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.SHOVE");
 
 			Plush::run(env, \
 				"\
@@ -4008,6 +4491,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.SIZE");
+
 			Plush::run(env, \
 				"\
 					{:instruction 1.0 :close 0}\
@@ -4035,6 +4520,9 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.SIZE");
+
 			Plush::run(env, \
 				"\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
@@ -4060,6 +4548,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.STACKDEPTH");
 
 			Plush::run(env, \
 				"\
@@ -4090,6 +4580,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.STACKDEPTH");
 
 			Plush::run(env, \
 				"\
@@ -4123,6 +4616,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.SUBST");
+
 			Plush::run(env, \
 				"\
 					{:instruction CODE.SUBST :close 0}\
@@ -4145,6 +4640,12 @@ namespace PlushUnitTest
 			//	0: (                                     )( FLOAT.-)( FLOAT.+)( CODE.SUBST
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("EXEC.DO*RANGE");
+			env.enable_function("FLOAT.+");
+			env.enable_function("FLOAT.-");
+			env.enable_function("CODE.SUBST");
 
 			Plush::run(env, \
 				"\
@@ -4178,6 +4679,10 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("FLOAT.+");
+			env.enable_function("FLOAT.-");
+			env.enable_function("CODE.SUBST");
+
 			Plush::run(env, \
 				"\
 					{:instruction FLOAT.+ :close 0}\
@@ -4199,6 +4704,12 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("EXEC.DO*RANGE");
+			env.enable_function("FLOAT.+");
+			env.enable_function("FLOAT.-");
+			env.enable_function("CODE.SUBST");
 
 			Plush::run(env, \
 				"\
@@ -4234,6 +4745,12 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("EXEC.DO*RANGE");
+			env.enable_function("FLOAT.+");
+			env.enable_function("FLOAT.-");
+			env.enable_function("CODE.SUBST");
+
 			Plush::run(env, \
 				"\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
@@ -4264,6 +4781,11 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("EXEC.DO*RANGE");
+			env.enable_function("FLOAT.+");
+			env.enable_function("CODE.SUBST");
+
 			Plush::run(env, \
 				"\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
@@ -4285,6 +4807,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.SWAP");
 
 			Plush::run(env, \
 				"\
@@ -4316,6 +4840,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.SWAP");
+
 			Plush::run(env, \
 				"\
 					{:instruction 1.0 :close 0}\
@@ -4345,6 +4871,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.SWAP");
 
 			Plush::run(env, \
 				"\
@@ -4379,6 +4908,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.SWAP");
 
 			Plush::run(env, \
 				"\
@@ -4426,6 +4958,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.SWAP");
+
 			Plush::run(env, \
 				"\
 					{:instruction CODE.SWAP :close 1}\
@@ -4441,6 +4975,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.SWAP");
 
 			Plush::run(env, \
 				"\
@@ -4474,6 +5011,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.YANK");
+
 			Plush::run(env, \
 				"\
 					{:instruction 1.0 :close 0}\
@@ -4503,6 +5042,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.YANK");
 
 			Plush::run(env, \
 				"\
@@ -4536,6 +5078,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.YANK");
+
 			Plush::run(env, \
 				"\
 					{:instruction 1.0 :close 0}\
@@ -4565,6 +5109,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.YANK");
 
 			Plush::run(env, \
 				"\
@@ -4599,6 +5146,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.YANK");
+
 			Plush::run(env, \
 				"\
 					{:instruction 1.0 :close 0}\
@@ -4629,6 +5178,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.YANK");
 
 			Plush::run(env, \
 				"\
@@ -4663,6 +5215,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.YANK");
+
 			Plush::run(env, \
 				"\
 					{:instruction 1.0 :close 0}\
@@ -4693,6 +5247,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.YANK");
 
 			Plush::run(env, \
 				"\
@@ -4726,6 +5283,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.YANK");
+
 			Plush::run(env, \
 				"\
 					{:instruction 1.0 :close 0}\
@@ -4755,6 +5314,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.YANK");
 
 			Plush::run(env, \
 				"\
@@ -4788,6 +5350,9 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.YANK");
+
 			Plush::run(env, \
 				"\
 					{:instruction EXEC.NOOP_OPEN_PAREN :close 0}\
@@ -4819,6 +5384,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("CODE.YANKDUP");
 
 			Plush::run(env, \
 				"\
@@ -4852,6 +5419,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.YANKDUP");
 
 			Plush::run(env, \
 				"\
@@ -4891,6 +5461,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.YANKDUP");
+
 			Plush::run(env, \
 				"\
 					{:instruction 1.0 :close 0}\
@@ -4922,6 +5494,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.YANKDUP");
 
 			Plush::run(env, \
 				"\
@@ -4956,6 +5531,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.YANKDUP");
+
 			Plush::run(env, \
 				"\
 					{:instruction 1.0 :close 0}\
@@ -4986,6 +5563,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.YANKDUP");
 
 			Plush::run(env, \
 				"\
@@ -5020,6 +5600,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.YANKDUP");
+
 			Plush::run(env, \
 				"\
 					{:instruction 1.0 :close 0}\
@@ -5050,6 +5632,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.YANKDUP");
 
 			Plush::run(env, \
 				"\
@@ -5084,6 +5669,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("CODE.YANKDUP");
+
 			Plush::run(env, \
 				"\
 					{:instruction 1.0 :close 0}\
@@ -5114,6 +5701,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.YANKDUP");
 
 			Plush::run(env, \
 				"\
@@ -5147,6 +5737,9 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.NOOP_OPEN_PAREN");
+			env.enable_function("CODE.YANKDUP");
 
 			Plush::run(env, \
 				"\

@@ -297,9 +297,10 @@ namespace pushGP
 
 		for (int n = 0; n < num_of_instructions; n++)
 		{
-			atom = random_atom(temp_atom);
-			atom.close_parenthesis = random_closes();
+			int r = Utilities::random_integer(0, std::numeric_limits<int>::max());
 
+			atom.instruction = toString(r);
+			atom.type = Plush::Atom::AtomType::integer;
 			genome.push(atom);
 		}
 

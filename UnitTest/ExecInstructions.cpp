@@ -54,6 +54,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("EXEC.DO*COUNT");
+
 			Plush::run(env, "\
 							 {:instruction EXEC.DO*COUNT :close 0}\
 							 {:instruction true :close 1}\
@@ -70,6 +72,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("EXEC.DO*COUNT");
 
 			Plush::run(env, "\
 							 {:instruction -3 :close 0}\
