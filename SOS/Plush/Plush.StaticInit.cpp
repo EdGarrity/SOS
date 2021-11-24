@@ -78,7 +78,7 @@ namespace Plush
 
 	std::string StaticInit::get_function_name(unsigned int function_index)
 	{
-		return function_names[function_index];
+		return function_names[function_index % number_of_functions()];
 	}
 
 	unsigned int StaticInit::get_function_block_wants(std::string function_name)

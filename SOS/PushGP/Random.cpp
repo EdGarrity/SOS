@@ -292,6 +292,25 @@ namespace pushGP
 			}
 		}
 
+		// Include knowledge of some instrcutions in the genome.
+		int num_of_instructions = Utilities::random_integer(Plush::static_initializer.number_of_functions());
+
+		for (int n = 0; n < num_of_instructions; n++)
+		{
+			atom = random_atom(temp_atom);
+			atom.close_parenthesis = random_closes();
+
+			genome.push(atom);
+		}
+
+		atom.instruction = toString(num_of_instructions);
+		atom.type = Plush::Atom::AtomType::integer;
+		genome.push(atom);
+
+		atom.instruction = "EXEC.ENABLE*INSTRUCTIONS";
+		atom.type = Plush::Atom::AtomType::ins;
+		genome.push(atom);
+
 		return genome;
 	}
 

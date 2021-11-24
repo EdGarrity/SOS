@@ -14,6 +14,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.=");
+
 			Plush::run(env, \
 				"\
 					{:instruction BOOLEAN.= :close 0}\
@@ -29,6 +31,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.=");
 
 			Plush::run(env, \
 				"\
@@ -50,6 +54,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.=");
+
 			Plush::run(env, \
 				"\
 					{:instruction FALSE :close 0}\
@@ -69,6 +75,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.=");
 
 			Plush::run(env, \
 				"\
@@ -90,6 +98,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.=");
+
 			Plush::run(env, \
 				"\
 					{:instruction FALSE :close 0}\
@@ -110,6 +120,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.AND");
+
 			Plush::run(env, \
 				"\
 					{:instruction BOOLEAN.AND :close 0}\
@@ -125,6 +137,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.AND");
 
 			Plush::run(env, \
 				"\
@@ -146,6 +160,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.AND");
+
 			Plush::run(env, \
 				"\
 					{:instruction FALSE :close 1}\
@@ -165,6 +181,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.AND");
 
 			Plush::run(env, \
 				"\
@@ -186,6 +204,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.AND");
+
 			Plush::run(env, \
 				"\
 					{:instruction FALSE :close 0}\
@@ -206,6 +226,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.NAND");
+
 			Plush::run(env, \
 				"\
 					{:instruction BOOLEAN.NAND :close 0}\
@@ -221,6 +243,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.NAND");
 
 			Plush::run(env, \
 				"\
@@ -242,6 +266,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.NAND");
+
 			Plush::run(env, \
 				"\
 					{:instruction FALSE :close 1}\
@@ -261,6 +287,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.NAND");
 
 			Plush::run(env, \
 				"\
@@ -282,6 +310,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.NAND");
+
 			Plush::run(env, \
 				"\
 					{:instruction FALSE :close 0}\
@@ -302,6 +332,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.DUP");
+
 			Plush::run(env, \
 				"\
 					{:instruction BOOLEAN.DUP :close 0}\
@@ -317,6 +349,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.DUP");
 
 			Plush::run(env, \
 				"\
@@ -336,6 +370,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.DUP");
+
 			Plush::run(env, \
 				"\
 					{:instruction FALSE :close 0}\
@@ -353,6 +389,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.DUP");
 
 			Plush::run(env, \
 				"\
@@ -374,6 +412,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.FLUSH");
+
 			Plush::run(env, \
 				"\
 					{:instruction BOOLEAN.FLUSH :close 0}\
@@ -389,6 +429,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.FLUSH");
 
 			Plush::run(env, \
 				"\
@@ -407,6 +449,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.FLUSH");
 
 			Plush::run(env, \
 				"\
@@ -428,6 +472,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.FROMFLOAT");
+
 			Plush::run(env, \
 				"\
 					{:instruction BOOLEAN.FROMFLOAT :close 0}\
@@ -443,6 +489,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.FROMFLOAT");
 
 			Plush::run(env, \
 				"\
@@ -462,6 +510,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.FROMFLOAT");
+
 			Plush::run(env, \
 				"\
 					{:instruction 0.0 :close 0}\
@@ -479,6 +529,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.FROMFLOAT");
 
 			Plush::run(env, \
 				"\
@@ -500,6 +552,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.FROMINTEGER");
+
 			Plush::run(env, \
 				"\
 					{:instruction BOOLEAN.FROMINTEGER :close 0}\
@@ -515,6 +569,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.FROMINTEGER");
 
 			Plush::run(env, \
 				"\
@@ -534,6 +590,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.FROMINTEGER");
+
 			Plush::run(env, \
 				"\
 					{:instruction 0 :close 0}\
@@ -551,6 +609,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.FROMINTEGER");
 
 			Plush::run(env, \
 				"\
@@ -572,6 +632,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.NOT");
+
 			Plush::run(env, \
 				"\
 					{:instruction BOOLEAN.NOT :close 0}\
@@ -587,6 +649,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.NOT");
 
 			Plush::run(env, \
 				"\
@@ -606,6 +670,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.NOT");
+
 			Plush::run(env, \
 				"\
 					{:instruction TRUE :close 0}\
@@ -623,6 +689,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.NOT");
 
 			Plush::run(env, \
 				"\
@@ -644,6 +712,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.OR");
+
 			Plush::run(env, \
 				"\
 					{:instruction BOOLEAN.OR :close 0}\
@@ -659,6 +729,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.OR");
 
 			Plush::run(env, \
 				"\
@@ -680,6 +752,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.OR");
+
 			Plush::run(env, \
 				"\
 					{:instruction FALSE :close 0}\
@@ -699,6 +773,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.OR");
 
 			Plush::run(env, \
 				"\
@@ -720,6 +796,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.OR");
+
 			Plush::run(env, \
 				"\
 					{:instruction FALSE :close 0}\
@@ -740,6 +818,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.NOR");
+
 			Plush::run(env, \
 				"\
 					{:instruction BOOLEAN.NOR :close 0}\
@@ -755,6 +835,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.NOR");
 
 			Plush::run(env, \
 				"\
@@ -776,6 +858,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.NOR");
+
 			Plush::run(env, \
 				"\
 					{:instruction FALSE :close 0}\
@@ -795,6 +879,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.NOR");
 
 			Plush::run(env, \
 				"\
@@ -816,6 +902,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.NOR");
+
 			Plush::run(env, \
 				"\
 					{:instruction FALSE :close 0}\
@@ -836,6 +924,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.POP");
+
 			Plush::run(env, \
 				"\
 					{:instruction BOOLEAN.POP :close 0}\
@@ -851,6 +941,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.POP");
 
 			Plush::run(env, \
 				"\
@@ -869,6 +961,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.POP");
 
 			Plush::run(env, \
 				"\
@@ -889,6 +983,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.POP");
 
 			Plush::run(env, \
 				"\
@@ -912,6 +1008,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.ROT");
+
 			Plush::run(env, \
 				"\
 					{:instruction BOOLEAN.ROT :close 0}\
@@ -927,6 +1025,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.ROT");
 
 			Plush::run(env, \
 				"\
@@ -949,6 +1049,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.ROT");
 
 			Plush::run(env, \
 				"\
@@ -978,6 +1080,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.SHOVE");
+
 			Plush::run(env, \
 				"\
 					{:instruction BOOLEAN.SHOVE :close 0}\
@@ -993,6 +1097,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.SHOVE");
 
 			Plush::run(env, \
 				"\
@@ -1013,6 +1119,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.SHOVE");
 
 			Plush::run(env, \
 				"\
@@ -1054,6 +1162,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.STACKDEPTH");
+
 			Plush::run(env, \
 				"\
 					{:instruction BOOLEAN.STACKDEPTH :close 0}\
@@ -1069,6 +1179,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.STACKDEPTH");
 
 			Plush::run(env, \
 				"\
@@ -1087,6 +1199,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.STACKDEPTH");
 
 			Plush::run(env, \
 				"\
@@ -1107,6 +1221,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.STACKDEPTH");
 
 			Plush::run(env, \
 				"\
@@ -1130,6 +1246,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.SWAP");
+
 			Plush::run(env, \
 				"\
 					{:instruction BOOLEAN.SWAP :close 0}\
@@ -1145,6 +1263,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.SWAP");
 
 			Plush::run(env, \
 				"\
@@ -1163,6 +1283,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.SWAP");
 
 			Plush::run(env, \
 				"\
@@ -1183,6 +1305,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.SWAP");
 
 			Plush::run(env, \
 				"\
@@ -1206,6 +1330,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.YANK");
+
 			Plush::run(env, \
 				"\
 					{:instruction BOOLEAN.YANK :close 0}\
@@ -1221,6 +1347,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.YANK");
 
 			Plush::run(env, \
 				"\
@@ -1249,6 +1377,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.YANK");
+
 			Plush::run(env, \
 				"\
 					{:instruction 1 :close 0}\
@@ -1274,6 +1404,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.YANK");
 
 			Plush::run(env, \
 				"\
@@ -1309,6 +1441,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("BOOLEAN.YANKDUP");
+
 			Plush::run(env, \
 				"\
 					{:instruction BOOLEAN.YANKDUP :close 0}\
@@ -1324,6 +1458,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.YANKDUP");
 
 			Plush::run(env, \
 				"\
@@ -1348,6 +1484,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("BOOLEAN.YANKDUP");
 
 			Plush::run(env, \
 				"\

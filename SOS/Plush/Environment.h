@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <map>
+#include <set>
 #include <stdexcept>
 #include "Genome.h"
 #include "Type.h"
@@ -24,8 +25,8 @@ namespace Plush
 		Genome<double> double_stack_;
 		Genome<bool> bool_stack_;
 
-		// Knowledge
-		typedef std::map<std::string, Instruction*> KnownInstructionsMapType;
+		// Dynamic Instruction Set
+		typedef std::set<std::string> KnownInstructionsMapType;
 		KnownInstructionsMapType KnownInstructionsMap;
 
 	public:
@@ -112,6 +113,38 @@ namespace Plush
 		}
 
 		/* Helper Functions */
+
+		void enable_function(std::string function_name)
+		{
+			KnownInstructionsMap.insert(function_name);
+		}
+
+		void disable_function(std::string function_name)
+		{
+			KnownInstructionsMap.erase(function_name);
+		}
+
+		void enable_function(unsigned int function_index)
+		{
+			KnownInstructionsMap.insert(static_initializer.get_function_name(function_index));
+		}
+
+		void disable_function(unsigned int function_index)
+		{
+			KnownInstructionsMap.erase(static_initializer.get_function_name(function_index));
+		}
+
+		bool is_function_enabled(std::string function_name)
+		{
+			if (function_name == "EXEC.ENABLE*INSTRUCTION")
+				return true;
+
+			if (function_name == "EXEC.ENABLE*INSTRUCTIONS")
+				return true;
+
+			else
+				return KnownInstructionsMap.find(function_name) != KnownInstructionsMap.end();
+		}
 
 		template<typename T>
 		size_t length()

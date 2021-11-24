@@ -8,6 +8,46 @@
 
 namespace Plush
 {
+	// Add an instruction to the instruction set for this individual.
+	inline size_t exec_enable_instruction(Environment& _env)
+	{
+		int n = _env.pop<long>();	// Instruction index
+
+		_env.enable_function(n);
+
+		return 1;
+	}
+
+	// Add instructions to the instruction set for this individual using the integers in the integer stack.
+	inline size_t exec_enable_instructions(Environment& _env)
+	{
+		int n = _env.pop<long>();	// Number of instructions to add
+		int i = _env.pop<long>();	// Instruction index
+
+		if (n > 0)
+		{
+			_env.enable_function(i);
+
+			if (_env.is_empty<long>() == false)
+			{
+				_env.push<long>(n - 1);
+				_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.ENABLE*INSTRUCTIONS :close 1}"));
+			}
+		}
+
+		return 1;
+	}
+
+	// Remove instruction from the instruction set for this individual.
+	inline size_t exec_disable_instruction(Environment& _env)
+	{
+		int n = _env.pop<long>();	// Instruction index
+
+		_env.disable_function(n);
+
+		return 1;
+	}
+
 	// Expand inner block
 	inline size_t noop_open_paren(Environment & _env)
 	{
@@ -910,7 +950,7 @@ namespace Plush
 	{
 		if (_env.input.size() > 0)
 		{
-			for (unsigned int index = _env.input.size() - 1; index >= 0; index--)
+			for (size_t index = _env.input.size() - 1; index >= 0; index--)
 			{
 				double value = _env.input[index];
 				_env.push<CodeAtom>(CodeAtom(value));
@@ -927,6 +967,10 @@ namespace Plush
 		if (initialized) return;
 
 		initialized = true;
+
+		push_make_instruction((Operator)exec_enable_instruction, "EXEC", "ENABLE*INSTRUCTION", integerType, nullType);
+		push_make_instruction((Operator)exec_enable_instructions, "EXEC", "ENABLE*INSTRUCTIONS", integerType+ integerType, nullType);
+		push_make_instruction((Operator)exec_disable_instruction, "EXEC", "DISABLE*INSTRUCTION", integerType, nullType);
 
 		push_make_instruction((Operator)exec_k, "EXEC", "K", execType + execType, nullType);
 		push_make_instruction((Operator)exec_s, "EXEC", "S", execType + execType + execType, execType);
