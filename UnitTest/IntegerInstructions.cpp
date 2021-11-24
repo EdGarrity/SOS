@@ -26,6 +26,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.%");
+
 			Plush::run(env, \
 				"\
 					{:instruction INTEGER.% :close 0}\
@@ -41,6 +43,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.%");
 
 			Plush::run(env, \
 				"\
@@ -59,6 +63,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.%");
 
 			Plush::run(env, \
 				"\
@@ -80,6 +86,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.%");
+
 			Plush::run(env, \
 				"\
 					{:instruction 10 :close 0}\
@@ -99,6 +107,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.%");
 
 			Plush::run(env, \
 				"\
@@ -120,6 +130,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.%");
+
 			Plush::run(env, \
 				"\
 					{:instruction 12 :close 0}\
@@ -140,6 +152,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.*");
+
 			Plush::run(env, \
 				"\
 					{:instruction INTEGER.* :close 0}\
@@ -155,6 +169,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.*");
 
 			Plush::run(env, \
 				"\
@@ -173,6 +189,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.*");
 
 			Plush::run(env, \
 				"\
@@ -193,6 +211,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.*");
 
 			Plush::run(env, \
 				"\
@@ -216,6 +236,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.+");
+
 			Plush::run(env, \
 				"\
 					{:instruction INTEGER.+ :close 0}\
@@ -231,6 +253,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.+");
 
 			Plush::run(env, \
 				"\
@@ -249,6 +273,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.+");
 
 			Plush::run(env, \
 				"\
@@ -269,6 +295,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.+");
 
 			Plush::run(env, \
 				"\
@@ -292,6 +320,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.-");
+
 			Plush::run(env, \
 				"\
 					{:instruction INTEGER.- :close 0}\
@@ -307,6 +337,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.-");
 
 			Plush::run(env, \
 				"\
@@ -325,6 +357,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.-");
 
 			Plush::run(env, \
 				"\
@@ -345,6 +379,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.-");
 
 			Plush::run(env, \
 				"\
@@ -368,6 +404,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER./");
+
 			Plush::run(env, \
 				"\
 					{:instruction INTEGER./ :close 0}\
@@ -383,6 +421,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER./");
 
 			Plush::run(env, \
 				"\
@@ -404,6 +444,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER./");
+
 			Plush::run(env, \
 				"\
 					{:instruction 10 :close 0}\
@@ -421,6 +463,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER./");
 
 			Plush::run(env, \
 				"\
@@ -441,6 +485,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER./");
 
 			Plush::run(env, \
 				"\
@@ -464,6 +510,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.<");
+
 			Plush::run(env, \
 				"\
 					{:instruction INT.< :close 0}\
@@ -479,6 +527,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.<");
 
 			Plush::run(env, \
 				"\
@@ -497,6 +547,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.<");
 
 			Plush::run(env, \
 				"\
@@ -518,6 +570,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.<");
+
 			Plush::run(env, \
 				"\
 					{:instruction 20 :close 0}\
@@ -537,6 +591,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.<");
 
 			Plush::run(env, \
 				"\
@@ -560,6 +616,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.=");
+
 			Plush::run(env, \
 				"\
 					{:instruction INTEGER.= :close 0}\
@@ -575,6 +633,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.=");
 
 			Plush::run(env, \
 				"\
@@ -593,6 +653,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.=");
 
 			Plush::run(env, \
 				"\
@@ -614,6 +676,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.=");
+
 			Plush::run(env, \
 				"\
 					{:instruction 20 :close 0}\
@@ -633,6 +697,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.=");
 
 			Plush::run(env, \
 				"\
@@ -656,6 +722,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.>");
+
 			Plush::run(env, \
 				"\
 					{:instruction INTEGER.> :close 0}\
@@ -671,6 +739,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.>");
 
 			Plush::run(env, \
 				"\
@@ -689,6 +759,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.>");
 
 			Plush::run(env, \
 				"\
@@ -710,6 +782,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.>");
+
 			Plush::run(env, \
 				"\
 					{:instruction 20 :close 0}\
@@ -729,6 +803,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.>");
 
 			Plush::run(env, \
 				"\
@@ -752,6 +828,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.DUP");
+
 			Plush::run(env, \
 				"\
 					{:instruction INTEGER.DUP :close 0}\
@@ -767,6 +845,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.DUP");
 
 			Plush::run(env, "\
                              {:instruction 10 :close 0}\
@@ -791,6 +871,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.DUP");
+
 			Plush::run(env, \
 				"\
 					{:instruction -1 :close 0}\
@@ -808,6 +890,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.DUP");
 
 			Plush::run(env, \
 				"\
@@ -828,6 +912,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.DUP");
 
 			Plush::run(env, \
 				"\
@@ -851,6 +937,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.FLUSH");
+
 			Plush::run(env, \
 				"\
 					{:instruction INTEGER.FLUSH :close 0}\
@@ -866,6 +954,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.FLUSH");
 
 			Plush::run(env, \
 				"\
@@ -884,6 +974,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.FLUSH");
 
 			Plush::run(env, \
 				"\
@@ -904,6 +996,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.FLUSH");
 
 			Plush::run(env, \
 				"\
@@ -927,6 +1021,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.FROMBOOLEAN");
+
 			Plush::run(env, \
 				"\
 					{:instruction INTEGER.FROMBOOLEAN :close 0}\
@@ -942,6 +1038,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.FROMBOOLEAN");
 
 			Plush::run(env, \
 				"\
@@ -960,6 +1058,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.FROMBOOLEAN");
 
 			Plush::run(env, \
 				"\
@@ -980,6 +1080,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.FROMBOOLEAN");
 
 			Plush::run(env, \
 				"\
@@ -1003,6 +1105,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.FROMFLOAT");
+
 			Plush::run(env, \
 				"\
 					{:instruction INTEGER.FROMFLOAT :close 0}\
@@ -1018,6 +1122,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.FROMFLOAT");
 
 			Plush::run(env, \
 				"\
@@ -1036,6 +1142,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.FROMFLOAT");
 
 			Plush::run(env, \
 				"\
@@ -1056,6 +1164,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.FROMFLOAT");
 
 			Plush::run(env, \
 				"\
@@ -1079,6 +1189,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.MAX");
+
 			Plush::run(env, \
 				"\
 					{:instruction INTEGER.MAX :close 0}\
@@ -1094,6 +1206,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.MAX");
 
 			Plush::run(env, \
 				"\
@@ -1112,6 +1226,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.MAX");
 
 			Plush::run(env, \
 				"\
@@ -1132,6 +1248,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.MAX");
 
 			Plush::run(env, \
 				"\
@@ -1155,6 +1273,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.MIN");
+
 			Plush::run(env, \
 				"\
 					{:instruction INTEGER.MIN :close 0}\
@@ -1170,6 +1290,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.MIN");
 
 			Plush::run(env, \
 				"\
@@ -1188,6 +1310,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.MIN");
 
 			Plush::run(env, \
 				"\
@@ -1208,6 +1332,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.MIN");
 
 			Plush::run(env, \
 				"\
@@ -1231,6 +1357,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.POP");
+
 			Plush::run(env, \
 				"\
 					{:instruction INTEGER.POP :close 0}\
@@ -1246,6 +1374,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.POP");
 
 			Plush::run(env, \
 				"\
@@ -1264,6 +1394,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.POP");
 
 			Plush::run(env, \
 				"\
@@ -1284,6 +1416,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.POP");
 
 			Plush::run(env, \
 				"\
@@ -1307,6 +1441,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.ROT");
+
 			Plush::run(env, \
 				"\
 					{:instruction INTEGER.ROT :close 0}\
@@ -1322,6 +1458,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.ROT");
 
 			Plush::run(env, "\
                              {:instruction 10 :close 0}\
@@ -1346,6 +1484,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.ROT");
+
 			Plush::run(env, \
 				"\
 					{:instruction -1 :close 0}\
@@ -1365,6 +1505,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.ROT");
 
 			Plush::run(env, \
 				"\
@@ -1388,6 +1530,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.SHOVE");
+
 			Plush::run(env, \
 				"\
 					{:instruction INTEGER.SHOVE :close 0}\
@@ -1403,6 +1547,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.SHOVE");
 
 			Plush::run(env, "\
                              {:instruction 10 :close 0}\
@@ -1431,6 +1577,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.SHOVE");
+
 			Plush::run(env, \
 				"\
 					{:instruction -1 :close 0}\
@@ -1450,6 +1598,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.SHOVE");
 
 			Plush::run(env, \
 				"\
@@ -1476,6 +1626,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.SHOVE");
 
 			Plush::run(env, "\
                              {:instruction 10 :close 0}\
@@ -1504,6 +1656,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.SHOVE");
+
 			Plush::run(env, "\
                              {:instruction 10 :close 0}\
                              {:instruction 20 :close 0}\
@@ -1526,6 +1680,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.SHOVE");
 
 			Plush::run(env, "\
                              {:instruction 10 :close 0}\
@@ -1554,6 +1710,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.STACKDEPTH");
+
 			Plush::run(env, \
 				"\
 					{:instruction INTEGER.STACKDEPTH :close 0}\
@@ -1569,6 +1727,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.STACKDEPTH");
 
 			Plush::run(env, "\
                              {:instruction 10 :close 0}\
@@ -1593,6 +1753,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.STACKDEPTH");
+
 			Plush::run(env, \
 				"\
 					{:instruction -1 :close 0}\
@@ -1612,6 +1774,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.STACKDEPTH");
 
 			Plush::run(env, \
 				"\
@@ -1635,6 +1799,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.SWAP");
+
 			Plush::run(env, \
 				"\
 					{:instruction INTEGER.SWAP :close 0}\
@@ -1650,6 +1816,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.SWAP");
 
 			Plush::run(env, "\
                              {:instruction 30 :close 0}\
@@ -1670,6 +1838,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.SWAP");
+
 			Plush::run(env, \
 				"\
 					{:instruction -1 :close 0}\
@@ -1689,6 +1859,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.SWAP");
 
 			Plush::run(env, \
 				"\
@@ -1712,6 +1884,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.YANK");
+
 			Plush::run(env, \
 				"\
 					{:instruction INTEGER.YANK :close 0}\
@@ -1727,6 +1901,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.YANK");
 
 			Plush::run(env, \
 				"\
@@ -1752,6 +1928,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.YANK");
+
 			Plush::run(env, \
 				"\
 					{:instruction 3 :close 0}\
@@ -1776,6 +1954,8 @@ namespace PlushUnitTest
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
 
+			env.enable_function("INTEGER.YANKDUP");
+
 			Plush::run(env, \
 				"\
 					{:instruction INTEGER.YANKDUP :close 0}\
@@ -1791,6 +1971,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.YANKDUP");
 
 			Plush::run(env, \
 				"\
@@ -1809,6 +1991,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.YANKDUP");
 
 			Plush::run(env, \
 				"\
@@ -1833,6 +2017,8 @@ namespace PlushUnitTest
 		{
 			Environment env;
 			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			env.enable_function("INTEGER.YANKDUP");
 
 			Plush::run(env, \
 				"\
