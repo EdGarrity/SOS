@@ -24,18 +24,29 @@ namespace Plush
 		int n = _env.pop<long>();	// Number of instructions to add
 		int i = _env.pop<long>();	// Instruction index
 
-		if (n > 0)
+		//if (n > 0)
+		//{
+		//	_env.enable_function(i);
+
+		//	if (_env.is_empty<long>() == false)
+		//	{
+		//		_env.push<long>(n - 1);
+		//		_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.ENABLE*INSTRUCTIONS :close 1}"));
+		//	}
+		//}
+
+		while (n > 0)
 		{
 			_env.enable_function(i);
 
 			if (_env.is_empty<long>() == false)
 			{
-				_env.push<long>(n - 1);
-				_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.ENABLE*INSTRUCTIONS :close 1}"));
+				n--;
+				i = _env.pop<long>();
 			}
 		}
 
-		return 1;
+		return (n > 0) ? n : 1;
 	}
 
 	// Remove instruction from the instruction set for this individual.

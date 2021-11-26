@@ -30,7 +30,7 @@ namespace Plush
 		// Registers a function and makes it globally available through the 'instructions' Code 
 		void push_register_pushfunc(Instruction* pInstruction);
 		void set_parentheses(std::string type, std::string name, unsigned int block_wants);
-		void set_parentheses(std::string name, unsigned int block_wants);
+		//void set_parentheses(std::string name, unsigned int block_wants);
 
 		// Helper functions
 		unsigned int number_of_functions();
@@ -41,17 +41,18 @@ namespace Plush
 		bool is_function_supported(std::string function_name);
 	};
 
-	extern thread_local StaticInit static_initializer;
+	//extern thread_local StaticInit static_initializer;
+	extern StaticInit static_initializer;
 
 	inline void set_parentheses(std::string type, std::string name, unsigned int block_wants)
 	{
 		static_initializer.set_parentheses(type, name, block_wants);
 	}
 
-	inline void set_parentheses(std::string name, unsigned int block_wants)
-	{
-		static_initializer.set_parentheses(name, block_wants);
-	}
+	//inline void set_parentheses(std::string name, unsigned int block_wants)
+	//{
+	//	static_initializer.set_parentheses(name, block_wants);
+	//}
 
 	void push_make_instruction(Operator op, std::string type, std::string name, Type in, Type out);
 }

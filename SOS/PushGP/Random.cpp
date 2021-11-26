@@ -114,128 +114,60 @@ namespace pushGP
 
 		genome.clear();
 
+		// Include knowledge of some instrcutions in the genome.
+		atom.instruction = toString(Plush::static_initializer.get_function_index("INTEGER.OUT"));
+		atom.type = Plush::Atom::AtomType::integer;
+		genome.push(atom);
+
+		atom.instruction = "EXEC.ENABLE*INSTRUCTION";
+		atom.type = Plush::Atom::AtomType::ins;
+		genome.push(atom);
+
+		atom.instruction = toString(Plush::static_initializer.get_function_index("INTEGER.INALLREV"));
+		atom.type = Plush::Atom::AtomType::integer;
+		genome.push(atom);
+
+		atom.instruction = "EXEC.ENABLE*INSTRUCTION";
+		atom.type = Plush::Atom::AtomType::ins;
+		genome.push(atom);
+
+		atom.instruction = toString(Plush::static_initializer.get_function_index("INTEGER.INALL"));
+		atom.type = Plush::Atom::AtomType::integer;
+		genome.push(atom);
+
+		atom.instruction = "EXEC.ENABLE*INSTRUCTION";
+		atom.type = Plush::Atom::AtomType::ins;
+		genome.push(atom);
+
+		atom.instruction = toString(Plush::static_initializer.get_function_index("INTEGER.IN"));
+		atom.type = Plush::Atom::AtomType::integer;
+		genome.push(atom);
+
+		atom.instruction = "EXEC.ENABLE*INSTRUCTION";
+		atom.type = Plush::Atom::AtomType::ins;
+		genome.push(atom);
+
+		int num_of_instructions = Utilities::random_integer(Plush::static_initializer.number_of_functions() * 4);
+
+		atom.instruction = toString(num_of_instructions);
+		atom.type = Plush::Atom::AtomType::integer;
+		genome.push(atom);
+
+		for (int n = 0; n < num_of_instructions; n++)
+		{
+			int r = Utilities::random_integer(0, std::numeric_limits<int>::max());
+
+			atom.instruction = toString(r);
+			atom.type = Plush::Atom::AtomType::integer;
+			genome.push(atom);
+		}
+
+		atom.instruction = "EXEC.ENABLE*INSTRUCTIONS";
+		atom.type = Plush::Atom::AtomType::ins;
+		genome.push(atom);
+
 		while (--n > 0)
 		{
-			//if (Utilities::random_double(0.0, 1.0) < domain::argmap::probability_of_generating_a_io_atom)
-			//{
-			//	int r = Utilities::random_integer(0, std::numeric_limits<int>::max());
-			//	unsigned int s = Utilities::random_integer(12);
-			//	
-			//	switch (s)
-			//	{
-			//	case 0:
-			//		atom.instruction = toString(r);
-			//		atom.type = Plush::Atom::AtomType::integer;
-			//		genome.push(atom);
-
-			//		atom.instruction = "INTEGER.IN";
-			//		atom.type = Plush::Atom::AtomType::ins;
-			//		genome.push(atom);
-
-			//		break;
-
-			//	case 1:
-			//		atom.instruction = toString(r);
-			//		atom.type = Plush::Atom::AtomType::integer;
-			//		genome.push(atom);
-
-			//		atom.instruction = "FLOAT.IN";
-			//		atom.type = Plush::Atom::AtomType::ins;
-			//		genome.push(atom);
-
-			//		break;
-
-			//	case 2:
-			//		atom.instruction = toString(r);
-			//		atom.type = Plush::Atom::AtomType::integer;
-			//		genome.push(atom);
-
-			//		atom.instruction = "BOOLEAN.IN";
-			//		atom.type = Plush::Atom::AtomType::ins;
-			//		genome.push(atom);
-
-			//		break;
-
-			//	case 3:
-			//		atom.instruction = "INTEGER.INALL";
-			//		atom.type = Plush::Atom::AtomType::ins;
-			//		genome.push(atom);
-
-			//		break;
-
-			//	case 4:
-			//		atom.instruction = "FLOAT.INALL";
-			//		atom.type = Plush::Atom::AtomType::ins;
-			//		genome.push(atom);
-
-			//		break;
-
-			//	case 5:
-			//		atom.instruction = "BOOLEAN.INALL";
-			//		atom.type = Plush::Atom::AtomType::ins;
-			//		genome.push(atom);
-
-			//		break;
-
-			//	case 6:
-			//		atom.instruction = "INTEGER.INALLREV";
-			//		atom.type = Plush::Atom::AtomType::ins;
-			//		genome.push(atom);
-
-			//		break;
-
-			//	case 7:
-			//		atom.instruction = "FLOAT.INALLREV";
-			//		atom.type = Plush::Atom::AtomType::ins;
-			//		genome.push(atom);
-
-			//		break;
-
-			//	case 8:
-			//		atom.instruction = "BOOLEAN.INALLREV";
-			//		atom.type = Plush::Atom::AtomType::ins;
-			//		genome.push(atom);
-
-			//		break;
-
-			//	case 9:
-			//		atom.instruction = toString(r);
-			//		atom.type = Plush::Atom::AtomType::integer;
-			//		genome.push(atom);
-
-			//		atom.instruction = "INTEGER.OUT";
-			//		atom.type = Plush::Atom::AtomType::ins;
-			//		genome.push(atom);
-
-			//		break;
-
-			//	case 10:
-			//		atom.instruction = toString(r);
-			//		atom.type = Plush::Atom::AtomType::integer;
-			//		genome.push(atom);
-
-			//		atom.instruction = "FLOAT.OUT";
-			//		atom.type = Plush::Atom::AtomType::ins;
-			//		genome.push(atom);
-
-			//		break;
-
-			//	case 11:
-			//		atom.instruction = toString(r);
-			//		atom.type = Plush::Atom::AtomType::integer;
-			//		genome.push(atom);
-
-			//		atom.instruction = "BOOLEAN.OUT";
-			//		atom.type = Plush::Atom::AtomType::ins;
-			//		genome.push(atom);
-
-			//		break;
-
-			//	default:
-			//		throw MyException("random_plush_genome_with_size() - Invalid random number generated.");
-			//	}
-			//}
-
 			if (Utilities::random_double(0.0, 1.0) < domain::argmap::probability_of_generating_a_io_atom)
 			{
 				int r = Utilities::random_integer(0, std::numeric_limits<int>::max());
@@ -244,12 +176,12 @@ namespace pushGP
 				switch (s)
 				{
 				case 0:
-					atom.instruction = toString(r);
-					atom.type = Plush::Atom::AtomType::integer;
-					genome.push(atom);
-
 					atom.instruction = "INTEGER.IN";
 					atom.type = Plush::Atom::AtomType::ins;
+					genome.push(atom);
+
+					atom.instruction = toString(r);
+					atom.type = Plush::Atom::AtomType::integer;
 					genome.push(atom);
 
 					break;
@@ -269,12 +201,12 @@ namespace pushGP
 					break;
 
 				case 3:
-					atom.instruction = toString(r);
-					atom.type = Plush::Atom::AtomType::integer;
-					genome.push(atom);
-
 					atom.instruction = "INTEGER.OUT";
 					atom.type = Plush::Atom::AtomType::ins;
+					genome.push(atom);
+
+					atom.instruction = toString(r);
+					atom.type = Plush::Atom::AtomType::integer;
 					genome.push(atom);
 
 					break;
@@ -292,57 +224,182 @@ namespace pushGP
 			}
 		}
 
-		// Include knowledge of some instrcutions in the genome.
-		int num_of_instructions = Utilities::random_integer(Plush::static_initializer.number_of_functions());
 
-		for (int n = 0; n < num_of_instructions; n++)
-		{
-			int r = Utilities::random_integer(0, std::numeric_limits<int>::max());
 
-			atom.instruction = toString(r);
-			atom.type = Plush::Atom::AtomType::integer;
-			genome.push(atom);
-		}
+		//if (Utilities::random_double(0.0, 1.0) < domain::argmap::probability_of_generating_a_io_atom)
+		//{
+		//	int r = Utilities::random_integer(0, std::numeric_limits<int>::max());
+		//	unsigned int s = Utilities::random_integer(12);
+		//	
+		//	switch (s)
+		//	{
+		//	case 0:
+		//		atom.instruction = toString(r);
+		//		atom.type = Plush::Atom::AtomType::integer;
+		//		genome.push(atom);
 
-		atom.instruction = toString(num_of_instructions);
-		atom.type = Plush::Atom::AtomType::integer;
-		genome.push(atom);
+		//		atom.instruction = "INTEGER.IN";
+		//		atom.type = Plush::Atom::AtomType::ins;
+		//		genome.push(atom);
 
-		atom.instruction = "EXEC.ENABLE*INSTRUCTIONS";
-		atom.type = Plush::Atom::AtomType::ins;
-		genome.push(atom);
+		//		break;
 
-		atom.instruction = toString(Plush::static_initializer.get_function_index("INTEGER.IN"));
-		atom.type = Plush::Atom::AtomType::integer;
-		genome.push(atom);
+		//	case 1:
+		//		atom.instruction = toString(r);
+		//		atom.type = Plush::Atom::AtomType::integer;
+		//		genome.push(atom);
 
-		atom.instruction = "EXEC.ENABLE*INSTRUCTION";
-		atom.type = Plush::Atom::AtomType::ins;
-		genome.push(atom);
+		//		atom.instruction = "FLOAT.IN";
+		//		atom.type = Plush::Atom::AtomType::ins;
+		//		genome.push(atom);
 
-		atom.instruction = toString(Plush::static_initializer.get_function_index("INTEGER.INALL"));
-		atom.type = Plush::Atom::AtomType::integer;
-		genome.push(atom);
+		//		break;
 
-		atom.instruction = "EXEC.ENABLE*INSTRUCTION";
-		atom.type = Plush::Atom::AtomType::ins;
-		genome.push(atom);
+		//	case 2:
+		//		atom.instruction = toString(r);
+		//		atom.type = Plush::Atom::AtomType::integer;
+		//		genome.push(atom);
 
-		atom.instruction = toString(Plush::static_initializer.get_function_index("INTEGER.INALLREV"));
-		atom.type = Plush::Atom::AtomType::integer;
-		genome.push(atom);
+		//		atom.instruction = "BOOLEAN.IN";
+		//		atom.type = Plush::Atom::AtomType::ins;
+		//		genome.push(atom);
 
-		atom.instruction = "EXEC.ENABLE*INSTRUCTION";
-		atom.type = Plush::Atom::AtomType::ins;
-		genome.push(atom);
+		//		break;
 
-		atom.instruction = toString(Plush::static_initializer.get_function_index("INTEGER.OUT"));
-		atom.type = Plush::Atom::AtomType::integer;
-		genome.push(atom);
+		//	case 3:
+		//		atom.instruction = "INTEGER.INALL";
+		//		atom.type = Plush::Atom::AtomType::ins;
+		//		genome.push(atom);
 
-		atom.instruction = "EXEC.ENABLE*INSTRUCTION";
-		atom.type = Plush::Atom::AtomType::ins;
-		genome.push(atom);
+		//		break;
+
+		//	case 4:
+		//		atom.instruction = "FLOAT.INALL";
+		//		atom.type = Plush::Atom::AtomType::ins;
+		//		genome.push(atom);
+
+		//		break;
+
+		//	case 5:
+		//		atom.instruction = "BOOLEAN.INALL";
+		//		atom.type = Plush::Atom::AtomType::ins;
+		//		genome.push(atom);
+
+		//		break;
+
+		//	case 6:
+		//		atom.instruction = "INTEGER.INALLREV";
+		//		atom.type = Plush::Atom::AtomType::ins;
+		//		genome.push(atom);
+
+		//		break;
+
+		//	case 7:
+		//		atom.instruction = "FLOAT.INALLREV";
+		//		atom.type = Plush::Atom::AtomType::ins;
+		//		genome.push(atom);
+
+		//		break;
+
+		//	case 8:
+		//		atom.instruction = "BOOLEAN.INALLREV";
+		//		atom.type = Plush::Atom::AtomType::ins;
+		//		genome.push(atom);
+
+		//		break;
+
+		//	case 9:
+		//		atom.instruction = toString(r);
+		//		atom.type = Plush::Atom::AtomType::integer;
+		//		genome.push(atom);
+
+		//		atom.instruction = "INTEGER.OUT";
+		//		atom.type = Plush::Atom::AtomType::ins;
+		//		genome.push(atom);
+
+		//		break;
+
+		//	case 10:
+		//		atom.instruction = toString(r);
+		//		atom.type = Plush::Atom::AtomType::integer;
+		//		genome.push(atom);
+
+		//		atom.instruction = "FLOAT.OUT";
+		//		atom.type = Plush::Atom::AtomType::ins;
+		//		genome.push(atom);
+
+		//		break;
+
+		//	case 11:
+		//		atom.instruction = toString(r);
+		//		atom.type = Plush::Atom::AtomType::integer;
+		//		genome.push(atom);
+
+		//		atom.instruction = "BOOLEAN.OUT";
+		//		atom.type = Plush::Atom::AtomType::ins;
+		//		genome.push(atom);
+
+		//		break;
+
+		//	default:
+		//		throw MyException("random_plush_genome_with_size() - Invalid random number generated.");
+		//	}
+		//}
+
+
+
+
+		//// Include knowledge of some instrcutions in the genome.
+		//int num_of_instructions = Utilities::random_integer(Plush::static_initializer.number_of_functions());
+
+		//for (int n = 0; n < num_of_instructions; n++)
+		//{
+		//	int r = Utilities::random_integer(0, std::numeric_limits<int>::max());
+
+		//	atom.instruction = toString(r);
+		//	atom.type = Plush::Atom::AtomType::integer;
+		//	genome.push(atom);
+		//}
+
+		//atom.instruction = toString(num_of_instructions);
+		//atom.type = Plush::Atom::AtomType::integer;
+		//genome.push(atom);
+
+		//atom.instruction = "EXEC.ENABLE*INSTRUCTIONS";
+		//atom.type = Plush::Atom::AtomType::ins;
+		//genome.push(atom);
+
+		//atom.instruction = toString(Plush::static_initializer.get_function_index("INTEGER.IN"));
+		//atom.type = Plush::Atom::AtomType::integer;
+		//genome.push(atom);
+
+		//atom.instruction = "EXEC.ENABLE*INSTRUCTION";
+		//atom.type = Plush::Atom::AtomType::ins;
+		//genome.push(atom);
+
+		//atom.instruction = toString(Plush::static_initializer.get_function_index("INTEGER.INALL"));
+		//atom.type = Plush::Atom::AtomType::integer;
+		//genome.push(atom);
+
+		//atom.instruction = "EXEC.ENABLE*INSTRUCTION";
+		//atom.type = Plush::Atom::AtomType::ins;
+		//genome.push(atom);
+
+		//atom.instruction = toString(Plush::static_initializer.get_function_index("INTEGER.INALLREV"));
+		//atom.type = Plush::Atom::AtomType::integer;
+		//genome.push(atom);
+
+		//atom.instruction = "EXEC.ENABLE*INSTRUCTION";
+		//atom.type = Plush::Atom::AtomType::ins;
+		//genome.push(atom);
+
+		//atom.instruction = toString(Plush::static_initializer.get_function_index("INTEGER.OUT"));
+		//atom.type = Plush::Atom::AtomType::integer;
+		//genome.push(atom);
+
+		//atom.instruction = "EXEC.ENABLE*INSTRUCTION";
+		//atom.type = Plush::Atom::AtomType::ins;
+		//genome.push(atom);
 
 		return genome;
 	}

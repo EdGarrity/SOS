@@ -4,11 +4,8 @@
 
 namespace Plush
 {
-	//thread_local Func2CodeMapType Func2CodeMap;
-	//thread_local Func2BlockWantsMapType Func2BlockWantsMap;
-	thread_local StaticInit static_initializer;
-//	Names function_names;
-//	std::vector<std::string> function_names;
+	//thread_local StaticInit static_initializer;
+	StaticInit static_initializer;
 
 	void initGenerics();
 	void initBool();
@@ -65,11 +62,11 @@ namespace Plush
 		Func2BlockWantsMap[func_name] = block_wants;
 	};
 
-	void StaticInit::set_parentheses(std::string name, unsigned int block_wants)
-	{
-		std::string func_name = name;
-		Func2BlockWantsMap[func_name] = block_wants;
-	};
+	//void StaticInit::set_parentheses(std::string name, unsigned int block_wants)
+	//{
+	//	std::string func_name = name;
+	//	Func2BlockWantsMap[func_name] = block_wants;
+	//};
 
 	unsigned int StaticInit::number_of_functions()
 	{
