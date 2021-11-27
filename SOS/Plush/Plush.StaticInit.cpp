@@ -4,8 +4,8 @@
 
 namespace Plush
 {
-	//thread_local StaticInit static_initializer;
-	StaticInit static_initializer;
+	thread_local StaticInit static_initializer;
+	//StaticInit static_initializer;
 
 	void initGenerics();
 	void initBool();

@@ -973,11 +973,11 @@ namespace Plush
 
 	void initExec()
 	{
-		static bool initialized = false;
+		//static bool initialized = false;
 
-		if (initialized) return;
+		//if (initialized) return;
 
-		initialized = true;
+		//initialized = true;
 
 		push_make_instruction((Operator)exec_enable_instruction, "EXEC", "ENABLE*INSTRUCTION", integerType, nullType);
 		push_make_instruction((Operator)exec_enable_instructions, "EXEC", "ENABLE*INSTRUCTIONS", integerType+ integerType, nullType);

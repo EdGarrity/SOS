@@ -41,8 +41,8 @@ namespace Plush
 		bool is_function_supported(std::string function_name);
 	};
 
-	//extern thread_local StaticInit static_initializer;
-	extern StaticInit static_initializer;
+	extern thread_local StaticInit static_initializer;
+	//extern StaticInit static_initializer;
 
 	inline void set_parentheses(std::string type, std::string name, unsigned int block_wants)
 	{
