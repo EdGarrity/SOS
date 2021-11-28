@@ -130,7 +130,8 @@ namespace Plush
 					//auto search = Func2CodeMap.find(atom.instruction);
 
 					//if (search != Func2CodeMap.end())
-					if ((static_initializer.is_function_supported(atom.instruction)) && (env.is_function_enabled(atom.instruction)))
+					//if ((static_initializer.is_function_supported(atom.instruction)) && (env.is_function_enabled(atom.instruction)))
+					if (static_initializer.is_function_supported(atom.instruction))
 					{
 						//Instruction * pI = Func2CodeMap[atom.instruction];
 						Instruction * pI = static_initializer.get_function(atom.instruction);
