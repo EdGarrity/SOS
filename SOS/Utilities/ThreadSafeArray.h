@@ -113,9 +113,10 @@ namespace Utilities
 	template<class T, size_t N1, size_t N2>
 	inline ThreadSafeArray_2D<T, N1, N2>::ThreadSafeArray_2D()
 	{
+#if DLEVEL > 0
 		std::string debug_message = "Allocating,N1=" + std::to_string(N1) + ",N2=" + std::to_string(N2);
 		Utilities::debug_log_nolock(-1, "ThreadSafeArray_2D", debug_message);
-
+#endif
 		data_array = (double*)calloc(N1 * N2, sizeof(double));
 		n1 = N1;
 		n2 = N2;
@@ -126,9 +127,10 @@ namespace Utilities
 				std::stringstream error_message;
 				error_message << "ThreadSafeArray_2D - Out of memory";
 
+#if DLEVEL > 0
 				std::string debug_message = error_message.str();
 				Utilities::debug_log(-1, "ThreadSafeArray_2D", debug_message);
-
+#endif
 				throw std::runtime_error(error_message.str());
 			}
 		}
@@ -137,9 +139,10 @@ namespace Utilities
 	template<class T, size_t N1, size_t N2>
 	inline ThreadSafeArray_2D<T, N1, N2>::~ThreadSafeArray_2D(void)
 	{
+#if DLEVEL > 0
 		std::string debug_message = "Deallocating,N1=" + std::to_string(N1) + ",N2=" + std::to_string(N2);
 		Utilities::debug_log_nolock(-1, "ThreadSafeArray_2D", debug_message);
-
+#endif
 		free(data_array);
 	}
 	template<class T, size_t N1, size_t N2>
@@ -150,9 +153,10 @@ namespace Utilities
 			std::stringstream error_message;
 			error_message << "ThreadSafeArray_2D::load(" << y << "," << x << ") - Index out of bounds";
 
+#if DLEVEL > 0
 			std::string debug_message = error_message.str();
 			Utilities::debug_log(-1, "ThreadSafeArray_2D", debug_message);
-
+#endif
 			throw std::out_of_range(error_message.str());
 		}
 
@@ -170,9 +174,10 @@ namespace Utilities
 			std::stringstream error_message;
 			error_message << "ThreadSafeArray_2D::store(" << y << "," << x << ") - Index out of bounds";
 
+#if DLEVEL > 0
 			std::string debug_message = error_message.str();
 			Utilities::debug_log(env_index, "ThreadSafeArray_2D", debug_message);
-
+#endif
 			throw std::out_of_range(error_message.str());
 		}
 

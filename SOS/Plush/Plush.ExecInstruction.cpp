@@ -21,32 +21,28 @@ namespace Plush
 	// Add instructions to the instruction set for this individual using the integers in the integer stack.
 	inline size_t exec_enable_instructions(Environment& _env)
 	{
-		int n = _env.pop<long>();	// Number of instructions to add
-		int i = _env.pop<long>();	// Instruction index
+		int number_of_instructions_to_add = _env.pop<long>();	// Number of instructions to add
+		int i = _env.pop<long>();								// Instruction index
 
-		//if (n > 0)
-		//{
-		//	_env.enable_function(i);
-
-		//	if (_env.is_empty<long>() == false)
-		//	{
-		//		_env.push<long>(n - 1);
-		//		_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.ENABLE*INSTRUCTIONS :close 1}"));
-		//	}
-		//}
-
-		while (n > 0)
+		if ((number_of_instructions_to_add > 0) && (_env.length<long>() >= (number_of_instructions_to_add - 1)))
 		{
 			_env.enable_function(i);
+			int n = number_of_instructions_to_add - 1;
 
-			if (_env.is_empty<long>() == false)
+			while (n > 0)
 			{
-				n--;
-				i = _env.pop<long>();
+				if (_env.is_empty<long>() == false)
+				{
+					n--;
+					i = _env.pop<long>();
+				}
 			}
+
+			return number_of_instructions_to_add;
 		}
 
-		return (n > 0) ? n : 1;
+		else
+			return 1;
 	}
 
 	// Remove instruction from the instruction set for this individual.

@@ -9,7 +9,9 @@
 #include "..\Utilities\WorkOrderManager.h"
 #include "..\Utilities\Debug.h"
 
+#if DLEVEL > 0
 extern std::atomic_bool debug_push;
+#endif
 //extern std::atomic_bool print_push;
 //extern std::string env_state[domain::argmap::max_threads];
 
@@ -81,12 +83,13 @@ namespace Plush
 				// Debug - Remember current instruction
 				env.current_instruction = atom.instruction;
 
+#if DLEVEL > 0
 				if (debug_push.load(std::memory_order_acquire))
 				{
 					std::string debug = "pre_run," + env.print_state();
 					Utilities::debug_log(env.current_thread, "Processor::run", debug);
 				}
-
+#endif
 				//if (print_push.load(std::memory_order_acquire))
 				//	env_state[env.current_thread] = env.print_state();
 
@@ -137,11 +140,13 @@ namespace Plush
 							Operator op = pI->get_op();
 							unit = op(env);
 
+#if DLEVEL > 0
 							if (debug_push.load(std::memory_order_acquire))
 							{
 								std::string debug = "unit=" + std::to_string(unit) + "," + env.print_state();
 								Utilities::debug_log(env.current_thread, "Processor::run", debug);
 							}
+#endif
 						}
 					}
 
@@ -173,8 +178,10 @@ namespace Plush
 				std::cerr << error.str();
 				std::string debug_message;
 
+#if DLEVEL > 0
 				debug_message = error.str();
 				Utilities::debug_log(-1, "run", debug_message);
+#endif
 			}
 			catch (...)
 			{
@@ -186,20 +193,23 @@ namespace Plush
 				error << "Unknown exception caught.  effort = " << effort << std::endl;
 
 				std::cerr << error.str();
+#if DLEVEL > 0
 				std::string debug_message;
 
 				debug_message = error.str();
 				Utilities::debug_log(-1, "run", debug_message);
+#endif
 			}
 
 			effort += (1u) > (unit) ? (1u) : (unit);
 
+#if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
 			{
 				std::string debug = "post_run," + env.print_state();
 				Utilities::debug_log(env.current_thread, "Processor::run", debug);
 			}
-
+#endif
 			//if (print_push.load(std::memory_order_acquire))
 			//	env_state[env.current_thread] = env.print_state();
 		}

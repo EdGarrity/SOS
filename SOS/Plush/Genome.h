@@ -1129,12 +1129,13 @@ namespace Plush
 		//
 		inline Genome_section<T> get_item(unsigned int item_number = 0)
 		{
+#if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
 			{
 				std::string debug = "entry,item_number=" + std::to_string(item_number);
 				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::get_item", debug);
 			}
-
+#endif
 			Genome_section<T> subsection;
 
 			int block_ending_index = 0;
@@ -1215,6 +1216,7 @@ namespace Plush
 
 			subsection.set(item_ending_position - atom_count, atom_count, extra_blocks);
 
+#if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
 			{
 				std::string debug = "exit,starting_position=" + std::to_string(subsection.starting_position);
@@ -1222,7 +1224,7 @@ namespace Plush
 				debug += ",extra_parenthesis=" + std::to_string(subsection.extra_parenthesis);
 				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::get_item", debug);
 			}
-
+#endif
 			return subsection;
 		};
 
@@ -1692,12 +1694,13 @@ namespace Plush
 		//
 		inline size_t remove_stack_element(unsigned int element_pos)
 		{
+#if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
 			{
 				std::string debug = "entry,element_pos=" + std::to_string(element_pos);
 				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::remove_stack_element", debug);
 			}
-
+#endif
 			Genome_section<T> section = (*this)[element_pos];
 			Utilities::FixedSizeStack<T>::remove_items(section.starting_position, section.size);
 
@@ -1717,12 +1720,13 @@ namespace Plush
 					atom.close_parenthesis = new_close_parenthesis;
 			}
 
+#if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
 			{
 				std::string debug = "exit,section.size=" + std::to_string(section.size);
 				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::remove_stack_element", debug);
 			}
-
+#endif
 			return section.size;
 		}
 
@@ -1750,18 +1754,20 @@ namespace Plush
 			unsigned int extra_blocks = 0;
 			size_t effort = 0;
 
+#if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
 			{
 				std::string debug = "entry,item_position=" + std::to_string(item_position);
 				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::yankdup_item", debug);
 			}
-
+#endif
 			Genome_section<T> genome_section = get_item(item_position);
 
 			s = genome_section.starting_position;
 			l = genome_section.size;
 			extra_blocks = genome_section.extra_parenthesis;
 
+#if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
 			{
 				std::string debug = "post_get_item,s=" + std::to_string(s)
@@ -1769,7 +1775,7 @@ namespace Plush
 					+ ",extra_blocks=" + std::to_string(extra_blocks);
 				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::yankdup_item", debug);
 			}
-
+#endif
 			if (l > 0)
 			{
 				if (l >= Utilities::FixedSizeStack<T>::free())
@@ -1801,12 +1807,13 @@ namespace Plush
 				if (Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::size() - l].close_parenthesis > extra_blocks)
 					Utilities::FixedSizeStack<T>::stack_[Utilities::FixedSizeStack<T>::size() - l].close_parenthesis -= extra_blocks;
 
+#if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
 			{
 				std::string debug = "exit,effort=" + std::to_string(effort);
 				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::yankdup_item", debug);
 			}
-
+#endif
 			return effort;
 		}
 
@@ -1832,12 +1839,13 @@ namespace Plush
 		//
 		inline size_t yankdup_stack_element(unsigned int element_pos)
 		{
+#if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
 			{
 				std::string debug = "entry,element_pos=" + std::to_string(element_pos);
 				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::yankdup_stack_element", debug);
 			}
-
+#endif
 			unsigned int s = 0;
 			unsigned int l = 0;
 			unsigned int extra_blocks = 0;
@@ -1860,12 +1868,13 @@ namespace Plush
 			if (atom.close_parenthesis > section.extra_parenthesis)
 				atom.close_parenthesis = new_close_parenthesis;
 
+#if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
 			{
 				std::string debug = "exit,effort=" + std::to_string(effort);
 				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::yankdup_stack_element", debug);
 			}
-
+#endif
 			return effort;
 		}
 
@@ -1979,12 +1988,13 @@ namespace Plush
 		//
 		inline size_t yank_stack_element(unsigned int element_pos)
 		{
+#if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
 			{
 				std::string debug = "entry,element_pos=" + std::to_string(element_pos);
 				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::yank_stack_element", debug);
 			}
-
+#endif
 			size_t effort = 0;
 
 			if (element_pos > 0)
@@ -1993,12 +2003,13 @@ namespace Plush
 					effort += remove_stack_element(element_pos + 1);
 			}
 
+#if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
 			{
 				std::string debug = "exit,effort=" + std::to_string(effort);
 				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::yank_stack_element", debug);
 			}
-
+#endif
 			return effort;
 		}
 

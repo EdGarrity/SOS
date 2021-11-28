@@ -149,10 +149,6 @@ namespace pushGP
 
 		int num_of_instructions = Utilities::random_integer(Plush::static_initializer.number_of_functions() * 4);
 
-		atom.instruction = toString(num_of_instructions);
-		atom.type = Plush::Atom::AtomType::integer;
-		genome.push(atom);
-
 		for (int n = 0; n < num_of_instructions; n++)
 		{
 			int r = Utilities::random_integer(0, std::numeric_limits<int>::max());
@@ -161,6 +157,10 @@ namespace pushGP
 			atom.type = Plush::Atom::AtomType::integer;
 			genome.push(atom);
 		}
+
+		atom.instruction = toString(num_of_instructions);
+		atom.type = Plush::Atom::AtomType::integer;
+		genome.push(atom);
 
 		atom.instruction = "EXEC.ENABLE*INSTRUCTIONS";
 		atom.type = Plush::Atom::AtomType::ins;
