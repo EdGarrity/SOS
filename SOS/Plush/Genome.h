@@ -2200,33 +2200,46 @@ namespace Plush
 		{
 			size_t effort = 0;
 
-			if (Utilities::FixedSizeStack<T>::free() <= second_section.size)
+			if (Utilities::FixedSizeStack<T>::free() > 0)
 			{
-				std::stringstream error_message;
-				error_message << "Genome::subst() - Stack overflow.  second_section.size = " << second_section.size 
-					<< " Utilities::FixedSizeStack<T>::free() = " << Utilities::FixedSizeStack<T>::free();
-
-				throw std::overflow_error(error_message.str());
-			}
-
-			size_t new_top = Utilities::FixedSizeStack<T>::size();
-
-			for (size_t main_section_position = main_section.starting_position;
-				main_section_position <= main_section.ending_position; 
-				main_section_position++)
-			{
-				Genome_section<T> item = get_item_that_starts_at_position(main_section_position);
-
-				if (comp(item, first_section))
+				if (Utilities::FixedSizeStack<T>::free() <= second_section.size)
 				{
-					for (size_t second_section_position = second_section.starting_position;
-						second_section_position <= second_section.ending_position;
-						second_section_position++)
-					{
-						T atom = Utilities::FixedSizeStack<T>::get_atom_at_position(second_section_position);
+					std::stringstream error_message;
+					error_message << "Genome::subst() - Stack overflow.  second_section.size = " << second_section.size
+						<< " Utilities::FixedSizeStack<T>::free() = " << Utilities::FixedSizeStack<T>::free();
 
-						if (second_section_position == second_section.ending_position)
-							atom.close_parenthesis = Utilities::FixedSizeStack<T>::get_atom_at_position(item.ending_position).close_parenthesis;
+					throw std::overflow_error(error_message.str());
+				}
+
+				size_t new_top = Utilities::FixedSizeStack<T>::size();
+
+				for (size_t main_section_position = main_section.starting_position;
+					main_section_position <= main_section.ending_position;
+					main_section_position++)
+				{
+					Genome_section<T> item = get_item_that_starts_at_position(main_section_position);
+
+					if (comp(item, first_section))
+					{
+						for (size_t second_section_position = second_section.starting_position;
+							second_section_position <= second_section.ending_position;
+							second_section_position++)
+						{
+							T atom = Utilities::FixedSizeStack<T>::get_atom_at_position(second_section_position);
+
+							if (second_section_position == second_section.ending_position)
+								atom.close_parenthesis = Utilities::FixedSizeStack<T>::get_atom_at_position(item.ending_position).close_parenthesis;
+
+							Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(new_top) = atom;
+							new_top++;
+
+							effort++;
+						}
+					}
+
+					else
+					{
+						T atom = Utilities::FixedSizeStack<T>::get_atom_at_position(item.starting_position);
 
 						Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(new_top) = atom;
 						new_top++;
@@ -2235,39 +2248,29 @@ namespace Plush
 					}
 				}
 
-				else
+				int i = Utilities::FixedSizeStack<T>::size();
+				int j = new_top - 1;
+
+				while (i < j)
 				{
-					T atom = Utilities::FixedSizeStack<T>::get_atom_at_position(item.starting_position);
+					T atom = Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(i);
+					Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(i) = Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(j);
+					Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(j) = atom;
 
-					Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(new_top) = atom;
-					new_top++;
-
+					i++;
+					j--;
 					effort++;
+				};
+
+				Utilities::FixedSizeStack<T>::set_top(new_top);
+
+				Genome_section<T> item = (*this)[0];
+
+				if (item.extra_parenthesis > 0)
+				{
+					T& atom = Utilities::FixedSizeStack<T>::get_atom_at_position(item.ending_position);
+					atom.close_parenthesis -= item.extra_parenthesis;
 				}
-			}
-
-			int i = Utilities::FixedSizeStack<T>::size();
-			int j = new_top - 1;
-
-			while (i < j)
-			{
-				T atom = Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(i);
-				Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(i) = Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(j);
-				Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(j) = atom;
-
-				i++;
-				j--;
-				effort++;
-			};
-
-			Utilities::FixedSizeStack<T>::set_top(new_top);
-
-			Genome_section<T> item = (*this)[0];
-
-			if (item.extra_parenthesis > 0)
-			{
-				T& atom = Utilities::FixedSizeStack<T>::get_atom_at_position(item.ending_position);
-				atom.close_parenthesis -= item.extra_parenthesis;
 			}
 
 			return effort;
