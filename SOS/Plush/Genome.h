@@ -3,6 +3,7 @@
 #include <vector>
 #include <stack>
 #include <map>
+#include <stdexcept>
 #include "Plush.StaticInit.h"
 #include "..\Utilities\FixedSizeStack.h"
 #include "..\Utilities\String.h"
@@ -2230,10 +2231,17 @@ namespace Plush
 							if (second_section_position == second_section.ending_position)
 								atom.close_parenthesis = Utilities::FixedSizeStack<T>::get_atom_at_position(item.ending_position).close_parenthesis;
 
-							Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(new_top) = atom;
-							new_top++;
+							try
+							{
+								Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(new_top) = atom;
+								new_top++;
 
-							effort++;
+								effort++;
+							}
+							catch(const std::out_of_range& e)
+							{
+								return 1;
+							}
 						}
 					}
 
@@ -2241,10 +2249,17 @@ namespace Plush
 					{
 						T atom = Utilities::FixedSizeStack<T>::get_atom_at_position(item.starting_position);
 
-						Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(new_top) = atom;
-						new_top++;
+						try
+						{
+							Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(new_top) = atom;
+							new_top++;
 
-						effort++;
+							effort++;
+						}
+						catch (const std::out_of_range& e)
+						{
+							return 1;
+						}
 					}
 				}
 
@@ -2253,13 +2268,20 @@ namespace Plush
 
 				while (i < j)
 				{
-					T atom = Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(i);
-					Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(i) = Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(j);
-					Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(j) = atom;
+					try
+					{
+						T atom = Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(i);
+						Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(i) = Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(j);
+						Utilities::FixedSizeStack<T>::get_atom_at_index_unmanaged(j) = atom;
 
-					i++;
-					j--;
-					effort++;
+						i++;
+						j--;
+						effort++;
+					}
+					catch (const std::out_of_range& e)
+					{
+						return 1;
+					}
 				};
 
 				Utilities::FixedSizeStack<T>::set_top(new_top);
