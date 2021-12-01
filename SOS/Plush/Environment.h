@@ -26,7 +26,10 @@ namespace Plush
 		Genome<bool> bool_stack_;
 
 		// Dynamic Instruction Set
-		typedef std::set<std::string> KnownInstructionsMapType;
+		//typedef std::set<std::string> KnownInstructionsMapType;
+		//KnownInstructionsMapType KnownInstructionsMap;
+
+		typedef std::map<std::string, bool> KnownInstructionsMapType;
 		KnownInstructionsMapType KnownInstructionsMap;
 
 	public:
@@ -116,22 +119,26 @@ namespace Plush
 
 		void enable_function(std::string function_name)
 		{
-			KnownInstructionsMap.insert(function_name);
+			//KnownInstructionsMap.insert(function_name);
+			KnownInstructionsMap[function_name] = true;
 		}
 
 		void disable_function(std::string function_name)
 		{
-			KnownInstructionsMap.erase(function_name);
+			//KnownInstructionsMap.erase(function_name);
+			KnownInstructionsMap[function_name] = false;
 		}
 
 		void enable_function(unsigned int function_index)
 		{
-			KnownInstructionsMap.insert(static_initializer.get_function_name(function_index));
+			//KnownInstructionsMap.insert(static_initializer.get_function_name(function_index));
+			KnownInstructionsMap[static_initializer.get_function_name(function_index)] = true;
 		}
 
 		void disable_function(unsigned int function_index)
 		{
-			KnownInstructionsMap.erase(static_initializer.get_function_name(function_index));
+			//KnownInstructionsMap.erase(static_initializer.get_function_name(function_index));
+			KnownInstructionsMap[static_initializer.get_function_name(function_index)] = false;
 		}
 
 		bool is_function_enabled(std::string function_name)
@@ -139,11 +146,14 @@ namespace Plush
 			if (function_name == "EXEC.ENABLE*INSTRUCTION")
 				return true;
 
-			if (function_name == "EXEC.ENABLE*INSTRUCTIONS")
+			else if (function_name == "EXEC.ENABLE*INSTRUCTIONS")
 				return true;
 
 			else
-				return KnownInstructionsMap.find(function_name) != KnownInstructionsMap.end();
+			{
+				//return KnownInstructionsMap.find(function_name) != KnownInstructionsMap.end();
+				return KnownInstructionsMap[function_name];	// Returns false if function is not in the list.
+			}
 		}
 
 		template<typename T>
