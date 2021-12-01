@@ -357,13 +357,13 @@ namespace Plush
 		if (block_a.size > 0)
 		{
 			for (size_t i = block_a.starting_position; i <= block_a.ending_position; i++)
-				atom_set.insert(genome.get_atom_at_position(i).instruction);
+				atom_set.insert(genome.get_atom_at_position(i).instruction_name);
 		}
 
 		if (block_b.size > 0)
 		{
 			for (size_t i = block_b.starting_position; i <= block_b.ending_position; i++)
-				atom_set.insert(genome.get_atom_at_position(i).instruction);
+				atom_set.insert(genome.get_atom_at_position(i).instruction_name);
 		}
 
 		int result = 0;
@@ -377,7 +377,7 @@ namespace Plush
 			{
 				for (size_t i = block_a.starting_position; i <= block_a.ending_position; i++)
 				{
-					if (instruction == genome.get_atom_at_position(i).instruction)
+					if (instruction == genome.get_atom_at_position(i).instruction_name)
 						count_a++;
 				}
 			}
@@ -386,7 +386,7 @@ namespace Plush
 			{
 				for (size_t i = block_b.starting_position; i <= block_b.ending_position; i++)
 				{
-					if (instruction == genome.get_atom_at_position(i).instruction)
+					if (instruction == genome.get_atom_at_position(i).instruction_name)
 						count_b++;
 				}
 			}
@@ -768,7 +768,7 @@ namespace Plush
 			_env.push<bool>(true);
 			
 		else if ((top_block.size == 1) 
-			&& (genome.get_atom_at_position(top_block.starting_position).instruction == "CODE.NOOP")
+			&& (genome.get_atom_at_position(top_block.starting_position).instruction_name == "CODE.NOOP")
 				&& (genome.get_atom_at_position(top_block.starting_position).close_parenthesis > 0))
 				_env.push<bool>(true);
 		else

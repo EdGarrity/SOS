@@ -103,7 +103,7 @@ namespace pushGP
 				{
 					if (atom.type == atom.floating_point)
 					{
-						double n = atof(atom.instruction.c_str());
+						double n = atof(atom.instruction_name.c_str());
 
 						n = perturb_with_gaussian_noise(domain::argmap::uniform_mutation_float_int_gaussian_standard_deviation, n);
 						new_genome.push(Plush::CodeAtom(n));
@@ -111,7 +111,7 @@ namespace pushGP
 
 					else if (atom.type == atom.integer)
 					{
-						long n = atoi(atom.instruction.c_str());
+						long n = atoi(atom.instruction_name.c_str());
 
 						perturb_with_gaussian_noise(domain::argmap::uniform_mutation_float_int_gaussian_standard_deviation, n);
 						new_genome.push(Plush::CodeAtom(n));
@@ -119,7 +119,7 @@ namespace pushGP
 
 					else if (atom.type == atom.boolean)
 					{
-						if (atom.instruction == Plush::Atom::boolean_true)
+						if (atom.instruction_name == Plush::Atom::boolean_true)
 							new_genome.push(Plush::CodeAtom(false));
 
 						else

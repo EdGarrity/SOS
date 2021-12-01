@@ -81,7 +81,7 @@ namespace Plush
 				ExecAtom atom = env.pop<ExecAtom>();
 
 				// Debug - Remember current instruction
-				env.current_instruction = atom.instruction;
+				env.current_instruction = atom.instruction_name;
 
 #if DLEVEL > 0
 				if (debug_push.load(std::memory_order_acquire))
@@ -96,15 +96,15 @@ namespace Plush
 				switch (atom.type)
 				{
 				case Atom::AtomType::integer:
-					env.push<long>(std::stol(atom.instruction));
+					env.push<long>(std::stol(atom.instruction_name));
 					unit = 1;
 					break;
 				case Atom::AtomType::floating_point:
-					env.push<double>(std::stod(atom.instruction));
+					env.push<double>(std::stod(atom.instruction_name));
 					unit = 1;
 					break;
 				case Atom::AtomType::boolean:
-					env.push<bool>(atom.instruction == Plush::Atom::boolean_true);
+					env.push<bool>(atom.instruction_name == Plush::Atom::boolean_true);
 					unit = 1;
 					break;
 				case Atom::AtomType::ins:
@@ -114,9 +114,9 @@ namespace Plush
 					int blocks_closed = atom.close_parenthesis;
 
 					// Close expected blocks for each block the instruction is expecting if the instruction closes that block.
-					if (atom.instruction != "EXEC.NOOP")
+					if (atom.instruction_name != "EXEC.NOOP")
 					{
-						if (atom.instruction.substr(0, 5) == "EXEC.")
+						if (atom.instruction_name.substr(0, 5) == "EXEC.")
 						{
 							if (blocks_closed > 0)
 							{
@@ -131,10 +131,10 @@ namespace Plush
 
 					//if (search != Func2CodeMap.end())
 					//if (static_initializer.is_function_supported(atom.instruction))
-					if ((static_initializer.is_function_supported(atom.instruction)) && (env.is_function_enabled(atom.instruction)))
+					if ((static_initializer.is_function_supported(atom.instruction_name)) && (env.is_function_enabled(atom.instruction_name)))
 					{
 						//Instruction * pI = Func2CodeMap[atom.instruction];
-						Instruction * pI = static_initializer.get_function(atom.instruction);
+						Instruction * pI = static_initializer.get_function(atom.instruction_name);
 
 						if (pI->can_run(env))
 						{
