@@ -30,7 +30,7 @@ namespace Plush
 	template <class T>
 	inline size_t pop_safe_position(Environment & _env)
 	{
-		int index = _env.pop<long>();
+		long index = _env.pop<long>();
 		size_t stacksize = _env.get_stack<T>().size();
 
 		index = (index < 0) ? 0 : index;
