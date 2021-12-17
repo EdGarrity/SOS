@@ -1,6 +1,6 @@
 #define NOMINMAX
 
-#include <string.h>
+#include <string>
 #include <random>
 #include <chrono>
 
@@ -115,7 +115,7 @@ namespace pushGP
 		genome.clear();
 
 		// Include knowledge of some instrcutions in the genome.
-		atom.instruction_name = toString(Plush::static_initializer.get_function_index("INTEGER.OUT"));
+		atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.OUT"));
 		atom.type = Plush::Atom::AtomType::integer;
 		genome.push(atom);
 
@@ -123,7 +123,7 @@ namespace pushGP
 		atom.type = Plush::Atom::AtomType::ins;
 		genome.push(atom);
 
-		atom.instruction_name = toString(Plush::static_initializer.get_function_index("INTEGER.INALLREV"));
+		atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.INALLREV"));
 		atom.type = Plush::Atom::AtomType::integer;
 		genome.push(atom);
 
@@ -131,7 +131,7 @@ namespace pushGP
 		atom.type = Plush::Atom::AtomType::ins;
 		genome.push(atom);
 
-		atom.instruction_name = toString(Plush::static_initializer.get_function_index("INTEGER.INALL"));
+		atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.INALL"));
 		atom.type = Plush::Atom::AtomType::integer;
 		genome.push(atom);
 
@@ -139,7 +139,7 @@ namespace pushGP
 		atom.type = Plush::Atom::AtomType::ins;
 		genome.push(atom);
 
-		atom.instruction_name = toString(Plush::static_initializer.get_function_index("INTEGER.IN"));
+		atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.IN"));
 		atom.type = Plush::Atom::AtomType::integer;
 		genome.push(atom);
 
@@ -153,7 +153,7 @@ namespace pushGP
 		{
 			int r = Utilities::random_integer(0, std::numeric_limits<int>::max());
 
-			atom.instruction_name = toString(r);
+			atom.instruction_name = std::to_string(r);
 			atom.type = Plush::Atom::AtomType::integer;
 			genome.push(atom);
 		}

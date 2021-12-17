@@ -131,12 +131,14 @@ namespace Plush
 
 					//if (search != Func2CodeMap.end())
 					//if (static_initializer.is_function_supported(atom.instruction))
-					if ((static_initializer.is_function_supported(atom.instruction_name)) && (env.is_function_enabled(atom.instruction_name)))
+					//if ((static_initializer.is_function_supported(atom.instruction_name)) && (env.is_function_enabled(atom.instruction_name)))
+					if (static_initializer.is_function_supported(atom.instruction_name))
 					{
 						//Instruction * pI = Func2CodeMap[atom.instruction];
-						Instruction * pI = static_initializer.get_function(atom.instruction_name);
+						//Instruction * pI = static_initializer.get_function(atom.instruction_name);
+						Instruction* pI = env.get_function(atom.instruction_name);
 
-						if (pI->can_run(env))
+						if ((pI) && (pI->can_run(env)))
 						{
 							Operator op = pI->get_op();
 							unit = op(env);

@@ -29,9 +29,12 @@ namespace Plush
 		//typedef std::set<std::string> KnownInstructionsMapType;
 		//KnownInstructionsMapType KnownInstructionsMap;
 
-		typedef std::map<std::string, bool> KnownInstructionsMapType;
-		//typedef std::map<int, bool> KnownInstructionsMapType;
-		KnownInstructionsMapType KnownInstructionsMap;
+		//typedef std::map<std::string, bool> KnownInstructionsMapType;
+		////typedef std::map<int, bool> KnownInstructionsMapType;
+		//KnownInstructionsMapType KnownInstructionsMap;
+
+		typedef std::map<std::string, Instruction*> Func2CodeMapType;
+		Func2CodeMapType Func2CodeMap;
 
 	public:
 		// State of Worker Thread
@@ -133,40 +136,57 @@ namespace Plush
 		void enable_function(std::string function_name)
 		{
 			//KnownInstructionsMap[static_initializer.get_function_index(function_name)] = true;
-			KnownInstructionsMap[function_name] = true;
+			//KnownInstructionsMap[function_name] = true;
+
+			Instruction* pInstruction = static_initializer.get_function(function_name);
+			Func2CodeMap[function_name] = pInstruction;
 		}
 
 		void disable_function(std::string function_name)
 		{
 			//KnownInstructionsMap[static_initializer.get_function_index(function_name)] = false;
-			KnownInstructionsMap[function_name] = false;
+			//KnownInstructionsMap[function_name] = false;
+
+			Func2CodeMap.erase(function_name);
 		}
 
-		void enable_function(int function_index)
+		void enable_function(size_t function_index)
 		{
 			//KnownInstructionsMap.insert(static_initializer.get_function_name(function_index));
-			KnownInstructionsMap[static_initializer.get_function_name(function_index)] = true;
+			//KnownInstructionsMap[static_initializer.get_function_name(function_index)] = true;
+
+			Instruction* pInstruction = static_initializer.get_function(function_index);
+			Func2CodeMap[pInstruction->to_string()] = pInstruction;
 		}
 
 		void disable_function(int function_index)
 		{
 			//KnownInstructionsMap.erase(static_initializer.get_function_name(function_index));
-			KnownInstructionsMap[static_initializer.get_function_name(function_index)] = false;
+			//KnownInstructionsMap[static_initializer.get_function_name(function_index)] = false;
+
+			Instruction* pInstruction = static_initializer.get_function(function_index);
+			std::string function_name = pInstruction->to_string();
+			Func2CodeMap.erase(function_name);
 		}
 
-		bool is_function_enabled(std::string function_name)
+		//bool is_function_enabled(std::string function_name)
+		//{
+		//	if (function_name == "EXEC.ENABLE*INSTRUCTION")
+		//		return true;
+
+		//	else if (function_name == "EXEC.ENABLE*INSTRUCTIONS")
+		//		return true;
+
+		//	else
+		//	{
+		//		//return KnownInstructionsMap.find(function_name) != KnownInstructionsMap.end();
+		//		return KnownInstructionsMap[function_name];	// Returns false if function is not in the list.
+		//	}
+		//}
+
+		Instruction* get_function(std::string function_name)
 		{
-			if (function_name == "EXEC.ENABLE*INSTRUCTION")
-				return true;
-
-			else if (function_name == "EXEC.ENABLE*INSTRUCTIONS")
-				return true;
-
-			else
-			{
-				//return KnownInstructionsMap.find(function_name) != KnownInstructionsMap.end();
-				return KnownInstructionsMap[function_name];	// Returns false if function is not in the list.
-			}
+			return Func2CodeMap[function_name];
 		}
 
 		template<typename T>
