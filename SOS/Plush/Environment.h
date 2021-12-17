@@ -29,8 +29,8 @@ namespace Plush
 		//typedef std::set<std::string> KnownInstructionsMapType;
 		//KnownInstructionsMapType KnownInstructionsMap;
 
-		//typedef std::map<std::string, bool> KnownInstructionsMapType;
-		typedef std::map<int, bool> KnownInstructionsMapType;
+		typedef std::map<std::string, bool> KnownInstructionsMapType;
+		//typedef std::map<int, bool> KnownInstructionsMapType;
 		KnownInstructionsMapType KnownInstructionsMap;
 
 	public:
@@ -132,12 +132,14 @@ namespace Plush
 
 		void enable_function(std::string function_name)
 		{
-			KnownInstructionsMap[static_initializer.get_function_index(function_name)] = true;
+			//KnownInstructionsMap[static_initializer.get_function_index(function_name)] = true;
+			KnownInstructionsMap[function_name] = true;
 		}
 
 		void disable_function(std::string function_name)
 		{
-			KnownInstructionsMap[static_initializer.get_function_index(function_name)] = false;
+			//KnownInstructionsMap[static_initializer.get_function_index(function_name)] = false;
+			KnownInstructionsMap[function_name] = false;
 		}
 
 		void enable_function(int function_index)
