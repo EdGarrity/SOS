@@ -119,6 +119,20 @@ namespace Plush
 			return debug_msg;
 		}
 
+		template<typename T>
+		std::string my_to_string()
+		{
+			Genome<T>& stack = get_stack<T>();
+			return stack.to_string();
+		}
+
+		//template<>
+		//std::string my_to_string<long>()
+		//{
+		//	Genome<long>& genome = get_stack<CodeAtom>();
+		//	return genome.number_of_blocks();
+		//}
+
 		/* Helper Functions */
 
 		//void enable_function(std::string function_name)

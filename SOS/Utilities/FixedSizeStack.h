@@ -205,6 +205,22 @@ namespace Utilities
 			return stack_[top_ - 1];
 		}
 
+		inline std::string to_string()
+		{
+			std::string s;
+
+			if (top_ > 0)
+			{
+				for (int n = 0; n << top_; n++)
+				{
+					s += ",";
+					s += std::to_string(stack_[n]);
+				}
+			}
+
+			return s;
+		}
+
 		//inline const_reference get_atom_at_position(unsigned int position) const
 		//{
 		//	if (top_ == 0)

@@ -2395,6 +2395,12 @@ namespace Plush
 		}
 	};
 
+	template<>
+	inline void Genome<long, 0>::convert_genome_to_string()
+	{
+		genome_string_ = Utilities::FixedSizeStack<long>::to_string();;
+	}
+
 	template<class T, size_t N>
 	inline void Genome<T, N>::convert_genome_to_string()
 	{

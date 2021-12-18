@@ -7,10 +7,13 @@
 #include <iostream>
 #include <time.h>
 #include <ctime>
+#include <queue>
+#include <sstream>
 
 #include "SystemInfo.h"
 
 #define DLEVEL 0
+#define TRACE_LEVEL 1
 
 namespace Utilities
 {
@@ -113,6 +116,25 @@ namespace Utilities
 
 			work_order_print_lock.unlock();
 		//}
+	};
+#endif
+
+#if TRACE_LEVEL>0
+	std::queue<std::basic_stringstream<char>> trace_queue;
+
+	inline void trace_plush(int thread_number, std::string instruction_name)
+	{
+//		std::basic_stringstream<char> ss;
+//		
+//		ss << getCurrentTimestamp()
+//			<< " Thread=" << thread_number
+//			<< " Function=" << instruction_name
+////			<< " Exec=" << env.my_to_string<Plush::ExecAtom>()
+////			<< " Code=" << env.my_to_string<Plush::CodeAtom>()
+//			//<< " long=" << env.my_to_string<long>()
+//			//<< " double=" << env.my_to_string<double>()
+//			//<< " bool=" << env.my_to_string<bool>()
+//			<< std::endl;
 	};
 #endif
 }
