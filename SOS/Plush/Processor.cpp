@@ -150,7 +150,15 @@ namespace Plush
 								Utilities::debug_log(env.current_thread, "Processor::run", debug);
 							}
 #endif
+
+#if TRACE_LEVEL>0
+							env.stack_dump("true");
+#endif
 						}
+#if TRACE_LEVEL>0
+						else
+							env.stack_dump("false");
+#endif
 					}
 
 					break;

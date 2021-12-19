@@ -1447,6 +1447,12 @@ namespace domain
 #if DLEVEL > 0
 					Utilities::debug_log(-1, "run", "Produce New Offspring");
 #endif
+
+#if TRACE_LEVEL>0
+
+					Utilities::flush_trace_queue();
+#endif
+
 					if (argmap::use_PPL)
 						parallel_produce_new_offspring(argmap::number_of_training_cases,
 							best_individual,

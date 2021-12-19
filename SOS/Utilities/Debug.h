@@ -11,6 +11,8 @@
 #include <sstream>
 
 #include "SystemInfo.h"
+//#include "..\Plush\Atom.h"
+//#include "..\Plush\Environment.h"
 
 #define DLEVEL 0
 #define TRACE_LEVEL 1
@@ -120,21 +122,32 @@ namespace Utilities
 #endif
 
 #if TRACE_LEVEL>0
-	std::queue<std::basic_stringstream<char>> trace_queue;
+	extern std::queue<std::string> trace_queue;
+	extern int generation;
 
-	inline void trace_plush(int thread_number, std::string instruction_name)
+	inline void trace_record(std::string trace_msg)
 	{
-//		std::basic_stringstream<char> ss;
-//		
-//		ss << getCurrentTimestamp()
-//			<< " Thread=" << thread_number
-//			<< " Function=" << instruction_name
-////			<< " Exec=" << env.my_to_string<Plush::ExecAtom>()
-////			<< " Code=" << env.my_to_string<Plush::CodeAtom>()
-//			//<< " long=" << env.my_to_string<long>()
-//			//<< " double=" << env.my_to_string<double>()
-//			//<< " bool=" << env.my_to_string<bool>()
-//			<< std::endl;
+		std::basic_stringstream<char> ss;
+		
+		ss << getCurrentTimestamp()
+			<< "generation=" << generation
+			<< trace_msg;
+
+		trace_queue.push(ss.str());
 	};
+
+	inline void flush_trace_queue()
+	{
+		std::ostringstream buf("trace.txt", std::ostringstream::out + std::ostringstream::trunc);
+
+		while (trace_queue.empty() == false)
+		{
+			buf << trace_queue.front();
+			buf << std::endl;
+			trace_queue.pop();
+		}
+
+		generation++;
+	}
 #endif
 }

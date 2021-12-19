@@ -119,11 +119,35 @@ namespace Plush
 			return debug_msg;
 		}
 
-		template<typename T>
-		std::string my_to_string()
+		//template<typename T>
+		//std::string my_to_string()
+		//{
+		//	Genome<T>& stack = get_stack<T>();
+		//	return stack.to_string();
+		//}
+
+		inline void stack_dump(std::string inst_enabled)
 		{
-			Genome<T>& stack = get_stack<T>();
-			return stack.to_string();
+			std::string msg;
+
+			//ss	<< " Thread=" << thread_number
+			//	<< " Function=" << instruction_name
+				//			<< " Exec=" << env.my_to_string<Plush::ExecAtom>()
+				//			<< " Code=" << env.my_to_string<Plush::CodeAtom>()
+							//<< " long=" << env.my_to_string<long>()
+							//<< " double=" << env.my_to_string<double>()
+							//<< " bool=" << env.my_to_string<bool>()
+
+			msg = "Thread=" + current_thread;
+			msg += "Instruction=" + current_instruction;
+			msg += "Enabled=" + inst_enabled;
+			msg += "Exec=" + get_stack<ExecAtom>().to_string();
+			msg += "Code=" + get_stack<CodeAtom>().to_string();
+			msg += "long=" + get_stack<long>().to_string();
+			msg += "double=" + get_stack<double>().to_string();
+			msg += "bool=" + get_stack<bool>().to_string();
+
+			Utilities::trace_record(msg);
 		}
 
 		//template<>
