@@ -136,6 +136,9 @@ namespace Plush
 
 		inline void stack_dump(std::string inst_enabled, size_t debug_ip)
 		{
+			if (individual_index != 1)
+				return;
+
 			std::string msg;
 
 			//ss	<< " Thread=" << thread_number
@@ -177,6 +180,9 @@ namespace Plush
 
 		inline void stack_dump(std::string inst_enabled, std::string instruction, size_t debug_ip)
 		{
+			if (individual_index != 1)
+				return;
+
 			std::string msg;
 
 			msg = "," + std::to_string(current_thread);
