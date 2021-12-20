@@ -261,8 +261,12 @@ namespace Plush
 			//KnownInstructionsMap[static_initializer.get_function_name(function_index)] = false;
 
 			Instruction* pInstruction = static_initializer.get_function(function_index);
-			std::string function_name = pInstruction->to_string();
-			Func2CodeMap.erase(function_name);
+
+			if (pInstruction != nullptr)
+			{
+				std::string function_name = pInstruction->to_string();
+				Func2CodeMap.erase(function_name);
+			}
 		}
 
 		//bool is_function_enabled(std::string function_name)
@@ -282,7 +286,13 @@ namespace Plush
 
 		Instruction* get_function(std::string function_name)
 		{
-			return Func2CodeMap[function_name];
+			auto search = Func2CodeMap.find(function_name);
+
+			if (search != Func2CodeMap.end())
+				return Func2CodeMap[function_name];
+
+			else
+				return nullptr;
 		}
 
 		template<typename T>

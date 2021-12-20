@@ -146,7 +146,7 @@ namespace Plush
 						//Instruction * pI = static_initializer.get_function(atom.instruction_name);
 						Instruction* pI = env.get_function(atom.instruction_name);
 
-						if ((pI) && (pI->can_run(env)))
+						if ((pI != nullptr) && (pI->can_run(env)))
 						{
 							Operator op = pI->get_op();
 							unit = op(env);
