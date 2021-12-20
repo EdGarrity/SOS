@@ -154,7 +154,7 @@ namespace Utilities
 		{
 			first = false;
 
-			myfile << "time,line_number,generation,thread,individual_index,ip,instruction,enabled,Exec,Code,long,double,bool,instructions";
+			myfile << "time,line_number,generation,thread,individual_index,example_case,ip,instruction,enabled,Exec,Code,long,double,bool,instructions";
 			myfile << std::endl;
 		}
 

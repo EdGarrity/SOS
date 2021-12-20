@@ -67,6 +67,7 @@ namespace Plush
 		size_t current_unit;
 		int current_thread = 0;
 		int individual_index = 0;
+		int example_case = 0;
 
 		inline void set_current_thread(int new_current_thread)
 		{
@@ -79,9 +80,10 @@ namespace Plush
 			double_stack_.set_current_thread(new_current_thread);
 		};
 
-		inline void set_current_individual_index(int new_individual_index)
+		inline void set_current_individual_index(int new_individual_index, int new_example_case)
 		{
 			individual_index = new_individual_index;
+			example_case = new_example_case;
 		}
 
 		virtual void clear_stacks()
@@ -161,6 +163,7 @@ namespace Plush
 
 			msg = "," + std::to_string(current_thread);
 			msg += "," + std::to_string(individual_index);
+			msg += "," + std::to_string(example_case);
 			msg += "," + std::to_string(debug_ip);
 			msg += "," + current_instruction;
 			msg += "," + inst_enabled;
@@ -187,6 +190,7 @@ namespace Plush
 
 			msg = "," + std::to_string(current_thread);
 			msg += "," + std::to_string(individual_index);
+			msg += "," + std::to_string(example_case);
 			msg += "," + std::to_string(debug_ip);
 			msg += "," + instruction;
 			msg += "," + inst_enabled;

@@ -159,7 +159,9 @@ namespace Utilities
 					debug_log(env_index, "WorkOrderManager::process_work_orders", "run_start", work_order.individual_index, work_order.example_case);
 #endif
 					env.set_current_thread(env_index);
-					env.set_current_individual_index(work_order.individual_index);
+
+					// Debug
+					env.set_current_individual_index(work_order.individual_index, work_order.example_case);
 
 					double error = domain::learn_from_examples::run_individual_threadsafe(env,
 						work_order.individual_index,
