@@ -211,9 +211,25 @@ namespace Utilities
 
 			if (top_ > 0)
 			{
-				for (int n = 0; n << top_; n++)
+				for (int n = 0; n < top_; n++)
 				{
-					s += ",";
+					s += " ";
+					s += std::to_string(stack_[n]);
+				}
+			}
+
+			return s;
+		}
+
+		inline std::string to_string_debug()
+		{
+			std::string s;
+
+			if (top_ > 0)
+			{
+				for (int n = top_ - 1; n >= 0; n--)
+				{
+					s += " ";
 					s += std::to_string(stack_[n]);
 				}
 			}

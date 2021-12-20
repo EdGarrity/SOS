@@ -53,6 +53,8 @@ namespace Plush
 			//output.clear();
 
 			//running_state = Idle;
+
+			enable_function("EXEC.ENABLE*INSTRUCTION");
 		}
 
 		// Pointer to input & output data
@@ -63,7 +65,8 @@ namespace Plush
 		std::string current_instruction;
 		size_t current_effort;
 		size_t current_unit;
-		int current_thread;
+		int current_thread = 0;
+		int individual_index = 0;
 
 		inline void set_current_thread(int new_current_thread)
 		{
@@ -75,6 +78,11 @@ namespace Plush
 			bool_stack_.set_current_thread(new_current_thread);
 			double_stack_.set_current_thread(new_current_thread);
 		};
+
+		inline void set_current_individual_index(int new_individual_index)
+		{
+			individual_index = new_individual_index;
+		}
 
 		virtual void clear_stacks()
 		{
@@ -126,7 +134,7 @@ namespace Plush
 		//	return stack.to_string();
 		//}
 
-		inline void stack_dump(std::string inst_enabled)
+		inline void stack_dump(std::string inst_enabled, size_t debug_ip)
 		{
 			std::string msg;
 
@@ -138,14 +146,54 @@ namespace Plush
 							//<< " double=" << env.my_to_string<double>()
 							//<< " bool=" << env.my_to_string<bool>()
 
-			msg = "Thread=" + current_thread;
-			msg += "Instruction=" + current_instruction;
-			msg += "Enabled=" + inst_enabled;
-			msg += "Exec=" + get_stack<ExecAtom>().to_string();
-			msg += "Code=" + get_stack<CodeAtom>().to_string();
-			msg += "long=" + get_stack<long>().to_string();
-			msg += "double=" + get_stack<double>().to_string();
-			msg += "bool=" + get_stack<bool>().to_string();
+			//msg = " thread=" + std::to_string(current_thread);
+			//msg += " individual_index=" + std::to_string(individual_index);
+			//msg += " instruction=" + current_instruction;
+			//msg += " enabled=" + inst_enabled;
+			//msg += " Exec=" + get_stack<ExecAtom>().to_string();
+			//msg += " Code=" + get_stack<CodeAtom>().to_string();
+			//msg += " long=" + get_stack<long>().to_string();
+			//msg += " double=" + get_stack<double>().to_string();
+			//msg += " bool=" + get_stack<bool>().to_string();
+
+			msg = "," + std::to_string(current_thread);
+			msg += "," + std::to_string(individual_index);
+			msg += "," + std::to_string(debug_ip);
+			msg += "," + current_instruction;
+			msg += "," + inst_enabled;
+			msg += "," + get_stack<ExecAtom>().to_string_debug();
+			msg += "," + get_stack<CodeAtom>().to_string_debug();
+			msg += "," + get_stack<long>().to_string_debug();
+			msg += "," + get_stack<double>().to_string_debug();
+			msg += "," + get_stack<bool>().to_string_debug();
+
+			msg += ",";
+
+			for (auto it = Func2CodeMap.begin(); it != Func2CodeMap.end(); ++it)
+				msg += it->first + " ";
+
+			Utilities::trace_record(msg);
+		}
+
+		inline void stack_dump(std::string inst_enabled, std::string instruction, size_t debug_ip)
+		{
+			std::string msg;
+
+			msg = "," + std::to_string(current_thread);
+			msg += "," + std::to_string(individual_index);
+			msg += "," + std::to_string(debug_ip);
+			msg += "," + instruction;
+			msg += "," + inst_enabled;
+			msg += "," + get_stack<ExecAtom>().to_string_debug();
+			msg += "," + get_stack<CodeAtom>().to_string_debug();
+			msg += "," + get_stack<long>().to_string_debug();
+			msg += "," + get_stack<double>().to_string_debug();
+			msg += "," + get_stack<bool>().to_string_debug();
+
+			msg += ",";
+
+			for (auto it = Func2CodeMap.begin(); it != Func2CodeMap.end(); ++it)
+				msg += it->first + " ";
 
 			Utilities::trace_record(msg);
 		}

@@ -287,6 +287,7 @@ namespace Plush
 
 		// Convert genome to a Human readable string
 		void convert_genome_to_string();
+		void convert_genome_to_string_debug();
 
 		// Ingest genome string
 		void ingest_plush_genome(std::string _genome_str);
@@ -646,6 +647,19 @@ namespace Plush
 				convert_genome_to_string();
 
 			return genome_string_;
+		}
+
+		inline const std::string to_string_debug()
+		{
+			std::string g1 = genome_string_;
+
+			convert_genome_to_string_debug();
+		
+			std::string g2 = genome_string_;
+
+			genome_string_ = g1;
+
+			return g2;
 		}
 
 		// Purpose: 
@@ -2407,6 +2421,28 @@ namespace Plush
 		genome_string_.clear();
 
 		for (size_t n = 0; n < Utilities::FixedSizeStack<T>::size(); n++)
+		{
+			genome_string_ += "{";
+			genome_string_ += ":instruction ";
+			genome_string_ += Utilities::FixedSizeStack<T>::stack_[n].instruction_name;
+			genome_string_ += " :close  ";
+			genome_string_ += std::to_string(Utilities::FixedSizeStack<T>::stack_[n].close_parenthesis);
+			genome_string_ += "}";
+		}
+	}
+
+	template<>
+	inline void Genome<long, 0>::convert_genome_to_string_debug()
+	{
+		genome_string_ = Utilities::FixedSizeStack<long>::to_string();;
+	}
+
+	template<class T, size_t N>
+	inline void Genome<T, N>::convert_genome_to_string_debug()
+	{
+		genome_string_.clear();
+
+		for (long n = Utilities::FixedSizeStack<T>::size() - 1; n >=0; n--)
 		{
 			genome_string_ += "{";
 			genome_string_ += ":instruction ";

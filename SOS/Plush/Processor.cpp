@@ -70,6 +70,9 @@ namespace Plush
 		size_t effort = 0;
 		size_t unit = 0;
 
+		// Debug
+		size_t debug_ip = 0;
+
 		while ((!env.is_empty<ExecAtom>()) && (effort < _max_effort))
 		{
 			try
@@ -77,6 +80,8 @@ namespace Plush
 				env.current_effort = effort;
 				env.current_unit = unit;
 				unit = 0;
+
+				debug_ip++;
 
 				ExecAtom atom = env.pop<ExecAtom>();
 
@@ -98,14 +103,17 @@ namespace Plush
 				case Atom::AtomType::integer:
 					env.push<long>(std::stol(atom.instruction_name));
 					unit = 1;
+					env.stack_dump("true", atom.instruction_name, debug_ip);
 					break;
 				case Atom::AtomType::floating_point:
 					env.push<double>(std::stod(atom.instruction_name));
 					unit = 1;
+					env.stack_dump("true", atom.instruction_name, debug_ip);
 					break;
 				case Atom::AtomType::boolean:
 					env.push<bool>(atom.instruction_name == Plush::Atom::boolean_true);
 					unit = 1;
+					env.stack_dump("true", atom.instruction_name, debug_ip);
 					break;
 				case Atom::AtomType::ins:
 					// Push open parenthesis onto stack if instruction expects any blocks
@@ -152,12 +160,12 @@ namespace Plush
 #endif
 
 #if TRACE_LEVEL>0
-							env.stack_dump("true");
+							env.stack_dump("true", debug_ip);
 #endif
 						}
 #if TRACE_LEVEL>0
 						else
-							env.stack_dump("false");
+							env.stack_dump("false", atom.instruction_name, debug_ip);
 #endif
 					}
 

@@ -9,6 +9,7 @@
 #include <ctime>
 #include <queue>
 #include <sstream>
+#include <fstream>
 
 #include "SystemInfo.h"
 //#include "..\Plush\Atom.h"
@@ -127,25 +128,53 @@ namespace Utilities
 
 	inline void trace_record(std::string trace_msg)
 	{
+		static bool first = true;
 		std::basic_stringstream<char> ss;
 		
-		ss << getCurrentTimestamp()
-			<< "generation=" << generation
-			<< trace_msg;
+		line_number++;
 
-		trace_queue.push(ss.str());
+		//ss << getCurrentTimestamp()
+		//	<< "line_number=" << line_number
+		//	<< "generation=" << generation
+		//	<< trace_msg
+		//	<< std::endl;
+
+		ss << getCurrentTimestamp()
+			<< "," << line_number
+			<< "," << generation
+			<< trace_msg
+			<< std::endl;
+
+		std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
+
+		std::ofstream myfile;
+		myfile.open("c:\\temp\\trace.txt", std::ios::out | std::ios::app);
+
+		if (first)
+		{
+			first = false;
+
+			myfile << "time,line_number,generation,thread,individual_index,ip,instruction,enabled,Exec,Code,long,double,bool,instructions";
+			myfile << std::endl;
+		}
+
+		myfile << ss.str();
+
+		myfile.close();
+
+		work_order_print_lock.unlock();
 	};
 
 	inline void flush_trace_queue()
 	{
-		std::ostringstream buf("trace.txt", std::ostringstream::out + std::ostringstream::trunc);
+		//std::ostringstream buf("trace.txt", std::ostringstream::out);
 
-		while (trace_queue.empty() == false)
-		{
-			buf << trace_queue.front();
-			buf << std::endl;
-			trace_queue.pop();
-		}
+		//while (trace_queue.empty() == false)
+		//{
+		//	buf << trace_queue.front();
+		//	buf << std::endl;
+		//	trace_queue.pop();
+		//}
 
 		generation++;
 	}
