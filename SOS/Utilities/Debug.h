@@ -133,12 +133,6 @@ namespace Utilities
 		
 		line_number++;
 
-		//ss << getCurrentTimestamp()
-		//	<< "line_number=" << line_number
-		//	<< "generation=" << generation
-		//	<< trace_msg
-		//	<< std::endl;
-
 		ss << getCurrentTimestamp()
 			<< "," << line_number
 			<< "," << generation
@@ -154,7 +148,7 @@ namespace Utilities
 		{
 			first = false;
 
-			myfile << "time,line_number,generation,thread,individual_index,example_case,ip,instruction,enabled,Exec,Code,long,double,bool,instructions";
+			myfile << "time,line_number,generation,thread,individual_index,example_case,ip,instruction,enabled,Exec_size,Exec,Code_size,Code,long_size,long,double_size,double,bool_size,bool,instructions";
 			myfile << std::endl;
 		}
 
@@ -167,15 +161,6 @@ namespace Utilities
 
 	inline void flush_trace_queue()
 	{
-		//std::ostringstream buf("trace.txt", std::ostringstream::out);
-
-		//while (trace_queue.empty() == false)
-		//{
-		//	buf << trace_queue.front();
-		//	buf << std::endl;
-		//	trace_queue.pop();
-		//}
-
 		generation++;
 	}
 #endif
