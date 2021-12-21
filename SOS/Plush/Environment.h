@@ -55,6 +55,7 @@ namespace Plush
 			//running_state = Idle;
 
 			enable_function("EXEC.ENABLE*INSTRUCTION");
+			enable_function("EXEC.ENABLE*INSTRUCTIONS");
 		}
 
 		// Pointer to input & output data
