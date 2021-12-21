@@ -35,6 +35,7 @@ namespace Plush
 				{
 					n--;
 					i = _env.pop<long>();
+					_env.enable_function(i);
 				}
 			}
 
