@@ -150,15 +150,15 @@ namespace Plush
 			msg += "," + std::to_string(debug_ip);
 			msg += "," + current_instruction;
 			msg += "," + inst_enabled;
-			msg += "," + get_stack<ExecAtom>().size();
+			msg += "," + std::to_string(get_stack<ExecAtom>().size());
 			msg += "," + get_stack<ExecAtom>().to_string_debug();
-			msg += "," + get_stack<CodeAtom>().size();
+			msg += "," + std::to_string(get_stack<CodeAtom>().size());
 			msg += "," + get_stack<CodeAtom>().to_string_debug();
-			msg += "," + get_stack<long>().size();
+			msg += "," + std::to_string(get_stack<long>().size());
 			msg += "," + get_stack<long>().to_string_debug();
-			msg += "," + get_stack<double>().size();
+			msg += "," + std::to_string(get_stack<double>().size());
 			msg += "," + get_stack<double>().to_string_debug();
-			msg += "," + get_stack<bool>().size();
+			msg += "," + std::to_string(get_stack<bool>().size());
 			msg += "," + get_stack<bool>().to_string_debug();
 
 			msg += ",";
@@ -182,15 +182,15 @@ namespace Plush
 			msg += "," + std::to_string(debug_ip);
 			msg += "," + instruction;
 			msg += "," + inst_enabled;
-			msg += "," + get_stack<ExecAtom>().size();
+			msg += "," + std::to_string(get_stack<ExecAtom>().size());
 			msg += "," + get_stack<ExecAtom>().to_string_debug();
-			msg += "," + get_stack<CodeAtom>().size();
+			msg += "," + std::to_string(get_stack<CodeAtom>().size());
 			msg += "," + get_stack<CodeAtom>().to_string_debug();
-			msg += "," + get_stack<long>().size();
+			msg += "," + std::to_string(get_stack<long>().size());
 			msg += "," + get_stack<long>().to_string_debug();
-			msg += "," + get_stack<double>().size();
+			msg += "," + std::to_string(get_stack<double>().size());
 			msg += "," + get_stack<double>().to_string_debug();
-			msg += "," + get_stack<bool>().size();
+			msg += "," + std::to_string(get_stack<bool>().size());
 			msg += "," + get_stack<bool>().to_string_debug();
 
 			msg += ",";
