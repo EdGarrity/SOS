@@ -211,7 +211,7 @@ namespace Utilities
 
 			if (top_ > 0)
 			{
-				for (int n = 0; n < top_; n++)
+				for (size_t n = 0; n < top_; n++)
 				{
 					s += " ";
 					s += std::to_string(stack_[n]);
@@ -227,7 +227,9 @@ namespace Utilities
 
 			if (top_ > 0)
 			{
-				for (int n = top_ - 1; n >= 0; n--)
+				size_t stack_size = top_ > 100 ? 100 : top_;
+
+				for (long long n = stack_size - 1; n >= 0; n--)
 				{
 					s += " ";
 					s += std::to_string(stack_[n]);
