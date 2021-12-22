@@ -2434,13 +2434,13 @@ namespace Plush
 	{
 		std::string genome_string;
 
-		size_t stack_size = Utilities::FixedSizeStack<T>::size();
+		size_t stack_top = Utilities::FixedSizeStack<T>::size();
 
-		if (stack_size > 0)
+		if (stack_top > 0)
 		{
-			stack_size = stack_size > 10 ? 10 : stack_size;
+			size_t stack_bottom = stack_top > 10 ? stack_top - 10 : 0;
 
-			for (long long n = stack_size - 1; n >= 0; n--)
+			for (long long n = stack_top - 1; n >= stack_bottom; n--)
 			{
 				genome_string += "{";
 				genome_string += ":instruction ";
