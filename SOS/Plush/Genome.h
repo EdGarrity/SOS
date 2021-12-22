@@ -2438,7 +2438,7 @@ namespace Plush
 
 		if (stack_size > 0)
 		{
-			stack_size = stack_size > 100 ? 100 : stack_size;
+			stack_size = stack_size > 10 ? 10 : stack_size;
 
 			for (long long n = stack_size - 1; n >= 0; n--)
 			{

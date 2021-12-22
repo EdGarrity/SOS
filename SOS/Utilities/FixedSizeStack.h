@@ -227,7 +227,7 @@ namespace Utilities
 
 			if (top_ > 0)
 			{
-				size_t stack_size = top_ > 100 ? 100 : top_;
+				size_t stack_size = top_ > 10 ? 10 : top_;
 
 				for (long long n = stack_size - 1; n >= 0; n--)
 				{
