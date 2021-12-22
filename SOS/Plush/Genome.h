@@ -651,15 +651,7 @@ namespace Plush
 
 		inline const std::string to_string_debug()
 		{
-			std::string g1 = genome_string_;
-
-			convert_genome_to_string_debug();
-		
-			std::string g2 = genome_string_;
-
-			genome_string_ = g1;
-
-			return g2;
+			return convert_genome_to_string_debug();
 		}
 
 		// Purpose: 
