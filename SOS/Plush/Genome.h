@@ -2434,11 +2434,11 @@ namespace Plush
 	{
 		std::string genome_string;
 
-		size_t stack_top = Utilities::FixedSizeStack<T>::size();
+		long long stack_top = Utilities::FixedSizeStack<T>::size();
 
 		if (stack_top > 0)
 		{
-			size_t stack_bottom = stack_top > 10 ? stack_top - 10 : 0;
+			long long stack_bottom = stack_top > 10 ? stack_top - 10 : 0;
 
 			for (long long n = stack_top - 1; n >= stack_bottom; n--)
 			{
