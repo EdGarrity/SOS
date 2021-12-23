@@ -130,13 +130,7 @@ namespace Plush
 			return debug_msg;
 		}
 
-		//template<typename T>
-		//std::string my_to_string()
-		//{
-		//	Genome<T>& stack = get_stack<T>();
-		//	return stack.to_string();
-		//}
-
+#if TRACE_LEVEL>0
 		inline void stack_dump(std::string inst_enabled, size_t debug_ip)
 		{
 			if (individual_index != 1)
@@ -200,13 +194,7 @@ namespace Plush
 
 			Utilities::trace_record(msg);
 		}
-
-		//template<>
-		//std::string my_to_string<long>()
-		//{
-		//	Genome<long>& genome = get_stack<CodeAtom>();
-		//	return genome.number_of_blocks();
-		//}
+#endif
 
 		/* Helper Functions */
 

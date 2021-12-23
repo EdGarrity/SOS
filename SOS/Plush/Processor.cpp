@@ -103,17 +103,23 @@ namespace Plush
 				case Atom::AtomType::integer:
 					env.push<long>(std::stol(atom.instruction_name));
 					unit = 1;
+#if TRACE_LEVEL>0
 					env.stack_dump("true", atom.instruction_name, debug_ip);
+#endif
 					break;
 				case Atom::AtomType::floating_point:
 					env.push<double>(std::stod(atom.instruction_name));
 					unit = 1;
+#if TRACE_LEVEL>0
 					env.stack_dump("true", atom.instruction_name, debug_ip);
+#endif
 					break;
 				case Atom::AtomType::boolean:
 					env.push<bool>(atom.instruction_name == Plush::Atom::boolean_true);
 					unit = 1;
+#if TRACE_LEVEL>0
 					env.stack_dump("true", atom.instruction_name, debug_ip);
+#endif
 					break;
 				case Atom::AtomType::ins:
 					// Push open parenthesis onto stack if instruction expects any blocks

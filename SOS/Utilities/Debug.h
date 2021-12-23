@@ -16,7 +16,7 @@
 //#include "..\Plush\Environment.h"
 
 #define DLEVEL 0
-#define TRACE_LEVEL 1
+#define TRACE_LEVEL 0
 
 namespace Utilities
 {
