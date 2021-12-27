@@ -7,7 +7,9 @@
 #include "..\Plush\Atom.h"
 #include "..\Utilities\Debug.h"
 
+#if DLEVEL > 0
 extern std::atomic_bool debug_push;
+#endif
 
 // Purpose: 
 //   Impliments a fixed-sized stack (FIFO)
@@ -201,6 +203,40 @@ namespace Utilities
 			}
 
 			return stack_[top_ - 1];
+		}
+
+		inline std::string to_string()
+		{
+			std::string s;
+
+			if (top_ > 0)
+			{
+				for (size_t n = 0; n < top_; n++)
+				{
+					s += " ";
+					s += std::to_string(stack_[n]);
+				}
+			}
+
+			return s;
+		}
+
+		inline std::string to_string_debug()
+		{
+			std::string s;
+
+			if (top_ > 0)
+			{
+				long long stack_bottom = top_ > 10 ? top_ - 10 : 0;
+
+				for (long long n = top_ - 1; n >= stack_bottom; n--)
+				{
+					s += " ";
+					s += std::to_string(stack_[n]);
+				}
+			}
+
+			return s;
 		}
 
 		//inline const_reference get_atom_at_position(unsigned int position) const
@@ -451,6 +487,7 @@ namespace Utilities
 		//
 		inline size_t remove_items(size_t position, size_t length)
 		{
+#if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
 			{
 				std::string debug = "entry,position=" + std::to_string(position) 
@@ -458,6 +495,7 @@ namespace Utilities
 					+ ",top_=" + std::to_string(top_);
 				Utilities::debug_log(current_thread, "FixedSizeStack::remove_items", debug);
 			}
+#endif
 
 			if (length > top_)
 				length = top_;
@@ -468,6 +506,7 @@ namespace Utilities
 			if (position > 0)
 			{
 				size_t j = top_ - position, k = (top_ - position - 1) - (length - 1);
+#if DLEVEL > 0
 				if (debug_push.load(std::memory_order_acquire))
 				{
 					std::string debug = "for,position=" + std::to_string(position)
@@ -477,6 +516,7 @@ namespace Utilities
 						+ ",k=" + std::to_string(k);
 						Utilities::debug_log(current_thread, "FixedSizeStack::remove_items", debug);
 				}
+#endif
 
 				for (/*size_t j = top_ - position, k = (top_ - position - 1) - (length - 1)*/;
 					j < top_;
@@ -490,6 +530,7 @@ namespace Utilities
 
 			top_ -= length;
 
+#if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
 			{
 				std::string debug = "exit,position=" + std::to_string(position)
@@ -497,6 +538,7 @@ namespace Utilities
 					+ ",top_=" + std::to_string(top_);
 				Utilities::debug_log(current_thread, "FixedSizeStack::remove_items", debug);
 			}
+#endif
 
 			return position;
 		}
@@ -623,6 +665,7 @@ namespace Utilities
 		//
 		inline size_t yankdup_item(size_t position, size_t length)
 		{
+#if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
 			{
 				std::string debug = "entry,position=" + std::to_string(position)
@@ -630,6 +673,7 @@ namespace Utilities
 					+ ",top_=" + std::to_string(top_);
 				Utilities::debug_log(current_thread, "FixedSizeStack::yankdup_item", debug);
 			}
+#endif
 
 			if (position >= top_)
 				position = top_ - 1;
@@ -640,6 +684,7 @@ namespace Utilities
 			if ((top_ - position - length >= 0) && ((top_ + length) < N))
 			{
 				size_t i = 0, j = top_ - position - length, k = top_;
+#if DLEVEL > 0
 				if (debug_push.load(std::memory_order_acquire))
 				{
 					std::string debug = "entry,position=" + std::to_string(position)
@@ -651,6 +696,7 @@ namespace Utilities
 						+ ",k=" + std::to_string(k);
 					Utilities::debug_log(current_thread, "FixedSizeStack::yankdup_item", debug);
 				}
+#endif
 				for (/*size_t i = 0, j = top_ - position - length, k = top_*/;
 					(i < length) && (k < N);
 					i++, j++, k++)
@@ -665,6 +711,7 @@ namespace Utilities
 			else
 				length = 0;
 
+#if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
 			{
 				std::string debug = "exit,position=" + std::to_string(position)
@@ -678,7 +725,7 @@ namespace Utilities
 				std::string debug = "exit,length=" + std::to_string(length);
 				Utilities::debug_log(current_thread, "FixedSizeStack::yankdup_item", debug);
 			}
-
+#endif
 			return length;
 		}
 

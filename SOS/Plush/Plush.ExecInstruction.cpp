@@ -8,6 +8,54 @@
 
 namespace Plush
 {
+	// Add an instruction to the instruction set for this individual.
+	inline size_t exec_enable_instruction(Environment& _env)
+	{
+		long n = _env.pop<long>();	// Instruction index
+
+		_env.enable_function(n);
+
+		return 1;
+	}
+
+	// Add instructions to the instruction set for this individual using the integers in the integer stack.
+	inline size_t exec_enable_instructions(Environment& _env)
+	{
+		long number_of_instructions_to_add = _env.pop<long>();	// Number of instructions to add
+		long i = _env.pop<long>();								// Instruction index
+
+		if ((number_of_instructions_to_add > 0) && (_env.length<long>() >= (number_of_instructions_to_add - 1)))
+		{
+			_env.enable_function(i);
+			long n = number_of_instructions_to_add - 1;
+
+			while (n > 0)
+			{
+				if (_env.is_empty<long>() == false)
+				{
+					n--;
+					i = _env.pop<long>();
+					_env.enable_function(i);
+				}
+			}
+
+			return number_of_instructions_to_add;
+		}
+
+		else
+			return 1;
+	}
+
+	// Remove instruction from the instruction set for this individual.
+	inline size_t exec_disable_instruction(Environment& _env)
+	{
+		long n = _env.pop<long>();	// Instruction index
+
+		_env.disable_function(n);
+
+		return 1;
+	}
+
 	// Expand inner block
 	inline size_t noop_open_paren(Environment & _env)
 	{
@@ -36,8 +84,8 @@ namespace Plush
 	// for possible access during the execution of the body of the loop
 	inline size_t exec_do_range(Environment & _env)
 	{
-		int n = _env.pop<long>();	// destination index
-		int i = _env.pop<long>();	// current index
+		long n = _env.pop<long>();	// destination index
+		long i = _env.pop<long>();	// current index
 
 		if (n == i)
 			_env.push<long>(i);
@@ -82,7 +130,7 @@ namespace Plush
 
 	inline size_t exec_do_count(Environment & _env)
 	{
-		int n = _env.pop<long>();	// destination index
+		long n = _env.pop<long>();	// destination index
 
 		if (n > 0)
 		{
@@ -97,7 +145,7 @@ namespace Plush
 
 	inline size_t exec_do_times(Environment & _env)
 	{
-		int n = _env.pop<long>();	// destination index
+		long n = _env.pop<long>();	// destination index
 
 		if (n > 0)
 		{
@@ -310,13 +358,13 @@ namespace Plush
 		if (block_a.size > 0)
 		{
 			for (size_t i = block_a.starting_position; i <= block_a.ending_position; i++)
-				atom_set.insert(genome.get_atom_at_position(i).instruction);
+				atom_set.insert(genome.get_atom_at_position(i).instruction_name);
 		}
 
 		if (block_b.size > 0)
 		{
 			for (size_t i = block_b.starting_position; i <= block_b.ending_position; i++)
-				atom_set.insert(genome.get_atom_at_position(i).instruction);
+				atom_set.insert(genome.get_atom_at_position(i).instruction_name);
 		}
 
 		int result = 0;
@@ -330,7 +378,7 @@ namespace Plush
 			{
 				for (size_t i = block_a.starting_position; i <= block_a.ending_position; i++)
 				{
-					if (instruction == genome.get_atom_at_position(i).instruction)
+					if (instruction == genome.get_atom_at_position(i).instruction_name)
 						count_a++;
 				}
 			}
@@ -339,7 +387,7 @@ namespace Plush
 			{
 				for (size_t i = block_b.starting_position; i <= block_b.ending_position; i++)
 				{
-					if (instruction == genome.get_atom_at_position(i).instruction)
+					if (instruction == genome.get_atom_at_position(i).instruction_name)
 						count_b++;
 				}
 			}
@@ -385,8 +433,8 @@ namespace Plush
 
 	inline size_t code_do_range(Environment & _env)
 	{
-		int n = _env.pop<long>();	// destination index
-		int i = _env.pop<long>();	// current index
+		long n = _env.pop<long>();	// destination index
+		long i = _env.pop<long>();	// current index
 
 		if (n == i)
 		{
@@ -429,7 +477,7 @@ namespace Plush
 
 	inline size_t code_do_count(Environment & _env)
 	{
-		int n = _env.pop<long>();	// destination index
+		long n = _env.pop<long>();	// destination index
 
 		if (n > 0)
 		{
@@ -444,7 +492,7 @@ namespace Plush
 
 	inline size_t code_do_times(Environment & _env)
 	{
-		int n = _env.pop<long>();	// destination index
+		long n = _env.pop<long>();	// destination index
 
 		if (n > 0)
 		{
@@ -460,7 +508,7 @@ namespace Plush
 
 	inline size_t code_extract(Environment & _env)
 	{
-		unsigned int item_number = std::abs(_env.pop<long>());	// index
+		long item_number = std::abs(_env.pop<long>());	// index
 
 		if (item_number != 0)
 		{
@@ -476,7 +524,7 @@ namespace Plush
 			if (number_of_items > 0)
 			{
 				// Take modulo the number of blocks to ensure that it is within the meaningful range.
-				int n = item_number - 1;
+				long n = item_number - 1;
 				item_number = std::abs(n) % number_of_items + 1;
 
 				Genome_section<CodeAtom> sub_block = genome.get_subitem(item_number);
@@ -553,7 +601,7 @@ namespace Plush
 
 	inline size_t code_insert(Environment & _env)
 	{
-		unsigned int item_number = std::abs(_env.pop<long>());	// index
+		long item_number = std::abs(_env.pop<long>());	// index
 
 		// Get reference to genome stack
 		Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
@@ -570,7 +618,7 @@ namespace Plush
 		// Take modulo the number of blocks to ensure that it is within the meaningful range.
 		if (item_number != 0)
 		{
-			int n = item_number - 1;
+			long n = item_number - 1;
 			item_number = std::abs(n) % number_of_items + 1;
 			item_number = (item_number == number_of_items) ? 0 : item_number;
 		}
@@ -656,7 +704,7 @@ namespace Plush
 
 	inline size_t code_nth(Environment & _env)
 	{
-		unsigned int index = std::abs(_env.pop<long>());	// index
+		long index = std::abs(_env.pop<long>());	// index
 
 		// Get reference to genome stack
 		Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
@@ -685,7 +733,7 @@ namespace Plush
 
 	inline size_t code_nthcdr(Environment & _env)
 	{
-		unsigned int item_number = std::abs(_env.pop<long>());	// index
+		long item_number = std::abs(_env.pop<long>());	// index
 
 		// Get reference to genome stack
 		Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
@@ -721,7 +769,7 @@ namespace Plush
 			_env.push<bool>(true);
 			
 		else if ((top_block.size == 1) 
-			&& (genome.get_atom_at_position(top_block.starting_position).instruction == "CODE.NOOP")
+			&& (genome.get_atom_at_position(top_block.starting_position).instruction_name == "CODE.NOOP")
 				&& (genome.get_atom_at_position(top_block.starting_position).close_parenthesis > 0))
 				_env.push<bool>(true);
 		else
@@ -910,7 +958,7 @@ namespace Plush
 	{
 		if (_env.input.size() > 0)
 		{
-			for (unsigned int index = _env.input.size() - 1; index >= 0; index--)
+			for (size_t index = _env.input.size() - 1; index >= 0; index--)
 			{
 				double value = _env.input[index];
 				_env.push<CodeAtom>(CodeAtom(value));
@@ -922,11 +970,15 @@ namespace Plush
 
 	void initExec()
 	{
-		static bool initialized = false;
+		//static bool initialized = false;
 
-		if (initialized) return;
+		//if (initialized) return;
 
-		initialized = true;
+		//initialized = true;
+
+		push_make_instruction((Operator)exec_enable_instruction, "EXEC", "ENABLE*INSTRUCTION", integerType, nullType);
+		push_make_instruction((Operator)exec_enable_instructions, "EXEC", "ENABLE*INSTRUCTIONS", integerType+ integerType, nullType);
+		push_make_instruction((Operator)exec_disable_instruction, "EXEC", "DISABLE*INSTRUCTION", integerType, nullType);
 
 		push_make_instruction((Operator)exec_k, "EXEC", "K", execType + execType, nullType);
 		push_make_instruction((Operator)exec_s, "EXEC", "S", execType + execType + execType, execType);

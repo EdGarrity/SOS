@@ -30,7 +30,7 @@ namespace Plush
 	template <class T>
 	inline size_t pop_safe_position(Environment & _env)
 	{
-		int index = _env.pop<long>();
+		long index = _env.pop<long>();
 		size_t stacksize = _env.get_stack<T>().size();
 
 		index = (index < 0) ? 0 : index;
@@ -291,22 +291,24 @@ namespace Plush
 	template<>
 	inline size_t swap<CodeAtom>(Environment & _env)
 	{
+#if DLEVEL > 0
 		if (debug_push.load(std::memory_order_acquire))
 		{
 			Utilities::debug_log(_env.current_thread, "GenericInstructions::swap<CodeAtom>", "entry");
 		}
-
+#endif
 		return _env.get_stack<CodeAtom>().yank_stack_element(1);
 	}
 
 	template<>
 	inline size_t swap<ExecAtom>(Environment & _env)
 	{
+#if DLEVEL > 0
 		if (debug_push.load(std::memory_order_acquire))
 		{
 			Utilities::debug_log(_env.current_thread, "GenericInstructions::swap<ExecAtom>", "entry");
 		}
-
+#endif
 		return _env.get_stack<ExecAtom>().yank_stack_element(1);
 	}
 }

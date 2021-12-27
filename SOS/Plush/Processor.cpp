@@ -9,7 +9,9 @@
 #include "..\Utilities\WorkOrderManager.h"
 #include "..\Utilities\Debug.h"
 
+#if DLEVEL > 0
 extern std::atomic_bool debug_push;
+#endif
 //extern std::atomic_bool print_push;
 //extern std::string env_state[domain::argmap::max_threads];
 
@@ -68,6 +70,9 @@ namespace Plush
 		size_t effort = 0;
 		size_t unit = 0;
 
+		// Debug
+		size_t debug_ip = 0;
+
 		while ((!env.is_empty<ExecAtom>()) && (effort < _max_effort))
 		{
 			try
@@ -76,33 +81,45 @@ namespace Plush
 				env.current_unit = unit;
 				unit = 0;
 
+				debug_ip++;
+
 				ExecAtom atom = env.pop<ExecAtom>();
 
 				// Debug - Remember current instruction
-				env.current_instruction = atom.instruction;
+				env.current_instruction = atom.instruction_name;
 
+#if DLEVEL > 0
 				if (debug_push.load(std::memory_order_acquire))
 				{
 					std::string debug = "pre_run," + env.print_state();
 					Utilities::debug_log(env.current_thread, "Processor::run", debug);
 				}
-
+#endif
 				//if (print_push.load(std::memory_order_acquire))
 				//	env_state[env.current_thread] = env.print_state();
 
 				switch (atom.type)
 				{
 				case Atom::AtomType::integer:
-					env.push<long>(std::stol(atom.instruction));
+					env.push<long>(std::stol(atom.instruction_name));
 					unit = 1;
+#if TRACE_LEVEL>0
+					env.stack_dump("true", atom.instruction_name, debug_ip);
+#endif
 					break;
 				case Atom::AtomType::floating_point:
-					env.push<double>(std::stod(atom.instruction));
+					env.push<double>(std::stod(atom.instruction_name));
 					unit = 1;
+#if TRACE_LEVEL>0
+					env.stack_dump("true", atom.instruction_name, debug_ip);
+#endif
 					break;
 				case Atom::AtomType::boolean:
-					env.push<bool>(atom.instruction == Plush::Atom::boolean_true);
+					env.push<bool>(atom.instruction_name == Plush::Atom::boolean_true);
 					unit = 1;
+#if TRACE_LEVEL>0
+					env.stack_dump("true", atom.instruction_name, debug_ip);
+#endif
 					break;
 				case Atom::AtomType::ins:
 					// Push open parenthesis onto stack if instruction expects any blocks
@@ -111,9 +128,9 @@ namespace Plush
 					int blocks_closed = atom.close_parenthesis;
 
 					// Close expected blocks for each block the instruction is expecting if the instruction closes that block.
-					if (atom.instruction != "EXEC.NOOP")
+					if (atom.instruction_name != "EXEC.NOOP")
 					{
-						if (atom.instruction.substr(0, 5) == "EXEC.")
+						if (atom.instruction_name.substr(0, 5) == "EXEC.")
 						{
 							if (blocks_closed > 0)
 							{
@@ -127,22 +144,35 @@ namespace Plush
 					//auto search = Func2CodeMap.find(atom.instruction);
 
 					//if (search != Func2CodeMap.end())
-					if (static_initializer.is_function_supported(atom.instruction))
+					//if (static_initializer.is_function_supported(atom.instruction))
+					//if ((static_initializer.is_function_supported(atom.instruction_name)) && (env.is_function_enabled(atom.instruction_name)))
+					if (static_initializer.is_function_supported(atom.instruction_name))
 					{
 						//Instruction * pI = Func2CodeMap[atom.instruction];
-						Instruction * pI = static_initializer.get_function(atom.instruction);
+						//Instruction * pI = static_initializer.get_function(atom.instruction_name);
+						Instruction* pI = env.get_function(atom.instruction_name);
 
-						if (pI->can_run(env))
+						if ((pI != nullptr) && (pI->can_run(env)))
 						{
 							Operator op = pI->get_op();
 							unit = op(env);
 
+#if DLEVEL > 0
 							if (debug_push.load(std::memory_order_acquire))
 							{
 								std::string debug = "unit=" + std::to_string(unit) + "," + env.print_state();
 								Utilities::debug_log(env.current_thread, "Processor::run", debug);
 							}
+#endif
+
+#if TRACE_LEVEL>0
+							env.stack_dump("true", debug_ip);
+#endif
 						}
+#if TRACE_LEVEL>0
+						else
+							env.stack_dump("false", atom.instruction_name, debug_ip);
+#endif
 					}
 
 					break;
@@ -173,8 +203,10 @@ namespace Plush
 				std::cerr << error.str();
 				std::string debug_message;
 
+#if DLEVEL > 0
 				debug_message = error.str();
 				Utilities::debug_log(-1, "run", debug_message);
+#endif
 			}
 			catch (...)
 			{
@@ -186,20 +218,23 @@ namespace Plush
 				error << "Unknown exception caught.  effort = " << effort << std::endl;
 
 				std::cerr << error.str();
+#if DLEVEL > 0
 				std::string debug_message;
 
 				debug_message = error.str();
 				Utilities::debug_log(-1, "run", debug_message);
+#endif
 			}
 
 			effort += (1u) > (unit) ? (1u) : (unit);
 
+#if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
 			{
 				std::string debug = "post_run," + env.print_state();
 				Utilities::debug_log(env.current_thread, "Processor::run", debug);
 			}
-
+#endif
 			//if (print_push.load(std::memory_order_acquire))
 			//	env_state[env.current_thread] = env.print_state();
 		}

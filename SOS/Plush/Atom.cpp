@@ -30,10 +30,10 @@ namespace Plush
 
 		start_of_optional_tokens = _atom_string.find_first_of(" :}", index);
 
-		instruction = _atom_string.substr(index, start_of_optional_tokens - index);
+		instruction_name = _atom_string.substr(index, start_of_optional_tokens - index);
 
 		// Convert instruction to upper case
-		std::transform(instruction.begin(), instruction.end(), instruction.begin(),
+		std::transform(instruction_name.begin(), instruction_name.end(), instruction_name.begin(),
 			[](unsigned char c) { return std::toupper(c); });
 
 		// Check for optional close token
@@ -64,19 +64,21 @@ namespace Plush
 		}
 
 		// Check for boolean
-		else if ((instruction == Plush::Atom::boolean_true) || (instruction == Plush::Atom::boolean_false))
+		else if ((instruction_name == Plush::Atom::boolean_true) || (instruction_name == Plush::Atom::boolean_false))
 			type = AtomType::boolean;
 
 		// Check for integer
-		else if ([&]() { char* p; strtol(instruction.c_str(), &p, 10); return *p == 0; }() == true)
+		else if ([&]() { char* p; strtol(instruction_name.c_str(), &p, 10); return *p == 0; }() == true)
 			type = AtomType::integer;
 
 		// Check for float
-		else if ([&]() { char* p; strtod(instruction.c_str(), &p); return *p == 0; }() == true)
+		else if ([&]() { char* p; strtod(instruction_name.c_str(), &p); return *p == 0; }() == true)
 			type = AtomType::floating_point;
 
 		else
 			type = ins;
+
+		instruction_id = Plush::static_initializer.get_function_index(instruction_name);
 	}
 
 	// Purpose: 

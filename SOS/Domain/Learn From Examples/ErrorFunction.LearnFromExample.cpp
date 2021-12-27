@@ -5,6 +5,7 @@
 #include "..\..\PushGP\Individual.h"
 #include "..\..\Plush\Processor.h"
 #include <cmath>
+#include "..\..\Utilities\Debug.h"
 
 namespace domain
 {
@@ -147,8 +148,14 @@ namespace domain
 
 			std::string program = pushGP::globals::population_agents[_individual_index].get_genome_string();
 
+#if DLEVEL > 0
+			Utilities::debug_log(env.current_thread, "learn_from_examples::run_individual_threadsafe", "start", _individual_index, 0);
+#endif
 			error = run_program(env, program, _example_problem, _example_solution);
 
+#if DLEVEL > 0
+			Utilities::debug_log(env.current_thread, "learn_from_examples::run_individual_threadsafe", "end", _individual_index, 0);
+#endif
 			return error;
 		}
 	}

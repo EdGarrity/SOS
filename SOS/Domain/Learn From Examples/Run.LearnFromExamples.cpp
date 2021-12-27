@@ -112,7 +112,9 @@ namespace domain
 
 			sqlcmd_get_last_saved_generation_number = new database::SQLCommand(&con, sqlstmt_get_last_saved_generation_number);
 
+#if DLEVEL > 0
 			Utilities::debug_log(-1, "get_last_saved_generation_number", "sqlcmd");
+#endif
 
 			sqlcmd_get_last_saved_generation_number->execute();
 
@@ -132,7 +134,10 @@ namespace domain
 
 			sqlcmd_get_last_saved_temperature = new database::SQLCommand(&con, sqlstmt_get_last_saved_temperature);
 
+#if DLEVEL > 0
 			Utilities::debug_log(-1, "get_last_saved_temperature", "sqlcmd");
+#endif
+
 			sqlcmd_get_last_saved_temperature->execute();
 
 			if (sqlcmd_get_last_saved_temperature->fetch_next())
@@ -151,7 +156,9 @@ namespace domain
 
 			sqlcmd_get_last_best_individual_error = new database::SQLCommand(&con, sqlstmt_get_last_best_individual_error);
 
+#if DLEVEL > 0
 			Utilities::debug_log(-1, "get_last_best_individual_error", "sqlcmd");
+#endif
 			sqlcmd_get_last_best_individual_error->execute();
 
 			if (sqlcmd_get_last_best_individual_error->fetch_next())
@@ -170,7 +177,9 @@ namespace domain
 
 			sqlcmd_get_last_prev_best_individual_error = new database::SQLCommand(&con, sqlstmt_get_last_prev_best_individual_error);
 
+#if DLEVEL > 0
 			Utilities::debug_log(-1, "get_last_prev_best_individual_error", "sqlcmd");
+#endif
 			sqlcmd_get_last_prev_best_individual_error->execute();
 
 			if (sqlcmd_get_last_prev_best_individual_error->fetch_next())
@@ -189,7 +198,9 @@ namespace domain
 
 			sqlcmd_get_last_stalled_count = new database::SQLCommand(&con, sqlstmt_get_last_stalled_count);
 
+#if DLEVEL > 0
 			Utilities::debug_log(-1, "get_last_stalled_count", "sqlcmd");
+#endif
 			sqlcmd_get_last_stalled_count->execute();
 
 			if (sqlcmd_get_last_stalled_count->fetch_next())
@@ -208,7 +219,9 @@ namespace domain
 
 			sqlcmd_get_last_cool_down_count = new database::SQLCommand(&con, sqlstmt_get_last_cool_down_count);
 
+#if DLEVEL > 0
 			Utilities::debug_log(-1, "get_last_cool_down_count", "sqlcmd");
+#endif
 			sqlcmd_get_last_cool_down_count->execute();
 
 			if (sqlcmd_get_last_cool_down_count->fetch_next())
@@ -228,7 +241,9 @@ namespace domain
 
 			sqlcmd_get_include_best_individual_in_breeding_pool = new database::SQLCommand(&con, sqlstmt_get_include_best_individual_in_breeding_pool);
 
+#if DLEVEL > 0
 			Utilities::debug_log(-1, "get_include_best_individual_in_breeding_pool", "sqlcmd");
+#endif
 			sqlcmd_get_include_best_individual_in_breeding_pool->execute();
 
 			if (sqlcmd_get_include_best_individual_in_breeding_pool->fetch_next())
@@ -258,7 +273,9 @@ namespace domain
 
 			try
 			{
+#if DLEVEL > 0
 				Utilities::debug_log(-1, "load_example_cases", "sqlcmd");
+#endif
 				sqlcmd_get_example_cases->execute();
 
 				if (sqlcmd_get_example_cases->is_result_set())
@@ -464,7 +481,7 @@ namespace domain
 
 		void save_example_cases()
 		{
-			char buffer[33];
+			char buffer[33] = "";
 
 			database::SQLCommand* sqlcmd_insert_new_example_case;
 
@@ -508,7 +525,9 @@ namespace domain
 				sqlcmd_insert_new_example_case->set_as_string(1, training_case_input_str);
 				sqlcmd_insert_new_example_case->set_as_string(2, training_case_output_str);
 
+#if DLEVEL > 0
 				Utilities::debug_log(-1, "save_example_cases", "sqlcmd");
+#endif
 				sqlcmd_insert_new_example_case->execute();
 			}
 
@@ -540,7 +559,9 @@ namespace domain
 
 				sqlcmd_insert_new_example_case->set_as_string(1, test_case_input_str);
 				sqlcmd_insert_new_example_case->set_as_string(2, test_case_output_str);
+#if DLEVEL > 0
 				Utilities::debug_log(-1, "save_example_cases", "sqlcmd2");
+#endif
 				sqlcmd_insert_new_example_case->execute();
 			}
 
@@ -560,7 +581,9 @@ namespace domain
 
 			try
 			{
+#if DLEVEL > 0
 				Utilities::debug_log(-1, "load_pop_agents", "sqlcmd");
+#endif
 				sqlcmd_get_individuals->execute();
 
 				if (sqlcmd_get_individuals->is_result_set())
@@ -1191,6 +1214,7 @@ namespace domain
 			sqlcmd_save_status_report->set_as_integer(20, _cool_down_count);
 			sqlcmd_save_status_report->set_as_integer(21, _include_best_individual_in_breeding_pool);
 
+#if DLEVEL > 0
 			Utilities::debug_log(-1, "generate_status_report", "sqlcmd");
 			Utilities::debug_log(-1, "generate_status_report", "_generation_number=" + std::to_string(_generation_number));
 			Utilities::debug_log(-1, "generate_status_report", "_generations_completed_this_session=" + std::to_string(_generations_completed_this_session));
@@ -1213,12 +1237,14 @@ namespace domain
 			Utilities::debug_log(-1, "generate_status_report", "_stalled_count=" + std::to_string(_stalled_count));
 			Utilities::debug_log(-1, "generate_status_report", "_cool_down_count=" + std::to_string(_cool_down_count));
 			Utilities::debug_log(-1, "generate_status_report", "_include_best_individual_in_breeding_pool=" + std::to_string(_include_best_individual_in_breeding_pool));
-
+#endif
 			sqlcmd_save_status_report->execute();
 
 			delete sqlcmd_save_status_report;
 
+#if DLEVEL > 0
 			Utilities::debug_log(-1, "generate_status_report", "Exit.");
+#endif
 		}
 
 		// May need to move to thread local.
@@ -1246,9 +1272,10 @@ namespace domain
 
 				std::cerr << error.str() << std::endl;
 
+#if DLEVEL > 0
 				debug_message = error.str();
 				Utilities::debug_log(-1, "run", debug_message);
-
+#endif
 				return 1;
 			}
 
@@ -1360,11 +1387,12 @@ namespace domain
 
 						std::cerr << error.str() << std::endl;
 
+#if DLEVEL > 0
 						debug_message = error.str();
 						debug_message += ",Generation=" + std::to_string(generation_number);
 						debug_message += ",Session=" + std::to_string(generations_completed_this_session);
 						Utilities::debug_log(-1, "run", debug_message);
-
+#endif
 						return 1;
 					}
 
@@ -1384,16 +1412,18 @@ namespace domain
 					//std::cout << "Generation " << generation_number << std::endl;
 					//std::cout << "Session " << generations_completed_this_session << std::endl;
 
+#if DLEVEL > 0
 					debug_message = "Reset variables which track the minimum error for this test case and the individual who achived the minimum error";
 					debug_message += ",Generation=" + std::to_string(generation_number);
 					debug_message += ",Session=" + std::to_string(generations_completed_this_session);
 					Utilities::debug_log(-1, "run", debug_message);
-
+#endif
 					save_generation();
 
 					//std::cout << "Run Programs with Training Cases" << std::endl;
+#if DLEVEL > 0
 					Utilities::debug_log(-1, "run", "Run Programs with Training Cases");
-
+#endif
 					std::tuple<int, double, double> best_individual_score_error;
 
 					if (argmap::use_multithreading)
@@ -1414,7 +1444,14 @@ namespace domain
 					best_individual_error = std::get<2>(best_individual_score_error);
 
 					//std::cout << "Produce New Offspring" << std::endl;
+#if DLEVEL > 0
 					Utilities::debug_log(-1, "run", "Produce New Offspring");
+#endif
+
+#if TRACE_LEVEL>0
+
+					Utilities::flush_trace_queue();
+#endif
 
 					if (argmap::use_PPL)
 						parallel_produce_new_offspring(argmap::number_of_training_cases,
@@ -1435,29 +1472,33 @@ namespace domain
 					//std::cout << "best_individual = " << best_individual << std::endl;
 					//std::cout << "genome = " << genome << std::endl;
 
+#if DLEVEL > 0
 					debug_message = "Run Best Individual's Program with Test Cases";
 					debug_message += ",best_individual=" + std::to_string(best_individual);
 					debug_message += ",genome=" + genome;
 					Utilities::debug_log(-1, "run", debug_message);
-
+#endif
 					double test_case_score = compute_test_errors(env, run_individual_threadsafe, best_individual);
 
 					//std::cout << "test_case_error = " << test_case_score << std::endl;
 					//std::cout << std::endl;
 
+#if DLEVEL > 0
 					debug_message = "compute_test_errors";
 					debug_message += ",test_case_error=" + std::to_string(test_case_score);
 					Utilities::debug_log(-1, "run", debug_message);
-
+#endif
 					//std::cout << "Generate Status Report" << std::endl;
 
+#if DLEVEL > 0
 					Utilities::debug_log(-1, "run", "Generate Status Report");
-
+#endif
 					double average_traiing_error = 0.0;
 					for (int ind = 0; ind < argmap::population_size; ind++)
 					{
 						for (int training_case_index = 0; training_case_index < argmap::number_of_training_cases; training_case_index++)
 						{
+#if DLEVEL > 0
 							debug_message = "error_matrix";
 							debug_message += ",training_case_index=" + std::to_string(training_case_index);
 							debug_message += ",ind=" + std::to_string(ind);
@@ -1468,7 +1509,7 @@ namespace domain
 							debug_message += ",error=" + std::to_string(pushGP::globals::error_matrix.load(training_case_index, ind));
 
 							Utilities::debug_log(-1, "run", debug_message);
-
+#endif
 							//average_traiing_error += pushGP::globals::error_matrix[training_case_index][ind].load(std::memory_order_acquire);
 							//average_traiing_error += pushGP::globals::error_matrix[training_case_index][ind];
 							//average_traiing_error += pushGP::globals::error_matrix.load(training_case_index, ind);
@@ -1513,8 +1554,9 @@ namespace domain
 
 					//std::cout << "Install New Generation" << std::endl;
 
+#if DLEVEL > 0
 					Utilities::debug_log(-1, "run", "Install New Generation");
-
+#endif
 					install_next_generation();
 					generation_number++;
 					generations_completed_this_session++;
@@ -1528,10 +1570,11 @@ namespace domain
 				delete[] pushGP::globals::population_agents;
 				delete[] pushGP::globals::child_agents;
 
+#if DLEVEL > 0
 				std::string err_msg = "Standard exception: ";
 				err_msg += e.what();
 				Utilities::debug_log(-1, "run", err_msg);
-
+#endif
 				env.clear_stacks();
 
 //				std::cerr << "Standard exception: " << e.what() << std::endl;
@@ -1541,9 +1584,10 @@ namespace domain
 
 				std::cerr << error.str() << std::endl;
 
+#if DLEVEL > 0
 				debug_message = error.str();
 				Utilities::debug_log(-1, "run", debug_message);
-
+#endif
 				throw;
 			}
 			catch (...)
@@ -1551,7 +1595,9 @@ namespace domain
 				delete[] pushGP::globals::population_agents;
 				delete[] pushGP::globals::child_agents;
 
+#if DLEVEL > 0
 				Utilities::debug_log(-1, "run", "Exception occurred");
+#endif
 				env.clear_stacks();
 
 //				std::cerr << "Exception occurred" << std::endl;
@@ -1561,9 +1607,10 @@ namespace domain
 
 				std::cerr << error.str() << std::endl;
 
+#if DLEVEL > 0
 				debug_message = error.str();
 				Utilities::debug_log(-1, "run", debug_message);
-
+#endif
 				throw;
 			}
 

@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <map>
+#include <set>
 #include <stdexcept>
 #include "Genome.h"
 #include "Type.h"
@@ -24,6 +25,16 @@ namespace Plush
 		Genome<double> double_stack_;
 		Genome<bool> bool_stack_;
 
+		// Dynamic Instruction Set
+		//typedef std::set<std::string> KnownInstructionsMapType;
+		//KnownInstructionsMapType KnownInstructionsMap;
+
+		//typedef std::map<std::string, bool> KnownInstructionsMapType;
+		////typedef std::map<int, bool> KnownInstructionsMapType;
+		//KnownInstructionsMapType KnownInstructionsMap;
+
+		typedef std::map<std::string, Instruction*> Func2CodeMapType;
+		Func2CodeMapType Func2CodeMap;
 
 	public:
 		// State of Worker Thread
@@ -42,6 +53,9 @@ namespace Plush
 			//output.clear();
 
 			//running_state = Idle;
+
+			enable_function("EXEC.ENABLE*INSTRUCTION");
+			enable_function("EXEC.ENABLE*INSTRUCTIONS");
 		}
 
 		// Pointer to input & output data
@@ -52,7 +66,9 @@ namespace Plush
 		std::string current_instruction;
 		size_t current_effort;
 		size_t current_unit;
-		int current_thread;
+		int current_thread = 0;
+		int individual_index = 0;
+		int example_case = 0;
 
 		inline void set_current_thread(int new_current_thread)
 		{
@@ -64,6 +80,12 @@ namespace Plush
 			bool_stack_.set_current_thread(new_current_thread);
 			double_stack_.set_current_thread(new_current_thread);
 		};
+
+		inline void set_current_individual_index(int new_individual_index, int new_example_case)
+		{
+			individual_index = new_individual_index;
+			example_case = new_example_case;
+		}
 
 		virtual void clear_stacks()
 		{
@@ -108,7 +130,151 @@ namespace Plush
 			return debug_msg;
 		}
 
+#if TRACE_LEVEL>0
+		inline void stack_dump(std::string inst_enabled, size_t debug_ip)
+		{
+			if (individual_index != 1)
+				return;
+
+			std::string msg;
+
+			msg = "," + std::to_string(current_thread);
+			msg += "," + std::to_string(individual_index);
+			msg += "," + std::to_string(example_case);
+			msg += "," + std::to_string(debug_ip);
+			msg += "," + current_instruction;
+			msg += "," + inst_enabled;
+			msg += "," + std::to_string(get_stack<ExecAtom>().size());
+			msg += "," + get_stack<ExecAtom>().to_string_debug();
+			msg += "," + std::to_string(get_stack<CodeAtom>().size());
+			msg += "," + get_stack<CodeAtom>().to_string_debug();
+			msg += "," + std::to_string(get_stack<long>().size());
+			msg += "," + get_stack<long>().to_string_debug();
+			msg += "," + std::to_string(get_stack<double>().size());
+			msg += "," + get_stack<double>().to_string_debug();
+			msg += "," + std::to_string(get_stack<bool>().size());
+			msg += "," + get_stack<bool>().to_string_debug();
+
+			msg += ",";
+
+			for (auto it = Func2CodeMap.begin(); it != Func2CodeMap.end(); ++it)
+				msg += it->first + " ";
+
+			Utilities::trace_record(msg);
+		}
+
+		inline void stack_dump(std::string inst_enabled, std::string instruction, size_t debug_ip)
+		{
+			if (individual_index != 1)
+				return;
+
+			std::string msg;
+
+			msg = "," + std::to_string(current_thread);
+			msg += "," + std::to_string(individual_index);
+			msg += "," + std::to_string(example_case);
+			msg += "," + std::to_string(debug_ip);
+			msg += "," + instruction;
+			msg += "," + inst_enabled;
+			msg += "," + std::to_string(get_stack<ExecAtom>().size());
+			msg += "," + get_stack<ExecAtom>().to_string_debug();
+			msg += "," + std::to_string(get_stack<CodeAtom>().size());
+			msg += "," + get_stack<CodeAtom>().to_string_debug();
+			msg += "," + std::to_string(get_stack<long>().size());
+			msg += "," + get_stack<long>().to_string_debug();
+			msg += "," + std::to_string(get_stack<double>().size());
+			msg += "," + get_stack<double>().to_string_debug();
+			msg += "," + std::to_string(get_stack<bool>().size());
+			msg += "," + get_stack<bool>().to_string_debug();
+
+			msg += ",";
+
+			for (auto it = Func2CodeMap.begin(); it != Func2CodeMap.end(); ++it)
+				msg += it->first + " ";
+
+			Utilities::trace_record(msg);
+		}
+#endif
+
 		/* Helper Functions */
+
+		//void enable_function(std::string function_name)
+		//{
+		//	//KnownInstructionsMap.insert(function_name);
+		//	KnownInstructionsMap[function_name] = true;
+		//}
+
+		//void disable_function(std::string function_name)
+		//{
+		//	//KnownInstructionsMap.erase(function_name);
+		//	KnownInstructionsMap[function_name] = false;
+		//}
+
+		void enable_function(std::string function_name)
+		{
+			//KnownInstructionsMap[static_initializer.get_function_index(function_name)] = true;
+			//KnownInstructionsMap[function_name] = true;
+
+			Instruction* pInstruction = static_initializer.get_function(function_name);
+			Func2CodeMap[function_name] = pInstruction;
+		}
+
+		void disable_function(std::string function_name)
+		{
+			//KnownInstructionsMap[static_initializer.get_function_index(function_name)] = false;
+			//KnownInstructionsMap[function_name] = false;
+
+			Func2CodeMap.erase(function_name);
+		}
+
+		void enable_function(size_t function_index)
+		{
+			//KnownInstructionsMap.insert(static_initializer.get_function_name(function_index));
+			//KnownInstructionsMap[static_initializer.get_function_name(function_index)] = true;
+
+			Instruction* pInstruction = static_initializer.get_function(function_index);
+			Func2CodeMap[pInstruction->to_string()] = pInstruction;
+		}
+
+		void disable_function(int function_index)
+		{
+			//KnownInstructionsMap.erase(static_initializer.get_function_name(function_index));
+			//KnownInstructionsMap[static_initializer.get_function_name(function_index)] = false;
+
+			Instruction* pInstruction = static_initializer.get_function(function_index);
+
+			if (pInstruction != nullptr)
+			{
+				std::string function_name = pInstruction->to_string();
+				Func2CodeMap.erase(function_name);
+			}
+		}
+
+		//bool is_function_enabled(std::string function_name)
+		//{
+		//	if (function_name == "EXEC.ENABLE*INSTRUCTION")
+		//		return true;
+
+		//	else if (function_name == "EXEC.ENABLE*INSTRUCTIONS")
+		//		return true;
+
+		//	else
+		//	{
+		//		//return KnownInstructionsMap.find(function_name) != KnownInstructionsMap.end();
+		//		return KnownInstructionsMap[function_name];	// Returns false if function is not in the list.
+		//	}
+		//}
+
+		Instruction* get_function(std::string function_name)
+		{
+			auto search = Func2CodeMap.find(function_name);
+
+			if (search != Func2CodeMap.end())
+				return Func2CodeMap[function_name];
+
+			else
+				return nullptr;
+		}
 
 		template<typename T>
 		size_t length()

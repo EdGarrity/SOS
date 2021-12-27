@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "Plush.StaticInit.h"
 
 namespace Plush
 {
@@ -25,22 +26,25 @@ namespace Plush
 		static const char boolean_true[]; // = "TRUE"; C2864
 		static const char boolean_false[]; // = "FALSE"; C2864
 
-		std::string instruction;
+		std::string instruction_name;
 		unsigned int close_parenthesis;
 		AtomType type;
+		int instruction_id;
 
 		explicit Atom()
 		{
-			instruction = "";
+			instruction_name = "";
 			close_parenthesis = 0;
 			type = AtomType::empty;
+			instruction_id = -1;
 		};
 
-		explicit Atom(std::string instruction, unsigned int close_parenthesis, AtomType type)
+		explicit Atom(std::string instruction_name, unsigned int close_parenthesis, AtomType type)
 		{
-			this->instruction = instruction;
+			this->instruction_name = instruction_name;
 			this->close_parenthesis = close_parenthesis;
 			this->type = type;
+			this->instruction_id = Plush::static_initializer.get_function_index(instruction_name);
 		};
 
 		explicit Atom(std::string _program_statement)
@@ -60,65 +64,71 @@ namespace Plush
 
 		explicit Atom(long value)
 		{
-			instruction = std::to_string(value);
+			instruction_name = std::to_string(value);
 			close_parenthesis = 0;
 			type = AtomType::integer;
 		};
 
 		explicit Atom(double value)
 		{
-			instruction = std::to_string(value);
+			instruction_name = std::to_string(value);
 			close_parenthesis = 0;
 			type = AtomType::floating_point;
 		};
 
 		explicit Atom(bool value)
 		{
-			instruction = value ? Plush::Atom::boolean_true : Plush::Atom::boolean_false;
+			instruction_name = value ? Plush::Atom::boolean_true : Plush::Atom::boolean_false;
 			close_parenthesis = 0;
 			type = AtomType::boolean;
 		};
 
 		explicit Atom(const Atom &other)
 		{
-			instruction = other.instruction;
+			instruction_name = other.instruction_name;
 			close_parenthesis = other.close_parenthesis;
 			type = other.type;
+			this->instruction_id = Plush::static_initializer.get_function_index(instruction_name);
 		};
 
 		explicit Atom(Atom &other)
 		{
-			instruction = other.instruction;
+			instruction_name = other.instruction_name;
 			close_parenthesis = other.close_parenthesis;
 			type = other.type;
+			this->instruction_id = Plush::static_initializer.get_function_index(instruction_name);
 		};
 
 		explicit Atom(const Atom* other)
 		{
-			instruction = other->instruction;
+			instruction_name = other->instruction_name;
 			close_parenthesis = other->close_parenthesis;
 			type = other->type;
+			this->instruction_id = Plush::static_initializer.get_function_index(instruction_name);
 		};
 
 		explicit Atom(Atom* other)
 		{
-			instruction = other->instruction;
+			instruction_name = other->instruction_name;
 			close_parenthesis = other->close_parenthesis;
 			type = other->type;
+			this->instruction_id = Plush::static_initializer.get_function_index(instruction_name);
 		};
 
 		void clear()
 		{
-			instruction = "";
+			instruction_name = "";
 			close_parenthesis = 0;
 			type = AtomType::empty;
+			this->instruction_id = -1;
 		};
 
-		void set(std::string instruction, unsigned int close_parenthesis, AtomType type)
+		void set(std::string instruction_name, unsigned int close_parenthesis, AtomType type)
 		{
-			this->instruction = instruction;
+			this->instruction_name = instruction_name;
 			this->close_parenthesis = close_parenthesis;
 			this->type = type;
+			this->instruction_id = Plush::static_initializer.get_function_index(instruction_name);
 		};
 
 		void compile(std::string _program_statement);
@@ -143,7 +153,7 @@ namespace Plush
 		//
 		bool comp(Atom &other) const
 		{
-			if ((instruction == other.instruction)
+			if ((instruction_name == other.instruction_name)
 				&& (close_parenthesis == other.close_parenthesis)
 				&& (type == other.type)
 				)
@@ -173,7 +183,7 @@ namespace Plush
 		//
 		bool like(Atom &other) const
 		{
-			if ((instruction == other.instruction)
+			if ((instruction_name == other.instruction_name)
 				&& (type == other.type)
 				)
 				return true;
@@ -214,7 +224,7 @@ namespace Plush
 
 		inline bool operator==(const ExecAtom& other)
 		{
-			return ((instruction == other.instruction)
+			return ((instruction_name == other.instruction_name)
 				&& (close_parenthesis == other.close_parenthesis)
 				&& (type == other.type));
 		};
@@ -238,13 +248,13 @@ namespace Plush
 		explicit CodeAtom(Atom &other) : Atom(other) {};
 		explicit CodeAtom(const Atom* other) : Atom(other) {};
 		explicit CodeAtom(Atom* other) : Atom(other) {};
-		explicit CodeAtom(ExecAtom& other) : Atom(other.instruction, other.close_parenthesis, other.type) {};
+		explicit CodeAtom(ExecAtom& other) : Atom(other.instruction_name, other.close_parenthesis, other.type) {};
 
 		~CodeAtom() {};
 
 		inline bool operator==(const CodeAtom& other)
 		{
-			return ((instruction == other.instruction)
+			return ((instruction_name == other.instruction_name)
 				&& (close_parenthesis == other.close_parenthesis)
 				&& (type == other.type));
 		};
