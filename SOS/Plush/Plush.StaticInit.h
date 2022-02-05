@@ -10,8 +10,7 @@ namespace Plush
 {
 	class Instruction;
 
-	typedef unsigned(*Operator)(Environment &env);
-
+	typedef unsigned(*Operator)(Environment& env);
 
 	class StaticInit
 	{
