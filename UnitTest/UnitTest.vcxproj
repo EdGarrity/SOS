@@ -169,6 +169,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BenchTests.cpp" />
     <ClCompile Include="BooleanInstructions.cpp" />
     <ClCompile Include="CodeInstructions.cpp" />
     <ClCompile Include="ExecInstructions.cpp" />
