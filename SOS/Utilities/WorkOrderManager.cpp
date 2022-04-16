@@ -163,7 +163,7 @@ namespace Utilities
 					// Debug
 					env.set_current_individual_index(work_order.individual_index, work_order.example_case);
 
-					double error = domain::learn_from_examples::run_individual_threadsafe(env,
+					auto [ error, effort ] = domain::learn_from_examples::run_individual_threadsafe(env,
 						work_order.individual_index,
 						work_order.example_problem,
 						work_order.example_solution);
@@ -173,6 +173,7 @@ namespace Utilities
 					//pushGP::globals::error_matrix.store(work_order.example_case, work_order.individual_index, error);
 					//pushGP::globals::error_matrix[work_order.example_case][work_order.individual_index].store(error, std::memory_order_release);
 					pushGP::globals::error_matrix.store(env_index, work_order.example_case, work_order.individual_index, error);
+					pushGP::globals::effort_matrix.store(env_index, work_order.example_case, work_order.individual_index, effort);
 
 					running_state[env_index].store(Plush::Environment::Waiting, std::memory_order_release);
 
@@ -186,6 +187,8 @@ namespace Utilities
 					std::stringstream warning_message;
 					warning_message << "WorkOrderManager::process_work_orders() - unable to insert work into queue.  env_index=" << env_index;
 
+					std::cerr << warning_message.str() << std::endl;
+
 					throw std::runtime_error(warning_message.str());
 				}
 				catch (...)
@@ -193,6 +196,8 @@ namespace Utilities
 					// Log exception
 					std::stringstream warning_message;
 					warning_message << "WorkOrderManager::process_work_orders() - An unknown error has occured.  env_index=" << env_index;
+
+					std::cerr << warning_message.str() << std::endl;
 
 					throw std::runtime_error(warning_message.str());
 				}
@@ -208,6 +213,8 @@ namespace Utilities
 			std::string debug_message = "Outer while loop.  env_index= " + std::to_string(env_index) + ",Exception=" + e.what();
 			debug_log(env_index, "WorkOrderManager::process_work_orders", debug_message);
 #endif
+			std::cerr << warning_message.str() << std::endl;
+
 			throw std::runtime_error(warning_message.str());
 		}
 		catch (...)
@@ -220,6 +227,8 @@ namespace Utilities
 			std::string debug_message = "An unknown error has occured.  env_index= " + std::to_string(env_index);
 			debug_log(env_index, "WorkOrderManager::process_work_orders", debug_message);
 #endif
+			std::cerr << warning_message.str() << std::endl;
+
 			throw std::runtime_error(warning_message.str());
 		}
 	}

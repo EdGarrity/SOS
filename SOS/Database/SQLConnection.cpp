@@ -128,6 +128,11 @@ namespace database
 				}
 			}
 
+
+			std::stringstream error;
+			error << "SQLConnection::initialize_and_establish_connection() MyException: " << e.what();
+			std::cerr << error.str() << std::endl;
+
 			throw (e);
 		}
 
@@ -182,6 +187,10 @@ namespace database
 				pIDBInitialize_->Release();
 				pIDBInitialize_ = nullptr;
 			}
+
+			std::stringstream error;
+			error << "SQLConnection::connect() MyException: " << e.what();
+			std::cerr << error.str() << std::endl;
 
 			throw (e);
 		}

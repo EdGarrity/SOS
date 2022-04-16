@@ -22,7 +22,9 @@ namespace domain
 		//   example_solution - The solution to the problem the program is suppose to find
 		//
 		// Return value:
-		//   The vector difference between the program's result and the expected result.
+		//   Tuple:
+		//     The vector difference between the program's result and the expected result.
+		//     Execution Effort
 		//
 		// Side Effects:
 		//   The Push environment is initialized and the Push stacks are manipulated.
@@ -37,18 +39,19 @@ namespace domain
 		//     Where:
 		//       X = 0 or more doubles.
 		//
-		double run_program(Plush::Environment& env,
+		std::tuple<double, size_t> run_program(Plush::Environment& env,
 			std::string program,
 			std::vector<double>& example_problem,
 			std::vector<double>& example_solution)
 		{
 			double error = 0.0;
 			int actual_solution_length = 0;
+			size_t effort = 0;
 
 			if (Utilities::trim_copy(program).length() > 0)
 			{
 				// Evaluate
-				Plush::run(env, program, example_problem);
+				effort = Plush::run(env, program, example_problem);
 
 				// Calculate error
 				double sum_of_error_squared = 0;
@@ -95,7 +98,8 @@ namespace domain
 			else
 				error = std::numeric_limits<double>::max() / (domain::argmap::population_size * 2.0);
 
-			return error;
+//			return error;
+			return std::make_tuple(error, effort);
 		}
 
 		// Purpose: 
@@ -107,7 +111,9 @@ namespace domain
 		//   example_solution - The solution to the problem the program is suppose to find
 		//
 		// Return value:
-		//   The vector difference between the program's result and the expected result.
+		//   Tuple:
+		//     The vector difference between the program's result and the expected result.
+		//     Execution Effort
 		//
 		// Side Effects:
 		//   The Push environment is initialized and the Push stacks are manipulated.
@@ -139,24 +145,25 @@ namespace domain
 
 		//	return error;
 		//}
-		double run_individual_threadsafe(Plush::Environment& env,
+		std::tuple<double, size_t> run_individual_threadsafe(Plush::Environment& env,
 			unsigned int _individual_index,
 			std::vector<double>& _example_problem,
 			std::vector<double>& _example_solution)
 		{
-			double error = 0.0;
+			//double error = 0.0;
 
 			std::string program = pushGP::globals::population_agents[_individual_index].get_genome_string();
 
 #if DLEVEL > 0
 			Utilities::debug_log(env.current_thread, "learn_from_examples::run_individual_threadsafe", "start", _individual_index, 0);
 #endif
-			error = run_program(env, program, _example_problem, _example_solution);
+			//error = run_program(env, program, _example_problem, _example_solution);
+			auto results = run_program(env, program, _example_problem, _example_solution);
 
 #if DLEVEL > 0
 			Utilities::debug_log(env.current_thread, "learn_from_examples::run_individual_threadsafe", "end", _individual_index, 0);
 #endif
-			return error;
+			return results;
 		}
 	}
 }
