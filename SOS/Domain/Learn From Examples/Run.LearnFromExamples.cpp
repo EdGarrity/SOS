@@ -1019,70 +1019,93 @@ namespace domain
 			pushGP::SimulatedAnnealing& sa,
 			bool _include_best_individual_in_breeding_pool)
 		{
-			std::set<std::string> set_of_gnomes;
-			combinable<pushGP::globals::Training_case_min_error_type> training_case_min_error;
-
-			// Reset children.
-			std::cout << "  Reset children" << std::endl;
-			for (unsigned int n = 0; n < argmap::population_size; n++)
-				pushGP::globals::child_agents[n].clear_genome();
-
-			// Breed new generation
-			std::cout << "  Breed new generation" << std::endl;
-
-			for (unsigned int individual_index = 0; individual_index < argmap::population_size; individual_index++)
+			try
 			{
-				Plush::Genome<Plush::CodeAtom>& child_genome = pushGP::globals::child_agents[individual_index].get_genome();
+				std::set<std::string> set_of_gnomes;
+				combinable<pushGP::globals::Training_case_min_error_type> training_case_min_error;
 
-				// Keep the best individual
-//				std::cout << "  Keep the best individual" << std::endl;
-				if ((!_include_best_individual_in_breeding_pool) && (individual_index == _best_individual))
-					pushGP::globals::child_agents[individual_index].copy(pushGP::globals::population_agents[individual_index]);
+				// Reset children.
+				std::cout << "  Reset children" << std::endl;
+				for (unsigned int n = 0; n < argmap::population_size; n++)
+					pushGP::globals::child_agents[n].clear_genome();
 
-				else
+				// Breed new generation
+				std::cout << "  Breed new generation" << std::endl;
+
+				for (unsigned int individual_index = 0; individual_index < argmap::population_size; individual_index++)
 				{
-//					std::cout << "  breed(" << individual_index << ")" << std::endl;
-					if (individual_index%100==0)
-						std::cout << "B";
+					Plush::Genome<Plush::CodeAtom>& child_genome = pushGP::globals::child_agents[individual_index].get_genome();
 
-					pushGP::breed(individual_index,
-						_number_of_example_cases,
-						training_case_min_error,
-						sa,
-						_include_best_individual_in_breeding_pool,
-						_best_individual);
+					// Keep the best individual
+	//				std::cout << "  Keep the best individual" << std::endl;
+					if ((!_include_best_individual_in_breeding_pool) && (individual_index == _best_individual))
+						pushGP::globals::child_agents[individual_index].copy(pushGP::globals::population_agents[individual_index]);
 
-					// If a child with the same genome already exists, create a new random child.
-//					std::cout << "  If a child with the same genome already exists, create a new random child." << std::endl;
-					if (set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string()).second == false)
+					else
 					{
-//						std::cout << "  create a new random child." << std::endl;
-//						pushGP::globals::child_agents[individual_index].set_genome(pushGP::make_random_plush_genome(genome));
-						pushGP::make_random_plush_genome(child_genome);
+						//					std::cout << "  breed(" << individual_index << ")" << std::endl;
+						if (individual_index % 100 == 0)
+							std::cout << "B";
+
+						pushGP::breed(individual_index,
+							_number_of_example_cases,
+							training_case_min_error,
+							sa,
+							_include_best_individual_in_breeding_pool,
+							_best_individual);
+
+						// If a child with the same genome already exists, create a new random child.
+	//					std::cout << "  If a child with the same genome already exists, create a new random child." << std::endl;
+						if (set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string()).second == false)
+						{
+							//						std::cout << "  create a new random child." << std::endl;
+							//						pushGP::globals::child_agents[individual_index].set_genome(pushGP::make_random_plush_genome(genome));
+							pushGP::make_random_plush_genome(child_genome);
+						}
 					}
 				}
-			}
 
-			std::cout << std::endl;
+				std::cout << std::endl;
 
-			// Keep the best individuals for each test case
-//			std::cout << "  Keep the best individuals for each test case" << std::endl;
-			std::cout << ".";
-			if (!_include_best_individual_in_breeding_pool)
-			{
-				for (unsigned int training_case = 0; training_case < domain::argmap::number_of_training_cases; training_case++)
+				// Keep the best individuals for each test case
+	//			std::cout << "  Keep the best individuals for each test case" << std::endl;
+				std::cout << ".";
+				if (!_include_best_individual_in_breeding_pool)
 				{
-					unsigned int best_individual_for_training_case = training_case_min_error.local().individual_with_minimum_error_for_training_case[training_case];
-
-					if (best_individual_for_training_case < (std::numeric_limits<unsigned int>::max)())
+					for (unsigned int training_case = 0; training_case < domain::argmap::number_of_training_cases; training_case++)
 					{
-//						std::cout << "  						pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);" << std::endl;
-						pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);
+						unsigned int best_individual_for_training_case = training_case_min_error.local().individual_with_minimum_error_for_training_case[training_case];
+
+						if (best_individual_for_training_case < (std::numeric_limits<unsigned int>::max)())
+						{
+							//						std::cout << "  						pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);" << std::endl;
+							pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);
+						}
 					}
 				}
-			}
 
-			std::cout << std::endl;
+				std::cout << std::endl;
+			}
+			catch (const std::exception& e)
+			{
+				std::stringstream error;
+
+				error << "Standard exception: " << e.what();
+
+				std::cerr << error.str() << std::endl;
+
+				throw;
+			}
+			catch (...)
+			{
+				std::stringstream error;
+
+				error << "Exception occurred";
+
+				std::cerr << error.str() << std::endl;
+
+				throw;
+			}
 		}
 
 		void parallel_produce_new_offspring(int _number_of_example_cases,
@@ -1397,7 +1420,7 @@ namespace domain
 					}
 
 					// Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
-					//std::cout << "Reset variables which track the minimum error for this test case and the individual who achived the minimum error " << std::endl;
+					std::cout << "Reset variables which track the minimum error for this test case and the individual who achived the minimum error " << std::endl;
 
 					for (int ind = 0; ind < argmap::population_size; ind++)
 					{
@@ -1409,8 +1432,8 @@ namespace domain
 							pushGP::globals::error_matrix.store(-1, training_case_index, ind, 0);
 					}
 
-					//std::cout << "Generation " << generation_number << std::endl;
-					//std::cout << "Session " << generations_completed_this_session << std::endl;
+					std::cout << "Generation " << generation_number << std::endl;
+					std::cout << "Session " << generations_completed_this_session << std::endl;
 
 #if DLEVEL > 0
 					debug_message = "Reset variables which track the minimum error for this test case and the individual who achived the minimum error";
@@ -1420,7 +1443,7 @@ namespace domain
 #endif
 					save_generation();
 
-					//std::cout << "Run Programs with Training Cases" << std::endl;
+					std::cout << "Run Programs with Training Cases" << std::endl;
 #if DLEVEL > 0
 					Utilities::debug_log(-1, "run", "Run Programs with Training Cases");
 #endif
@@ -1443,7 +1466,7 @@ namespace domain
 					best_individual_score = std::get<1>(best_individual_score_error);
 					best_individual_error = std::get<2>(best_individual_score_error);
 
-					//std::cout << "Produce New Offspring" << std::endl;
+					std::cout << "Produce New Offspring" << std::endl;
 #if DLEVEL > 0
 					Utilities::debug_log(-1, "run", "Produce New Offspring");
 #endif
@@ -1465,12 +1488,12 @@ namespace domain
 							sa,
 							include_best_individual_in_breeding_pool);
 
-					//std::cout << "Run Best Individual's Program with Test Cases" << std::endl;
+					std::cout << "Run Best Individual's Program with Test Cases" << std::endl;
 
 					std::string genome = pushGP::globals::population_agents[best_individual].get_genome_as_string();
 
-					//std::cout << "best_individual = " << best_individual << std::endl;
-					//std::cout << "genome = " << genome << std::endl;
+					std::cout << "best_individual = " << best_individual << std::endl;
+					std::cout << "genome = " << genome << std::endl;
 
 #if DLEVEL > 0
 					debug_message = "Run Best Individual's Program with Test Cases";
@@ -1480,15 +1503,15 @@ namespace domain
 #endif
 					double test_case_score = compute_test_errors(env, run_individual_threadsafe, best_individual);
 
-					//std::cout << "test_case_error = " << test_case_score << std::endl;
-					//std::cout << std::endl;
+					std::cout << "test_case_error = " << test_case_score << std::endl;
+					std::cout << std::endl;
 
 #if DLEVEL > 0
 					debug_message = "compute_test_errors";
 					debug_message += ",test_case_error=" + std::to_string(test_case_score);
 					Utilities::debug_log(-1, "run", debug_message);
 #endif
-					//std::cout << "Generate Status Report" << std::endl;
+					std::cout << "Generate Status Report" << std::endl;
 
 #if DLEVEL > 0
 					Utilities::debug_log(-1, "run", "Generate Status Report");
@@ -1552,7 +1575,7 @@ namespace domain
 						pushGP::globals::population_agents[best_individual]
 					);
 
-					//std::cout << "Install New Generation" << std::endl;
+					std::cout << "Install New Generation" << std::endl;
 
 #if DLEVEL > 0
 					Utilities::debug_log(-1, "run", "Install New Generation");
