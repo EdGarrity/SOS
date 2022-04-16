@@ -31,32 +31,43 @@ namespace Plush
 	unsigned int run(Environment& env, std::string program, std::vector<double>& input)
 	{
 		std::string gene;
-		Utilities::FixedSizeStack<Atom> program_stack;
+		//Utilities::FixedSizeStack<Atom> program_stack;
+		int i = 0;
 
 		// Initialize environment
 		env.clear_stacks();
 
 		// Load program into temp
-		while (program.length() > 0)
+		while ((program.length() > 0) && (i < domain::argmap::maximum_stack_size))
 		{
 			gene = first_atom(program);
 			program = rest_atom(program);
 			Utilities::trim(program);
 
-			Atom atom(gene);
+			env.temp_genes[i++] = gene;
 
-			program_stack.push(atom);
+			//Atom atom(gene);
+			//program_stack.push(atom);
 		}
 
 		// Load inputs
 		env.initialize(input);
 
 		// Load program on CODE and EXEC stacks
-		while (!program_stack.empty())
+		//while (!program_stack.empty())
+		//{
+		//	env.get_stack<CodeAtom>().push(CodeAtom(program_stack.get_top_atom()));
+		//	env.get_stack<ExecAtom>().push(ExecAtom(program_stack.get_top_atom()));
+		//	program_stack.pop();
+		//}
+
+		if (i > 0)
+		for (int n = i-1; n--; n >= 0)
 		{
-			env.get_stack<CodeAtom>().push(CodeAtom(program_stack.get_top_atom()));
-			env.get_stack<ExecAtom>().push(ExecAtom(program_stack.get_top_atom()));
-			program_stack.pop();
+			Atom atom(env.temp_genes[n]);
+
+			env.get_stack<CodeAtom>().push(CodeAtom(atom));
+			env.get_stack<ExecAtom>().push(ExecAtom(atom));
 		}
 
 		// Execute

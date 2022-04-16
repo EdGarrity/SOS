@@ -37,6 +37,9 @@ namespace Plush
 		Func2CodeMapType Func2CodeMap;
 
 	public:
+		// Temp array of genes.  Used to reverse order of program prior to pushing program onto code stack.
+		std::array<std::string, domain::argmap::maximum_stack_size> temp_genes;
+
 		// State of Worker Thread
 		enum RunningState
 		{

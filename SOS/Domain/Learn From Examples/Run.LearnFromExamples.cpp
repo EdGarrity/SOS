@@ -788,7 +788,7 @@ namespace domain
 			int individual_with_best_score = -1;
 			double min_error = (std::numeric_limits<double>::max)();
 			double min_score = (std::numeric_limits<double>::max)();
-			int total_effort_for_best_individual = 0;
+			int max_effort_for_best_individual = 0;
 
 			Plush::Environment* envp_local = new Plush::Environment;
 
@@ -796,7 +796,7 @@ namespace domain
 			{
 				int error_count_for_individual = 0;
 				double avg_error_for_individual = 0.0;
-				int total_effort_for_individual = 0;
+				int max_effort_for_individual = 0;
 
 				if ((individual_index % 100) == 0)
 					std::cout << individual_index;
@@ -813,7 +813,7 @@ namespace domain
 						error_count_for_individual++;
 
 					avg_error_for_individual += error;
-					total_effort_for_individual += effort;
+					max_effort_for_individual = (max_effort_for_individual > effort) ? max_effort_for_individual : effort;
 
 					//pushGP::globals::error_matrix[example_case][individual_index].store(error, std::memory_order_release);
 					//pushGP::globals::error_matrix[example_case][individual_index] = error;
@@ -832,14 +832,14 @@ namespace domain
 				{
 					min_score = score;
 					individual_with_best_score = individual_index;
-					total_effort_for_best_individual = total_effort_for_individual;
+					max_effort_for_best_individual = max_effort_for_individual;
 				}
 
 				if (avg_error_for_individual < min_error)
 				{
 					min_error = avg_error_for_individual;
 					individual_with_least_error = individual_index;
-					total_effort_for_best_individual = total_effort_for_individual;
+					max_effort_for_best_individual = max_effort_for_individual;
 				}
 
 				if ((individual_index % 100) == 0)
@@ -855,7 +855,7 @@ namespace domain
 				(individual_with_best_score == -1) ? individual_with_least_error : individual_with_best_score,
 				min_score,
 				min_error,
-				total_effort_for_best_individual
+				max_effort_for_best_individual
 			);
 		}
 
@@ -871,7 +871,7 @@ namespace domain
 			double min_error = (std::numeric_limits<double>::max)();
 			double min_score = (std::numeric_limits<double>::max)();
 			const unsigned int zero = 0;
-			int total_effort_for_best_individual = 0;
+			int max_effort_for_best_individual = 0;
 
 			parallel_for(zero, domain::argmap::population_size / domain::argmap::thread_chunk_size, [&, _number_of_example_cases](const unsigned int chunk_index)
 			{
@@ -879,7 +879,7 @@ namespace domain
 				{
 					int error_count_for_individual = 0;
 					double avg_error_for_individual = 0.0;
-					int total_effort_for_individual = 0;
+					int max_effort_for_individual = 0;
 
 					for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
 					{
@@ -893,7 +893,7 @@ namespace domain
 							error_count_for_individual++;
 
 						avg_error_for_individual += error;
-						total_effort_for_individual += effort;
+						max_effort_for_individual = (max_effort_for_individual > effort) ? max_effort_for_individual : effort;
 
 						//pushGP::globals::error_matrix[example_case][individual_index].store(error, std::memory_order_release);
 						//pushGP::globals::error_matrix[example_case][individual_index] = error;
@@ -912,14 +912,14 @@ namespace domain
 					{
 						min_score = score;
 						individual_with_best_score = individual_index;
-						total_effort_for_best_individual = total_effort_for_individual;
+						max_effort_for_best_individual = max_effort_for_individual;
 					}
 
 					if (avg_error_for_individual < min_error)
 					{
 						min_error = avg_error_for_individual;
 						individual_with_least_error = individual_index;
-						total_effort_for_best_individual = total_effort_for_individual;
+						max_effort_for_best_individual = max_effort_for_individual;
 					}
 				}
 			});
@@ -929,7 +929,7 @@ namespace domain
 				(individual_with_best_score == -1) ? individual_with_least_error : individual_with_best_score,
 				min_score,
 				min_error,
-				total_effort_for_best_individual
+				max_effort_for_best_individual
 			);
 		}
 
@@ -944,7 +944,7 @@ namespace domain
 			int individual_with_best_score = -1;
 			double min_error = (std::numeric_limits<double>::max)();
 			double min_score = (std::numeric_limits<double>::max)();
-			int total_effort_for_best_individual = 0;
+			int max_effort_for_best_individual = 0;
 
 			std::cout << "compute_training_errors_thread_safe() - Process threads" << std::endl;
 
@@ -970,7 +970,7 @@ namespace domain
 			{
 				int error_count_for_individual = 0;
 				double avg_error_for_individual = 0.0;
-				int total_effort_for_individual = 0;
+				int max_effort_for_individual = 0;
 
 				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
 				{
@@ -985,7 +985,7 @@ namespace domain
 						error_count_for_individual++;
 
 					avg_error_for_individual += error;
-					total_effort_for_individual += effort;
+					max_effort_for_individual = (max_effort_for_individual > effort) ? max_effort_for_individual : effort;
 				}
 
 				// Calculate the average error for all example cases
@@ -997,14 +997,14 @@ namespace domain
 				{
 					min_score = score;
 					individual_with_best_score = individual_index;
-					total_effort_for_best_individual = total_effort_for_individual;
+					max_effort_for_best_individual = max_effort_for_individual;
 				}
 
 				if (avg_error_for_individual < min_error)
 				{
 					min_error = avg_error_for_individual;
 					individual_with_least_error = individual_index;
-					total_effort_for_best_individual = total_effort_for_individual;
+					max_effort_for_best_individual = max_effort_for_individual;
 				}
 			}
 
@@ -1015,7 +1015,7 @@ namespace domain
 				(individual_with_best_score == -1) ? individual_with_least_error : individual_with_best_score,
 				min_score,
 				min_error,
-				total_effort_for_best_individual
+				max_effort_for_best_individual
 			);
 		}
 
