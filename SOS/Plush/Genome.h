@@ -44,7 +44,7 @@ namespace Plush
 		size_t size = 0;
 
 		// Number of extra closing parenthesis in genome
-		unsigned int extra_parenthesis = 0;
+		size_t extra_parenthesis = 0;
 
 		// Default constructor
 		Genome_section()
@@ -1253,25 +1253,26 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline Genome_section<T> get_subitem(unsigned int item_number)
+		inline Genome_section<T> get_subitem(size_t item_number)
 		{
 			Genome_section<T> subsection;
-			int atom_count = 0;
-			unsigned int extra_blocks = 0;
+			//int atom_count = 0;
+			size_t extra_blocks = 0;
 //			Utilities::FixedSizeStack<CodeAtom> temp;
 
-			int item_ending_position = 0;
-			int item_length = 0;
+			size_t item_ending_position = 0;
+			size_t item_length = 0;
 
-			int search_starting_index = Utilities::FixedSizeStack<T>::size() - 1;
-			int search_ending_index = search_starting_index;
+			size_t sz = Utilities::FixedSizeStack<T>::size();
+			size_t search_starting_index = (sz > 0) ? (sz - 1) : 0;
+			size_t search_ending_index = search_starting_index;
 
-			for (int n = 0; n < item_number; n++)
+			for (size_t n = 0; n < item_number; n++)
 			{
 				unsigned int wanted_blocks = 0;
 				std::stack<unsigned int> wanted_stack;
 
-				for (int i = search_starting_index; i >= 0; i--)
+				for (intmax_t i = search_starting_index; i >= 0; i--)
 				{
 					search_ending_index = i;
 
@@ -1280,7 +1281,7 @@ namespace Plush
 					if (extra_blocks == 0)
 					{
 						atom = Utilities::FixedSizeStack<T>::get_atom_at_index(i);
-						atom_count++;
+						//atom_count++;
 					}
 					else
 					{
@@ -1328,7 +1329,7 @@ namespace Plush
 				search_starting_index -= item_length;
 			}
 
-			size_t starting_position = item_ending_position - item_length;
+			size_t starting_position = (item_ending_position > item_length) ? (item_ending_position - item_length) : 0;
 			subsection.set(starting_position, item_length, extra_blocks);
 			return subsection;
 		};
@@ -1636,17 +1637,11 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline size_t remove_item_at_position(unsigned int item_position)
+		inline size_t remove_item_at_position(size_t item_position)
 		{
-			unsigned int s = 0;
-			unsigned int l = 0;
-			unsigned int extra_blocks;
-
-			//for (unsigned int n = 0; n <= item_position; n++)
-			//{
-			//	s += l;
-			//	l = number_of_atoms(extra_blocks, n);
-			//}
+			size_t s = 0;
+			size_t l = 0;
+			size_t extra_blocks;
 
 			Genome_section<T> genome_section = get_item(item_position);
 

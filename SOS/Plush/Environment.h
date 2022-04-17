@@ -349,7 +349,7 @@ namespace Plush
 		
 		template <typename T> inline bool is_empty()
 		{
-			return (get_stack<T>().empty());
+			return (get_stack<T>().is_empty());
 		}
 
 		template <typename T> inline void clear()

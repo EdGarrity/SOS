@@ -24,7 +24,7 @@ namespace Plush
 		long number_of_instructions_to_add = _env.pop<long>();	// Number of instructions to add
 		long i = _env.pop<long>();								// Instruction index
 
-		if ((number_of_instructions_to_add > 0) && (_env.length<long>() >= (number_of_instructions_to_add - (long)1)))
+		if ((number_of_instructions_to_add > 0) && (_env.length<long>() >= (size_t)number_of_instructions_to_add - 1))
 		{
 			_env.enable_function(i);
 			long n = number_of_instructions_to_add - (long)1;
@@ -519,7 +519,7 @@ namespace Plush
 			Genome_section<CodeAtom> first_block = genome[0];
 
 			// Get count items in first block
-			int number_of_items = genome.number_of_items(first_block);
+			size_t number_of_items = genome.number_of_items(first_block);
 
 			if (number_of_items > 0)
 			{
@@ -613,7 +613,7 @@ namespace Plush
 		Genome_section<CodeAtom> block_a = genome[0];
 
 		// Get count items in first block
-		int number_of_items = genome.number_of_items(block_a);
+		size_t number_of_items = genome.number_of_items(block_a);
 
 		// Take modulo the number of blocks to ensure that it is within the meaningful range.
 		if (item_number != 0)
@@ -652,8 +652,8 @@ namespace Plush
 		Genome_section<CodeAtom> top_block = genome[0]; 
 
 		// Get count items in first block
-		unsigned int number_of_items = genome.number_of_items(top_block);
-		_env.push<long>(number_of_items);
+		size_t number_of_items = genome.number_of_items(top_block);
+		_env.push<long>((long)number_of_items);
 		_env.pop_genome<CodeAtom>();
 
 		return 1;
@@ -742,7 +742,7 @@ namespace Plush
 		Genome_section<CodeAtom> first_block = genome[0];
 
 		// Get count items in first block
-		unsigned int number_of_items = genome.number_of_items(first_block);
+		size_t number_of_items = genome.number_of_items(first_block);
 
 		if (number_of_items > 0)
 		{
@@ -804,7 +804,7 @@ namespace Plush
 			Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
 
 			// Get count items in first block
-			unsigned int number_of_items = genome.number_of_items(block_A);
+			size_t number_of_items = genome.number_of_items(block_A);
 
 			for (unsigned int n = 0; n < number_of_items; n++)
 			{
@@ -846,7 +846,7 @@ namespace Plush
 		Genome_section<CodeAtom> top_block = _env.pop_genome<CodeAtom>();
 
 		// Get count items in first block
-		unsigned int size = top_block.size;
+		size_t size = top_block.size;
 		_env.push<long>(size);
 
 		return 1;

@@ -88,7 +88,7 @@ namespace Utilities
 		//}
 
 		// Checks if the underlying container has no elements
-		inline bool empty() const
+		inline bool is_empty() const
 		{
 			return top_ == 0;
 		}
@@ -731,7 +731,7 @@ namespace Utilities
 
 	protected:
 		// Zero-based index to the first empty slot on the stack
-		size_type top_ = 0;
+		size_t top_ = 0;
 
 		// The containter for the stack
 		std::array<T, N> stack_;

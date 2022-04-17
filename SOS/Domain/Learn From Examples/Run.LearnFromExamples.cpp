@@ -506,24 +506,26 @@ namespace domain
 				std::string training_case_input_str = "";
 				std::string training_case_element = "";
 
-				for (int training_case_data : training_cases_problem[i])
+				for (double training_case_data : training_cases_problem[i])
 				{
 					if (training_case_input_str.length() > 0)
 						training_case_input_str += ",";
 
-					_itoa_s(training_case_data, buffer, 10);
+					int n = (int)training_case_data;
+					_itoa_s(n, buffer, 10);
 					training_case_input_str += buffer;
 				}
 
 				std::string training_case_output_str = "";
 				training_case_element = "";
 
-				for (int training_case_data : training_cases_solution[i])
+				for (double training_case_data : training_cases_solution[i])
 				{
 					if (training_case_output_str.length() > 0)
 						training_case_output_str += ",";
 
-					_itoa_s(training_case_data, buffer, 10);
+					int n = (int)training_case_data;
+					_itoa_s(n, buffer, 10);
 					training_case_output_str += buffer;
 				}
 
@@ -541,24 +543,26 @@ namespace domain
 				std::string test_case_input_str = "";
 				std::string test_case_element = "";
 
-				for (int test_case_data : test_cases_problem[i])
+				for (double test_case_data : test_cases_problem[i])
 				{
 					if (test_case_input_str.length() > 0)
 						test_case_input_str += ",";
 
-					_itoa_s(test_case_data, buffer, 10);
+					int n = (int)test_case_data;
+					_itoa_s(n, buffer, 10);
 					test_case_input_str += buffer;
 				}
 
 				std::string test_case_output_str = "";
 				test_case_element = "";
 
-				for (int test_case_data : test_cases_solution[i])
+				for (double test_case_data : test_cases_solution[i])
 				{
 					if (test_case_output_str.length() > 0)
 						test_case_output_str += ",";
 
-					_itoa_s(test_case_data, buffer, 10);
+					int n = (int)test_case_data;
+					_itoa_s(n, buffer, 10);
 					test_case_output_str += buffer;
 				}
 
@@ -1276,7 +1280,7 @@ namespace domain
 			sqlcmd_save_status_report->set_as_integer(19, _stalled_count);
 			sqlcmd_save_status_report->set_as_integer(20, _cool_down_count);
 			sqlcmd_save_status_report->set_as_integer(21, _include_best_individual_in_breeding_pool);
-			sqlcmd_save_status_report->set_as_integer(22, _best_individual_training_effort);
+			sqlcmd_save_status_report->set_as_integer(22, (int)_best_individual_training_effort);
 
 #if DLEVEL > 0
 			Utilities::debug_log(-1, "generate_status_report", "sqlcmd");
