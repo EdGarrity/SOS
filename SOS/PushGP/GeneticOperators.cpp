@@ -101,7 +101,7 @@ namespace pushGP
 			{
 				if (Utilities::random_double(0.0, 1.0) < domain::argmap::uniform_mutation_constant_tweak_rate)
 				{
-					if (atom.type == atom.floating_point)
+					if (atom.type == Plush::Atom::AtomType::floating_point)
 					{
 						double n = atof(atom.instruction_name.c_str());
 
@@ -109,7 +109,7 @@ namespace pushGP
 						new_genome.push(Plush::CodeAtom(n));
 					}
 
-					else if (atom.type == atom.integer)
+					else if (atom.type == Plush::Atom::AtomType::integer)
 					{
 						long n = atoi(atom.instruction_name.c_str());
 
@@ -117,7 +117,7 @@ namespace pushGP
 						new_genome.push(Plush::CodeAtom(n));
 					}
 
-					else if (atom.type == atom.boolean)
+					else if (atom.type == Plush::Atom::AtomType::boolean)
 					{
 						if (atom.instruction_name == Plush::Atom::boolean_true)
 							new_genome.push(Plush::CodeAtom(false));

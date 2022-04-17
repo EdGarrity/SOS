@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <cctype>
 #include <string>
+#include "..\Utilities\String.h"
 
 namespace Plush
 {
@@ -60,23 +61,29 @@ namespace Plush
 				start_of_optional_value++;
 
 			if (_atom_string.find("true") != std::string::npos)
-				type = silent;
+				type = AtomType::silent;
 		}
 
 		// Check for boolean
 		else if ((instruction_name == Plush::Atom::boolean_true) || (instruction_name == Plush::Atom::boolean_false))
 			type = AtomType::boolean;
 
-		// Check for integer
-		else if ([&]() { char* p; strtol(instruction_name.c_str(), &p, 10); return *p == 0; }() == true)
-			type = AtomType::integer;
-
 		// Check for float
-		else if ([&]() { char* p; strtod(instruction_name.c_str(), &p); return *p == 0; }() == true)
+		//else if ([&]() { char* p; strtod(instruction_name.c_str(), &p); return *p == 0; }() == true)
+		//	type = AtomType::floating_point;
+
+		else if (Utilities::isFloat(instruction_name))
 			type = AtomType::floating_point;
 
+		// Check for integer
+		//else if ([&]() { char* p; strtol(instruction_name.c_str(), &p, 10); return *p == 0; }() == true)
+		//	type = AtomType::integer;
+
+		else if (Utilities::isNumber(instruction_name))
+			type = AtomType::integer;
+
 		else
-			type = ins;
+			type = AtomType::ins;
 
 		instruction_id = Plush::static_initializer.get_function_index(instruction_name);
 	}

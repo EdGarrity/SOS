@@ -665,7 +665,10 @@ namespace domain
 			UUID NilUuid;
 
 			// creates a nil-valued UUID
-			UuidCreateNil(&NilUuid);
+			RPC_STATUS ret=UuidCreateNil(&NilUuid);
+
+			if (ret != RPC_S_OK)
+				std::cout << "UuidCreateNil() did not return RPC_S_OK" << std::endl;
 
 			database::SQLCommand* sqlcmd_delete_individuals;
 			database::SQLCommand* sqlcmd_insert_new_individual;

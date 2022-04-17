@@ -1,3 +1,4 @@
+#include <string.h>
 #include "SQLCommand.h"
 #include "..\Utilities\Conversion.h"
 #include "..\Utilities\Debug.h"
@@ -123,7 +124,7 @@ namespace database
 	void SQLCommand::set_command(std::string _command)
 	{
 		// Get count of parameters
-		number_of_parameters_in_command_ = std::count(_command.begin(), _command.end(), '?');
+		number_of_parameters_in_command_ = (ULONG)std::count(_command.begin(), _command.end(), '?');
 
 		command_ = _command;
 
@@ -134,23 +135,33 @@ namespace database
 		{
 			// Allocate memory for the bindings array
 			rgBindings_ = (DBBINDING*)CoTaskMemAlloc(number_of_parameters_in_command_ * sizeof(DBBINDING));
-			memset(rgBindings_, 0, number_of_parameters_in_command_ * sizeof(DBBINDING));
 
-			// Allocate memory for the parameter buffer
-			memset(sprocparams, 0, MAX_ROW_LENGTH);
-			dwOffset_ = 0;
-
-			for (int i = 0; i < number_of_parameters_in_command_; i++)
+			if (rgBindings_ != NULL)
 			{
-				rgBindings_[i].obLength = 0;
-				rgBindings_[i].obStatus = 0;
-				rgBindings_[i].pTypeInfo = NULL;
-				rgBindings_[i].pObject = NULL;
-				rgBindings_[i].pBindExt = NULL;
-				rgBindings_[i].dwPart = DBPART_VALUE;
-				rgBindings_[i].dwMemOwner = DBMEMOWNER_CLIENTOWNED;
-				rgBindings_[i].dwFlags = 0;
-				rgBindings_[i].bScale = 0;
+				memset(rgBindings_, 0, number_of_parameters_in_command_ * sizeof(DBBINDING));
+
+				// Allocate memory for the parameter buffer
+				memset(sprocparams, 0, MAX_ROW_LENGTH);
+				dwOffset_ = 0;
+
+				for (ULONG i = 0; i < number_of_parameters_in_command_; i++)
+				{
+					rgBindings_[i].obLength = 0;
+					rgBindings_[i].obStatus = 0;
+					rgBindings_[i].pTypeInfo = NULL;
+					rgBindings_[i].pObject = NULL;
+					rgBindings_[i].pBindExt = NULL;
+					rgBindings_[i].dwPart = DBPART_VALUE;
+					rgBindings_[i].dwMemOwner = DBMEMOWNER_CLIENTOWNED;
+					rgBindings_[i].dwFlags = 0;
+					rgBindings_[i].bScale = 0;
+				}
+			}
+			else
+			{
+				rgBindings_ = NULL;
+
+				std::cerr << "SQLCommand::set_command() - rgBindings_ == NULL" << std::endl;
 			}
 		}
 
@@ -195,7 +206,7 @@ namespace database
 		// Update the offset past the end of this column's data, so
 		// that the next column will begin in the correct place in
 		// the buffer
-		dwOffset_ += rgBindings_[n].cbMaxLen + 1;
+		dwOffset_ += (ULONG)rgBindings_[n].cbMaxLen + 1;
 
 		// Ensure that the data for the next column will be correctly
 		// aligned for all platforms, or, if we're done with columns,
@@ -241,7 +252,7 @@ namespace database
 		// Update the offset past the end of this column's data, so
 		// that the next column will begin in the correct place in
 		// the buffer
-		dwOffset_ += rgBindings_[n].cbMaxLen;
+		dwOffset_ += (ULONG)rgBindings_[n].cbMaxLen;
 
 		// Ensure that the data for the next column will be correctly
 		// aligned for all platforms, or, if we're done with columns,
@@ -279,7 +290,7 @@ namespace database
 		// Update the offset past the end of this column's data, so
 		// that the next column will begin in the correct place in
 		// the buffer
-		dwOffset_ += rgBindings_[n].cbMaxLen;
+		dwOffset_ += (ULONG)rgBindings_[n].cbMaxLen;
 
 		// Ensure that the data for the next column will be correctly
 		// aligned for all platforms, or, if we're done with columns,
@@ -324,7 +335,7 @@ namespace database
 		char** ppRowValues           // [out]
 	)
 	{
-		ULONG       nCol;
+		DBORDINAL	nCol;
 		ULONG       cbRow = 0;
 		DBBINDING*  pDBBindings;
 		char*       pRowValues;
@@ -333,7 +344,7 @@ namespace database
 
 		for (nCol = 0; nCol < nCols; nCol++)
 		{
-			pDBBindings[nCol].iOrdinal = nCol + 1;
+			pDBBindings[nCol].iOrdinal = nCol + (DBORDINAL)1;
 			pDBBindings[nCol].obValue = cbRow;
 			pDBBindings[nCol].obLength = 0;
 			pDBBindings[nCol].obStatus = 0;
@@ -349,7 +360,7 @@ namespace database
 			pDBBindings[nCol].bPrecision = pColumnsInfo[nCol].bPrecision;
 			pDBBindings[nCol].bScale = pColumnsInfo[nCol].bScale;
 
-			cbRow += pDBBindings[nCol].cbMaxLen;
+			cbRow += (ULONG)pDBBindings[nCol].cbMaxLen;
 		}
 
 		pRowValues = new char[cbRow];	// Potential Memory Leak
@@ -443,7 +454,7 @@ namespace database
 
 			// Create the binding structures.
 //			Utilities::debug_log(-1, "SQLCommand::execute", "Create_the_binding_structures");
-			myCreateDBBindings(nCols, pColumnsInfo_, &pDBBindings_, &pRowValues_);
+			myCreateDBBindings((ULONG)nCols, pColumnsInfo_, &pDBBindings_, &pRowValues_);
 			pDBBindStatus_ = new DBBINDSTATUS[nCols];
 
 			// Create the accessor.

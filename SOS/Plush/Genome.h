@@ -1146,13 +1146,13 @@ namespace Plush
 			Genome_section<T> subsection;
 
 			int block_ending_index = 0;
-			int item_ending_position = 0;
+			size_t item_ending_position = 0;
 			int item_length = 0;
 
 			unsigned int wanted_blocks = 0;
 			unsigned int extra_blocks = 0;
 			std::stack<unsigned int> wanted_stack;
-			unsigned int atom_count = 0;
+			size_t atom_count = 0;
 			int block_starting_index = Utilities::FixedSizeStack<T>::size() - 1;
 
 			for (unsigned int item = 0; item <= item_number; item++)
@@ -1221,7 +1221,8 @@ namespace Plush
 				item_ending_position += atom_count;
 			}
 
-			subsection.set(item_ending_position - atom_count, atom_count, extra_blocks);
+			size_t t = (item_ending_position > atom_count) ? item_ending_position - atom_count : 0;
+			subsection.set(t, atom_count, extra_blocks);
 
 #if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))

@@ -7,7 +7,7 @@ namespace Plush
 	class Atom
 	{
 	public:
-		enum AtomType
+		enum class AtomType
 		{
 			empty = 0,
 
@@ -29,7 +29,7 @@ namespace Plush
 		std::string instruction_name;
 		unsigned int close_parenthesis;
 		AtomType type;
-		int instruction_id;
+		size_t instruction_id;
 
 		explicit Atom()
 		{

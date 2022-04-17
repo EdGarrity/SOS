@@ -94,7 +94,7 @@ namespace pushGP
 		//else
 		//{
 			gene.instruction_name = Individual::make_terminal();	// gets a random instruction.
-			gene.type = Plush::Atom::ins;
+			gene.type = Plush::Atom::AtomType::ins;
 		//}
 
 		return gene;

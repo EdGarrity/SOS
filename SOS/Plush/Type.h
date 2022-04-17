@@ -62,7 +62,7 @@ namespace Plush
 		bool can_pop_from(/*const*/ Environment &env); // const;
 		bool can_push_to(/*const*/ Environment &env); // const;
 
-		int operator[](unsigned i) const
+		size_t operator[](unsigned i) const
 		{
 			return i < type.size() ? type[i] : 0;
 		}
