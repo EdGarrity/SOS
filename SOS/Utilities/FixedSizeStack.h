@@ -166,7 +166,7 @@ namespace Utilities
 		// Returns the number of available elements in the underlying container
 		inline size_type free() const
 		{
-			unsigned int free = N - top_ - 1;
+			size_t free = N - top_ - 1;
 
 			if (free > N)
 				free = N;

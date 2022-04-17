@@ -56,9 +56,10 @@ namespace domain
 				// Calculate error
 				double sum_of_error_squared = 0;
 
-				int digits_imbalance = example_solution.size() - env.output.size();
-
-				int digits = std::min(example_solution.size(), env.output.size());
+				size_t digits_imbalance = (example_solution.size() > env.output.size()) 
+					? (example_solution.size() - env.output.size()) 
+					: (env.output.size() - example_solution.size());
+				size_t digits = std::min(example_solution.size(), env.output.size());
 
 				if (digits > 0)
 				{
@@ -82,7 +83,7 @@ namespace domain
 				error = (-1.0 / std::log10(error + 10.0)) + 1.0;
 
 				// Add number of wrong digits
-				error += std::abs(digits_imbalance);
+				error += digits_imbalance;
 
 				// Cleanup Push Stacks to release memory
 				env.clear_stacks();

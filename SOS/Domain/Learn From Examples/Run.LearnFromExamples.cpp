@@ -435,20 +435,20 @@ namespace domain
 			{
 				for (int i = _example_cases_loaded; i < argmap::number_of_training_cases; i++)
 				{
-					int training_case_length = Utilities::random_integer(argmap::example_case_min_length, argmap::example_case_max_length);
+					size_t training_case_length = Utilities::random_integer(argmap::example_case_min_length, argmap::example_case_max_length);
 
 					for (int j = 0; j < training_case_length; j++)
 					{
-						int n = Utilities::random_integer(argmap::example_case_upper_range);
+						size_t n = Utilities::random_integer(argmap::example_case_upper_range);
 
 						training_cases_problem[i].push_back(n);
 					}
 
-					int sum = 0;
+					double sum = 0;
 					training_cases_solution[i].clear();
 
-					for (int i : training_cases_problem[i])
-						sum += i;
+					for (double d : training_cases_problem[i])
+						sum += d;
 
 					training_cases_solution[i].push_back(sum);
 
@@ -460,20 +460,20 @@ namespace domain
 			{
 				for (int i = _example_cases_loaded + training_cases_created - argmap::number_of_training_cases; i < argmap::number_of_test_cases; i++)
 				{
-					int test_case_length = Utilities::random_integer(argmap::example_case_min_length, argmap::example_case_max_length);
+					size_t test_case_length = Utilities::random_integer(argmap::example_case_min_length, argmap::example_case_max_length);
 
 					for (int j = 0; j < test_case_length; j++)
 					{
-						int n = Utilities::random_integer(argmap::example_case_upper_range);
+						double n = Utilities::random_integer(argmap::example_case_upper_range);
 
 						test_cases_problem[i].push_back(n);
 					}
 
-					int sum = 0;
+					double sum = 0;
 					test_cases_solution[i].clear();
 
-					for (int i : test_cases_problem[i])
-						sum += i;
+					for (double d : test_cases_problem[i])
+						sum += d;
 
 					test_cases_solution[i].push_back(sum);
 
@@ -791,7 +791,7 @@ namespace domain
 			int individual_with_best_score = -1;
 			double min_error = (std::numeric_limits<double>::max)();
 			double min_score = (std::numeric_limits<double>::max)();
-			int max_effort_for_best_individual = 0;
+			size_t max_effort_for_best_individual = 0;
 
 			Plush::Environment* envp_local = new Plush::Environment;
 
@@ -799,7 +799,7 @@ namespace domain
 			{
 				int error_count_for_individual = 0;
 				double avg_error_for_individual = 0.0;
-				int max_effort_for_individual = 0;
+				size_t max_effort_for_individual = 0;
 
 				if ((individual_index % 100) == 0)
 					std::cout << individual_index;

@@ -75,7 +75,7 @@ namespace Utilities
 	//   has an equal likelihood of being produced. This is the distribution function that appears on 
 	//   many trivial random processes (like the result of rolling a die).
 	//
-	int random_integer(const int & min, const int & max)
+	size_t random_integer(size_t min, const size_t max)
 	{
 		std::hash<std::thread::id> hasher;
 
@@ -106,7 +106,7 @@ namespace Utilities
 	//   has an equal likelihood of being produced. This is the distribution function that appears on 
 	//   many trivial random processes (like the result of rolling a die).
 	//
-	unsigned int random_integer(unsigned int m)
+	size_t random_integer(size_t m)
 	{
 		return random_integer(0, m - 1);
 	}

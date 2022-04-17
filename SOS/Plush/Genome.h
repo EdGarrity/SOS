@@ -688,7 +688,7 @@ namespace Plush
 			unsigned int wanted_blocks = 1;	// Assume all genomes begin as a block.
 			unsigned int extra_blocks = 0;
 			std::stack<unsigned int> wanted_stack;
-			int n = Utilities::FixedSizeStack<T>::size() - 1;
+			int n = (int)Utilities::FixedSizeStack<T>::size() - 1;
 
 			while ((n >= 0) || (extra_blocks > 0))
 			{
@@ -775,7 +775,7 @@ namespace Plush
 			unsigned int wanted_blocks = 1;	// Assume all genomes begin as a block.
 			unsigned int extra_blocks = 0;
 			std::stack<unsigned int> wanted_stack;
-			int n = Utilities::FixedSizeStack<T>::size() - 1;
+			int n = (int)Utilities::FixedSizeStack<T>::size() - 1;
 
 			while ((n >= 0) || (extra_blocks > 0))
 			{
@@ -1153,7 +1153,7 @@ namespace Plush
 			unsigned int extra_blocks = 0;
 			std::stack<unsigned int> wanted_stack;
 			size_t atom_count = 0;
-			int block_starting_index = Utilities::FixedSizeStack<T>::size() - 1;
+			int block_starting_index = (int)Utilities::FixedSizeStack<T>::size() - 1;
 
 			for (unsigned int item = 0; item <= item_number; item++)
 			{
