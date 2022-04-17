@@ -24,10 +24,10 @@ namespace Plush
 		long number_of_instructions_to_add = _env.pop<long>();	// Number of instructions to add
 		long i = _env.pop<long>();								// Instruction index
 
-		if ((number_of_instructions_to_add > 0) && (_env.length<long>() >= (number_of_instructions_to_add - 1)))
+		if ((number_of_instructions_to_add > 0) && (_env.length<long>() >= (number_of_instructions_to_add - (long)1)))
 		{
 			_env.enable_function(i);
-			long n = number_of_instructions_to_add - 1;
+			long n = number_of_instructions_to_add - (long)1;
 
 			while (n > 0)
 			{
@@ -295,7 +295,7 @@ namespace Plush
 	{
 		_env.get_stack<CodeAtom>().yank_item(1);
 
-		unsigned n = _env.get_stack<CodeAtom>()[0].ending_position;
+		size_t n = _env.get_stack<CodeAtom>()[0].ending_position;
 		_env.get_stack<CodeAtom>().get_atom_at_position(n).close_parenthesis--;
 
 		return 1;
@@ -531,7 +531,7 @@ namespace Plush
 
 				if (sub_block.size > 0)
 				{
-					unsigned int old_top = genome.size();
+					size_t old_top = genome.size();
 
 					_env.get_stack<CodeAtom>().yankdup_stack_element(sub_block);
 
@@ -713,7 +713,7 @@ namespace Plush
 		Genome_section<CodeAtom> block(genome[0]);
 
 		// Get count items in first block
-		unsigned int number_of_items = genome.number_of_items(block);
+		size_t number_of_items = genome.number_of_items(block);
 
 		// Take modulo the number of blocks to ensure that it is within the meaningful range.
 		index = index % number_of_items;
@@ -958,9 +958,13 @@ namespace Plush
 	{
 		if (_env.input.size() > 0)
 		{
-			for (size_t index = _env.input.size() - 1; index >= 0; index--)
+			long long size = _env.input.size();
+			size_t index = size;
+
+			//for (size_t index = _env.input.size() - 1; index >= 0; index--)
+			for (int n = 0; n < size; n++)
 			{
-				double value = _env.input[index];
+				double value = _env.input[--index];
 				_env.push<CodeAtom>(CodeAtom(value));
 			}
 		}

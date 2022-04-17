@@ -439,7 +439,7 @@ namespace domain
 
 					for (int j = 0; j < training_case_length; j++)
 					{
-						size_t n = Utilities::random_integer(argmap::example_case_upper_range);
+						double n = (double)Utilities::random_integer(argmap::example_case_upper_range);
 
 						training_cases_problem[i].push_back(n);
 					}
@@ -464,7 +464,7 @@ namespace domain
 
 					for (int j = 0; j < test_case_length; j++)
 					{
-						double n = Utilities::random_integer(argmap::example_case_upper_range);
+						double n = (double)Utilities::random_integer(argmap::example_case_upper_range);
 
 						test_cases_problem[i].push_back(n);
 					}
@@ -867,22 +867,22 @@ namespace domain
 				unsigned int _individual_index,
 				std::vector<double>& _input_list,
 				std::vector<double>& _output_list)> _run_individual_program,
-			int _number_of_example_cases)
+			size_t _number_of_example_cases)
 		{
 			int individual_with_least_error = -1;
 			int individual_with_best_score = -1;
 			double min_error = (std::numeric_limits<double>::max)();
 			double min_score = (std::numeric_limits<double>::max)();
 			const unsigned int zero = 0;
-			int max_effort_for_best_individual = 0;
+			size_t max_effort_for_best_individual = 0;
 
 			parallel_for(zero, domain::argmap::population_size / domain::argmap::thread_chunk_size, [&, _number_of_example_cases](const unsigned int chunk_index)
 			{
-				for (int individual_index = chunk_index * domain::argmap::thread_chunk_size; individual_index < (chunk_index + 1) * domain::argmap::thread_chunk_size; individual_index++)
+				for (int individual_index = chunk_index * domain::argmap::thread_chunk_size; individual_index < (int)((chunk_index + 1) * domain::argmap::thread_chunk_size); individual_index++)
 				{
 					int error_count_for_individual = 0;
 					double avg_error_for_individual = 0.0;
-					int max_effort_for_individual = 0;
+					size_t max_effort_for_individual = 0;
 
 					for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
 					{
@@ -941,13 +941,13 @@ namespace domain
 				unsigned int _individual_index,
 				std::vector<double>& _input_list,
 				std::vector<double>& _output_list)> _run_individual_program,
-			int _number_of_example_cases)
+			size_t _number_of_example_cases)
 		{
 			int individual_with_least_error = -1;
 			int individual_with_best_score = -1;
 			double min_error = (std::numeric_limits<double>::max)();
 			double min_score = (std::numeric_limits<double>::max)();
-			int max_effort_for_best_individual = 0;
+			size_t max_effort_for_best_individual = 0;
 
 			std::cout << "compute_training_errors_thread_safe() - Process threads" << std::endl;
 
@@ -973,7 +973,7 @@ namespace domain
 			{
 				int error_count_for_individual = 0;
 				double avg_error_for_individual = 0.0;
-				int max_effort_for_individual = 0;
+				size_t max_effort_for_individual = 0;
 
 				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
 				{
@@ -982,7 +982,7 @@ namespace domain
 					//double error = pushGP::globals::error_matrix.load(example_case, individual_index);
 					//double error = pushGP::globals::error_matrix[example_case][individual_index].load(std::memory_order_acquire);
 					double error = pushGP::globals::error_matrix.load(example_case, individual_index);
-					int effort = pushGP::globals::effort_matrix.load(example_case, individual_index);
+					size_t effort = pushGP::globals::effort_matrix.load(example_case, individual_index);
 
 					if (error > 0.0)
 						error_count_for_individual++;
@@ -1232,7 +1232,7 @@ namespace domain
 			unsigned int _generations_completed_this_session,
 			unsigned int _best_individual_id,
 			double _best_individual_training_score,
-			unsigned int _best_individual_training_effort,
+			size_t _best_individual_training_effort,
 			double _best_individual_training_error,
 			double _best_individual_prev_training_error,
 			double _average_traiing_error,
@@ -1557,7 +1557,7 @@ namespace domain
 					Utilities::debug_log(-1, "run", "Generate Status Report");
 #endif
 					double average_traiing_error = 0.0;
-					int traiing_effort = 0;
+					size_t traiing_effort = 0;
 
 					for (int ind = 0; ind < argmap::population_size; ind++)
 					{

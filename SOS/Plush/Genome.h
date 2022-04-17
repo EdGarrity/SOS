@@ -949,7 +949,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline unsigned int number_of_items(Genome_section<T> section)
+		inline size_t number_of_items(Genome_section<T> section)
 		{
 			unsigned int item_number = 0;
 			unsigned int wanted_blocks = 0;
@@ -1258,7 +1258,7 @@ namespace Plush
 			Genome_section<T> subsection;
 			int atom_count = 0;
 			unsigned int extra_blocks = 0;
-			Utilities::FixedSizeStack<CodeAtom> temp;
+//			Utilities::FixedSizeStack<CodeAtom> temp;
 
 			int item_ending_position = 0;
 			int item_length = 0;
@@ -1328,7 +1328,8 @@ namespace Plush
 				search_starting_index -= item_length;
 			}
 
-			subsection.set(item_ending_position - item_length, item_length, extra_blocks);
+			size_t starting_position = item_ending_position - item_length;
+			subsection.set(starting_position, item_length, extra_blocks);
 			return subsection;
 		};
 

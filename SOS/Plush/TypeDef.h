@@ -23,7 +23,7 @@ namespace Plush
 	template <typename T>
 	inline Type make_type() 
 	{
-		int n = get_stack_num<T>();
+		size_t n = get_stack_num<T>();
 		Type type(n + 1, n);
 		return type;
 	}
