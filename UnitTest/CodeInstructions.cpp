@@ -1249,7 +1249,7 @@ namespace PlushUnitTest
 							 {:instruction false :close 0}\
 							 {:instruction true :close 1}\
 							 {:instruction 3 :close 0}\
-							 {:instruction CODE.DO*COUNT : close 0}\
+							 {:instruction CODE.DO*COUNT :close 0}\
 							");
 
 			Assert::IsTrue(is_stack_state(env, { 2 }, {}, { false, true, false, true, false, true, false, true }, {},

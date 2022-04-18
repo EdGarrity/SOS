@@ -49,16 +49,28 @@ namespace Plush
 
 		explicit Atom(std::string _program_statement)
 		{
+			instruction_name = "";
+			close_parenthesis = 0;
+			type = AtomType::empty;
+			instruction_id = -1;
 			compile(_program_statement);
 		};
 
 		explicit Atom(char _program_statement[])
 		{
+			instruction_name = "";
+			close_parenthesis = 0;
+			type = AtomType::empty;
+			instruction_id = -1;
 			compile(_program_statement);
 		};
 
 		explicit Atom(const char* _program_statement)
 		{
+			instruction_name = "";
+			close_parenthesis = 0;
+			type = AtomType::empty;
+			instruction_id = -1;
 			compile(_program_statement);
 		};
 
