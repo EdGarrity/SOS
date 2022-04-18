@@ -784,7 +784,7 @@ namespace domain
 			delete sqlcmd_insert_new_individual;
 		}
 
-		std::tuple<int, double, double, int> compute_training_errors(Plush::Environment& _env,
+		std::tuple<int, double, double, size_t> compute_training_errors(Plush::Environment& _env,
 			std::function<std::tuple<double, size_t>(Plush::Environment& _env,
 				unsigned int _individual_index,
 				std::vector<double>& _input_list,
@@ -866,7 +866,7 @@ namespace domain
 			);
 		}
 
-		std::tuple<int, double, double, int> parallel_compute_training_errors(Plush::Environment& _env,
+		std::tuple<int, double, double, size_t> parallel_compute_training_errors(Plush::Environment& _env,
 			std::function<std::tuple<double, size_t>(Plush::Environment& _env,
 				unsigned int _individual_index,
 				std::vector<double>& _input_list,
@@ -940,7 +940,7 @@ namespace domain
 			);
 		}
 
-		std::tuple<int, double, double, int> compute_training_errors_thread_safe(Plush::Environment& _env,
+		std::tuple<int, double, double, size_t> compute_training_errors_thread_safe(Plush::Environment& _env,
 			std::function<std::tuple<double, size_t>(Plush::Environment& _env,
 				unsigned int _individual_index,
 				std::vector<double>& _input_list,
@@ -1387,6 +1387,7 @@ namespace domain
 				int best_individual = -1;
 				double best_individual_score = std::numeric_limits<double>::max();
 				double best_individual_error = get_last_best_individual_error(std::numeric_limits<double>::max());
+				size_t best_individual_effort = 0;
 				double prev_best_individual_error = get_last_prev_best_individual_error(std::numeric_limits<double>::max());
 				int stalled_count = get_last_stalled_count(argmap::stalled_count_trigger);
 				int cool_down_count = get_last_cool_down_count(argmap::cool_down_period);
@@ -1509,6 +1510,7 @@ namespace domain
 					best_individual = std::get<0>(best_individual_score_error);
 					best_individual_score = std::get<1>(best_individual_score_error);
 					best_individual_error = std::get<2>(best_individual_score_error);
+					best_individual_effort = std::get<3>(best_individual_score_error);
 
 					std::cout << "Produce New Offspring" << std::endl;
 #if DLEVEL > 0
@@ -1561,7 +1563,7 @@ namespace domain
 					Utilities::debug_log(-1, "run", "Generate Status Report");
 #endif
 					double average_traiing_error = 0.0;
-					size_t traiing_effort = 0;
+					//size_t traiing_effort = 0;
 
 					for (int ind = 0; ind < argmap::population_size; ind++)
 					{
@@ -1584,7 +1586,7 @@ namespace domain
 							//average_traiing_error += pushGP::globals::error_matrix.load(training_case_index, ind);
 							//average_traiing_error += pushGP::globals::error_matrix[training_case_index][ind].load(std::memory_order_acquire);
 							average_traiing_error += pushGP::globals::error_matrix.load(training_case_index, ind);
-							traiing_effort += pushGP::globals::effort_matrix.load(training_case_index, ind);
+							//traiing_effort += pushGP::globals::effort_matrix.load(training_case_index, ind);
 						}
 					}
 					average_traiing_error /= (double)(domain::argmap::population_size * argmap::number_of_training_cases);
@@ -1610,7 +1612,8 @@ namespace domain
 						generations_completed_this_session,
 						best_individual,
 						best_individual_score,
-						traiing_effort,
+						best_individual_effort,
+						//traiing_effort,
 						best_individual_error,
 						prev_best_individual_error,
 						average_traiing_error,

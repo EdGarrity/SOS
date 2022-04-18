@@ -44,7 +44,7 @@ namespace Plush
 		size_t size = 0;
 
 		// Number of extra closing parenthesis in genome
-		size_t extra_parenthesis = 0;
+		unsigned int extra_parenthesis = 0;
 
 		// Default constructor
 		Genome_section()
