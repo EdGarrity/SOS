@@ -62,12 +62,15 @@ namespace Plush
 		//}
 
 		if (i > 0)
-		for (int n = i-1; n--; n >= 0)
 		{
-			Atom atom(env.temp_genes[n]);
+			int j = i;
+			for (int n = 0; n < i; n++)
+			{
+				Atom atom(env.temp_genes[--j]);
 
-			env.get_stack<CodeAtom>().push(CodeAtom(atom));
-			env.get_stack<ExecAtom>().push(ExecAtom(atom));
+				env.get_stack<CodeAtom>().push(CodeAtom(atom));
+				env.get_stack<ExecAtom>().push(ExecAtom(atom));
+			}
 		}
 
 		// Execute

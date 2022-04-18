@@ -81,5 +81,5 @@ namespace Utilities
 	bool isFloat(std::string myString);
 
 	// See https://www.delftstack.com/howto/cpp/how-to-determine-if-a-string-is-number-cpp/#:~:text=Use%20std%3A%3Aisdigit%20Method%20to%20Determine%20if%20a%20String%20Is%20a%20Number,-The%20first%20version&text=Namely%2C%20pass%20a%20string%20as,none%20is%20found%20returns%20true.
-	bool isNumber(const std::string& str);
+	bool isNumber(const std::string str);
 }
