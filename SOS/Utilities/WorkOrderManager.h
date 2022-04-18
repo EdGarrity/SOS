@@ -18,8 +18,8 @@ namespace Utilities
 	private:
 		struct WorkOrder
 		{
-			size_t individual_index;
-			int example_case = 0;
+			unsigned long individual_index = 0;
+			unsigned long example_case = 0;
 			std::vector<double> example_problem;
 			std::vector<double> example_solution;
 		};
@@ -32,7 +32,7 @@ namespace Utilities
 
 		std::atomic<QueueState> queue_state;
 
-		unsigned int num_threads_;
+		unsigned long num_threads_;
 		std::mutex work_order_mutex_;
 		//std::deque<std::thread> thread_pool_;
 		std::deque<WorkOrder> work_order_queue_;
@@ -44,18 +44,18 @@ namespace Utilities
 
 	public:
 		WorkOrderManager();
-		WorkOrderManager(unsigned int _num_threads);
+		WorkOrderManager(unsigned long _num_threads);
 		~WorkOrderManager();
 
 		//void debug_log(const int env_index, std::string function, std::string status);
 		//void debug_log(const int env_index, std::string function, std::string status, unsigned int individual_index, unsigned int example_case);
 
 //		void initialize();
-		void initialize(unsigned int _num_threads);
+		void initialize(unsigned long _num_threads);
 		void start();
 		void stop();
-		void push(size_t individual_index, int example_case, std::vector<double>& input_list, std::vector<double>& output_list);
-		void process_work_orders(const unsigned int env_index);
+		void push(unsigned long individual_index, unsigned long example_case, std::vector<double>& input_list, std::vector<double>& output_list);
+		void process_work_orders(const unsigned long env_index);
 		void wait_for_all_threads_to_complete();
 	};
 

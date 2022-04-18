@@ -24,7 +24,7 @@ namespace Plush
 		long number_of_instructions_to_add = _env.pop<long>();	// Number of instructions to add
 		long i = _env.pop<long>();								// Instruction index
 
-		if ((number_of_instructions_to_add > 0) && (_env.length<long>() >= number_of_instructions_to_add - 1))
+		if ((number_of_instructions_to_add > 0) && (_env.length<long>() >= static_cast<int64_t>(number_of_instructions_to_add) - 1))
 		{
 			_env.enable_function(i);
 			long n = number_of_instructions_to_add - 1;
@@ -704,7 +704,7 @@ namespace Plush
 
 	inline unsigned long code_nth(Environment & _env)
 	{
-		long index = std::abs(_env.pop<long>());	// index
+		unsigned long index = std::abs(_env.pop<long>());	// index
 
 		// Get reference to genome stack
 		Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
@@ -806,7 +806,7 @@ namespace Plush
 			// Get count items in first block
 			unsigned long number_of_items = genome.number_of_items(block_A);
 
-			for (unsigned int n = 0; n < number_of_items; n++)
+			for (unsigned long n = 0; n < number_of_items; n++)
 			{
 				Genome_section<CodeAtom> subitem = genome.get_subitem(n + 1);
 					
@@ -958,11 +958,11 @@ namespace Plush
 	{
 		if (_env.input.size() > 0)
 		{
-			long long size = _env.input.size();
-			unsigned long index = size;
+			size_t size = _env.input.size();
+			size_t index = size;
 
 			//for (unsigned long index = _env.input.size() - 1; index >= 0; index--)
-			for (int n = 0; n < size; n++)
+			for (size_t n = 0; n < size; n++)
 			{
 				double value = _env.input[--index];
 				_env.push<CodeAtom>(CodeAtom(value));

@@ -30,7 +30,7 @@ namespace Utilities
 		queue_state.store(QueueState::Stopped, std::memory_order_release);
 	}
 
-	WorkOrderManager::WorkOrderManager(unsigned int num_threads) :
+	WorkOrderManager::WorkOrderManager(unsigned long num_threads) :
 		work_order_queue_(), 
 		work_order_mutex_(), 
 		work_in_process_mutex_(), 
@@ -49,7 +49,7 @@ namespace Utilities
 		wait_for_all_threads_to_complete();
 	}
 
-	void WorkOrderManager::initialize(unsigned int num_threads)
+	void WorkOrderManager::initialize(unsigned long num_threads)
 	{
 		if (num_threads_ > 0)
 		{
@@ -84,7 +84,7 @@ namespace Utilities
 		queue_state.store(QueueState::Stopped, std::memory_order_release);
 	}
 
-	void WorkOrderManager::push(size_t individual_index, int example_case, std::vector<double>& input_list, std::vector<double>& output_list)
+	void WorkOrderManager::push(unsigned long individual_index, unsigned long example_case, std::vector<double>& input_list, std::vector<double>& output_list)
 	{
 		WorkOrder work_order;
 
@@ -104,7 +104,7 @@ namespace Utilities
 		data_condition_.notify_one();
 	}
 
-	void WorkOrderManager::process_work_orders(const unsigned int env_index)
+	void WorkOrderManager::process_work_orders(const unsigned long env_index)
 	{
 		using namespace std::chrono_literals;
 
@@ -246,7 +246,7 @@ namespace Utilities
 #endif
 		if (num_threads_ > 0)
 		{
-			int queue_size = 0;
+			long queue_size = 0;
 
 #if DLEVEL > 0
 			debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", "wait_for_queue_to_empty");
@@ -290,7 +290,7 @@ namespace Utilities
 				if (all_done == false)
 					std::this_thread::sleep_for(10s);
 
-				int count = 0;
+				long count = 0;
 
 				for (int i = 0; i < num_threads_; i++)
 				{

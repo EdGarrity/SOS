@@ -138,8 +138,8 @@ namespace pushGP
 			//unsigned int r = Utilities::random_integer(0, Push::detail::function_names.size() - 1);
 			//return (Push::detail::function_names[r]);
 
-			size_t n = Plush::static_initializer.number_of_functions() - 1;
-			size_t r = Utilities::random_integer(0, n);
+			unsigned long n = Plush::static_initializer.number_of_functions() - 1;
+			unsigned long r = Utilities::random_integer(0, n);
 			return (Plush::static_initializer.get_function_name(r));
 		}
 

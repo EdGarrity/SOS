@@ -39,14 +39,14 @@ namespace domain
 		//     Where:
 		//       X = 0 or more doubles.
 		//
-		std::tuple<double, size_t> run_program(Plush::Environment& env,
+		std::tuple<double, unsigned long> run_program(Plush::Environment& env,
 			std::string program,
 			std::vector<double>& example_problem,
 			std::vector<double>& example_solution)
 		{
 			double error = 0.0;
 			int actual_solution_length = 0;
-			size_t effort = 0;
+			unsigned long effort = 0;
 
 			if (Utilities::trim_copy(program).length() > 0)
 			{
@@ -146,7 +146,7 @@ namespace domain
 
 		//	return error;
 		//}
-		std::tuple<double, size_t> run_individual_threadsafe(Plush::Environment& env,
+		std::tuple<double, unsigned long> run_individual_threadsafe(Plush::Environment& env,
 			unsigned int _individual_index,
 			std::vector<double>& _example_problem,
 			std::vector<double>& _example_solution)

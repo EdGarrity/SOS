@@ -75,11 +75,11 @@ namespace Utilities
 	//   has an equal likelihood of being produced. This is the distribution function that appears on 
 	//   many trivial random processes (like the result of rolling a die).
 	//
-	size_t random_integer(size_t min, const size_t max)
+	unsigned long random_integer(unsigned long min, const unsigned long max)
 	{
 		std::hash<std::thread::id> hasher;
 
-		size_t t = hasher(this_thread::get_id()) + clock();
+		unsigned long t = hasher(this_thread::get_id()) + clock();
 
 		static thread_local std::mt19937 generator(t);
 		std::uniform_int_distribution<int> distribution(min, max);
@@ -106,7 +106,7 @@ namespace Utilities
 	//   has an equal likelihood of being produced. This is the distribution function that appears on 
 	//   many trivial random processes (like the result of rolling a die).
 	//
-	size_t random_integer(size_t m)
+	unsigned long random_integer(unsigned long m)
 	{
 		return random_integer(0, m - 1);
 	}
@@ -135,7 +135,7 @@ namespace Utilities
 	{
 		std::hash<std::thread::id> hasher;
 
-		size_t t = hasher(this_thread::get_id()) + clock();
+		unsigned long t = hasher(this_thread::get_id()) + clock();
 
 		static thread_local std::mt19937 generator(t);
 		std::uniform_real_distribution<double> distribution(min, max);

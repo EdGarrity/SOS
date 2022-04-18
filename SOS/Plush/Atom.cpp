@@ -101,7 +101,7 @@ namespace Plush
 	//
 	std::string first_atom(std::string _genome_instructions)
 	{
-		std::size_t found = _genome_instructions.find_first_of("}");
+		size_t found = _genome_instructions.find_first_of("}");
 
 		if (found == std::string::npos)
 			return "";
@@ -129,7 +129,7 @@ namespace Plush
 	//
 	std::string rest_atom(std::string _genome_instructions)
 	{
-		std::size_t found = _genome_instructions.find_first_of("}");
+		size_t found = _genome_instructions.find_first_of("}");
 
 		if (found == std::string::npos)
 			return "";

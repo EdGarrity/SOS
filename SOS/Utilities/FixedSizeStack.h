@@ -31,7 +31,7 @@ extern std::atomic_bool debug_push;
 namespace Utilities
 {
 	// Template class definition
-	template <class T, size_t N = domain::argmap::maximum_stack_size>
+	template <class T, unsigned long N = domain::argmap::maximum_stack_size>
 	class FixedSizeStack
 	{
 	public:
@@ -40,7 +40,7 @@ namespace Utilities
 		typedef typename std::array<T, N>::const_reference const_reference;
 		typedef typename std::array<T, N>::size_type size_type;
 
-		inline void set_current_thread(int new_current_thread)
+		inline void set_current_thread(unsigned long new_current_thread)
 		{
 			current_thread = new_current_thread;
 		};
@@ -52,7 +52,7 @@ namespace Utilities
 		};
 
 		// Sets value of stack top.  Used when adding a block to the end of the stack.
-		inline void set_top(size_t new_top)
+		inline void set_top(unsigned long new_top)
 		{
 			if (new_top >= N)
 			{
@@ -93,7 +93,7 @@ namespace Utilities
 			return top_ == 0;
 		}
 
-		inline size_t copy(const FixedSizeStack<T>& other)
+		inline unsigned long copy(const FixedSizeStack<T>& other)
 		{
 			if (other->top_ >= N)
 			{
@@ -105,7 +105,7 @@ namespace Utilities
 
 			top_ = other->top_;
 
-			for (size_t n = 0; n < top_; n++)
+			for (unsigned long n = 0; n < top_; n++)
 				stack_[n] = other->stack_[n];
 
 			return top_;
@@ -117,7 +117,7 @@ namespace Utilities
 		}
 
 		// These need to be rewritten to reference stack from top, not absolute
-		inline const_reference operator [] (size_t index) const
+		inline const_reference operator [] (unsigned long index) const
 		{
 			if (index >= N)
 			{
@@ -137,7 +137,7 @@ namespace Utilities
 			return stack_[index];
 		}
 
-		inline reference operator [] (size_t index)
+		inline reference operator [] (unsigned long index)
 		{
 			if (index >= N)
 			{
@@ -158,15 +158,18 @@ namespace Utilities
 		}
 
 		// Returns the number of elements in the underlying container
-		inline size_type size() const
+		inline unsigned long size() const
 		{
 			return top_;
 		}
 
 		// Returns the number of available elements in the underlying container
-		inline size_type free() const
+		inline unsigned long free() const
 		{
-			size_t free = N - top_ - 1;
+			unsigned long free = 0;
+			
+			if (N > top_)
+				free = N - top_ - 1;
 
 			if (free > N)
 				free = N;
@@ -227,9 +230,9 @@ namespace Utilities
 
 			if (top_ > 0)
 			{
-				long long stack_bottom = top_ > 10 ? top_ - 10 : 0;
+				unsigned long stack_bottom = top_ > 10 ? top_ - 10 : 0;
 
-				for (long long n = top_ - 1; n >= stack_bottom; n--)
+				for (unsigned long n = top_ - 1; n >= stack_bottom; n--)
 				{
 					s += " ";
 					s += std::to_string(stack_[n]);
@@ -322,7 +325,7 @@ namespace Utilities
 		}
 
 		// Removes the top element from the stack
-		inline size_t pop()
+		inline unsigned long pop()
 		{
 			if (top_ == 0)
 			{
@@ -338,7 +341,7 @@ namespace Utilities
 		}
 
 		// Pushes the given element value to the top of the stack.
-		inline size_t push(value_type& value)
+		inline unsigned long push(value_type& value)
 		{
 			if (top_ >= N)
 			{
@@ -355,7 +358,7 @@ namespace Utilities
 		}
 
 		// Pushes the given element value to the top of the stack.
-		inline size_t push(std::string& program)
+		inline unsigned long push(std::string& program)
 		{
 			if (top_ >= N)
 			{
@@ -391,7 +394,7 @@ namespace Utilities
 		//
 		// Remarks:
 		//
-		inline size_t shove_it(T& atom, size_t position)
+		inline unsigned long shove_it(T& atom, unsigned long position)
 		{
 			if ((top_ + 1) > N)
 			{
@@ -403,9 +406,9 @@ namespace Utilities
 
 			position = (position >= top_) ? top_ - 1: position;
 
-			size_t index = top_ - position;
+			unsigned long index = top_ - position;
 
-			for (size_t i = top_; i >= index; i--)
+			for (unsigned long i = top_; i >= index; i--)
 				stack_[i] = stack_[i - 1];
 
 			stack_[index] = atom;
@@ -436,7 +439,7 @@ namespace Utilities
 		//
 		// Remarks:
 		//
-		inline size_t shove_it(size_t destination_position, size_t source_position, size_t length)
+		inline unsigned long shove_it(unsigned long destination_position, unsigned long source_position, unsigned long length)
 		{
 			if ((top_ + length) > N)
 			{
@@ -449,16 +452,16 @@ namespace Utilities
 			source_position = (source_position >= top_) ? top_ - 1: source_position;
 			destination_position = (destination_position >= top_) ? top_ - 1: destination_position;
 
-			size_t source_index = position_to_index(source_position);
-			size_t destination_index = position_to_index(destination_position); 
+			unsigned long source_index = position_to_index(source_position);
+			unsigned long destination_index = position_to_index(destination_position);
 
 			// Make space in this stack for the other stack items
-			for (size_t i = 0, j = top_ - 1, k = top_ - 1 + length;
+			for (unsigned long i = 0, j = top_ - 1, k = top_ - 1 + length;
 				i < top_ - destination_index;
 				i++, j--, k--)
 				stack_[k] = stack_[j];
 
-			for (size_t i = 0, j = top_, k = destination_index;
+			for (unsigned long i = 0, j = top_, k = destination_index;
 				i < length;
 				i++, j++, k++)
 				stack_[k] = stack_[j];
@@ -485,7 +488,7 @@ namespace Utilities
 		//
 		// Remarks:
 		//
-		inline size_t remove_items(size_t position, size_t length)
+		inline unsigned long remove_items(unsigned long position, unsigned long length)
 		{
 #if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
@@ -505,7 +508,7 @@ namespace Utilities
 
 			if (position > 0)
 			{
-				size_t j = top_ - position, k = (top_ - position - 1) - (length - 1);
+				unsigned long j = top_ - position, k = (top_ - position - 1) - (length - 1);
 #if DLEVEL > 0
 				if (debug_push.load(std::memory_order_acquire))
 				{
@@ -543,7 +546,7 @@ namespace Utilities
 			return position;
 		}
 
-		inline size_t position_to_index(size_t position)
+		inline unsigned long position_to_index(unsigned long position)
 		{
 			position = (position >= top_) ? top_ - 1 : position;
 
@@ -574,7 +577,7 @@ namespace Utilities
 		//
 		// Remarks:
 		//
-		inline size_t replace(T& other, size_t n)
+		inline unsigned long replace(T& other, unsigned long n)
 		{
 			if (n >= N)
 			{
@@ -610,7 +613,7 @@ namespace Utilities
 		//
 		// Remarks:
 		//
-		inline size_t replace_section(size_t source_position, size_t target_position, size_t length)
+		inline unsigned long replace_section(unsigned long source_position, unsigned long target_position, unsigned long length)
 		{
 			if ((source_position >= N) || (source_position >= top_))
 			{
@@ -629,13 +632,13 @@ namespace Utilities
 			}
 
 			// Convert relative positions to absolute indexes
-			size_t source_index = top_ - source_position - 1;
-			size_t target_index = top_ - target_position - 1;
+			unsigned long source_index = top_ - source_position - 1;
+			unsigned long target_index = top_ - target_position - 1;
 
 			// Copy source to target
 			if (source_index > target_index)
 			{
-				for (size_t n = 0; n < length; n++)
+				for (unsigned long n = 0; n < length; n++)
 					stack_[target_index + n] = stack_[source_index + n];
 			}
 			 
@@ -663,7 +666,7 @@ namespace Utilities
 		//
 		// Remarks:
 		//
-		inline size_t yankdup_item(size_t position, size_t length)
+		inline unsigned long yankdup_item(unsigned long position, unsigned long length)
 		{
 #if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
@@ -683,7 +686,7 @@ namespace Utilities
 
 			if ((top_ - position - length >= 0) && ((top_ + length) < N))
 			{
-				size_t i = 0, j = top_ - position - length, k = top_;
+				unsigned long i = 0, j = top_ - position - length, k = top_;
 #if DLEVEL > 0
 				if (debug_push.load(std::memory_order_acquire))
 				{
@@ -731,11 +734,11 @@ namespace Utilities
 
 	protected:
 		// Zero-based index to the first empty slot on the stack
-		size_t top_ = 0;
+		unsigned long top_ = 0;
 
 		// The containter for the stack
 		std::array<T, N> stack_;
 
-		int current_thread = -99;
+		unsigned int current_thread = 999;
 	};
 }

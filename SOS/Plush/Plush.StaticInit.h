@@ -32,12 +32,12 @@ namespace Plush
 		//void set_parentheses(std::string name, unsigned int block_wants);
 
 		// Helper functions
-		size_t number_of_functions();
-		std::string get_function_name(size_t function_index);
-		size_t get_function_index(std::string function_name);
+		unsigned long number_of_functions();
+		std::string get_function_name(unsigned long function_index);
+		unsigned long get_function_index(std::string function_name);
 		unsigned int get_function_block_wants(std::string function_name);
 		Instruction* get_function(std::string function_name);
-		Instruction* get_function(size_t function_index);
+		Instruction* get_function(unsigned long function_index);
 		bool is_function_supported(std::string function_name);
 	};
 

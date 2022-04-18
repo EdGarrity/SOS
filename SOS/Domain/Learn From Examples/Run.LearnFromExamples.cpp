@@ -435,9 +435,9 @@ namespace domain
 			{
 				for (int i = _example_cases_loaded; i < argmap::number_of_training_cases; i++)
 				{
-					size_t training_case_length = Utilities::random_integer(argmap::example_case_min_length, argmap::example_case_max_length);
+					unsigned long training_case_length = Utilities::random_integer(argmap::example_case_min_length, argmap::example_case_max_length);
 
-					for (int j = 0; j < training_case_length; j++)
+					for (unsigned long j = 0; j < training_case_length; j++)
 					{
 						double n = (double)Utilities::random_integer(argmap::example_case_upper_range);
 
@@ -460,9 +460,9 @@ namespace domain
 			{
 				for (int i = _example_cases_loaded + training_cases_created - argmap::number_of_training_cases; i < argmap::number_of_test_cases; i++)
 				{
-					size_t test_case_length = Utilities::random_integer(argmap::example_case_min_length, argmap::example_case_max_length);
+					unsigned long test_case_length = Utilities::random_integer(argmap::example_case_min_length, argmap::example_case_max_length);
 
-					for (int j = 0; j < test_case_length; j++)
+					for (unsigned long j = 0; j < test_case_length; j++)
 					{
 						double n = (double)Utilities::random_integer(argmap::example_case_upper_range);
 
@@ -784,31 +784,31 @@ namespace domain
 			delete sqlcmd_insert_new_individual;
 		}
 
-		std::tuple<int, double, double, size_t> compute_training_errors(Plush::Environment& _env,
-			std::function<std::tuple<double, size_t>(Plush::Environment& _env,
-				unsigned int _individual_index,
+		std::tuple<int, double, double, unsigned long> compute_training_errors(Plush::Environment& _env,
+			std::function<std::tuple<double, unsigned long>(Plush::Environment& _env,
+				unsigned long _individual_index,
 				std::vector<double>& _input_list,
 				std::vector<double>& _output_list)> _run_individual_program,
-			int _number_of_example_cases)
+			unsigned long _number_of_example_cases)
 		{
 			int individual_with_least_error = -1;
 			int individual_with_best_score = -1;
 			double min_error = (std::numeric_limits<double>::max)();
 			double min_score = (std::numeric_limits<double>::max)();
-			size_t max_effort_for_best_individual = 0;
+			unsigned long max_effort_for_best_individual = 0;
 
 			Plush::Environment* envp_local = new Plush::Environment;
 
-			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
+			for (unsigned long individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			{
 				int error_count_for_individual = 0;
 				double avg_error_for_individual = 0.0;
-				size_t max_effort_for_individual = 0;
+				unsigned long max_effort_for_individual = 0;
 
 				if ((individual_index % 100) == 0)
 					std::cout << individual_index;
 
-				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
+				for (unsigned long example_case = 0; example_case < _number_of_example_cases; example_case++)
 				{
 					std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
 					std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
@@ -866,100 +866,93 @@ namespace domain
 			);
 		}
 
-		std::tuple<int, double, double, size_t> parallel_compute_training_errors(Plush::Environment& _env,
-			std::function<std::tuple<double, size_t>(Plush::Environment& _env,
-				unsigned int _individual_index,
+		//std::tuple<int, double, double> parallel_compute_training_errors(Plush::Environment& _env,
+		//	std::function<double(Plush::Environment& _env,
+		//		unsigned int _individual_index,
+		//		std::vector<double>& _input_list,
+		//		std::vector<double>& _output_list)> _run_individual_program,
+		//	int _number_of_example_cases)
+		//{
+		//	int individual_with_least_error = -1;
+		//	int individual_with_best_score = -1;
+		//	double min_error = (std::numeric_limits<double>::max)();
+		//	double min_score = (std::numeric_limits<double>::max)();
+		//	const unsigned int zero = 0;
+
+		//	parallel_for(zero, domain::argmap::population_size / domain::argmap::thread_chunk_size, [&, _number_of_example_cases](const unsigned int chunk_index)
+		//	{
+		//		for (int individual_index = chunk_index * domain::argmap::thread_chunk_size; individual_index < (chunk_index + 1) * domain::argmap::thread_chunk_size; individual_index++)
+		//		{
+		//			int error_count_for_individual = 0;
+		//			double avg_error_for_individual = 0.0;
+
+		//			for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
+		//			{
+		//				std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
+		//				std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
+
+		//				// Run program
+		//				double error = run_individual_threadsafe(_env, individual_index, example_problem, example_solution);
+
+		//				if (error > 0.0)
+		//					error_count_for_individual++;
+
+		//				avg_error_for_individual += error;
+
+		//				//pushGP::globals::error_matrix[example_case][individual_index].store(error, std::memory_order_release);
+		//				//pushGP::globals::error_matrix[example_case][individual_index] = error;
+		//				//pushGP::globals::error_matrix.store(example_case, individual_index, error);
+		//				//pushGP::globals::error_matrix[example_case][individual_index].store(error, std::memory_order_release);
+		//				pushGP::globals::error_matrix.store(-1, example_case, individual_index, error);
+		//			}
+
+		//			// Calculate the average error for all example cases
+		//			avg_error_for_individual /= (double)_number_of_example_cases;
+
+		//			double score = (double)error_count_for_individual / (double)_number_of_example_cases;
+
+		//			if ((score < 1.0) && (score < min_score))
+		//			{
+		//				min_score = score;
+		//				individual_with_best_score = individual_index;
+		//			}
+
+		//			if (avg_error_for_individual < min_error)
+		//			{
+		//				min_error = avg_error_for_individual;
+		//				individual_with_least_error = individual_index;
+		//			}
+		//		}
+		//	});
+
+		//	return std::make_tuple
+		//	(
+		//		(individual_with_best_score == -1) ? individual_with_least_error : individual_with_best_score,
+		//		min_score,
+		//		min_error
+		//	);
+		//}
+
+		std::tuple<int, double, double, unsigned long> compute_training_errors_thread_safe(Plush::Environment& _env,
+			std::function<std::tuple<double, unsigned long>(Plush::Environment& _env,
+				unsigned long _individual_index,
 				std::vector<double>& _input_list,
 				std::vector<double>& _output_list)> _run_individual_program,
-			size_t _number_of_example_cases)
+			unsigned long _number_of_example_cases)
 		{
-			int individual_with_least_error = -1;
-			int individual_with_best_score = -1;
+			long individual_with_least_error = -1;
+			long individual_with_best_score = -1;
 			double min_error = (std::numeric_limits<double>::max)();
 			double min_score = (std::numeric_limits<double>::max)();
-			const unsigned int zero = 0;
-			size_t max_effort_for_best_individual = 0;
-
-			parallel_for(zero, domain::argmap::population_size / domain::argmap::thread_chunk_size, [&, _number_of_example_cases](const unsigned int chunk_index)
-			{
-				for (int individual_index = chunk_index * domain::argmap::thread_chunk_size; individual_index < (int)((chunk_index + 1) * domain::argmap::thread_chunk_size); individual_index++)
-				{
-					int error_count_for_individual = 0;
-					double avg_error_for_individual = 0.0;
-					size_t max_effort_for_individual = 0;
-
-					for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
-					{
-						std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
-						std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
-
-						// Run program
-						auto [ error, effort ] = run_individual_threadsafe(_env, individual_index, example_problem, example_solution);
-
-						if (error > 0.0)
-							error_count_for_individual++;
-
-						avg_error_for_individual += error;
-						max_effort_for_individual = (max_effort_for_individual > effort) ? max_effort_for_individual : effort;
-
-						//pushGP::globals::error_matrix[example_case][individual_index].store(error, std::memory_order_release);
-						//pushGP::globals::error_matrix[example_case][individual_index] = error;
-						//pushGP::globals::error_matrix.store(example_case, individual_index, error);
-						//pushGP::globals::error_matrix[example_case][individual_index].store(error, std::memory_order_release);
-						pushGP::globals::error_matrix.store(-1, example_case, individual_index, error);
-						pushGP::globals::effort_matrix.store(-1, example_case, individual_index, effort);
-					}
-
-					// Calculate the average error for all example cases
-					avg_error_for_individual /= (double)_number_of_example_cases;
-
-					double score = (double)error_count_for_individual / (double)_number_of_example_cases;
-
-					if ((score < 1.0) && (score < min_score))
-					{
-						min_score = score;
-						individual_with_best_score = individual_index;
-						max_effort_for_best_individual = max_effort_for_individual;
-					}
-
-					if (avg_error_for_individual < min_error)
-					{
-						min_error = avg_error_for_individual;
-						individual_with_least_error = individual_index;
-						max_effort_for_best_individual = max_effort_for_individual;
-					}
-				}
-			});
-
-			return std::make_tuple
-			(
-				(individual_with_best_score == -1) ? individual_with_least_error : individual_with_best_score,
-				min_score,
-				min_error,
-				max_effort_for_best_individual
-			);
-		}
-
-		std::tuple<int, double, double, size_t> compute_training_errors_thread_safe(Plush::Environment& _env,
-			std::function<std::tuple<double, size_t>(Plush::Environment& _env,
-				unsigned int _individual_index,
-				std::vector<double>& _input_list,
-				std::vector<double>& _output_list)> _run_individual_program,
-			size_t _number_of_example_cases)
-		{
-			int individual_with_least_error = -1;
-			int individual_with_best_score = -1;
-			double min_error = (std::numeric_limits<double>::max)();
-			double min_score = (std::numeric_limits<double>::max)();
-			size_t max_effort_for_best_individual = 0;
+			unsigned long max_effort_for_best_individual = 0;
 
 			std::cout << "compute_training_errors_thread_safe() - Process threads" << std::endl;
 
 			Utilities::work_order_manager.stop();
 
-			for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
+			for (unsigned long example_case = 0; example_case < _number_of_example_cases; example_case++)
 			{
-				for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
+				for (unsigned long individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 				{
 					std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
 					std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
@@ -973,20 +966,20 @@ namespace domain
 
 			std::cout << "compute_training_errors_thread_safe() - Aggregate errors" << std::endl;
 
-			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
+			for (unsigned long individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			{
 				int error_count_for_individual = 0;
 				double avg_error_for_individual = 0.0;
-				size_t max_effort_for_individual = 0;
+				unsigned long max_effort_for_individual = 0;
 
-				for (int example_case = 0; example_case < _number_of_example_cases; example_case++)
+				for (unsigned long example_case = 0; example_case < _number_of_example_cases; example_case++)
 				{
 					//double error = pushGP::globals::error_matrix[example_case][individual_index].load(std::memory_order_acquire);
 					//double error = pushGP::globals::error_matrix[example_case][individual_index];
 					//double error = pushGP::globals::error_matrix.load(example_case, individual_index);
 					//double error = pushGP::globals::error_matrix[example_case][individual_index].load(std::memory_order_acquire);
 					double error = pushGP::globals::error_matrix.load(example_case, individual_index);
-					size_t effort = pushGP::globals::effort_matrix.load(example_case, individual_index);
+					unsigned long effort = pushGP::globals::effort_matrix.load(example_case, individual_index);
 
 					if (error > 0.0)
 						error_count_for_individual++;
@@ -1027,16 +1020,16 @@ namespace domain
 		}
 
 		double compute_test_errors(Plush::Environment& _env,
-			std::function<std::tuple<double, size_t>(Plush::Environment& _env,
-				unsigned int _individual_index,
+			std::function<std::tuple<double, unsigned long>(Plush::Environment& _env,
+				unsigned long _individual_index,
 				std::vector<double>& _example_problem,
 				std::vector<double>& _example_solution)> _run_individual_program,
-			int _individual_index)
+			unsigned long _individual_index)
 		{
 			double error = (std::numeric_limits<double>::max)();
 			int error_count = 0;
 
-			for (int example_case = 0; example_case < argmap::number_of_test_cases; ++example_case)
+			for (unsigned long example_case = 0; example_case < argmap::number_of_test_cases; ++example_case)
 			{
 				std::cout << ".";
 
@@ -1057,8 +1050,8 @@ namespace domain
 			return error;
 		}
 
-		void produce_new_offspring(int _number_of_example_cases,
-			unsigned int _best_individual,
+		void produce_new_offspring(unsigned long _number_of_example_cases,
+			unsigned long _best_individual,
 			pushGP::SimulatedAnnealing& sa,
 			bool _include_best_individual_in_breeding_pool)
 		{
@@ -1069,13 +1062,13 @@ namespace domain
 
 				// Reset children.
 				std::cout << "  Reset children" << std::endl;
-				for (unsigned int n = 0; n < argmap::population_size; n++)
+				for (unsigned long n = 0; n < argmap::population_size; n++)
 					pushGP::globals::child_agents[n].clear_genome();
 
 				// Breed new generation
 				std::cout << "  Breed new generation" << std::endl;
 
-				for (unsigned int individual_index = 0; individual_index < argmap::population_size; individual_index++)
+				for (unsigned long individual_index = 0; individual_index < argmap::population_size; individual_index++)
 				{
 					Plush::Genome<Plush::CodeAtom>& child_genome = pushGP::globals::child_agents[individual_index].get_genome();
 
@@ -1115,9 +1108,9 @@ namespace domain
 				std::cout << ".";
 				if (!_include_best_individual_in_breeding_pool)
 				{
-					for (unsigned int training_case = 0; training_case < domain::argmap::number_of_training_cases; training_case++)
+					for (unsigned long training_case = 0; training_case < domain::argmap::number_of_training_cases; training_case++)
 					{
-						unsigned int best_individual_for_training_case = training_case_min_error.local().individual_with_minimum_error_for_training_case[training_case];
+						unsigned long best_individual_for_training_case = training_case_min_error.local().individual_with_minimum_error_for_training_case[training_case];
 
 						if (best_individual_for_training_case < (std::numeric_limits<unsigned int>::max)())
 						{
@@ -1151,84 +1144,84 @@ namespace domain
 			}
 		}
 
-		void parallel_produce_new_offspring(int _number_of_example_cases,
-			unsigned int _best_individual,
-			pushGP::SimulatedAnnealing& sa,
-			bool _include_best_individual_in_breeding_pool)
-		{
-			concurrent_unordered_set<std::string> set_of_gnomes;
-			combinable<pushGP::globals::Training_case_min_error_type> training_case_min_error_sub_computations;
-			pushGP::globals::Training_case_min_error_type training_case_min_error;
+		//void parallel_produce_new_offspring(unsigned long _number_of_example_cases,
+		//	unsigned long _best_individual,
+		//	pushGP::SimulatedAnnealing& sa,
+		//	bool _include_best_individual_in_breeding_pool)
+		//{
+		//	concurrent_unordered_set<std::string> set_of_gnomes;
+		//	combinable<pushGP::globals::Training_case_min_error_type> training_case_min_error_sub_computations;
+		//	pushGP::globals::Training_case_min_error_type training_case_min_error;
 
-			// Reset children.
-			std::cout << "  Reset children" << std::endl;
-			for (unsigned int n = 0; n < argmap::population_size; n++)
-				pushGP::globals::child_agents[n].clear_genome();
+		//	// Reset children.
+		//	std::cout << "  Reset children" << std::endl;
+		//	for (unsigned int n = 0; n < argmap::population_size; n++)
+		//		pushGP::globals::child_agents[n].clear_genome();
 
-			// Breed new generation
-			std::cout << "  Breed new generation" << std::endl;
+		//	// Breed new generation
+		//	std::cout << "  Breed new generation" << std::endl;
 
-			const unsigned int zero = 0;
-			parallel_for(zero, domain::argmap::population_size, [&, _best_individual, _number_of_example_cases](const unsigned int individual_index)
-			{
-				// Keep the best individual
-				if (individual_index == _best_individual)
-					pushGP::globals::child_agents[individual_index].copy(pushGP::globals::population_agents[individual_index]);
+		//	const unsigned int zero = 0;
+		//	parallel_for(zero, domain::argmap::population_size, [&, _best_individual, _number_of_example_cases](const unsigned int individual_index)
+		//	{
+		//		// Keep the best individual
+		//		if (individual_index == _best_individual)
+		//			pushGP::globals::child_agents[individual_index].copy(pushGP::globals::population_agents[individual_index]);
 
-				else
-				{
-					pushGP::breed(individual_index,
-						_number_of_example_cases,
-						training_case_min_error_sub_computations,
-						sa,
-						_include_best_individual_in_breeding_pool,
-						_best_individual);
-				}
-			});
+		//		else
+		//		{
+		//			pushGP::breed(individual_index,
+		//				_number_of_example_cases,
+		//				training_case_min_error_sub_computations,
+		//				sa,
+		//				_include_best_individual_in_breeding_pool,
+		//				_best_individual);
+		//		}
+		//	});
 
-			parallel_for(zero, domain::argmap::population_size, [&, _best_individual, _number_of_example_cases](const unsigned int individual_index)
-			{
-				// If a child with the same genome already exists, create a new random child.
-				if (individual_index != _best_individual)
-				{
-					Plush::Genome<Plush::CodeAtom>& child_genome = pushGP::globals::child_agents[individual_index].get_genome();
+		//	parallel_for(zero, domain::argmap::population_size, [&, _best_individual, _number_of_example_cases](const unsigned int individual_index)
+		//	{
+		//		// If a child with the same genome already exists, create a new random child.
+		//		if (individual_index != _best_individual)
+		//		{
+		//			Plush::Genome<Plush::CodeAtom>& child_genome = pushGP::globals::child_agents[individual_index].get_genome();
 
-					if (set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string()).second == false)
-						pushGP::make_random_plush_genome(child_genome);
-				}
-			});
+		//			if (set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string()).second == false)
+		//				pushGP::make_random_plush_genome(child_genome);
+		//		}
+		//	});
 
-			// Combine the Training Case Minimum Errors
-			training_case_min_error_sub_computations.combine_each([&](pushGP::globals::Training_case_min_error_type &local)
-			{
-				for (unsigned int example_case = 0; example_case < domain::argmap::number_of_training_cases; example_case++)
-				{
-					if (training_case_min_error.minimum_error_array_by_example_case[example_case] > local.minimum_error_array_by_example_case[example_case])
-					{
-						training_case_min_error.minimum_error_array_by_example_case[example_case] = local.minimum_error_array_by_example_case[example_case];
-						training_case_min_error.individual_with_minimum_error_for_training_case[example_case] = local.individual_with_minimum_error_for_training_case[example_case];
-					}
-				}
-			});
+		//	// Combine the Training Case Minimum Errors
+		//	training_case_min_error_sub_computations.combine_each([&](pushGP::globals::Training_case_min_error_type &local)
+		//	{
+		//		for (unsigned int example_case = 0; example_case < domain::argmap::number_of_training_cases; example_case++)
+		//		{
+		//			if (training_case_min_error.minimum_error_array_by_example_case[example_case] > local.minimum_error_array_by_example_case[example_case])
+		//			{
+		//				training_case_min_error.minimum_error_array_by_example_case[example_case] = local.minimum_error_array_by_example_case[example_case];
+		//				training_case_min_error.individual_with_minimum_error_for_training_case[example_case] = local.individual_with_minimum_error_for_training_case[example_case];
+		//			}
+		//		}
+		//	});
 
-			// Keep the best individuals for each test case
-			if (_include_best_individual_in_breeding_pool)
-			{
-				for (unsigned int training_case = 0; training_case < domain::argmap::number_of_training_cases; training_case++)
-				{
-					unsigned int best_individual_for_training_case = training_case_min_error.individual_with_minimum_error_for_training_case[training_case];
+		//	// Keep the best individuals for each test case
+		//	if (_include_best_individual_in_breeding_pool)
+		//	{
+		//		for (unsigned int training_case = 0; training_case < domain::argmap::number_of_training_cases; training_case++)
+		//		{
+		//			unsigned int best_individual_for_training_case = training_case_min_error.individual_with_minimum_error_for_training_case[training_case];
 
-					if (best_individual_for_training_case < (std::numeric_limits<unsigned int>::max)())
-						pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);
-				}
-			}
+		//			if (best_individual_for_training_case < (std::numeric_limits<unsigned int>::max)())
+		//				pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);
+		//		}
+		//	}
 
-			std::cout << std::endl;
-		}
+		//	std::cout << std::endl;
+		//}
 
 		void install_next_generation()
 		{
-			for (unsigned int n = 0; n < argmap::population_size; n++)
+			for (unsigned long n = 0; n < argmap::population_size; n++)
 				pushGP::globals::population_agents[n].copy(pushGP::globals::child_agents[n]);
 		}
 
@@ -1499,11 +1492,11 @@ namespace domain
 							env, 
 							run_individual_threadsafe,
 							argmap::number_of_training_cases);
-					else if (argmap::use_PPL)
-						best_individual_score_error = parallel_compute_training_errors(
-							env,
-							run_individual_threadsafe,
-							argmap::number_of_training_cases);
+					//else if (argmap::use_PPL)
+					//	best_individual_score_error = parallel_compute_training_errors(
+					//		env,
+					//		run_individual_threadsafe,
+					//		argmap::number_of_training_cases);
 					else
 						best_individual_score_error = compute_training_errors(env, run_individual_threadsafe, argmap::number_of_training_cases);
 
@@ -1522,13 +1515,13 @@ namespace domain
 					Utilities::flush_trace_queue();
 #endif
 
-					if (argmap::use_PPL)
-						parallel_produce_new_offspring(argmap::number_of_training_cases,
-							best_individual,
-							sa,
-							include_best_individual_in_breeding_pool);
+					//if (argmap::use_PPL)
+					//	parallel_produce_new_offspring(argmap::number_of_training_cases,
+					//		best_individual,
+					//		sa,
+					//		include_best_individual_in_breeding_pool);
 
-					else
+					//else
 						produce_new_offspring(argmap::number_of_training_cases,
 							best_individual,
 							sa,

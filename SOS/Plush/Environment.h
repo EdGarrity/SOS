@@ -67,11 +67,11 @@ namespace Plush
 
 		// Debug - Rember current state
 		std::string current_instruction;
-		size_t current_effort;
-		size_t current_unit;
-		int current_thread = 0;
-		int individual_index = 0;
-		int example_case = 0;
+		unsigned long current_effort;
+		unsigned long current_unit;
+		unsigned long current_thread = 0;
+		unsigned long individual_index = 0;
+		unsigned long example_case = 0;
 
 		inline void set_current_thread(int new_current_thread)
 		{
@@ -230,7 +230,7 @@ namespace Plush
 			Func2CodeMap.erase(function_name);
 		}
 
-		void enable_function(size_t function_index)
+		void enable_function(unsigned long function_index)
 		{
 			//KnownInstructionsMap.insert(static_initializer.get_function_name(function_index));
 			//KnownInstructionsMap[static_initializer.get_function_name(function_index)] = true;
@@ -280,35 +280,35 @@ namespace Plush
 		}
 
 		template<typename T>
-		size_t length()
+		unsigned long length()
 		{
 			Genome<T>& stack = get_stack<T>();
 			return stack.size();
 		}
 
 		template<>
-		size_t length<CodeAtom>()
+		unsigned long length<CodeAtom>()
 		{
 			Genome<CodeAtom>& genome = get_stack<CodeAtom>();
 			return genome.number_of_blocks();
 		}
 
 		template<>
-		size_t length<ExecAtom>()
+		unsigned long length<ExecAtom>()
 		{
 			Genome<ExecAtom>& genome = get_stack<ExecAtom>();
 			return genome.number_of_blocks();
 		}
 
 		template<typename T>
-		bool assert_length(unsigned int needed)
+		bool assert_length(unsigned long needed)
 		{
 			Genome<T>& stack = get_stack<T>();
 			return stack.size() >= needed;
 		}
 
 		template<>
-		bool assert_length<CodeAtom>(unsigned int needed)
+		bool assert_length<CodeAtom>(unsigned long needed)
 		{
 			Genome<CodeAtom>& genome = get_stack<CodeAtom>();
 			//return genome.number_of_blocks() >= needed;
@@ -317,7 +317,7 @@ namespace Plush
 		}
 
 		template<>
-		bool assert_length<ExecAtom>(unsigned int needed)
+		bool assert_length<ExecAtom>(unsigned long needed)
 		{
 			Genome<ExecAtom>& genome = get_stack<ExecAtom>();
 			//return genome.number_of_blocks() >= needed;
@@ -360,7 +360,7 @@ namespace Plush
 		/* pushing and popping */
 
 		template <typename T>
-		inline unsigned int push(T value)
+		inline unsigned long push(T value)
 		{
 			get_stack<T>().push(value);
 			return 1;
@@ -376,10 +376,10 @@ namespace Plush
 
 			else
 			{
-				size_t starting_index = code_stack.position_to_index(genome_section.ending_position);
-				size_t ending_index = code_stack.position_to_index(genome_section.starting_position) + 1;
+				unsigned long starting_index = code_stack.position_to_index(genome_section.ending_position);
+				unsigned long ending_index = code_stack.position_to_index(genome_section.starting_position) + 1;
 
-				for (size_t n = starting_index; n < ending_index; n++)
+				for (unsigned long n = starting_index; n < ending_index; n++)
 					push(T(code_stack.get_atom_at_index(n)));
 			}
 		}
@@ -394,10 +394,10 @@ namespace Plush
 
 			else
 			{
-				size_t starting_index = stack.position_to_index(genome_section.ending_position);
-				size_t ending_index = stack.position_to_index(genome_section.starting_position) + 1;
+				unsigned long starting_index = stack.position_to_index(genome_section.ending_position);
+				unsigned long ending_index = stack.position_to_index(genome_section.starting_position) + 1;
 
-				for (size_t n = starting_index; n < ending_index; n++)
+				for (unsigned long n = starting_index; n < ending_index; n++)
 					push(T(stack.get_atom_at_index(n)));
 			}
 		}
@@ -434,7 +434,7 @@ namespace Plush
 		}
 
 		template <class T>
-		inline Genome_section<T> peek_genome(unsigned int position)
+		inline Genome_section<T> peek_genome(unsigned long position)
 		{
 			std::stringstream error_message;
 			error_message << "reference Environment::peek_genome() - Function not defined for this type of stack";
@@ -445,13 +445,13 @@ namespace Plush
 		}
 
 		template <>
-		inline Genome_section<CodeAtom> peek_genome<CodeAtom>(unsigned int position)
+		inline Genome_section<CodeAtom> peek_genome<CodeAtom>(unsigned long position)
 		{
 			return get_stack<CodeAtom>()[position];
 		}
 
 		template <>
-		inline Genome_section<ExecAtom> peek_genome<ExecAtom>(unsigned int position)
+		inline Genome_section<ExecAtom> peek_genome<ExecAtom>(unsigned long position)
 		{
 			return get_stack<ExecAtom>()[position];
 		}
@@ -497,7 +497,7 @@ namespace Plush
 		virtual Type make_type() const;
 
 		/* Needed for type checking of preconditions */
-		inline size_t get_stack_size(unsigned int which) //const
+		inline unsigned long get_stack_size(unsigned int which) //const
 		{
 			switch (which)
 			{
@@ -511,7 +511,7 @@ namespace Plush
 		}
 
 		/* Needed for type checking of preconditions */
-		inline bool check_stack_size_at_least(unsigned int which, unsigned int size_needed) //const
+		inline bool check_stack_size_at_least(unsigned long which, unsigned long size_needed) //const
 		{
 			switch (which)
 			{
@@ -525,7 +525,7 @@ namespace Plush
 		}
 
 		/* Needed for type checking of post conditions */
-		inline size_t get_stack_free(unsigned int which) //const
+		inline unsigned long get_stack_free(unsigned long which) //const
 		{
 			switch (which)
 			{
@@ -539,7 +539,7 @@ namespace Plush
 		}
 
 		template <typename T>
-		inline size_t position_to_index(size_t position)
+		inline unsigned long position_to_index(unsigned long position)
 		{
 			return get_stack<T>().position_to_index(position);
 		}

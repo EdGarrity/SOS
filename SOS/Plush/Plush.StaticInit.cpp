@@ -68,19 +68,19 @@ namespace Plush
 	//	Func2BlockWantsMap[func_name] = block_wants;
 	//};
 
-	size_t StaticInit::number_of_functions()
+	unsigned long StaticInit::number_of_functions()
 	{
 		return function_names.size();
 	}
 
-	std::string StaticInit::get_function_name(size_t function_index)
+	std::string StaticInit::get_function_name(unsigned long function_index)
 	{
 		return function_names[function_index % number_of_functions()];
 	}
 
-	size_t StaticInit::get_function_index(std::string function_name)
+	unsigned long StaticInit::get_function_index(std::string function_name)
 	{
-		for (size_t n = 0; n < function_names.size(); n++)
+		for (unsigned long n = 0; n < function_names.size(); n++)
 			if (function_names[n] == function_name)
 				return n;
 
@@ -97,7 +97,7 @@ namespace Plush
 		return Func2CodeMap[function_name];
 	}
 
-	Instruction* StaticInit::get_function(size_t function_index)
+	Instruction* StaticInit::get_function(unsigned long function_index)
 	{
 		return Func2CodeMap[function_names[function_index % number_of_functions()]];
 	}

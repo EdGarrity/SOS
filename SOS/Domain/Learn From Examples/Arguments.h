@@ -21,9 +21,9 @@ namespace domain
 		//	;; When true, will only use a single thread.
 		const bool use_multithreading = true;
 		const bool use_PPL = false;
-		const unsigned int number_of_cores_to_reserve = 4;
-		const unsigned int max_threads = 24;
-		const unsigned thread_chunk_size = 1; // 100;  // Number of threads per chunk.
+		const unsigned long number_of_cores_to_reserve = 4;
+		const unsigned long max_threads = 24;
+		const unsigned long thread_chunk_size = 1; // 100;  // Number of threads per chunk.
 
 		// CPU temperature monitoring
 		const std::string GetCpuTemperatureCmd = "C:\\Users\\edgar\\OneDrive\\Projects\\Source\\Repos\\EdGarrity\\SOS\\Debug\\GetCpuTemperature.exe";
@@ -58,14 +58,14 @@ namespace domain
 		//		;; The instructions that pushgp will use in random code.
 
 		// Number of individuals in the population.
-		const unsigned int population_size = 10000; // 100; // 20000; // 200'000;
+		const unsigned long population_size = 10000; // 100; // 20000; // 200'000;
 
 		// The maximum number of generations to run GP.
-		const unsigned int max_generations_in_one_session = 10000;
+		const unsigned long max_generations_in_one_session = 10000;
 
 		//		;; The limit for the number of point(instruction) evaluations to
 		//		;; execute during the run.
-		const unsigned int max_point_evaluations = 10'000;  //10,000,000; //INT_MAX; // 100000; // 10e100
+		const unsigned long max_point_evaluations = 10'000;  //10,000,000; //INT_MAX; // 100000; // 10e100
 
 			//		:genome - representation : plush
 			//		;; The representation for the genomes used for initialiation and inheritance.
@@ -74,26 +74,26 @@ namespace domain
 		// Maximum size of push programs and push code, as counted by points
 		// in the program. 1 / 4 this limit is used as the limit for sizes of
 		// Plush genomes.
-		const unsigned int max_points = maximum_stack_size - 1;
+		const unsigned long max_points = maximum_stack_size - 1;
 
 		// Maximum size of initial Plush genomes in generation 0. Keep in mind
 		// that genome lengths will otherwise be limited by 1 / 4 of :max - points.
-		const unsigned int max_genome_size_in_initial_program = max_points / 4;
+		const unsigned long max_genome_size_in_initial_program = max_points / 4;
 
 		// Number of Available Training Cases
-		const long int number_of_training_cases = 100;
+		const long long number_of_training_cases = 100;
 
 		// Number of Available Test Cases
-		const long int number_of_test_cases = 100;
+		const long long number_of_test_cases = 100;
 
 		// Minimum length of an example case
-		const long int example_case_min_length = 2;
+		const long long example_case_min_length = 2;
 
 		// Maximum length of an example case
-		const long int example_case_max_length = 4;
+		const long long example_case_max_length = 4;
 		
 		// Upper range of values in the example case
-		const long int example_case_upper_range = 1'000;
+		const long long example_case_upper_range = 1'000;
 
 		//// Date range for training
 		//const long int training_start_index = 0;
@@ -203,8 +203,8 @@ namespace domain
 		// When generating a constant, the range of possible values the constant can be
 		const double float_min = ((std::numeric_limits<double>::lowest)() / 2.0);
 		const double float_max = ((std::numeric_limits<double>::max)() / 2.0);
-		const int int_min = (std::numeric_limits<int>::lowest)();
-		const int int_max = (std::numeric_limits<int>::max)();
+		const long int_min = (std::numeric_limits<int>::lowest)();
+		const long int_max = (std::numeric_limits<int>::max)();
 
 		// When using alternation, the probability of alternating between the parents when moving
 		// to the next gene.
@@ -212,7 +212,7 @@ namespace domain
 
 		// When using alternation, the standard deviation of how far alternation may jump between
 		// indices when switching between parents.
-		const unsigned int alignment_deviation = 10;
+		const unsigned long alignment_deviation = 10;
 
 		// The probability of each token being mutated during uniform mutation.
 		const double uniform_mutation_rate = 0.20;
