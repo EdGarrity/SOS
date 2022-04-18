@@ -80,12 +80,12 @@ namespace Utilities
 		}
 		catch (std::invalid_argument const& ex)
 		{
-			std::cerr << "isFloat(" << str << ") std::invalid_argument::what() : " << ex.what() << '\n';
+			//std::cerr << "isFloat(" << str << ") std::invalid_argument::what() : " << ex.what() << '\n';
 			return false;
 		}
 		catch (std::out_of_range const& ex)
 		{
-			std::cerr << "isFloat(" << str << ") std::out_of_range::what(): " << ex.what() << '\n';
+			//std::cerr << "isFloat(" << str << ") std::out_of_range::what(): " << ex.what() << '\n';
 			return false;
 		}
 
@@ -111,12 +111,12 @@ namespace Utilities
 		}
 		catch (std::invalid_argument const& ex)
 		{
-			std::cerr << "isNumber(" << str << ") std::invalid_argument::what() : " << ex.what() << '\n';
+			//std::cerr << "isNumber(" << str << ") std::invalid_argument::what() : " << ex.what() << '\n';
 			return false;
 		}
 		catch (std::out_of_range const& ex)
 		{
-			std::cerr << "isNumber(" << str << ") std::out_of_range::what(): " << ex.what() << '\n';
+			//std::cerr << "isNumber(" << str << ") std::out_of_range::what(): " << ex.what() << '\n';
 			return false;
 		}
 

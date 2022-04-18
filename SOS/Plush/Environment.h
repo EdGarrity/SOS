@@ -41,7 +41,7 @@ namespace Plush
 		std::array<std::string, domain::argmap::maximum_stack_size> temp_genes;
 
 		// State of Worker Thread
-		enum RunningState
+		enum class RunningState
 		{
 			Idle = 0,
 			Waiting,

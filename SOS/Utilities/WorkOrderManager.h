@@ -19,12 +19,12 @@ namespace Utilities
 		struct WorkOrder
 		{
 			size_t individual_index;
-			int example_case;
+			int example_case = 0;
 			std::vector<double> example_problem;
 			std::vector<double> example_solution;
 		};
 
-		enum QueueState
+		enum class QueueState
 		{
 			Stopped = 0,
 			Running
