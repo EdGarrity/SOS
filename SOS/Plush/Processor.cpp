@@ -81,11 +81,11 @@ namespace Plush
 	unsigned int run(Environment& env, unsigned _max_effort)
 	{
 		// The basic pop-exec cycle
-		size_t effort = 0;
-		size_t unit = 0;
+		unsigned int effort = 0;
+		unsigned int unit = 0;
 
 		// Debug
-		size_t debug_ip = 0;
+		unsigned int debug_ip = 0;
 
 		while ((!env.is_empty<ExecAtom>()) && (effort < _max_effort))
 		{

@@ -1326,7 +1326,7 @@ namespace Plush
 				search_starting_index -= item_length;
 			}
 
-			size_t starting_position = (item_ending_position > item_length) ? (item_ending_position - item_length) : 0;
+			unsigned long starting_position = (item_ending_position > item_length) ? (item_ending_position - item_length) : 0;
 			subsection.set(starting_position, item_length, extra_blocks);
 			return subsection;
 		};
@@ -1997,7 +1997,7 @@ namespace Plush
 				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::yank_stack_element", debug);
 			}
 #endif
-			size_t effort = 0;
+			unsigned long effort = 0;
 
 			if (element_pos > 0)
 			{
@@ -2324,7 +2324,7 @@ namespace Plush
 			// If length of Block A is less than Block B + 1, then it is too small to contain Block B
 			if (block_a.size > block_b.size)
 			{
-				for (size_t block_a_section_position = block_a.starting_position;
+				for (unsigned long block_a_section_position = block_a.starting_position;
 					block_a_section_position <= block_a.ending_position;
 					block_a_section_position++)
 				{
@@ -2371,7 +2371,7 @@ namespace Plush
 			// If length of Block A is less than Block B + 1, then it is too small to contain Block B
 			if (block_a.size > block_b.size)
 			{
-				for (size_t block_a_section_position = block_a.starting_position;
+				for (unsigned long block_a_section_position = block_a.starting_position;
 					block_a_section_position <= block_a.ending_position;
 					block_a_section_position++)
 				{

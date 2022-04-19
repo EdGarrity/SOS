@@ -26,7 +26,7 @@ namespace pushGP
 		//extern Utilities::ThreadSafeArray_2D<double, domain::argmap::number_of_training_cases, domain::argmap::population_size> error_matrix;
 		//extern std::array<std::array<std::atomic<double>, domain::argmap::population_size>, domain::argmap::number_of_training_cases> error_matrix;
 		extern Utilities::ThreadSafeArray_2D<double, domain::argmap::number_of_training_cases, domain::argmap::population_size> error_matrix;
-		extern Utilities::ThreadSafeArray_2D<size_t, domain::argmap::number_of_training_cases, domain::argmap::population_size> effort_matrix;
+		extern Utilities::ThreadSafeArray_2D<unsigned long, domain::argmap::number_of_training_cases, domain::argmap::population_size> effort_matrix;
 
 		struct Training_case_min_error
 		{

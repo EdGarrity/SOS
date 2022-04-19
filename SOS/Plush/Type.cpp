@@ -75,19 +75,19 @@ namespace Plush
 
 	bool Type::operator==(/*const*/ Type & other) // const
 	{
-		unsigned mins = std::min(type.size(), other.type.size());
+		unsigned long mins = (unsigned long)std::min(type.size(), other.type.size());
 
-		for (unsigned i = 0; i < mins; ++i)
+		for (unsigned long i = 0; i < mins; ++i)
 		{
 			if (type[i] != other.type[i]) return false;
 		}
 
-		for (unsigned i = mins; i < type.size(); ++i)
+		for (unsigned long i = mins; i < type.size(); ++i)
 		{
 			if (type[i] != 0) return false;
 		}
 
-		for (unsigned i = mins; i < other.type.size(); ++i)
+		for (unsigned long i = mins; i < other.type.size(); ++i)
 		{
 			if (other.type[i] != 0) return false;
 		}

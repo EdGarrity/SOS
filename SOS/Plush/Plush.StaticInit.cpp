@@ -70,7 +70,7 @@ namespace Plush
 
 	unsigned long StaticInit::number_of_functions()
 	{
-		return function_names.size();
+		return (unsigned long)function_names.size();
 	}
 
 	std::string StaticInit::get_function_name(unsigned long function_index)

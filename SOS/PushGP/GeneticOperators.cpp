@@ -188,7 +188,7 @@ namespace pushGP
 		{
 			if (Utilities::random_double(0.0, 1.0) < domain::argmap::alternation_rate)
 			{
-				i = std::fmax(0.0, i + std::round(domain::argmap::alignment_deviation * gaussian_noise_factor()));
+				i = (unsigned int)std::fmax(0.0, i + std::round(domain::argmap::alignment_deviation * gaussian_noise_factor()));
 				use_s1 = !use_s1;
 				iteration_budget--;
 			}

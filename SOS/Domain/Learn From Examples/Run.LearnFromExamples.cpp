@@ -384,10 +384,10 @@ namespace domain
 			return training_case_index + test_case_index;
 		}
 
-		unsigned int make_example_cases(int _example_cases_loaded)
+		unsigned long make_example_cases(unsigned long _example_cases_loaded)
 		{
-			unsigned int training_cases_created = 0;
-			unsigned int test_cases_created = 0;
+			unsigned long training_cases_created = 0;
+			unsigned long test_cases_created = 0;
 
 			//// Simple sorting test cases
 			//if (_example_cases_loaded < argmap::number_of_training_cases)

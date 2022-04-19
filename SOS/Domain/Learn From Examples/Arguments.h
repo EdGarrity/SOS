@@ -7,9 +7,9 @@ namespace domain
 	namespace argmap
 	{
 		// Default maximum size of the stack buffer.  Must be greater than max_points
-		const unsigned int maximum_stack_size = 2000;
+		const unsigned long maximum_stack_size = 2000;
 
-		const unsigned int maximum_stack_dept = 100;
+		const unsigned long maximum_stack_dept = 100;
 
 		const double PI = 3.141592653589793238463;
 
@@ -81,19 +81,19 @@ namespace domain
 		const unsigned long max_genome_size_in_initial_program = max_points / 4;
 
 		// Number of Available Training Cases
-		const long long number_of_training_cases = 100;
+		const unsigned long number_of_training_cases = 100;
 
 		// Number of Available Test Cases
-		const long long number_of_test_cases = 100;
+		const unsigned long number_of_test_cases = 100;
 
 		// Minimum length of an example case
-		const long long example_case_min_length = 2;
+		const unsigned long example_case_min_length = 2;
 
 		// Maximum length of an example case
-		const long long example_case_max_length = 4;
+		const unsigned long example_case_max_length = 4;
 		
 		// Upper range of values in the example case
-		const long long example_case_upper_range = 1'000;
+		const unsigned long example_case_upper_range = 1'000;
 
 		//// Date range for training
 		//const long int training_start_index = 0;
