@@ -58,14 +58,14 @@ namespace domain
 		//		;; The instructions that pushgp will use in random code.
 
 		// Number of individuals in the population.
-		const unsigned long population_size = 10000; // 100; // 20000; // 200'000;
+		const unsigned long population_size = 1000; // 100; // 20000; // 200'000;
 
 		// The maximum number of generations to run GP.
 		const unsigned long max_generations_in_one_session = 10000;
 
 		//		;; The limit for the number of point(instruction) evaluations to
 		//		;; execute during the run.
-		const unsigned long max_point_evaluations = 10'000;  //10,000,000; //INT_MAX; // 100000; // 10e100
+		const unsigned long max_point_evaluations = 10000;  //10,000,000; //INT_MAX; // 100000; // 10e100
 
 			//		:genome - representation : plush
 			//		;; The representation for the genomes used for initialiation and inheritance.

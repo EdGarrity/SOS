@@ -8,6 +8,7 @@
 #include "..\Utilities\String.h"
 #include "..\Utilities\WorkOrderManager.h"
 #include "..\Utilities\Debug.h"
+#include "..\PushGP\Globals.h"
 
 #if DLEVEL > 0
 extern std::atomic_bool debug_push;
@@ -101,6 +102,11 @@ namespace Plush
 
 				// Debug - Remember current instruction
 				env.current_instruction = atom.instruction_name;
+
+				for (int n = 0; n < atom.instruction_name.length(); n++)
+					pushGP::globals::thread_current_instruction.store(env.current_thread, n, env.current_thread, atom.instruction_name[n]);
+
+				pushGP::globals::thread_current_instruction.store(env.current_thread, atom.instruction_name.length(), env.current_thread, 0);
 
 #if DLEVEL > 0
 				if (debug_push.load(std::memory_order_acquire))

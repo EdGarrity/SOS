@@ -264,8 +264,8 @@ namespace Utilities
 				debug_message = "wait_for_queue_to_empty,queue_size=" + std::to_string(queue_size);
 				debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 #endif
-				//debug_message = "wait_for_queue_to_empty,queue_size=" + std::to_string(queue_size);
-				//std::cout << debug_message << std::endl;
+				debug_message = "wait_for_queue_to_empty,queue_size=" + std::to_string(queue_size);
+				std::cout << debug_message << std::endl;
 
 			} while (queue_size > 0);
 
@@ -291,18 +291,35 @@ namespace Utilities
 					std::this_thread::sleep_for(10s);
 
 				long count = 0;
+				long hanging_thread = 0;
+
+				//for (int i = 0; i < num_threads_; i++)
+				//{
+				//	if (running_state[i].load(std::memory_order_acquire) == Plush::Environment::RunningState::Running)
+				//	{
+				//		count++;
+				//		all_done = false;
+				//		break;
+				//	}
+
+				//	all_done = true;
+				//}
 
 				for (int i = 0; i < num_threads_; i++)
 				{
 					if (running_state[i].load(std::memory_order_acquire) == Plush::Environment::RunningState::Running)
 					{
 						count++;
-						all_done = false;
-						break;
+						hanging_thread = i;
 					}
-
-					all_done = true;
 				}
+
+				if (count > 0)
+					all_done = false;
+
+				else
+					all_done = true;
+
 
 #if DLEVEL > 0
 				if (count == 1)
@@ -311,6 +328,23 @@ namespace Utilities
 				else
 					debug_push.store(false, std::memory_order_release);
 #endif
+
+				std::string current_instruction;
+
+				int n = 0;
+				char ch = 0;
+				do
+				{
+					ch = pushGP::globals::thread_current_instruction.load(n, hanging_thread);
+
+					if (ch != 0)
+						current_instruction += ch;
+
+				} while (ch != 0);
+
+				std::this_thread::sleep_for(50s);
+				debug_message = "wait_for_queue_to_empty,count=" + std::to_string(count) + ",current_instruction=" + current_instruction;
+				std::cout << debug_message << std::endl;
 			} while (all_done == false);
 
 #if DLEVEL > 0

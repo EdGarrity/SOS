@@ -28,6 +28,8 @@ namespace pushGP
 		extern Utilities::ThreadSafeArray_2D<double, domain::argmap::number_of_training_cases, domain::argmap::population_size> error_matrix;
 		extern Utilities::ThreadSafeArray_2D<unsigned long, domain::argmap::number_of_training_cases, domain::argmap::population_size> effort_matrix;
 
+		extern Utilities::ThreadSafeArray_2D<char, 80, domain::argmap::population_size> thread_current_instruction;
+
 		struct Training_case_min_error
 		{
 			double minimum_error_array_by_example_case[domain::argmap::number_of_training_cases];
