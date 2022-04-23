@@ -115,7 +115,7 @@ namespace Plush
 	template<>
 	inline unsigned long yankdup<ExecAtom>(Environment & _env)
 	{
-		return _env.get_stack<CodeAtom>().yankdup_stack_element(pop_safe_position<ExecAtom>(_env));
+		return _env.get_stack<ExecAtom>().yankdup_stack_element(pop_safe_position<ExecAtom>(_env));
 	}
 
 	template <typename T>
