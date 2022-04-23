@@ -10,6 +10,9 @@
 #include "..\PushGP\Globals.h"
 #include "Debug.h"
 
+#include <iostream>
+#include <iomanip>
+
 #if DLEVEL > 0
 std::atomic_bool debug_push = ATOMIC_FLAG_INIT;
 #endif
@@ -244,6 +247,14 @@ namespace Utilities
 #if DLEVEL > 0
 		debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", "entry_point");
 #endif
+
+		for (int i = 0; i < num_threads_; i++)
+		{
+			pushGP::globals::thread_effort[i] = 0;
+			pushGP::globals::thread_exec_size[i] = 0;
+		}
+
+
 		if (num_threads_ > 0)
 		{
 			long queue_size = 0;
@@ -284,8 +295,15 @@ namespace Utilities
 			// wait for all threads to stop
 			bool all_done = true;
 
+			std::cout << "Queue empty" << std::endl << std::endl;
+
 			do
 			{
+				std::cout << std::endl;
+				std::cout << std::endl;
+				std::cout << std::setw(30) << "N" << std::setw(30) << "effort" << std::setw(30) << "exec_size" << std::endl;
+				std::cout << std::setw(30) << "-" << std::setw(30) << "---------" << std::endl;
+
 				// Don't do the first time.
 				if (all_done == false)
 					std::this_thread::sleep_for(10s);
@@ -311,6 +329,11 @@ namespace Utilities
 					{
 						count++;
 						hanging_thread = i;
+
+						unsigned long effort = pushGP::globals::thread_effort[i];
+						unsigned long exec_size = pushGP::globals::thread_exec_size[i];
+
+						std::cout << std::setw(30) << i << std::setw(30) << effort << std::setw(30) << exec_size  << std::endl;
 					}
 				}
 
@@ -329,22 +352,25 @@ namespace Utilities
 					debug_push.store(false, std::memory_order_release);
 #endif
 
-				std::string current_instruction;
+				char current_instruction[81];
 
-				int n = 0;
-				char ch = 0;
-				do
-				{
-					ch = pushGP::globals::thread_current_instruction.load(n, hanging_thread);
+				//int n = 0;
+				//char ch = 0;
+				//do
+				//{
+				//	ch = pushGP::globals::thread_current_instruction.load(n, hanging_thread);
 
-					if (ch != 0)
-						current_instruction += ch;
+				//	if (ch != 0)
+				//		current_instruction += ch;
 
-				} while (ch != 0);
+				//} while (ch != 0);
+
+				//strcpy_s(current_instruction, 80, pushGP::globals::thread_current_instruction[hanging_thread]);
+				//current_instruction[80] = '\0';
 
 				std::this_thread::sleep_for(50s);
-				debug_message = "wait_for_queue_to_empty,count=" + std::to_string(count) + ",current_instruction=" + current_instruction;
-				std::cout << debug_message << std::endl;
+				//debug_message = "wait_for_queue_to_empty,count=" + std::to_string(count) + ",current_instruction=" + current_instruction;
+				//std::cout << debug_message << std::endl;
 			} while (all_done == false);
 
 #if DLEVEL > 0

@@ -92,6 +92,9 @@ namespace Plush
 		{
 			try
 			{
+				pushGP::globals::thread_effort[env.current_thread] = effort;
+				pushGP::globals::thread_exec_size[env.current_thread] = env.get_stack<ExecAtom>().size();
+
 				env.current_effort = effort;
 				env.current_unit = unit;
 				unit = 0;
@@ -103,11 +106,14 @@ namespace Plush
 				// Debug - Remember current instruction
 				env.current_instruction = atom.instruction_name;
 
-				for (int n = 0; n < atom.instruction_name.length(); n++)
-					pushGP::globals::thread_current_instruction.store(env.current_thread, n, env.current_thread, atom.instruction_name[n]);
+				//for (int n = 0; n < atom.instruction_name.length(); n++)
+				//	pushGP::globals::thread_current_instruction.store(env.current_thread, n, env.current_thread, atom.instruction_name[n]);
 
-				pushGP::globals::thread_current_instruction.store(env.current_thread, atom.instruction_name.length(), env.current_thread, 0);
+				//pushGP::globals::thread_current_instruction.store(env.current_thread, atom.instruction_name.length(), env.current_thread, 0);
 
+				//strcpy_s(pushGP::globals::thread_current_instruction[env.current_thread], 80, atom.instruction_name.c_str());
+				//pushGP::globals::thread_current_instruction[env.current_thread][atom.instruction_name.length()] = '\0';
+				pushGP::globals::thread_current_instruction[env.current_thread][0] = '\0';
 #if DLEVEL > 0
 				if (debug_push.load(std::memory_order_acquire))
 				{
@@ -258,6 +264,8 @@ namespace Plush
 			//if (print_push.load(std::memory_order_acquire))
 			//	env_state[env.current_thread] = env.print_state();
 		}
+
+		pushGP::globals::thread_exec_size[env.current_thread] = 0;
 
 		return effort;
 	}

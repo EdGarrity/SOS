@@ -28,7 +28,10 @@ namespace pushGP
 		Utilities::ThreadSafeArray_2D<double, domain::argmap::number_of_training_cases, domain::argmap::population_size> error_matrix;
 		Utilities::ThreadSafeArray_2D<unsigned long, domain::argmap::number_of_training_cases, domain::argmap::population_size> effort_matrix;
 
-		Utilities::ThreadSafeArray_2D<char, 80, domain::argmap::population_size> thread_current_instruction;
+		//Utilities::ThreadSafeArray_2D<char, 80, domain::argmap::population_size> thread_current_instruction;
+		char thread_current_instruction[domain::argmap::max_threads][81];
+		unsigned long thread_effort[domain::argmap::max_threads];
+		unsigned long thread_exec_size[domain::argmap::max_threads];
 
 		// Used in epsilon lexicase. Only calculated once per population
 		std::vector<double> epsilons;
