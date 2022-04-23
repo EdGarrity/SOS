@@ -93,28 +93,28 @@ namespace Utilities
 			return top_ == 0;
 		}
 
-		inline unsigned long copy(const FixedSizeStack<T>& other)
-		{
-			if (other->top_ >= N)
-			{
-				std::stringstream error_message;
-				error_message << "Utilities::FixedSizeStack::copy() - Stack overflow.  top = " << other->top_;
+		//inline unsigned long copy(const FixedSizeStack<T>& other)
+		//{
+		//	if (other->top_ >= N)
+		//	{
+		//		std::stringstream error_message;
+		//		error_message << "Utilities::FixedSizeStack::copy() - Stack overflow.  top = " << other->top_;
 
-				throw std::overflow_error(error_message.str());
-			}
+		//		throw std::overflow_error(error_message.str());
+		//	}
 
-			top_ = other->top_;
+		//	top_ = other->top_;
 
-			for (unsigned long n = 0; n < top_; n++)
-				stack_[n] = other->stack_[n];
+		//	for (unsigned long n = 0; n < top_; n++)
+		//		stack_[n] = other->stack_[n];
 
-			return top_;
-		}
+		//	return top_;
+		//}
 
-		FixedSizeStack operator= (const FixedSizeStack& other)
-		{
-			copy(other);
-		}
+		//FixedSizeStack operator= (const FixedSizeStack& other)
+		//{
+		//	copy(other);
+		//}
 
 		// These need to be rewritten to reference stack from top, not absolute
 		inline const_reference operator [] (unsigned long index) const
@@ -404,14 +404,20 @@ namespace Utilities
 				throw std::overflow_error(error_message.str());
 			}
 
-			position = (position >= top_) ? top_ - 1: position;
+			if (top_ > 0)
+			{
+				position = (position >= top_) ? top_ - 1 : position;
 
-			unsigned long index = top_ - position;
+				unsigned long index = top_ - position;
 
-			for (unsigned long i = top_; i >= index; i--)
-				stack_[i] = stack_[i - 1];
+				for (unsigned long i = top_; i >= index; i--)
+					stack_[i] = stack_[i - 1];
 
-			stack_[index] = atom;
+				stack_[index] = atom;
+			}
+
+			else
+				stack_[0] = atom;
 
 			top_++;
 
