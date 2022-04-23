@@ -1860,15 +1860,19 @@ namespace Plush
 				push(T("{:instruction EXEC.NOOP :close 1}"));
 
 			unsigned long sz = Utilities::FixedSizeStack<T>::size();
-			T& atom = Utilities::FixedSizeStack<T>::get_atom_at_index(sz - 1);
 
-			//unsigned long new_close_parenthesis = atom.close_parenthesis - section.extra_parenthesis;
-			//new_close_parenthesis = (new_close_parenthesis < 0) ? 0 : new_close_parenthesis;
+			if (sz > 1)
+			{
+				T& atom = Utilities::FixedSizeStack<T>::get_atom_at_index(sz - 1);
 
-			unsigned long new_close_parenthesis = (atom.close_parenthesis > section.extra_parenthesis) ? (atom.close_parenthesis - section.extra_parenthesis) : (0);
+				//unsigned long new_close_parenthesis = atom.close_parenthesis - section.extra_parenthesis;
+				//new_close_parenthesis = (new_close_parenthesis < 0) ? 0 : new_close_parenthesis;
 
-			if (atom.close_parenthesis > section.extra_parenthesis)
-				atom.close_parenthesis = new_close_parenthesis;
+				unsigned long new_close_parenthesis = (atom.close_parenthesis > section.extra_parenthesis) ? (atom.close_parenthesis - section.extra_parenthesis) : (0);
+
+				if (atom.close_parenthesis > section.extra_parenthesis)
+					atom.close_parenthesis = new_close_parenthesis;
+			}
 
 #if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))

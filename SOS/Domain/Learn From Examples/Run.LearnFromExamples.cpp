@@ -950,6 +950,9 @@ namespace domain
 
 			Utilities::work_order_manager.stop();
 
+			for (int i = 0; i < domain::argmap::max_threads; i++)
+				unsigned long instruction_index = pushGP::globals::thread_instruction_index[i] = 999998;
+
 			for (unsigned long example_case = 0; example_case < _number_of_example_cases; example_case++)
 			{
 				for (unsigned long individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
