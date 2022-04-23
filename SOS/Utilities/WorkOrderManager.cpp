@@ -341,7 +341,7 @@ namespace Utilities
 							instruction_name = "N/A";
 
 						else
-							instruction_name = Plush::static_initializer.get_function_name(instruction_index);;
+							instruction_name = Plush::static_initializer.get_function_name(instruction_index) + " (" + std::to_string(instruction_index) + ")";
 
 						std::cout << std::setw(30) << i 
 							<< std::setw(30) << effort 
