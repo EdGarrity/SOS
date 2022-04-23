@@ -94,6 +94,7 @@ namespace Plush
 			{
 				pushGP::globals::thread_effort[env.current_thread] = effort;
 				pushGP::globals::thread_exec_size[env.current_thread] = env.get_stack<ExecAtom>().size();
+				pushGP::globals::thread_instruction_index[env.current_thread] = 99999999;
 
 				env.current_effort = effort;
 				env.current_unit = unit;
@@ -177,6 +178,8 @@ namespace Plush
 						//Instruction * pI = Func2CodeMap[atom.instruction];
 						//Instruction * pI = static_initializer.get_function(atom.instruction_name);
 						Instruction* pI = env.get_function(atom.instruction_name);
+
+						pushGP::globals::thread_instruction_index[env.current_thread] = Plush::static_initializer.get_function_index(atom.instruction_name);;
 
 						if ((pI != nullptr) && (pI->can_run(env)))
 						{

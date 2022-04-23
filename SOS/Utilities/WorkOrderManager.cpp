@@ -9,6 +9,7 @@
 #include "..\Domain\Learn From Examples\ErrorFunction.LearnFromExample.h"
 #include "..\PushGP\Globals.h"
 #include "Debug.h"
+#include "..\Plush\Plush.StaticInit.h"
 
 #include <iostream>
 #include <iomanip>
@@ -301,8 +302,8 @@ namespace Utilities
 			{
 				std::cout << std::endl;
 				std::cout << std::endl;
-				std::cout << std::setw(30) << "N" << std::setw(30) << "effort" << std::setw(30) << "exec_size" << std::endl;
-				std::cout << std::setw(30) << "-" << std::setw(30) << "---------" << std::endl;
+				std::cout << std::setw(30) << "N" << std::setw(30) << "effort" << std::setw(30) << "exec_size" << std::setw(30) << "instruction" << std::endl;
+				std::cout << std::setw(30) << "-" << std::setw(30) << "------" << std::setw(30) << "---------" << std::setw(30) << "-----------" << std::endl;
 
 				// Don't do the first time.
 				if (all_done == false)
@@ -332,8 +333,21 @@ namespace Utilities
 
 						unsigned long effort = pushGP::globals::thread_effort[i];
 						unsigned long exec_size = pushGP::globals::thread_exec_size[i];
+						unsigned long instruction_index = pushGP::globals::thread_instruction_index[i];
 
-						std::cout << std::setw(30) << i << std::setw(30) << effort << std::setw(30) << exec_size  << std::endl;
+						std::string instruction_name;
+
+						if (instruction_index == 99999999)
+							instruction_name = "N/A";
+
+						else
+							instruction_name = Plush::static_initializer.get_function_name(instruction_index);;
+
+						std::cout << std::setw(30) << i 
+							<< std::setw(30) << effort 
+							<< std::setw(30) << exec_size 
+							<< std::setw(30) << instruction_name 
+							<< std::endl;
 					}
 				}
 
