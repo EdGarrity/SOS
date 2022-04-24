@@ -33,6 +33,8 @@ namespace pushGP
 		unsigned long thread_effort[domain::argmap::max_threads];
 		unsigned long thread_exec_size[domain::argmap::max_threads];
 		unsigned long thread_instruction_index[domain::argmap::max_threads];
+		unsigned long thread_individual_index[domain::argmap::max_threads];
+		unsigned long thread_example_case[domain::argmap::max_threads];
 
 		// Used in epsilon lexicase. Only calculated once per population
 		std::vector<double> epsilons;

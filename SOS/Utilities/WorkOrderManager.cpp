@@ -169,6 +169,9 @@ namespace Utilities
 					// Debug
 					env.set_current_individual_index(work_order.individual_index, work_order.example_case);
 
+					pushGP::globals::thread_individual_index[env_index] = work_order.individual_index;
+					pushGP::globals::thread_example_case[env_index] = work_order.example_case;
+
 					auto [ error, effort ] = domain::learn_from_examples::run_individual_threadsafe(env,
 						work_order.individual_index,
 						work_order.example_problem,
@@ -302,8 +305,8 @@ namespace Utilities
 			{
 				std::cout << std::endl;
 				std::cout << std::endl;
-				std::cout << std::setw(30) << "N" << std::setw(30) << "effort" << std::setw(30) << "exec_size" << std::setw(30) << "instruction" << std::endl;
-				std::cout << std::setw(30) << "-" << std::setw(30) << "------" << std::setw(30) << "---------" << std::setw(30) << "-----------" << std::endl;
+				std::cout << std::setw(30) << "N" << std::setw(30) << "effort" << std::setw(30) << "exec_size" << std::setw(30) << "instruction" << std::setw(30) << "individual" << std::setw(30) << "case"  << std::endl;
+				std::cout << std::setw(30) << "-" << std::setw(30) << "------" << std::setw(30) << "---------" << std::setw(30) << "-----------" << std::setw(30) << "----------" << std::setw(30) << "----" << std::endl;
 
 				// Don't do the first time.
 				if (all_done == false)
@@ -334,6 +337,8 @@ namespace Utilities
 						unsigned long effort = pushGP::globals::thread_effort[i];
 						unsigned long exec_size = pushGP::globals::thread_exec_size[i];
 						unsigned long instruction_index = pushGP::globals::thread_instruction_index[i];
+						unsigned long individual_index = pushGP::globals::thread_individual_index[i];
+						unsigned long example_case = pushGP::globals::thread_example_case[i];
 
 						std::string instruction_name;
 
@@ -347,6 +352,8 @@ namespace Utilities
 							<< std::setw(30) << effort 
 							<< std::setw(30) << exec_size 
 							<< std::setw(30) << instruction_name 
+							<< std::setw(30) << individual_index
+							<< std::setw(30) << example_case
 							<< std::endl;
 					}
 				}
