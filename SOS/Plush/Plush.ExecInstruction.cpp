@@ -609,18 +609,32 @@ namespace Plush
 		// Get reference to second block on stack
 		Genome_section<CodeAtom> block_b = genome[1];
 
+		//if (block_b.size == 0)
+		//	return 1;
+
 		// Get reference to first block on stack
 		Genome_section<CodeAtom> block_a = genome[0];
 
+		if (block_a.size == 0)
+			return 1;
+
 		// Get count items in first block
-		unsigned long number_of_items = genome.number_of_items(block_a);
+		unsigned long number_of_items_in_block_a = genome.number_of_items(block_a);
+
+		if (number_of_items_in_block_a == 0)
+			return 1;
+
+		unsigned long number_of_items_in_block_b = genome.number_of_items(block_b);
+
+		if (number_of_items_in_block_b == 0)
+			return 1;
 
 		// Take modulo the number of blocks to ensure that it is within the meaningful range.
 		if (item_number != 0)
 		{
 			long n = item_number - 1;
-			item_number = std::abs(n) % number_of_items + 1;
-			item_number = (item_number == number_of_items) ? 0 : item_number;
+				item_number = std::abs(n) % number_of_items_in_block_a + 1;
+				item_number = (item_number == number_of_items_in_block_a) ? 0 : item_number;
 		}
 
 		if (item_number == 0)
