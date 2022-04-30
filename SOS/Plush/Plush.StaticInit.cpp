@@ -1,6 +1,7 @@
 #include "Plush.StaticInit.h"
 #include "Environment.h"
 #include "Plush.Instruction.h"
+#include "..\Utilities\MyException.h"
 
 namespace Plush
 {
@@ -59,7 +60,10 @@ namespace Plush
 	void StaticInit::set_parentheses(std::string type, std::string name, unsigned int block_wants)
 	{
 		std::string func_name = type + "." + name;
-		Func2BlockWantsMap[func_name] = block_wants;
+		//Func2BlockWantsMap[func_name] = block_wants;
+
+		if (is_function_supported(func_name))
+			Func2BlockWantsMap[func_name] = block_wants;
 	};
 
 	//void StaticInit::set_parentheses(std::string name, unsigned int block_wants)
@@ -89,11 +93,29 @@ namespace Plush
 
 	unsigned int StaticInit::get_function_block_wants(std::string function_name)
 	{
-		return Func2BlockWantsMap[function_name];
+		//return Func2BlockWantsMap[function_name];
+
+		unsigned int blocks = 0;
+
+		try
+		{
+			blocks = Func2BlockWantsMap.at(function_name);
+		}
+		catch (const std::out_of_range& oor)
+		{
+			return 0;
+		}
+
+		return blocks;
 	}
 
 	Instruction * StaticInit::get_function(std::string function_name)
 	{
+		//return Func2CodeMap[function_name];
+
+		if (!is_function_supported(function_name))
+			throw MyException("StaticInit::get_function() out_of_range");
+
 		return Func2CodeMap[function_name];
 	}
 

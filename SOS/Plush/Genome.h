@@ -1146,14 +1146,14 @@ namespace Plush
 #endif
 			Genome_section<T> subsection;
 
-			unsigned long block_ending_index = 0;
-			unsigned long item_ending_position = 0;
+			long block_ending_index = 0;
+			long item_ending_position = 0;
 			long item_length = 0;
 
-			unsigned long wanted_blocks = 0;
-			unsigned long extra_blocks = 0;
+			long wanted_blocks = 0;
+			long extra_blocks = 0;
 			std::stack<unsigned long> wanted_stack;
-			unsigned long atom_count = 0;
+			long atom_count = 0;
 			long block_starting_index = (long)Utilities::FixedSizeStack<T>::size() - 1;
 
 			for (unsigned long item = 0; item <= item_number; item++)
@@ -1192,7 +1192,8 @@ namespace Plush
 						if (closing < 0)
 						{
 							wanted_stack.push(wanted_blocks);
-							wanted_blocks = 0 - closing;
+							//wanted_blocks = 0 - closing;
+							wanted_blocks = std::abs(closing);
 						}
 
 						extra_blocks += (closing > 1) ? (closing - 1) : (0);
@@ -1222,7 +1223,7 @@ namespace Plush
 				item_ending_position += atom_count;
 			}
 
-			unsigned long t = (item_ending_position > atom_count) ? item_ending_position - atom_count : 0;
+			long t = (item_ending_position > atom_count) ? item_ending_position - atom_count : 0;
 			subsection.set(t, atom_count, extra_blocks);
 
 #if DLEVEL > 0
