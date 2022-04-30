@@ -305,8 +305,8 @@ namespace Utilities
 			{
 				std::cout << std::endl;
 				std::cout << std::endl;
-				std::cout << std::setw(30) << "N" << std::setw(30) << "effort" << std::setw(30) << "exec_size" << std::setw(30) << "instruction" << std::setw(30) << "individual" << std::setw(30) << "case"  << std::endl;
-				std::cout << std::setw(30) << "-" << std::setw(30) << "------" << std::setw(30) << "---------" << std::setw(30) << "-----------" << std::setw(30) << "----------" << std::setw(30) << "----" << std::endl;
+				std::cout << "N" << std::setw(30) << "effort" << std::setw(30) << "exec_size" << std::setw(30) << "instruction" << std::setw(30) << "individual" << std::setw(30) << "case"  << std::endl;
+				std::cout << "-" << std::setw(30) << "------" << std::setw(30) << "---------" << std::setw(30) << "-----------" << std::setw(30) << "----------" << std::setw(30) << "----" << std::endl;
 
 				// Don't do the first time.
 				if (all_done == false)
@@ -348,7 +348,7 @@ namespace Utilities
 						else
 							instruction_name = Plush::static_initializer.get_function_name(instruction_index) + " (" + std::to_string(instruction_index) + ")";
 
-						std::cout << std::setw(30) << i 
+						std::cout << i 
 							<< std::setw(30) << effort 
 							<< std::setw(30) << exec_size 
 							<< std::setw(30) << instruction_name 

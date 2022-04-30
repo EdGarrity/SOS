@@ -959,14 +959,14 @@ namespace domain
 
 			for (unsigned long example_case = 0; example_case < _number_of_example_cases; example_case++)
 			{
-				//for (unsigned long individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
-				//{
-					unsigned long individual_index = 748;
+				for (unsigned long individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
+				{
+					//unsigned long individual_index = 125;
 					std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
 					std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
 
 					Utilities::work_order_manager.push(individual_index, example_case, example_problem, example_solution);
-				//}
+				}
 			}
 
 			Utilities::work_order_manager.start();
