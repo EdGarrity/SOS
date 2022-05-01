@@ -1152,11 +1152,11 @@ namespace Plush
 
 			long wanted_blocks = 0;
 			long extra_blocks = 0;
-			std::stack<unsigned long> wanted_stack;
+			std::stack<long> wanted_stack;
 			long atom_count = 0;
 			long block_starting_index = (long)Utilities::FixedSizeStack<T>::size() - 1;
 
-			for (unsigned long item = 0; item <= item_number; item++)
+			for (long item = 0; item <= item_number; item++)
 			{
 				atom_count = 0;
 
