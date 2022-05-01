@@ -24,8 +24,8 @@
 
 namespace Plush
 {
-	static thread_local unsigned long g_individual_index;
-	static thread_local unsigned long g_example_case;
+	extern thread_local unsigned long g_individual_index;
+	extern thread_local unsigned long g_example_case;
 
 
 
@@ -1150,13 +1150,12 @@ namespace Plush
 				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::get_item", debug);
 			}
 #endif
-
 			if ((g_individual_index == 124) && (g_example_case == 8))
 			{
 				std::cout << std::endl;
 				std::cout << std::endl;
-				std::cout << "item_number" << std::setw(30) << "item" << std::setw(30) << "i" << std::setw(30) << "closing" << std::setw(30) << "wanted_blocks" << std::setw(30) << "extra_blocks" << std::endl;
-				std::cout << "-----------" << std::setw(30) << "----" << std::setw(30) << "-" << std::setw(30) << "-------" << std::setw(30) << "-------------" << std::setw(30) << "------------" << std::endl;
+				std::cout << "item_number" << std::setw(15) << "item" << std::setw(15) << "i" << std::setw(15) << "closing" << std::setw(15) << "wanted_blocks" << std::setw(15) << "extra_blocks" << std::setw(20) << "instruction" << std::setw(15) << "close_parenthesis" << std::setw(15) << "block_wants" << std::endl;
+				std::cout << "-----------" << std::setw(15) << "----" << std::setw(15) << "-" << std::setw(15) << "-------" << std::setw(15) << "-------------" << std::setw(15) << "------------" << std::setw(20) << "-----------" << std::setw(15) << "-----------------" << std::setw(15) << "-----------" << std::endl;
 			}
 
 			Genome_section<T> subsection;
@@ -1203,6 +1202,7 @@ namespace Plush
 
 						//int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
 						long closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction_name);
+						unsigned int block_wants = static_initializer.get_function_block_wants(atom.instruction_name);
 
 						if (closing < 0)
 						{
@@ -1235,11 +1235,14 @@ namespace Plush
 						if ((g_individual_index == 124) && (g_example_case == 8))
 						{
 							std::cout << item_number
-								<< std::setw(30) << item
-								<< std::setw(30) << i
-								<< std::setw(30) << closing
-								<< std::setw(30) << wanted_blocks
-								<< std::setw(30) << extra_blocks
+								<< std::setw(15) << item
+								<< std::setw(15) << i
+								<< std::setw(15) << closing
+								<< std::setw(15) << wanted_blocks
+								<< std::setw(15) << extra_blocks
+								<< std::setw(20) << atom.instruction_name
+								<< std::setw(15) << atom.close_parenthesis
+								<< std::setw(15) << block_wants
 								<< std::endl;
 						}
 
@@ -1254,11 +1257,11 @@ namespace Plush
 			if ((g_individual_index == 124) && (g_example_case == 8))
 			{
 				std::cout << item_number
-					<< std::setw(30) << "end"
-					<< std::setw(30) << "end"
-					<< std::setw(30) << "end"
-					<< std::setw(30) << wanted_blocks
-					<< std::setw(30) << extra_blocks
+					<< std::setw(15) << "end"
+					<< std::setw(15) << "end"
+					<< std::setw(15) << "end"
+					<< std::setw(15) << wanted_blocks
+					<< std::setw(15) << extra_blocks
 					<< std::endl;
 			}
 
