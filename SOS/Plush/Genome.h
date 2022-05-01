@@ -5,6 +5,7 @@
 #include <map>
 #include <stdexcept>
 #include <cstdlib>
+#include <iomanip>
 #include "Plush.StaticInit.h"
 #include "..\Utilities\FixedSizeStack.h"
 #include "..\Utilities\String.h"
@@ -23,6 +24,11 @@
 
 namespace Plush
 {
+	static thread_local unsigned long g_individual_index;
+	static thread_local unsigned long g_example_case;
+
+
+
 	//typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
 	//extern Func2BlockWantsMapType Func2BlockWantsMap;
 
@@ -1144,6 +1150,15 @@ namespace Plush
 				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::get_item", debug);
 			}
 #endif
+
+			if ((g_individual_index == 124) && (g_example_case == 8))
+			{
+				std::cout << std::endl;
+				std::cout << std::endl;
+				std::cout << "item_number" << std::setw(30) << "item" << std::setw(30) << "i" << std::setw(30) << "closing" << std::setw(30) << "wanted_blocks" << std::setw(30) << "extra_blocks" << std::endl;
+				std::cout << "-----------" << std::setw(30) << "----" << std::setw(30) << "-" << std::setw(30) << "-------" << std::setw(30) << "-------------" << std::setw(30) << "------------" << std::endl;
+			}
+
 			Genome_section<T> subsection;
 
 			long block_ending_index = 0;
@@ -1215,13 +1230,38 @@ namespace Plush
 								wanted_stack.pop();
 							}
 						}
-					}
 
+
+						if ((g_individual_index == 124) && (g_example_case == 8))
+						{
+							std::cout << item_number
+								<< std::setw(30) << item
+								<< std::setw(30) << i
+								<< std::setw(30) << closing
+								<< std::setw(30) << wanted_blocks
+								<< std::setw(30) << extra_blocks
+								<< std::endl;
+						}
+
+					}
 					block_starting_index = block_ending_index - 1;
 				}
 
 				item_ending_position += atom_count;
 			}
+
+
+			if ((g_individual_index == 124) && (g_example_case == 8))
+			{
+				std::cout << item_number
+					<< std::setw(30) << "end"
+					<< std::setw(30) << "end"
+					<< std::setw(30) << "end"
+					<< std::setw(30) << wanted_blocks
+					<< std::setw(30) << extra_blocks
+					<< std::endl;
+			}
+
 
 			long t = (item_ending_position > atom_count) ? item_ending_position - atom_count : 0;
 			subsection.set(t, atom_count, extra_blocks);
