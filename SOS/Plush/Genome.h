@@ -1150,13 +1150,13 @@ namespace Plush
 				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::get_item", debug);
 			}
 #endif
-			if (g_individual_index == 124)
-			{
-				std::cout << std::endl;
-				std::cout << std::endl;
-				std::cout << "case" << std::setw(15) << "item_number" << std::setw(15) << "item" << std::setw(15) << "i" << std::setw(15) << "closing" << std::setw(15) << "wanted_blocks" << std::setw(15) << "extra_blocks" << std::setw(20) << "instruction" << std::setw(15) << "close_parenthesis" << std::setw(15) << "block_wants" << std::setw(15) << "atom.close_parenthesis" << std::endl;
-				std::cout << "----" << std::setw(15) << "-----------" << std::setw(15) << "----" << std::setw(15) << "-" << std::setw(15) << "-------" << std::setw(15) << "-------------" << std::setw(15) << "------------" << std::setw(20) << "-----------" << std::setw(15) << "-----------------" << std::setw(15) << "-----------" << std::setw(15) << "----------------------" << std::endl;
-			}
+			//if (g_individual_index == 124)
+			//{
+			//	std::cout << std::endl;
+			//	std::cout << std::endl;
+			//	std::cout << "case" << std::setw(15) << "item_number" << std::setw(15) << "item" << std::setw(15) << "i" << std::setw(15) << "closing" << std::setw(15) << "wanted_blocks" << std::setw(15) << "extra_blocks" << std::setw(20) << "instruction" << std::setw(15) << "close_parenthesis" << std::setw(15) << "block_wants" << std::setw(15) << "atom.close_parenthesis" << std::endl;
+			//	std::cout << "----" << std::setw(15) << "-----------" << std::setw(15) << "----" << std::setw(15) << "-" << std::setw(15) << "-------" << std::setw(15) << "-------------" << std::setw(15) << "------------" << std::setw(20) << "-----------" << std::setw(15) << "-----------------" << std::setw(15) << "-----------" << std::setw(15) << "----------------------" << std::endl;
+			//}
 
 			Genome_section<T> subsection;
 
@@ -1235,21 +1235,21 @@ namespace Plush
 						}
 
 
-						if (g_individual_index == 124)
-						{
-							std::cout << item_number
-								<< std::setw(15) << g_example_case
-								<< std::setw(15) << item
-								<< std::setw(15) << i
-								<< std::setw(15) << closing
-								<< std::setw(15) << wanted_blocks
-								<< std::setw(15) << extra_blocks
-								<< std::setw(20) << atom.instruction_name
-								<< std::setw(15) << atom.close_parenthesis
-								<< std::setw(15) << block_wants
-								<< std::setw(15) << atom.close_parenthesis
-								<< std::endl;
-						}
+						//if (g_individual_index == 124)
+						//{
+						//	std::cout << item_number
+						//		<< std::setw(15) << g_example_case
+						//		<< std::setw(15) << item
+						//		<< std::setw(15) << i
+						//		<< std::setw(15) << closing
+						//		<< std::setw(15) << wanted_blocks
+						//		<< std::setw(15) << extra_blocks
+						//		<< std::setw(20) << atom.instruction_name
+						//		<< std::setw(15) << atom.close_parenthesis
+						//		<< std::setw(15) << block_wants
+						//		<< std::setw(15) << atom.close_parenthesis
+						//		<< std::endl;
+						//}
 
 					}
 					block_starting_index = block_ending_index - 1;
@@ -1259,17 +1259,17 @@ namespace Plush
 			}
 
 
-			if (g_individual_index == 124)
-			{
-				std::cout << item_number
-					<< std::setw(15) << g_example_case
-					<< std::setw(15) << "end"
-					<< std::setw(15) << "end"
-					<< std::setw(15) << "end"
-					<< std::setw(15) << wanted_blocks
-					<< std::setw(15) << extra_blocks
-					<< std::endl;
-			}
+			//if (g_individual_index == 124)
+			//{
+			//	std::cout << item_number
+			//		<< std::setw(15) << g_example_case
+			//		<< std::setw(15) << "end"
+			//		<< std::setw(15) << "end"
+			//		<< std::setw(15) << "end"
+			//		<< std::setw(15) << wanted_blocks
+			//		<< std::setw(15) << extra_blocks
+			//		<< std::endl;
+			//}
 
 
 			long t = (item_ending_position > atom_count) ? item_ending_position - atom_count : 0;
