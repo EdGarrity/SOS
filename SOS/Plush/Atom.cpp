@@ -48,6 +48,9 @@ namespace Plush
 				start_of_optional_value++;
 
 			close_parenthesis = std::stoi(_atom_string.substr(start_of_optional_value, index));
+
+			if (close_parenthesis > 5)
+				close_parenthesis = 5;
 		}
 
 		// Check for optional silent tiken
