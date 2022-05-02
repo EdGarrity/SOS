@@ -42,7 +42,7 @@ namespace Plush
 		explicit Atom(std::string instruction_name, unsigned int close_parenthesis, AtomType type)
 		{
 			this->instruction_name = instruction_name;
-			this->close_parenthesis = close_parenthesis;
+			this->close_parenthesis = (close_parenthesis > 5) ? (5) : (close_parenthesis);
 			this->type = type;
 			this->instruction_id = Plush::static_initializer.get_function_index(instruction_name);
 		};
@@ -98,7 +98,7 @@ namespace Plush
 		explicit Atom(const Atom &other)
 		{
 			instruction_name = other.instruction_name;
-			close_parenthesis = other.close_parenthesis;
+			close_parenthesis = other.close_parenthesis > 5 ? 5 : other.close_parenthesis;
 			type = other.type;
 			this->instruction_id = Plush::static_initializer.get_function_index(instruction_name);
 		};
@@ -106,7 +106,7 @@ namespace Plush
 		explicit Atom(Atom &other)
 		{
 			instruction_name = other.instruction_name;
-			close_parenthesis = other.close_parenthesis;
+			close_parenthesis = other.close_parenthesis > 5 ? 5 : other.close_parenthesis;
 			type = other.type;
 			this->instruction_id = Plush::static_initializer.get_function_index(instruction_name);
 		};
@@ -114,7 +114,7 @@ namespace Plush
 		explicit Atom(const Atom* other)
 		{
 			instruction_name = other->instruction_name;
-			close_parenthesis = other->close_parenthesis;
+			close_parenthesis = other->close_parenthesis > 5 ? 5 : other->close_parenthesis;
 			type = other->type;
 			this->instruction_id = Plush::static_initializer.get_function_index(instruction_name);
 		};
@@ -122,7 +122,7 @@ namespace Plush
 		explicit Atom(Atom* other)
 		{
 			instruction_name = other->instruction_name;
-			close_parenthesis = other->close_parenthesis;
+			close_parenthesis = other->close_parenthesis > 5 ? 5 : other->close_parenthesis;
 			type = other->type;
 			this->instruction_id = Plush::static_initializer.get_function_index(instruction_name);
 		};
@@ -138,7 +138,7 @@ namespace Plush
 		void set(std::string instruction_name, unsigned int close_parenthesis, AtomType type)
 		{
 			this->instruction_name = instruction_name;
-			this->close_parenthesis = close_parenthesis;
+			this->close_parenthesis = close_parenthesis > 5 ? 5 : close_parenthesis;
 			this->type = type;
 			this->instruction_id = Plush::static_initializer.get_function_index(instruction_name);
 		};

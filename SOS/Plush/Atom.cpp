@@ -47,7 +47,7 @@ namespace Plush
 			while (_atom_string[start_of_optional_value] == ' ')
 				start_of_optional_value++;
 
-			close_parenthesis = std::stoi(_atom_string.substr(start_of_optional_value, index));
+			close_parenthesis = std::abs(std::stoi(_atom_string.substr(start_of_optional_value, index)));
 
 			if (close_parenthesis > 5)
 				close_parenthesis = 5;
