@@ -1154,8 +1154,8 @@ namespace Plush
 			{
 				std::cout << std::endl;
 				std::cout << std::endl;
-				std::cout << "case" << std::setw(15) << "item_number" << std::setw(15) << "item" << std::setw(15) << "i" << std::setw(15) << "closing" << std::setw(15) << "wanted_blocks" << std::setw(15) << "extra_blocks" << std::setw(20) << "instruction" << std::setw(15) << "close_parenthesis" << std::setw(15) << "block_wants" << std::endl;
-				std::cout << "----" << std::setw(15) << "-----------" << std::setw(15) << "----" << std::setw(15) << "-" << std::setw(15) << "-------" << std::setw(15) << "-------------" << std::setw(15) << "------------" << std::setw(20) << "-----------" << std::setw(15) << "-----------------" << std::setw(15) << "-----------" << std::endl;
+				std::cout << "case" << std::setw(15) << "item_number" << std::setw(15) << "item" << std::setw(15) << "i" << std::setw(15) << "closing" << std::setw(15) << "wanted_blocks" << std::setw(15) << "extra_blocks" << std::setw(20) << "instruction" << std::setw(15) << "close_parenthesis" << std::setw(15) << "block_wants" << std::setw(15) << "atom.close_parenthesis" << std::endl;
+				std::cout << "----" << std::setw(15) << "-----------" << std::setw(15) << "----" << std::setw(15) << "-" << std::setw(15) << "-------" << std::setw(15) << "-------------" << std::setw(15) << "------------" << std::setw(20) << "-----------" << std::setw(15) << "-----------------" << std::setw(15) << "-----------" << std::setw(15) << "----------------------" << std::endl;
 			}
 
 			Genome_section<T> subsection;
@@ -1201,7 +1201,10 @@ namespace Plush
 						}
 
 						//int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
-						long closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction_name);
+						//long closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction_name);
+						
+						long close_parenthesis = (long)atom.close_parenthesis > 5 ? 5 : (long)atom.close_parenthesis;
+						long closing = close_parenthesis - static_initializer.get_function_block_wants(atom.instruction_name);
 						unsigned int block_wants = static_initializer.get_function_block_wants(atom.instruction_name);
 
 						if (closing < 0)
@@ -1244,6 +1247,7 @@ namespace Plush
 								<< std::setw(20) << atom.instruction_name
 								<< std::setw(15) << atom.close_parenthesis
 								<< std::setw(15) << block_wants
+								<< std::setw(15) << atom.close_parenthesis
 								<< std::endl;
 						}
 
