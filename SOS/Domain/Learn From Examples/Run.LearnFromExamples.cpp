@@ -1540,7 +1540,7 @@ namespace domain
 					std::string genome = pushGP::globals::population_agents[best_individual].get_genome_as_string();
 
 					std::cout << "best_individual = " << best_individual << std::endl;
-					std::cout << "genome = " << genome << std::endl;
+					//std::cout << "genome = " << genome << std::endl;
 
 #if DLEVEL > 0
 					debug_message = "Run Best Individual's Program with Test Cases";

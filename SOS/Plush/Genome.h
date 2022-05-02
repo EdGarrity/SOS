@@ -1515,7 +1515,7 @@ namespace Plush
 					&& (Utilities::FixedSizeStack<T>::top_ > 0))
 				{
 					atom.close_parenthesis += top_atom.close_parenthesis;
-					atom.close_parenthesis = atom.close_parenthesis > 100 ? 100 : atom.close_parenthesis;
+					atom.close_parenthesis = atom.close_parenthesis > domain::argmap::maximum_stack_dept ? domain::argmap::maximum_stack_dept : atom.close_parenthesis;
 					Utilities::FixedSizeStack<T>::pop();
 				}
 
@@ -1539,7 +1539,7 @@ namespace Plush
 					&& (Utilities::FixedSizeStack<T>::top_ > 0))
 				{
 					atom.close_parenthesis += top_atom.close_parenthesis;
-					atom.close_parenthesis = atom.close_parenthesis > 100 ? 100 : atom.close_parenthesis;
+					atom.close_parenthesis = atom.close_parenthesis > domain::argmap::maximum_stack_dept ? domain::argmap::maximum_stack_dept : atom.close_parenthesis;
 					Utilities::FixedSizeStack<T>::pop();
 				}
 

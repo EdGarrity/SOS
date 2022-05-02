@@ -49,8 +49,8 @@ namespace Plush
 
 			close_parenthesis = std::abs(std::stoi(_atom_string.substr(start_of_optional_value, index)));
 
-			if (close_parenthesis > 5)
-				close_parenthesis = 5;
+			if (close_parenthesis > domain::argmap::maximum_stack_dept)
+				close_parenthesis = domain::argmap::maximum_stack_dept;
 		}
 
 		// Check for optional silent tiken
