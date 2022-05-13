@@ -5,6 +5,7 @@
 #include <map>
 #include <stdexcept>
 #include <cstdlib>
+#include <iomanip>
 #include "Plush.StaticInit.h"
 #include "..\Utilities\FixedSizeStack.h"
 #include "..\Utilities\String.h"
@@ -23,6 +24,11 @@
 
 namespace Plush
 {
+	extern thread_local unsigned long g_individual_index;
+	extern thread_local unsigned long g_example_case;
+
+
+
 	//typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
 	//extern Func2BlockWantsMapType Func2BlockWantsMap;
 
@@ -710,12 +716,12 @@ namespace Plush
 					atom.close_parenthesis = 1;
 
 				//int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
-				long closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction_name);
+				long closing = (long)atom.close_parenthesis - (long)static_initializer.get_function_block_wants(atom.instruction_name);
 
 				if (closing < 0)
 				{
 					wanted_stack.push(wanted_blocks);
-					wanted_blocks = 0 - closing;
+					wanted_blocks = std::abs(closing);
 				}
 
 				extra_blocks = (closing > 1) ? (closing - 1) : (0);
@@ -797,12 +803,12 @@ namespace Plush
 					atom.close_parenthesis = 1;
 
 				//int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
-				long closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction_name);
+				long closing = (long)atom.close_parenthesis - (long)static_initializer.get_function_block_wants(atom.instruction_name);
 
 				if (closing < 0)
 				{
 					wanted_stack.push(wanted_blocks);
-					wanted_blocks = 0 - closing;
+					wanted_blocks = std::abs(closing);
 				}
 
 				extra_blocks = (closing > 1) ? (closing - 1) : (0);
@@ -885,7 +891,7 @@ namespace Plush
 					atom = Plush::Atom("{:instruction EXEC.NOOP :close 1}");
 
 				//int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
-				long closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction_name);
+				long closing = (long)atom.close_parenthesis - (long)static_initializer.get_function_block_wants(atom.instruction_name);
 
 				if (n < 0)
 					closing = wanted_blocks;
@@ -893,7 +899,7 @@ namespace Plush
 				if (closing < 0)
 				{
 					wanted_stack.push(wanted_blocks);
-					wanted_blocks = 0 - closing;
+					wanted_blocks = std::abs(closing);
 				}
 
 				extra_blocks = (closing > 1) ? (closing - 1) : (0);
@@ -971,7 +977,7 @@ namespace Plush
 					atom = Plush::Atom("{:instruction EXEC.NOOP :close 1}");
 
 				//int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
-				long closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction_name);
+				long closing = (long)atom.close_parenthesis - (long)static_initializer.get_function_block_wants(atom.instruction_name);
 
 				if (n < 0)
 					closing = wanted_blocks;
@@ -979,7 +985,7 @@ namespace Plush
 				if (closing < 0)
 				{
 					wanted_stack.push(wanted_blocks);
-					wanted_blocks = 0 - closing;
+					wanted_blocks = std::abs(closing);
 				}
 
 				extra_blocks = (closing > 1) ? (closing - 1) : (0);
@@ -1144,19 +1150,27 @@ namespace Plush
 				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::get_item", debug);
 			}
 #endif
+			//if (g_individual_index == 124)
+			//{
+			//	std::cout << std::endl;
+			//	std::cout << std::endl;
+			//	std::cout << "case" << std::setw(15) << "item_number" << std::setw(15) << "item" << std::setw(15) << "i" << std::setw(15) << "closing" << std::setw(15) << "wanted_blocks" << std::setw(15) << "extra_blocks" << std::setw(20) << "instruction" << std::setw(15) << "close_parenthesis" << std::setw(15) << "block_wants" << std::setw(15) << "atom.close_parenthesis" << std::endl;
+			//	std::cout << "----" << std::setw(15) << "-----------" << std::setw(15) << "----" << std::setw(15) << "-" << std::setw(15) << "-------" << std::setw(15) << "-------------" << std::setw(15) << "------------" << std::setw(20) << "-----------" << std::setw(15) << "-----------------" << std::setw(15) << "-----------" << std::setw(15) << "----------------------" << std::endl;
+			//}
+
 			Genome_section<T> subsection;
 
-			unsigned long block_ending_index = 0;
-			unsigned long item_ending_position = 0;
+			long block_ending_index = 0;
+			long item_ending_position = 0;
 			long item_length = 0;
 
-			unsigned long wanted_blocks = 0;
-			unsigned long extra_blocks = 0;
-			std::stack<unsigned long> wanted_stack;
-			unsigned long atom_count = 0;
+			long wanted_blocks = 0;
+			long extra_blocks = 0;
+			std::stack<long> wanted_stack;
+			long atom_count = 0;
 			long block_starting_index = (long)Utilities::FixedSizeStack<T>::size() - 1;
 
-			for (unsigned long item = 0; item <= item_number; item++)
+			for (long item = 0; item <= item_number; item++)
 			{
 				atom_count = 0;
 
@@ -1187,12 +1201,17 @@ namespace Plush
 						}
 
 						//int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
-						long closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction_name);
+						//long closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction_name);
+						
+						long close_parenthesis = (long)atom.close_parenthesis > 5 ? 5 : (long)atom.close_parenthesis;
+						long closing = close_parenthesis - static_initializer.get_function_block_wants(atom.instruction_name);
+						unsigned int block_wants = static_initializer.get_function_block_wants(atom.instruction_name);
 
 						if (closing < 0)
 						{
 							wanted_stack.push(wanted_blocks);
-							wanted_blocks = 0 - closing;
+							//wanted_blocks = 0 - closing;
+							wanted_blocks = std::abs(closing);
 						}
 
 						extra_blocks += (closing > 1) ? (closing - 1) : (0);
@@ -1214,15 +1233,46 @@ namespace Plush
 								wanted_stack.pop();
 							}
 						}
-					}
 
+
+						//if (g_individual_index == 124)
+						//{
+						//	std::cout << item_number
+						//		<< std::setw(15) << g_example_case
+						//		<< std::setw(15) << item
+						//		<< std::setw(15) << i
+						//		<< std::setw(15) << closing
+						//		<< std::setw(15) << wanted_blocks
+						//		<< std::setw(15) << extra_blocks
+						//		<< std::setw(20) << atom.instruction_name
+						//		<< std::setw(15) << atom.close_parenthesis
+						//		<< std::setw(15) << block_wants
+						//		<< std::setw(15) << atom.close_parenthesis
+						//		<< std::endl;
+						//}
+
+					}
 					block_starting_index = block_ending_index - 1;
 				}
 
 				item_ending_position += atom_count;
 			}
 
-			unsigned long t = (item_ending_position > atom_count) ? item_ending_position - atom_count : 0;
+
+			//if (g_individual_index == 124)
+			//{
+			//	std::cout << item_number
+			//		<< std::setw(15) << g_example_case
+			//		<< std::setw(15) << "end"
+			//		<< std::setw(15) << "end"
+			//		<< std::setw(15) << "end"
+			//		<< std::setw(15) << wanted_blocks
+			//		<< std::setw(15) << extra_blocks
+			//		<< std::endl;
+			//}
+
+
+			long t = (item_ending_position > atom_count) ? item_ending_position - atom_count : 0;
 			subsection.set(t, atom_count, extra_blocks);
 
 #if DLEVEL > 0
@@ -1465,6 +1515,7 @@ namespace Plush
 					&& (Utilities::FixedSizeStack<T>::top_ > 0))
 				{
 					atom.close_parenthesis += top_atom.close_parenthesis;
+					atom.close_parenthesis = atom.close_parenthesis > domain::argmap::maximum_stack_dept ? domain::argmap::maximum_stack_dept : atom.close_parenthesis;
 					Utilities::FixedSizeStack<T>::pop();
 				}
 
@@ -1488,6 +1539,7 @@ namespace Plush
 					&& (Utilities::FixedSizeStack<T>::top_ > 0))
 				{
 					atom.close_parenthesis += top_atom.close_parenthesis;
+					atom.close_parenthesis = atom.close_parenthesis > domain::argmap::maximum_stack_dept ? domain::argmap::maximum_stack_dept : atom.close_parenthesis;
 					Utilities::FixedSizeStack<T>::pop();
 				}
 

@@ -70,6 +70,8 @@ namespace Plush
 		unsigned long current_effort;
 		unsigned long current_unit;
 		unsigned long current_thread = 0;
+		//static thread_local unsigned long individual_index;
+		//static thread_local unsigned long example_case;
 		unsigned long individual_index = 0;
 		unsigned long example_case = 0;
 
@@ -88,6 +90,15 @@ namespace Plush
 		{
 			individual_index = new_individual_index;
 			example_case = new_example_case;
+
+			g_individual_index = new_individual_index;
+			g_example_case = new_example_case;
+
+
+
+			if ((new_example_case > 100) && (new_individual_index == 124))
+				std::cout << "set_current_individual_index(new_individual_index=" << new_individual_index << ", new_example_case=" << new_example_case << ")" << std::endl;
+
 		}
 
 		virtual void clear_stacks()

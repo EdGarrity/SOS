@@ -5,6 +5,7 @@
 #include "Processor.h"
 #include "Plush.StaticInit.h"
 #include "..\Utilities\String.h"
+#include "..\Domain\Arguments.h"
 
 namespace Plush
 {
@@ -265,7 +266,10 @@ namespace Plush
 			unsigned long old_top = _env.get_stack<CodeAtom>().size();
 
 			_env.get_stack<CodeAtom>().push(first_item);
-			_env.get_stack<CodeAtom>().get_atom_at_index(old_top).close_parenthesis++;
+
+			if (_env.get_stack<CodeAtom>().get_atom_at_index(old_top).close_parenthesis < domain::argmap::maximum_stack_dept)
+				_env.get_stack<CodeAtom>().get_atom_at_index(old_top).close_parenthesis++;
+	
 			_env.get_stack<CodeAtom>().remove_item_at_position(1);
 		}
 
@@ -296,7 +300,9 @@ namespace Plush
 		_env.get_stack<CodeAtom>().yank_item(1);
 
 		unsigned long n = _env.get_stack<CodeAtom>()[0].ending_position;
-		_env.get_stack<CodeAtom>().get_atom_at_position(n).close_parenthesis--;
+
+		if (_env.get_stack<CodeAtom>().get_atom_at_position(n).close_parenthesis > 0)
+			_env.get_stack<CodeAtom>().get_atom_at_position(n).close_parenthesis--;
 
 		return 1;
 	}
@@ -317,7 +323,7 @@ namespace Plush
 		{
 			_env.get_stack<CodeAtom>().yankdup_stack_element(container_block);
 
-			if (container_block.starting_position == 0)
+			if ((container_block.starting_position == 0) && (_env.get_stack<CodeAtom>().get_atom_at_position(container_block.ending_position).close_parenthesis < domain::argmap::maximum_stack_dept))
 				_env.get_stack<CodeAtom>().get_atom_at_position(container_block.ending_position).close_parenthesis++;
 		}
 
@@ -536,7 +542,7 @@ namespace Plush
 					_env.get_stack<CodeAtom>().yankdup_stack_element(sub_block);
 
 					// Close extracted item if not last item in original top block
-					if (item_number != number_of_items)
+					if ((item_number != number_of_items) && (genome.get_atom_at_position(old_top).close_parenthesis < domain::argmap::maximum_stack_dept))
 						genome.get_atom_at_index(old_top).close_parenthesis++;
 
 					genome.remove_item_at_position(1);
@@ -685,7 +691,8 @@ namespace Plush
 		Genome_section<CodeAtom> block_b = genome[1];
 
 		// Close combined list
-		genome.get_atom_at_position(block_b.ending_position).close_parenthesis++;
+		if (genome.get_atom_at_position(block_b.ending_position).close_parenthesis < domain::argmap::maximum_stack_dept)
+			genome.get_atom_at_position(block_b.ending_position).close_parenthesis++;
 
 		// Balance parenthesis
 		CodeAtom code("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}");
@@ -736,7 +743,7 @@ namespace Plush
 		Genome_section<CodeAtom> sub_block(genome.get_subitem(index + 1));
 
 		// Blance closing parenthesis
-		if ((number_of_items > 0) && (index < number_of_items - 1))
+		if ((number_of_items > 0) && (index < number_of_items - 1) && (genome.get_atom_at_position(sub_block.ending_position).close_parenthesis < domain::argmap::maximum_stack_dept))
 			genome.get_atom_at_position(sub_block.ending_position).close_parenthesis++;
 
 		// Replace top genome with subsection

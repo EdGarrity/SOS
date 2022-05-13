@@ -97,6 +97,14 @@ namespace Utilities
 		work_order.example_problem = input_list;
 		work_order.example_solution = output_list;
 
+		
+		
+		if ((example_case > 100) && (individual_index == 124))
+			std::cout << "WorkOrderManager::push(individual_index=" << individual_index << ", example_case=" << example_case << ", std::vector<double>& input_list, std::vector<double>& output_list)" << std::endl;
+
+
+		
+		
 		std::unique_lock<std::mutex> work_in_process_lock(work_in_process_mutex_);
 		std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
 		work_order_queue_.push_front(work_order);

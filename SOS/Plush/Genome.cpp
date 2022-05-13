@@ -2,6 +2,10 @@
 
 namespace Plush
 {
+	thread_local unsigned long g_individual_index = 0;
+	thread_local unsigned long g_example_case = 0;
+
+
 	//Genome_section::Genome_section()
 	//{
 	//	this->starting_position = 0;
