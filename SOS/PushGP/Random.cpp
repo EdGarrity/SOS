@@ -46,10 +46,26 @@ namespace pushGP
 			probability += domain::argmap::close_parens_probabilities[n];
 
 			if (r < probability)
-				return n;
+			{
+				if (n < 0)
+					return 0;
+
+				else if (n > domain::argmap::maximum_stack_dept)
+					return domain::argmap::maximum_stack_dept;
+
+				else
+					return n;
+			}
 		}
 		
-		return n;
+		if (n < 0)
+			return 0;
+
+		else if (n > domain::argmap::maximum_stack_dept)
+			return domain::argmap::maximum_stack_dept;
+
+		else
+			return n;
 	}
 
 	Plush::CodeAtom& random_atom(Plush::CodeAtom& gene)
@@ -94,7 +110,7 @@ namespace pushGP
 		//else
 		//{
 			gene.instruction_name = Individual::make_terminal();	// gets a random instruction.
-			gene.type = Plush::Atom::ins;
+			gene.type = Plush::Atom::AtomType::ins;
 		//}
 
 		return gene;

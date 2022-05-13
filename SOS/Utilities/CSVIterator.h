@@ -33,6 +33,7 @@ public:
 		{
 			m_data.push_back(cell);
 		}
+
 		// This checks for a trailing comma with no data after it.
 		if (!lineStream && cell.empty())
 		{
@@ -40,6 +41,7 @@ public:
 			m_data.push_back("");
 		}
 	}
+
 private:
 	std::vector<std::string>    m_data;
 };
@@ -63,14 +65,34 @@ public:
 	CSVIterator() :m_str(NULL) {}
 
 	// Pre Increment
-	CSVIterator& operator++() { if (m_str) { if (!((*m_str) >> m_row)) { m_str = NULL; } }return *this; }
+	CSVIterator& operator++() 
+	{ 
+		if (m_str) 
+		{ 
+			if ( !( (*m_str) >> m_row) ) 
+			{ 
+				m_str = NULL; 
+			} 
+		}
+		
+		return *this; 
+	}
+
 	// Post increment
-	CSVIterator operator++(int) { CSVIterator    tmp(*this); ++(*this); return tmp; }
+	CSVIterator operator++(int) 
+	{ 
+		CSVIterator    tmp(*this); 
+
+		++(*this); 
+		return tmp; 
+	}
+
 	CSVRow const& operator*()   const { return m_row; }
 	CSVRow const* operator->()  const { return &m_row; }
 
 	bool operator==(CSVIterator const& rhs) { return ((this == &rhs) || ((this->m_str == NULL) && (rhs.m_str == NULL))); }
 	bool operator!=(CSVIterator const& rhs) { return !((*this) == rhs); }
+
 private:
 	std::istream*       m_str;
 	CSVRow              m_row;

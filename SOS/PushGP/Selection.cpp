@@ -62,7 +62,7 @@ namespace pushGP
 	{
 		std::sort(_x.begin(), _x.end());
 		std::vector<double>::size_type middle;
-		double median_x;
+		double median_x = 0.0;
 
 		switch (_x.size() % 2)
 		{

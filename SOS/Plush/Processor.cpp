@@ -8,6 +8,7 @@
 #include "..\Utilities\String.h"
 #include "..\Utilities\WorkOrderManager.h"
 #include "..\Utilities\Debug.h"
+#include "..\PushGP\Globals.h"
 
 #if DLEVEL > 0
 extern std::atomic_bool debug_push;
@@ -31,32 +32,46 @@ namespace Plush
 	unsigned int run(Environment& env, std::string program, std::vector<double>& input)
 	{
 		std::string gene;
-		Utilities::FixedSizeStack<Atom> program_stack;
+		//Utilities::FixedSizeStack<Atom> program_stack;
+		int i = 0;
 
 		// Initialize environment
 		env.clear_stacks();
 
 		// Load program into temp
-		while (program.length() > 0)
+		while ((program.length() > 0) && (i < domain::argmap::maximum_stack_size))
 		{
 			gene = first_atom(program);
 			program = rest_atom(program);
 			Utilities::trim(program);
 
-			Atom atom(gene);
+			env.temp_genes[i++] = gene;
 
-			program_stack.push(atom);
+			//Atom atom(gene);
+			//program_stack.push(atom);
 		}
 
 		// Load inputs
 		env.initialize(input);
 
 		// Load program on CODE and EXEC stacks
-		while (!program_stack.empty())
+		//while (!program_stack.empty())
+		//{
+		//	env.get_stack<CodeAtom>().push(CodeAtom(program_stack.get_top_atom()));
+		//	env.get_stack<ExecAtom>().push(ExecAtom(program_stack.get_top_atom()));
+		//	program_stack.pop();
+		//}
+
+		if (i > 0)
 		{
-			env.get_stack<CodeAtom>().push(CodeAtom(program_stack.get_top_atom()));
-			env.get_stack<ExecAtom>().push(ExecAtom(program_stack.get_top_atom()));
-			program_stack.pop();
+			int j = i;
+			for (int n = 0; n < i; n++)
+			{
+				Atom atom(env.temp_genes[--j]);
+
+				env.get_stack<CodeAtom>().push(CodeAtom(atom));
+				env.get_stack<ExecAtom>().push(ExecAtom(atom));
+			}
 		}
 
 		// Execute
@@ -67,16 +82,20 @@ namespace Plush
 	unsigned int run(Environment& env, unsigned _max_effort)
 	{
 		// The basic pop-exec cycle
-		size_t effort = 0;
-		size_t unit = 0;
+		unsigned int effort = 0;
+		unsigned int unit = 0;
 
 		// Debug
-		size_t debug_ip = 0;
+		unsigned int debug_ip = 0;
 
 		while ((!env.is_empty<ExecAtom>()) && (effort < _max_effort))
 		{
 			try
 			{
+				pushGP::globals::thread_effort[env.current_thread] = effort;
+				pushGP::globals::thread_exec_size[env.current_thread] = env.get_stack<ExecAtom>().size();
+				pushGP::globals::thread_instruction_index[env.current_thread] = 99999999;
+
 				env.current_effort = effort;
 				env.current_unit = unit;
 				unit = 0;
@@ -88,6 +107,14 @@ namespace Plush
 				// Debug - Remember current instruction
 				env.current_instruction = atom.instruction_name;
 
+				//for (int n = 0; n < atom.instruction_name.length(); n++)
+				//	pushGP::globals::thread_current_instruction.store(env.current_thread, n, env.current_thread, atom.instruction_name[n]);
+
+				//pushGP::globals::thread_current_instruction.store(env.current_thread, atom.instruction_name.length(), env.current_thread, 0);
+
+				//strcpy_s(pushGP::globals::thread_current_instruction[env.current_thread], 80, atom.instruction_name.c_str());
+				//pushGP::globals::thread_current_instruction[env.current_thread][atom.instruction_name.length()] = '\0';
+				pushGP::globals::thread_current_instruction[env.current_thread][0] = '\0';
 #if DLEVEL > 0
 				if (debug_push.load(std::memory_order_acquire))
 				{
@@ -151,6 +178,8 @@ namespace Plush
 						//Instruction * pI = Func2CodeMap[atom.instruction];
 						//Instruction * pI = static_initializer.get_function(atom.instruction_name);
 						Instruction* pI = env.get_function(atom.instruction_name);
+
+						pushGP::globals::thread_instruction_index[env.current_thread] = Plush::static_initializer.get_function_index(atom.instruction_name);;
 
 						if ((pI != nullptr) && (pI->can_run(env)))
 						{
@@ -238,6 +267,8 @@ namespace Plush
 			//if (print_push.load(std::memory_order_acquire))
 			//	env_state[env.current_thread] = env.print_state();
 		}
+
+		pushGP::globals::thread_exec_size[env.current_thread] = 0;
 
 		return effort;
 	}

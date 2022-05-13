@@ -5,11 +5,12 @@
 #include "Processor.h"
 #include "Plush.StaticInit.h"
 #include "..\Utilities\String.h"
+#include "..\Domain\Arguments.h"
 
 namespace Plush
 {
 	// Add an instruction to the instruction set for this individual.
-	inline size_t exec_enable_instruction(Environment& _env)
+	inline unsigned long exec_enable_instruction(Environment& _env)
 	{
 		long n = _env.pop<long>();	// Instruction index
 
@@ -19,12 +20,12 @@ namespace Plush
 	}
 
 	// Add instructions to the instruction set for this individual using the integers in the integer stack.
-	inline size_t exec_enable_instructions(Environment& _env)
+	inline unsigned long exec_enable_instructions(Environment& _env)
 	{
 		long number_of_instructions_to_add = _env.pop<long>();	// Number of instructions to add
 		long i = _env.pop<long>();								// Instruction index
 
-		if ((number_of_instructions_to_add > 0) && (_env.length<long>() >= (number_of_instructions_to_add - 1)))
+		if ((number_of_instructions_to_add > 0) && (_env.length<long>() >= static_cast<int64_t>(number_of_instructions_to_add) - 1))
 		{
 			_env.enable_function(i);
 			long n = number_of_instructions_to_add - 1;
@@ -47,7 +48,7 @@ namespace Plush
 	}
 
 	// Remove instruction from the instruction set for this individual.
-	inline size_t exec_disable_instruction(Environment& _env)
+	inline unsigned long exec_disable_instruction(Environment& _env)
 	{
 		long n = _env.pop<long>();	// Instruction index
 
@@ -57,7 +58,7 @@ namespace Plush
 	}
 
 	// Expand inner block
-	inline size_t noop_open_paren(Environment & _env)
+	inline unsigned long noop_open_paren(Environment & _env)
 	{
 		//if (_env.has_elements<ExecAtom>(1))
 		//{
@@ -74,7 +75,7 @@ namespace Plush
 		return 0;
 	}
 
-	inline size_t noop(Environment & _env)
+	inline unsigned long noop(Environment & _env)
 	{
 		return 0;
 	}
@@ -82,7 +83,7 @@ namespace Plush
 	// An iteration instruction that executes the top item on the EXEC stack a number of times that 
 	// depends on the top two integers, while also pushing the loop counter onto the INTEGER stack 
 	// for possible access during the execution of the body of the loop
-	inline size_t exec_do_range(Environment & _env)
+	inline unsigned long exec_do_range(Environment & _env)
 	{
 		long n = _env.pop<long>();	// destination index
 		long i = _env.pop<long>();	// current index
@@ -115,7 +116,7 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t exec_if(Environment & _env)
+	inline unsigned long exec_if(Environment & _env)
 	{
 		// Get conditional boolean
 		bool s = _env.pop<bool>();
@@ -128,7 +129,7 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t exec_do_count(Environment & _env)
+	inline unsigned long exec_do_count(Environment & _env)
 	{
 		long n = _env.pop<long>();	// destination index
 
@@ -143,7 +144,7 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t exec_do_times(Environment & _env)
+	inline unsigned long exec_do_times(Environment & _env)
 	{
 		long n = _env.pop<long>();	// destination index
 
@@ -159,10 +160,10 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t exec_while(Environment & _env)
+	inline unsigned long exec_while(Environment & _env)
 	{
 		bool flag = _env.pop<bool>();
-		size_t effort = 1;
+		unsigned long effort = 1;
 
 		if (flag)
 		{
@@ -173,15 +174,15 @@ namespace Plush
 		return effort;
 	}
 
-	inline size_t do_while(Environment & _env)
+	inline unsigned long do_while(Environment & _env)
 	{
 		_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.WHILE :close 0}"));
 		return _env.get_stack<ExecAtom>().yankdup_item(1);
 	}
 
-	inline size_t exec_when(Environment & _env)
+	inline unsigned long exec_when(Environment & _env)
 	{
-		size_t effort = 1;
+		unsigned long effort = 1;
 		bool flag = _env.pop<bool>();
 
 		if (!flag)
@@ -190,14 +191,14 @@ namespace Plush
 		return effort;
 	}
 
-	inline size_t exec_k(Environment & _env)
+	inline unsigned long exec_k(Environment & _env)
 	{
 		return _env.get_stack<ExecAtom>().remove_item_at_position(1);
 	}
 
-	inline size_t exec_s(Environment & _env)
+	inline unsigned long exec_s(Environment & _env)
 	{
-		size_t effort = 0;
+		unsigned long effort = 0;
 
 		// containing B
 		effort += _env.get_stack<ExecAtom>().yankdup_item(1);
@@ -222,13 +223,13 @@ namespace Plush
 		return effort;
 	}
 
-	inline size_t exec_y(Environment & _env)
+	inline unsigned long exec_y(Environment & _env)
 	{
 		_env.push<ExecAtom>(ExecAtom("{:instruction EXEC.Y :close 0}"));
 		return _env.get_stack<ExecAtom>().yankdup_item(1);
 	}
 
-	inline size_t code_append(Environment & _env)
+	inline unsigned long code_append(Environment & _env)
 	{
 		Genome_section<CodeAtom> section_A = _env.get_stack<CodeAtom>()[0];
 		Genome_section<CodeAtom> section_B = _env.get_stack<CodeAtom>()[1];
@@ -242,7 +243,7 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t code_atom(Environment & _env)
+	inline unsigned long code_atom(Environment & _env)
 	{
 		Genome_section<CodeAtom> item = _env.get_stack<CodeAtom>().pop_genome();
 
@@ -255,24 +256,27 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t code_car(Environment & _env)
+	inline unsigned long code_car(Environment & _env)
 	{
 		Genome_section<CodeAtom> item = _env.peek_genome<CodeAtom>(0);
 
 		if (item.size > 1)
 		{
 			Genome_section<CodeAtom> first_item = _env.get_stack<CodeAtom>().get_subitem(1);
-			size_t old_top = _env.get_stack<CodeAtom>().size();
+			unsigned long old_top = _env.get_stack<CodeAtom>().size();
 
 			_env.get_stack<CodeAtom>().push(first_item);
-			_env.get_stack<CodeAtom>().get_atom_at_index(old_top).close_parenthesis++;
+
+			if (_env.get_stack<CodeAtom>().get_atom_at_index(old_top).close_parenthesis < domain::argmap::maximum_stack_dept)
+				_env.get_stack<CodeAtom>().get_atom_at_index(old_top).close_parenthesis++;
+	
 			_env.get_stack<CodeAtom>().remove_item_at_position(1);
 		}
 
 		return 1;
 	}
 
-	inline size_t code_cdr(Environment & _env)
+	inline unsigned long code_cdr(Environment & _env)
 	{
 		Genome<CodeAtom>& stack = _env.get_stack<CodeAtom>();
 		Genome_section<CodeAtom> block_a = stack[0];
@@ -291,17 +295,19 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t code_cons(Environment & _env)
+	inline unsigned long code_cons(Environment & _env)
 	{
 		_env.get_stack<CodeAtom>().yank_item(1);
 
-		unsigned n = _env.get_stack<CodeAtom>()[0].ending_position;
-		_env.get_stack<CodeAtom>().get_atom_at_position(n).close_parenthesis--;
+		unsigned long n = _env.get_stack<CodeAtom>()[0].ending_position;
+
+		if (_env.get_stack<CodeAtom>().get_atom_at_position(n).close_parenthesis > 0)
+			_env.get_stack<CodeAtom>().get_atom_at_position(n).close_parenthesis--;
 
 		return 1;
 	}
 
-	inline size_t code_container(Environment & _env)
+	inline unsigned long code_container(Environment & _env)
 	{
 		Genome_section<CodeAtom> container_block;
 
@@ -317,7 +323,7 @@ namespace Plush
 		{
 			_env.get_stack<CodeAtom>().yankdup_stack_element(container_block);
 
-			if (container_block.starting_position == 0)
+			if ((container_block.starting_position == 0) && (_env.get_stack<CodeAtom>().get_atom_at_position(container_block.ending_position).close_parenthesis < domain::argmap::maximum_stack_dept))
 				_env.get_stack<CodeAtom>().get_atom_at_position(container_block.ending_position).close_parenthesis++;
 		}
 
@@ -330,7 +336,7 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t code_contains(Environment & _env)
+	inline unsigned long code_contains(Environment & _env)
 	{
 		// Get first block from stack
 		Genome_section<CodeAtom> block_A = _env.peek_genome<CodeAtom>(0);
@@ -347,7 +353,7 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t code_discrepancy(Environment & _env)
+	inline unsigned long code_discrepancy(Environment & _env)
 	{
 		Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
 		Genome_section<CodeAtom> block_a = genome[0];
@@ -357,13 +363,13 @@ namespace Plush
 
 		if (block_a.size > 0)
 		{
-			for (size_t i = block_a.starting_position; i <= block_a.ending_position; i++)
+			for (unsigned long i = block_a.starting_position; i <= block_a.ending_position; i++)
 				atom_set.insert(genome.get_atom_at_position(i).instruction_name);
 		}
 
 		if (block_b.size > 0)
 		{
-			for (size_t i = block_b.starting_position; i <= block_b.ending_position; i++)
+			for (unsigned long i = block_b.starting_position; i <= block_b.ending_position; i++)
 				atom_set.insert(genome.get_atom_at_position(i).instruction_name);
 		}
 
@@ -376,7 +382,7 @@ namespace Plush
 
 			if (block_a.size > 0)
 			{
-				for (size_t i = block_a.starting_position; i <= block_a.ending_position; i++)
+				for (unsigned long i = block_a.starting_position; i <= block_a.ending_position; i++)
 				{
 					if (instruction == genome.get_atom_at_position(i).instruction_name)
 						count_a++;
@@ -385,7 +391,7 @@ namespace Plush
 
 			if (block_b.size > 0)
 			{
-				for (size_t i = block_b.starting_position; i <= block_b.ending_position; i++)
+				for (unsigned long i = block_b.starting_position; i <= block_b.ending_position; i++)
 				{
 					if (instruction == genome.get_atom_at_position(i).instruction_name)
 						count_b++;
@@ -403,7 +409,7 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t code_do(Environment & _env)
+	inline unsigned long code_do(Environment & _env)
 	{
 		// Get reference to top block on code stack
 		Genome_section<CodeAtom> code_block(_env.peek_genome<CodeAtom>(0));
@@ -417,7 +423,7 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t code_do_star(Environment & _env)
+	inline unsigned long code_do_star(Environment & _env)
 	{
 		// Get reference to top block on code stack
 		Genome_section<CodeAtom> code_block(_env.peek_genome<CodeAtom>(0));
@@ -431,7 +437,7 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t code_do_range(Environment & _env)
+	inline unsigned long code_do_range(Environment & _env)
 	{
 		long n = _env.pop<long>();	// destination index
 		long i = _env.pop<long>();	// current index
@@ -475,7 +481,7 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t code_do_count(Environment & _env)
+	inline unsigned long code_do_count(Environment & _env)
 	{
 		long n = _env.pop<long>();	// destination index
 
@@ -490,7 +496,7 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t code_do_times(Environment & _env)
+	inline unsigned long code_do_times(Environment & _env)
 	{
 		long n = _env.pop<long>();	// destination index
 
@@ -506,7 +512,7 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t code_extract(Environment & _env)
+	inline unsigned long code_extract(Environment & _env)
 	{
 		long item_number = std::abs(_env.pop<long>());	// index
 
@@ -519,7 +525,7 @@ namespace Plush
 			Genome_section<CodeAtom> first_block = genome[0];
 
 			// Get count items in first block
-			int number_of_items = genome.number_of_items(first_block);
+			unsigned long number_of_items = genome.number_of_items(first_block);
 
 			if (number_of_items > 0)
 			{
@@ -531,12 +537,12 @@ namespace Plush
 
 				if (sub_block.size > 0)
 				{
-					unsigned int old_top = genome.size();
+					unsigned long old_top = genome.size();
 
 					_env.get_stack<CodeAtom>().yankdup_stack_element(sub_block);
 
 					// Close extracted item if not last item in original top block
-					if (item_number != number_of_items)
+					if ((item_number != number_of_items) && (genome.get_atom_at_position(old_top).close_parenthesis < domain::argmap::maximum_stack_dept))
 						genome.get_atom_at_index(old_top).close_parenthesis++;
 
 					genome.remove_item_at_position(1);
@@ -547,7 +553,7 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t bool2code(Environment & _env)
+	inline unsigned long bool2code(Environment & _env)
 	{
 		bool val = _env.pop<bool>();
 
@@ -560,7 +566,7 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t float2code(Environment & _env)
+	inline unsigned long float2code(Environment & _env)
 	{
 		double val = _env.pop<double>();
 		std::string instruction = Utilities::string_format("{:instruction %f :close 1}", val);
@@ -569,7 +575,7 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t int2code(Environment & _env)
+	inline unsigned long int2code(Environment & _env)
 	{
 		long val = _env.pop<long>();
 		std::string instruction = Utilities::string_format("{:instruction %d :close 1}", val);
@@ -578,7 +584,7 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t code_if(Environment & _env)
+	inline unsigned long code_if(Environment & _env)
 	{
 		// Get blocks
 		Genome_section<CodeAtom> code_block_a = _env.peek_genome<CodeAtom>(0);
@@ -599,7 +605,7 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t code_insert(Environment & _env)
+	inline unsigned long code_insert(Environment & _env)
 	{
 		long item_number = std::abs(_env.pop<long>());	// index
 
@@ -609,18 +615,32 @@ namespace Plush
 		// Get reference to second block on stack
 		Genome_section<CodeAtom> block_b = genome[1];
 
+		//if (block_b.size == 0)
+		//	return 1;
+
 		// Get reference to first block on stack
 		Genome_section<CodeAtom> block_a = genome[0];
 
+		if (block_a.size == 0)
+			return 1;
+
 		// Get count items in first block
-		int number_of_items = genome.number_of_items(block_a);
+		unsigned long number_of_items_in_block_a = genome.number_of_items(block_a);
+
+		if (number_of_items_in_block_a == 0)
+			return 1;
+
+		unsigned long number_of_items_in_block_b = genome.number_of_items(block_b);
+
+		if (number_of_items_in_block_b == 0)
+			return 1;
 
 		// Take modulo the number of blocks to ensure that it is within the meaningful range.
 		if (item_number != 0)
 		{
 			long n = item_number - 1;
-			item_number = std::abs(n) % number_of_items + 1;
-			item_number = (item_number == number_of_items) ? 0 : item_number;
+				item_number = std::abs(n) % number_of_items_in_block_a + 1;
+				item_number = (item_number == number_of_items_in_block_a) ? 0 : item_number;
 		}
 
 		if (item_number == 0)
@@ -643,7 +663,7 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t code_length(Environment & _env)
+	inline unsigned long code_length(Environment & _env)
 	{
 		// Get reference to genome stack
 		Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
@@ -652,14 +672,14 @@ namespace Plush
 		Genome_section<CodeAtom> top_block = genome[0]; 
 
 		// Get count items in first block
-		unsigned int number_of_items = genome.number_of_items(top_block);
-		_env.push<long>(number_of_items);
+		unsigned long number_of_items = genome.number_of_items(top_block);
+		_env.push<long>((long)number_of_items);
 		_env.pop_genome<CodeAtom>();
 
 		return 1;
 	}
 
-	inline size_t code_list(Environment & _env)
+	inline unsigned long code_list(Environment & _env)
 	{
 		// Get reference to genome stack
 		Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
@@ -671,7 +691,8 @@ namespace Plush
 		Genome_section<CodeAtom> block_b = genome[1];
 
 		// Close combined list
-		genome.get_atom_at_position(block_b.ending_position).close_parenthesis++;
+		if (genome.get_atom_at_position(block_b.ending_position).close_parenthesis < domain::argmap::maximum_stack_dept)
+			genome.get_atom_at_position(block_b.ending_position).close_parenthesis++;
 
 		// Balance parenthesis
 		CodeAtom code("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}");
@@ -682,7 +703,7 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t code_member(Environment & _env)
+	inline unsigned long code_member(Environment & _env)
 	{
 		// Get reference to genome stack
 		Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
@@ -702,9 +723,9 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t code_nth(Environment & _env)
+	inline unsigned long code_nth(Environment & _env)
 	{
-		long index = std::abs(_env.pop<long>());	// index
+		unsigned long index = std::abs(_env.pop<long>());	// index
 
 		// Get reference to genome stack
 		Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
@@ -713,7 +734,7 @@ namespace Plush
 		Genome_section<CodeAtom> block(genome[0]);
 
 		// Get count items in first block
-		unsigned int number_of_items = genome.number_of_items(block);
+		unsigned long number_of_items = genome.number_of_items(block);
 
 		// Take modulo the number of blocks to ensure that it is within the meaningful range.
 		index = index % number_of_items;
@@ -722,7 +743,7 @@ namespace Plush
 		Genome_section<CodeAtom> sub_block(genome.get_subitem(index + 1));
 
 		// Blance closing parenthesis
-		if ((number_of_items > 0) && (index < number_of_items - 1))
+		if ((number_of_items > 0) && (index < number_of_items - 1) && (genome.get_atom_at_position(sub_block.ending_position).close_parenthesis < domain::argmap::maximum_stack_dept))
 			genome.get_atom_at_position(sub_block.ending_position).close_parenthesis++;
 
 		// Replace top genome with subsection
@@ -731,7 +752,7 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t code_nthcdr(Environment & _env)
+	inline unsigned long code_nthcdr(Environment & _env)
 	{
 		long item_number = std::abs(_env.pop<long>());	// index
 
@@ -742,7 +763,7 @@ namespace Plush
 		Genome_section<CodeAtom> first_block = genome[0];
 
 		// Get count items in first block
-		unsigned int number_of_items = genome.number_of_items(first_block);
+		unsigned long number_of_items = genome.number_of_items(first_block);
 
 		if (number_of_items > 0)
 		{
@@ -760,7 +781,7 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t code_null(Environment & _env)
+	inline unsigned long code_null(Environment & _env)
 	{
 		Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
 		Genome_section<CodeAtom> top_block = genome[0];
@@ -780,9 +801,9 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t code_position(Environment & _env)
+	inline unsigned long code_position(Environment & _env)
 	{
-		size_t effort = 1;
+		unsigned long effort = 1;
 
 		long return_val = -1;
 
@@ -804,9 +825,9 @@ namespace Plush
 			Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
 
 			// Get count items in first block
-			unsigned int number_of_items = genome.number_of_items(block_A);
+			unsigned long number_of_items = genome.number_of_items(block_A);
 
-			for (unsigned int n = 0; n < number_of_items; n++)
+			for (unsigned long n = 0; n < number_of_items; n++)
 			{
 				Genome_section<CodeAtom> subitem = genome.get_subitem(n + 1);
 					
@@ -827,7 +848,7 @@ namespace Plush
 		return effort;
 	}
 
-	inline size_t code_quote(Environment & _env)
+	inline unsigned long code_quote(Environment & _env)
 	{
 		// Get reference to genome stack
 		Genome<ExecAtom>& genome = _env.get_stack<ExecAtom>();
@@ -840,19 +861,19 @@ namespace Plush
 		return 1;
 	}
 
-	inline size_t code_size(Environment & _env)
+	inline unsigned long code_size(Environment & _env)
 	{
 		// Get first block from stack
 		Genome_section<CodeAtom> top_block = _env.pop_genome<CodeAtom>();
 
 		// Get count items in first block
-		unsigned int size = top_block.size;
+		unsigned long size = top_block.size;
 		_env.push<long>(size);
 
 		return 1;
 	}
 
-	inline size_t code_subst(Environment & _env)
+	inline unsigned long code_subst(Environment & _env)
 	{
 		Genome<CodeAtom>& stack = _env.get_stack<CodeAtom>();
 
@@ -893,7 +914,7 @@ namespace Plush
 	//   N is popped from the Integer stack first. If N < 0, or if N >= size of input array, or the Integer 
 	//	 stack is empty then a NO-OP is executed instead.
 	//
-	inline size_t in2code(Environment & _env)
+	inline unsigned long in2code(Environment & _env)
 	{
 		long index = _env.pop<long>();
 
@@ -922,7 +943,7 @@ namespace Plush
 	// Remarks:
 	//   if input array is empty, NO-OP is executed.
 	//
-	inline size_t inall2code(Environment & _env)
+	inline unsigned long inall2code(Environment & _env)
 	{
 		if (_env.input.size() > 0)
 		{
@@ -954,13 +975,17 @@ namespace Plush
 	// Remarks:
 	//   if input array is empty, NO-OP is executed.
 	//
-	inline size_t inallrev2code(Environment & _env)
+	inline unsigned long inallrev2code(Environment & _env)
 	{
 		if (_env.input.size() > 0)
 		{
-			for (size_t index = _env.input.size() - 1; index >= 0; index--)
+			size_t size = _env.input.size();
+			size_t index = size;
+
+			//for (unsigned long index = _env.input.size() - 1; index >= 0; index--)
+			for (size_t n = 0; n < size; n++)
 			{
-				double value = _env.input[index];
+				double value = _env.input[--index];
 				_env.push<CodeAtom>(CodeAtom(value));
 			}
 		}

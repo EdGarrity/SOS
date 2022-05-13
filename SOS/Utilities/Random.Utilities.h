@@ -2,8 +2,8 @@
 
 namespace Utilities
 {
-	int random_integer(const int & min, const int & max);
-	unsigned int random_integer(unsigned int m);
+	unsigned long random_integer(unsigned long min, unsigned long max);
+	unsigned long random_integer(unsigned long m);
 	double random_double(const double min, const double max);
 	//double random_double(const double & max);
 	//double random_double();

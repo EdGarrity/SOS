@@ -251,7 +251,7 @@ namespace Plush
 			long index = _env.pop<long>();
 
 			size_t i = std::abs((long)(index % _env.input.size()));
-			T value = _env.input[i];
+			T value = (T)_env.input[i];
 			_env.push<T>(value);
 		}
 
@@ -353,7 +353,7 @@ namespace Plush
 			//{
 				for (size_t index = 0; index < _env.input.size(); index++)
 				{
-					T value = _env.input[index];
+					T value = (T)_env.input[index];
 					_env.push<T>(value);
 				}
 			//}
@@ -389,7 +389,7 @@ namespace Plush
 			//{
 				for (long long index = _env.input.size() - 1; index >= 0; index--)
 				{
-					T value = _env.input[index];
+					T value = (T)_env.input[index];
 					_env.push<T>(value);
 				}
 			//}

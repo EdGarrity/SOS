@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <cctype>
 #include <string>
+#include "..\Utilities\String.h"
 
 namespace Plush
 {
@@ -46,7 +47,10 @@ namespace Plush
 			while (_atom_string[start_of_optional_value] == ' ')
 				start_of_optional_value++;
 
-			close_parenthesis = std::stoi(_atom_string.substr(start_of_optional_value, index));
+			close_parenthesis = std::abs(std::stoi(_atom_string.substr(start_of_optional_value, index)));
+
+			if (close_parenthesis > domain::argmap::maximum_stack_dept)
+				close_parenthesis = domain::argmap::maximum_stack_dept;
 		}
 
 		// Check for optional silent tiken
@@ -60,7 +64,7 @@ namespace Plush
 				start_of_optional_value++;
 
 			if (_atom_string.find("true") != std::string::npos)
-				type = silent;
+				type = AtomType::silent;
 		}
 
 		// Check for boolean
@@ -68,15 +72,15 @@ namespace Plush
 			type = AtomType::boolean;
 
 		// Check for integer
-		else if ([&]() { char* p; strtol(instruction_name.c_str(), &p, 10); return *p == 0; }() == true)
+		else if (Utilities::isNumber(instruction_name))
 			type = AtomType::integer;
 
 		// Check for float
-		else if ([&]() { char* p; strtod(instruction_name.c_str(), &p); return *p == 0; }() == true)
+		else if (Utilities::isFloat(instruction_name))
 			type = AtomType::floating_point;
 
 		else
-			type = ins;
+			type = AtomType::ins;
 
 		instruction_id = Plush::static_initializer.get_function_index(instruction_name);
 	}
@@ -100,7 +104,7 @@ namespace Plush
 	//
 	std::string first_atom(std::string _genome_instructions)
 	{
-		std::size_t found = _genome_instructions.find_first_of("}");
+		size_t found = _genome_instructions.find_first_of("}");
 
 		if (found == std::string::npos)
 			return "";
@@ -128,7 +132,7 @@ namespace Plush
 	//
 	std::string rest_atom(std::string _genome_instructions)
 	{
-		std::size_t found = _genome_instructions.find_first_of("}");
+		size_t found = _genome_instructions.find_first_of("}");
 
 		if (found == std::string::npos)
 			return "";

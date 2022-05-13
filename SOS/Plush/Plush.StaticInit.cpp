@@ -1,6 +1,7 @@
 #include "Plush.StaticInit.h"
 #include "Environment.h"
 #include "Plush.Instruction.h"
+#include "..\Utilities\MyException.h"
 
 namespace Plush
 {
@@ -59,7 +60,10 @@ namespace Plush
 	void StaticInit::set_parentheses(std::string type, std::string name, unsigned int block_wants)
 	{
 		std::string func_name = type + "." + name;
-		Func2BlockWantsMap[func_name] = block_wants;
+		//Func2BlockWantsMap[func_name] = block_wants;
+
+		if (is_function_supported(func_name))
+			Func2BlockWantsMap[func_name] = block_wants;
 	};
 
 	//void StaticInit::set_parentheses(std::string name, unsigned int block_wants)
@@ -68,19 +72,19 @@ namespace Plush
 	//	Func2BlockWantsMap[func_name] = block_wants;
 	//};
 
-	size_t StaticInit::number_of_functions()
+	unsigned long StaticInit::number_of_functions()
 	{
-		return function_names.size();
+		return (unsigned long)function_names.size();
 	}
 
-	std::string StaticInit::get_function_name(size_t function_index)
+	std::string StaticInit::get_function_name(unsigned long function_index)
 	{
 		return function_names[function_index % number_of_functions()];
 	}
 
-	size_t StaticInit::get_function_index(std::string function_name)
+	unsigned long StaticInit::get_function_index(std::string function_name)
 	{
-		for (size_t n = 0; n < function_names.size(); n++)
+		for (unsigned long n = 0; n < function_names.size(); n++)
 			if (function_names[n] == function_name)
 				return n;
 
@@ -89,15 +93,33 @@ namespace Plush
 
 	unsigned int StaticInit::get_function_block_wants(std::string function_name)
 	{
-		return Func2BlockWantsMap[function_name];
+		//return Func2BlockWantsMap[function_name];
+
+		unsigned int blocks = 0;
+
+		try
+		{
+			blocks = Func2BlockWantsMap.at(function_name);
+		}
+		catch (const std::out_of_range& oor)
+		{
+			return 0;
+		}
+
+		return blocks;
 	}
 
 	Instruction * StaticInit::get_function(std::string function_name)
 	{
+		//return Func2CodeMap[function_name];
+
+		if (!is_function_supported(function_name))
+			throw MyException("StaticInit::get_function() out_of_range");
+
 		return Func2CodeMap[function_name];
 	}
 
-	Instruction* StaticInit::get_function(size_t function_index)
+	Instruction* StaticInit::get_function(unsigned long function_index)
 	{
 		return Func2CodeMap[function_names[function_index % number_of_functions()]];
 	}

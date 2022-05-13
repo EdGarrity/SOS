@@ -11,15 +11,15 @@ namespace Plush
 
 	class Type
 	{
-		std::vector<size_t> type;
+		std::vector<unsigned int> type;
 		unsigned _start;
 	public:
 
-		Type(size_t len = 0) : type(len)
+		Type(unsigned int len = 0) : type(len)
 		{
 			postc();
 		}
-		Type(size_t len, size_t which, size_t value = 1) : type(len)
+		Type(unsigned int len, unsigned int which, unsigned int value = 1) : type(len)
 		{
 			type[which] = value;
 			postc();
@@ -29,7 +29,7 @@ namespace Plush
 			postc();
 		}
 
-		typedef std::vector<size_t> TypeVec;
+		typedef std::vector<unsigned int> TypeVec;
 
 		const TypeVec &get() const
 		{
@@ -62,7 +62,7 @@ namespace Plush
 		bool can_pop_from(/*const*/ Environment &env); // const;
 		bool can_push_to(/*const*/ Environment &env); // const;
 
-		int operator[](unsigned i) const
+		unsigned int operator[](unsigned i) const
 		{
 			return i < type.size() ? type[i] : 0;
 		}

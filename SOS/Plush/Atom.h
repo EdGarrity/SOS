@@ -1,13 +1,14 @@
 #pragma once
 #include <string>
 #include "Plush.StaticInit.h"
+#include "..\Domain\Arguments.h"
 
 namespace Plush
 {
 	class Atom
 	{
 	public:
-		enum AtomType
+		enum class AtomType
 		{
 			empty = 0,
 
@@ -29,7 +30,7 @@ namespace Plush
 		std::string instruction_name;
 		unsigned int close_parenthesis;
 		AtomType type;
-		int instruction_id;
+		size_t instruction_id;
 
 		explicit Atom()
 		{
@@ -42,23 +43,35 @@ namespace Plush
 		explicit Atom(std::string instruction_name, unsigned int close_parenthesis, AtomType type)
 		{
 			this->instruction_name = instruction_name;
-			this->close_parenthesis = close_parenthesis;
+			this->close_parenthesis = (close_parenthesis > domain::argmap::maximum_stack_dept) ? (domain::argmap::maximum_stack_dept) : (close_parenthesis);
 			this->type = type;
 			this->instruction_id = Plush::static_initializer.get_function_index(instruction_name);
 		};
 
 		explicit Atom(std::string _program_statement)
 		{
+			instruction_name = "";
+			close_parenthesis = 0;
+			type = AtomType::empty;
+			instruction_id = -1;
 			compile(_program_statement);
 		};
 
 		explicit Atom(char _program_statement[])
 		{
+			instruction_name = "";
+			close_parenthesis = 0;
+			type = AtomType::empty;
+			instruction_id = -1;
 			compile(_program_statement);
 		};
 
 		explicit Atom(const char* _program_statement)
 		{
+			instruction_name = "";
+			close_parenthesis = 0;
+			type = AtomType::empty;
+			instruction_id = -1;
 			compile(_program_statement);
 		};
 
@@ -86,7 +99,7 @@ namespace Plush
 		explicit Atom(const Atom &other)
 		{
 			instruction_name = other.instruction_name;
-			close_parenthesis = other.close_parenthesis;
+			close_parenthesis = other.close_parenthesis > domain::argmap::maximum_stack_dept ? domain::argmap::maximum_stack_dept : other.close_parenthesis;
 			type = other.type;
 			this->instruction_id = Plush::static_initializer.get_function_index(instruction_name);
 		};
@@ -94,7 +107,7 @@ namespace Plush
 		explicit Atom(Atom &other)
 		{
 			instruction_name = other.instruction_name;
-			close_parenthesis = other.close_parenthesis;
+			close_parenthesis = other.close_parenthesis > domain::argmap::maximum_stack_dept ? domain::argmap::maximum_stack_dept : other.close_parenthesis;
 			type = other.type;
 			this->instruction_id = Plush::static_initializer.get_function_index(instruction_name);
 		};
@@ -102,7 +115,7 @@ namespace Plush
 		explicit Atom(const Atom* other)
 		{
 			instruction_name = other->instruction_name;
-			close_parenthesis = other->close_parenthesis;
+			close_parenthesis = other->close_parenthesis > domain::argmap::maximum_stack_dept ? domain::argmap::maximum_stack_dept : other->close_parenthesis;
 			type = other->type;
 			this->instruction_id = Plush::static_initializer.get_function_index(instruction_name);
 		};
@@ -110,7 +123,7 @@ namespace Plush
 		explicit Atom(Atom* other)
 		{
 			instruction_name = other->instruction_name;
-			close_parenthesis = other->close_parenthesis;
+			close_parenthesis = other->close_parenthesis > domain::argmap::maximum_stack_dept ? domain::argmap::maximum_stack_dept : other->close_parenthesis;
 			type = other->type;
 			this->instruction_id = Plush::static_initializer.get_function_index(instruction_name);
 		};
@@ -126,7 +139,7 @@ namespace Plush
 		void set(std::string instruction_name, unsigned int close_parenthesis, AtomType type)
 		{
 			this->instruction_name = instruction_name;
-			this->close_parenthesis = close_parenthesis;
+			this->close_parenthesis = close_parenthesis > domain::argmap::maximum_stack_dept ? domain::argmap::maximum_stack_dept : close_parenthesis;
 			this->type = type;
 			this->instruction_id = Plush::static_initializer.get_function_index(instruction_name);
 		};

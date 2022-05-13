@@ -4,6 +4,8 @@
 #include <stack>
 #include <map>
 #include <stdexcept>
+#include <cstdlib>
+#include <iomanip>
 #include "Plush.StaticInit.h"
 #include "..\Utilities\FixedSizeStack.h"
 #include "..\Utilities\String.h"
@@ -22,6 +24,11 @@
 
 namespace Plush
 {
+	extern thread_local unsigned long g_individual_index;
+	extern thread_local unsigned long g_example_case;
+
+
+
 	//typedef std::map<std::string, unsigned int> Func2BlockWantsMapType;
 	//extern Func2BlockWantsMapType Func2BlockWantsMap;
 
@@ -35,16 +42,16 @@ namespace Plush
 	{
 	public:
 		// Position of first atom in genome (0 = top)
-		size_t starting_position = 0;
+		unsigned long starting_position = 0;
 
 		// Position of last atom in genome (0 = top)
-		size_t ending_position = 0;
+		unsigned long ending_position = 0;
 
 		// Number of atomes in genome
-		size_t size = 0;
+		unsigned long size = 0;
 
 		// Number of extra closing parenthesis in genome
-		unsigned int extra_parenthesis = 0;
+		unsigned long extra_parenthesis = 0;
 
 		// Default constructor
 		Genome_section()
@@ -92,7 +99,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		Genome_section(size_t starting_position, size_t size, unsigned int extra_parenthesis = 0)
+		Genome_section(unsigned long starting_position, unsigned long size, unsigned long extra_parenthesis = 0)
 		{
 			this->starting_position = starting_position;
 			this->size = size;
@@ -124,7 +131,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline void set(size_t starting_position, size_t size, unsigned int extra_parenthesis = 0)
+		inline void set(unsigned long starting_position, unsigned long size, unsigned long extra_parenthesis = 0)
 		{
 			this->starting_position = starting_position;
 			this->size = size;
@@ -181,7 +188,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		const Genome_section<T> operator+ (unsigned int n)
+		const Genome_section<T> operator+ (unsigned long n)
 		{
 			if (starting_position + n > ending_position)
 			{
@@ -273,7 +280,7 @@ namespace Plush
 		}
 	};
 
-	template <class T, size_t N = domain::argmap::maximum_stack_size>
+	template <class T, unsigned long N = domain::argmap::maximum_stack_size>
 	class Genome : public Utilities::FixedSizeStack<T>
 	{
 	private:
@@ -331,7 +338,7 @@ namespace Plush
 
 			Utilities::FixedSizeStack<T>::top_ = other->top_;
 
-			for (unsigned int n = 0; n < Utilities::FixedSizeStack<T>::top_; n++)
+			for (unsigned long n = 0; n < Utilities::FixedSizeStack<T>::top_; n++)
 				Utilities::FixedSizeStack<T>::stack_[n] = other->stack_[n];
 		}
 
@@ -389,7 +396,7 @@ namespace Plush
 
 			Utilities::FixedSizeStack<T>::top_ = other.top_;
 
-			for (size_t n = 0; n < Utilities::FixedSizeStack<T>::top_; n++)
+			for (long n = 0; n < Utilities::FixedSizeStack<T>::top_; n++)
 				Utilities::FixedSizeStack<T>::stack_[n] = other.stack_[n];
 
 			genome_string_ = other.genome_string_;
@@ -439,7 +446,7 @@ namespace Plush
 		void set(std::string genome_string);
 
 		// Same as the copy method
-		inline size_t set(Genome<T, N>& other)
+		inline unsigned long set(Genome<T, N>& other)
 		{
 			if (other.top_ >= N)
 			{
@@ -451,7 +458,7 @@ namespace Plush
 
 			Utilities::FixedSizeStack<T>::top_ = other.top_;
 
-			for (size_t n = 0; n < Utilities::FixedSizeStack<T>::top_; n++)
+			for (long n = 0; n < Utilities::FixedSizeStack<T>::top_; n++)
 				Utilities::FixedSizeStack<T>::stack_[n] = other.stack_[n];
 
 			return Utilities::FixedSizeStack<T>::top_;
@@ -506,7 +513,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline const Genome_section<T> operator [] (unsigned int item_position) const
+		inline const Genome_section<T> operator [] (unsigned long item_position) const
 		{
 			return get_item(item_position);
 		}
@@ -535,7 +542,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline Genome_section<T> operator [] (unsigned int item_position)
+		inline Genome_section<T> operator [] (unsigned long item_position)
 		{
 			return get_item(item_position);
 		}
@@ -586,7 +593,7 @@ namespace Plush
 			if (genome_a.size != genome_b.size)
 				return false;
 
-			for (unsigned int n = 0; n < genome_a.size; n++)
+			for (unsigned long n = 0; n < genome_a.size; n++)
 			{
 				size_t pos_a = genome_a.ending_position - n;
 				size_t pos_b = genome_b.ending_position - n;
@@ -682,13 +689,13 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		unsigned int number_of_blocks()
+		unsigned long number_of_blocks()
 		{
-			unsigned int item_number = 0;
-			unsigned int wanted_blocks = 1;	// Assume all genomes begin as a block.
-			unsigned int extra_blocks = 0;
-			std::stack<unsigned int> wanted_stack;
-			int n = Utilities::FixedSizeStack<T>::size() - 1;
+			unsigned long item_number = 0;
+			unsigned long wanted_blocks = 1;	// Assume all genomes begin as a block.
+			unsigned long extra_blocks = 0;
+			std::stack<unsigned long> wanted_stack;
+			long n = Utilities::FixedSizeStack<T>::size() - 1;
 
 			while ((n >= 0) || (extra_blocks > 0))
 			{
@@ -709,12 +716,12 @@ namespace Plush
 					atom.close_parenthesis = 1;
 
 				//int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
-				int closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction_name);
+				long closing = (long)atom.close_parenthesis - (long)static_initializer.get_function_block_wants(atom.instruction_name);
 
 				if (closing < 0)
 				{
 					wanted_stack.push(wanted_blocks);
-					wanted_blocks = 0 - closing;
+					wanted_blocks = std::abs(closing);
 				}
 
 				extra_blocks = (closing > 1) ? (closing - 1) : (0);
@@ -769,13 +776,13 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline bool number_of_blocks_at_least(unsigned int required)
+		inline bool number_of_blocks_at_least(unsigned long required)
 		{
-			unsigned int item_number = 0;
-			unsigned int wanted_blocks = 1;	// Assume all genomes begin as a block.
-			unsigned int extra_blocks = 0;
-			std::stack<unsigned int> wanted_stack;
-			int n = Utilities::FixedSizeStack<T>::size() - 1;
+			unsigned long item_number = 0;
+			unsigned long wanted_blocks = 1;	// Assume all genomes begin as a block.
+			unsigned long extra_blocks = 0;
+			std::stack<unsigned long> wanted_stack;
+			long n = (int)Utilities::FixedSizeStack<T>::size() - 1;
 
 			while ((n >= 0) || (extra_blocks > 0))
 			{
@@ -796,12 +803,12 @@ namespace Plush
 					atom.close_parenthesis = 1;
 
 				//int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
-				int closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction_name);
+				long closing = (long)atom.close_parenthesis - (long)static_initializer.get_function_block_wants(atom.instruction_name);
 
 				if (closing < 0)
 				{
 					wanted_stack.push(wanted_blocks);
-					wanted_blocks = 0 - closing;
+					wanted_blocks = std::abs(closing);
 				}
 
 				extra_blocks = (closing > 1) ? (closing - 1) : (0);
@@ -857,13 +864,13 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline unsigned int number_of_items(int starting_position = -1)
+		inline unsigned long number_of_items(long starting_position = -1)
 		{
-			unsigned int item_number = 0;
-			unsigned int wanted_blocks = 0;
-			unsigned int extra_blocks = 0;
-			std::stack<unsigned int> wanted_stack;
-			int n = Utilities::FixedSizeStack<T>::size() - 1;
+			unsigned long item_number = 0;
+			unsigned long wanted_blocks = 0;
+			unsigned long extra_blocks = 0;
+			std::stack<unsigned long> wanted_stack;
+			long n = Utilities::FixedSizeStack<T>::size() - 1;
 
 			if (starting_position > -1)
 			{
@@ -884,7 +891,7 @@ namespace Plush
 					atom = Plush::Atom("{:instruction EXEC.NOOP :close 1}");
 
 				//int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
-				int closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction_name);
+				long closing = (long)atom.close_parenthesis - (long)static_initializer.get_function_block_wants(atom.instruction_name);
 
 				if (n < 0)
 					closing = wanted_blocks;
@@ -892,7 +899,7 @@ namespace Plush
 				if (closing < 0)
 				{
 					wanted_stack.push(wanted_blocks);
-					wanted_blocks = 0 - closing;
+					wanted_blocks = std::abs(closing);
 				}
 
 				extra_blocks = (closing > 1) ? (closing - 1) : (0);
@@ -949,13 +956,13 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline unsigned int number_of_items(Genome_section<T> section)
+		inline unsigned long number_of_items(Genome_section<T> section)
 		{
-			unsigned int item_number = 0;
-			unsigned int wanted_blocks = 0;
-			unsigned int extra_blocks = 0;
-			std::stack<unsigned int> wanted_stack;
-			int n = Utilities::FixedSizeStack<T>::top_ - section.starting_position - 1;
+			unsigned long item_number = 0;
+			unsigned long wanted_blocks = 0;
+			unsigned long extra_blocks = 0;
+			std::stack<unsigned long> wanted_stack;
+			long n = Utilities::FixedSizeStack<T>::top_ - section.starting_position - 1;
 
 			while (n >= 0)
 			{
@@ -970,7 +977,7 @@ namespace Plush
 					atom = Plush::Atom("{:instruction EXEC.NOOP :close 1}");
 
 				//int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
-				int closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction_name);
+				long closing = (long)atom.close_parenthesis - (long)static_initializer.get_function_block_wants(atom.instruction_name);
 
 				if (n < 0)
 					closing = wanted_blocks;
@@ -978,7 +985,7 @@ namespace Plush
 				if (closing < 0)
 				{
 					wanted_stack.push(wanted_blocks);
-					wanted_blocks = 0 - closing;
+					wanted_blocks = std::abs(closing);
 				}
 
 				extra_blocks = (closing > 1) ? (closing - 1) : (0);
@@ -1032,16 +1039,16 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline unsigned int number_of_atoms_in_Nth_block(unsigned int& extra_blocks_returned, int starting_position = -1, bool top_block = false)
+		inline unsigned long number_of_atoms_in_Nth_block(unsigned long& extra_blocks_returned, long starting_position = -1, bool top_block = false)
 		{
-			int atom_count = 0;
-			unsigned int item_number = 0;
-			unsigned int wanted_blocks = 0;
-			unsigned int extra_blocks = 0;
+			long atom_count = 0;
+			unsigned long item_number = 0;
+			unsigned long wanted_blocks = 0;
+			unsigned long extra_blocks = 0;
 			Utilities::FixedSizeStack<CodeAtom> temp;
-			std::stack<unsigned int> wanted_stack;
+			std::stack<unsigned long> wanted_stack;
 
-			int block_starting_index = Utilities::FixedSizeStack<T>::size() - 1;
+			long block_starting_index = Utilities::FixedSizeStack<T>::size() - 1;
 
 			if (starting_position > -1)
 			{
@@ -1049,7 +1056,7 @@ namespace Plush
 				block_starting_index -= starting_position;
 			}
 
-			for (int i = block_starting_index; i >= 0; i--)
+			for (long i = block_starting_index; i >= 0; i--)
 			{
 				T atom;
 
@@ -1066,7 +1073,7 @@ namespace Plush
 				}
 
 				//int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
-				int closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction);
+				long closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction);
 
 				if (closing < 0)
 				{
@@ -1134,7 +1141,7 @@ namespace Plush
 		//   provide the starting_position parameter.  I am keeping this parameter available in 
 		//   case I ever have a need for it.
 		//
-		inline Genome_section<T> get_item(unsigned int item_number = 0)
+		inline Genome_section<T> get_item(unsigned long item_number = 0)
 		{
 #if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
@@ -1143,19 +1150,27 @@ namespace Plush
 				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::get_item", debug);
 			}
 #endif
+			//if (g_individual_index == 124)
+			//{
+			//	std::cout << std::endl;
+			//	std::cout << std::endl;
+			//	std::cout << "case" << std::setw(15) << "item_number" << std::setw(15) << "item" << std::setw(15) << "i" << std::setw(15) << "closing" << std::setw(15) << "wanted_blocks" << std::setw(15) << "extra_blocks" << std::setw(20) << "instruction" << std::setw(15) << "close_parenthesis" << std::setw(15) << "block_wants" << std::setw(15) << "atom.close_parenthesis" << std::endl;
+			//	std::cout << "----" << std::setw(15) << "-----------" << std::setw(15) << "----" << std::setw(15) << "-" << std::setw(15) << "-------" << std::setw(15) << "-------------" << std::setw(15) << "------------" << std::setw(20) << "-----------" << std::setw(15) << "-----------------" << std::setw(15) << "-----------" << std::setw(15) << "----------------------" << std::endl;
+			//}
+
 			Genome_section<T> subsection;
 
-			int block_ending_index = 0;
-			int item_ending_position = 0;
-			int item_length = 0;
+			long block_ending_index = 0;
+			long item_ending_position = 0;
+			long item_length = 0;
 
-			unsigned int wanted_blocks = 0;
-			unsigned int extra_blocks = 0;
-			std::stack<unsigned int> wanted_stack;
-			unsigned int atom_count = 0;
-			int block_starting_index = Utilities::FixedSizeStack<T>::size() - 1;
+			long wanted_blocks = 0;
+			long extra_blocks = 0;
+			std::stack<long> wanted_stack;
+			long atom_count = 0;
+			long block_starting_index = (long)Utilities::FixedSizeStack<T>::size() - 1;
 
-			for (unsigned int item = 0; item <= item_number; item++)
+			for (long item = 0; item <= item_number; item++)
 			{
 				atom_count = 0;
 
@@ -1166,7 +1181,7 @@ namespace Plush
 				{
 					block_ending_index = 0;
 
-					for (int i = block_starting_index; i >= 0; i--)
+					for (long i = block_starting_index; i >= 0; i--)
 					{
 						block_ending_index = i;
 
@@ -1186,12 +1201,17 @@ namespace Plush
 						}
 
 						//int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
-						int closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction_name);
+						//long closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction_name);
+						
+						long close_parenthesis = (long)atom.close_parenthesis > 5 ? 5 : (long)atom.close_parenthesis;
+						long closing = close_parenthesis - static_initializer.get_function_block_wants(atom.instruction_name);
+						unsigned int block_wants = static_initializer.get_function_block_wants(atom.instruction_name);
 
 						if (closing < 0)
 						{
 							wanted_stack.push(wanted_blocks);
-							wanted_blocks = 0 - closing;
+							//wanted_blocks = 0 - closing;
+							wanted_blocks = std::abs(closing);
 						}
 
 						extra_blocks += (closing > 1) ? (closing - 1) : (0);
@@ -1213,15 +1233,47 @@ namespace Plush
 								wanted_stack.pop();
 							}
 						}
-					}
 
+
+						//if (g_individual_index == 124)
+						//{
+						//	std::cout << item_number
+						//		<< std::setw(15) << g_example_case
+						//		<< std::setw(15) << item
+						//		<< std::setw(15) << i
+						//		<< std::setw(15) << closing
+						//		<< std::setw(15) << wanted_blocks
+						//		<< std::setw(15) << extra_blocks
+						//		<< std::setw(20) << atom.instruction_name
+						//		<< std::setw(15) << atom.close_parenthesis
+						//		<< std::setw(15) << block_wants
+						//		<< std::setw(15) << atom.close_parenthesis
+						//		<< std::endl;
+						//}
+
+					}
 					block_starting_index = block_ending_index - 1;
 				}
 
 				item_ending_position += atom_count;
 			}
 
-			subsection.set(item_ending_position - atom_count, atom_count, extra_blocks);
+
+			//if (g_individual_index == 124)
+			//{
+			//	std::cout << item_number
+			//		<< std::setw(15) << g_example_case
+			//		<< std::setw(15) << "end"
+			//		<< std::setw(15) << "end"
+			//		<< std::setw(15) << "end"
+			//		<< std::setw(15) << wanted_blocks
+			//		<< std::setw(15) << extra_blocks
+			//		<< std::endl;
+			//}
+
+
+			long t = (item_ending_position > atom_count) ? item_ending_position - atom_count : 0;
+			subsection.set(t, atom_count, extra_blocks);
 
 #if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
@@ -1252,35 +1304,32 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline Genome_section<T> get_subitem(unsigned int item_number)
+		inline Genome_section<T> get_subitem(unsigned long item_number)
 		{
 			Genome_section<T> subsection;
-			int atom_count = 0;
-			unsigned int extra_blocks = 0;
-			Utilities::FixedSizeStack<CodeAtom> temp;
+			unsigned long extra_blocks = 0;
 
-			int item_ending_position = 0;
-			int item_length = 0;
+			unsigned long item_ending_position = 0;
+			unsigned long item_length = 0;
 
-			int search_starting_index = Utilities::FixedSizeStack<T>::size() - 1;
-			int search_ending_index = search_starting_index;
+			unsigned long sz = Utilities::FixedSizeStack<T>::size();
+			unsigned long search_starting_index = (sz > 0) ? (sz - 1) : 0;
+			unsigned long search_ending_index = search_starting_index;
 
-			for (int n = 0; n < item_number; n++)
+			for (unsigned long n = 0; n < item_number; n++)
 			{
 				unsigned int wanted_blocks = 0;
 				std::stack<unsigned int> wanted_stack;
 
-				for (int i = search_starting_index; i >= 0; i--)
+				for (long i = search_starting_index; i >= 0; i--)
 				{
-					search_ending_index = i;
+					search_ending_index = std::abs(i);
 
 					T atom;
 
 					if (extra_blocks == 0)
-					{
 						atom = Utilities::FixedSizeStack<T>::get_atom_at_index(i);
-						atom_count++;
-					}
+
 					else
 					{
 						atom = T("{:instruction EXEC.NOOP :close 1}");
@@ -1289,7 +1338,7 @@ namespace Plush
 					}
 
 					//int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
-					int closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction_name);
+					long closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction_name);
 
 					if (closing < 0)
 					{
@@ -1327,7 +1376,8 @@ namespace Plush
 				search_starting_index -= item_length;
 			}
 
-			subsection.set(item_ending_position - item_length, item_length, extra_blocks);
+			unsigned long starting_position = (item_ending_position > item_length) ? (item_ending_position - item_length) : 0;
+			subsection.set(starting_position, item_length, extra_blocks);
 			return subsection;
 		};
 
@@ -1348,22 +1398,22 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline Genome_section<T> get_item_that_starts_at_position(size_t search_starting_position)
+		inline Genome_section<T> get_item_that_starts_at_position(unsigned long search_starting_position)
 		{
 			Genome_section<T> subsection;
-			int atom_count = 0;
-			unsigned int extra_blocks = 0;
+			long atom_count = 0;
+			unsigned long extra_blocks = 0;
 
-			int item_ending_position = 0;
-			int item_length = 0;
+			long item_ending_position = 0;
+			long item_length = 0;
 
-			int search_starting_index = Utilities::FixedSizeStack<T>::size() - search_starting_position - 1;
-			int search_ending_index = search_starting_index;
+			long search_starting_index = Utilities::FixedSizeStack<T>::size() - search_starting_position - 1;
+			long search_ending_index = search_starting_index;
 
-			unsigned int wanted_blocks = 0;
-			std::stack<unsigned int> wanted_stack;
+			unsigned long wanted_blocks = 0;
+			std::stack<unsigned long> wanted_stack;
 
-			for (int i = search_starting_index; i >= 0; i--)
+			for (long i = search_starting_index; i >= 0; i--)
 			{
 				T atom;
 
@@ -1381,8 +1431,7 @@ namespace Plush
 
 				search_ending_index = i;
 
-				//int closing = atom.close_parenthesis - Func2BlockWantsMap[atom.instruction];
-				int closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction_name);
+				long closing = atom.close_parenthesis - static_initializer.get_function_block_wants(atom.instruction_name);
 
 				if (closing < 0)
 				{
@@ -1440,22 +1489,22 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline size_t push(long value)
+		inline unsigned long push(long value)
 		{
 			return Utilities::FixedSizeStack<T>::push(value);
 		}
 
-		inline size_t push(double value)
+		inline unsigned long push(double value)
 		{
 			return Utilities::FixedSizeStack<T>::push(value);
 		}
 
-		inline size_t push(bool value)
+		inline unsigned long push(bool value)
 		{
 			return Utilities::FixedSizeStack<T>::push(value);
 		}
 
-		inline size_t push(CodeAtom atom)
+		inline unsigned long push(CodeAtom atom)
 		{
 			if (Utilities::FixedSizeStack<T>::top_ > 0)
 			{
@@ -1466,6 +1515,7 @@ namespace Plush
 					&& (Utilities::FixedSizeStack<T>::top_ > 0))
 				{
 					atom.close_parenthesis += top_atom.close_parenthesis;
+					atom.close_parenthesis = atom.close_parenthesis > domain::argmap::maximum_stack_dept ? domain::argmap::maximum_stack_dept : atom.close_parenthesis;
 					Utilities::FixedSizeStack<T>::pop();
 				}
 
@@ -1478,7 +1528,7 @@ namespace Plush
 			return 1;
 		}
 
-		inline size_t push(ExecAtom atom)
+		inline unsigned long push(ExecAtom atom)
 		{
 			if (Utilities::FixedSizeStack<T>::top_ > 0)
 			{
@@ -1489,6 +1539,7 @@ namespace Plush
 					&& (Utilities::FixedSizeStack<T>::top_ > 0))
 				{
 					atom.close_parenthesis += top_atom.close_parenthesis;
+					atom.close_parenthesis = atom.close_parenthesis > domain::argmap::maximum_stack_dept ? domain::argmap::maximum_stack_dept : atom.close_parenthesis;
 					Utilities::FixedSizeStack<T>::pop();
 				}
 
@@ -1634,17 +1685,11 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline size_t remove_item_at_position(unsigned int item_position)
+		inline unsigned long remove_item_at_position(unsigned long item_position)
 		{
-			unsigned int s = 0;
-			unsigned int l = 0;
-			unsigned int extra_blocks;
-
-			//for (unsigned int n = 0; n <= item_position; n++)
-			//{
-			//	s += l;
-			//	l = number_of_atoms(extra_blocks, n);
-			//}
+			unsigned long s = 0;
+			unsigned long l = 0;
+			unsigned long extra_blocks;
 
 			Genome_section<T> genome_section = get_item(item_position);
 
@@ -1699,7 +1744,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline size_t remove_stack_element(unsigned int element_pos)
+		inline unsigned long remove_stack_element(unsigned long element_pos)
 		{
 #if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
@@ -1754,12 +1799,12 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline size_t yankdup_item(unsigned int item_position)
+		inline unsigned long yankdup_item(unsigned long item_position)
 		{
-			unsigned int s = 0;
-			unsigned int l = 0;
-			unsigned int extra_blocks = 0;
-			size_t effort = 0;
+			unsigned long s = 0;
+			unsigned long l = 0;
+			unsigned long extra_blocks = 0;
+			unsigned long effort = 0;
 
 #if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
@@ -1844,7 +1889,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline size_t yankdup_stack_element(unsigned int element_pos)
+		inline unsigned long yankdup_stack_element(unsigned long element_pos)
 		{
 #if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
@@ -1853,10 +1898,10 @@ namespace Plush
 				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::yankdup_stack_element", debug);
 			}
 #endif
-			unsigned int s = 0;
-			unsigned int l = 0;
-			unsigned int extra_blocks = 0;
-			size_t effort = 1;
+			unsigned long s = 0;
+			unsigned long l = 0;
+			unsigned long extra_blocks = 0;
+			unsigned long effort = 1;
 
 			Genome_section<T> section = (*this)[element_pos];
 
@@ -1866,14 +1911,20 @@ namespace Plush
 			else
 				push(T("{:instruction EXEC.NOOP :close 1}"));
 
-			unsigned int sz = Utilities::FixedSizeStack<T>::size();
-			T& atom = Utilities::FixedSizeStack<T>::get_atom_at_index(sz - 1);
-			unsigned int new_close_parenthesis = atom.close_parenthesis - section.extra_parenthesis;
+			unsigned long sz = Utilities::FixedSizeStack<T>::size();
 
-			new_close_parenthesis = (new_close_parenthesis < 0) ? 0 : new_close_parenthesis;
+			if (sz > 1)
+			{
+				T& atom = Utilities::FixedSizeStack<T>::get_atom_at_index(sz - 1);
 
-			if (atom.close_parenthesis > section.extra_parenthesis)
-				atom.close_parenthesis = new_close_parenthesis;
+				//unsigned long new_close_parenthesis = atom.close_parenthesis - section.extra_parenthesis;
+				//new_close_parenthesis = (new_close_parenthesis < 0) ? 0 : new_close_parenthesis;
+
+				unsigned long new_close_parenthesis = (atom.close_parenthesis > section.extra_parenthesis) ? (atom.close_parenthesis - section.extra_parenthesis) : (0);
+
+				if (atom.close_parenthesis > section.extra_parenthesis)
+					atom.close_parenthesis = new_close_parenthesis;
+			}
 
 #if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
@@ -1885,7 +1936,7 @@ namespace Plush
 			return effort;
 		}
 
-		inline size_t yankdup_stack_element(Genome_section<T> section)
+		inline unsigned long yankdup_stack_element(Genome_section<T> section)
 		{
 			if (section.size > Utilities::FixedSizeStack<T>::free())
 			{
@@ -1924,9 +1975,9 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline size_t push(Genome_section<T> section)
+		inline unsigned long push(Genome_section<T> section)
 		{
-			size_t effort = 0;
+			unsigned long effort = 0;
 
 			if (section.size > Utilities::FixedSizeStack<T>::free())
 			{
@@ -1960,9 +2011,9 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline size_t yank_item(unsigned int item_position)
+		inline unsigned long yank_item(unsigned long item_position)
 		{
-			size_t effort = 0;
+			unsigned long effort = 0;
 
 			if (item_position > 0)
 			{
@@ -1993,7 +2044,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline size_t yank_stack_element(unsigned int element_pos)
+		inline unsigned long yank_stack_element(unsigned long element_pos)
 		{
 #if DLEVEL > 0
 			if (debug_push.load(std::memory_order_acquire))
@@ -2002,7 +2053,7 @@ namespace Plush
 				Utilities::debug_log(Utilities::FixedSizeStack<T>::current_thread, "Gnome::yank_stack_element", debug);
 			}
 #endif
-			size_t effort = 0;
+			unsigned long effort = 0;
 
 			if (element_pos > 0)
 			{
@@ -2037,9 +2088,9 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline size_t yank_stack_element(Genome_section<T> section)
+		inline unsigned long yank_stack_element(Genome_section<T> section)
 		{
-			size_t effort = 0;
+			unsigned long effort = 0;
 
 			if (section.size > 0)
 			{
@@ -2070,7 +2121,7 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline size_t shove(size_t destination_position, Genome_section<T> source_section)
+		inline unsigned long shove(unsigned long destination_position, Genome_section<T> source_section)
 		{
 			T atom;
 			std::array<T, N>& stack = Utilities::FixedSizeStack<T>::stack_;
@@ -2086,14 +2137,14 @@ namespace Plush
 			destination_position = (destination_position >= Utilities::FixedSizeStack<T>::top_) 
 				? Utilities::FixedSizeStack<T>::top_ - 1 : destination_position;
 
-			size_t source_index = (Utilities::FixedSizeStack<T>::top_ > source_section.starting_position) 
+			unsigned long source_index = (Utilities::FixedSizeStack<T>::top_ > source_section.starting_position)
 				? Utilities::FixedSizeStack<T>::top_ - source_section.starting_position - 1 : 0;
 
-			size_t destination_index = (Utilities::FixedSizeStack<T>::top_ > destination_position) 
+			unsigned long destination_index = (Utilities::FixedSizeStack<T>::top_ > destination_position)
 				? Utilities::FixedSizeStack<T>::top_ - destination_position - 1 : 0;
 
 			// Make space in this stack for the other items
-			for (size_t i = 0, j = Utilities::FixedSizeStack<T>::top_ - 1, k = Utilities::FixedSizeStack<T>::top_;
+			for (unsigned long i = 0, j = Utilities::FixedSizeStack<T>::top_ - 1, k = Utilities::FixedSizeStack<T>::top_;
 				i < destination_position; 
 				i++, j--, k--)
 			{
@@ -2104,7 +2155,7 @@ namespace Plush
 			stack[Utilities::FixedSizeStack<T>::top_ - destination_position] = T("{:instruction EXEC.NOOP_OPEN_PAREN :close 0}");
 
 			// Fix closing parenthesis
-			unsigned int extra_parenthesis = (source_section.size == 0) ? (1) : (source_section.extra_parenthesis);
+			unsigned long extra_parenthesis = (source_section.size == 0) ? (1) : (source_section.extra_parenthesis);
 
 			atom = stack[source_index - source_section.size + 1];
 			atom.close_parenthesis -= extra_parenthesis;
@@ -2115,7 +2166,7 @@ namespace Plush
 			stack[destination_index - source_section.size + 1] = atom;
 
 			// Swap source and destinaton atoms
-			for (size_t i = 0, j = source_index, k = Utilities::FixedSizeStack<T>::top_ - 1 - destination_position;
+			for (unsigned long i = 0, j = source_index, k = Utilities::FixedSizeStack<T>::top_ - 1 - destination_position;
 				i < source_section.size;
 				i++, j--, k--)
 			{
@@ -2150,9 +2201,9 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline size_t shove_to_stack_element(size_t element_pos)
+		inline unsigned long shove_to_stack_element(unsigned long element_pos)
 		{
-			size_t effort = 0;
+			unsigned long effort = 0;
 
 			if (element_pos > 0)
 			{
@@ -2160,8 +2211,8 @@ namespace Plush
 				Genome_section<T> pre_target = (*this)[element_pos - 1];
 				Genome_section<T> first = (*this)[0];
 
-				size_t target_position = (target.size == 0) ? (target.ending_position - 1) : (target.ending_position);
-				size_t target_extra_parenthesis = (target.size == 0) ? (pre_target.extra_parenthesis) : (target.extra_parenthesis);
+				unsigned long target_position = (target.size == 0) ? (target.ending_position - 1) : (target.ending_position);
+				unsigned long target_extra_parenthesis = (target.size == 0) ? (pre_target.extra_parenthesis) : (target.extra_parenthesis);
 
 				effort = Utilities::FixedSizeStack<T>::shove_it(target_position, 0, first.size);
 
@@ -2176,7 +2227,7 @@ namespace Plush
 					if (first.extra_parenthesis > 0)
 					{
 						T& atom2 = Utilities::FixedSizeStack<T>::get_atom_at_position(target.ending_position);
-						unsigned int new_close_parenthesis = atom2.close_parenthesis + target_extra_parenthesis;
+						unsigned long new_close_parenthesis = atom2.close_parenthesis + target_extra_parenthesis;
 						atom2.close_parenthesis = new_close_parenthesis;
 					}
 				}
@@ -2203,9 +2254,9 @@ namespace Plush
 		//
 		// Remarks:
 		//
-		inline size_t subst(Genome_section<T> main_section, Genome_section<T> first_section, Genome_section<T> second_section)
+		inline unsigned long subst(Genome_section<T> main_section, Genome_section<T> first_section, Genome_section<T> second_section)
 		{
-			size_t effort = 0;
+			unsigned long effort = 0;
 
 			if (Utilities::FixedSizeStack<T>::free() > 0)
 			{
@@ -2218,9 +2269,9 @@ namespace Plush
 					throw std::overflow_error(error_message.str());
 				}
 
-				size_t new_top = Utilities::FixedSizeStack<T>::size();
+				unsigned long new_top = Utilities::FixedSizeStack<T>::size();
 
-				for (size_t main_section_position = main_section.starting_position;
+				for (unsigned long main_section_position = main_section.starting_position;
 					main_section_position <= main_section.ending_position;
 					main_section_position++)
 				{
@@ -2228,7 +2279,7 @@ namespace Plush
 
 					if (comp(item, first_section))
 					{
-						for (size_t second_section_position = second_section.starting_position;
+						for (unsigned long second_section_position = second_section.starting_position;
 							second_section_position <= second_section.ending_position;
 							second_section_position++)
 						{
@@ -2269,8 +2320,8 @@ namespace Plush
 					}
 				}
 
-				int i = Utilities::FixedSizeStack<T>::size();
-				int j = new_top - 1;
+				long i = Utilities::FixedSizeStack<T>::size();
+				long j = new_top - 1;
 
 				while (i < j)
 				{
@@ -2324,12 +2375,12 @@ namespace Plush
 		//
 		inline Genome_section<T> contains(Genome_section<T> block_b, Genome_section<T> block_a)
 		{
-			unsigned int extra_blocks = 0;
+			unsigned long extra_blocks = 0;
 
 			// If length of Block A is less than Block B + 1, then it is too small to contain Block B
 			if (block_a.size > block_b.size)
 			{
-				for (size_t block_a_section_position = block_a.starting_position;
+				for (unsigned long block_a_section_position = block_a.starting_position;
 					block_a_section_position <= block_a.ending_position;
 					block_a_section_position++)
 				{
@@ -2370,13 +2421,13 @@ namespace Plush
 		inline Genome_section<T> container_of(Genome_section<T> block_a, Genome_section<T> block_b)
 		{
 			bool found = false;
-			unsigned int extra_blocks = 0;
+			unsigned long extra_blocks = 0;
 			Genome_section<T> container_block(0, 0);
 
 			// If length of Block A is less than Block B + 1, then it is too small to contain Block B
 			if (block_a.size > block_b.size)
 			{
-				for (size_t block_a_section_position = block_a.starting_position;
+				for (unsigned long block_a_section_position = block_a.starting_position;
 					block_a_section_position <= block_a.ending_position;
 					block_a_section_position++)
 				{
@@ -2407,12 +2458,12 @@ namespace Plush
 		genome_string_ = Utilities::FixedSizeStack<long>::to_string();;
 	}
 
-	template<class T, size_t N>
+	template<class T, unsigned long N>
 	inline void Genome<T, N>::convert_genome_to_string()
 	{
 		genome_string_.clear();
 
-		for (size_t n = 0; n < Utilities::FixedSizeStack<T>::size(); n++)
+		for (unsigned long n = 0; n < Utilities::FixedSizeStack<T>::size(); n++)
 		{
 			genome_string_ += "{";
 			genome_string_ += ":instruction ";
@@ -2429,18 +2480,18 @@ namespace Plush
 		genome_string_ = Utilities::FixedSizeStack<long>::to_string();;
 	}
 
-	template<class T, size_t N>
+	template<class T, unsigned long N>
 	inline std::string Genome<T, N>::convert_genome_to_string_debug()
 	{
 		std::string genome_string;
 
-		long long stack_top = Utilities::FixedSizeStack<T>::size();
+		unsigned long stack_top = Utilities::FixedSizeStack<T>::size();
 
 		if (stack_top > 0)
 		{
-			long long stack_bottom = stack_top > 10 ? stack_top - 10 : 0;
+			unsigned long stack_bottom = stack_top > 10 ? stack_top - 10 : 0;
 
-			for (long long n = stack_top - 1; n >= stack_bottom; n--)
+			for (long n = stack_top - 1; n >= stack_bottom; n--)
 			{
 				genome_string += "{";
 				genome_string += ":instruction ";
@@ -2454,7 +2505,7 @@ namespace Plush
 		return genome_string;
 	}
 
-	template<class T, size_t N>
+	template<class T, unsigned long N>
 	inline void Genome<T, N>::ingest_plush_genome(std::string _genome_str)
 	{
 		std::string gene;
@@ -2471,7 +2522,7 @@ namespace Plush
 		}
 	}
 
-	template<class T, size_t N>
+	template<class T, unsigned long N>
 	inline void Genome<T, N>::set(std::string _genome_string)
 	{
 		std::string genome_string = Utilities::trim_copy(_genome_string);

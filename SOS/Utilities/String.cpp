@@ -5,6 +5,7 @@
 #include <vector>
 #include <iterator>
 #include <algorithm>
+#include <iostream>
 
 namespace Utilities
 {
@@ -61,5 +62,64 @@ namespace Utilities
 		std::string newData = data;
 
 		return to_lower(newData);
+	}
+
+	bool isFloat(std::string str)
+	{
+		//std::istringstream iss(myString);
+		//float f;
+		//iss >> std::noskipws >> f; // noskipws considers leading whitespace invalid
+		//// Check the entire string was consumed and if either failbit or badbit is set
+		//return iss.eof() && !iss.fail();
+
+		// See https://en.cppreference.com/w/cpp/string/basic_string/stol
+		std::size_t pos{};
+		try
+		{
+			const double i{ std::stod(str, &pos) };
+		}
+		catch (std::invalid_argument const& ex)
+		{
+			//std::cerr << "isFloat(" << str << ") std::invalid_argument::what() : " << ex.what() << '\n';
+			return false;
+		}
+		catch (std::out_of_range const& ex)
+		{
+			//std::cerr << "isFloat(" << str << ") std::out_of_range::what(): " << ex.what() << '\n';
+			return false;
+		}
+
+		return true;
+	}
+
+	bool isNumber(const std::string str)
+	{
+		//for (char const& c : str) 
+		//{
+		//	if (std::isdigit(c) == 0) return false;
+		//}
+		//return true;
+
+		// See https://en.cppreference.com/w/cpp/string/basic_string/stol
+		std::size_t pos{};
+		try
+		{
+			const long i{ std::stol(str, &pos) };
+	
+			if (str[pos] == '.')
+				return false;
+		}
+		catch (std::invalid_argument const& ex)
+		{
+			//std::cerr << "isNumber(" << str << ") std::invalid_argument::what() : " << ex.what() << '\n';
+			return false;
+		}
+		catch (std::out_of_range const& ex)
+		{
+			//std::cerr << "isNumber(" << str << ") std::out_of_range::what(): " << ex.what() << '\n';
+			return false;
+		}
+
+		return true;
 	}
 }

@@ -1,0 +1,45 @@
+inline unsigned yankdup(Environment & _env)
+
+		TEST_METHOD(YankDup_One_Parameter)
+		{
+			Environment env;
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {}, {}));
+
+			Plush::run(env, \
+				"\
+					{:instruction 0 :close 0}\
+					{:instruction INTEGER.YANKDUP :close 0}\
+				");
+
+			Assert::IsTrue(is_stack_state(env, {}, {}, {}, {},
+				{
+					CodeAtom("{:instruction INTEGER.YANKDUP :close 0}")
+				}));
+		}
+		
+Unit Test C++ Includes:
+C:\Users\egarrity\Documents\Source\Repo\SOS\SOS\Plush
+C:\Users\edgar\OneDrive\Projects\Source\Repos\EdGarrity\SOS\SOS\Plush
+
+Unit Test C++ Libraries:
+C:\Users\egarrity\source\repos\EdGarrity\SOS\SOS\x64\Debug
+C:\Users\egarrity\Documents\Source\Repo\SOS\SOS\x64\Debug
+C:\Users\egarrity\OneDrive\Projects\Source\Repos\EdGarrity\SOS\SOS\x64\Debug
+C:\Users\edgar\OneDrive\Projects\Source\Repos\EdGarrity\SOS\SOS\x64\Debug
+
+Unit Test C++ Linker Dependencies
+Atom.obj
+Environment.obj
+Genome
+Plush.BooleanInstructions.obj
+Plush.ExecInstruction.obj
+Plush.FloatInstructions.obj
+Plush.IntegerInstructions.obj
+Plush.Instruction.obj
+Plush.StaticInit.obj
+Processor.obj
+
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	C2662	'unsigned int Plush::Environment::length<Plush::CodeAtom>(void)': cannot convert 'this' pointer from 'const Plush::Environment' to 'Plush::Environment &'	SOS	c:\users\edgar\onedrive\projects\source\repos\edgarrity\sos\sos\plush\environment.h	293	
+

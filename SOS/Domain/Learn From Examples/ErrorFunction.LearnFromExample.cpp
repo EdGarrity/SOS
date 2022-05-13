@@ -22,7 +22,9 @@ namespace domain
 		//   example_solution - The solution to the problem the program is suppose to find
 		//
 		// Return value:
-		//   The vector difference between the program's result and the expected result.
+		//   Tuple:
+		//     The vector difference between the program's result and the expected result.
+		//     Execution Effort
 		//
 		// Side Effects:
 		//   The Push environment is initialized and the Push stacks are manipulated.
@@ -37,25 +39,27 @@ namespace domain
 		//     Where:
 		//       X = 0 or more doubles.
 		//
-		double run_program(Plush::Environment& env,
+		std::tuple<double, unsigned long> run_program(Plush::Environment& env,
 			std::string program,
 			std::vector<double>& example_problem,
 			std::vector<double>& example_solution)
 		{
 			double error = 0.0;
 			int actual_solution_length = 0;
+			unsigned long effort = 0;
 
 			if (Utilities::trim_copy(program).length() > 0)
 			{
 				// Evaluate
-				Plush::run(env, program, example_problem);
+				effort = Plush::run(env, program, example_problem);
 
 				// Calculate error
 				double sum_of_error_squared = 0;
 
-				int digits_imbalance = example_solution.size() - env.output.size();
-
-				int digits = std::min(example_solution.size(), env.output.size());
+				size_t digits_imbalance = (example_solution.size() > env.output.size()) 
+					? (example_solution.size() - env.output.size()) 
+					: (env.output.size() - example_solution.size());
+				size_t digits = std::min(example_solution.size(), env.output.size());
 
 				if (digits > 0)
 				{
@@ -79,7 +83,7 @@ namespace domain
 				error = (-1.0 / std::log10(error + 10.0)) + 1.0;
 
 				// Add number of wrong digits
-				error += std::abs(digits_imbalance);
+				error += digits_imbalance;
 
 				// Cleanup Push Stacks to release memory
 				env.clear_stacks();
@@ -95,7 +99,8 @@ namespace domain
 			else
 				error = std::numeric_limits<double>::max() / (domain::argmap::population_size * 2.0);
 
-			return error;
+//			return error;
+			return std::make_tuple(error, effort);
 		}
 
 		// Purpose: 
@@ -107,7 +112,9 @@ namespace domain
 		//   example_solution - The solution to the problem the program is suppose to find
 		//
 		// Return value:
-		//   The vector difference between the program's result and the expected result.
+		//   Tuple:
+		//     The vector difference between the program's result and the expected result.
+		//     Execution Effort
 		//
 		// Side Effects:
 		//   The Push environment is initialized and the Push stacks are manipulated.
@@ -139,24 +146,25 @@ namespace domain
 
 		//	return error;
 		//}
-		double run_individual_threadsafe(Plush::Environment& env,
+		std::tuple<double, unsigned long> run_individual_threadsafe(Plush::Environment& env,
 			unsigned int _individual_index,
 			std::vector<double>& _example_problem,
 			std::vector<double>& _example_solution)
 		{
-			double error = 0.0;
+			//double error = 0.0;
 
 			std::string program = pushGP::globals::population_agents[_individual_index].get_genome_string();
 
 #if DLEVEL > 0
 			Utilities::debug_log(env.current_thread, "learn_from_examples::run_individual_threadsafe", "start", _individual_index, 0);
 #endif
-			error = run_program(env, program, _example_problem, _example_solution);
+			//error = run_program(env, program, _example_problem, _example_solution);
+			auto results = run_program(env, program, _example_problem, _example_solution);
 
 #if DLEVEL > 0
 			Utilities::debug_log(env.current_thread, "learn_from_examples::run_individual_threadsafe", "end", _individual_index, 0);
 #endif
-			return error;
+			return results;
 		}
 	}
 }
