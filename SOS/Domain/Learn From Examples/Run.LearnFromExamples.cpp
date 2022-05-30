@@ -105,6 +105,24 @@ namespace domain
 			"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 				//       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2
 
+
+		// Purpose: 
+		//   Returns the number of the last generation saved to the database.
+		//
+		// Parameters:
+		//   None
+		// 
+		// Return value:
+		//   The number of the last generation saved to the database or zero if no generations exist in the database.
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//
 		unsigned long get_last_saved_generation_number()
 		{
 			unsigned long n = 0;
@@ -127,6 +145,23 @@ namespace domain
 			return n;
 		}
 
+		// Purpose: 
+		//   Returns the SA tempreture of the last generation saved to the database.
+		//
+		// Parameters:
+		//   _default_temperature	-	The default to return if database table is empty
+		// 
+		// Return value:
+		//   The SA tempreture or the default tempreture if table in database is empty
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//
 		double get_last_saved_temperature(double _default_temperature)
 		{
 			double n = _default_temperature;
@@ -149,6 +184,24 @@ namespace domain
 			return n;
 		}
 
+		// Purpose: 
+		//   Returns the error of the best individual from the database, where:
+		//		error := average of the vector RMS difference between the example vector and the program's output vector for all examples in a training or test case
+		//
+		// Parameters:
+		//   _default_error	-	The default to return if database table is empty
+		// 
+		// Return value:
+		//   The error of the best individual from the database
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//
 		double get_last_best_individual_error(double _default_error)
 		{
 			double n = _default_error;
@@ -170,6 +223,24 @@ namespace domain
 			return n;
 		}
 
+		// Purpose: 
+		//   Returns the error of the 2nd best individual from the database, where:
+		//		error := average of the vector RMS difference between the example vector and the program's output vector for all examples in a training or test case
+		//
+		// Parameters:
+		//   _default_error	-	The default to return if database table is empty
+		// 
+		// Return value:
+		//   The error of the 2nd best individual from the database
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//
 		double get_last_prev_best_individual_error(double _default_error)
 		{
 			double n = _default_error;
@@ -191,6 +262,23 @@ namespace domain
 			return n;
 		}
 
+		// Purpose: 
+		//   Returns the stalled count from the database
+		//
+		// Parameters:
+		//   _default_stalled_count	-	The default to return if database table is empty
+		// 
+		// Return value:
+		//   The stalled count
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//
 		unsigned long get_last_stalled_count(unsigned long _default_stalled_count)
 		{
 			unsigned long n = _default_stalled_count;
@@ -212,6 +300,23 @@ namespace domain
 			return n;
 		}
 
+		// Purpose: 
+		//   Returns the cool down count from the database
+		//
+		// Parameters:
+		//   _default_cool_down_count	-	The default to return if database table is empty
+		// 
+		// Return value:
+		//   The cool down count
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//
 		unsigned long get_last_cool_down_count(unsigned long _default_cool_down_count)
 		{
 			unsigned long n = _default_cool_down_count;
@@ -234,6 +339,23 @@ namespace domain
 		}
 
 
+		// Purpose: 
+		//   Returns the Include the best individual in breeding flag
+		//
+		// Parameters:
+		//   _default_cool_down_count	-	The default to return if database table is empty
+		// 
+		// Return value:
+		//   Include the best individual in breeding flag
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//
 		bool get_include_best_individual_in_breeding_pool(unsigned long _default_include_best_individual_in_breeding_pool)
 		{
 			bool n = _default_include_best_individual_in_breeding_pool;
@@ -255,6 +377,23 @@ namespace domain
 			return n;
 		}
 
+		// Purpose: 
+		//   Load the example training and test cases from the database
+		//
+		// Parameters:
+		//   None
+		// 
+		// Return value:
+		//   Count of training and test cases loaded
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//
 		unsigned int load_example_cases()
 		{
 			unsigned int training_case_index = 0;
