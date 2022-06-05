@@ -1,9 +1,10 @@
 #include <algorithm>
 #include <chrono>
 #include <random>
+#include <limits>
+#include <numeric>
 #include "Selection.h"
-//#include "Random.h"
-//#include "..\Utilities\Random.Utilities.h"
+#include "..\Domain\Arguments.h"
 
 namespace pushGP
 {
@@ -146,7 +147,6 @@ namespace pushGP
 	//
 	// Remarks:
 	//
-
 	unsigned int epsilon_lexicase_selection(int _number_of_example_cases, 
 		std::unordered_set<int> _black_list,
 		combinable<pushGP::globals::Training_case_min_error_type> & _training_case_min_error)
@@ -155,68 +155,62 @@ namespace pushGP
 		unsigned individual_index = 0;
 		int number_of_survivors = domain::argmap::population_size;
 
+		// Get a randomized deck of test cases
+		std::vector<unsigned int> example_cases = lshuffle(_number_of_example_cases);
+
+		// Used to calculate static epsilon for each individual
+		std::vector<double> test_case_errors;
+
 		// Set survivors to be a copy of the population
 		std::forward_list<unsigned int> survivors_index;
 
+		// Select the first training case
+		unsigned int example_case = example_cases.back();
+
 		for (int n = 0; n < domain::argmap::population_size; n++)
 		{
-			// Skip the other parent
-			//if (n != _index_of_other_parent)
-			//	survivors_index.push_front(n);
-
 			if (_black_list.find(n) == _black_list.end())
+			{
 				survivors_index.push_front(n);
+
+				double error = pushGP::globals::error_matrix.load(example_case, n);
+				test_case_errors.push_back(error);
+			}
 		}
 
-		// Get a randomized deck of test cases
-		std::vector<unsigned int> example_cases = lshuffle(_number_of_example_cases); 
+		// Calculate static epsilon
+		double median_absolute_deviation = 0.0;
+		unsigned int non_zero_count = 0;
+
+		std::tie(median_absolute_deviation, non_zero_count) = mad(test_case_errors);
 
 		while ((!example_cases.empty()) && (number_of_survivors > 1))
 		{
 			double min_error_for_this_example_case = std::numeric_limits<double>::max();
 
 			// Select a random training case
-			unsigned int example_case = example_cases.back();
+			example_case = example_cases.back();
 
 			// Reduce remaining cases
 			example_cases.pop_back();
 
-			// Calculate epsilon for each survivor and remember the minimum error
-			std::vector<double> test_case_errors;
 			std::map<unsigned int, double> survivor_to_error_map;
 
 			for (unsigned int survivor_index : survivors_index)
 			{
-				//double error = pushGP::globals::error_matrix[example_case][survivor_index].load(std::memory_order_acquire);
-				//double error = pushGP::globals::error_matrix[example_case][individual_index];
-				//double error = pushGP::globals::error_matrix.load(example_case, survivor_index);
-				//double error = pushGP::globals::error_matrix[example_case][survivor_index].load(std::memory_order_acquire);
 				double error = pushGP::globals::error_matrix.load(example_case, survivor_index);
-
-				test_case_errors.push_back(error);
 
 				survivor_to_error_map[survivor_index] = error;
 
 				// Record minimum error for this test case and the individual who achived the minimum error
 				min_error_for_this_example_case = error < min_error_for_this_example_case ? error : min_error_for_this_example_case;
 
-				//if (pushGP::globals::minimum_error_array_by_example_case[example_case] > min_error_for_this_example_case)
-				//{
-				//	pushGP::globals::minimum_error_array_by_example_case[example_case] = min_error_for_this_example_case;
-				//	pushGP::globals::individual_with_minimum_error_for_training_case[example_case] = survivor_index;
-				//}
 				if (_training_case_min_error.local().minimum_error_array_by_example_case[example_case] > min_error_for_this_example_case)
 				{
 					_training_case_min_error.local().minimum_error_array_by_example_case[example_case] = min_error_for_this_example_case;
 					_training_case_min_error.local().individual_with_minimum_error_for_training_case[example_case] = survivor_index;
 				}
 			}
-
-			// Calculate epsilon
-			double median_absolute_deviation = 0.0;
-			unsigned int non_zero_count = 0;
-
-			std::tie(median_absolute_deviation, non_zero_count) = mad(test_case_errors);
 
 			// Reduce selection pool
 			auto before_it = survivors_index.before_begin();
@@ -287,5 +281,136 @@ namespace pushGP
 		}
 
 		return chosen;
+	}
+
+	//template <typename T>
+	//double	vector_manhattan_distance(const std::vector<T>& a, const std::vector<T>& b)
+	//{
+	//	std::vector<double>	auxiliary;
+
+	//	std::transform(a.begin(), a.end(), b.begin(), std::back_inserter(auxiliary),//
+	//		[](T element1, T element2) {return (element1 != element2) ? 1 : 0; });
+
+	//	return  (double)std::accumulate(auxiliary.begin(), auxiliary.end() / (double)auxiliary.size();
+	//}
+
+	typedef std::array<int, domain::argmap::number_of_training_cases> ERROR_VECTOR;
+
+	unsigned int g_uid = 0;
+
+	int vector_manhattan_distance(const ERROR_VECTOR& a, const ERROR_VECTOR& b)
+	{
+		std::vector<int> auxiliary;
+
+		std::transform(a.begin(), a.end(), b.begin(), std::back_inserter(auxiliary),//
+			[](int element1, int element2) {return (element1 != element2) ? 1 : 0; });
+
+		return std::accumulate(auxiliary.begin(), auxiliary.end(), 0);
+	}
+
+	struct Cluster
+	{
+		unsigned long uid;
+		ERROR_VECTOR error_vector;
+		double distance = 0;
+
+		void set(ERROR_VECTOR& a)
+		{
+			uid = g_uid++;
+			error_vector = a;
+		};
+
+		void merge(Cluster cluster_1, Cluster cluster_2, double _dist)
+		{
+			error_vector.empty();
+
+			std::transform(cluster_1.error_vector.begin(), cluster_1.error_vector.end(), cluster_2.error_vector.begin(), std::back_inserter(error_vector),//
+				[](int element1, int element2) {return (element1 != element2) ? 1 : 0; });
+
+			uid = g_uid++;
+			double distance = _dist;
+		};
+	};
+
+
+	// Purpose: 
+	//   Calculate the diversity of the population following the process discussed in "Lexicase 
+	//   selection for program synthesis: a diversity analysis" by Thomas Helmuth, Nicholas Freitag 
+	//   McPhee, Lee Spector
+	//
+	// Parameters:
+	// 
+	// Return value:
+	//   Diversite value = [0,1)
+	//
+	// Side Effects:
+	//   None
+	//
+	// Thread Safe:
+	//   Yes
+	//
+	// Remarks:
+	//
+	// Calculate elite vector (0 = the individual is one of the best on that test case)
+	std::array<ERROR_VECTOR, domain::argmap::population_size> elitized;
+	std::map <unsigned long, Cluster> tree;
+
+	double calculate_diversity(int _number_of_example_cases,
+		combinable<pushGP::globals::Training_case_min_error_type>& _training_case_min_error,
+		double _median_absolute_deviation)
+	{
+		for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
+		{
+			for (int case_index = 0; case_index < domain::argmap::number_of_training_cases; case_index++)
+			{
+				double error_epsilon = _training_case_min_error.local().minimum_error_array_by_example_case[case_index] + _median_absolute_deviation;
+				double error = pushGP::globals::error_matrix.load(case_index, individual_index);
+
+				elitized[individual_index][case_index] = (error < error_epsilon) ? 0 : 1;
+			}
+		}
+
+
+		// Create distance array
+		Cluster cluster;
+
+		// Initialize tree
+		for (int n = 0; n < domain::argmap::population_size; n++)
+		{
+			cluster.set(elitized[n]);
+			tree[cluster.uid] = cluster;
+		}
+
+		// Grow tree
+		while (tree.size() > 1)
+		{
+			unsigned int cluster_1_index = Utilities::random_integer(tree.size());
+			auto it = tree.begin();
+			std::advance(it, cluster_1_index);
+			unsigned long cluster_1_key = it->first;
+
+			double min_dist = std::numeric_limits<double>::max();
+			unsigned int closet_cluster_key = 0;
+
+			for (auto it = tree.begin(); it != tree.end(); ++it)
+			{
+				unsigned int cluster_2_key = it->first;
+				if (cluster_1_key != cluster_2_key)
+				{
+					double dist = vector_manhattan_distance(tree[cluster_1_key].error_vector, tree[cluster_2_key].error_vector);
+
+					if (dist < min_dist)
+					{
+						min_dist = dist;
+						closet_cluster_key = cluster_2_key;
+					}
+				}
+			}
+
+			cluster.merge(tree[cluster_1_key], tree[closet_cluster_key], min_dist);
+			tree[cluster.uid] = cluster;
+			tree.erase(cluster_1_key);
+			tree.erase(closet_cluster_key);
+		}
 	}
 }
