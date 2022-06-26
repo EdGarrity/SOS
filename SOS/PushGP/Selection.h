@@ -29,7 +29,11 @@ namespace pushGP
 
 	// Returns an individual that does within epsilon of the best on the fitness cases when 
 	// considered one at a time in random order.  Returns a selected parent.
-	unsigned int epsilon_lexicase_selection(int _number_of_test_cases, 
+	std::tuple<double, unsigned int> epsilon_lexicase_selection(int _number_of_test_cases,
 		std::unordered_set<int> _black_list,
 		combinable<pushGP::globals::Training_case_min_error_type> & _training_case_min_error);
+
+	double calculate_diversity(int _number_of_example_cases,
+		combinable<pushGP::globals::Training_case_min_error_type>& _training_case_min_error,
+		double _median_absolute_deviation);
 }

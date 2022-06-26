@@ -147,7 +147,7 @@ namespace pushGP
 	//
 	// Remarks:
 	//
-	unsigned int epsilon_lexicase_selection(int _number_of_example_cases, 
+	std::tuple<double, unsigned int> epsilon_lexicase_selection(int _number_of_example_cases,
 		std::unordered_set<int> _black_list,
 		combinable<pushGP::globals::Training_case_min_error_type> & _training_case_min_error)
 	{
@@ -280,7 +280,7 @@ namespace pushGP
 			chosen = n;
 		}
 
-		return chosen;
+		return std::make_tuple(median_absolute_deviation, chosen);
 	}
 
 	//template <typename T>
@@ -328,7 +328,7 @@ namespace pushGP
 				[](int element1, int element2) {return (element1 != element2) ? 1 : 0; });
 
 			uid = g_uid++;
-			double distance = _dist;
+			distance = _dist;
 		};
 	};
 
@@ -355,6 +355,9 @@ namespace pushGP
 	std::array<ERROR_VECTOR, domain::argmap::population_size> elitized;
 	std::map <unsigned long, Cluster> tree;
 
+	// Create distance array
+	Cluster cluster;
+
 	double calculate_diversity(int _number_of_example_cases,
 		combinable<pushGP::globals::Training_case_min_error_type>& _training_case_min_error,
 		double _median_absolute_deviation)
@@ -370,9 +373,6 @@ namespace pushGP
 			}
 		}
 
-
-		// Create distance array
-		Cluster cluster;
 
 		// Initialize tree
 		for (int n = 0; n < domain::argmap::population_size; n++)

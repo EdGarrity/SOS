@@ -1268,6 +1268,8 @@ namespace domain
 				}
 
 				std::cout << std::endl;
+
+				calculate_diversity(argmap::number_of_training_cases, training_case_min_error, 0);
 			}
 			catch (const std::exception& e)
 			{
