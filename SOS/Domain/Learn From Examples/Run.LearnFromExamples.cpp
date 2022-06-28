@@ -27,6 +27,7 @@
 #include "../../PushGP/Random.h"
 #include "..\..\Utilities\WorkOrderManager.h"
 #include "..\..\Utilities\Debug.h"
+#include "..\..\PushGP\CalculateDiversity.h"
 
 // Correction for Syntax error with std::numeric_limits::max compiler error
 // See https://stackoverflow.com/questions/27442885/syntax-error-with-stdnumeric-limitsmax
@@ -1269,7 +1270,7 @@ namespace domain
 
 				std::cout << std::endl;
 
-				calculate_diversity(argmap::number_of_training_cases, training_case_min_error, 0);
+				double diversity = pushGP::calculate_diversity();
 			}
 			catch (const std::exception& e)
 			{
