@@ -6,42 +6,69 @@
 
 namespace pushGP
 {
-	typedef std::array<int, domain::argmap::number_of_training_cases> ERROR_VECTOR;
+	typedef std::array<int, domain::argmap::number_of_training_cases> ERROR_ARRAY;
 
 	unsigned int g_uid = 0;
 
-	int vector_manhattan_distance(const ERROR_VECTOR& a, const ERROR_VECTOR& b)
+	//int vector_manhattan_distance(const ERROR_ARRAY& a, const ERROR_ARRAY& b)
+	//{
+	//	std::vector<int> auxiliary;
+
+	//	std::transform(a.begin(), a.end(), b.begin(), std::back_inserter(auxiliary),//
+	//		[](int element1, int element2) {return (element1 != element2) ? 1 : 0; });
+
+	//	return std::accumulate(auxiliary.begin(), auxiliary.end(), 0);
+	//}
+
+	int vector_manhattan_distance(std::vector<int>& a, std::vector<int>& b)
 	{
-		std::vector<int> auxiliary;
+		//std::vector<int> auxiliary;
 
-		std::transform(a.begin(), a.end(), b.begin(), std::back_inserter(auxiliary),//
-			[](int element1, int element2) {return (element1 != element2) ? 1 : 0; });
+		//std::transform(a.begin(), a.end(), b.begin(), std::back_inserter(auxiliary),//
+		//	[](int element1, int element2) {return (element1 != element2) ? 1 : 0; });
 
-		return std::accumulate(auxiliary.begin(), auxiliary.end(), 0);
+		//return std::accumulate(auxiliary.begin(), auxiliary.end(), 0);
+		return 0;
 	}
 
 	struct Cluster
 	{
 		unsigned long uid;
-		ERROR_VECTOR error_vector;
+		std::vector<int> error_vector;
 		double distance = 0;
 
-		void set(ERROR_VECTOR& a)
+		//void set(ERROR_ARRAY& a)
+		//{
+		//	uid = g_uid++;
+		//	error_vector = a;
+		//};
+
+		void set(ERROR_ARRAY& a)
 		{
-			uid = g_uid++;
-			error_vector = a;
-		};
+			error_vector.clear();
+
+			for (int n = 0; n < a.size(); n++)
+				error_vector.push_back(a[n]);
+		}
+
 
 		void merge(Cluster cluster_1, Cluster cluster_2, double _dist)
 		{
 			error_vector.empty();
 
-			std::transform(cluster_1.error_vector.begin(), cluster_1.error_vector.end(), cluster_2.error_vector.begin(), std::back_inserter(error_vector),//
-				[](int element1, int element2) {return (element1 != element2) ? 1 : 0; });
+			std::transform
+			(
+					cluster_1.error_vector.begin(), 
+					cluster_1.error_vector.end(), 
+					cluster_2.error_vector.begin(), 
+					error_vector,
+					[](int element1, int element2) {return (element1 != element2) ? 1 : 0; }
+			);
 
 			uid = g_uid++;
 			distance = _dist;
 		};
+
 	};
 
 	// Purpose: 
@@ -61,7 +88,7 @@ namespace pushGP
 	//
 	// Remarks:
 	//
-	double median(std::vector<double> _x)
+	double median_2(std::vector<double> _x)
 	{
 		std::sort(_x.begin(), _x.end());
 		std::vector<double>::size_type middle;
@@ -108,10 +135,10 @@ namespace pushGP
 	//
 	// Remarks:
 	//
-	std::tuple<double, unsigned int> mad(std::vector<double> _x)
+	std::tuple<double, unsigned int> mad_2(std::vector<double> _x)
 	{
 		unsigned int n = 0;
-		double median_x = median(_x);
+		double median_x = median_2(_x);
 
 		std::vector<double> dev;
 
@@ -124,13 +151,13 @@ namespace pushGP
 				n++;
 		}
 
-		double m = median(dev);
+		double m = median_2(dev);
 
 		return std::make_tuple(m, n);
 	}
 
 	// Calculate elite vector (0 = the individual is one of the best on that test case)
-	std::array<ERROR_VECTOR, domain::argmap::population_size> elitized;
+	std::array<ERROR_ARRAY, domain::argmap::population_size> elitized;
 	std::map <unsigned long, Cluster> tree;
 
 	// Create distance array
@@ -183,7 +210,7 @@ namespace pushGP
 			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 				test_case_errors.push_back(pushGP::globals::error_matrix.load(case_index, individual_index));
 
-			std::tie(training_case_threashold, non_zero_count) = mad(test_case_errors);
+			std::tie(training_case_threashold, non_zero_count) = mad_2(test_case_errors);
 
 			// Calculate the minimum error for this training case
 			double training_case_minimum_error = 0.0;

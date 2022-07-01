@@ -1661,7 +1661,7 @@ namespace domain
 
 
 					std::cout << "Calculate Diversity" << std::endl;
-					double diversity = pushGP::calculate_diversity();
+					//double diversity = pushGP::calculate_diversity();
 
 					std::cout << "Produce New Offspring" << std::endl;
 #if DLEVEL > 0
