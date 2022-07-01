@@ -101,10 +101,11 @@ namespace domain
 			"           ,[Cool_Down_Count]"							// 20
 			"           ,[Include_Best_Individual_In_Breeding_Pool]"// 21
 			"           ,[BestIndividual_Training_Effort]"			// 22
+			"           ,[Diversity]"								// 23
 			"           )"
 			"     VALUES"
-			"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-				//       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2
+			"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+				//       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3
 
 
 		// Purpose: 
@@ -1269,8 +1270,6 @@ namespace domain
 				}
 
 				std::cout << std::endl;
-
-				double diversity = pushGP::calculate_diversity();
 			}
 			catch (const std::exception& e)
 			{
@@ -1389,7 +1388,8 @@ namespace domain
 			unsigned long _stalled_count,
 			unsigned int _cool_down_count,
 			bool _include_best_individual_in_breeding_pool,
-			std::string _best_gnome)
+			std::string _best_gnome,
+			double _diversity)
 		{
 			database::SQLCommand* sqlcmd_save_status_report;
 
@@ -1424,6 +1424,7 @@ namespace domain
 			sqlcmd_save_status_report->set_as_integer(20, _cool_down_count);
 			sqlcmd_save_status_report->set_as_integer(21, _include_best_individual_in_breeding_pool);
 			sqlcmd_save_status_report->set_as_integer(22, (int)_best_individual_training_effort);
+			sqlcmd_save_status_report->set_as_float(23, _diversity);
 
 #if DLEVEL > 0
 			Utilities::debug_log(-1, "generate_status_report", "sqlcmd");
@@ -1448,6 +1449,8 @@ namespace domain
 			Utilities::debug_log(-1, "generate_status_report", "_stalled_count=" + std::to_string(_stalled_count));
 			Utilities::debug_log(-1, "generate_status_report", "_cool_down_count=" + std::to_string(_cool_down_count));
 			Utilities::debug_log(-1, "generate_status_report", "_include_best_individual_in_breeding_pool=" + std::to_string(_include_best_individual_in_breeding_pool));
+			Utilities::debug_log(-1, "generate_status_report", "_include_best_individual_in_breeding_pool=" + std::to_string(_include_best_individual_in_breeding_pool));
+			Utilities::debug_log(-1, "generate_status_report", "diversity=" + std::to_string(diversity));
 #endif
 			sqlcmd_save_status_report->execute();
 
@@ -1500,6 +1503,7 @@ namespace domain
 				unsigned int generations_completed_this_session = 0;
 				unsigned int agents_created = 0;
 				bool done = false;
+				double diversity = 0.0;
 
 				// Allocate meneory for Individuals (See https://stackoverflow.com/questions/19803162/array-size-error-x64-process)
 				size_t sz = domain::argmap::population_size;
@@ -1655,6 +1659,10 @@ namespace domain
 					best_individual_error = std::get<2>(best_individual_score_error);
 					best_individual_effort = std::get<3>(best_individual_score_error);
 
+
+					std::cout << "Calculate Diversity" << std::endl;
+					double diversity = pushGP::calculate_diversity();
+
 					std::cout << "Produce New Offspring" << std::endl;
 #if DLEVEL > 0
 					Utilities::debug_log(-1, "run", "Produce New Offspring");
@@ -1724,12 +1732,7 @@ namespace domain
 
 							Utilities::debug_log(-1, "run", debug_message);
 #endif
-							//average_traiing_error += pushGP::globals::error_matrix[training_case_index][ind].load(std::memory_order_acquire);
-							//average_traiing_error += pushGP::globals::error_matrix[training_case_index][ind];
-							//average_traiing_error += pushGP::globals::error_matrix.load(training_case_index, ind);
-							//average_traiing_error += pushGP::globals::error_matrix[training_case_index][ind].load(std::memory_order_acquire);
 							average_traiing_error += pushGP::globals::error_matrix.load(training_case_index, ind);
-							//traiing_effort += pushGP::globals::effort_matrix.load(training_case_index, ind);
 						}
 					}
 					average_traiing_error /= (double)(domain::argmap::population_size * argmap::number_of_training_cases);
@@ -1739,10 +1742,6 @@ namespace domain
 					{
 						for (int training_case_index = 0; training_case_index < argmap::number_of_training_cases; training_case_index++)
 						{
-							//double error = pushGP::globals::error_matrix[training_case_index][ind].load(std::memory_order_acquire);
-							//double error = pushGP::globals::error_matrix[training_case_index][ind];
-							//double error = pushGP::globals::error_matrix.load(training_case_index, ind);
-							//double error = pushGP::globals::error_matrix[training_case_index][ind].load(std::memory_order_acquire);
 							double error = pushGP::globals::error_matrix.load(training_case_index, ind);
 
 							standard_deviation += (error - average_traiing_error) * (error - average_traiing_error);
@@ -1766,7 +1765,8 @@ namespace domain
 						stalled_count,
 						cool_down_count,
 						include_best_individual_in_breeding_pool,
-						pushGP::globals::population_agents[best_individual]
+						pushGP::globals::population_agents[best_individual],
+						diversity
 					);
 
 					std::cout << "Install New Generation" << std::endl;

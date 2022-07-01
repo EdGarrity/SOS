@@ -153,6 +153,9 @@ namespace pushGP
 	//   Yes
 	//
 	// Remarks:
+	//   See Lexicase selection for program synthesis: a diversity analysis
+	//       Genetic Programming Theory and Practice XIII (GPTP 2015)
+	//       Thomas Helmuth, Nicholas Freitag McPhee, Lee Spector
 	//
 	double calculate_diversity()
 	{
@@ -168,30 +171,39 @@ namespace pushGP
 			}
 		}
 
-		// Calculate static epsilon
-		double median_absolute_deviation = 0.0;
+		// Calculate dynamic epsilon
+		double training_case_threashold = 0.0;
 		unsigned int non_zero_count = 0;
-
-		std::tie(median_absolute_deviation, non_zero_count) = mad(test_case_errors);
 
 		for (int case_index = 0; case_index < domain::argmap::number_of_training_cases; case_index++)
 		{
-			double error_epsilon = std::numeric_limits<double>::max();
+			// Determine the threshold delta for this training case
+			test_case_errors.clear();
+
+			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
+				test_case_errors.push_back(pushGP::globals::error_matrix.load(case_index, individual_index));
+
+			std::tie(training_case_threashold, non_zero_count) = mad(test_case_errors);
+
+			// Calculate the minimum error for this training case
+			double training_case_minimum_error = 0.0;
 
 			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			{
 				double error = pushGP::globals::error_matrix.load(case_index, individual_index);
 
-				error_epsilon = (error < error_epsilon) ? error : error_epsilon;
+				training_case_minimum_error = (error < training_case_minimum_error) ? error : training_case_minimum_error;
 			}
 
-			error_epsilon += median_absolute_deviation;
+			// Set error threashold value
+			double error_threshold = training_case_minimum_error + training_case_threashold;
 
+			// Construct the “elitized” error vectors that indicate whether an individual achieved the best error on each training case
 			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			{
 				double error = pushGP::globals::error_matrix.load(case_index, individual_index);
 
-				elitized[individual_index][case_index] = (error < error_epsilon) ? 0 : 1;
+				elitized[individual_index][case_index] = (error < error_threshold) ? 0 : 1;
 			}
 
 		}
