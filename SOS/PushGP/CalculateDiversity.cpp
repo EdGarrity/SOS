@@ -4,66 +4,45 @@
 #include <numeric>
 #include "CalculateDiversity.h"
 
+//   See Lexicase selection for program synthesis: a diversity analysis
+//       Genetic Programming Theory and Practice XIII (GPTP 2015)
+//       Thomas Helmuth, Nicholas Freitag McPhee, Lee Spector
+
 namespace pushGP
 {
 	typedef std::array<int, domain::argmap::number_of_training_cases> ERROR_ARRAY;
 
 	unsigned int g_uid = 0;
 
-	//int vector_manhattan_distance(const ERROR_ARRAY& a, const ERROR_ARRAY& b)
-	//{
-	//	std::vector<int> auxiliary;
-
-	//	std::transform(a.begin(), a.end(), b.begin(), std::back_inserter(auxiliary),//
-	//		[](int element1, int element2) {return (element1 != element2) ? 1 : 0; });
-
-	//	return std::accumulate(auxiliary.begin(), auxiliary.end(), 0);
-	//}
-
-	int vector_manhattan_distance(std::vector<int>& a, std::vector<int>& b)
+	int vector_manhattan_distance(const ERROR_ARRAY& a, const ERROR_ARRAY& b)
 	{
-		//std::vector<int> auxiliary;
+		int dist = 0;
 
-		//std::transform(a.begin(), a.end(), b.begin(), std::back_inserter(auxiliary),//
-		//	[](int element1, int element2) {return (element1 != element2) ? 1 : 0; });
+		for (int n = 0; n < domain::argmap::number_of_training_cases; n++)
+		{
+			if (a[n] != b[n])
+				dist++;
+		}
 
-		//return std::accumulate(auxiliary.begin(), auxiliary.end(), 0);
-		return 0;
+		return dist;
 	}
 
 	struct Cluster
 	{
 		unsigned long uid;
-		std::vector<int> error_vector;
 		double distance = 0;
-
-		//void set(ERROR_ARRAY& a)
-		//{
-		//	uid = g_uid++;
-		//	error_vector = a;
-		//};
+		ERROR_ARRAY error_array;
 
 		void set(ERROR_ARRAY& a)
 		{
-			error_vector.clear();
-
-			for (int n = 0; n < a.size(); n++)
-				error_vector.push_back(a[n]);
+			for (int n = 0; n < domain::argmap::number_of_training_cases; n++)
+				error_array[n] = a[n];
 		}
-
 
 		void merge(Cluster cluster_1, Cluster cluster_2, double _dist)
 		{
-			error_vector.empty();
-
-			std::transform
-			(
-					cluster_1.error_vector.begin(), 
-					cluster_1.error_vector.end(), 
-					cluster_2.error_vector.begin(), 
-					error_vector,
-					[](int element1, int element2) {return (element1 != element2) ? 1 : 0; }
-			);
+			for (int n = 0; n < domain::argmap::number_of_training_cases; n++)
+				error_array[n] = (cluster_1.error_array[n] != cluster_2.error_array[n]) ? 1 : 0;
 
 			uid = g_uid++;
 			distance = _dist;
@@ -180,9 +159,6 @@ namespace pushGP
 	//   Yes
 	//
 	// Remarks:
-	//   See Lexicase selection for program synthesis: a diversity analysis
-	//       Genetic Programming Theory and Practice XIII (GPTP 2015)
-	//       Thomas Helmuth, Nicholas Freitag McPhee, Lee Spector
 	//
 	double calculate_diversity()
 	{
@@ -258,7 +234,7 @@ namespace pushGP
 				unsigned int cluster_2_key = it->first;
 				if (cluster_1_key != cluster_2_key)
 				{
-					double dist = vector_manhattan_distance(tree[cluster_1_key].error_vector, tree[cluster_2_key].error_vector);
+					double dist = vector_manhattan_distance(tree[cluster_1_key].error_array, tree[cluster_2_key].error_array);
 
 					if (dist < min_dist)
 					{
