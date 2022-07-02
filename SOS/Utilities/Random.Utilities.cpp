@@ -75,14 +75,14 @@ namespace Utilities
 	//   has an equal likelihood of being produced. This is the distribution function that appears on 
 	//   many trivial random processes (like the result of rolling a die).
 	//
-	unsigned long random_integer(unsigned long min, const unsigned long max)
+	unsigned long random_integer(unsigned long min, const size_t max)
 	{
 		std::hash<std::thread::id> hasher;
 
-		unsigned long t = hasher(this_thread::get_id()) + clock();
+		size_t t = hasher(this_thread::get_id()) + clock();
 
-		static thread_local std::mt19937 generator(t);
-		std::uniform_int_distribution<int> distribution(min, max);
+		static thread_local std::mt19937 generator(static_cast<unsigned int>(t));
+		std::uniform_int_distribution<int> distribution(min, static_cast<int>(max));
 		return distribution(generator);
 	}
 
@@ -106,9 +106,10 @@ namespace Utilities
 	//   has an equal likelihood of being produced. This is the distribution function that appears on 
 	//   many trivial random processes (like the result of rolling a die).
 	//
-	unsigned long random_integer(unsigned long m)
+	unsigned long random_integer(const size_t m)
 	{
-		return random_integer(0, m - 1);
+		size_t upper_bound = (m == 0) ? 0 : m - 1;
+		return random_integer(0, upper_bound);
 	}
 
 	// Purpose: 
@@ -135,9 +136,9 @@ namespace Utilities
 	{
 		std::hash<std::thread::id> hasher;
 
-		unsigned long t = hasher(this_thread::get_id()) + clock();
+		size_t t = hasher(this_thread::get_id()) + clock();
 
-		static thread_local std::mt19937 generator(t);
+		static thread_local std::mt19937 generator(static_cast<unsigned int>(t));
 		std::uniform_real_distribution<double> distribution(min, max);
 		return distribution(generator);
 	}

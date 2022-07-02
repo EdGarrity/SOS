@@ -18,7 +18,7 @@ public:
 	~MyException(void);
 
 	const char * what () const throw ();
-	short code() const throw();
+	long code() const throw();
 
 private:
 	std::string exception_;

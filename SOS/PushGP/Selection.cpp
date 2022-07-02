@@ -33,7 +33,7 @@ namespace pushGP
 			deck.push_back(n);
 
 		// obtain a time-based seed:
-		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+		unsigned seed = (unsigned int)std::chrono::system_clock::now().time_since_epoch().count();
 
 		std::shuffle(deck.begin(), deck.end(), std::default_random_engine(seed));
 
@@ -153,7 +153,7 @@ namespace pushGP
 	{
 		unsigned int chosen = 0;
 		unsigned individual_index = 0;
-		int number_of_survivors = domain::argmap::population_size;
+		long number_of_survivors = domain::argmap::population_size;
 
 		// Get a randomized deck of test cases
 		std::vector<unsigned int> example_cases = lshuffle(_number_of_example_cases);
@@ -260,7 +260,7 @@ namespace pushGP
 			before_it = survivors_index.begin();
 
 			// Advance to a random survivor
-			int n = Utilities::random_integer(0, number_of_survivors - 1);
+			int n = Utilities::random_integer(0, number_of_survivors - static_cast<long>(1));
 
 			if (n > 0)
 				while (n > 0)
