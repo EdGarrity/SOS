@@ -24,5 +24,6 @@ SELECT TOP (1000) [ID]
       ,[Cool_Down_Count]
       ,[Include_Best_Individual_In_Breeding_Pool]
       ,[BestIndividual_Training_Effort]
+	  ,[Diversity]
   FROM [SOS].[dbo].[ProgressLog] (NOLOCK)
   Order by [Created_DTS] Desc
