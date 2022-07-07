@@ -162,17 +162,8 @@ namespace pushGP
 	//
 	double calculate_diversity()
 	{
-		// Used to calculate static epsilon for all individuals
+		// Used to calculate epsilon for all individuals
 		std::vector<double> test_case_errors;
-
-		for (int case_index = 0; case_index < domain::argmap::number_of_training_cases; case_index++)
-		{
-			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
-			{
-				double error = pushGP::globals::error_matrix.load(case_index, individual_index);
-				test_case_errors.push_back(error);
-			}
-		}
 
 		// Calculate dynamic epsilon
 		double training_case_threashold = 0.0;
@@ -189,7 +180,7 @@ namespace pushGP
 			std::tie(training_case_threashold, non_zero_count) = mad_2(test_case_errors);
 
 			// Calculate the minimum error for this training case
-			double training_case_minimum_error = 0.0;
+			double training_case_minimum_error = std::numeric_limits<double>::max();
 
 			for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			{
