@@ -205,6 +205,7 @@ namespace pushGP
 		// Initialize tree
 		for (int n = 0; n < domain::argmap::population_size; n++)
 		{
+			// Need to initialize cluster.uid
 			cluster.set(elitized[n]);
 			tree[cluster.uid] = cluster;
 		}
