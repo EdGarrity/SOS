@@ -29,12 +29,15 @@ namespace pushGP
 
 	struct Cluster
 	{
-		unsigned long uid;
+		unsigned long uid = 0;
 		double distance = 0;
 		ERROR_ARRAY error_array;
 
 		void set(ERROR_ARRAY& a)
 		{
+			uid = g_uid++;
+			distance = 0;
+
 			for (int n = 0; n < domain::argmap::number_of_training_cases; n++)
 				error_array[n] = a[n];
 		}
