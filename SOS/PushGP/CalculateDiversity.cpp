@@ -12,46 +12,92 @@ namespace pushGP
 {
 	typedef std::array<int, domain::argmap::number_of_training_cases> ERROR_ARRAY;
 
-	unsigned int g_uid = 0;
-
-	int vector_manhattan_distance(const ERROR_ARRAY& a, const ERROR_ARRAY& b)
+	class Cluster
 	{
-		int dist = 0;
+	private:
+		// Uniqueue ID of this cluster group
+		unsigned long id = 0;
 
-		for (int n = 0; n < domain::argmap::number_of_training_cases; n++)
-		{
-			if (a[n] != b[n])
-				dist++;
-		}
-
-		return dist;
-	}
-
-	struct Cluster
-	{
-		unsigned long uid = 0;
+		// Distance to previous cluster group
 		double distance = 0;
+
+		// Combined error vector 
 		ERROR_ARRAY error_array;
 
-		void set(ERROR_ARRAY& a)
+		// Generate a unique ID that is uniqueue within the scope of this namespace.
+		unsigned long generate_uid()
 		{
-			uid = g_uid++;
+			static unsigned long _uid = 0;
+
+			return _uid++;
+		}
+
+	public:
+		Cluster(const ERROR_ARRAY& a)
+		{
+			id = generate_uid();
 			distance = 0;
 
 			for (int n = 0; n < domain::argmap::number_of_training_cases; n++)
 				error_array[n] = a[n];
 		}
 
-		void merge(Cluster cluster_1, Cluster cluster_2, double _dist)
+		Cluster(const Cluster* cluster_1, const Cluster* cluster_2, double _dist)
 		{
 			for (int n = 0; n < domain::argmap::number_of_training_cases; n++)
-				error_array[n] = (cluster_1.error_array[n] != cluster_2.error_array[n]) ? 1 : 0;
+				error_array[n] = (cluster_1->error_array[n] != cluster_2->error_array[n]) ? 1 : 0;
 
-			uid = g_uid++;
+			id = generate_uid();
 			distance = _dist;
 		};
 
+		unsigned long get_id()
+		{
+			return id;
+		}
+
+		// Get distance from this cluster to previos cluster
+		double get_distance()
+		{
+			return distance;
+		}
+
+		// Purpose: 
+		//   Calculate the manhattan distance between two clusters' error arrays
+		// 
+		//   Manhattan distance is calculated as the sum of the absolute differences between the two vectors.  
+		// 
+		//		ManhattanDistance = sum for i to N sum | v1[i] – v2[i] |
+		// 
+		// Parameters:
+		//   cluster_1, cluster_2 - pointers to the two clusters
+		// 
+		// Return value:
+		//   An integer representing the distance between the two error vectors
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes
+		//
+		// Remarks:
+		//	 See https://machinelearningmastery.com/distance-measures-for-machine-learning/#:~:text=Manhattan%20distance%20is%20calculated%20as,differences%20between%20the%20two%20vectors.&text=The%20Manhattan%20distance%20is%20related,and%20mean%20absolute%20error%20metric.
+		//
+		static double get_distance(const Cluster* cluster_1, const Cluster* cluster_2)
+		{
+			int dist = 0;
+
+			for (int n = 0; n < domain::argmap::number_of_training_cases; n++)
+			{
+				if (cluster_1->error_array[n] != cluster_2->error_array[n])
+					dist++;
+			}
+
+			return dist;
+		}
 	};
+
 
 	// Purpose: 
 	//   Get the Median value of a vector of doubles
@@ -140,10 +186,7 @@ namespace pushGP
 
 	// Calculate elite vector (0 = the individual is one of the best on that test case)
 	std::array<ERROR_ARRAY, domain::argmap::population_size> elitized;
-	std::map <unsigned long, Cluster> tree;
-
-	// Create distance array
-	Cluster cluster;
+	std::map <unsigned long, Cluster*> tree;
 
 	// Purpose: 
 	//   Calculate the diversity of the population following the process discussed in "Lexicase 
@@ -208,9 +251,8 @@ namespace pushGP
 		// Initialize tree
 		for (int n = 0; n < domain::argmap::population_size; n++)
 		{
-			// Need to initialize cluster.uid
-			cluster.set(elitized[n]);
-			tree[cluster.uid] = cluster;
+			Cluster* cluster = new Cluster(elitized[n]);
+			tree[cluster->get_id()] = cluster;
 		}
 
 		// Grow tree
@@ -222,29 +264,36 @@ namespace pushGP
 			unsigned long cluster_1_key = it->first;
 
 			double min_dist = std::numeric_limits<double>::max();
-			unsigned int closet_cluster_key = 0;
+			unsigned int closest_cluster_key = 0;
 
 			for (auto it = tree.begin(); it != tree.end(); ++it)
 			{
 				unsigned int cluster_2_key = it->first;
 				if (cluster_1_key != cluster_2_key)
 				{
-					double dist = vector_manhattan_distance(tree[cluster_1_key].error_array, tree[cluster_2_key].error_array);
+					double dist = Cluster::get_distance(tree[cluster_1_key], tree[cluster_2_key]);
 
 					if (dist < min_dist)
 					{
 						min_dist = dist;
-						closet_cluster_key = cluster_2_key;
+						closest_cluster_key = cluster_2_key;
 					}
 				}
 			}
 
-			cluster.merge(tree[cluster_1_key], tree[closet_cluster_key], min_dist);
-			tree[cluster.uid] = cluster;
+			Cluster* cluster = new Cluster(tree[cluster_1_key], tree[closest_cluster_key], min_dist);
+			tree[cluster->get_id()] = cluster;
+
+			delete tree[cluster_1_key];
+			delete tree[closest_cluster_key];
+
 			tree.erase(cluster_1_key);
-			tree.erase(closet_cluster_key);
+			tree.erase(closest_cluster_key);
 		}
 
-		return tree.begin()->second.distance;
+		double dist = tree.begin()->second->get_distance();
+		delete tree.begin()->second;
+
+		return dist;
 	}
 }
