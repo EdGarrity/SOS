@@ -102,10 +102,11 @@ namespace domain
 			"           ,[Include_Best_Individual_In_Breeding_Pool]"// 21
 			"           ,[BestIndividual_Training_Effort]"			// 22
 			"           ,[Diversity]"								// 23
+			"           ,[Count_of_Diverse_Clusters]"				// 24
 			"           )"
 			"     VALUES"
-			"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-				//       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3
+			"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+				//       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4
 
 
 		// Purpose: 
@@ -1389,7 +1390,9 @@ namespace domain
 			unsigned int _cool_down_count,
 			bool _include_best_individual_in_breeding_pool,
 			std::string _best_gnome,
-			double _diversity)
+			double _diversity,
+			unsigned int _count_of_diverse_clusters
+		)
 		{
 			database::SQLCommand* sqlcmd_save_status_report;
 
@@ -1425,6 +1428,7 @@ namespace domain
 			sqlcmd_save_status_report->set_as_integer(21, _include_best_individual_in_breeding_pool);
 			sqlcmd_save_status_report->set_as_integer(22, (int)_best_individual_training_effort);
 			sqlcmd_save_status_report->set_as_float(23, _diversity);
+			sqlcmd_save_status_report->set_as_integer(24, _count_of_diverse_clusters);
 
 #if DLEVEL > 0
 			Utilities::debug_log(-1, "generate_status_report", "sqlcmd");
@@ -1450,7 +1454,8 @@ namespace domain
 			Utilities::debug_log(-1, "generate_status_report", "_cool_down_count=" + std::to_string(_cool_down_count));
 			Utilities::debug_log(-1, "generate_status_report", "_include_best_individual_in_breeding_pool=" + std::to_string(_include_best_individual_in_breeding_pool));
 			Utilities::debug_log(-1, "generate_status_report", "_include_best_individual_in_breeding_pool=" + std::to_string(_include_best_individual_in_breeding_pool));
-			Utilities::debug_log(-1, "generate_status_report", "diversity=" + std::to_string(diversity));
+			Utilities::debug_log(-1, "generate_status_report", "diversity=" + std::to_string(_diversity));
+			Utilities::debug_log(-1, "generate_status_report", "diversity=" + std::to_string(_count_of_diverse_clusters));
 #endif
 			sqlcmd_save_status_report->execute();
 
@@ -1661,7 +1666,7 @@ namespace domain
 
 
 					std::cout << "Calculate Diversity" << std::endl;
-					double diversity = pushGP::calculate_diversity();
+					auto[diversity, count_of_diverse_clusters] = pushGP::calculate_diversity();
 
 					std::cout << "Produce New Offspring" << std::endl;
 #if DLEVEL > 0
@@ -1766,7 +1771,8 @@ namespace domain
 						cool_down_count,
 						include_best_individual_in_breeding_pool,
 						pushGP::globals::population_agents[best_individual],
-						diversity
+						diversity,
+						count_of_diverse_clusters
 					);
 
 					std::cout << "Install New Generation" << std::endl;
