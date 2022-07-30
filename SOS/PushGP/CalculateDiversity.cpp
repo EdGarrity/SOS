@@ -21,6 +21,9 @@ namespace pushGP
 		// Distance to previous cluster group
 		double distance = 0;
 
+		// Count of failed training cases
+		unsigned long failed_test_cases_count = 0;
+
 		// Combined error vector 
 		ERROR_ARRAY error_array;
 
@@ -37,6 +40,7 @@ namespace pushGP
 		{
 			id = generate_uid();
 			distance = 0;
+			failed_test_cases_count = 0;
 
 			for (int n = 0; n < domain::argmap::number_of_training_cases; n++)
 				error_array[n] = a[n];
@@ -45,7 +49,11 @@ namespace pushGP
 		Cluster(const Cluster* cluster_1, const Cluster* cluster_2, double _dist)
 		{
 			for (int n = 0; n < domain::argmap::number_of_training_cases; n++)
-				error_array[n] = (cluster_1->error_array[n] != cluster_2->error_array[n]) ? 1 : 0;
+			{
+				int error_flag = (cluster_1->error_array[n] != cluster_2->error_array[n]) ? 1 : 0;
+				error_array[n] = error_flag;
+				failed_test_cases_count += error_flag;
+			}
 
 			id = generate_uid();
 			distance = _dist;
@@ -60,6 +68,12 @@ namespace pushGP
 		double get_distance()
 		{
 			return distance;
+		}
+
+		// Get count of failed training cases
+		unsigned long get_failed_test_cases_count()
+		{
+			return failed_test_cases_count;
 		}
 
 		// Purpose: 
@@ -206,7 +220,7 @@ namespace pushGP
 	//
 	// Remarks:
 	//
-	double calculate_diversity()
+	std::tuple<double, unsigned long> calculate_diversity()
 	{
 		// Used to calculate epsilon for all individuals
 		std::vector<double> test_case_errors;
@@ -214,6 +228,9 @@ namespace pushGP
 		// Calculate dynamic epsilon
 		double training_case_threashold = 0.0;
 		unsigned int non_zero_count = 0;
+
+		// Count of clusters that differed on at least 10 % of the training cases
+		unsigned int count_of_diverse_clusters = 0;
 
 		for (int case_index = 0; case_index < domain::argmap::number_of_training_cases; case_index++)
 		{
@@ -284,6 +301,11 @@ namespace pushGP
 			Cluster* cluster = new Cluster(tree[cluster_1_key], tree[closest_cluster_key], min_dist);
 			tree[cluster->get_id()] = cluster;
 
+			double cluster_diversity = (double)(domain::argmap::number_of_training_cases - cluster->get_failed_test_cases_count()) / (double)domain::argmap::number_of_training_cases;
+
+			if ((double)cluster->get_failed_test_cases_count() > ((double)domain::argmap::number_of_training_cases * domain::argmap::cluster_break_threshold))
+				count_of_diverse_clusters++;
+
 			delete tree[cluster_1_key];
 			delete tree[closest_cluster_key];
 
@@ -291,9 +313,9 @@ namespace pushGP
 			tree.erase(closest_cluster_key);
 		}
 
-		double dist = tree.begin()->second->get_distance();
+		double dist = tree.begin()->second->get_distance() / (double)domain::argmap::number_of_training_cases;
 		delete tree.begin()->second;
 
-		return dist;
+		return std::make_tuple(dist, count_of_diverse_clusters);
 	}
 }
