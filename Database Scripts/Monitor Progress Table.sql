@@ -25,5 +25,6 @@ SELECT TOP (1000) [ID]
       ,[Include_Best_Individual_In_Breeding_Pool]
       ,[BestIndividual_Training_Effort]
 	  ,[Diversity]
+	  ,[Diverse_Clusters]
   FROM [SOS].[dbo].[ProgressLog] (NOLOCK)
   Order by [Created_DTS] Desc
