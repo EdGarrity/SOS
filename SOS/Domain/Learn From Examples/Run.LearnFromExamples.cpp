@@ -102,7 +102,7 @@ namespace domain
 			"           ,[Include_Best_Individual_In_Breeding_Pool]"// 21
 			"           ,[BestIndividual_Training_Effort]"			// 22
 			"           ,[Diversity]"								// 23
-			"           ,[Count_of_Diverse_Clusters]"				// 24
+			"           ,[Diverse_Clusters]"						// 24
 			"           )"
 			"     VALUES"
 			"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
