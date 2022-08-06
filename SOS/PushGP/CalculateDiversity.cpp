@@ -298,6 +298,10 @@ namespace pushGP
 			// Grow tree
 			while (tree.size() > 1)
 			{
+				std::cout << "Calculate Diversity() - tree.size() = " << tree.size() << std::endl;
+
+
+
 				unsigned int cluster_1_index = Utilities::random_integer(tree.size());
 				auto it = tree.begin();
 				std::advance(it, cluster_1_index);
@@ -313,6 +317,13 @@ namespace pushGP
 					{
 						double dist = Cluster::get_distance(tree[cluster_1_key], tree[cluster_2_key]);
 
+
+
+
+						std::cout << "Calculate Diversity() - get_distance(" << cluster_1_key << ", " << cluster_2_key << ") = " << dist << std::endl;
+
+
+
 						if (dist < min_dist)
 						{
 							min_dist = dist;
@@ -320,6 +331,15 @@ namespace pushGP
 						}
 					}
 				}
+
+
+
+				std::cout << "Calculate Diversity() - min_dist = " << min_dist << ", closest_cluster_key = " << closest_cluster_key << std::endl;
+
+
+
+
+
 
 				Cluster* cluster = new Cluster(tree[cluster_1_key], tree[closest_cluster_key], min_dist);
 				tree[cluster->get_id()] = cluster;
@@ -329,10 +349,21 @@ namespace pushGP
 				if ((double)cluster->get_failed_test_cases_count() > ((double)domain::argmap::number_of_training_cases * domain::argmap::cluster_break_threshold))
 					count_of_diverse_clusters++;
 
+
+
+				std::cout << "Calculate Diversity() - delete tree[" << cluster_1_key << "]" << std::endl;
 				delete tree[cluster_1_key];
+
+
+				std::cout << "Calculate Diversity() - delete tree[" << closest_cluster_key << "]" << std::endl;
 				delete tree[closest_cluster_key];
 
+
+
+				std::cout << "Calculate Diversity() - tree.erase[" << cluster_1_key << "]" << std::endl;
 				tree.erase(cluster_1_key);
+
+				std::cout << "Calculate Diversity() - tree.erase[" << closest_cluster_key << "]" << std::endl;
 				tree.erase(closest_cluster_key);
 			}
 
