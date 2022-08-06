@@ -284,6 +284,10 @@ namespace pushGP
 			for (int n = 0; n < domain::argmap::population_size; n++)
 			{
 				Cluster* cluster = new Cluster(elitized[n]);
+
+				unsigned long id=cluster->get_id();
+				std::cout << "Calculate Diversity() - Initialize tree[" << id << "]" << std::endl;
+
 				tree[cluster->get_id()] = cluster;
 			}
 
@@ -342,6 +346,12 @@ namespace pushGP
 
 
 				Cluster* cluster = new Cluster(tree[cluster_1_key], tree[closest_cluster_key], min_dist);
+
+
+				unsigned long id = cluster->get_id();
+				std::cout << "Calculate Diversity() - create tree[" << id << "]"  << std::endl;
+
+
 				tree[cluster->get_id()] = cluster;
 
 				double cluster_diversity = (double)(domain::argmap::number_of_training_cases - cluster->get_failed_test_cases_count()) / (double)domain::argmap::number_of_training_cases;
@@ -351,19 +361,19 @@ namespace pushGP
 
 
 
-				std::cout << "Calculate Diversity() - delete tree[" << cluster_1_key << "]" << std::endl;
+				std::cout << "Calculate Diversity() - delete tree1[" << cluster_1_key << "]" << std::endl;
 				delete tree[cluster_1_key];
 
 
-				std::cout << "Calculate Diversity() - delete tree[" << closest_cluster_key << "]" << std::endl;
+				std::cout << "Calculate Diversity() - delete tree2[" << closest_cluster_key << "]" << std::endl;
 				delete tree[closest_cluster_key];
 
 
 
-				std::cout << "Calculate Diversity() - tree.erase[" << cluster_1_key << "]" << std::endl;
+				std::cout << "Calculate Diversity() - tree.erase1[" << cluster_1_key << "]" << std::endl;
 				tree.erase(cluster_1_key);
 
-				std::cout << "Calculate Diversity() - tree.erase[" << closest_cluster_key << "]" << std::endl;
+				std::cout << "Calculate Diversity() - tree.erase2[" << closest_cluster_key << "]" << std::endl;
 				tree.erase(closest_cluster_key);
 			}
 
