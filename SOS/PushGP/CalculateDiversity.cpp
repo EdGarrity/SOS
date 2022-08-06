@@ -349,7 +349,7 @@ namespace pushGP
 
 
 				unsigned long id = cluster->get_id();
-				std::cout << "Calculate Diversity() - create tree[" << id << "]"  << std::endl;
+				std::cout << "Calculate Diversity() - create tree[" << id << "] from " << cluster_1_key << " and " << closest_cluster_key << std::endl;
 
 
 				tree[cluster->get_id()] = cluster;
@@ -361,12 +361,16 @@ namespace pushGP
 
 
 
-				std::cout << "Calculate Diversity() - delete tree1[" << cluster_1_key << "]" << std::endl;
-				delete tree[cluster_1_key];
 
 
-				std::cout << "Calculate Diversity() - delete tree2[" << closest_cluster_key << "]" << std::endl;
-				delete tree[closest_cluster_key];
+				Cluster* cluster1 = tree[cluster_1_key];
+				std::cout << "Calculate Diversity() - delete tree1[" << cluster_1_key << "] = " << cluster1->get_id() << std::endl;
+				delete cluster1;
+
+
+				Cluster* cluster2 = tree[closest_cluster_key];
+				std::cout << "Calculate Diversity() - delete tree1[" << closest_cluster_key << "] = " << cluster2->get_id() << std::endl;
+				delete cluster2;
 
 
 
