@@ -236,7 +236,7 @@ namespace pushGP
 
 
 
-			std::cout << "Calculate Diversity() - Construct the elitized error vectors that indicate whether an individual achieved the best error on each training case" << std::endl;
+			//std::cout << "Calculate Diversity() - Construct the elitized error vectors that indicate whether an individual achieved the best error on each training case" << std::endl;
 
 
 
@@ -276,12 +276,12 @@ namespace pushGP
 
 
 
-			std::cout << "Calculate Diversity() - Initialize tree" << std::endl;
+			//std::cout << "Calculate Diversity() - Initialize tree" << std::endl;
 
 
 
 			// Initialize tree
-			std::cout << "Calculate Diversity() - Initialize tree.  tree.size() = " << tree.size() << std::endl;
+			//std::cout << "Calculate Diversity() - Initialize tree.  tree.size() = " << tree.size() << std::endl;
 			tree.clear();
 
 			for (int n = 0; n < domain::argmap::population_size; n++)
@@ -289,7 +289,7 @@ namespace pushGP
 				Cluster* cluster = new Cluster(elitized[n]);
 
 				unsigned long id=cluster->get_id();
-				std::cout << "Calculate Diversity() - Initialize tree[" << id << "]" << std::endl;
+				//std::cout << "Calculate Diversity() - Initialize tree[" << id << "]" << std::endl;
 
 				tree[cluster->get_id()] = cluster;
 			}
@@ -298,14 +298,14 @@ namespace pushGP
 
 
 
-			std::cout << "Calculate Diversity() - Grow tree" << std::endl;
+			//std::cout << "Calculate Diversity() - Grow tree" << std::endl;
 
 
 
 			// Grow tree
 			while (tree.size() > 1)
 			{
-				std::cout << "Calculate Diversity() - tree.size() = " << tree.size() << std::endl;
+				//std::cout << "Calculate Diversity() - tree.size() = " << tree.size() << std::endl;
 
 
 
@@ -327,7 +327,7 @@ namespace pushGP
 
 
 
-						std::cout << "Calculate Diversity() - get_distance(" << cluster_1_key << ", " << cluster_2_key << ") = " << dist << std::endl;
+						//std::cout << "Calculate Diversity() - get_distance(" << cluster_1_key << ", " << cluster_2_key << ") = " << dist << std::endl;
 
 
 
@@ -341,7 +341,7 @@ namespace pushGP
 
 
 
-				std::cout << "Calculate Diversity() - min_dist = " << min_dist << ", closest_cluster_key = " << closest_cluster_key << std::endl;
+				//std::cout << "Calculate Diversity() - min_dist = " << min_dist << ", closest_cluster_key = " << closest_cluster_key << std::endl;
 
 
 
@@ -352,7 +352,7 @@ namespace pushGP
 
 
 				unsigned long id = cluster->get_id();
-				std::cout << "Calculate Diversity() - create tree[" << id << "] from " << cluster_1_key << " and " << closest_cluster_key << std::endl;
+				//std::cout << "Calculate Diversity() - create tree[" << id << "] from " << cluster_1_key << " and " << closest_cluster_key << std::endl;
 
 
 				tree[cluster->get_id()] = cluster;
@@ -367,20 +367,20 @@ namespace pushGP
 
 
 				Cluster* cluster1 = tree[cluster_1_key];
-				std::cout << "Calculate Diversity() - delete tree1[" << cluster_1_key << "] = " << cluster1->get_id() << std::endl;
+				//std::cout << "Calculate Diversity() - delete tree1[" << cluster_1_key << "] = " << cluster1->get_id() << std::endl;
 				delete cluster1;
 
 
 				Cluster* cluster2 = tree[closest_cluster_key];
-				std::cout << "Calculate Diversity() - delete tree1[" << closest_cluster_key << "] = " << cluster2->get_id() << std::endl;
+				//std::cout << "Calculate Diversity() - delete tree1[" << closest_cluster_key << "] = " << cluster2->get_id() << std::endl;
 				delete cluster2;
 
 
 
-				std::cout << "Calculate Diversity() - tree.erase1[" << cluster_1_key << "]" << std::endl;
+				//std::cout << "Calculate Diversity() - tree.erase1[" << cluster_1_key << "]" << std::endl;
 				tree.erase(cluster_1_key);
 
-				std::cout << "Calculate Diversity() - tree.erase2[" << closest_cluster_key << "]" << std::endl;
+				//std::cout << "Calculate Diversity() - tree.erase2[" << closest_cluster_key << "]" << std::endl;
 				tree.erase(closest_cluster_key);
 			}
 
@@ -388,7 +388,7 @@ namespace pushGP
 
 
 
-			std::cout << "Calculate Diversity() - Clean up" << std::endl;
+			//std::cout << "Calculate Diversity() - Clean up" << std::endl;
 
 
 
@@ -399,7 +399,7 @@ namespace pushGP
 
 
 
-			std::cout << "Calculate Diversity() - Done" << std::endl;
+			//std::cout << "Calculate Diversity() - Done" << std::endl;
 
 
 
