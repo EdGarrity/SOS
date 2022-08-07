@@ -58,7 +58,7 @@ namespace domain
 		//		;; The instructions that pushgp will use in random code.
 
 		// Number of individuals in the population.
-		const unsigned long population_size = 10000; // 100; // 20000; // 200'000;
+		const unsigned long population_size = 1000; // 20000; // 200'000;
 
 		// The maximum number of generations to run GP.
 		const unsigned long max_generations_in_one_session = 10000;
@@ -84,7 +84,7 @@ namespace domain
 		const unsigned long number_of_training_cases = 100;
 
 		// Number of Available Test Cases
-		const unsigned long number_of_test_cases = 100;
+		const unsigned long number_of_test_cases = 10;
 
 		// Minimum length of an example case
 		const unsigned long example_case_min_length = 2;
@@ -94,6 +94,9 @@ namespace domain
 		
 		// Upper range of values in the example case
 		const unsigned long example_case_upper_range = 1'000;
+
+		// Threshold fpr cutting the merge between any two clusters.  Used to count the number of clusters that differ on at least the threshold amount of the training cases
+		const double cluster_break_threshold = 0.1;
 
 		//// Date range for training
 		//const long int training_start_index = 0;

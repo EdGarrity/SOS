@@ -15,6 +15,7 @@ namespace pushGP
 	// Parameters:
 	//   individual_index - Index of child object within the collection of individuals.
 	//   numer_of_example_cases - Number of examples.  Used in selection of parents.
+	//   training_case_min_error
 	// 
 	// Return value:
 	//   None
@@ -38,6 +39,7 @@ namespace pushGP
 		unsigned int first_parent_index = 0;
 		unsigned int other_parent_index = 0;
 		double random_variable = Utilities::random_double(0.0, 1.0);
+		double median_absolute_deviation = 0.0;
 
 		Plush::Genome<Plush::CodeAtom>& child_genome = globals::child_agents[_individual_index].get_genome();
 
@@ -72,19 +74,19 @@ namespace pushGP
 
 				if (_include_best_individual_in_breeding_pool)
 				{
-					first_parent_index = epsilon_lexicase_selection(_number_of_example_cases, { -1 }, _training_case_min_error);
+					std::tie(median_absolute_deviation, first_parent_index) = epsilon_lexicase_selection(_number_of_example_cases, { -1 }, _training_case_min_error);
 
 					other_parent_exclusions.insert(first_parent_index);
-					other_parent_index = epsilon_lexicase_selection(_number_of_example_cases, other_parent_exclusions, _training_case_min_error);
+					std::tie(median_absolute_deviation, other_parent_index) = epsilon_lexicase_selection(_number_of_example_cases, other_parent_exclusions, _training_case_min_error);
 				}
 				else
 				{
 					first_parent_exclusions.insert(_best_individual);
-					first_parent_index = epsilon_lexicase_selection(_number_of_example_cases, first_parent_exclusions, _training_case_min_error);
+					std::tie(median_absolute_deviation, first_parent_index) = epsilon_lexicase_selection(_number_of_example_cases, first_parent_exclusions, _training_case_min_error);
 
 					other_parent_exclusions.insert(_best_individual);
 					other_parent_exclusions.insert(first_parent_index);
-					other_parent_index = epsilon_lexicase_selection(_number_of_example_cases, other_parent_exclusions, _training_case_min_error);
+					std::tie(median_absolute_deviation, other_parent_index) = epsilon_lexicase_selection(_number_of_example_cases, other_parent_exclusions, _training_case_min_error);
 				}
 
 				// Check that both parents are not the same individual
@@ -172,12 +174,12 @@ namespace pushGP
 			std::unordered_set<int> first_parent_exclusions;
 
 			if (_include_best_individual_in_breeding_pool)
-				first_parent_index = epsilon_lexicase_selection(_number_of_example_cases, { -1 }, _training_case_min_error);
+				std::tie(median_absolute_deviation, first_parent_index) = epsilon_lexicase_selection(_number_of_example_cases, { -1 }, _training_case_min_error);
 
 			else
 			{
 				first_parent_exclusions.insert(_best_individual);
-				first_parent_index = epsilon_lexicase_selection(_number_of_example_cases, first_parent_exclusions, _training_case_min_error);
+				std::tie(median_absolute_deviation, first_parent_index) = epsilon_lexicase_selection(_number_of_example_cases, first_parent_exclusions, _training_case_min_error);
 			}
 
 			uniform_mutation(first_parent_index, _individual_index);

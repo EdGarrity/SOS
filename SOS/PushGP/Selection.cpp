@@ -1,9 +1,10 @@
 #include <algorithm>
 #include <chrono>
 #include <random>
+#include <limits>
+#include <numeric>
 #include "Selection.h"
-//#include "Random.h"
-//#include "..\Utilities\Random.Utilities.h"
+#include "..\Domain\Arguments.h"
 
 namespace pushGP
 {
@@ -32,11 +33,9 @@ namespace pushGP
 			deck.push_back(n);
 
 		// obtain a time-based seed:
-		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+		unsigned seed = (unsigned int)std::chrono::system_clock::now().time_since_epoch().count();
 
 		std::shuffle(deck.begin(), deck.end(), std::default_random_engine(seed));
-
-//		std::random_shuffle(deck.begin(), deck.end(), Utilities::random_integer);
 
 		return deck;
 	}
@@ -134,6 +133,8 @@ namespace pushGP
 	// Parameters:
 	//   numer_of_example_cases - Number of examples
 	//   index_of_other_parent - Index of other selected parent
+	//   black_list - Individuals not to consider
+	//   training_case_min_error
 	// 
 	// Return value:
 	//   Index of parent selected
@@ -146,77 +147,70 @@ namespace pushGP
 	//
 	// Remarks:
 	//
-
-	unsigned int epsilon_lexicase_selection(int _number_of_example_cases, 
+	std::tuple<double, unsigned int> epsilon_lexicase_selection(int _number_of_example_cases,
 		std::unordered_set<int> _black_list,
 		combinable<pushGP::globals::Training_case_min_error_type> & _training_case_min_error)
 	{
 		unsigned int chosen = 0;
 		unsigned individual_index = 0;
-		int number_of_survivors = domain::argmap::population_size;
+		long number_of_survivors = domain::argmap::population_size;
+
+		// Get a randomized deck of test cases
+		std::vector<unsigned int> example_cases = lshuffle(_number_of_example_cases);
+
+		// Used to calculate static epsilon for each individual
+		std::vector<double> test_case_errors;
 
 		// Set survivors to be a copy of the population
 		std::forward_list<unsigned int> survivors_index;
 
+		// Select the first training case
+		unsigned int example_case = example_cases.back();
+
 		for (int n = 0; n < domain::argmap::population_size; n++)
 		{
-			// Skip the other parent
-			//if (n != _index_of_other_parent)
-			//	survivors_index.push_front(n);
-
 			if (_black_list.find(n) == _black_list.end())
+			{
 				survivors_index.push_front(n);
+
+				double error = pushGP::globals::error_matrix.load(example_case, n);
+				test_case_errors.push_back(error);
+			}
 		}
 
-		// Get a randomized deck of test cases
-		std::vector<unsigned int> example_cases = lshuffle(_number_of_example_cases); 
+		// Calculate static epsilon
+		double median_absolute_deviation = 0.0;
+		unsigned int non_zero_count = 0;
+
+		std::tie(median_absolute_deviation, non_zero_count) = mad(test_case_errors);
 
 		while ((!example_cases.empty()) && (number_of_survivors > 1))
 		{
 			double min_error_for_this_example_case = std::numeric_limits<double>::max();
 
 			// Select a random training case
-			unsigned int example_case = example_cases.back();
+			example_case = example_cases.back();
 
 			// Reduce remaining cases
 			example_cases.pop_back();
 
-			// Calculate epsilon for each survivor and remember the minimum error
-			std::vector<double> test_case_errors;
 			std::map<unsigned int, double> survivor_to_error_map;
 
 			for (unsigned int survivor_index : survivors_index)
 			{
-				//double error = pushGP::globals::error_matrix[example_case][survivor_index].load(std::memory_order_acquire);
-				//double error = pushGP::globals::error_matrix[example_case][individual_index];
-				//double error = pushGP::globals::error_matrix.load(example_case, survivor_index);
-				//double error = pushGP::globals::error_matrix[example_case][survivor_index].load(std::memory_order_acquire);
 				double error = pushGP::globals::error_matrix.load(example_case, survivor_index);
-
-				test_case_errors.push_back(error);
 
 				survivor_to_error_map[survivor_index] = error;
 
 				// Record minimum error for this test case and the individual who achived the minimum error
 				min_error_for_this_example_case = error < min_error_for_this_example_case ? error : min_error_for_this_example_case;
 
-				//if (pushGP::globals::minimum_error_array_by_example_case[example_case] > min_error_for_this_example_case)
-				//{
-				//	pushGP::globals::minimum_error_array_by_example_case[example_case] = min_error_for_this_example_case;
-				//	pushGP::globals::individual_with_minimum_error_for_training_case[example_case] = survivor_index;
-				//}
 				if (_training_case_min_error.local().minimum_error_array_by_example_case[example_case] > min_error_for_this_example_case)
 				{
 					_training_case_min_error.local().minimum_error_array_by_example_case[example_case] = min_error_for_this_example_case;
 					_training_case_min_error.local().individual_with_minimum_error_for_training_case[example_case] = survivor_index;
 				}
 			}
-
-			// Calculate epsilon
-			double median_absolute_deviation = 0.0;
-			unsigned int non_zero_count = 0;
-
-			std::tie(median_absolute_deviation, non_zero_count) = mad(test_case_errors);
 
 			// Reduce selection pool
 			auto before_it = survivors_index.before_begin();
@@ -257,7 +251,6 @@ namespace pushGP
 		auto it = survivors_index.begin();
 		auto before_it = survivors_index.begin();
 
-//		if ((number_of_survivors == 1) && (*before_it == _index_of_other_parent))
 		if ((number_of_survivors == 1) && (_black_list.find(*before_it) != _black_list.end()))
 			number_of_survivors = 0;
 
@@ -267,7 +260,7 @@ namespace pushGP
 			before_it = survivors_index.begin();
 
 			// Advance to a random survivor
-			int n = Utilities::random_integer(0, number_of_survivors - 1);
+			int n = Utilities::random_integer(0, number_of_survivors - static_cast<long>(1));
 
 			if (n > 0)
 				while (n > 0)
@@ -286,6 +279,7 @@ namespace pushGP
 			chosen = n;
 		}
 
-		return chosen;
+		return std::make_tuple(median_absolute_deviation, chosen);
 	}
+
 }

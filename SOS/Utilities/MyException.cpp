@@ -47,7 +47,7 @@ const char * MyException::what () const throw ()
 	return exception_.c_str();
 }
 
-short MyException::code() const throw()
+long MyException::code() const throw()
 {
 	return code_;
 }

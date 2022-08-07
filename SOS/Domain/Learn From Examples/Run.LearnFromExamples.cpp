@@ -27,6 +27,7 @@
 #include "../../PushGP/Random.h"
 #include "..\..\Utilities\WorkOrderManager.h"
 #include "..\..\Utilities\Debug.h"
+#include "..\..\PushGP\CalculateDiversity.h"
 
 // Correction for Syntax error with std::numeric_limits::max compiler error
 // See https://stackoverflow.com/questions/27442885/syntax-error-with-stdnumeric-limitsmax
@@ -100,11 +101,31 @@ namespace domain
 			"           ,[Cool_Down_Count]"							// 20
 			"           ,[Include_Best_Individual_In_Breeding_Pool]"// 21
 			"           ,[BestIndividual_Training_Effort]"			// 22
+			"           ,[Diversity]"								// 23
+			"           ,[Diverse_Clusters]"						// 24
 			"           )"
 			"     VALUES"
-			"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-				//       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2
+			"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+				//       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4
 
+
+		// Purpose: 
+		//   Returns the number of the last generation saved to the database.
+		//
+		// Parameters:
+		//   None
+		// 
+		// Return value:
+		//   The number of the last generation saved to the database or zero if no generations exist in the database.
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//
 		unsigned long get_last_saved_generation_number()
 		{
 			unsigned long n = 0;
@@ -127,6 +148,23 @@ namespace domain
 			return n;
 		}
 
+		// Purpose: 
+		//   Returns the SA tempreture of the last generation saved to the database.
+		//
+		// Parameters:
+		//   _default_temperature	-	The default to return if database table is empty
+		// 
+		// Return value:
+		//   The SA tempreture or the default tempreture if table in database is empty
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//
 		double get_last_saved_temperature(double _default_temperature)
 		{
 			double n = _default_temperature;
@@ -149,6 +187,24 @@ namespace domain
 			return n;
 		}
 
+		// Purpose: 
+		//   Returns the error of the best individual from the database, where:
+		//		error := average of the vector RMS difference between the example vector and the program's output vector for all examples in a training or test case
+		//
+		// Parameters:
+		//   _default_error	-	The default to return if database table is empty
+		// 
+		// Return value:
+		//   The error of the best individual from the database
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//
 		double get_last_best_individual_error(double _default_error)
 		{
 			double n = _default_error;
@@ -170,6 +226,24 @@ namespace domain
 			return n;
 		}
 
+		// Purpose: 
+		//   Returns the error of the 2nd best individual from the database, where:
+		//		error := average of the vector RMS difference between the example vector and the program's output vector for all examples in a training or test case
+		//
+		// Parameters:
+		//   _default_error	-	The default to return if database table is empty
+		// 
+		// Return value:
+		//   The error of the 2nd best individual from the database
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//
 		double get_last_prev_best_individual_error(double _default_error)
 		{
 			double n = _default_error;
@@ -191,6 +265,23 @@ namespace domain
 			return n;
 		}
 
+		// Purpose: 
+		//   Returns the stalled count from the database
+		//
+		// Parameters:
+		//   _default_stalled_count	-	The default to return if database table is empty
+		// 
+		// Return value:
+		//   The stalled count
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//
 		unsigned long get_last_stalled_count(unsigned long _default_stalled_count)
 		{
 			unsigned long n = _default_stalled_count;
@@ -212,6 +303,23 @@ namespace domain
 			return n;
 		}
 
+		// Purpose: 
+		//   Returns the cool down count from the database
+		//
+		// Parameters:
+		//   _default_cool_down_count	-	The default to return if database table is empty
+		// 
+		// Return value:
+		//   The cool down count
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//
 		unsigned long get_last_cool_down_count(unsigned long _default_cool_down_count)
 		{
 			unsigned long n = _default_cool_down_count;
@@ -234,6 +342,23 @@ namespace domain
 		}
 
 
+		// Purpose: 
+		//   Returns the Include the best individual in breeding flag
+		//
+		// Parameters:
+		//   _default_cool_down_count	-	The default to return if database table is empty
+		// 
+		// Return value:
+		//   Include the best individual in breeding flag
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//
 		bool get_include_best_individual_in_breeding_pool(unsigned long _default_include_best_individual_in_breeding_pool)
 		{
 			bool n = _default_include_best_individual_in_breeding_pool;
@@ -255,6 +380,23 @@ namespace domain
 			return n;
 		}
 
+		// Purpose: 
+		//   Load the example training and test cases from the database
+		//
+		// Parameters:
+		//   None
+		// 
+		// Return value:
+		//   Count of training and test cases loaded
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//
 		unsigned int load_example_cases()
 		{
 			unsigned int training_case_index = 0;
@@ -1247,7 +1389,10 @@ namespace domain
 			unsigned long _stalled_count,
 			unsigned int _cool_down_count,
 			bool _include_best_individual_in_breeding_pool,
-			std::string _best_gnome)
+			std::string _best_gnome,
+			double _diversity,
+			unsigned int _count_of_diverse_clusters
+		)
 		{
 			database::SQLCommand* sqlcmd_save_status_report;
 
@@ -1282,6 +1427,8 @@ namespace domain
 			sqlcmd_save_status_report->set_as_integer(20, _cool_down_count);
 			sqlcmd_save_status_report->set_as_integer(21, _include_best_individual_in_breeding_pool);
 			sqlcmd_save_status_report->set_as_integer(22, (int)_best_individual_training_effort);
+			sqlcmd_save_status_report->set_as_float(23, _diversity);
+			sqlcmd_save_status_report->set_as_integer(24, _count_of_diverse_clusters);
 
 #if DLEVEL > 0
 			Utilities::debug_log(-1, "generate_status_report", "sqlcmd");
@@ -1306,6 +1453,9 @@ namespace domain
 			Utilities::debug_log(-1, "generate_status_report", "_stalled_count=" + std::to_string(_stalled_count));
 			Utilities::debug_log(-1, "generate_status_report", "_cool_down_count=" + std::to_string(_cool_down_count));
 			Utilities::debug_log(-1, "generate_status_report", "_include_best_individual_in_breeding_pool=" + std::to_string(_include_best_individual_in_breeding_pool));
+			Utilities::debug_log(-1, "generate_status_report", "_include_best_individual_in_breeding_pool=" + std::to_string(_include_best_individual_in_breeding_pool));
+			Utilities::debug_log(-1, "generate_status_report", "diversity=" + std::to_string(_diversity));
+			Utilities::debug_log(-1, "generate_status_report", "diversity=" + std::to_string(_count_of_diverse_clusters));
 #endif
 			sqlcmd_save_status_report->execute();
 
@@ -1358,6 +1508,7 @@ namespace domain
 				unsigned int generations_completed_this_session = 0;
 				unsigned int agents_created = 0;
 				bool done = false;
+				double diversity = 0.0;
 
 				// Allocate meneory for Individuals (See https://stackoverflow.com/questions/19803162/array-size-error-x64-process)
 				size_t sz = domain::argmap::population_size;
@@ -1513,6 +1664,10 @@ namespace domain
 					best_individual_error = std::get<2>(best_individual_score_error);
 					best_individual_effort = std::get<3>(best_individual_score_error);
 
+
+					std::cout << "Calculate Diversity" << std::endl;
+					auto[diversity, count_of_diverse_clusters] = pushGP::calculate_diversity();
+
 					std::cout << "Produce New Offspring" << std::endl;
 #if DLEVEL > 0
 					Utilities::debug_log(-1, "run", "Produce New Offspring");
@@ -1582,12 +1737,7 @@ namespace domain
 
 							Utilities::debug_log(-1, "run", debug_message);
 #endif
-							//average_traiing_error += pushGP::globals::error_matrix[training_case_index][ind].load(std::memory_order_acquire);
-							//average_traiing_error += pushGP::globals::error_matrix[training_case_index][ind];
-							//average_traiing_error += pushGP::globals::error_matrix.load(training_case_index, ind);
-							//average_traiing_error += pushGP::globals::error_matrix[training_case_index][ind].load(std::memory_order_acquire);
 							average_traiing_error += pushGP::globals::error_matrix.load(training_case_index, ind);
-							//traiing_effort += pushGP::globals::effort_matrix.load(training_case_index, ind);
 						}
 					}
 					average_traiing_error /= (double)(domain::argmap::population_size * argmap::number_of_training_cases);
@@ -1597,10 +1747,6 @@ namespace domain
 					{
 						for (int training_case_index = 0; training_case_index < argmap::number_of_training_cases; training_case_index++)
 						{
-							//double error = pushGP::globals::error_matrix[training_case_index][ind].load(std::memory_order_acquire);
-							//double error = pushGP::globals::error_matrix[training_case_index][ind];
-							//double error = pushGP::globals::error_matrix.load(training_case_index, ind);
-							//double error = pushGP::globals::error_matrix[training_case_index][ind].load(std::memory_order_acquire);
 							double error = pushGP::globals::error_matrix.load(training_case_index, ind);
 
 							standard_deviation += (error - average_traiing_error) * (error - average_traiing_error);
@@ -1624,7 +1770,9 @@ namespace domain
 						stalled_count,
 						cool_down_count,
 						include_best_individual_in_breeding_pool,
-						pushGP::globals::population_agents[best_individual]
+						pushGP::globals::population_agents[best_individual],
+						diversity,
+						count_of_diverse_clusters
 					);
 
 					std::cout << "Install New Generation" << std::endl;

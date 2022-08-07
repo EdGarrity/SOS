@@ -1170,7 +1170,7 @@ namespace Plush
 			long atom_count = 0;
 			long block_starting_index = (long)Utilities::FixedSizeStack<T>::size() - 1;
 
-			for (long item = 0; item <= item_number; item++)
+			for (long item = 0; item <= (long)item_number; item++)
 			{
 				atom_count = 0;
 
