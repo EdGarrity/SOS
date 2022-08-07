@@ -281,6 +281,9 @@ namespace pushGP
 
 
 			// Initialize tree
+			std::cout << "Calculate Diversity() - Initialize tree.  tree.size() = " << tree.size() << std::endl;
+			tree.clear();
+
 			for (int n = 0; n < domain::argmap::population_size; n++)
 			{
 				Cluster* cluster = new Cluster(elitized[n]);
