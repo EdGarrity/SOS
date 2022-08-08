@@ -161,25 +161,25 @@ namespace domain
 			//	;; Arguments related to genetic operators
 			//	;; ----------------------------------------
 
-		// Genetic Operator Probabilities (must add up to 100%)
-		const double probability_of_alternation = 0.90;
-		const double probability_of_mutation = 0.01;
-		const double probability_of_cloaning = 0.09;
+		// Genetic Operator Probabilities (must add up to 100%) - Not used if SA enabled
+		const double probability_of_alternation = 0.80;
+		const double probability_of_mutation = 0.10;
+		const double probability_of_cloaning = 0.10;
 
 		// Genetic Operator SA Probabilities
 		const double heat_up_rate = 0.10;
 		const double cool_down_rate = 0.10;
-		const double stalled_delta = 0.0001;
+		const double stalled_delta = 0.005;
 		const int stalled_count_trigger = 10;
 		const int cool_down_period = 25;
 
-		const double probability_of_alternation_at_minimum_tempareture = 0.9;
+		const double probability_of_alternation_at_minimum_tempareture = 0.8;
 		const double probability_of_alternation_at_mid_tempareture = 0.45;
 		const double probability_of_alternation_at_maximum_tempareture = 0.0;
 		const double probability_of_alternation_slope_1 = probability_of_alternation_at_mid_tempareture - probability_of_alternation_at_minimum_tempareture;
 		const double probability_of_alternation_slope_2 = probability_of_alternation_at_maximum_tempareture - probability_of_alternation_at_mid_tempareture;
 
-		const double probability_of_mutation_at_minimum_tempareture = 0.01;
+		const double probability_of_mutation_at_minimum_tempareture = 0.10;
 		const double probability_of_mutation_at_mid_tempareture = 1.0;
 		const double probability_of_mutation_at_maximum_tempareture = 0.0;
 		const double probability_of_mutation_slope_1 = probability_of_mutation_at_mid_tempareture - probability_of_mutation_at_minimum_tempareture;
