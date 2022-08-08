@@ -1533,7 +1533,7 @@ namespace domain
 				sa.set_cold();
 				sa.set_tempareture(get_last_saved_temperature(sa.get_tempareture()));
 
-				if (agents_created > 0)
+				if (agents_created > argmap::population_size / 2)
 					generation_number = 0;
 
 				int best_individual = -1;
@@ -1783,6 +1783,8 @@ namespace domain
 					install_next_generation();
 					generation_number++;
 					generations_completed_this_session++;
+
+					std::cout << "---------------------------------------------" << std::endl << std::endl << std::endl;
 				}
 
 				delete[] pushGP::globals::population_agents;
