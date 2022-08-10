@@ -24,8 +24,8 @@ namespace pushGP
 		// Count of failed training cases
 		unsigned long failed_test_cases_count = 0;
 
-		// Combined error vector 
-		ERROR_ARRAY error_array;
+		//// Combined error vector 
+		//ERROR_ARRAY error_array;
 
 		// Generate a unique ID that is uniqueue within the scope of this namespace.
 		unsigned long generate_uid()
@@ -36,6 +36,9 @@ namespace pushGP
 		}
 
 	public:
+		// Combined error vector 
+		ERROR_ARRAY error_array;
+
 		Cluster(const ERROR_ARRAY& a)
 		{
 			id = generate_uid();
@@ -284,6 +287,13 @@ namespace pushGP
 			//std::cout << "Calculate Diversity() - Initialize tree.  tree.size() = " << tree.size() << std::endl;
 			tree.clear();
 
+			std::cout << "Calculate Diversity,id,diversity,parent_1,parent_2";
+
+			for (int n=0; n = domain::argmap::number_of_training_cases;n++)
+				std::cout << ",error_" << n;
+
+			std::cout << std::endl;
+
 			for (int n = 0; n < domain::argmap::population_size; n++)
 			{
 				Cluster* cluster = new Cluster(elitized[n]);
@@ -292,6 +302,13 @@ namespace pushGP
 				//std::cout << "Calculate Diversity() - Initialize tree[" << id << "]" << std::endl;
 
 				tree[cluster->get_id()] = cluster;
+
+				std::cout << "Calculate Diversity," << cluster->get_id() << ", 0, -1, -1";
+
+				for (int n = 0; n = domain::argmap::number_of_training_cases; n++)
+					std::cout << ", " << cluster->error_array[n];
+
+				std::cout << std::endl;
 			}
 
 
@@ -365,6 +382,17 @@ namespace pushGP
 
 
 
+				std::cout << "Calculate Diversity," << cluster->get_id() << ", " << cluster_diversity << ", " << cluster_1_key << ", " << closest_cluster_key << ", ";
+
+				for (int n = 0; n = domain::argmap::number_of_training_cases; n++)
+					std::cout << ", " << cluster->error_array[n];
+
+				std::cout << std::endl;
+
+
+
+
+
 
 				Cluster* cluster1 = tree[cluster_1_key];
 				//std::cout << "Calculate Diversity() - delete tree1[" << cluster_1_key << "] = " << cluster1->get_id() << std::endl;
@@ -385,6 +413,8 @@ namespace pushGP
 			}
 
 
+			std::cout << std::endl;
+			std::cout << std::endl;
 
 
 
