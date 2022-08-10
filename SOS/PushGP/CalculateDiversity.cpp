@@ -289,7 +289,7 @@ namespace pushGP
 
 			std::cout << "Calculate Diversity,id,diversity,parent_1,parent_2";
 
-			for (int n=0; n = domain::argmap::number_of_training_cases;n++)
+			for (int n=0; n < domain::argmap::number_of_training_cases;n++)
 				std::cout << ",error_" << n;
 
 			std::cout << std::endl;
@@ -305,8 +305,11 @@ namespace pushGP
 
 				std::cout << "Calculate Diversity," << cluster->get_id() << ", 0, -1, -1";
 
-				for (int n = 0; n = domain::argmap::number_of_training_cases; n++)
-					std::cout << ", " << cluster->error_array[n];
+				for (int n = 0; n < domain::argmap::number_of_training_cases; n++)
+				{
+					int id = cluster->error_array[n];
+					std::cout << ", " << id;
+				}
 
 				std::cout << std::endl;
 			}
@@ -384,8 +387,11 @@ namespace pushGP
 
 				std::cout << "Calculate Diversity," << cluster->get_id() << ", " << cluster_diversity << ", " << cluster_1_key << ", " << closest_cluster_key << ", ";
 
-				for (int n = 0; n = domain::argmap::number_of_training_cases; n++)
-					std::cout << ", " << cluster->error_array[n];
+				for (int n = 0; n < domain::argmap::number_of_training_cases; n++)
+				{
+					int id = cluster->error_array[n];
+					std::cout << ", " << id;
+				}
 
 				std::cout << std::endl;
 
