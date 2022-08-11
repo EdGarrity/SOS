@@ -245,7 +245,7 @@ namespace pushGP
 
 			// Print out the error matrix
 			std::cout << std::endl;
-			std::cout << "Calculate Diversity,individual_index,";
+			std::cout << "Calculate Diversity,individual_index";
 
 			for (int n = 0; n < domain::argmap::number_of_training_cases; n++)
 				std::cout << ",error_" << n;
@@ -309,7 +309,7 @@ namespace pushGP
 				{
 					double error = pushGP::globals::error_matrix.load(case_index, individual_index);
 
-					elitized[individual_index][case_index] = (error < error_threshold) ? 0 : 1;
+					elitized[individual_index][case_index] = (error <= error_threshold) ? 0 : 1;
 				}
 
 
@@ -353,7 +353,7 @@ namespace pushGP
 			//std::cout << "Calculate Diversity() - Initialize tree.  tree.size() = " << tree.size() << std::endl;
 			tree.clear();
 
-			std::cout << "Calculate Diversity,id,,distance,failed_test_cases_count,diversity,count_of_diverse_clusters,parent_1,parent_2";
+			std::cout << "Calculate Diversity,id,distance,failed_test_cases_count,diversity,count_of_diverse_clusters,parent_1,parent_2";
 
 			for (int n=0; n < domain::argmap::number_of_training_cases;n++)
 				std::cout << ",error_" << n;
