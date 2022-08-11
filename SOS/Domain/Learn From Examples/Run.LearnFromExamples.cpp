@@ -1785,6 +1785,8 @@ namespace domain
 					generations_completed_this_session++;
 
 					std::cout << "---------------------------------------------" << std::endl << std::endl << std::endl;
+
+					break;
 				}
 
 				delete[] pushGP::globals::population_agents;
