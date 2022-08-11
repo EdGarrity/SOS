@@ -268,16 +268,18 @@ namespace pushGP
 			std::cout << std::endl;
 			std::cout << std::endl;
 
-			double debug_training_case_threashold = 0;
-			double debug_training_case_minimum_error = 0;
-			double debug_error_threshold = 0;
-
-
-
-
-
-
+		
 			// Construct the elitized error vectors that indicate whether an individual achieved the best error on each training case
+
+
+
+
+			std::string debug_training_case_threashold = "Calculate Diversity - training_case_threashold";
+			std::string debug_training_case_minimum_error = "Calculate Diversity - training_case_minimum_error";
+			std::string debug_error_threshold = "Calculate Diversity - error_threshold";
+
+
+
 
 			for (int case_index = 0; case_index < domain::argmap::number_of_training_cases; case_index++)
 			{
@@ -315,12 +317,26 @@ namespace pushGP
 
 
 
-				debug_training_case_threashold = training_case_threashold;
-				debug_training_case_minimum_error = training_case_minimum_error;
-				debug_error_threshold = error_threshold;
+
+
+				debug_training_case_threashold += "," + std::to_string(training_case_threashold);
+				debug_training_case_minimum_error += "," + std::to_string(training_case_minimum_error);
+				debug_error_threshold += "," + std::to_string(error_threshold);
+
 			}
 
-			std::cout << "Calculate Diversity,training_case_threashold = " << debug_training_case_threashold << ", training_case_minimum_error = " << debug_training_case_minimum_error << ", error_threshold = " << debug_error_threshold << std::endl;
+			// Print out the error matrix
+			std::cout << "Calculate Diversity,";
+
+			for (int n = 0; n < domain::argmap::number_of_training_cases; n++)
+				std::cout << ",case_index_" << n;
+
+			std::cout << std::endl;
+
+			std::cout << debug_training_case_threashold << std::endl;
+			std::cout << debug_training_case_minimum_error << std::endl;
+			std::cout << debug_error_threshold << std::endl;
+
 			std::cout << std::endl;
 			std::cout << std::endl;
 
