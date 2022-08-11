@@ -287,12 +287,12 @@ namespace pushGP
 			//std::cout << "Calculate Diversity() - Initialize tree.  tree.size() = " << tree.size() << std::endl;
 			tree.clear();
 
-			std::cout << "Calculate Diversity,id,,distance,failed_test_cases_count,diversity,count_of_diverse_clusters,parent_1,parent_2";
+			//std::cout << "Calculate Diversity,id,,distance,failed_test_cases_count,diversity,count_of_diverse_clusters,parent_1,parent_2";
 
-			for (int n=0; n < domain::argmap::number_of_training_cases;n++)
-				std::cout << ",error_" << n;
+			//for (int n=0; n < domain::argmap::number_of_training_cases;n++)
+			//	std::cout << ",error_" << n;
 
-			std::cout << std::endl;
+			//std::cout << std::endl;
 
 			for (int n = 0; n < domain::argmap::population_size; n++)
 			{
@@ -303,15 +303,15 @@ namespace pushGP
 
 				tree[cluster->get_id()] = cluster;
 
-				std::cout << "Calculate Diversity," << cluster->get_id() << ", 0, 0, 0, 0, -1, -1";
+				//std::cout << "Calculate Diversity," << cluster->get_id() << ", 0, 0, 0, 0, -1, -1";
 
-				for (int n = 0; n < domain::argmap::number_of_training_cases; n++)
-				{
-					int id = cluster->error_array[n];
-					std::cout << ", " << id;
-				}
+				//for (int n = 0; n < domain::argmap::number_of_training_cases; n++)
+				//{
+				//	int id = cluster->error_array[n];
+				//	std::cout << ", " << id;
+				//}
 
-				std::cout << std::endl;
+				//std::cout << std::endl;
 			}
 
 
@@ -387,15 +387,15 @@ namespace pushGP
 
 
 
-				std::cout << "Calculate Diversity," << cluster->get_id() << ", " << min_dist << ", " << failed_test_cases_count << ", " << cluster_diversity << ", " << count_of_diverse_clusters << ", " << cluster_1_key << ", " << closest_cluster_key;
+				//std::cout << "Calculate Diversity," << cluster->get_id() << ", " << min_dist << ", " << failed_test_cases_count << ", " << cluster_diversity << ", " << count_of_diverse_clusters << ", " << cluster_1_key << ", " << closest_cluster_key;
 
-				for (int n = 0; n < domain::argmap::number_of_training_cases; n++)
-				{
-					int id = cluster->error_array[n];
-					std::cout << ", " << id;
-				}
+				//for (int n = 0; n < domain::argmap::number_of_training_cases; n++)
+				//{
+				//	int id = cluster->error_array[n];
+				//	std::cout << ", " << id;
+				//}
 
-				std::cout << std::endl;
+				//std::cout << std::endl;
 
 
 
@@ -421,8 +421,8 @@ namespace pushGP
 			}
 
 
-			std::cout << std::endl;
-			std::cout << std::endl;
+			//std::cout << std::endl;
+			//std::cout << std::endl;
 
 
 
@@ -437,7 +437,7 @@ namespace pushGP
 
 
 
-			std::cout << "Calculate Diversity() - Done, cluster_diversity = " << cluster_diversity  << ", count_of_diverse_clusters = " << std::endl;
+			//std::cout << "Calculate Diversity() - Done, cluster_diversity = " << cluster_diversity  << ", count_of_diverse_clusters = " << std::endl;
 
 
 			return std::make_tuple(cluster_diversity, count_of_diverse_clusters);
