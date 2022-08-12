@@ -1226,6 +1226,13 @@ namespace domain
 				// Breed new generation
 				std::cout << "  Breed new generation" << std::endl;
 
+				std::map<pushGP::SimulatedAnnealing::States, int> state_count;
+
+				state_count[pushGP::SimulatedAnnealing::States::alternate] = 0;
+				state_count[pushGP::SimulatedAnnealing::States::cloan] = 0;
+				state_count[pushGP::SimulatedAnnealing::States::mutate] = 0;
+				state_count[pushGP::SimulatedAnnealing::States::regenerate] = 0;
+
 				for (unsigned long individual_index = 0; individual_index < argmap::population_size; individual_index++)
 				{
 					Plush::Genome<Plush::CodeAtom>& child_genome = pushGP::globals::child_agents[individual_index].get_genome();
@@ -1241,12 +1248,14 @@ namespace domain
 						if (individual_index % 100 == 0)
 							std::cout << "B";
 
-						pushGP::breed(individual_index,
+						pushGP::SimulatedAnnealing::States state = pushGP::breed(individual_index,
 							_number_of_example_cases,
 							training_case_min_error,
 							sa,
 							_include_best_individual_in_breeding_pool,
 							_best_individual);
+
+						state_count[state]++;
 
 						// If a child with the same genome already exists, create a new random child.
 	//					std::cout << "  If a child with the same genome already exists, create a new random child." << std::endl;
@@ -1259,6 +1268,16 @@ namespace domain
 					}
 				}
 
+				std::cout << std::endl;
+				std::cout << std::endl;
+
+				std::cout << "Selection distribution" << std::endl;
+				std::cout << "  Alternate = " << (double)state_count[pushGP::SimulatedAnnealing::States::alternate] / (double)argmap::population_size * 100.0 << std::endl;
+				std::cout << "  Cloan = " << (double)state_count[pushGP::SimulatedAnnealing::States::cloan] / (double)argmap::population_size * 100.0 << std::endl;
+				std::cout << "  Mutate = " << (double)state_count[pushGP::SimulatedAnnealing::States::mutate] / (double)argmap::population_size * 100.0 << std::endl;
+				std::cout << "  Regenerate = " << (double)state_count[pushGP::SimulatedAnnealing::States::regenerate] / (double)argmap::population_size * 100.0 << std::endl;
+
+				std::cout << std::endl;
 				std::cout << std::endl;
 
 				// Keep the best individuals for each test case

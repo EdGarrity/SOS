@@ -18,7 +18,7 @@ namespace pushGP
 	//   training_case_min_error
 	// 
 	// Return value:
-	//   None
+	//   The selection method.
 	//
 	// Side Effects:
 	//   Updates child object with new PLUSH genes and PUSH program
@@ -29,7 +29,7 @@ namespace pushGP
 	// Remarks:
 	//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
 	//
-	void breed(unsigned int _individual_index, 
+	pushGP::SimulatedAnnealing::States breed(unsigned int _individual_index,
 		int _number_of_example_cases, 
 		combinable<pushGP::globals::Training_case_min_error_type>& _training_case_min_error, 
 		pushGP::SimulatedAnnealing& _sa,
@@ -164,7 +164,10 @@ namespace pushGP
 				alternation(first_parent_index, other_parent_index, _individual_index);
 
 			else
+			{
 				make_random_plush_genome(child_genome);
+				state = pushGP::SimulatedAnnealing::States::regenerate;
+			}
 		}
 
 		else if (state == pushGP::SimulatedAnnealing::States::mutate)
@@ -195,9 +198,17 @@ namespace pushGP
 		}
 
 		else
+		{
 			make_random_plush_genome(child_genome);
+			state = pushGP::SimulatedAnnealing::States::regenerate;
+		}
 
 		if ((globals::child_agents[_individual_index].get_genome_point_estimate()) > domain::argmap::max_points)
+		{
 			make_random_plush_genome(child_genome);
+			state = pushGP::SimulatedAnnealing::States::regenerate;
+		}
+
+		return state;
 	}
 }
