@@ -938,6 +938,8 @@ namespace domain
 			double min_error = (std::numeric_limits<double>::max)();
 			double min_score = (std::numeric_limits<double>::max)();
 			unsigned long max_effort_for_best_individual = 0;
+			unsigned long max_effort_for_best_individual_a = 0;
+			unsigned long max_effort_for_best_individual_b = 0;
 
 			Plush::Environment* envp_local = new Plush::Environment;
 
@@ -981,19 +983,25 @@ namespace domain
 				{
 					min_score = score;
 					individual_with_best_score = individual_index;
-					max_effort_for_best_individual = max_effort_for_individual;
+					max_effort_for_best_individual_a = max_effort_for_individual;
 				}
 
 				if (avg_error_for_individual < min_error)
 				{
 					min_error = avg_error_for_individual;
 					individual_with_least_error = individual_index;
-					max_effort_for_best_individual = max_effort_for_individual;
+					max_effort_for_best_individual_b = max_effort_for_individual;
 				}
 
 				if ((individual_index % 100) == 0)
 					std::cout << std::endl;
 			}
+
+			if (individual_with_best_score == -1)
+				max_effort_for_best_individual = max_effort_for_best_individual_b;
+
+			else
+				max_effort_for_best_individual = max_effort_for_best_individual_a;
 
 			delete envp_local;
 
