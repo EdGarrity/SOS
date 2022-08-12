@@ -7,7 +7,7 @@ SELECT TOP (1000) [ID]
 	  ,[Diversity]
 	  ,[Diverse_Clusters]
       ,[BestIndividual_Training_Score]
-      ,[BestIndividual_Training_Error]
+      ,[BestIndividual_Training_Error] 
       ,[Average_Training_Error]
       ,[Standard_Deviation]
       ,[BestIndividual_Test_Score]
@@ -25,5 +25,7 @@ SELECT TOP (1000) [ID]
       ,[Cool_Down_Count]
       ,[Include_Best_Individual_In_Breeding_Pool]
       ,[BestIndividual_Training_Effort]
+	  ,ABS([BestIndividual_Training_Error] - [BestIndividual_Prev_Training_Error]) AS Delta_Error
   FROM [SOS].[dbo].[ProgressLog] (NOLOCK)
+--  where [Stalled_Count] < 2
   Order by [Created_DTS] Desc
