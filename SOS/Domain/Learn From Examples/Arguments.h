@@ -173,7 +173,7 @@ namespace domain
 		const int stalled_count_trigger = 10;
 		const int cool_down_period = 25;
 
-		const double probability_of_alternation_at_minimum_tempareture = 0.8;
+		const double probability_of_alternation_at_minimum_tempareture = 0.70;
 		const double probability_of_alternation_at_mid_tempareture = 0.45;
 		const double probability_of_alternation_at_maximum_tempareture = 0.0;
 		const double probability_of_alternation_slope_1 = probability_of_alternation_at_mid_tempareture - probability_of_alternation_at_minimum_tempareture;
@@ -191,7 +191,7 @@ namespace domain
 		const double probability_of_cloaning_slope_1 = probability_of_cloaning_at_mid_tempareture - probability_of_cloaning_at_minimum_tempareture;
 		const double probability_of_cloaning_slope_2 = probability_of_cloaning_at_maximum_tempareture - probability_of_cloaning_at_mid_tempareture;
 
-		const double probability_of_regeneraton_at_minimum_tempareture = 0.0;
+		const double probability_of_regeneraton_at_minimum_tempareture = 0.01;
 		const double probability_of_regeneraton_at_mid_tempareture = 0.50;
 		const double probability_of_regeneraton_at_maximum_tempareture = 1.0;
 		const double probability_of_regeneraton_slope_1 = probability_of_regeneraton_at_mid_tempareture - probability_of_regeneraton_at_minimum_tempareture;

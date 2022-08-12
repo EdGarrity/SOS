@@ -1539,7 +1539,7 @@ namespace domain
 				agents_created = make_pop_agents(env, load_pop_agents());
 
 				sa.set_cold();
-				sa.set_tempareture(get_last_saved_temperature(sa.get_tempareture()));
+				sa.set_temperature(get_last_saved_temperature(sa.get_temperature()));
 
 				if (agents_created > argmap::population_size / 2)
 					generation_number = 0;
@@ -1555,27 +1555,59 @@ namespace domain
 
 				while ((!done) && (generations_completed_this_session < argmap::max_generations_in_one_session))
 				{
-					if ((std::fabs(best_individual_error - prev_best_individual_error) < argmap::stalled_delta) && (cool_down_count <= 0))
-						stalled_count = (stalled_count < 0) ? 0 : stalled_count - 1;
+					//if ((std::fabs(best_individual_error - prev_best_individual_error) < argmap::stalled_delta) && (cool_down_count <= 0))
+					//	stalled_count = (stalled_count < 0) ? 0 : stalled_count - 1;
 
-					else
-						stalled_count = argmap::stalled_count_trigger;
+					//else
+					//	stalled_count = argmap::stalled_count_trigger;
 
-					if (stalled_count <= 0)
+					//if (stalled_count <= 0)
+					//{
+					//	sa.set_hot();
+					//	cool_down_count = argmap::cool_down_period;
+					//	include_best_individual_in_breeding_pool = false;
+
+					//	std::cout << "Heat up " << sa.get_tempareture() << std::endl;
+					//}
+					//else
+					//{
+					//	sa.cool_down();
+					//	cool_down_count = (cool_down_count < 0) ? 0 : cool_down_count - 1;
+
+					//	std::cout << "Cool down " << sa.get_tempareture() << std::endl;
+					//}
+
+
+
+
+					// best_individual_score
+
+					if (cool_down_count <= 0)
 					{
-						sa.set_hot();
+						sa.set_temperature(std::min(best_individual_score,1.0));
+
 						cool_down_count = argmap::cool_down_period;
 						include_best_individual_in_breeding_pool = false;
 
-						std::cout << "Heat up " << sa.get_tempareture() << std::endl;
+						std::cout << "Heat up " << sa.get_temperature() << std::endl;
 					}
+
 					else
 					{
 						sa.cool_down();
-						cool_down_count = (cool_down_count < 0) ? 0 : cool_down_count - 1;
 
-						std::cout << "Cool down " << sa.get_tempareture() << std::endl;
+						cool_down_count = (cool_down_count < 0) ? 0 : cool_down_count - 1;
+						include_best_individual_in_breeding_pool = true;
+
+						std::cout << "Cool down " << sa.get_temperature() << std::endl;
 					}
+
+
+
+
+
+
+
 
 					prev_best_individual_error = best_individual_error;
 
@@ -1774,7 +1806,7 @@ namespace domain
 						average_traiing_error,
 						standard_deviation,
 						test_case_score,
-						sa.get_tempareture(),
+						sa.get_temperature(),
 						stalled_count,
 						cool_down_count,
 						include_best_individual_in_breeding_pool,

@@ -28,12 +28,12 @@ namespace pushGP
 
 	public:
 		// Methods
-		double get_tempareture()
+		double get_temperature()
 		{
 			return temperature_;
 		}
 
-		void set_tempareture(double _temperature)
+		void set_temperature(double _temperature)
 		{
 			temperature_ = _temperature;
 			calculate_state_probability_levels();
