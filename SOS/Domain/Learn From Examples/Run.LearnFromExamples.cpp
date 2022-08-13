@@ -1603,17 +1603,23 @@ namespace domain
 
 					if (cool_down_count <= 0)
 					{
-						sa.set_temperature(std::min(best_individual_score,1.0));
+						stalled_count = (stalled_count < 0) ? 0 : stalled_count - 1;
 
-						cool_down_count = argmap::cool_down_period;
-						include_best_individual_in_breeding_pool = false;
+						if (stalled_count <= 0)
+						{
+							sa.set_temperature(std::min(best_individual_score, 1.0));
 
-						std::cout << "Heat up " << sa.get_temperature() << std::endl;
+							cool_down_count = argmap::cool_down_period;
+							include_best_individual_in_breeding_pool = false;
+
+							std::cout << "Heat up " << sa.get_temperature() << std::endl;
+						}
 					}
 
 					else
 					{
 						sa.cool_down();
+						stalled_count = argmap::stalled_count_trigger;
 
 						cool_down_count = (cool_down_count < 0) ? 0 : cool_down_count - 1;
 						include_best_individual_in_breeding_pool = true;
