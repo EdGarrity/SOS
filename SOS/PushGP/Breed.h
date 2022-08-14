@@ -13,7 +13,7 @@ using namespace concurrency;
 namespace pushGP
 {
 	// Returns an individual bred from the given population using the given parameters
-	pushGP::SimulatedAnnealing::States breed(unsigned int _individual_index,
+	pushGP::SimulatedAnnealing_States breed(unsigned int _individual_index,
 		int _number_of_test_cases, 
 		combinable<pushGP::globals::Training_case_min_error_type> & _training_case_min_error, 
 		pushGP::SimulatedAnnealing & _sa,

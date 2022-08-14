@@ -45,24 +45,24 @@ namespace pushGP
 		std::cout << " probability_level_of_regeneration_ = " << probability_level_of_regeneration_ << std::endl;
 	}
 
-	SimulatedAnnealing::States SimulatedAnnealing::get_state(double _random_variable)
+	SimulatedAnnealing_States SimulatedAnnealing::get_state(double _random_variable)
 	{
-		States state;
+		SimulatedAnnealing_States state;
 
 		if (_random_variable < probability_level_of_alternation_)
-			state = SimulatedAnnealing::States::alternate;
+			state = SimulatedAnnealing_States::alternate;
 
 		else if (_random_variable < probability_level_of_elite_alternation_)
-			state = SimulatedAnnealing::States::alternate_elite;
+			state = SimulatedAnnealing_States::alternate_elite;
 
 		else if (_random_variable < probability_level_of_mutation_)
-			state = SimulatedAnnealing::States::mutate;
+			state = SimulatedAnnealing_States::mutate;
 
 		else if (_random_variable < probability_level_of_cloaning_)
-			state = SimulatedAnnealing::States::cloan;
+			state = SimulatedAnnealing_States::cloan;
 
 		else
-			state = SimulatedAnnealing::States::regenerate;
+			state = SimulatedAnnealing_States::regenerate;
 
 		return state;
 	}

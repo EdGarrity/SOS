@@ -1226,12 +1226,12 @@ namespace domain
 				// Breed new generation
 				std::cout << "  Breed new generation" << std::endl;
 
-				std::map<pushGP::SimulatedAnnealing::States, int> state_count;
+				std::map<pushGP::SimulatedAnnealing_States, int> state_count;
 
-				state_count[pushGP::SimulatedAnnealing::States::alternate] = 0;
-				state_count[pushGP::SimulatedAnnealing::States::cloan] = 0;
-				state_count[pushGP::SimulatedAnnealing::States::mutate] = 0;
-				state_count[pushGP::SimulatedAnnealing::States::regenerate] = 0;
+				state_count[pushGP::SimulatedAnnealing_States::alternate] = 0;
+				state_count[pushGP::SimulatedAnnealing_States::cloan] = 0;
+				state_count[pushGP::SimulatedAnnealing_States::mutate] = 0;
+				state_count[pushGP::SimulatedAnnealing_States::regenerate] = 0;
 
 				for (unsigned long individual_index = 0; individual_index < argmap::population_size; individual_index++)
 				{
@@ -1248,7 +1248,7 @@ namespace domain
 						if (individual_index % 100 == 0)
 							std::cout << "B";
 
-						pushGP::SimulatedAnnealing::States state = pushGP::breed(individual_index,
+						pushGP::SimulatedAnnealing_States state = pushGP::breed(individual_index,
 							_number_of_example_cases,
 							training_case_min_error,
 							sa,
@@ -1272,11 +1272,11 @@ namespace domain
 				std::cout << std::endl;
 
 				std::cout << "Selection distribution" << std::endl;
-				std::cout << "  Alternate = " << (double)state_count[pushGP::SimulatedAnnealing::States::alternate] / (double)argmap::population_size * 100.0 << std::endl;
-				std::cout << "  Alternate_elite = " << (double)state_count[pushGP::SimulatedAnnealing::States::alternate_elite] / (double)argmap::population_size * 100.0 << std::endl;
-				std::cout << "  Cloan = " << (double)state_count[pushGP::SimulatedAnnealing::States::cloan] / (double)argmap::population_size * 100.0 << std::endl;
-				std::cout << "  Mutate = " << (double)state_count[pushGP::SimulatedAnnealing::States::mutate] / (double)argmap::population_size * 100.0 << std::endl;
-				std::cout << "  Regenerate = " << (double)state_count[pushGP::SimulatedAnnealing::States::regenerate] / (double)argmap::population_size * 100.0 << std::endl;
+				std::cout << "  Alternate = " << (double)state_count[pushGP::SimulatedAnnealing_States::alternate] / (double)argmap::population_size * 100.0 << std::endl;
+				std::cout << "  Alternate_elite = " << (double)state_count[pushGP::SimulatedAnnealing_States::alternate_elite] / (double)argmap::population_size * 100.0 << std::endl;
+				std::cout << "  Cloan = " << (double)state_count[pushGP::SimulatedAnnealing_States::cloan] / (double)argmap::population_size * 100.0 << std::endl;
+				std::cout << "  Mutate = " << (double)state_count[pushGP::SimulatedAnnealing_States::mutate] / (double)argmap::population_size * 100.0 << std::endl;
+				std::cout << "  Regenerate = " << (double)state_count[pushGP::SimulatedAnnealing_States::regenerate] / (double)argmap::population_size * 100.0 << std::endl;
 
 				std::cout << std::endl;
 				std::cout << std::endl;

@@ -29,7 +29,7 @@ namespace pushGP
 	// Remarks:
 	//   Must call Push::init_push() prior to this function call to register the Push functions and populate str2parentheses_map_ptr
 	//
-	pushGP::SimulatedAnnealing::States breed(unsigned int _individual_index,
+	pushGP::SimulatedAnnealing_States breed(unsigned int _individual_index,
 		int _number_of_example_cases, 
 		combinable<pushGP::globals::Training_case_min_error_type>& _training_case_min_error, 
 		pushGP::SimulatedAnnealing& _sa,
@@ -43,9 +43,9 @@ namespace pushGP
 
 		Plush::Genome<Plush::CodeAtom>& child_genome = globals::child_agents[_individual_index].get_genome();
 
-		pushGP::SimulatedAnnealing::States state = _sa.get_state(random_variable);
+		pushGP::SimulatedAnnealing_States state = _sa.get_state(random_variable);
 
-		if (state == pushGP::SimulatedAnnealing::States::alternate)
+		if (state == pushGP::SimulatedAnnealing_States::alternate)
 		{
 			bool done = false;
 			bool first = true;
@@ -171,11 +171,11 @@ namespace pushGP
 			else
 			{
 				make_random_plush_genome(child_genome);
-				state = pushGP::SimulatedAnnealing::States::regenerate;
+				state = pushGP::SimulatedAnnealing_States::regenerate;
 			}
 		}
 
-		else if (state == pushGP::SimulatedAnnealing::States::alternate_elite)
+		else if (state == pushGP::SimulatedAnnealing_States::alternate_elite)
 		{
 			bool done = false;
 			bool first = true;
@@ -296,11 +296,11 @@ namespace pushGP
 			else
 			{
 				make_random_plush_genome(child_genome);
-				state = pushGP::SimulatedAnnealing::States::regenerate;
+				state = pushGP::SimulatedAnnealing_States::regenerate;
 			}
 		}
 
-		else if (state == pushGP::SimulatedAnnealing::States::mutate)
+		else if (state == pushGP::SimulatedAnnealing_States::mutate)
 		{
 			//first_parent_index = epsilon_lexicase_selection(_number_of_example_cases, -1, _training_case_min_error);
 
@@ -318,7 +318,7 @@ namespace pushGP
 			uniform_mutation(first_parent_index, _individual_index);
 		}
 
-		else if (state == pushGP::SimulatedAnnealing::States::cloan)
+		else if (state == pushGP::SimulatedAnnealing_States::cloan)
 		{
 			if ((!_include_best_individual_in_breeding_pool) && (_individual_index == _best_individual))
 				make_random_plush_genome(child_genome);
@@ -330,13 +330,13 @@ namespace pushGP
 		else
 		{
 			make_random_plush_genome(child_genome);
-			state = pushGP::SimulatedAnnealing::States::regenerate;
+			state = pushGP::SimulatedAnnealing_States::regenerate;
 		}
 
 		if ((globals::child_agents[_individual_index].get_genome_point_estimate()) > domain::argmap::max_points)
 		{
 			make_random_plush_genome(child_genome);
-			state = pushGP::SimulatedAnnealing::States::regenerate;
+			state = pushGP::SimulatedAnnealing_States::regenerate;
 		}
 
 		return state;

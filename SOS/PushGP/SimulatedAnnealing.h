@@ -4,19 +4,18 @@
 
 namespace pushGP
 {
+	// State Machine
+	enum class SimulatedAnnealing_States
+	{
+		alternate,
+		alternate_elite,
+		mutate,
+		cloan,
+		regenerate
+	};
+
 	class SimulatedAnnealing
 	{
-	public:
-		// State Machine
-		enum class States
-		{
-			alternate,
-			alternate_elite,
-			mutate,
-			cloan,
-			regenerate
-		};
-
 	private:
 		double temperature_ = 0.0;
 
@@ -69,6 +68,6 @@ namespace pushGP
 			calculate_state_probability_levels();
 		}
 
-		States get_state(double x);
+		SimulatedAnnealing_States get_state(double x);
 	};
 }
