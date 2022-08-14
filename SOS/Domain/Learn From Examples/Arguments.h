@@ -179,6 +179,12 @@ namespace domain
 		const double probability_of_alternation_slope_1 = probability_of_alternation_at_mid_tempareture - probability_of_alternation_at_minimum_tempareture;
 		const double probability_of_alternation_slope_2 = probability_of_alternation_at_maximum_tempareture - probability_of_alternation_at_mid_tempareture;
 
+		const double probability_of_alternation_elite_at_minimum_tempareture = 0.70;
+		const double probability_of_alternation_elite_at_mid_tempareture = 0.45;
+		const double probability_of_alternation_elite_at_maximum_tempareture = 0.0;
+		const double probability_of_alternation_elite_slope_1 = probability_of_alternation_elite_at_mid_tempareture - probability_of_alternation_elite_at_minimum_tempareture;
+		const double probability_of_alternation_elite_slope_2 = probability_of_alternation_elite_at_maximum_tempareture - probability_of_alternation_elite_at_mid_tempareture;
+
 		const double probability_of_mutation_at_minimum_tempareture = 0.10;
 		const double probability_of_mutation_at_mid_tempareture = 1.0;
 		const double probability_of_mutation_at_maximum_tempareture = 0.0;

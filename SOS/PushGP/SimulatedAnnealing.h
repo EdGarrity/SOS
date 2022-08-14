@@ -8,9 +8,10 @@ namespace pushGP
 	{
 	public:
 		// State Machine
-		enum States
+		enum class States
 		{
 			alternate,
+			alternate_elite,
 			mutate,
 			cloan,
 			regenerate
@@ -20,6 +21,7 @@ namespace pushGP
 		double temperature_ = 0.0;
 
 		double probability_level_of_alternation_ = 0.0;
+		double probability_level_of_elite_alternation_ = 0.0;
 		double probability_level_of_mutation_ = 0.0;
 		double probability_level_of_cloaning_ = 0.0;
 		double probability_level_of_regeneration_ = 0.0;
