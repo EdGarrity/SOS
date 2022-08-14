@@ -18,7 +18,7 @@ namespace pushGP
 	//   training_case_min_error
 	// 
 	// Return value:
-	//   None
+	//   The selection method.
 	//
 	// Side Effects:
 	//   Updates child object with new PLUSH genes and PUSH program
