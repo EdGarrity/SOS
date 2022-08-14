@@ -204,6 +204,13 @@ namespace Plush
 #endif
 					}
 
+
+					else
+					{
+						std::cout << atom.instruction_name << " ";
+					}
+
+
 					break;
 				}
 			}
