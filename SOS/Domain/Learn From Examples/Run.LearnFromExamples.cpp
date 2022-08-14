@@ -1273,6 +1273,7 @@ namespace domain
 
 				std::cout << "Selection distribution" << std::endl;
 				std::cout << "  Alternate = " << (double)state_count[pushGP::SimulatedAnnealing::States::alternate] / (double)argmap::population_size * 100.0 << std::endl;
+				std::cout << "  Alternate_elite = " << (double)state_count[pushGP::SimulatedAnnealing::States::alternate_elite] / (double)argmap::population_size * 100.0 << std::endl;
 				std::cout << "  Cloan = " << (double)state_count[pushGP::SimulatedAnnealing::States::cloan] / (double)argmap::population_size * 100.0 << std::endl;
 				std::cout << "  Mutate = " << (double)state_count[pushGP::SimulatedAnnealing::States::mutate] / (double)argmap::population_size * 100.0 << std::endl;
 				std::cout << "  Regenerate = " << (double)state_count[pushGP::SimulatedAnnealing::States::regenerate] / (double)argmap::population_size * 100.0 << std::endl;
