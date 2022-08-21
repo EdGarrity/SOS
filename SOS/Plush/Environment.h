@@ -57,8 +57,19 @@ namespace Plush
 
 			//running_state = Idle;
 
-			enable_function("EXEC.ENABLE*INSTRUCTION");
-			enable_function("EXEC.ENABLE*INSTRUCTIONS");
+			if (domain::argmap::static_instruction_set)
+			{
+				int num_of_instructions = Plush::static_initializer.number_of_functions();
+
+				for (int n = 0; n < num_of_instructions; n++)
+					enable_function(n);
+			}
+
+			else
+			{
+				enable_function("EXEC.ENABLE*INSTRUCTION");
+				enable_function("EXEC.ENABLE*INSTRUCTIONS");
+			}
 		}
 
 		// Pointer to input & output data
@@ -238,7 +249,8 @@ namespace Plush
 			//KnownInstructionsMap[static_initializer.get_function_index(function_name)] = false;
 			//KnownInstructionsMap[function_name] = false;
 
-			Func2CodeMap.erase(function_name);
+			if (!domain::argmap::static_instruction_set)
+				Func2CodeMap.erase(function_name);
 		}
 
 		void enable_function(unsigned long function_index)
@@ -255,12 +267,15 @@ namespace Plush
 			//KnownInstructionsMap.erase(static_initializer.get_function_name(function_index));
 			//KnownInstructionsMap[static_initializer.get_function_name(function_index)] = false;
 
-			Instruction* pInstruction = static_initializer.get_function(function_index);
-
-			if (pInstruction != nullptr)
+			if (!domain::argmap::static_instruction_set)
 			{
-				std::string function_name = pInstruction->to_string();
-				Func2CodeMap.erase(function_name);
+				Instruction* pInstruction = static_initializer.get_function(function_index);
+
+				if (pInstruction != nullptr)
+				{
+					std::string function_name = pInstruction->to_string();
+					Func2CodeMap.erase(function_name);
+				}
 			}
 		}
 

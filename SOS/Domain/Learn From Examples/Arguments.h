@@ -98,6 +98,9 @@ namespace domain
 		// Threshold fpr cutting the merge between any two clusters.  Used to count the number of clusters that differ on at least the threshold amount of the training cases
 		const double cluster_break_threshold = 0.1;
 
+		// Dynamic instruction set - Can Push programs add and delete instructions from the Piush Instruction set?
+		const bool static_instruction_set = true;
+
 		//// Date range for training
 		//const long int training_start_index = 0;
 		//const long int training_end_index = 9;
