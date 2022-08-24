@@ -98,6 +98,9 @@ namespace domain
 		// Threshold fpr cutting the merge between any two clusters.  Used to count the number of clusters that differ on at least the threshold amount of the training cases
 		const double cluster_break_threshold = 0.1;
 
+		// Dynamic instruction set - Can Push programs add and delete instructions from the Piush Instruction set?
+		const bool static_instruction_set = true;
+
 		//// Date range for training
 		//const long int training_start_index = 0;
 		//const long int training_end_index = 9;
@@ -170,29 +173,35 @@ namespace domain
 		const double heat_up_rate = 0.10;
 		const double cool_down_rate = 0.10;
 		const double stalled_delta = 0.005;
-		const int stalled_count_trigger = 10;
+		const int stalled_count_trigger = 20;
 		const int cool_down_period = 25;
 
-		const double probability_of_alternation_at_minimum_tempareture = 0.8;
-		const double probability_of_alternation_at_mid_tempareture = 0.45;
-		const double probability_of_alternation_at_maximum_tempareture = 0.0;
+		const double probability_of_alternation_at_minimum_tempareture = 0.70;
+		const double probability_of_alternation_at_mid_tempareture = 0.60;
+		const double probability_of_alternation_at_maximum_tempareture = 0.50;
 		const double probability_of_alternation_slope_1 = probability_of_alternation_at_mid_tempareture - probability_of_alternation_at_minimum_tempareture;
 		const double probability_of_alternation_slope_2 = probability_of_alternation_at_maximum_tempareture - probability_of_alternation_at_mid_tempareture;
 
+		const double probability_of_alternation_elite_at_minimum_tempareture = 0.70;
+		const double probability_of_alternation_elite_at_mid_tempareture = 0.45;
+		const double probability_of_alternation_elite_at_maximum_tempareture = 0.0;
+		const double probability_of_alternation_elite_slope_1 = probability_of_alternation_elite_at_mid_tempareture - probability_of_alternation_elite_at_minimum_tempareture;
+		const double probability_of_alternation_elite_slope_2 = probability_of_alternation_elite_at_maximum_tempareture - probability_of_alternation_elite_at_mid_tempareture;
+
 		const double probability_of_mutation_at_minimum_tempareture = 0.10;
-		const double probability_of_mutation_at_mid_tempareture = 1.0;
-		const double probability_of_mutation_at_maximum_tempareture = 0.0;
+		const double probability_of_mutation_at_mid_tempareture = 0.20;
+		const double probability_of_mutation_at_maximum_tempareture = 0.50;
 		const double probability_of_mutation_slope_1 = probability_of_mutation_at_mid_tempareture - probability_of_mutation_at_minimum_tempareture;
 		const double probability_of_mutation_slope_2 = probability_of_mutation_at_maximum_tempareture - probability_of_mutation_at_mid_tempareture;
 
-		const double probability_of_cloaning_at_minimum_tempareture = 0.09;
-		const double probability_of_cloaning_at_mid_tempareture = 0.0;
-		const double probability_of_cloaning_at_maximum_tempareture = 0.0;
+		const double probability_of_cloaning_at_minimum_tempareture = 0.10;
+		const double probability_of_cloaning_at_mid_tempareture = 0.10;
+		const double probability_of_cloaning_at_maximum_tempareture = 0.10;
 		const double probability_of_cloaning_slope_1 = probability_of_cloaning_at_mid_tempareture - probability_of_cloaning_at_minimum_tempareture;
 		const double probability_of_cloaning_slope_2 = probability_of_cloaning_at_maximum_tempareture - probability_of_cloaning_at_mid_tempareture;
 
-		const double probability_of_regeneraton_at_minimum_tempareture = 0.0;
-		const double probability_of_regeneraton_at_mid_tempareture = 0.50;
+		const double probability_of_regeneraton_at_minimum_tempareture = 0.00;
+		const double probability_of_regeneraton_at_mid_tempareture = 0.00;
 		const double probability_of_regeneraton_at_maximum_tempareture = 1.0;
 		const double probability_of_regeneraton_slope_1 = probability_of_regeneraton_at_mid_tempareture - probability_of_regeneraton_at_minimum_tempareture;
 		const double probability_of_regeneraton_slope_2 = probability_of_regeneraton_at_maximum_tempareture - probability_of_regeneraton_at_mid_tempareture;

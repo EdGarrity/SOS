@@ -52,7 +52,8 @@ namespace Plush
 	{
 		long n = _env.pop<long>();	// Instruction index
 
-		_env.disable_function(n);
+		if (!domain::argmap::static_instruction_set)
+			_env.disable_function(n);
 
 		return 1;
 	}

@@ -130,57 +130,60 @@ namespace pushGP
 
 		genome.clear();
 
-		// Include knowledge of some instrcutions in the genome.
-		atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.OUT"));
-		atom.type = Plush::Atom::AtomType::integer;
-		genome.push(atom);
-
-		atom.instruction_name = "EXEC.ENABLE*INSTRUCTION";
-		atom.type = Plush::Atom::AtomType::ins;
-		genome.push(atom);
-
-		atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.INALLREV"));
-		atom.type = Plush::Atom::AtomType::integer;
-		genome.push(atom);
-
-		atom.instruction_name = "EXEC.ENABLE*INSTRUCTION";
-		atom.type = Plush::Atom::AtomType::ins;
-		genome.push(atom);
-
-		atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.INALL"));
-		atom.type = Plush::Atom::AtomType::integer;
-		genome.push(atom);
-
-		atom.instruction_name = "EXEC.ENABLE*INSTRUCTION";
-		atom.type = Plush::Atom::AtomType::ins;
-		genome.push(atom);
-
-		atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.IN"));
-		atom.type = Plush::Atom::AtomType::integer;
-		genome.push(atom);
-
-		atom.instruction_name = "EXEC.ENABLE*INSTRUCTION";
-		atom.type = Plush::Atom::AtomType::ins;
-		genome.push(atom);
-
-		int num_of_instructions = Utilities::random_integer(Plush::static_initializer.number_of_functions() * 4);
-
-		for (int n = 0; n < num_of_instructions; n++)
+		if (!domain::argmap::static_instruction_set)
 		{
-			int r = Utilities::random_integer(0, std::numeric_limits<int>::max());
-
-			atom.instruction_name = std::to_string(r);
+			// Include knowledge of some instrcutions in the genome.
+			atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.OUT"));
 			atom.type = Plush::Atom::AtomType::integer;
 			genome.push(atom);
+
+			atom.instruction_name = "EXEC.ENABLE*INSTRUCTION";
+			atom.type = Plush::Atom::AtomType::ins;
+			genome.push(atom);
+
+			atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.INALLREV"));
+			atom.type = Plush::Atom::AtomType::integer;
+			genome.push(atom);
+
+			atom.instruction_name = "EXEC.ENABLE*INSTRUCTION";
+			atom.type = Plush::Atom::AtomType::ins;
+			genome.push(atom);
+
+			atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.INALL"));
+			atom.type = Plush::Atom::AtomType::integer;
+			genome.push(atom);
+
+			atom.instruction_name = "EXEC.ENABLE*INSTRUCTION";
+			atom.type = Plush::Atom::AtomType::ins;
+			genome.push(atom);
+
+			atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.IN"));
+			atom.type = Plush::Atom::AtomType::integer;
+			genome.push(atom);
+
+			atom.instruction_name = "EXEC.ENABLE*INSTRUCTION";
+			atom.type = Plush::Atom::AtomType::ins;
+			genome.push(atom);
+
+			int num_of_instructions = Utilities::random_integer(Plush::static_initializer.number_of_functions() * 4);
+
+			for (int n = 0; n < num_of_instructions; n++)
+			{
+				int r = Utilities::random_integer(0, std::numeric_limits<int>::max());
+
+				atom.instruction_name = std::to_string(r);
+				atom.type = Plush::Atom::AtomType::integer;
+				genome.push(atom);
+			}
+
+			atom.instruction_name = toString(num_of_instructions);
+			atom.type = Plush::Atom::AtomType::integer;
+			genome.push(atom);
+
+			atom.instruction_name = "EXEC.ENABLE*INSTRUCTIONS";
+			atom.type = Plush::Atom::AtomType::ins;
+			genome.push(atom);
 		}
-
-		atom.instruction_name = toString(num_of_instructions);
-		atom.type = Plush::Atom::AtomType::integer;
-		genome.push(atom);
-
-		atom.instruction_name = "EXEC.ENABLE*INSTRUCTIONS";
-		atom.type = Plush::Atom::AtomType::ins;
-		genome.push(atom);
 
 		while (--n > 0)
 		{
