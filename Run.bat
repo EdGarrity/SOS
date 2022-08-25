@@ -1,3 +1,3 @@
 :Loop
-x64\Release\SOS
+x64\Release\SOS >> sos.txt
 Goto Loop

@@ -1694,8 +1694,18 @@ namespace domain
 				std::cout << "Create Population Agents" << std::endl;
 				agents_created = make_pop_agents(env, load_pop_agents());
 
-				//if (agents_created > argmap::population_size / 2)
-				//	generation_number = 0;
+				if (agents_created > argmap::population_size / 2)
+				{
+					run_number = 1;
+					generation_number = 1;
+					best_individual_score = std::numeric_limits<double>::max();
+					best_individual_error = std::numeric_limits<double>::max();
+					prev_best_individual_error = std::numeric_limits<double>::max();
+					sa.set_temperature(0);
+					cool_down_count = argmap::cool_down_period;
+					stalled_count = argmap::stalled_count_trigger;
+					include_best_individual_in_breeding_pool = true;
+				}
 
 				int best_individual = -1;
 				//double best_individual_score = std::numeric_limits<double>::max();
