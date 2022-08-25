@@ -61,7 +61,7 @@ namespace domain
 		const unsigned long population_size = 1000; // 20000; // 200'000;
 
 		// The maximum number of generations to run GP.
-		const unsigned long max_generations_in_one_session = 10000;
+		const unsigned long max_generations_in_one_session = 300;
 
 		//		;; The limit for the number of point(instruction) evaluations to
 		//		;; execute during the run.
