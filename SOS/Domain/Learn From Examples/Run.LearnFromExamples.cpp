@@ -148,7 +148,7 @@ namespace domain
 
 			delete sqlcmd_get_last_saved_run_number;
 
-			return n;
+			return n < 1000000 ? n : 0;
 		}
 
 		// Purpose: 
@@ -1654,7 +1654,7 @@ namespace domain
 				con.connect(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
 
 				// Load data from most recent database record
-				unsigned int run_number = get_last_saved_run_number() + 1;
+				unsigned int run_number = get_last_saved_run_number();
 				unsigned int generation_number = get_last_saved_generation_number() + 1;
 				double best_individual_score = get_last_best_individual_score(std::numeric_limits<double>::max());
 				double best_individual_error = get_last_best_individual_error(std::numeric_limits<double>::max());
@@ -1663,6 +1663,9 @@ namespace domain
 				int cool_down_count = get_last_cool_down_count(argmap::cool_down_period);
 				bool include_best_individual_in_breeding_pool = get_include_best_individual_in_breeding_pool(true);
 								
+				sa.set_cold();
+				sa.set_temperature(get_last_saved_temperature(sa.get_temperature()));
+
 				// If last run found a solution or exhausted the number of generations, 
 				// then clear the individuals table to force the creation of new individuals
 				// and reset to start a new run
@@ -1671,6 +1674,12 @@ namespace domain
 					run_number++;
 					generation_number = 1;
 					best_individual_score = std::numeric_limits<double>::max();
+					best_individual_error = std::numeric_limits<double>::max();
+					prev_best_individual_error = std::numeric_limits<double>::max();
+					sa.set_temperature(0);
+					cool_down_count = argmap::cool_down_period;
+					stalled_count = argmap::stalled_count_trigger;
+					include_best_individual_in_breeding_pool = true;
 					clear_individuals_table();
 				}
 
@@ -1684,9 +1693,6 @@ namespace domain
 				// Load population.  Create more if not enough loaded.
 				std::cout << "Create Population Agents" << std::endl;
 				agents_created = make_pop_agents(env, load_pop_agents());
-
-				sa.set_cold();
-				sa.set_temperature(get_last_saved_temperature(sa.get_temperature()));
 
 				//if (agents_created > argmap::population_size / 2)
 				//	generation_number = 0;
