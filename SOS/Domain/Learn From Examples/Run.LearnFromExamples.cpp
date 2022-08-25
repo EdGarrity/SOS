@@ -148,7 +148,7 @@ namespace domain
 
 			delete sqlcmd_get_last_saved_run_number;
 
-			return n < 1000000 ? n : 0;
+			return ((n >= 0) || (n < 1000000)) ? n : 0;
 		}
 
 		// Purpose: 
@@ -187,7 +187,7 @@ namespace domain
 
 			delete sqlcmd_get_last_saved_generation_number;
 
-			return n;
+			return ((n >= 0) || (n < 1000000)) ? n : 0;
 		}
 
 		// Purpose: 
