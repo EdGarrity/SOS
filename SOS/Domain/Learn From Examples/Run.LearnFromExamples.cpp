@@ -1696,7 +1696,7 @@ namespace domain
 
 				if (agents_created > argmap::population_size / 2)
 				{
-					run_number = 1;
+//					run_number = 1;
 					generation_number = 1;
 					best_individual_score = std::numeric_limits<double>::max();
 					best_individual_error = std::numeric_limits<double>::max();
