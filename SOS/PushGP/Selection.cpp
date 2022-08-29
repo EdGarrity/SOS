@@ -282,4 +282,37 @@ namespace pushGP
 		return std::make_tuple(median_absolute_deviation, chosen);
 	}
 
-}
+	// Purpose: 
+	//   Returns an individual that does within epsilon of the best on the fitness cases when 
+	//   considered one at a time in random order.  The selection process is aplified by using 
+	//   a random saple of the training cases instead of the full set.
+	//
+	// References:
+	//   [1] Thomas Helmuth and Lee Spector. 2020. Explaining and Exploiting the Advantages of 
+	//       Down-sampled Lexicase Selection. In Artificial Life Conference Proceedings.. MIT 
+	//       Press, 341–349. https://doi.org/10.1162/isal_a_00334
+	//   [2] Thomas Helmuthand Lee Spector. 2021. Problem - solving benefits of downsampled 
+	//       lexicase selection.Artificial Life(2021).In press.
+	//
+	// Parameters:
+	//   numer_of_example_cases - Number of examples
+	//   index_of_other_parent - Index of other selected parent
+	//   black_list - Individuals not to consider
+	//   training_case_min_error
+	// 
+	// Return value:
+	//   Index of parent selected
+	//
+	// Side Effects:
+	//   None
+	//
+	// Thread Safe:
+	//   Yes
+	//
+	// Remarks:
+	//
+	std::tuple<double, unsigned int> downsample_epsilon_lexicase_selection(int _number_of_example_cases,
+			std::unordered_set<int> _black_list,
+			combinable<pushGP::globals::Training_case_min_error_type>& _training_case_min_error)
+	{
+	}

@@ -407,9 +407,14 @@ namespace domain
 		//const unsigned int error_ratio_cap_for_retaining_parents = 0.2;
 
 		//	:parent - selection : lexicase
-		//	;; The parent selection method.Options include : tournament, : lexicase, : epsilon - lexicase,
-		//	;; :elitegroup - lexicase, : uniform, : leaky - lexicase, : random - threshold - lexicase,
-		//	;; :random - toggle - lexicase, : randomly - truncated - lexicase, : novelty - search
+		//	;; The parent selection method.Options include : epsilon_lexicase, downsampled_lexicase
+		enum PerentSelection { epsilon_lexicase, downsampled_lexicase };
+		const PerentSelection parent_selection = downsampled_lexicase;
+
+		//:downsample - factor 1
+		//	;; Determines the proportion of cases to use when using downsampled lexicase.
+		//	;; When set to 1, has no effect.Should be in the range(0, 1].
+		const double downsample_factor = 1.0;
 
 		//	: epsilon - lexicase - epsilon nil
 		//	;; When parent - selection is : epsilon - lexicase,
