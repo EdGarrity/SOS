@@ -1,0 +1,5323 @@
+CPU Temperature is 0
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Load Example Cases
+training case n = 0
+training case n = 1
+training case n = 2
+training case n = 3
+training case n = 4
+training case n = 5
+training case n = 6
+training case n = 7
+training case n = 8
+training case n = 9
+training case n = 10
+training case n = 11
+training case n = 12
+training case n = 13
+training case n = 14
+training case n = 15
+training case n = 16
+training case n = 17
+training case n = 18
+training case n = 19
+training case n = 20
+training case n = 21
+training case n = 22
+training case n = 23
+training case n = 24
+training case n = 25
+training case n = 26
+training case n = 27
+training case n = 28
+training case n = 29
+training case n = 30
+training case n = 31
+training case n = 32
+training case n = 33
+training case n = 34
+training case n = 35
+training case n = 36
+training case n = 37
+training case n = 38
+training case n = 39
+training case n = 40
+training case n = 41
+training case n = 42
+training case n = 43
+training case n = 44
+training case n = 45
+training case n = 46
+training case n = 47
+training case n = 48
+training case n = 49
+training case n = 50
+training case n = 51
+training case n = 52
+training case n = 53
+training case n = 54
+training case n = 55
+training case n = 56
+training case n = 57
+training case n = 58
+training case n = 59
+training case n = 60
+training case n = 61
+training case n = 62
+training case n = 63
+training case n = 64
+training case n = 65
+training case n = 66
+training case n = 67
+training case n = 68
+training case n = 69
+training case n = 70
+training case n = 71
+training case n = 72
+training case n = 73
+training case n = 74
+training case n = 75
+training case n = 76
+training case n = 77
+training case n = 78
+training case n = 79
+training case n = 80
+training case n = 81
+training case n = 82
+training case n = 83
+training case n = 84
+training case n = 85
+training case n = 86
+training case n = 87
+training case n = 88
+training case n = 89
+training case n = 90
+training case n = 91
+training case n = 92
+training case n = 93
+training case n = 94
+training case n = 95
+training case n = 96
+training case n = 97
+training case n = 98
+training case n = 99
+test case n = 0
+test case n = 1
+test case n = 2
+test case n = 3
+test case n = 4
+test case n = 5
+test case n = 6
+test case n = 7
+test case n = 8
+test case n = 9
+Create Population Agents
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 1
+Session 0
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=99300
+wait_for_queue_to_empty,queue_size=98738
+wait_for_queue_to_empty,queue_size=98220
+wait_for_queue_to_empty,queue_size=97665
+wait_for_queue_to_empty,queue_size=97169
+wait_for_queue_to_empty,queue_size=96612
+wait_for_queue_to_empty,queue_size=96087
+wait_for_queue_to_empty,queue_size=95534
+wait_for_queue_to_empty,queue_size=95024
+wait_for_queue_to_empty,queue_size=94495
+wait_for_queue_to_empty,queue_size=94008
+wait_for_queue_to_empty,queue_size=93434
+wait_for_queue_to_empty,queue_size=92967
+wait_for_queue_to_empty,queue_size=92392
+wait_for_queue_to_empty,queue_size=91865
+wait_for_queue_to_empty,queue_size=91304
+wait_for_queue_to_empty,queue_size=90796
+wait_for_queue_to_empty,queue_size=90279
+wait_for_queue_to_empty,queue_size=89735
+wait_for_queue_to_empty,queue_size=89182
+wait_for_queue_to_empty,queue_size=88586
+wait_for_queue_to_empty,queue_size=88029
+wait_for_queue_to_empty,queue_size=87451
+wait_for_queue_to_empty,queue_size=86963
+wait_for_queue_to_empty,queue_size=86392
+wait_for_queue_to_empty,queue_size=85877
+wait_for_queue_to_empty,queue_size=85338
+wait_for_queue_to_empty,queue_size=84822
+wait_for_queue_to_empty,queue_size=84249
+wait_for_queue_to_empty,queue_size=83683
+wait_for_queue_to_empty,queue_size=83037
+wait_for_queue_to_empty,queue_size=82440
+wait_for_queue_to_empty,queue_size=81935
+wait_for_queue_to_empty,queue_size=81358
+wait_for_queue_to_empty,queue_size=80824
+wait_for_queue_to_empty,queue_size=80276
+wait_for_queue_to_empty,queue_size=79739
+wait_for_queue_to_empty,queue_size=79151
+wait_for_queue_to_empty,queue_size=78601
+wait_for_queue_to_empty,queue_size=78066
+wait_for_queue_to_empty,queue_size=77550
+wait_for_queue_to_empty,queue_size=77043
+wait_for_queue_to_empty,queue_size=76473
+wait_for_queue_to_empty,queue_size=75993
+wait_for_queue_to_empty,queue_size=75444
+wait_for_queue_to_empty,queue_size=74927
+wait_for_queue_to_empty,queue_size=74389
+wait_for_queue_to_empty,queue_size=73885
+wait_for_queue_to_empty,queue_size=73306
+wait_for_queue_to_empty,queue_size=72769
+wait_for_queue_to_empty,queue_size=72279
+wait_for_queue_to_empty,queue_size=71740
+wait_for_queue_to_empty,queue_size=71155
+wait_for_queue_to_empty,queue_size=70562
+wait_for_queue_to_empty,queue_size=70040
+wait_for_queue_to_empty,queue_size=69458
+wait_for_queue_to_empty,queue_size=68999
+wait_for_queue_to_empty,queue_size=68387
+wait_for_queue_to_empty,queue_size=67876
+wait_for_queue_to_empty,queue_size=67307
+wait_for_queue_to_empty,queue_size=66772
+wait_for_queue_to_empty,queue_size=66208
+wait_for_queue_to_empty,queue_size=65659
+wait_for_queue_to_empty,queue_size=65160
+wait_for_queue_to_empty,queue_size=64604
+wait_for_queue_to_empty,queue_size=64088
+wait_for_queue_to_empty,queue_size=63470
+wait_for_queue_to_empty,queue_size=62928
+wait_for_queue_to_empty,queue_size=62391
+wait_for_queue_to_empty,queue_size=61901
+wait_for_queue_to_empty,queue_size=61282
+wait_for_queue_to_empty,queue_size=60760
+wait_for_queue_to_empty,queue_size=60204
+wait_for_queue_to_empty,queue_size=59631
+wait_for_queue_to_empty,queue_size=59143
+wait_for_queue_to_empty,queue_size=58558
+wait_for_queue_to_empty,queue_size=58069
+wait_for_queue_to_empty,queue_size=57503
+wait_for_queue_to_empty,queue_size=57026
+wait_for_queue_to_empty,queue_size=56416
+wait_for_queue_to_empty,queue_size=55928
+wait_for_queue_to_empty,queue_size=55342
+wait_for_queue_to_empty,queue_size=54824
+wait_for_queue_to_empty,queue_size=54261
+wait_for_queue_to_empty,queue_size=53717
+wait_for_queue_to_empty,queue_size=53168
+wait_for_queue_to_empty,queue_size=52592
+wait_for_queue_to_empty,queue_size=52071
+wait_for_queue_to_empty,queue_size=51535
+wait_for_queue_to_empty,queue_size=51023
+wait_for_queue_to_empty,queue_size=50475
+wait_for_queue_to_empty,queue_size=49986
+wait_for_queue_to_empty,queue_size=49404
+wait_for_queue_to_empty,queue_size=48900
+wait_for_queue_to_empty,queue_size=48272
+wait_for_queue_to_empty,queue_size=47690
+wait_for_queue_to_empty,queue_size=47051
+wait_for_queue_to_empty,queue_size=46509
+wait_for_queue_to_empty,queue_size=46006
+wait_for_queue_to_empty,queue_size=45418
+wait_for_queue_to_empty,queue_size=44938
+wait_for_queue_to_empty,queue_size=44336
+wait_for_queue_to_empty,queue_size=43760
+wait_for_queue_to_empty,queue_size=43206
+wait_for_queue_to_empty,queue_size=42636
+wait_for_queue_to_empty,queue_size=42152
+wait_for_queue_to_empty,queue_size=41598
+wait_for_queue_to_empty,queue_size=41074
+wait_for_queue_to_empty,queue_size=40510
+wait_for_queue_to_empty,queue_size=40023
+wait_for_queue_to_empty,queue_size=39498
+wait_for_queue_to_empty,queue_size=39000
+wait_for_queue_to_empty,queue_size=38391
+wait_for_queue_to_empty,queue_size=37870
+wait_for_queue_to_empty,queue_size=37317
+wait_for_queue_to_empty,queue_size=36852
+wait_for_queue_to_empty,queue_size=36277
+wait_for_queue_to_empty,queue_size=35750
+wait_for_queue_to_empty,queue_size=35230
+wait_for_queue_to_empty,queue_size=34717
+wait_for_queue_to_empty,queue_size=34153
+wait_for_queue_to_empty,queue_size=33611
+wait_for_queue_to_empty,queue_size=33089
+wait_for_queue_to_empty,queue_size=32517
+wait_for_queue_to_empty,queue_size=32046
+wait_for_queue_to_empty,queue_size=31470
+wait_for_queue_to_empty,queue_size=30973
+wait_for_queue_to_empty,queue_size=30398
+wait_for_queue_to_empty,queue_size=29881
+wait_for_queue_to_empty,queue_size=29299
+wait_for_queue_to_empty,queue_size=28736
+wait_for_queue_to_empty,queue_size=28119
+wait_for_queue_to_empty,queue_size=27518
+wait_for_queue_to_empty,queue_size=27031
+wait_for_queue_to_empty,queue_size=26438
+wait_for_queue_to_empty,queue_size=25963
+wait_for_queue_to_empty,queue_size=25402
+wait_for_queue_to_empty,queue_size=24924
+wait_for_queue_to_empty,queue_size=24301
+wait_for_queue_to_empty,queue_size=23771
+wait_for_queue_to_empty,queue_size=23244
+wait_for_queue_to_empty,queue_size=22748
+wait_for_queue_to_empty,queue_size=22194
+wait_for_queue_to_empty,queue_size=21685
+wait_for_queue_to_empty,queue_size=21143
+wait_for_queue_to_empty,queue_size=20603
+wait_for_queue_to_empty,queue_size=20135
+wait_for_queue_to_empty,queue_size=19517
+wait_for_queue_to_empty,queue_size=18997
+wait_for_queue_to_empty,queue_size=18428
+wait_for_queue_to_empty,queue_size=17937
+wait_for_queue_to_empty,queue_size=17403
+wait_for_queue_to_empty,queue_size=16912
+wait_for_queue_to_empty,queue_size=16394
+wait_for_queue_to_empty,queue_size=15872
+wait_for_queue_to_empty,queue_size=15336
+wait_for_queue_to_empty,queue_size=14832
+wait_for_queue_to_empty,queue_size=14267
+wait_for_queue_to_empty,queue_size=13775
+wait_for_queue_to_empty,queue_size=13153
+wait_for_queue_to_empty,queue_size=12606
+wait_for_queue_to_empty,queue_size=12131
+wait_for_queue_to_empty,queue_size=11575
+wait_for_queue_to_empty,queue_size=11053
+wait_for_queue_to_empty,queue_size=10517
+wait_for_queue_to_empty,queue_size=10042
+wait_for_queue_to_empty,queue_size=9461
+wait_for_queue_to_empty,queue_size=8925
+wait_for_queue_to_empty,queue_size=8389
+wait_for_queue_to_empty,queue_size=7855
+wait_for_queue_to_empty,queue_size=7261
+wait_for_queue_to_empty,queue_size=6685
+wait_for_queue_to_empty,queue_size=6151
+wait_for_queue_to_empty,queue_size=5567
+wait_for_queue_to_empty,queue_size=5043
+wait_for_queue_to_empty,queue_size=4497
+wait_for_queue_to_empty,queue_size=3964
+wait_for_queue_to_empty,queue_size=3392
+wait_for_queue_to_empty,queue_size=2878
+wait_for_queue_to_empty,queue_size=2287
+wait_for_queue_to_empty,queue_size=1711
+wait_for_queue_to_empty,queue_size=1198
+wait_for_queue_to_empty,queue_size=666
+wait_for_queue_to_empty,queue_size=191
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 45.9
+  Alternate_elite = 43.6
+  Cloan = 4.9
+  Mutate = 5.6
+  Regenerate = 0
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 549
+..........
+
+test_case_error = 0.7
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 2
+Session 1
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=99065
+wait_for_queue_to_empty,queue_size=98270
+wait_for_queue_to_empty,queue_size=97623
+wait_for_queue_to_empty,queue_size=96894
+wait_for_queue_to_empty,queue_size=96120
+wait_for_queue_to_empty,queue_size=95455
+wait_for_queue_to_empty,queue_size=94771
+wait_for_queue_to_empty,queue_size=94049
+wait_for_queue_to_empty,queue_size=93322
+wait_for_queue_to_empty,queue_size=92692
+wait_for_queue_to_empty,queue_size=91969
+wait_for_queue_to_empty,queue_size=91159
+wait_for_queue_to_empty,queue_size=90432
+wait_for_queue_to_empty,queue_size=89749
+wait_for_queue_to_empty,queue_size=89015
+wait_for_queue_to_empty,queue_size=88206
+wait_for_queue_to_empty,queue_size=87510
+wait_for_queue_to_empty,queue_size=86798
+wait_for_queue_to_empty,queue_size=86054
+wait_for_queue_to_empty,queue_size=85312
+wait_for_queue_to_empty,queue_size=84596
+wait_for_queue_to_empty,queue_size=83923
+wait_for_queue_to_empty,queue_size=83057
+wait_for_queue_to_empty,queue_size=82184
+wait_for_queue_to_empty,queue_size=81370
+wait_for_queue_to_empty,queue_size=80649
+wait_for_queue_to_empty,queue_size=79925
+wait_for_queue_to_empty,queue_size=79104
+wait_for_queue_to_empty,queue_size=78393
+wait_for_queue_to_empty,queue_size=77689
+wait_for_queue_to_empty,queue_size=76955
+wait_for_queue_to_empty,queue_size=76145
+wait_for_queue_to_empty,queue_size=75431
+wait_for_queue_to_empty,queue_size=74651
+wait_for_queue_to_empty,queue_size=73987
+wait_for_queue_to_empty,queue_size=73216
+wait_for_queue_to_empty,queue_size=72489
+wait_for_queue_to_empty,queue_size=71797
+wait_for_queue_to_empty,queue_size=70994
+wait_for_queue_to_empty,queue_size=70207
+wait_for_queue_to_empty,queue_size=69510
+wait_for_queue_to_empty,queue_size=68858
+wait_for_queue_to_empty,queue_size=68069
+wait_for_queue_to_empty,queue_size=67296
+wait_for_queue_to_empty,queue_size=66605
+wait_for_queue_to_empty,queue_size=65943
+wait_for_queue_to_empty,queue_size=65195
+wait_for_queue_to_empty,queue_size=64452
+wait_for_queue_to_empty,queue_size=63678
+wait_for_queue_to_empty,queue_size=62980
+wait_for_queue_to_empty,queue_size=62211
+wait_for_queue_to_empty,queue_size=61402
+wait_for_queue_to_empty,queue_size=60641
+wait_for_queue_to_empty,queue_size=59897
+wait_for_queue_to_empty,queue_size=59115
+wait_for_queue_to_empty,queue_size=58320
+wait_for_queue_to_empty,queue_size=57603
+wait_for_queue_to_empty,queue_size=56945
+wait_for_queue_to_empty,queue_size=56115
+wait_for_queue_to_empty,queue_size=55410
+wait_for_queue_to_empty,queue_size=54699
+wait_for_queue_to_empty,queue_size=54009
+wait_for_queue_to_empty,queue_size=53201
+wait_for_queue_to_empty,queue_size=52450
+wait_for_queue_to_empty,queue_size=51753
+wait_for_queue_to_empty,queue_size=51041
+wait_for_queue_to_empty,queue_size=50345
+wait_for_queue_to_empty,queue_size=49657
+wait_for_queue_to_empty,queue_size=48935
+wait_for_queue_to_empty,queue_size=48116
+wait_for_queue_to_empty,queue_size=47337
+wait_for_queue_to_empty,queue_size=46571
+wait_for_queue_to_empty,queue_size=45884
+wait_for_queue_to_empty,queue_size=45116
+wait_for_queue_to_empty,queue_size=44423
+wait_for_queue_to_empty,queue_size=43695
+wait_for_queue_to_empty,queue_size=42969
+wait_for_queue_to_empty,queue_size=42202
+wait_for_queue_to_empty,queue_size=41466
+wait_for_queue_to_empty,queue_size=40871
+wait_for_queue_to_empty,queue_size=40127
+wait_for_queue_to_empty,queue_size=39486
+wait_for_queue_to_empty,queue_size=38804
+wait_for_queue_to_empty,queue_size=37962
+wait_for_queue_to_empty,queue_size=37212
+wait_for_queue_to_empty,queue_size=36471
+wait_for_queue_to_empty,queue_size=35863
+wait_for_queue_to_empty,queue_size=35153
+wait_for_queue_to_empty,queue_size=34400
+wait_for_queue_to_empty,queue_size=33648
+wait_for_queue_to_empty,queue_size=32969
+wait_for_queue_to_empty,queue_size=32238
+wait_for_queue_to_empty,queue_size=31519
+wait_for_queue_to_empty,queue_size=30922
+wait_for_queue_to_empty,queue_size=30212
+wait_for_queue_to_empty,queue_size=29485
+wait_for_queue_to_empty,queue_size=28814
+wait_for_queue_to_empty,queue_size=28021
+wait_for_queue_to_empty,queue_size=27202
+wait_for_queue_to_empty,queue_size=26422
+wait_for_queue_to_empty,queue_size=25708
+wait_for_queue_to_empty,queue_size=24954
+wait_for_queue_to_empty,queue_size=24137
+wait_for_queue_to_empty,queue_size=23398
+wait_for_queue_to_empty,queue_size=22707
+wait_for_queue_to_empty,queue_size=22017
+wait_for_queue_to_empty,queue_size=21238
+wait_for_queue_to_empty,queue_size=20509
+wait_for_queue_to_empty,queue_size=19840
+wait_for_queue_to_empty,queue_size=19033
+wait_for_queue_to_empty,queue_size=18289
+wait_for_queue_to_empty,queue_size=17551
+wait_for_queue_to_empty,queue_size=16863
+wait_for_queue_to_empty,queue_size=16116
+wait_for_queue_to_empty,queue_size=15389
+wait_for_queue_to_empty,queue_size=14675
+wait_for_queue_to_empty,queue_size=13938
+wait_for_queue_to_empty,queue_size=13129
+wait_for_queue_to_empty,queue_size=12409
+wait_for_queue_to_empty,queue_size=11796
+wait_for_queue_to_empty,queue_size=11017
+wait_for_queue_to_empty,queue_size=10261
+wait_for_queue_to_empty,queue_size=9577
+wait_for_queue_to_empty,queue_size=8909
+wait_for_queue_to_empty,queue_size=8103
+wait_for_queue_to_empty,queue_size=7362
+wait_for_queue_to_empty,queue_size=6605
+wait_for_queue_to_empty,queue_size=5896
+wait_for_queue_to_empty,queue_size=5088
+wait_for_queue_to_empty,queue_size=4369
+wait_for_queue_to_empty,queue_size=3649
+wait_for_queue_to_empty,queue_size=2985
+wait_for_queue_to_empty,queue_size=2263
+wait_for_queue_to_empty,queue_size=1459
+wait_for_queue_to_empty,queue_size=753
+wait_for_queue_to_empty,queue_size=63
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 43.2
+  Alternate_elite = 43.4
+  Cloan = 7.2
+  Mutate = 6.2
+  Regenerate = 0
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 426
+..........
+
+test_case_error = 1
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 3
+Session 2
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=98473
+wait_for_queue_to_empty,queue_size=97303
+wait_for_queue_to_empty,queue_size=96167
+wait_for_queue_to_empty,queue_size=95156
+wait_for_queue_to_empty,queue_size=94075
+wait_for_queue_to_empty,queue_size=93016
+wait_for_queue_to_empty,queue_size=91863
+wait_for_queue_to_empty,queue_size=90781
+wait_for_queue_to_empty,queue_size=89742
+wait_for_queue_to_empty,queue_size=88686
+wait_for_queue_to_empty,queue_size=87631
+wait_for_queue_to_empty,queue_size=86617
+wait_for_queue_to_empty,queue_size=85549
+wait_for_queue_to_empty,queue_size=84355
+wait_for_queue_to_empty,queue_size=83319
+wait_for_queue_to_empty,queue_size=82127
+wait_for_queue_to_empty,queue_size=80908
+wait_for_queue_to_empty,queue_size=79782
+wait_for_queue_to_empty,queue_size=78721
+wait_for_queue_to_empty,queue_size=77656
+wait_for_queue_to_empty,queue_size=76596
+wait_for_queue_to_empty,queue_size=75491
+wait_for_queue_to_empty,queue_size=74387
+wait_for_queue_to_empty,queue_size=73303
+wait_for_queue_to_empty,queue_size=72332
+wait_for_queue_to_empty,queue_size=71309
+wait_for_queue_to_empty,queue_size=70321
+wait_for_queue_to_empty,queue_size=69300
+wait_for_queue_to_empty,queue_size=68254
+wait_for_queue_to_empty,queue_size=67155
+wait_for_queue_to_empty,queue_size=66037
+wait_for_queue_to_empty,queue_size=65054
+wait_for_queue_to_empty,queue_size=64055
+wait_for_queue_to_empty,queue_size=62963
+wait_for_queue_to_empty,queue_size=61911
+wait_for_queue_to_empty,queue_size=60861
+wait_for_queue_to_empty,queue_size=59838
+wait_for_queue_to_empty,queue_size=58784
+wait_for_queue_to_empty,queue_size=57768
+wait_for_queue_to_empty,queue_size=56653
+wait_for_queue_to_empty,queue_size=55603
+wait_for_queue_to_empty,queue_size=54587
+wait_for_queue_to_empty,queue_size=53482
+wait_for_queue_to_empty,queue_size=52355
+wait_for_queue_to_empty,queue_size=51282
+wait_for_queue_to_empty,queue_size=50236
+wait_for_queue_to_empty,queue_size=49127
+wait_for_queue_to_empty,queue_size=47977
+wait_for_queue_to_empty,queue_size=46914
+wait_for_queue_to_empty,queue_size=45914
+wait_for_queue_to_empty,queue_size=44913
+wait_for_queue_to_empty,queue_size=43919
+wait_for_queue_to_empty,queue_size=42911
+wait_for_queue_to_empty,queue_size=41951
+wait_for_queue_to_empty,queue_size=40783
+wait_for_queue_to_empty,queue_size=39740
+wait_for_queue_to_empty,queue_size=38643
+wait_for_queue_to_empty,queue_size=37572
+wait_for_queue_to_empty,queue_size=36530
+wait_for_queue_to_empty,queue_size=35461
+wait_for_queue_to_empty,queue_size=34352
+wait_for_queue_to_empty,queue_size=33270
+wait_for_queue_to_empty,queue_size=32213
+wait_for_queue_to_empty,queue_size=31123
+wait_for_queue_to_empty,queue_size=30117
+wait_for_queue_to_empty,queue_size=28974
+wait_for_queue_to_empty,queue_size=27901
+wait_for_queue_to_empty,queue_size=26807
+wait_for_queue_to_empty,queue_size=25737
+wait_for_queue_to_empty,queue_size=24641
+wait_for_queue_to_empty,queue_size=23585
+wait_for_queue_to_empty,queue_size=22483
+wait_for_queue_to_empty,queue_size=21367
+wait_for_queue_to_empty,queue_size=20319
+wait_for_queue_to_empty,queue_size=19198
+wait_for_queue_to_empty,queue_size=18127
+wait_for_queue_to_empty,queue_size=17002
+wait_for_queue_to_empty,queue_size=16000
+wait_for_queue_to_empty,queue_size=14923
+wait_for_queue_to_empty,queue_size=13939
+wait_for_queue_to_empty,queue_size=12846
+wait_for_queue_to_empty,queue_size=11807
+wait_for_queue_to_empty,queue_size=10764
+wait_for_queue_to_empty,queue_size=9749
+wait_for_queue_to_empty,queue_size=8686
+wait_for_queue_to_empty,queue_size=7641
+wait_for_queue_to_empty,queue_size=6467
+wait_for_queue_to_empty,queue_size=5330
+wait_for_queue_to_empty,queue_size=4299
+wait_for_queue_to_empty,queue_size=3230
+wait_for_queue_to_empty,queue_size=2101
+wait_for_queue_to_empty,queue_size=1070
+wait_for_queue_to_empty,queue_size=25
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 35.2
+  Alternate_elite = 13.9
+  Cloan = 5.2
+  Mutate = 7.7
+  Regenerate = 38
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 113
+..........
+
+test_case_error = 0.7
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 4
+Session 3
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=98718
+wait_for_queue_to_empty,queue_size=97711
+wait_for_queue_to_empty,queue_size=96725
+wait_for_queue_to_empty,queue_size=95704
+wait_for_queue_to_empty,queue_size=94656
+wait_for_queue_to_empty,queue_size=93604
+wait_for_queue_to_empty,queue_size=92640
+wait_for_queue_to_empty,queue_size=91594
+wait_for_queue_to_empty,queue_size=90523
+wait_for_queue_to_empty,queue_size=89471
+wait_for_queue_to_empty,queue_size=88319
+wait_for_queue_to_empty,queue_size=87126
+wait_for_queue_to_empty,queue_size=86137
+wait_for_queue_to_empty,queue_size=85179
+wait_for_queue_to_empty,queue_size=84118
+wait_for_queue_to_empty,queue_size=83043
+wait_for_queue_to_empty,queue_size=81961
+wait_for_queue_to_empty,queue_size=80861
+wait_for_queue_to_empty,queue_size=79763
+wait_for_queue_to_empty,queue_size=78692
+wait_for_queue_to_empty,queue_size=77666
+wait_for_queue_to_empty,queue_size=76591
+wait_for_queue_to_empty,queue_size=75535
+wait_for_queue_to_empty,queue_size=74504
+wait_for_queue_to_empty,queue_size=73455
+wait_for_queue_to_empty,queue_size=72452
+wait_for_queue_to_empty,queue_size=71460
+wait_for_queue_to_empty,queue_size=70322
+wait_for_queue_to_empty,queue_size=69365
+wait_for_queue_to_empty,queue_size=68206
+wait_for_queue_to_empty,queue_size=67085
+wait_for_queue_to_empty,queue_size=66043
+wait_for_queue_to_empty,queue_size=65186
+wait_for_queue_to_empty,queue_size=64262
+wait_for_queue_to_empty,queue_size=63144
+wait_for_queue_to_empty,queue_size=62122
+wait_for_queue_to_empty,queue_size=60970
+wait_for_queue_to_empty,queue_size=59968
+wait_for_queue_to_empty,queue_size=58981
+wait_for_queue_to_empty,queue_size=57944
+wait_for_queue_to_empty,queue_size=56942
+wait_for_queue_to_empty,queue_size=55883
+wait_for_queue_to_empty,queue_size=54755
+wait_for_queue_to_empty,queue_size=53743
+wait_for_queue_to_empty,queue_size=52709
+wait_for_queue_to_empty,queue_size=51690
+wait_for_queue_to_empty,queue_size=50725
+wait_for_queue_to_empty,queue_size=49713
+wait_for_queue_to_empty,queue_size=48594
+wait_for_queue_to_empty,queue_size=47324
+wait_for_queue_to_empty,queue_size=46197
+wait_for_queue_to_empty,queue_size=45229
+wait_for_queue_to_empty,queue_size=44219
+wait_for_queue_to_empty,queue_size=43127
+wait_for_queue_to_empty,queue_size=42248
+wait_for_queue_to_empty,queue_size=41138
+wait_for_queue_to_empty,queue_size=40020
+wait_for_queue_to_empty,queue_size=38971
+wait_for_queue_to_empty,queue_size=37821
+wait_for_queue_to_empty,queue_size=36797
+wait_for_queue_to_empty,queue_size=35807
+wait_for_queue_to_empty,queue_size=34844
+wait_for_queue_to_empty,queue_size=33876
+wait_for_queue_to_empty,queue_size=32830
+wait_for_queue_to_empty,queue_size=31789
+wait_for_queue_to_empty,queue_size=30793
+wait_for_queue_to_empty,queue_size=29778
+wait_for_queue_to_empty,queue_size=28737
+wait_for_queue_to_empty,queue_size=27713
+wait_for_queue_to_empty,queue_size=26696
+wait_for_queue_to_empty,queue_size=25649
+wait_for_queue_to_empty,queue_size=24629
+wait_for_queue_to_empty,queue_size=23557
+wait_for_queue_to_empty,queue_size=22592
+wait_for_queue_to_empty,queue_size=21621
+wait_for_queue_to_empty,queue_size=20615
+wait_for_queue_to_empty,queue_size=19602
+wait_for_queue_to_empty,queue_size=18507
+wait_for_queue_to_empty,queue_size=17527
+wait_for_queue_to_empty,queue_size=16519
+wait_for_queue_to_empty,queue_size=15488
+wait_for_queue_to_empty,queue_size=14590
+wait_for_queue_to_empty,queue_size=13569
+wait_for_queue_to_empty,queue_size=12518
+wait_for_queue_to_empty,queue_size=11487
+wait_for_queue_to_empty,queue_size=10509
+wait_for_queue_to_empty,queue_size=9479
+wait_for_queue_to_empty,queue_size=8460
+wait_for_queue_to_empty,queue_size=7455
+wait_for_queue_to_empty,queue_size=6443
+wait_for_queue_to_empty,queue_size=5413
+wait_for_queue_to_empty,queue_size=4321
+wait_for_queue_to_empty,queue_size=3155
+wait_for_queue_to_empty,queue_size=2052
+wait_for_queue_to_empty,queue_size=1127
+wait_for_queue_to_empty,queue_size=137
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 21.8
+  Alternate_elite = 9.5
+  Cloan = 7.6
+  Mutate = 6.7
+  Regenerate = 54.4
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 0
+..........
+
+test_case_error = 0.7
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 5
+Session 4
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=99054
+wait_for_queue_to_empty,queue_size=98226
+wait_for_queue_to_empty,queue_size=97406
+wait_for_queue_to_empty,queue_size=96630
+wait_for_queue_to_empty,queue_size=95969
+wait_for_queue_to_empty,queue_size=95339
+wait_for_queue_to_empty,queue_size=94544
+wait_for_queue_to_empty,queue_size=93794
+wait_for_queue_to_empty,queue_size=93165
+wait_for_queue_to_empty,queue_size=92388
+wait_for_queue_to_empty,queue_size=91604
+wait_for_queue_to_empty,queue_size=90979
+wait_for_queue_to_empty,queue_size=90315
+wait_for_queue_to_empty,queue_size=89488
+wait_for_queue_to_empty,queue_size=88719
+wait_for_queue_to_empty,queue_size=87976
+wait_for_queue_to_empty,queue_size=87209
+wait_for_queue_to_empty,queue_size=86437
+wait_for_queue_to_empty,queue_size=85714
+wait_for_queue_to_empty,queue_size=85060
+wait_for_queue_to_empty,queue_size=84335
+wait_for_queue_to_empty,queue_size=83500
+wait_for_queue_to_empty,queue_size=82705
+wait_for_queue_to_empty,queue_size=82016
+wait_for_queue_to_empty,queue_size=81316
+wait_for_queue_to_empty,queue_size=80474
+wait_for_queue_to_empty,queue_size=79580
+wait_for_queue_to_empty,queue_size=78851
+wait_for_queue_to_empty,queue_size=78131
+wait_for_queue_to_empty,queue_size=77384
+wait_for_queue_to_empty,queue_size=76566
+wait_for_queue_to_empty,queue_size=75811
+wait_for_queue_to_empty,queue_size=75076
+wait_for_queue_to_empty,queue_size=74342
+wait_for_queue_to_empty,queue_size=73532
+wait_for_queue_to_empty,queue_size=72797
+wait_for_queue_to_empty,queue_size=72082
+wait_for_queue_to_empty,queue_size=71340
+wait_for_queue_to_empty,queue_size=70460
+wait_for_queue_to_empty,queue_size=69664
+wait_for_queue_to_empty,queue_size=68968
+wait_for_queue_to_empty,queue_size=68261
+wait_for_queue_to_empty,queue_size=67468
+wait_for_queue_to_empty,queue_size=66719
+wait_for_queue_to_empty,queue_size=66076
+wait_for_queue_to_empty,queue_size=65404
+wait_for_queue_to_empty,queue_size=64641
+wait_for_queue_to_empty,queue_size=63885
+wait_for_queue_to_empty,queue_size=63218
+wait_for_queue_to_empty,queue_size=62408
+wait_for_queue_to_empty,queue_size=61583
+wait_for_queue_to_empty,queue_size=60770
+wait_for_queue_to_empty,queue_size=60093
+wait_for_queue_to_empty,queue_size=59389
+wait_for_queue_to_empty,queue_size=58591
+wait_for_queue_to_empty,queue_size=57870
+wait_for_queue_to_empty,queue_size=57261
+wait_for_queue_to_empty,queue_size=56541
+wait_for_queue_to_empty,queue_size=55729
+wait_for_queue_to_empty,queue_size=54984
+wait_for_queue_to_empty,queue_size=54307
+wait_for_queue_to_empty,queue_size=53486
+wait_for_queue_to_empty,queue_size=52668
+wait_for_queue_to_empty,queue_size=51974
+wait_for_queue_to_empty,queue_size=51311
+wait_for_queue_to_empty,queue_size=50488
+wait_for_queue_to_empty,queue_size=49702
+wait_for_queue_to_empty,queue_size=49004
+wait_for_queue_to_empty,queue_size=48335
+wait_for_queue_to_empty,queue_size=47427
+wait_for_queue_to_empty,queue_size=46651
+wait_for_queue_to_empty,queue_size=45952
+wait_for_queue_to_empty,queue_size=45309
+wait_for_queue_to_empty,queue_size=44422
+wait_for_queue_to_empty,queue_size=43685
+wait_for_queue_to_empty,queue_size=42911
+wait_for_queue_to_empty,queue_size=42261
+wait_for_queue_to_empty,queue_size=41471
+wait_for_queue_to_empty,queue_size=40724
+wait_for_queue_to_empty,queue_size=40124
+wait_for_queue_to_empty,queue_size=39418
+wait_for_queue_to_empty,queue_size=38645
+wait_for_queue_to_empty,queue_size=37879
+wait_for_queue_to_empty,queue_size=37132
+wait_for_queue_to_empty,queue_size=36404
+wait_for_queue_to_empty,queue_size=35651
+wait_for_queue_to_empty,queue_size=34972
+wait_for_queue_to_empty,queue_size=34231
+wait_for_queue_to_empty,queue_size=33460
+wait_for_queue_to_empty,queue_size=32722
+wait_for_queue_to_empty,queue_size=32063
+wait_for_queue_to_empty,queue_size=31386
+wait_for_queue_to_empty,queue_size=30631
+wait_for_queue_to_empty,queue_size=29961
+wait_for_queue_to_empty,queue_size=29335
+wait_for_queue_to_empty,queue_size=28439
+wait_for_queue_to_empty,queue_size=27648
+wait_for_queue_to_empty,queue_size=26907
+wait_for_queue_to_empty,queue_size=26209
+wait_for_queue_to_empty,queue_size=25427
+wait_for_queue_to_empty,queue_size=24695
+wait_for_queue_to_empty,queue_size=23916
+wait_for_queue_to_empty,queue_size=23285
+wait_for_queue_to_empty,queue_size=22468
+wait_for_queue_to_empty,queue_size=21753
+wait_for_queue_to_empty,queue_size=21105
+wait_for_queue_to_empty,queue_size=20383
+wait_for_queue_to_empty,queue_size=19569
+wait_for_queue_to_empty,queue_size=18773
+wait_for_queue_to_empty,queue_size=18060
+wait_for_queue_to_empty,queue_size=17399
+wait_for_queue_to_empty,queue_size=16579
+wait_for_queue_to_empty,queue_size=15821
+wait_for_queue_to_empty,queue_size=15181
+wait_for_queue_to_empty,queue_size=14436
+wait_for_queue_to_empty,queue_size=13658
+wait_for_queue_to_empty,queue_size=12908
+wait_for_queue_to_empty,queue_size=12267
+wait_for_queue_to_empty,queue_size=11426
+wait_for_queue_to_empty,queue_size=10683
+wait_for_queue_to_empty,queue_size=9988
+wait_for_queue_to_empty,queue_size=9314
+wait_for_queue_to_empty,queue_size=8477
+wait_for_queue_to_empty,queue_size=7702
+wait_for_queue_to_empty,queue_size=6907
+wait_for_queue_to_empty,queue_size=6291
+wait_for_queue_to_empty,queue_size=5426
+wait_for_queue_to_empty,queue_size=4638
+wait_for_queue_to_empty,queue_size=3946
+wait_for_queue_to_empty,queue_size=3301
+wait_for_queue_to_empty,queue_size=2405
+wait_for_queue_to_empty,queue_size=1604
+wait_for_queue_to_empty,queue_size=945
+wait_for_queue_to_empty,queue_size=306
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 28.3
+  Alternate_elite = 3.5
+  Cloan = 6.2
+  Mutate = 5.9
+  Regenerate = 56.1
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 37
+..........
+
+test_case_error = 0.7
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 6
+Session 5
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=99062
+wait_for_queue_to_empty,queue_size=98286
+wait_for_queue_to_empty,queue_size=97349
+wait_for_queue_to_empty,queue_size=96517
+wait_for_queue_to_empty,queue_size=95829
+wait_for_queue_to_empty,queue_size=94962
+wait_for_queue_to_empty,queue_size=94163
+wait_for_queue_to_empty,queue_size=93360
+wait_for_queue_to_empty,queue_size=92495
+wait_for_queue_to_empty,queue_size=91656
+wait_for_queue_to_empty,queue_size=90869
+wait_for_queue_to_empty,queue_size=90048
+wait_for_queue_to_empty,queue_size=89189
+wait_for_queue_to_empty,queue_size=88281
+wait_for_queue_to_empty,queue_size=87381
+wait_for_queue_to_empty,queue_size=86496
+wait_for_queue_to_empty,queue_size=85783
+wait_for_queue_to_empty,queue_size=84991
+wait_for_queue_to_empty,queue_size=84191
+wait_for_queue_to_empty,queue_size=83215
+wait_for_queue_to_empty,queue_size=82368
+wait_for_queue_to_empty,queue_size=81478
+wait_for_queue_to_empty,queue_size=80577
+wait_for_queue_to_empty,queue_size=79759
+wait_for_queue_to_empty,queue_size=78974
+wait_for_queue_to_empty,queue_size=78159
+wait_for_queue_to_empty,queue_size=77336
+wait_for_queue_to_empty,queue_size=76455
+wait_for_queue_to_empty,queue_size=75576
+wait_for_queue_to_empty,queue_size=74739
+wait_for_queue_to_empty,queue_size=73955
+wait_for_queue_to_empty,queue_size=73126
+wait_for_queue_to_empty,queue_size=72273
+wait_for_queue_to_empty,queue_size=71403
+wait_for_queue_to_empty,queue_size=70482
+wait_for_queue_to_empty,queue_size=69604
+wait_for_queue_to_empty,queue_size=68773
+wait_for_queue_to_empty,queue_size=67927
+wait_for_queue_to_empty,queue_size=67130
+wait_for_queue_to_empty,queue_size=66263
+wait_for_queue_to_empty,queue_size=65427
+wait_for_queue_to_empty,queue_size=64578
+wait_for_queue_to_empty,queue_size=63731
+wait_for_queue_to_empty,queue_size=62919
+wait_for_queue_to_empty,queue_size=62145
+wait_for_queue_to_empty,queue_size=61219
+wait_for_queue_to_empty,queue_size=60352
+wait_for_queue_to_empty,queue_size=59428
+wait_for_queue_to_empty,queue_size=58565
+wait_for_queue_to_empty,queue_size=57727
+wait_for_queue_to_empty,queue_size=56919
+wait_for_queue_to_empty,queue_size=56141
+wait_for_queue_to_empty,queue_size=55268
+wait_for_queue_to_empty,queue_size=54392
+wait_for_queue_to_empty,queue_size=53439
+wait_for_queue_to_empty,queue_size=52515
+wait_for_queue_to_empty,queue_size=51609
+wait_for_queue_to_empty,queue_size=50795
+wait_for_queue_to_empty,queue_size=49985
+wait_for_queue_to_empty,queue_size=49135
+wait_for_queue_to_empty,queue_size=48290
+wait_for_queue_to_empty,queue_size=47381
+wait_for_queue_to_empty,queue_size=46450
+wait_for_queue_to_empty,queue_size=45649
+wait_for_queue_to_empty,queue_size=44871
+wait_for_queue_to_empty,queue_size=44052
+wait_for_queue_to_empty,queue_size=43128
+wait_for_queue_to_empty,queue_size=42289
+wait_for_queue_to_empty,queue_size=41458
+wait_for_queue_to_empty,queue_size=40689
+wait_for_queue_to_empty,queue_size=39955
+wait_for_queue_to_empty,queue_size=39165
+wait_for_queue_to_empty,queue_size=38316
+wait_for_queue_to_empty,queue_size=37412
+wait_for_queue_to_empty,queue_size=36552
+wait_for_queue_to_empty,queue_size=35759
+wait_for_queue_to_empty,queue_size=34980
+wait_for_queue_to_empty,queue_size=34169
+wait_for_queue_to_empty,queue_size=33393
+wait_for_queue_to_empty,queue_size=32496
+wait_for_queue_to_empty,queue_size=31674
+wait_for_queue_to_empty,queue_size=30919
+wait_for_queue_to_empty,queue_size=30123
+wait_for_queue_to_empty,queue_size=29328
+wait_for_queue_to_empty,queue_size=28401
+wait_for_queue_to_empty,queue_size=27426
+wait_for_queue_to_empty,queue_size=26569
+wait_for_queue_to_empty,queue_size=25778
+wait_for_queue_to_empty,queue_size=24921
+wait_for_queue_to_empty,queue_size=24068
+wait_for_queue_to_empty,queue_size=23268
+wait_for_queue_to_empty,queue_size=22441
+wait_for_queue_to_empty,queue_size=21656
+wait_for_queue_to_empty,queue_size=20862
+wait_for_queue_to_empty,queue_size=20095
+wait_for_queue_to_empty,queue_size=19258
+wait_for_queue_to_empty,queue_size=18365
+wait_for_queue_to_empty,queue_size=17462
+wait_for_queue_to_empty,queue_size=16659
+wait_for_queue_to_empty,queue_size=15894
+wait_for_queue_to_empty,queue_size=15130
+wait_for_queue_to_empty,queue_size=14381
+wait_for_queue_to_empty,queue_size=13442
+wait_for_queue_to_empty,queue_size=12631
+wait_for_queue_to_empty,queue_size=11842
+wait_for_queue_to_empty,queue_size=10976
+wait_for_queue_to_empty,queue_size=10227
+wait_for_queue_to_empty,queue_size=9385
+wait_for_queue_to_empty,queue_size=8475
+wait_for_queue_to_empty,queue_size=7677
+wait_for_queue_to_empty,queue_size=6838
+wait_for_queue_to_empty,queue_size=6063
+wait_for_queue_to_empty,queue_size=5265
+wait_for_queue_to_empty,queue_size=4346
+wait_for_queue_to_empty,queue_size=3412
+wait_for_queue_to_empty,queue_size=2564
+wait_for_queue_to_empty,queue_size=1753
+wait_for_queue_to_empty,queue_size=953
+wait_for_queue_to_empty,queue_size=74
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 30.1
+  Alternate_elite = 9.7
+  Cloan = 5.2
+  Mutate = 6.3
+  Regenerate = 48.7
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 13
+..........
+
+test_case_error = 0.7
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 7
+Session 6
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=98968
+wait_for_queue_to_empty,queue_size=98042
+wait_for_queue_to_empty,queue_size=97126
+wait_for_queue_to_empty,queue_size=96178
+wait_for_queue_to_empty,queue_size=95246
+wait_for_queue_to_empty,queue_size=94422
+wait_for_queue_to_empty,queue_size=93646
+wait_for_queue_to_empty,queue_size=92729
+wait_for_queue_to_empty,queue_size=91710
+wait_for_queue_to_empty,queue_size=90810
+wait_for_queue_to_empty,queue_size=89863
+wait_for_queue_to_empty,queue_size=88931
+wait_for_queue_to_empty,queue_size=87937
+wait_for_queue_to_empty,queue_size=87029
+wait_for_queue_to_empty,queue_size=86133
+wait_for_queue_to_empty,queue_size=85369
+wait_for_queue_to_empty,queue_size=84459
+wait_for_queue_to_empty,queue_size=83548
+wait_for_queue_to_empty,queue_size=82688
+wait_for_queue_to_empty,queue_size=81737
+wait_for_queue_to_empty,queue_size=80787
+wait_for_queue_to_empty,queue_size=79852
+wait_for_queue_to_empty,queue_size=78917
+wait_for_queue_to_empty,queue_size=77922
+wait_for_queue_to_empty,queue_size=77023
+wait_for_queue_to_empty,queue_size=76060
+wait_for_queue_to_empty,queue_size=75183
+wait_for_queue_to_empty,queue_size=74234
+wait_for_queue_to_empty,queue_size=73356
+wait_for_queue_to_empty,queue_size=72415
+wait_for_queue_to_empty,queue_size=71509
+wait_for_queue_to_empty,queue_size=70624
+wait_for_queue_to_empty,queue_size=69715
+wait_for_queue_to_empty,queue_size=68799
+wait_for_queue_to_empty,queue_size=67830
+wait_for_queue_to_empty,queue_size=66926
+wait_for_queue_to_empty,queue_size=65997
+wait_for_queue_to_empty,queue_size=65127
+wait_for_queue_to_empty,queue_size=64196
+wait_for_queue_to_empty,queue_size=63196
+wait_for_queue_to_empty,queue_size=62394
+wait_for_queue_to_empty,queue_size=61432
+wait_for_queue_to_empty,queue_size=60486
+wait_for_queue_to_empty,queue_size=59642
+wait_for_queue_to_empty,queue_size=58663
+wait_for_queue_to_empty,queue_size=57686
+wait_for_queue_to_empty,queue_size=56737
+wait_for_queue_to_empty,queue_size=55783
+wait_for_queue_to_empty,queue_size=54869
+wait_for_queue_to_empty,queue_size=53954
+wait_for_queue_to_empty,queue_size=52999
+wait_for_queue_to_empty,queue_size=52160
+wait_for_queue_to_empty,queue_size=51325
+wait_for_queue_to_empty,queue_size=50419
+wait_for_queue_to_empty,queue_size=49474
+wait_for_queue_to_empty,queue_size=48502
+wait_for_queue_to_empty,queue_size=47511
+wait_for_queue_to_empty,queue_size=46605
+wait_for_queue_to_empty,queue_size=45687
+wait_for_queue_to_empty,queue_size=44765
+wait_for_queue_to_empty,queue_size=43777
+wait_for_queue_to_empty,queue_size=42865
+wait_for_queue_to_empty,queue_size=41975
+wait_for_queue_to_empty,queue_size=41064
+wait_for_queue_to_empty,queue_size=40196
+wait_for_queue_to_empty,queue_size=39414
+wait_for_queue_to_empty,queue_size=38596
+wait_for_queue_to_empty,queue_size=37635
+wait_for_queue_to_empty,queue_size=36706
+wait_for_queue_to_empty,queue_size=35775
+wait_for_queue_to_empty,queue_size=34875
+wait_for_queue_to_empty,queue_size=33931
+wait_for_queue_to_empty,queue_size=33056
+wait_for_queue_to_empty,queue_size=32139
+wait_for_queue_to_empty,queue_size=31211
+wait_for_queue_to_empty,queue_size=30415
+wait_for_queue_to_empty,queue_size=29589
+wait_for_queue_to_empty,queue_size=28669
+wait_for_queue_to_empty,queue_size=27706
+wait_for_queue_to_empty,queue_size=26737
+wait_for_queue_to_empty,queue_size=25765
+wait_for_queue_to_empty,queue_size=24806
+wait_for_queue_to_empty,queue_size=23852
+wait_for_queue_to_empty,queue_size=22940
+wait_for_queue_to_empty,queue_size=22054
+wait_for_queue_to_empty,queue_size=21155
+wait_for_queue_to_empty,queue_size=20193
+wait_for_queue_to_empty,queue_size=19186
+wait_for_queue_to_empty,queue_size=18302
+wait_for_queue_to_empty,queue_size=17416
+wait_for_queue_to_empty,queue_size=16551
+wait_for_queue_to_empty,queue_size=15536
+wait_for_queue_to_empty,queue_size=14678
+wait_for_queue_to_empty,queue_size=13680
+wait_for_queue_to_empty,queue_size=12764
+wait_for_queue_to_empty,queue_size=11897
+wait_for_queue_to_empty,queue_size=10967
+wait_for_queue_to_empty,queue_size=10054
+wait_for_queue_to_empty,queue_size=9186
+wait_for_queue_to_empty,queue_size=8236
+wait_for_queue_to_empty,queue_size=7283
+wait_for_queue_to_empty,queue_size=6341
+wait_for_queue_to_empty,queue_size=5430
+wait_for_queue_to_empty,queue_size=4645
+wait_for_queue_to_empty,queue_size=3755
+wait_for_queue_to_empty,queue_size=2831
+wait_for_queue_to_empty,queue_size=1866
+wait_for_queue_to_empty,queue_size=887
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 29.6
+  Alternate_elite = 12
+  Cloan = 6.9
+  Mutate = 6.7
+  Regenerate = 44.8
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 3
+..........
+
+test_case_error = 0.7
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 8
+Session 7
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=99043
+wait_for_queue_to_empty,queue_size=98391
+wait_for_queue_to_empty,queue_size=97609
+wait_for_queue_to_empty,queue_size=96867
+wait_for_queue_to_empty,queue_size=96178
+wait_for_queue_to_empty,queue_size=95468
+wait_for_queue_to_empty,queue_size=94753
+wait_for_queue_to_empty,queue_size=94038
+wait_for_queue_to_empty,queue_size=93402
+wait_for_queue_to_empty,queue_size=92575
+wait_for_queue_to_empty,queue_size=91822
+wait_for_queue_to_empty,queue_size=91054
+wait_for_queue_to_empty,queue_size=90386
+wait_for_queue_to_empty,queue_size=89580
+wait_for_queue_to_empty,queue_size=88881
+wait_for_queue_to_empty,queue_size=88195
+wait_for_queue_to_empty,queue_size=87393
+wait_for_queue_to_empty,queue_size=86659
+wait_for_queue_to_empty,queue_size=85985
+wait_for_queue_to_empty,queue_size=85203
+wait_for_queue_to_empty,queue_size=84493
+wait_for_queue_to_empty,queue_size=83805
+wait_for_queue_to_empty,queue_size=82988
+wait_for_queue_to_empty,queue_size=82347
+wait_for_queue_to_empty,queue_size=81580
+wait_for_queue_to_empty,queue_size=80878
+wait_for_queue_to_empty,queue_size=80204
+wait_for_queue_to_empty,queue_size=79478
+wait_for_queue_to_empty,queue_size=78739
+wait_for_queue_to_empty,queue_size=78031
+wait_for_queue_to_empty,queue_size=77361
+wait_for_queue_to_empty,queue_size=76584
+wait_for_queue_to_empty,queue_size=75894
+wait_for_queue_to_empty,queue_size=75132
+wait_for_queue_to_empty,queue_size=74410
+wait_for_queue_to_empty,queue_size=73652
+wait_for_queue_to_empty,queue_size=72973
+wait_for_queue_to_empty,queue_size=72277
+wait_for_queue_to_empty,queue_size=71518
+wait_for_queue_to_empty,queue_size=70811
+wait_for_queue_to_empty,queue_size=70140
+wait_for_queue_to_empty,queue_size=69432
+wait_for_queue_to_empty,queue_size=68702
+wait_for_queue_to_empty,queue_size=67950
+wait_for_queue_to_empty,queue_size=67312
+wait_for_queue_to_empty,queue_size=66573
+wait_for_queue_to_empty,queue_size=65858
+wait_for_queue_to_empty,queue_size=65190
+wait_for_queue_to_empty,queue_size=64472
+wait_for_queue_to_empty,queue_size=63736
+wait_for_queue_to_empty,queue_size=62957
+wait_for_queue_to_empty,queue_size=62206
+wait_for_queue_to_empty,queue_size=61518
+wait_for_queue_to_empty,queue_size=60744
+wait_for_queue_to_empty,queue_size=60031
+wait_for_queue_to_empty,queue_size=59362
+wait_for_queue_to_empty,queue_size=58584
+wait_for_queue_to_empty,queue_size=57904
+wait_for_queue_to_empty,queue_size=57254
+wait_for_queue_to_empty,queue_size=56558
+wait_for_queue_to_empty,queue_size=55793
+wait_for_queue_to_empty,queue_size=55057
+wait_for_queue_to_empty,queue_size=54411
+wait_for_queue_to_empty,queue_size=53618
+wait_for_queue_to_empty,queue_size=52890
+wait_for_queue_to_empty,queue_size=52246
+wait_for_queue_to_empty,queue_size=51509
+wait_for_queue_to_empty,queue_size=50779
+wait_for_queue_to_empty,queue_size=50081
+wait_for_queue_to_empty,queue_size=49419
+wait_for_queue_to_empty,queue_size=48726
+wait_for_queue_to_empty,queue_size=47937
+wait_for_queue_to_empty,queue_size=47168
+wait_for_queue_to_empty,queue_size=46527
+wait_for_queue_to_empty,queue_size=45823
+wait_for_queue_to_empty,queue_size=45131
+wait_for_queue_to_empty,queue_size=44443
+wait_for_queue_to_empty,queue_size=43700
+wait_for_queue_to_empty,queue_size=42956
+wait_for_queue_to_empty,queue_size=42296
+wait_for_queue_to_empty,queue_size=41552
+wait_for_queue_to_empty,queue_size=40825
+wait_for_queue_to_empty,queue_size=40118
+wait_for_queue_to_empty,queue_size=39386
+wait_for_queue_to_empty,queue_size=38626
+wait_for_queue_to_empty,queue_size=37830
+wait_for_queue_to_empty,queue_size=37131
+wait_for_queue_to_empty,queue_size=36450
+wait_for_queue_to_empty,queue_size=35752
+wait_for_queue_to_empty,queue_size=35004
+wait_for_queue_to_empty,queue_size=34362
+wait_for_queue_to_empty,queue_size=33627
+wait_for_queue_to_empty,queue_size=32973
+wait_for_queue_to_empty,queue_size=32262
+wait_for_queue_to_empty,queue_size=31541
+wait_for_queue_to_empty,queue_size=30859
+wait_for_queue_to_empty,queue_size=30119
+wait_for_queue_to_empty,queue_size=29433
+wait_for_queue_to_empty,queue_size=28707
+wait_for_queue_to_empty,queue_size=27957
+wait_for_queue_to_empty,queue_size=27334
+wait_for_queue_to_empty,queue_size=26539
+wait_for_queue_to_empty,queue_size=25823
+wait_for_queue_to_empty,queue_size=25029
+wait_for_queue_to_empty,queue_size=24322
+wait_for_queue_to_empty,queue_size=23659
+wait_for_queue_to_empty,queue_size=22894
+wait_for_queue_to_empty,queue_size=22272
+wait_for_queue_to_empty,queue_size=21479
+wait_for_queue_to_empty,queue_size=20751
+wait_for_queue_to_empty,queue_size=20006
+wait_for_queue_to_empty,queue_size=19350
+wait_for_queue_to_empty,queue_size=18639
+wait_for_queue_to_empty,queue_size=17937
+wait_for_queue_to_empty,queue_size=17187
+wait_for_queue_to_empty,queue_size=16450
+wait_for_queue_to_empty,queue_size=15734
+wait_for_queue_to_empty,queue_size=15005
+wait_for_queue_to_empty,queue_size=14348
+wait_for_queue_to_empty,queue_size=13574
+wait_for_queue_to_empty,queue_size=12811
+wait_for_queue_to_empty,queue_size=12097
+wait_for_queue_to_empty,queue_size=11434
+wait_for_queue_to_empty,queue_size=10734
+wait_for_queue_to_empty,queue_size=10001
+wait_for_queue_to_empty,queue_size=9368
+wait_for_queue_to_empty,queue_size=8629
+wait_for_queue_to_empty,queue_size=7867
+wait_for_queue_to_empty,queue_size=7118
+wait_for_queue_to_empty,queue_size=6420
+wait_for_queue_to_empty,queue_size=5700
+wait_for_queue_to_empty,queue_size=4956
+wait_for_queue_to_empty,queue_size=4369
+wait_for_queue_to_empty,queue_size=3595
+wait_for_queue_to_empty,queue_size=2857
+wait_for_queue_to_empty,queue_size=2162
+wait_for_queue_to_empty,queue_size=1495
+wait_for_queue_to_empty,queue_size=762
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 39.7
+  Alternate_elite = 35.7
+  Cloan = 5.4
+  Mutate = 6.4
+  Regenerate = 12.8
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 39
+..........
+
+test_case_error = 0.7
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 9
+Session 8
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=97993
+wait_for_queue_to_empty,queue_size=96524
+wait_for_queue_to_empty,queue_size=95210
+wait_for_queue_to_empty,queue_size=93870
+wait_for_queue_to_empty,queue_size=92595
+wait_for_queue_to_empty,queue_size=91262
+wait_for_queue_to_empty,queue_size=89858
+wait_for_queue_to_empty,queue_size=88505
+wait_for_queue_to_empty,queue_size=87062
+wait_for_queue_to_empty,queue_size=85674
+wait_for_queue_to_empty,queue_size=84432
+wait_for_queue_to_empty,queue_size=83060
+wait_for_queue_to_empty,queue_size=81621
+wait_for_queue_to_empty,queue_size=80283
+wait_for_queue_to_empty,queue_size=78890
+wait_for_queue_to_empty,queue_size=77478
+wait_for_queue_to_empty,queue_size=76088
+wait_for_queue_to_empty,queue_size=74887
+wait_for_queue_to_empty,queue_size=73505
+wait_for_queue_to_empty,queue_size=72076
+wait_for_queue_to_empty,queue_size=70692
+wait_for_queue_to_empty,queue_size=69478
+wait_for_queue_to_empty,queue_size=67993
+wait_for_queue_to_empty,queue_size=66676
+wait_for_queue_to_empty,queue_size=65474
+wait_for_queue_to_empty,queue_size=64099
+wait_for_queue_to_empty,queue_size=62795
+wait_for_queue_to_empty,queue_size=61440
+wait_for_queue_to_empty,queue_size=60058
+wait_for_queue_to_empty,queue_size=58775
+wait_for_queue_to_empty,queue_size=57416
+wait_for_queue_to_empty,queue_size=56028
+wait_for_queue_to_empty,queue_size=54832
+wait_for_queue_to_empty,queue_size=53622
+wait_for_queue_to_empty,queue_size=52551
+wait_for_queue_to_empty,queue_size=51238
+wait_for_queue_to_empty,queue_size=49698
+wait_for_queue_to_empty,queue_size=48432
+wait_for_queue_to_empty,queue_size=46925
+wait_for_queue_to_empty,queue_size=45553
+wait_for_queue_to_empty,queue_size=44071
+wait_for_queue_to_empty,queue_size=42908
+wait_for_queue_to_empty,queue_size=41483
+wait_for_queue_to_empty,queue_size=40100
+wait_for_queue_to_empty,queue_size=38841
+wait_for_queue_to_empty,queue_size=37369
+wait_for_queue_to_empty,queue_size=35919
+wait_for_queue_to_empty,queue_size=34564
+wait_for_queue_to_empty,queue_size=33065
+wait_for_queue_to_empty,queue_size=31749
+wait_for_queue_to_empty,queue_size=30483
+wait_for_queue_to_empty,queue_size=29328
+wait_for_queue_to_empty,queue_size=27985
+wait_for_queue_to_empty,queue_size=26668
+wait_for_queue_to_empty,queue_size=25327
+wait_for_queue_to_empty,queue_size=23692
+wait_for_queue_to_empty,queue_size=22375
+wait_for_queue_to_empty,queue_size=20985
+wait_for_queue_to_empty,queue_size=19597
+wait_for_queue_to_empty,queue_size=18362
+wait_for_queue_to_empty,queue_size=16931
+wait_for_queue_to_empty,queue_size=15552
+wait_for_queue_to_empty,queue_size=14291
+wait_for_queue_to_empty,queue_size=12841
+wait_for_queue_to_empty,queue_size=11447
+wait_for_queue_to_empty,queue_size=10062
+wait_for_queue_to_empty,queue_size=8606
+wait_for_queue_to_empty,queue_size=7363
+wait_for_queue_to_empty,queue_size=5920
+wait_for_queue_to_empty,queue_size=4704
+wait_for_queue_to_empty,queue_size=3368
+wait_for_queue_to_empty,queue_size=1929
+wait_for_queue_to_empty,queue_size=518
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 38.3
+  Alternate_elite = 31.5
+  Cloan = 6.4
+  Mutate = 5.8
+  Regenerate = 18
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 4
+..........
+
+test_case_error = 0.7
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 10
+Session 9
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=98322
+wait_for_queue_to_empty,queue_size=97278
+wait_for_queue_to_empty,queue_size=96242
+wait_for_queue_to_empty,queue_size=95185
+wait_for_queue_to_empty,queue_size=94106
+wait_for_queue_to_empty,queue_size=92984
+wait_for_queue_to_empty,queue_size=91817
+wait_for_queue_to_empty,queue_size=90748
+wait_for_queue_to_empty,queue_size=89724
+wait_for_queue_to_empty,queue_size=88643
+wait_for_queue_to_empty,queue_size=87511
+wait_for_queue_to_empty,queue_size=86526
+wait_for_queue_to_empty,queue_size=85290
+wait_for_queue_to_empty,queue_size=84304
+wait_for_queue_to_empty,queue_size=83178
+wait_for_queue_to_empty,queue_size=82110
+wait_for_queue_to_empty,queue_size=81034
+wait_for_queue_to_empty,queue_size=80025
+wait_for_queue_to_empty,queue_size=78912
+wait_for_queue_to_empty,queue_size=77809
+wait_for_queue_to_empty,queue_size=76731
+wait_for_queue_to_empty,queue_size=75614
+wait_for_queue_to_empty,queue_size=74447
+wait_for_queue_to_empty,queue_size=73398
+wait_for_queue_to_empty,queue_size=72305
+wait_for_queue_to_empty,queue_size=71308
+wait_for_queue_to_empty,queue_size=70203
+wait_for_queue_to_empty,queue_size=69128
+wait_for_queue_to_empty,queue_size=68095
+wait_for_queue_to_empty,queue_size=66987
+wait_for_queue_to_empty,queue_size=65877
+wait_for_queue_to_empty,queue_size=64924
+wait_for_queue_to_empty,queue_size=63962
+wait_for_queue_to_empty,queue_size=62809
+wait_for_queue_to_empty,queue_size=61708
+wait_for_queue_to_empty,queue_size=60623
+wait_for_queue_to_empty,queue_size=59512
+wait_for_queue_to_empty,queue_size=58445
+wait_for_queue_to_empty,queue_size=57302
+wait_for_queue_to_empty,queue_size=56211
+wait_for_queue_to_empty,queue_size=55145
+wait_for_queue_to_empty,queue_size=54110
+wait_for_queue_to_empty,queue_size=53029
+wait_for_queue_to_empty,queue_size=51978
+wait_for_queue_to_empty,queue_size=50932
+wait_for_queue_to_empty,queue_size=49830
+wait_for_queue_to_empty,queue_size=48751
+wait_for_queue_to_empty,queue_size=47633
+wait_for_queue_to_empty,queue_size=46568
+wait_for_queue_to_empty,queue_size=45497
+wait_for_queue_to_empty,queue_size=44421
+wait_for_queue_to_empty,queue_size=43308
+wait_for_queue_to_empty,queue_size=42250
+wait_for_queue_to_empty,queue_size=41155
+wait_for_queue_to_empty,queue_size=40025
+wait_for_queue_to_empty,queue_size=38952
+wait_for_queue_to_empty,queue_size=37908
+wait_for_queue_to_empty,queue_size=36877
+wait_for_queue_to_empty,queue_size=35731
+wait_for_queue_to_empty,queue_size=34674
+wait_for_queue_to_empty,queue_size=33614
+wait_for_queue_to_empty,queue_size=32458
+wait_for_queue_to_empty,queue_size=31551
+wait_for_queue_to_empty,queue_size=30294
+wait_for_queue_to_empty,queue_size=29268
+wait_for_queue_to_empty,queue_size=28106
+wait_for_queue_to_empty,queue_size=27048
+wait_for_queue_to_empty,queue_size=25962
+wait_for_queue_to_empty,queue_size=24932
+wait_for_queue_to_empty,queue_size=23823
+wait_for_queue_to_empty,queue_size=22741
+wait_for_queue_to_empty,queue_size=21552
+wait_for_queue_to_empty,queue_size=20405
+wait_for_queue_to_empty,queue_size=19379
+wait_for_queue_to_empty,queue_size=18305
+wait_for_queue_to_empty,queue_size=17300
+wait_for_queue_to_empty,queue_size=16321
+wait_for_queue_to_empty,queue_size=15185
+wait_for_queue_to_empty,queue_size=14122
+wait_for_queue_to_empty,queue_size=12915
+wait_for_queue_to_empty,queue_size=11871
+wait_for_queue_to_empty,queue_size=10794
+wait_for_queue_to_empty,queue_size=9744
+wait_for_queue_to_empty,queue_size=8702
+wait_for_queue_to_empty,queue_size=7519
+wait_for_queue_to_empty,queue_size=6527
+wait_for_queue_to_empty,queue_size=5433
+wait_for_queue_to_empty,queue_size=4328
+wait_for_queue_to_empty,queue_size=3257
+wait_for_queue_to_empty,queue_size=2168
+wait_for_queue_to_empty,queue_size=1090
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 27.2
+  Alternate_elite = 21.6
+  Cloan = 5.1
+  Mutate = 4.8
+  Regenerate = 41.3
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 4
+..........
+
+test_case_error = 0.7
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 11
+Session 10
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=98646
+wait_for_queue_to_empty,queue_size=97291
+wait_for_queue_to_empty,queue_size=96077
+wait_for_queue_to_empty,queue_size=94675
+wait_for_queue_to_empty,queue_size=93326
+wait_for_queue_to_empty,queue_size=92021
+wait_for_queue_to_empty,queue_size=90650
+wait_for_queue_to_empty,queue_size=89254
+wait_for_queue_to_empty,queue_size=87911
+wait_for_queue_to_empty,queue_size=86628
+wait_for_queue_to_empty,queue_size=85196
+wait_for_queue_to_empty,queue_size=83915
+wait_for_queue_to_empty,queue_size=82594
+wait_for_queue_to_empty,queue_size=81138
+wait_for_queue_to_empty,queue_size=79940
+wait_for_queue_to_empty,queue_size=78667
+wait_for_queue_to_empty,queue_size=77254
+wait_for_queue_to_empty,queue_size=76043
+wait_for_queue_to_empty,queue_size=74703
+wait_for_queue_to_empty,queue_size=73346
+wait_for_queue_to_empty,queue_size=72063
+wait_for_queue_to_empty,queue_size=70764
+wait_for_queue_to_empty,queue_size=69352
+wait_for_queue_to_empty,queue_size=68122
+wait_for_queue_to_empty,queue_size=66838
+wait_for_queue_to_empty,queue_size=65412
+wait_for_queue_to_empty,queue_size=64178
+wait_for_queue_to_empty,queue_size=62907
+wait_for_queue_to_empty,queue_size=61615
+wait_for_queue_to_empty,queue_size=60266
+wait_for_queue_to_empty,queue_size=58939
+wait_for_queue_to_empty,queue_size=57615
+wait_for_queue_to_empty,queue_size=56377
+wait_for_queue_to_empty,queue_size=55167
+wait_for_queue_to_empty,queue_size=53952
+wait_for_queue_to_empty,queue_size=52614
+wait_for_queue_to_empty,queue_size=51241
+wait_for_queue_to_empty,queue_size=50022
+wait_for_queue_to_empty,queue_size=48763
+wait_for_queue_to_empty,queue_size=47346
+wait_for_queue_to_empty,queue_size=46059
+wait_for_queue_to_empty,queue_size=44823
+wait_for_queue_to_empty,queue_size=43588
+wait_for_queue_to_empty,queue_size=42235
+wait_for_queue_to_empty,queue_size=40993
+wait_for_queue_to_empty,queue_size=39788
+wait_for_queue_to_empty,queue_size=38531
+wait_for_queue_to_empty,queue_size=37159
+wait_for_queue_to_empty,queue_size=35848
+wait_for_queue_to_empty,queue_size=34557
+wait_for_queue_to_empty,queue_size=33162
+wait_for_queue_to_empty,queue_size=31988
+wait_for_queue_to_empty,queue_size=30725
+wait_for_queue_to_empty,queue_size=29470
+wait_for_queue_to_empty,queue_size=28013
+wait_for_queue_to_empty,queue_size=26718
+wait_for_queue_to_empty,queue_size=25343
+wait_for_queue_to_empty,queue_size=24058
+wait_for_queue_to_empty,queue_size=22733
+wait_for_queue_to_empty,queue_size=21395
+wait_for_queue_to_empty,queue_size=20108
+wait_for_queue_to_empty,queue_size=18767
+wait_for_queue_to_empty,queue_size=17507
+wait_for_queue_to_empty,queue_size=16123
+wait_for_queue_to_empty,queue_size=14846
+wait_for_queue_to_empty,queue_size=13389
+wait_for_queue_to_empty,queue_size=12119
+wait_for_queue_to_empty,queue_size=10899
+wait_for_queue_to_empty,queue_size=9609
+wait_for_queue_to_empty,queue_size=8200
+wait_for_queue_to_empty,queue_size=6964
+wait_for_queue_to_empty,queue_size=5714
+wait_for_queue_to_empty,queue_size=4334
+wait_for_queue_to_empty,queue_size=3080
+wait_for_queue_to_empty,queue_size=1821
+wait_for_queue_to_empty,queue_size=435
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 28.2
+  Alternate_elite = 16.7
+  Cloan = 5.9
+  Mutate = 5.8
+  Regenerate = 43.4
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 53
+..........
+
+test_case_error = 0.6
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 12
+Session 11
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=99005
+wait_for_queue_to_empty,queue_size=98079
+wait_for_queue_to_empty,queue_size=97070
+wait_for_queue_to_empty,queue_size=96114
+wait_for_queue_to_empty,queue_size=95120
+wait_for_queue_to_empty,queue_size=94132
+wait_for_queue_to_empty,queue_size=93186
+wait_for_queue_to_empty,queue_size=92192
+wait_for_queue_to_empty,queue_size=91283
+wait_for_queue_to_empty,queue_size=90324
+wait_for_queue_to_empty,queue_size=89327
+wait_for_queue_to_empty,queue_size=88394
+wait_for_queue_to_empty,queue_size=87501
+wait_for_queue_to_empty,queue_size=86551
+wait_for_queue_to_empty,queue_size=85588
+wait_for_queue_to_empty,queue_size=84586
+wait_for_queue_to_empty,queue_size=83604
+wait_for_queue_to_empty,queue_size=82606
+wait_for_queue_to_empty,queue_size=81601
+wait_for_queue_to_empty,queue_size=80653
+wait_for_queue_to_empty,queue_size=79709
+wait_for_queue_to_empty,queue_size=78738
+wait_for_queue_to_empty,queue_size=77800
+wait_for_queue_to_empty,queue_size=76795
+wait_for_queue_to_empty,queue_size=75921
+wait_for_queue_to_empty,queue_size=74978
+wait_for_queue_to_empty,queue_size=73994
+wait_for_queue_to_empty,queue_size=73057
+wait_for_queue_to_empty,queue_size=72026
+wait_for_queue_to_empty,queue_size=71075
+wait_for_queue_to_empty,queue_size=70090
+wait_for_queue_to_empty,queue_size=69126
+wait_for_queue_to_empty,queue_size=68143
+wait_for_queue_to_empty,queue_size=67229
+wait_for_queue_to_empty,queue_size=66371
+wait_for_queue_to_empty,queue_size=65425
+wait_for_queue_to_empty,queue_size=64522
+wait_for_queue_to_empty,queue_size=63561
+wait_for_queue_to_empty,queue_size=62617
+wait_for_queue_to_empty,queue_size=61652
+wait_for_queue_to_empty,queue_size=60710
+wait_for_queue_to_empty,queue_size=59834
+wait_for_queue_to_empty,queue_size=58912
+wait_for_queue_to_empty,queue_size=57908
+wait_for_queue_to_empty,queue_size=56993
+wait_for_queue_to_empty,queue_size=56090
+wait_for_queue_to_empty,queue_size=55171
+wait_for_queue_to_empty,queue_size=54262
+wait_for_queue_to_empty,queue_size=53389
+wait_for_queue_to_empty,queue_size=52501
+wait_for_queue_to_empty,queue_size=51561
+wait_for_queue_to_empty,queue_size=50591
+wait_for_queue_to_empty,queue_size=49586
+wait_for_queue_to_empty,queue_size=48604
+wait_for_queue_to_empty,queue_size=47561
+wait_for_queue_to_empty,queue_size=46616
+wait_for_queue_to_empty,queue_size=45697
+wait_for_queue_to_empty,queue_size=44884
+wait_for_queue_to_empty,queue_size=44026
+wait_for_queue_to_empty,queue_size=43129
+wait_for_queue_to_empty,queue_size=42334
+wait_for_queue_to_empty,queue_size=41380
+wait_for_queue_to_empty,queue_size=40394
+wait_for_queue_to_empty,queue_size=39405
+wait_for_queue_to_empty,queue_size=38453
+wait_for_queue_to_empty,queue_size=37462
+wait_for_queue_to_empty,queue_size=36440
+wait_for_queue_to_empty,queue_size=35425
+wait_for_queue_to_empty,queue_size=34418
+wait_for_queue_to_empty,queue_size=33398
+wait_for_queue_to_empty,queue_size=32460
+wait_for_queue_to_empty,queue_size=31524
+wait_for_queue_to_empty,queue_size=30591
+wait_for_queue_to_empty,queue_size=29653
+wait_for_queue_to_empty,queue_size=28766
+wait_for_queue_to_empty,queue_size=27789
+wait_for_queue_to_empty,queue_size=26946
+wait_for_queue_to_empty,queue_size=26110
+wait_for_queue_to_empty,queue_size=25254
+wait_for_queue_to_empty,queue_size=24324
+wait_for_queue_to_empty,queue_size=23377
+wait_for_queue_to_empty,queue_size=22476
+wait_for_queue_to_empty,queue_size=21592
+wait_for_queue_to_empty,queue_size=20692
+wait_for_queue_to_empty,queue_size=19823
+wait_for_queue_to_empty,queue_size=18859
+wait_for_queue_to_empty,queue_size=18027
+wait_for_queue_to_empty,queue_size=17036
+wait_for_queue_to_empty,queue_size=16156
+wait_for_queue_to_empty,queue_size=15251
+wait_for_queue_to_empty,queue_size=14298
+wait_for_queue_to_empty,queue_size=13249
+wait_for_queue_to_empty,queue_size=12244
+wait_for_queue_to_empty,queue_size=11248
+wait_for_queue_to_empty,queue_size=10339
+wait_for_queue_to_empty,queue_size=9391
+wait_for_queue_to_empty,queue_size=8501
+wait_for_queue_to_empty,queue_size=7520
+wait_for_queue_to_empty,queue_size=6609
+wait_for_queue_to_empty,queue_size=5746
+wait_for_queue_to_empty,queue_size=4902
+wait_for_queue_to_empty,queue_size=4090
+wait_for_queue_to_empty,queue_size=3266
+wait_for_queue_to_empty,queue_size=2327
+wait_for_queue_to_empty,queue_size=1401
+wait_for_queue_to_empty,queue_size=405
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 38.5
+  Alternate_elite = 28.3
+  Cloan = 6.6
+  Mutate = 5.9
+  Regenerate = 20.7
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 431
+..........
+
+test_case_error = 0.6
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 13
+Session 12
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=98679
+wait_for_queue_to_empty,queue_size=97725
+wait_for_queue_to_empty,queue_size=96868
+wait_for_queue_to_empty,queue_size=96115
+wait_for_queue_to_empty,queue_size=95261
+wait_for_queue_to_empty,queue_size=94368
+wait_for_queue_to_empty,queue_size=93508
+wait_for_queue_to_empty,queue_size=92573
+wait_for_queue_to_empty,queue_size=91557
+wait_for_queue_to_empty,queue_size=90666
+wait_for_queue_to_empty,queue_size=89711
+wait_for_queue_to_empty,queue_size=88768
+wait_for_queue_to_empty,queue_size=87792
+wait_for_queue_to_empty,queue_size=86924
+wait_for_queue_to_empty,queue_size=86119
+wait_for_queue_to_empty,queue_size=85198
+wait_for_queue_to_empty,queue_size=84297
+wait_for_queue_to_empty,queue_size=83334
+wait_for_queue_to_empty,queue_size=82458
+wait_for_queue_to_empty,queue_size=81551
+wait_for_queue_to_empty,queue_size=80643
+wait_for_queue_to_empty,queue_size=79716
+wait_for_queue_to_empty,queue_size=78854
+wait_for_queue_to_empty,queue_size=78119
+wait_for_queue_to_empty,queue_size=77184
+wait_for_queue_to_empty,queue_size=76209
+wait_for_queue_to_empty,queue_size=75370
+wait_for_queue_to_empty,queue_size=74508
+wait_for_queue_to_empty,queue_size=73643
+wait_for_queue_to_empty,queue_size=72728
+wait_for_queue_to_empty,queue_size=72109
+wait_for_queue_to_empty,queue_size=71301
+wait_for_queue_to_empty,queue_size=70318
+wait_for_queue_to_empty,queue_size=69393
+wait_for_queue_to_empty,queue_size=68536
+wait_for_queue_to_empty,queue_size=67677
+wait_for_queue_to_empty,queue_size=66862
+wait_for_queue_to_empty,queue_size=66202
+wait_for_queue_to_empty,queue_size=65390
+wait_for_queue_to_empty,queue_size=64519
+wait_for_queue_to_empty,queue_size=63597
+wait_for_queue_to_empty,queue_size=62702
+wait_for_queue_to_empty,queue_size=61772
+wait_for_queue_to_empty,queue_size=60740
+wait_for_queue_to_empty,queue_size=59814
+wait_for_queue_to_empty,queue_size=58985
+wait_for_queue_to_empty,queue_size=58058
+wait_for_queue_to_empty,queue_size=57115
+wait_for_queue_to_empty,queue_size=56181
+wait_for_queue_to_empty,queue_size=55283
+wait_for_queue_to_empty,queue_size=54393
+wait_for_queue_to_empty,queue_size=53508
+wait_for_queue_to_empty,queue_size=52575
+wait_for_queue_to_empty,queue_size=51647
+wait_for_queue_to_empty,queue_size=50729
+wait_for_queue_to_empty,queue_size=50004
+wait_for_queue_to_empty,queue_size=49152
+wait_for_queue_to_empty,queue_size=48284
+wait_for_queue_to_empty,queue_size=47321
+wait_for_queue_to_empty,queue_size=46490
+wait_for_queue_to_empty,queue_size=45666
+wait_for_queue_to_empty,queue_size=44722
+wait_for_queue_to_empty,queue_size=43725
+wait_for_queue_to_empty,queue_size=42733
+wait_for_queue_to_empty,queue_size=41855
+wait_for_queue_to_empty,queue_size=40988
+wait_for_queue_to_empty,queue_size=40124
+wait_for_queue_to_empty,queue_size=39298
+wait_for_queue_to_empty,queue_size=38400
+wait_for_queue_to_empty,queue_size=37592
+wait_for_queue_to_empty,queue_size=36685
+wait_for_queue_to_empty,queue_size=35865
+wait_for_queue_to_empty,queue_size=35120
+wait_for_queue_to_empty,queue_size=34221
+wait_for_queue_to_empty,queue_size=33337
+wait_for_queue_to_empty,queue_size=32574
+wait_for_queue_to_empty,queue_size=31666
+wait_for_queue_to_empty,queue_size=30855
+wait_for_queue_to_empty,queue_size=30135
+wait_for_queue_to_empty,queue_size=29136
+wait_for_queue_to_empty,queue_size=28171
+wait_for_queue_to_empty,queue_size=27305
+wait_for_queue_to_empty,queue_size=26369
+wait_for_queue_to_empty,queue_size=25468
+wait_for_queue_to_empty,queue_size=24536
+wait_for_queue_to_empty,queue_size=23643
+wait_for_queue_to_empty,queue_size=22730
+wait_for_queue_to_empty,queue_size=22007
+wait_for_queue_to_empty,queue_size=21209
+wait_for_queue_to_empty,queue_size=20326
+wait_for_queue_to_empty,queue_size=19398
+wait_for_queue_to_empty,queue_size=18461
+wait_for_queue_to_empty,queue_size=17525
+wait_for_queue_to_empty,queue_size=16611
+wait_for_queue_to_empty,queue_size=15699
+wait_for_queue_to_empty,queue_size=14757
+wait_for_queue_to_empty,queue_size=13861
+wait_for_queue_to_empty,queue_size=12779
+wait_for_queue_to_empty,queue_size=12009
+wait_for_queue_to_empty,queue_size=11115
+wait_for_queue_to_empty,queue_size=10179
+wait_for_queue_to_empty,queue_size=9205
+wait_for_queue_to_empty,queue_size=8223
+wait_for_queue_to_empty,queue_size=7334
+wait_for_queue_to_empty,queue_size=6328
+wait_for_queue_to_empty,queue_size=5449
+wait_for_queue_to_empty,queue_size=4461
+wait_for_queue_to_empty,queue_size=3435
+wait_for_queue_to_empty,queue_size=2507
+wait_for_queue_to_empty,queue_size=1535
+wait_for_queue_to_empty,queue_size=649
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+14                          9420                          1888                EXEC.SWAP (40)                           995                            99
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 25.6
+  Alternate_elite = 16.4
+  Cloan = 6.2
+  Mutate = 5.5
+  Regenerate = 46.3
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 86
+..........
+
+test_case_error = 0.6
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 14
+Session 13
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=98925
+wait_for_queue_to_empty,queue_size=98045
+wait_for_queue_to_empty,queue_size=97096
+wait_for_queue_to_empty,queue_size=96185
+CPU Temperature is 0
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Load Example Cases
+training case n = 0
+training case n = 1
+training case n = 2
+training case n = 3
+training case n = 4
+training case n = 5
+training case n = 6
+training case n = 7
+training case n = 8
+training case n = 9
+training case n = 10
+training case n = 11
+training case n = 12
+training case n = 13
+training case n = 14
+training case n = 15
+training case n = 16
+training case n = 17
+training case n = 18
+training case n = 19
+training case n = 20
+training case n = 21
+training case n = 22
+training case n = 23
+training case n = 24
+training case n = 25
+training case n = 26
+training case n = 27
+training case n = 28
+training case n = 29
+training case n = 30
+training case n = 31
+training case n = 32
+training case n = 33
+training case n = 34
+training case n = 35
+training case n = 36
+training case n = 37
+training case n = 38
+training case n = 39
+training case n = 40
+training case n = 41
+training case n = 42
+training case n = 43
+training case n = 44
+training case n = 45
+training case n = 46
+training case n = 47
+training case n = 48
+training case n = 49
+training case n = 50
+training case n = 51
+training case n = 52
+training case n = 53
+training case n = 54
+training case n = 55
+training case n = 56
+training case n = 57
+training case n = 58
+training case n = 59
+training case n = 60
+training case n = 61
+training case n = 62
+training case n = 63
+training case n = 64
+training case n = 65
+training case n = 66
+training case n = 67
+training case n = 68
+training case n = 69
+training case n = 70
+training case n = 71
+training case n = 72
+training case n = 73
+training case n = 74
+training case n = 75
+training case n = 76
+training case n = 77
+training case n = 78
+training case n = 79
+training case n = 80
+training case n = 81
+training case n = 82
+training case n = 83
+training case n = 84
+training case n = 85
+training case n = 86
+training case n = 87
+training case n = 88
+training case n = 89
+training case n = 90
+training case n = 91
+training case n = 92
+training case n = 93
+training case n = 94
+training case n = 95
+training case n = 96
+training case n = 97
+training case n = 98
+training case n = 99
+test case n = 0
+test case n = 1
+test case n = 2
+test case n = 3
+test case n = 4
+test case n = 5
+test case n = 6
+test case n = 7
+test case n = 8
+test case n = 9
+Create Population Agents
+n = 0
+n = 29  Ignoring empty genome string
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 14
+Session 0
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=94898
+wait_for_queue_to_empty,queue_size=90131
+wait_for_queue_to_empty,queue_size=85207
+wait_for_queue_to_empty,queue_size=80361
+wait_for_queue_to_empty,queue_size=75449
+wait_for_queue_to_empty,queue_size=70503
+wait_for_queue_to_empty,queue_size=65718
+wait_for_queue_to_empty,queue_size=60745
+wait_for_queue_to_empty,queue_size=55931
+wait_for_queue_to_empty,queue_size=51022
+wait_for_queue_to_empty,queue_size=46216
+wait_for_queue_to_empty,queue_size=41308
+wait_for_queue_to_empty,queue_size=36444
+wait_for_queue_to_empty,queue_size=31884
+wait_for_queue_to_empty,queue_size=26852
+wait_for_queue_to_empty,queue_size=22099
+wait_for_queue_to_empty,queue_size=17177
+wait_for_queue_to_empty,queue_size=12195
+wait_for_queue_to_empty,queue_size=7216
+wait_for_queue_to_empty,queue_size=2320
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 33.1
+  Alternate_elite = 31.6
+  Cloan = 5.3
+  Mutate = 6.4
+  Regenerate = 23.6
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 256
+..........
+
+test_case_error = 0.6
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 15
+Session 1
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=91846
+wait_for_queue_to_empty,queue_size=84258
+wait_for_queue_to_empty,queue_size=76713
+wait_for_queue_to_empty,queue_size=68941
+wait_for_queue_to_empty,queue_size=61306
+wait_for_queue_to_empty,queue_size=53683
+wait_for_queue_to_empty,queue_size=45811
+wait_for_queue_to_empty,queue_size=38562
+wait_for_queue_to_empty,queue_size=31292
+wait_for_queue_to_empty,queue_size=23326
+wait_for_queue_to_empty,queue_size=15897
+wait_for_queue_to_empty,queue_size=8381
+wait_for_queue_to_empty,queue_size=537
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 30.2
+  Alternate_elite = 21.6
+  Cloan = 5.4
+  Mutate = 7.1
+  Regenerate = 35.7
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 753
+..........
+
+test_case_error = 0.3
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 16
+Session 2
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=93807
+wait_for_queue_to_empty,queue_size=87884
+wait_for_queue_to_empty,queue_size=81748
+wait_for_queue_to_empty,queue_size=75719
+wait_for_queue_to_empty,queue_size=69797
+wait_for_queue_to_empty,queue_size=64014
+wait_for_queue_to_empty,queue_size=57770
+wait_for_queue_to_empty,queue_size=51926
+wait_for_queue_to_empty,queue_size=45975
+wait_for_queue_to_empty,queue_size=40162
+wait_for_queue_to_empty,queue_size=34551
+wait_for_queue_to_empty,queue_size=28871
+wait_for_queue_to_empty,queue_size=22632
+wait_for_queue_to_empty,queue_size=16738
+wait_for_queue_to_empty,queue_size=10828
+wait_for_queue_to_empty,queue_size=4780
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 27.3
+  Alternate_elite = 12.7
+  Cloan = 5.8
+  Mutate = 4.9
+  Regenerate = 49.3
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 876
+..........
+
+test_case_error = 0.3
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 17
+Session 3
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=94393
+wait_for_queue_to_empty,queue_size=88981
+wait_for_queue_to_empty,queue_size=83375
+wait_for_queue_to_empty,queue_size=77633
+wait_for_queue_to_empty,queue_size=72277
+wait_for_queue_to_empty,queue_size=66609
+wait_for_queue_to_empty,queue_size=61178
+wait_for_queue_to_empty,queue_size=55433
+wait_for_queue_to_empty,queue_size=50229
+wait_for_queue_to_empty,queue_size=44501
+wait_for_queue_to_empty,queue_size=39275
+wait_for_queue_to_empty,queue_size=33840
+wait_for_queue_to_empty,queue_size=28629
+wait_for_queue_to_empty,queue_size=23093
+wait_for_queue_to_empty,queue_size=17574
+wait_for_queue_to_empty,queue_size=12104
+wait_for_queue_to_empty,queue_size=6720
+wait_for_queue_to_empty,queue_size=1483
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 33.4
+  Alternate_elite = 27.4
+  Cloan = 5.5
+  Mutate = 6.5
+  Regenerate = 27.2
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 313
+..........
+
+test_case_error = 0.3
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 18
+Session 4
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=92458
+wait_for_queue_to_empty,queue_size=85295
+wait_for_queue_to_empty,queue_size=78313
+wait_for_queue_to_empty,queue_size=71983
+wait_for_queue_to_empty,queue_size=65898
+wait_for_queue_to_empty,queue_size=59304
+wait_for_queue_to_empty,queue_size=52757
+wait_for_queue_to_empty,queue_size=46010
+wait_for_queue_to_empty,queue_size=39291
+wait_for_queue_to_empty,queue_size=33036
+wait_for_queue_to_empty,queue_size=26407
+wait_for_queue_to_empty,queue_size=19702
+wait_for_queue_to_empty,queue_size=13013
+wait_for_queue_to_empty,queue_size=6241
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 29.7
+  Alternate_elite = 15.7
+  Cloan = 7.6
+  Mutate = 5.7
+  Regenerate = 41.3
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 449
+..........
+
+test_case_error = 0.3
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 19
+Session 5
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=93164
+wait_for_queue_to_empty,queue_size=86081
+wait_for_queue_to_empty,queue_size=78983
+wait_for_queue_to_empty,queue_size=72173
+wait_for_queue_to_empty,queue_size=65113
+wait_for_queue_to_empty,queue_size=58151
+wait_for_queue_to_empty,queue_size=50869
+wait_for_queue_to_empty,queue_size=43867
+wait_for_queue_to_empty,queue_size=37237
+wait_for_queue_to_empty,queue_size=30852
+wait_for_queue_to_empty,queue_size=23623
+wait_for_queue_to_empty,queue_size=17026
+wait_for_queue_to_empty,queue_size=10295
+wait_for_queue_to_empty,queue_size=3114
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 33.3
+  Alternate_elite = 30.6
+  Cloan = 6.4
+  Mutate = 6.1
+  Regenerate = 23.6
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 18
+..........
+
+test_case_error = 0.2
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 20
+Session 6
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=89441
+wait_for_queue_to_empty,queue_size=78924
+wait_for_queue_to_empty,queue_size=69083
+wait_for_queue_to_empty,queue_size=58621
+wait_for_queue_to_empty,queue_size=48351
+wait_for_queue_to_empty,queue_size=37989
+wait_for_queue_to_empty,queue_size=27821
+wait_for_queue_to_empty,queue_size=17290
+wait_for_queue_to_empty,queue_size=7360
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 23
+  Alternate_elite = 16.8
+  Cloan = 7.2
+  Mutate = 8.1
+  Regenerate = 44.9
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 18
+..........
+
+test_case_error = 0.5
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 21
+Session 7
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=92978
+wait_for_queue_to_empty,queue_size=86059
+wait_for_queue_to_empty,queue_size=78826
+wait_for_queue_to_empty,queue_size=71758
+wait_for_queue_to_empty,queue_size=64645
+wait_for_queue_to_empty,queue_size=57221
+wait_for_queue_to_empty,queue_size=50050
+wait_for_queue_to_empty,queue_size=42868
+wait_for_queue_to_empty,queue_size=35990
+wait_for_queue_to_empty,queue_size=29352
+wait_for_queue_to_empty,queue_size=21978
+wait_for_queue_to_empty,queue_size=14871
+wait_for_queue_to_empty,queue_size=7855
+wait_for_queue_to_empty,queue_size=541
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 30.9
+  Alternate_elite = 24.3
+  Cloan = 7.8
+  Mutate = 5.3
+  Regenerate = 31.7
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 507
+..........
+
+test_case_error = 0.6
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 22
+Session 8
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=92927
+wait_for_queue_to_empty,queue_size=86097
+wait_for_queue_to_empty,queue_size=78653
+wait_for_queue_to_empty,queue_size=71898
+wait_for_queue_to_empty,queue_size=65180
+wait_for_queue_to_empty,queue_size=57980
+wait_for_queue_to_empty,queue_size=50701
+wait_for_queue_to_empty,queue_size=43753
+wait_for_queue_to_empty,queue_size=37090
+wait_for_queue_to_empty,queue_size=30503
+wait_for_queue_to_empty,queue_size=23434
+wait_for_queue_to_empty,queue_size=16809
+wait_for_queue_to_empty,queue_size=10015
+wait_for_queue_to_empty,queue_size=3003
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 25.8
+  Alternate_elite = 23.5
+  Cloan = 6.2
+  Mutate = 6.6
+  Regenerate = 37.9
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 543
+..........
+
+test_case_error = 0.6
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 23
+Session 9
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=92989
+wait_for_queue_to_empty,queue_size=86044
+wait_for_queue_to_empty,queue_size=78676
+wait_for_queue_to_empty,queue_size=71860
+wait_for_queue_to_empty,queue_size=64974
+wait_for_queue_to_empty,queue_size=57701
+wait_for_queue_to_empty,queue_size=50508
+wait_for_queue_to_empty,queue_size=43407
+wait_for_queue_to_empty,queue_size=36569
+wait_for_queue_to_empty,queue_size=29717
+wait_for_queue_to_empty,queue_size=22749
+wait_for_queue_to_empty,queue_size=16052
+wait_for_queue_to_empty,queue_size=9198
+wait_for_queue_to_empty,queue_size=2246
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 25.1
+  Alternate_elite = 13
+  Cloan = 6.8
+  Mutate = 7.1
+  Regenerate = 48
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 590
+..........
+
+test_case_error = 0.3
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 24
+Session 10
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=94652
+wait_for_queue_to_empty,queue_size=89422
+wait_for_queue_to_empty,queue_size=83939
+wait_for_queue_to_empty,queue_size=78367
+wait_for_queue_to_empty,queue_size=72717
+wait_for_queue_to_empty,queue_size=67274
+wait_for_queue_to_empty,queue_size=61749
+wait_for_queue_to_empty,queue_size=56016
+wait_for_queue_to_empty,queue_size=50782
+wait_for_queue_to_empty,queue_size=44776
+wait_for_queue_to_empty,queue_size=39563
+wait_for_queue_to_empty,queue_size=33811
+wait_for_queue_to_empty,queue_size=28776
+wait_for_queue_to_empty,queue_size=22884
+wait_for_queue_to_empty,queue_size=17512
+wait_for_queue_to_empty,queue_size=11791
+wait_for_queue_to_empty,queue_size=6511
+wait_for_queue_to_empty,queue_size=1254
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 31.3
+  Alternate_elite = 11.5
+  Cloan = 6.8
+  Mutate = 6.1
+  Regenerate = 44.3
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 553
+..........
+
+test_case_error = 0.3
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 25
+Session 11
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=94856
+wait_for_queue_to_empty,queue_size=90215
+wait_for_queue_to_empty,queue_size=85204
+wait_for_queue_to_empty,queue_size=80099
+wait_for_queue_to_empty,queue_size=75076
+wait_for_queue_to_empty,queue_size=70076
+wait_for_queue_to_empty,queue_size=65146
+wait_for_queue_to_empty,queue_size=59903
+wait_for_queue_to_empty,queue_size=54881
+wait_for_queue_to_empty,queue_size=49973
+wait_for_queue_to_empty,queue_size=44992
+wait_for_queue_to_empty,queue_size=40066
+wait_for_queue_to_empty,queue_size=35321
+wait_for_queue_to_empty,queue_size=30498
+wait_for_queue_to_empty,queue_size=25323
+wait_for_queue_to_empty,queue_size=20326
+wait_for_queue_to_empty,queue_size=15365
+wait_for_queue_to_empty,queue_size=10407
+wait_for_queue_to_empty,queue_size=5293
+wait_for_queue_to_empty,queue_size=276
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 34.7
+  Alternate_elite = 26.7
+  Cloan = 6.7
+  Mutate = 6.4
+  Regenerate = 25.5
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 257
+..........
+
+test_case_error = 0.6
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 26
+Session 12
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=90614
+wait_for_queue_to_empty,queue_size=81113
+wait_for_queue_to_empty,queue_size=72096
+wait_for_queue_to_empty,queue_size=63042
+wait_for_queue_to_empty,queue_size=53460
+wait_for_queue_to_empty,queue_size=44214
+wait_for_queue_to_empty,queue_size=35171
+wait_for_queue_to_empty,queue_size=26004
+wait_for_queue_to_empty,queue_size=16731
+wait_for_queue_to_empty,queue_size=7670
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 32.8
+  Alternate_elite = 29.5
+  Cloan = 6.5
+  Mutate = 5.6
+  Regenerate = 25.6
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 77
+..........
+
+test_case_error = 0.6
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 27
+Session 13
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=92585
+wait_for_queue_to_empty,queue_size=85472
+wait_for_queue_to_empty,queue_size=78181
+wait_for_queue_to_empty,queue_size=71253
+wait_for_queue_to_empty,queue_size=64226
+wait_for_queue_to_empty,queue_size=56753
+wait_for_queue_to_empty,queue_size=49683
+wait_for_queue_to_empty,queue_size=42499
+wait_for_queue_to_empty,queue_size=35514
+wait_for_queue_to_empty,queue_size=28725
+wait_for_queue_to_empty,queue_size=21393
+wait_for_queue_to_empty,queue_size=14344
+wait_for_queue_to_empty,queue_size=7243
+wait_for_queue_to_empty,queue_size=82
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 21.3
+  Alternate_elite = 9.6
+  Cloan = 7.4
+  Mutate = 5.7
+  Regenerate = 56
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 906
+..........
+
+test_case_error = 0.3
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 28
+Session 14
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=94338
+wait_for_queue_to_empty,queue_size=89082
+wait_for_queue_to_empty,queue_size=83583
+wait_for_queue_to_empty,queue_size=77931
+wait_for_queue_to_empty,queue_size=72411
+wait_for_queue_to_empty,queue_size=67046
+wait_for_queue_to_empty,queue_size=61552
+wait_for_queue_to_empty,queue_size=56176
+wait_for_queue_to_empty,queue_size=50845
+wait_for_queue_to_empty,queue_size=45093
+wait_for_queue_to_empty,queue_size=39486
+wait_for_queue_to_empty,queue_size=34121
+wait_for_queue_to_empty,queue_size=28838
+wait_for_queue_to_empty,queue_size=23247
+wait_for_queue_to_empty,queue_size=17845
+wait_for_queue_to_empty,queue_size=12268
+wait_for_queue_to_empty,queue_size=6772
+wait_for_queue_to_empty,queue_size=1401
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 37.2
+  Alternate_elite = 34.6
+  Cloan = 6.5
+  Mutate = 7.1
+  Regenerate = 14.6
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 122
+..........
+
+test_case_error = 0.3
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 29
+Session 15
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=89406
+wait_for_queue_to_empty,queue_size=78664
+wait_for_queue_to_empty,queue_size=68789
+wait_for_queue_to_empty,queue_size=58623
+wait_for_queue_to_empty,queue_size=48731
+wait_for_queue_to_empty,queue_size=38663
+wait_for_queue_to_empty,queue_size=28684
+wait_for_queue_to_empty,queue_size=18408
+wait_for_queue_to_empty,queue_size=8077
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 28.6
+  Alternate_elite = 21.5
+  Cloan = 6.7
+  Mutate = 4.6
+  Regenerate = 38.6
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 326
+..........
+
+test_case_error = 0.3
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 30
+Session 16
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=91159
+wait_for_queue_to_empty,queue_size=82169
+wait_for_queue_to_empty,queue_size=73603
+wait_for_queue_to_empty,queue_size=64904
+wait_for_queue_to_empty,queue_size=56247
+wait_for_queue_to_empty,queue_size=47281
+wait_for_queue_to_empty,queue_size=38622
+wait_for_queue_to_empty,queue_size=30247
+wait_for_queue_to_empty,queue_size=21434
+wait_for_queue_to_empty,queue_size=12711
+wait_for_queue_to_empty,queue_size=4161
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 31.1
+  Alternate_elite = 27
+  Cloan = 5.7
+  Mutate = 6
+  Regenerate = 30.2
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 8
+..........
+
+test_case_error = 0.3
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 31
+Session 17
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=92672
+wait_for_queue_to_empty,queue_size=85359
+wait_for_queue_to_empty,queue_size=77509
+wait_for_queue_to_empty,queue_size=70531
+wait_for_queue_to_empty,queue_size=63401
+wait_for_queue_to_empty,queue_size=55553
+wait_for_queue_to_empty,queue_size=48490
+wait_for_queue_to_empty,queue_size=41261
+wait_for_queue_to_empty,queue_size=34271
+wait_for_queue_to_empty,queue_size=27068
+wait_for_queue_to_empty,queue_size=19791
+wait_for_queue_to_empty,queue_size=12476
+wait_for_queue_to_empty,queue_size=5427
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 30.6
+  Alternate_elite = 22.4
+  Cloan = 7.1
+  Mutate = 6
+  Regenerate = 33.9
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 245
+..........
+
+test_case_error = 0.3
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 32
+Session 18
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=90381
+wait_for_queue_to_empty,queue_size=80674
+wait_for_queue_to_empty,queue_size=71168
+wait_for_queue_to_empty,queue_size=61643
+wait_for_queue_to_empty,queue_size=51773
+wait_for_queue_to_empty,queue_size=42177
+wait_for_queue_to_empty,queue_size=32986
+wait_for_queue_to_empty,queue_size=23423
+wait_for_queue_to_empty,queue_size=13963
+wait_for_queue_to_empty,queue_size=4389
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 43
+  Alternate_elite = 35.9
+  Cloan = 6.2
+  Mutate = 5
+  Regenerate = 9.9
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 31
+..........
+
+test_case_error = 0.3
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 33
+Session 19
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=86257
+wait_for_queue_to_empty,queue_size=72447
+wait_for_queue_to_empty,queue_size=58870
+wait_for_queue_to_empty,queue_size=45283
+wait_for_queue_to_empty,queue_size=32115
+wait_for_queue_to_empty,queue_size=18643
+wait_for_queue_to_empty,queue_size=5178
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 22.1
+  Alternate_elite = 16.2
+  Cloan = 5.9
+  Mutate = 7
+  Regenerate = 48.8
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 586
+..........
+
+test_case_error = 0.3
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 34
+Session 20
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=93180
+wait_for_queue_to_empty,queue_size=86194
+wait_for_queue_to_empty,queue_size=79163
+wait_for_queue_to_empty,queue_size=72049
+wait_for_queue_to_empty,queue_size=64985
+wait_for_queue_to_empty,queue_size=57865
+wait_for_queue_to_empty,queue_size=50850
+wait_for_queue_to_empty,queue_size=43627
+wait_for_queue_to_empty,queue_size=36680
+wait_for_queue_to_empty,queue_size=30157
+wait_for_queue_to_empty,queue_size=23270
+wait_for_queue_to_empty,queue_size=16439
+wait_for_queue_to_empty,queue_size=9310
+wait_for_queue_to_empty,queue_size=2469
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 30.5
+  Alternate_elite = 22.1
+  Cloan = 7.4
+  Mutate = 6.5
+  Regenerate = 33.5
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 98
+..........
+
+test_case_error = 0.3
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 35
+Session 21
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=92766
+wait_for_queue_to_empty,queue_size=85798
+wait_for_queue_to_empty,queue_size=78330
+wait_for_queue_to_empty,queue_size=70892
+wait_for_queue_to_empty,queue_size=63786
+wait_for_queue_to_empty,queue_size=56500
+wait_for_queue_to_empty,queue_size=49560
+wait_for_queue_to_empty,queue_size=42006
+wait_for_queue_to_empty,queue_size=34834
+wait_for_queue_to_empty,queue_size=27926
+wait_for_queue_to_empty,queue_size=20882
+wait_for_queue_to_empty,queue_size=13593
+wait_for_queue_to_empty,queue_size=6265
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 28.7
+  Alternate_elite = 21.8
+  Cloan = 6.6
+  Mutate = 5.9
+  Regenerate = 37
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 80
+..........
+
+test_case_error = 0.3
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 36
+Session 22
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=91883
+wait_for_queue_to_empty,queue_size=84120
+wait_for_queue_to_empty,queue_size=75936
+wait_for_queue_to_empty,queue_size=67794
+wait_for_queue_to_empty,queue_size=60041
+wait_for_queue_to_empty,queue_size=52169
+wait_for_queue_to_empty,queue_size=44119
+wait_for_queue_to_empty,queue_size=36113
+wait_for_queue_to_empty,queue_size=28134
+wait_for_queue_to_empty,queue_size=20169
+wait_for_queue_to_empty,queue_size=12223
+wait_for_queue_to_empty,queue_size=4307
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 27.8
+  Alternate_elite = 14
+  Cloan = 6.6
+  Mutate = 7.1
+  Regenerate = 44.5
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 114
+..........
+
+test_case_error = 0.3
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 37
+Session 23
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=92535
+wait_for_queue_to_empty,queue_size=85305
+wait_for_queue_to_empty,queue_size=77691
+wait_for_queue_to_empty,queue_size=70222
+wait_for_queue_to_empty,queue_size=63121
+wait_for_queue_to_empty,queue_size=55661
+wait_for_queue_to_empty,queue_size=48154
+wait_for_queue_to_empty,queue_size=40794
+wait_for_queue_to_empty,queue_size=33441
+wait_for_queue_to_empty,queue_size=26049
+wait_for_queue_to_empty,queue_size=18781
+wait_for_queue_to_empty,queue_size=11528
+wait_for_queue_to_empty,queue_size=4101
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 29.3
+  Alternate_elite = 14.1
+  Cloan = 6.9
+  Mutate = 6.8
+  Regenerate = 42.9
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 648
+..........
+
+test_case_error = 0
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 38
+Session 24
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=94243
+wait_for_queue_to_empty,queue_size=89007
+wait_for_queue_to_empty,queue_size=83463
+wait_for_queue_to_empty,queue_size=77543
+wait_for_queue_to_empty,queue_size=71912
+wait_for_queue_to_empty,queue_size=66276
+wait_for_queue_to_empty,queue_size=60741
+wait_for_queue_to_empty,queue_size=55140
+wait_for_queue_to_empty,queue_size=49775
+wait_for_queue_to_empty,queue_size=44111
+wait_for_queue_to_empty,queue_size=38910
+wait_for_queue_to_empty,queue_size=33550
+wait_for_queue_to_empty,queue_size=28286
+wait_for_queue_to_empty,queue_size=22638
+wait_for_queue_to_empty,queue_size=17433
+wait_for_queue_to_empty,queue_size=12122
+wait_for_queue_to_empty,queue_size=6635
+wait_for_queue_to_empty,queue_size=1063
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 28
+  Alternate_elite = 15.5
+  Cloan = 6.2
+  Mutate = 6.5
+  Regenerate = 43.8
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 614
+..........
+
+test_case_error = 0
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+Returned from run().  Exiting main()
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+CPU Temperature is 0
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Load Example Cases
+training case n = 0
+training case n = 1
+training case n = 2
+training case n = 3
+training case n = 4
+training case n = 5
+training case n = 6
+training case n = 7
+training case n = 8
+training case n = 9
+training case n = 10
+training case n = 11
+training case n = 12
+training case n = 13
+training case n = 14
+training case n = 15
+training case n = 16
+training case n = 17
+training case n = 18
+training case n = 19
+training case n = 20
+training case n = 21
+training case n = 22
+training case n = 23
+training case n = 24
+training case n = 25
+training case n = 26
+training case n = 27
+training case n = 28
+training case n = 29
+training case n = 30
+training case n = 31
+training case n = 32
+training case n = 33
+training case n = 34
+training case n = 35
+training case n = 36
+training case n = 37
+training case n = 38
+training case n = 39
+training case n = 40
+training case n = 41
+training case n = 42
+training case n = 43
+training case n = 44
+training case n = 45
+training case n = 46
+training case n = 47
+training case n = 48
+training case n = 49
+training case n = 50
+training case n = 51
+training case n = 52
+training case n = 53
+training case n = 54
+training case n = 55
+training case n = 56
+training case n = 57
+training case n = 58
+training case n = 59
+training case n = 60
+training case n = 61
+training case n = 62
+training case n = 63
+training case n = 64
+training case n = 65
+training case n = 66
+training case n = 67
+training case n = 68
+training case n = 69
+training case n = 70
+training case n = 71
+training case n = 72
+training case n = 73
+training case n = 74
+training case n = 75
+training case n = 76
+training case n = 77
+training case n = 78
+training case n = 79
+training case n = 80
+training case n = 81
+training case n = 82
+training case n = 83
+training case n = 84
+training case n = 85
+training case n = 86
+training case n = 87
+training case n = 88
+training case n = 89
+training case n = 90
+training case n = 91
+training case n = 92
+training case n = 93
+training case n = 94
+training case n = 95
+training case n = 96
+training case n = 97
+training case n = 98
+training case n = 99
+test case n = 0
+test case n = 1
+test case n = 2
+test case n = 3
+test case n = 4
+test case n = 5
+test case n = 6
+test case n = 7
+test case n = 8
+test case n = 9
+Create Population Agents
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 1
+Session 0
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=96336
+wait_for_queue_to_empty,queue_size=92870
+wait_for_queue_to_empty,queue_size=89188
+wait_for_queue_to_empty,queue_size=85535
+wait_for_queue_to_empty,queue_size=81739
+wait_for_queue_to_empty,queue_size=78022
+wait_for_queue_to_empty,queue_size=74289
+wait_for_queue_to_empty,queue_size=70592
+wait_for_queue_to_empty,queue_size=66965
+wait_for_queue_to_empty,queue_size=63228
+wait_for_queue_to_empty,queue_size=59435
+wait_for_queue_to_empty,queue_size=55681
+wait_for_queue_to_empty,queue_size=52098
+wait_for_queue_to_empty,queue_size=48567
+wait_for_queue_to_empty,queue_size=44833
+wait_for_queue_to_empty,queue_size=41169
+wait_for_queue_to_empty,queue_size=37560
+wait_for_queue_to_empty,queue_size=33972
+wait_for_queue_to_empty,queue_size=30625
+wait_for_queue_to_empty,queue_size=26858
+wait_for_queue_to_empty,queue_size=23119
+wait_for_queue_to_empty,queue_size=19574
+wait_for_queue_to_empty,queue_size=15790
+wait_for_queue_to_empty,queue_size=12217
+wait_for_queue_to_empty,queue_size=8552
+wait_for_queue_to_empty,queue_size=4793
+wait_for_queue_to_empty,queue_size=1332
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 41.8
+  Alternate_elite = 44.8
+  Cloan = 7.5
+  Mutate = 5.9
+  Regenerate = 0
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 108
+..........
+
+test_case_error = 0.7
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 2
+Session 1
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=96977
+wait_for_queue_to_empty,queue_size=94098
+wait_for_queue_to_empty,queue_size=91199
+wait_for_queue_to_empty,queue_size=88212
+wait_for_queue_to_empty,queue_size=85390
+wait_for_queue_to_empty,queue_size=82492
+wait_for_queue_to_empty,queue_size=79546
+wait_for_queue_to_empty,queue_size=76721
+wait_for_queue_to_empty,queue_size=73836
+wait_for_queue_to_empty,queue_size=70919
+wait_for_queue_to_empty,queue_size=67967
+wait_for_queue_to_empty,queue_size=65063
+wait_for_queue_to_empty,queue_size=62167
+wait_for_queue_to_empty,queue_size=59145
+wait_for_queue_to_empty,queue_size=56240
+wait_for_queue_to_empty,queue_size=53190
+wait_for_queue_to_empty,queue_size=50212
+wait_for_queue_to_empty,queue_size=47278
+wait_for_queue_to_empty,queue_size=44334
+wait_for_queue_to_empty,queue_size=41334
+wait_for_queue_to_empty,queue_size=38565
+wait_for_queue_to_empty,queue_size=35691
+wait_for_queue_to_empty,queue_size=32886
+wait_for_queue_to_empty,queue_size=30074
+wait_for_queue_to_empty,queue_size=27001
+wait_for_queue_to_empty,queue_size=24144
+wait_for_queue_to_empty,queue_size=21303
+wait_for_queue_to_empty,queue_size=18326
+wait_for_queue_to_empty,queue_size=15374
+wait_for_queue_to_empty,queue_size=12542
+wait_for_queue_to_empty,queue_size=9555
+wait_for_queue_to_empty,queue_size=6576
+wait_for_queue_to_empty,queue_size=3649
+wait_for_queue_to_empty,queue_size=732
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 12.4
+  Alternate_elite = 11.5
+  Cloan = 6.7
+  Mutate = 6.8
+  Regenerate = 62.6
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 60
+..........
+
+test_case_error = 0.6
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 3
+Session 2
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=96774
+wait_for_queue_to_empty,queue_size=93651
+wait_for_queue_to_empty,queue_size=90498
+wait_for_queue_to_empty,queue_size=87307
+wait_for_queue_to_empty,queue_size=84203
+wait_for_queue_to_empty,queue_size=81052
+wait_for_queue_to_empty,queue_size=77887
+wait_for_queue_to_empty,queue_size=74770
+wait_for_queue_to_empty,queue_size=71724
+wait_for_queue_to_empty,queue_size=68655
+wait_for_queue_to_empty,queue_size=65635
+wait_for_queue_to_empty,queue_size=62396
+wait_for_queue_to_empty,queue_size=59169
+wait_for_queue_to_empty,queue_size=56014
+wait_for_queue_to_empty,queue_size=53027
+wait_for_queue_to_empty,queue_size=49914
+wait_for_queue_to_empty,queue_size=46664
+wait_for_queue_to_empty,queue_size=43541
+wait_for_queue_to_empty,queue_size=40428
+wait_for_queue_to_empty,queue_size=37182
+wait_for_queue_to_empty,queue_size=34104
+wait_for_queue_to_empty,queue_size=30983
+wait_for_queue_to_empty,queue_size=27850
+wait_for_queue_to_empty,queue_size=24652
+wait_for_queue_to_empty,queue_size=21509
+wait_for_queue_to_empty,queue_size=18298
+wait_for_queue_to_empty,queue_size=15146
+wait_for_queue_to_empty,queue_size=12006
+wait_for_queue_to_empty,queue_size=8873
+wait_for_queue_to_empty,queue_size=5657
+wait_for_queue_to_empty,queue_size=2710
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 37.9
+  Alternate_elite = 6.6
+  Cloan = 5.3
+  Mutate = 5.6
+  Regenerate = 44.6
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 60
+..........
+
+test_case_error = 0.6
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 4
+Session 3
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=96758
+wait_for_queue_to_empty,queue_size=93660
+wait_for_queue_to_empty,queue_size=90551
+wait_for_queue_to_empty,queue_size=87320
+wait_for_queue_to_empty,queue_size=84159
+wait_for_queue_to_empty,queue_size=80743
+wait_for_queue_to_empty,queue_size=77618
+wait_for_queue_to_empty,queue_size=74569
+wait_for_queue_to_empty,queue_size=71414
+wait_for_queue_to_empty,queue_size=68156
+wait_for_queue_to_empty,queue_size=65048
+wait_for_queue_to_empty,queue_size=61867
+wait_for_queue_to_empty,queue_size=58652
+wait_for_queue_to_empty,queue_size=55543
+wait_for_queue_to_empty,queue_size=52214
+wait_for_queue_to_empty,queue_size=48994
+wait_for_queue_to_empty,queue_size=45778
+wait_for_queue_to_empty,queue_size=42651
+wait_for_queue_to_empty,queue_size=39592
+wait_for_queue_to_empty,queue_size=36298
+wait_for_queue_to_empty,queue_size=33185
+wait_for_queue_to_empty,queue_size=30234
+wait_for_queue_to_empty,queue_size=26760
+wait_for_queue_to_empty,queue_size=23590
+wait_for_queue_to_empty,queue_size=20544
+wait_for_queue_to_empty,queue_size=17287
+wait_for_queue_to_empty,queue_size=14131
+wait_for_queue_to_empty,queue_size=11131
+wait_for_queue_to_empty,queue_size=8007
+wait_for_queue_to_empty,queue_size=4752
+wait_for_queue_to_empty,queue_size=1541
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 38.2
+  Alternate_elite = 37.8
+  Cloan = 7.1
+  Mutate = 6.9
+  Regenerate = 10
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 60
+..........
+
+test_case_error = 0.6
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 5
+Session 4
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=96533
+wait_for_queue_to_empty,queue_size=93168
+wait_for_queue_to_empty,queue_size=89892
+wait_for_queue_to_empty,queue_size=86576
+wait_for_queue_to_empty,queue_size=83213
+wait_for_queue_to_empty,queue_size=79875
+wait_for_queue_to_empty,queue_size=76527
+wait_for_queue_to_empty,queue_size=73196
+wait_for_queue_to_empty,queue_size=69869
+wait_for_queue_to_empty,queue_size=66579
+wait_for_queue_to_empty,queue_size=63234
+wait_for_queue_to_empty,queue_size=59890
+wait_for_queue_to_empty,queue_size=56571
+wait_for_queue_to_empty,queue_size=53236
+wait_for_queue_to_empty,queue_size=49939
+wait_for_queue_to_empty,queue_size=46553
+wait_for_queue_to_empty,queue_size=43185
+wait_for_queue_to_empty,queue_size=39897
+wait_for_queue_to_empty,queue_size=36535
+wait_for_queue_to_empty,queue_size=33266
+wait_for_queue_to_empty,queue_size=30024
+wait_for_queue_to_empty,queue_size=26706
+wait_for_queue_to_empty,queue_size=23355
+wait_for_queue_to_empty,queue_size=19990
+wait_for_queue_to_empty,queue_size=16673
+wait_for_queue_to_empty,queue_size=13315
+wait_for_queue_to_empty,queue_size=9977
+wait_for_queue_to_empty,queue_size=6660
+wait_for_queue_to_empty,queue_size=3361
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 10.5
+  Alternate_elite = 6.7
+  Cloan = 6.5
+  Mutate = 6.5
+  Regenerate = 69.8
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 733
+..........
+
+test_case_error = 0.3
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 6
+Session 5
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=96058
+wait_for_queue_to_empty,queue_size=92380
+wait_for_queue_to_empty,queue_size=88554
+wait_for_queue_to_empty,queue_size=84866
+wait_for_queue_to_empty,queue_size=81072
+wait_for_queue_to_empty,queue_size=77317
+wait_for_queue_to_empty,queue_size=73548
+wait_for_queue_to_empty,queue_size=69799
+wait_for_queue_to_empty,queue_size=66122
+wait_for_queue_to_empty,queue_size=62420
+wait_for_queue_to_empty,queue_size=58437
+wait_for_queue_to_empty,queue_size=54800
+wait_for_queue_to_empty,queue_size=51130
+wait_for_queue_to_empty,queue_size=47468
+wait_for_queue_to_empty,queue_size=43687
+wait_for_queue_to_empty,queue_size=40049
+wait_for_queue_to_empty,queue_size=36405
+wait_for_queue_to_empty,queue_size=32897
+wait_for_queue_to_empty,queue_size=29319
+wait_for_queue_to_empty,queue_size=25324
+wait_for_queue_to_empty,queue_size=21693
+wait_for_queue_to_empty,queue_size=18008
+wait_for_queue_to_empty,queue_size=14319
+wait_for_queue_to_empty,queue_size=10598
+wait_for_queue_to_empty,queue_size=6894
+wait_for_queue_to_empty,queue_size=3128
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 33.7
+  Alternate_elite = 7.8
+  Cloan = 6
+  Mutate = 6
+  Regenerate = 46.5
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 476
+..........
+
+test_case_error = 0.3
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 7
+Session 6
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=94680
+wait_for_queue_to_empty,queue_size=89447
+wait_for_queue_to_empty,queue_size=84391
+wait_for_queue_to_empty,queue_size=79214
+wait_for_queue_to_empty,queue_size=74322
+wait_for_queue_to_empty,queue_size=69192
+wait_for_queue_to_empty,queue_size=64079
+wait_for_queue_to_empty,queue_size=59038
+wait_for_queue_to_empty,queue_size=53849
+wait_for_queue_to_empty,queue_size=48657
+wait_for_queue_to_empty,queue_size=43553
+wait_for_queue_to_empty,queue_size=38244
+wait_for_queue_to_empty,queue_size=33215
+wait_for_queue_to_empty,queue_size=27781
+wait_for_queue_to_empty,queue_size=22819
+wait_for_queue_to_empty,queue_size=17872
+wait_for_queue_to_empty,queue_size=13080
+wait_for_queue_to_empty,queue_size=8170
+wait_for_queue_to_empty,queue_size=3024
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 25.5
+  Alternate_elite = 3.3
+  Cloan = 6.5
+  Mutate = 5.8
+  Regenerate = 58.9
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 61
+..........
+
+test_case_error = 0.3
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 8
+Session 7
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=95199
+wait_for_queue_to_empty,queue_size=90449
+wait_for_queue_to_empty,queue_size=85683
+wait_for_queue_to_empty,queue_size=80891
+wait_for_queue_to_empty,queue_size=76007
+wait_for_queue_to_empty,queue_size=71439
+wait_for_queue_to_empty,queue_size=66906
+wait_for_queue_to_empty,queue_size=62248
+wait_for_queue_to_empty,queue_size=57338
+wait_for_queue_to_empty,queue_size=52868
+wait_for_queue_to_empty,queue_size=48195
+wait_for_queue_to_empty,queue_size=43370
+wait_for_queue_to_empty,queue_size=38820
+wait_for_queue_to_empty,queue_size=34144
+wait_for_queue_to_empty,queue_size=29601
+wait_for_queue_to_empty,queue_size=24865
+wait_for_queue_to_empty,queue_size=20171
+wait_for_queue_to_empty,queue_size=15522
+wait_for_queue_to_empty,queue_size=10918
+wait_for_queue_to_empty,queue_size=6466
+wait_for_queue_to_empty,queue_size=1994
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 33.5
+  Alternate_elite = 7.7
+  Cloan = 5.7
+  Mutate = 6.7
+  Regenerate = 46.4
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 213
+..........
+
+test_case_error = 0.6
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 9
+Session 8
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=95006
+wait_for_queue_to_empty,queue_size=90335
+wait_for_queue_to_empty,queue_size=85574
+wait_for_queue_to_empty,queue_size=80689
+wait_for_queue_to_empty,queue_size=75572
+wait_for_queue_to_empty,queue_size=70654
+wait_for_queue_to_empty,queue_size=65876
+wait_for_queue_to_empty,queue_size=60658
+wait_for_queue_to_empty,queue_size=55695
+wait_for_queue_to_empty,queue_size=50763
+wait_for_queue_to_empty,queue_size=45507
+wait_for_queue_to_empty,queue_size=40677
+wait_for_queue_to_empty,queue_size=35812
+wait_for_queue_to_empty,queue_size=30963
+wait_for_queue_to_empty,queue_size=25967
+wait_for_queue_to_empty,queue_size=21201
+wait_for_queue_to_empty,queue_size=16200
+wait_for_queue_to_empty,queue_size=11231
+wait_for_queue_to_empty,queue_size=6141
+wait_for_queue_to_empty,queue_size=1527
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 25.4
+  Alternate_elite = 9.3
+  Cloan = 6.9
+  Mutate = 5.9
+  Regenerate = 52.5
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 312
+..........
+
+test_case_error = 0.6
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 10
+Session 9
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=95131
+wait_for_queue_to_empty,queue_size=90453
+wait_for_queue_to_empty,queue_size=85803
+wait_for_queue_to_empty,queue_size=81304
+wait_for_queue_to_empty,queue_size=76530
+wait_for_queue_to_empty,queue_size=71896
+wait_for_queue_to_empty,queue_size=67282
+wait_for_queue_to_empty,queue_size=62668
+wait_for_queue_to_empty,queue_size=58003
+wait_for_queue_to_empty,queue_size=53491
+wait_for_queue_to_empty,queue_size=48836
+wait_for_queue_to_empty,queue_size=44174
+wait_for_queue_to_empty,queue_size=39563
+wait_for_queue_to_empty,queue_size=34764
+wait_for_queue_to_empty,queue_size=30306
+wait_for_queue_to_empty,queue_size=25555
+wait_for_queue_to_empty,queue_size=21005
+wait_for_queue_to_empty,queue_size=16430
+wait_for_queue_to_empty,queue_size=11651
+wait_for_queue_to_empty,queue_size=6946
+wait_for_queue_to_empty,queue_size=2398
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 29.7
+  Alternate_elite = 8.5
+  Cloan = 7.1
+  Mutate = 5.4
+  Regenerate = 49.3
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 195
+..........
+
+test_case_error = 0.6
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 11
+Session 10
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=96152
+wait_for_queue_to_empty,queue_size=92528
+wait_for_queue_to_empty,queue_size=88737
+wait_for_queue_to_empty,queue_size=85068
+wait_for_queue_to_empty,queue_size=81292
+wait_for_queue_to_empty,queue_size=77530
+wait_for_queue_to_empty,queue_size=73888
+wait_for_queue_to_empty,queue_size=70245
+wait_for_queue_to_empty,queue_size=66572
+wait_for_queue_to_empty,queue_size=62826
+wait_for_queue_to_empty,queue_size=59041
+wait_for_queue_to_empty,queue_size=55311
+wait_for_queue_to_empty,queue_size=51598
+wait_for_queue_to_empty,queue_size=48070
+wait_for_queue_to_empty,queue_size=44310
+wait_for_queue_to_empty,queue_size=40600
+wait_for_queue_to_empty,queue_size=36929
+wait_for_queue_to_empty,queue_size=33377
+wait_for_queue_to_empty,queue_size=30036
+wait_for_queue_to_empty,queue_size=26279
+wait_for_queue_to_empty,queue_size=22604
+wait_for_queue_to_empty,queue_size=19104
+wait_for_queue_to_empty,queue_size=15309
+wait_for_queue_to_empty,queue_size=11691
+wait_for_queue_to_empty,queue_size=8121
+wait_for_queue_to_empty,queue_size=4338
+wait_for_queue_to_empty,queue_size=728
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 33.3
+  Alternate_elite = 18.4
+  Cloan = 5.8
+  Mutate = 5.6
+  Regenerate = 36.9
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 83
+..........
+
+test_case_error = 0.6
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 12
+Session 11
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=93748
+wait_for_queue_to_empty,queue_size=87817
+wait_for_queue_to_empty,queue_size=81836
+wait_for_queue_to_empty,queue_size=75996
+wait_for_queue_to_empty,queue_size=70141
+wait_for_queue_to_empty,queue_size=64384
+wait_for_queue_to_empty,queue_size=58109
+wait_for_queue_to_empty,queue_size=52125
+wait_for_queue_to_empty,queue_size=46398
+wait_for_queue_to_empty,queue_size=40710
+wait_for_queue_to_empty,queue_size=34885
+wait_for_queue_to_empty,queue_size=29086
+wait_for_queue_to_empty,queue_size=23009
+wait_for_queue_to_empty,queue_size=17359
+wait_for_queue_to_empty,queue_size=11342
+wait_for_queue_to_empty,queue_size=5393
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 28.2
+  Alternate_elite = 18.7
+  Cloan = 5.9
+  Mutate = 5.9
+  Regenerate = 41.3
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 89
+..........
+
+test_case_error = 0.6
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 13
+Session 12
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=95485
+wait_for_queue_to_empty,queue_size=91104
+wait_for_queue_to_empty,queue_size=86645
+wait_for_queue_to_empty,queue_size=82161
+wait_for_queue_to_empty,queue_size=77528
+wait_for_queue_to_empty,queue_size=72946
+wait_for_queue_to_empty,queue_size=68648
+wait_for_queue_to_empty,queue_size=64256
+wait_for_queue_to_empty,queue_size=59644
+wait_for_queue_to_empty,queue_size=55114
+wait_for_queue_to_empty,queue_size=50757
+wait_for_queue_to_empty,queue_size=46141
+wait_for_queue_to_empty,queue_size=41646
+wait_for_queue_to_empty,queue_size=37343
+wait_for_queue_to_empty,queue_size=32871
+wait_for_queue_to_empty,queue_size=28527
+wait_for_queue_to_empty,queue_size=23947
+wait_for_queue_to_empty,queue_size=19425
+wait_for_queue_to_empty,queue_size=15035
+wait_for_queue_to_empty,queue_size=10555
+wait_for_queue_to_empty,queue_size=6139
+wait_for_queue_to_empty,queue_size=1774
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 30.6
+  Alternate_elite = 15.4
+  Cloan = 6.9
+  Mutate = 6.2
+  Regenerate = 40.9
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 290
+..........
+
+test_case_error = 0.6
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 14
+Session 13
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=93578
+wait_for_queue_to_empty,queue_size=87268
+wait_for_queue_to_empty,queue_size=81099
+wait_for_queue_to_empty,queue_size=74734
+wait_for_queue_to_empty,queue_size=68263
+wait_for_queue_to_empty,queue_size=61957
+wait_for_queue_to_empty,queue_size=55395
+wait_for_queue_to_empty,queue_size=48979
+wait_for_queue_to_empty,queue_size=42577
+wait_for_queue_to_empty,queue_size=36272
+wait_for_queue_to_empty,queue_size=30136
+wait_for_queue_to_empty,queue_size=23584
+wait_for_queue_to_empty,queue_size=17369
+wait_for_queue_to_empty,queue_size=11144
+wait_for_queue_to_empty,queue_size=4909
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 28.4
+  Alternate_elite = 7.2
+  Cloan = 7
+  Mutate = 6.1
+  Regenerate = 51.3
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 249
+..........
+
+test_case_error = 0.6
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 15
+Session 14
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=92311
+wait_for_queue_to_empty,queue_size=84618
+wait_for_queue_to_empty,queue_size=76931
+wait_for_queue_to_empty,queue_size=69672
+wait_for_queue_to_empty,queue_size=62162
+wait_for_queue_to_empty,queue_size=54530
+wait_for_queue_to_empty,queue_size=46950
+wait_for_queue_to_empty,queue_size=39589
+wait_for_queue_to_empty,queue_size=32044
+wait_for_queue_to_empty,queue_size=24568
+wait_for_queue_to_empty,queue_size=16997
+wait_for_queue_to_empty,queue_size=9415
+wait_for_queue_to_empty,queue_size=2047
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 32.9
+  Alternate_elite = 16.8
+  Cloan = 5.7
+  Mutate = 8.5
+  Regenerate = 36.1
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 95
+..........
+
+test_case_error = 0.6
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 16
+Session 15
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=93678
+wait_for_queue_to_empty,queue_size=87438
+wait_for_queue_to_empty,queue_size=81171
+wait_for_queue_to_empty,queue_size=75186
+wait_for_queue_to_empty,queue_size=69189
+wait_for_queue_to_empty,queue_size=63083
+wait_for_queue_to_empty,queue_size=56705
+wait_for_queue_to_empty,queue_size=50506
+wait_for_queue_to_empty,queue_size=44335
+wait_for_queue_to_empty,queue_size=38448
+wait_for_queue_to_empty,queue_size=32429
+wait_for_queue_to_empty,queue_size=26261
+wait_for_queue_to_empty,queue_size=20173
+wait_for_queue_to_empty,queue_size=13978
+wait_for_queue_to_empty,queue_size=7836
+wait_for_queue_to_empty,queue_size=1696
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 30.8
+  Alternate_elite = 37.7
+  Cloan = 6.1
+  Mutate = 6.7
+  Regenerate = 18.7
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 397
+..........
+
+test_case_error = 0.6
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 17
+Session 16
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=91391
+wait_for_queue_to_empty,queue_size=83441
+wait_for_queue_to_empty,queue_size=75371
+wait_for_queue_to_empty,queue_size=67536
+wait_for_queue_to_empty,queue_size=59426
+wait_for_queue_to_empty,queue_size=51581
+wait_for_queue_to_empty,queue_size=43673
+wait_for_queue_to_empty,queue_size=35444
+wait_for_queue_to_empty,queue_size=27663
+wait_for_queue_to_empty,queue_size=19657
+wait_for_queue_to_empty,queue_size=11437
+wait_for_queue_to_empty,queue_size=3635
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 26.2
+  Alternate_elite = 23.2
+  Cloan = 5.6
+  Mutate = 4.5
+  Regenerate = 40.5
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 36
+..........
+
+test_case_error = 0.6
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 18
+Session 17
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=92967
+wait_for_queue_to_empty,queue_size=86039
+wait_for_queue_to_empty,queue_size=78793
+wait_for_queue_to_empty,queue_size=72058
+wait_for_queue_to_empty,queue_size=65092
+wait_for_queue_to_empty,queue_size=58112
+wait_for_queue_to_empty,queue_size=51104
+wait_for_queue_to_empty,queue_size=44245
+wait_for_queue_to_empty,queue_size=37465
+wait_for_queue_to_empty,queue_size=30709
+wait_for_queue_to_empty,queue_size=23568
+wait_for_queue_to_empty,queue_size=16754
+wait_for_queue_to_empty,queue_size=9751
+wait_for_queue_to_empty,queue_size=2888
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 25.6
+  Alternate_elite = 29.1
+  Cloan = 6.6
+  Mutate = 6.4
+  Regenerate = 32.3
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 9
+..........
+
+test_case_error = 0.6
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 19
+Session 18
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=91961
+wait_for_queue_to_empty,queue_size=84388
+wait_for_queue_to_empty,queue_size=76843
+wait_for_queue_to_empty,queue_size=69461
+wait_for_queue_to_empty,queue_size=61752
+wait_for_queue_to_empty,queue_size=54016
+wait_for_queue_to_empty,queue_size=46752
+wait_for_queue_to_empty,queue_size=39319
+wait_for_queue_to_empty,queue_size=31843
+wait_for_queue_to_empty,queue_size=23972
+wait_for_queue_to_empty,queue_size=16411
+wait_for_queue_to_empty,queue_size=8861
+wait_for_queue_to_empty,queue_size=1269
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 22.5
+  Alternate_elite = 11
+  Cloan = 5.3
+  Mutate = 7
+  Regenerate = 54.2
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 180
+..........
+
+test_case_error = 0.6
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 20
+Session 19
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=94009
+wait_for_queue_to_empty,queue_size=88301
+wait_for_queue_to_empty,queue_size=82685
+wait_for_queue_to_empty,queue_size=76882
+wait_for_queue_to_empty,queue_size=71227
+wait_for_queue_to_empty,queue_size=65704
+wait_for_queue_to_empty,queue_size=59867
+wait_for_queue_to_empty,queue_size=53935
+wait_for_queue_to_empty,queue_size=48385
+wait_for_queue_to_empty,queue_size=42314
+wait_for_queue_to_empty,queue_size=36691
+wait_for_queue_to_empty,queue_size=31111
+wait_for_queue_to_empty,queue_size=25121
+wait_for_queue_to_empty,queue_size=19655
+wait_for_queue_to_empty,queue_size=13834
+wait_for_queue_to_empty,queue_size=8014
+wait_for_queue_to_empty,queue_size=2169
+wait_for_queue_to_empty,queue_size=0
+Queue empty
+
+
+
+N                        effort                     exec_size                   instruction                    individual                          case
+-                        ------                     ---------                   -----------                    ----------                          ----
+compute_training_errors_thread_safe() - Aggregate errors
+compute_training_errors_thread_safe() - Return result
+Calculate Diversity
+Produce New Offspring
+  Reset children
+  Breed new generation
+BBBBBBBBBB
+
+Selection distribution
+  Alternate = 31.1
+  Alternate_elite = 13.7
+  Cloan = 7.4
+  Mutate = 6.4
+  Regenerate = 41.4
+
+
+.
+Run Best Individual's Program with Test Cases
+best_individual = 667
+..........
+
+test_case_error = 0.6
+
+Generate Status Report
+Install New Generation
+---------------------------------------------
+
+
+ probability_level_of_alternation_ = 0.4375
+ probability_level_of_elite_alternation_ = 0.875
+ probability_level_of_mutation_ = 0.9375
+ probability_level_of_cloaning_ = 1
+ probability_level_of_regeneration_ = 1
+Cool down 0
+CPU Temperature: Min = 40 Max = 60 Current Temp = 0
+Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
+Generation 21
+Session 20
+Run Programs with Training Cases
+compute_training_errors_thread_safe() - Process threads
+wait_for_queue_to_empty,queue_size=93662
+wait_for_queue_to_empty,queue_size=87532
+wait_for_queue_to_empty,queue_size=81281
+wait_for_queue_to_empty,queue_size=75658
+wait_for_queue_to_empty,queue_size=69906
+wait_for_queue_to_empty,queue_size=64419
+wait_for_queue_to_empty,queue_size=57783
+wait_for_queue_to_empty,queue_size=52226
+wait_for_queue_to_empty,queue_size=46479
+wait_for_queue_to_empty,queue_size=40659
+wait_for_queue_to_empty,queue_size=35080
+wait_for_queue_to_empty,queue_size=29264
+wait_for_queue_to_empty,queue_size=23083

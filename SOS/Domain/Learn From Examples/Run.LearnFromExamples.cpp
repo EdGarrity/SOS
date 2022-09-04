@@ -46,8 +46,10 @@ namespace domain
 
 		database::SQLConnection con;
 
+		const std::string sqlstmt_get_last_saved_run_number = "SELECT TOP 1 [Run_Number] FROM [SOS].[dbo].[ProgressLog] ORDER BY [Created_DTS] DESC;";
 		const std::string sqlstmt_get_last_saved_generation_number = "SELECT TOP 1 [Generation] FROM [SOS].[dbo].[ProgressLog] ORDER BY [Created_DTS] DESC;";
 		const std::string sqlstmt_get_last_saved_temperature = "SELECT TOP 1 [Tempareture] FROM [SOS].[dbo].[ProgressLog] ORDER BY [Created_DTS] DESC;";
+		const std::string sqlstmt_get_last_best_individual_score = "SELECT TOP 1 [BestIndividual_Training_Score] FROM [SOS].[dbo].[ProgressLog] ORDER BY [Created_DTS] DESC;";
 		const std::string sqlstmt_get_last_best_individual_error = "SELECT TOP 1 [BestIndividual_Training_Error] FROM [SOS].[dbo].[ProgressLog] ORDER BY [Created_DTS] DESC;";
 		const std::string sqlstmt_get_last_prev_best_individual_error = "SELECT TOP 1 [BestIndividual_Prev_Training_Error] FROM [SOS].[dbo].[ProgressLog] ORDER BY [Created_DTS] DESC;";
 		const std::string sqlstmt_get_last_stalled_count = "SELECT TOP 1 [Stalled_Count] FROM [SOS].[dbo].[ProgressLog] ORDER BY [Created_DTS] DESC;";
@@ -103,11 +105,51 @@ namespace domain
 			"           ,[BestIndividual_Training_Effort]"			// 22
 			"           ,[Diversity]"								// 23
 			"           ,[Diverse_Clusters]"						// 24
+			"           ,[Run_Number]"								// 25
 			"           )"
 			"     VALUES"
-			"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-				//       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4
+			"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+				//       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
 
+
+		// Purpose: 
+		//   Returns the number of the last run saved to the database.
+		//
+		// Parameters:
+		//   None
+		// 
+		// Return value:
+		//   The number of the last run saved to the database or zero if no runs exist in the database.
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//
+		unsigned long get_last_saved_run_number()
+		{
+			unsigned long n = 0;
+
+			database::SQLCommand* sqlcmd_get_last_saved_run_number;
+
+			sqlcmd_get_last_saved_run_number = new database::SQLCommand(&con, sqlstmt_get_last_saved_run_number);
+
+#if DLEVEL > 0
+			Utilities::debug_log(-1, "get_last_saved_generation_number", "sqlcmd");
+#endif
+
+			sqlcmd_get_last_saved_run_number->execute();
+
+			if (sqlcmd_get_last_saved_run_number->fetch_next())
+				n = sqlcmd_get_last_saved_run_number->get_field_as_long(1);
+
+			delete sqlcmd_get_last_saved_run_number;
+
+			return ((n >= 0) || (n < 1000000)) ? n : 0;
+		}
 
 		// Purpose: 
 		//   Returns the number of the last generation saved to the database.
@@ -145,7 +187,7 @@ namespace domain
 
 			delete sqlcmd_get_last_saved_generation_number;
 
-			return n;
+			return ((n >= 0) || (n < 1000000)) ? n : 0;
 		}
 
 		// Purpose: 
@@ -183,6 +225,42 @@ namespace domain
 				n = sqlcmd_get_last_saved_temperature->get_field_as_double(1);
 
 			delete sqlcmd_get_last_saved_temperature;
+
+			return n;
+		}
+
+		// Purpose: 
+		//   Returns the score of the best individual from the database, where:
+		//		score := ratio of test case errors / total test cases.
+		//
+		// Parameters:
+		//   _default_score	-	The default to return if database table is empty
+		// 
+		// Return value:
+		//   The error of the best individual from the database
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//
+		double get_last_best_individual_score(double _default_score)
+		{
+			double n = _default_score;
+
+			database::SQLCommand* sqlcmd_get_last_best_individual_score;
+
+			sqlcmd_get_last_best_individual_score = new database::SQLCommand(&con, sqlstmt_get_last_best_individual_score);
+
+			sqlcmd_get_last_best_individual_score->execute();
+
+			if (sqlcmd_get_last_best_individual_score->fetch_next())
+				n = sqlcmd_get_last_best_individual_score->get_field_as_double(1);
+
+			delete sqlcmd_get_last_best_individual_score;
 
 			return n;
 		}
@@ -378,6 +456,33 @@ namespace domain
 			delete sqlcmd_get_include_best_individual_in_breeding_pool;
 
 			return n;
+		}
+
+		// Purpose: 
+		//   Clears the individuals table in the database
+		//
+		// Parameters:
+		//   None
+		// 
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//
+		void clear_individuals_table(void)
+		{
+			database::SQLCommand* sqlcmd_clear_individuals_table;
+
+			sqlcmd_clear_individuals_table = new database::SQLCommand(&con, sqlstmt_delete_individual);
+			sqlcmd_clear_individuals_table->execute();
+
+			delete sqlcmd_clear_individuals_table;
 		}
 
 		// Purpose: 
@@ -816,10 +921,10 @@ namespace domain
 			if (ret != RPC_S_OK)
 				std::cout << "UuidCreateNil() did not return RPC_S_OK" << std::endl;
 
-			database::SQLCommand* sqlcmd_delete_individuals;
+			//database::SQLCommand* sqlcmd_delete_individuals;
 			database::SQLCommand* sqlcmd_insert_new_individual;
 
-			sqlcmd_delete_individuals = new database::SQLCommand(&con, sqlstmt_delete_individual);
+			//sqlcmd_delete_individuals = new database::SQLCommand(&con, sqlstmt_delete_individual);
 			sqlcmd_insert_new_individual = new database::SQLCommand(&con);
 
 			// Begin a transaction
@@ -922,7 +1027,7 @@ namespace domain
 			// Commit transaction
 			sqlcmd_insert_new_individual->commit_transaction();  //transaction->commit();
 
-			delete sqlcmd_delete_individuals;
+			//delete sqlcmd_delete_individuals;
 			delete sqlcmd_insert_new_individual;
 		}
 
@@ -1403,7 +1508,8 @@ namespace domain
 				pushGP::globals::population_agents[n].copy(pushGP::globals::child_agents[n]);
 		}
 
-		void generate_status_report(unsigned int _generation_number,
+		void generate_status_report(unsigned int _run_number,
+			unsigned int _generation_number,
 			unsigned int _generations_completed_this_session,
 			unsigned int _best_individual_id,
 			double _best_individual_training_score,
@@ -1457,6 +1563,7 @@ namespace domain
 			sqlcmd_save_status_report->set_as_integer(22, (int)_best_individual_training_effort);
 			sqlcmd_save_status_report->set_as_float(23, _diversity);
 			sqlcmd_save_status_report->set_as_integer(24, _count_of_diverse_clusters);
+			sqlcmd_save_status_report->set_as_integer(25, _run_number);
 
 #if DLEVEL > 0
 			Utilities::debug_log(-1, "generate_status_report", "sqlcmd");
@@ -1532,7 +1639,7 @@ namespace domain
 
 			try
 			{
-				unsigned int generation_number = 1;
+				//unsigned int generation_number = 1;
 				unsigned int generations_completed_this_session = 0;
 				unsigned int agents_created = 0;
 				bool done = false;
@@ -1546,6 +1653,36 @@ namespace domain
 				// Initialize database connection
 				con.connect(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
 
+				// Load data from most recent database record
+				unsigned int run_number = get_last_saved_run_number();
+				unsigned int generation_number = get_last_saved_generation_number() + 1;
+				double best_individual_score = get_last_best_individual_score(std::numeric_limits<double>::max());
+				double best_individual_error = get_last_best_individual_error(std::numeric_limits<double>::max());
+				double prev_best_individual_error = get_last_prev_best_individual_error(std::numeric_limits<double>::max());
+				int stalled_count = get_last_stalled_count(argmap::stalled_count_trigger);
+				int cool_down_count = get_last_cool_down_count(argmap::cool_down_period);
+				bool include_best_individual_in_breeding_pool = get_include_best_individual_in_breeding_pool(true);
+								
+				sa.set_cold();
+				sa.set_temperature(get_last_saved_temperature(sa.get_temperature()));
+
+				// If last run found a solution or exhausted the number of generations, 
+				// then clear the individuals table to force the creation of new individuals
+				// and reset to start a new run
+				if ((best_individual_score <= 0.0) || (generation_number > argmap::max_generations_in_one_session))
+				{
+					run_number++;
+					generation_number = 1;
+					best_individual_score = std::numeric_limits<double>::max();
+					best_individual_error = std::numeric_limits<double>::max();
+					prev_best_individual_error = std::numeric_limits<double>::max();
+					sa.set_temperature(0);
+					cool_down_count = argmap::cool_down_period;
+					stalled_count = argmap::stalled_count_trigger;
+					include_best_individual_in_breeding_pool = true;
+					clear_individuals_table();
+				}
+
 				// Load example cases.  Create more if not enough loaded.
 				std::cout << "Load Example Cases" << std::endl;
 				unsigned int example_cases_created = make_example_cases(load_example_cases());
@@ -1555,25 +1692,29 @@ namespace domain
 
 				// Load population.  Create more if not enough loaded.
 				std::cout << "Create Population Agents" << std::endl;
-				generation_number = get_last_saved_generation_number() + 1;
 				agents_created = make_pop_agents(env, load_pop_agents());
 
-				sa.set_cold();
-				sa.set_temperature(get_last_saved_temperature(sa.get_temperature()));
-
 				if (agents_created > argmap::population_size / 2)
-					generation_number = 0;
+				{
+//					run_number = 1;
+					generation_number = 1;
+					best_individual_score = std::numeric_limits<double>::max();
+					best_individual_error = std::numeric_limits<double>::max();
+					prev_best_individual_error = std::numeric_limits<double>::max();
+					sa.set_temperature(0);
+					cool_down_count = argmap::cool_down_period;
+					stalled_count = argmap::stalled_count_trigger;
+					include_best_individual_in_breeding_pool = true;
+				}
 
 				int best_individual = -1;
-				double best_individual_score = std::numeric_limits<double>::max();
-				double best_individual_error = get_last_best_individual_error(std::numeric_limits<double>::max());
+				//double best_individual_score = std::numeric_limits<double>::max();
 				size_t best_individual_effort = 0;
-				double prev_best_individual_error = get_last_prev_best_individual_error(std::numeric_limits<double>::max());
-				int stalled_count = get_last_stalled_count(argmap::stalled_count_trigger);
-				int cool_down_count = get_last_cool_down_count(argmap::cool_down_period);
-				bool include_best_individual_in_breeding_pool = get_include_best_individual_in_breeding_pool(true);
 
-				while ((!done) && (generations_completed_this_session < argmap::max_generations_in_one_session))
+				while ((!done) 
+					&& (generation_number <= argmap::max_generations_in_one_session)
+					&& (best_individual_score > 0.0)
+					)
 				{
 					//if ((std::fabs(best_individual_error - prev_best_individual_error) < argmap::stalled_delta) && (cool_down_count <= 0))
 					//	stalled_count = (stalled_count < 0) ? 0 : stalled_count - 1;
@@ -1821,7 +1962,8 @@ namespace domain
 					standard_deviation /= (double)(domain::argmap::population_size * argmap::number_of_training_cases);
 					standard_deviation = std::sqrt(standard_deviation);
 
-					generate_status_report(generation_number,
+					generate_status_report(run_number,
+						generation_number,
 						generations_completed_this_session,
 						best_individual,
 						best_individual_score,

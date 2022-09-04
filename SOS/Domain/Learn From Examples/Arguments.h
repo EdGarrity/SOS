@@ -61,11 +61,11 @@ namespace domain
 		const unsigned long population_size = 1000; // 20000; // 200'000;
 
 		// The maximum number of generations to run GP.
-		const unsigned long max_generations_in_one_session = 10000;
+		const unsigned long max_generations_in_one_session = 300;
 
 		//		;; The limit for the number of point(instruction) evaluations to
 		//		;; execute during the run.
-		const unsigned long max_point_evaluations = 10000;  //10,000,000; //INT_MAX; // 100000; // 10e100
+		const unsigned long max_point_evaluations = 1000; //10000;  //10,000,000; //INT_MAX; // 100000; // 10e100
 
 			//		:genome - representation : plush
 			//		;; The representation for the genomes used for initialiation and inheritance.
@@ -93,7 +93,7 @@ namespace domain
 		const unsigned long example_case_max_length = 4;
 		
 		// Upper range of values in the example case
-		const unsigned long example_case_upper_range = 1'000;
+		const unsigned long example_case_upper_range = 1000;
 
 		// Threshold fpr cutting the merge between any two clusters.  Used to count the number of clusters that differ on at least the threshold amount of the training cases
 		const double cluster_break_threshold = 0.1;

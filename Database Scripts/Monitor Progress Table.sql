@@ -1,6 +1,7 @@
 /****** Script for SelectTopNRows command from SSMS  ******/
 SELECT TOP (1000) [ID]
       ,[Created_DTS]
+	  ,[Run_Number]
       ,[Generation]
       ,[Generations_Completed_This_Session]
       ,[BestIndividual_ID]
