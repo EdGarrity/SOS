@@ -31,7 +31,8 @@ namespace pushGP
 	//
 	pushGP::SimulatedAnnealing_States breed(unsigned int _individual_index,
 		int _number_of_example_cases, 
-		combinable<pushGP::globals::Training_case_min_error_type>& _training_case_min_error, 
+		concurrent_unordered_set<size_t>& _downsampled_training_cases,
+		combinable<pushGP::globals::Training_case_min_error_type>& _training_case_min_error,
 		pushGP::SimulatedAnnealing& _sa,
 		bool _include_best_individual_in_breeding_pool,
 		int _best_individual)
@@ -77,21 +78,21 @@ namespace pushGP
 					first_parent_index = _individual_index;
 
 					other_parent_exclusions.insert(first_parent_index);
-					std::tie(median_absolute_deviation, other_parent_index) = epsilon_lexicase_selection(_number_of_example_cases, other_parent_exclusions, _training_case_min_error);
+					std::tie(median_absolute_deviation, other_parent_index) = epsilon_lexicase_selection(_number_of_example_cases, _downsampled_training_cases, other_parent_exclusions, _training_case_min_error);
 				}
 				else
 				{
 					if (first_parent_index == _individual_index)
 					{
 						first_parent_exclusions.insert(_best_individual);
-						std::tie(median_absolute_deviation, first_parent_index) = epsilon_lexicase_selection(_number_of_example_cases, first_parent_exclusions, _training_case_min_error);
+						std::tie(median_absolute_deviation, first_parent_index) = epsilon_lexicase_selection(_number_of_example_cases, _downsampled_training_cases, first_parent_exclusions, _training_case_min_error);
 					} 
 					else 
 						first_parent_index = _individual_index;
 
 					other_parent_exclusions.insert(_best_individual);
 					other_parent_exclusions.insert(first_parent_index);
-					std::tie(median_absolute_deviation, other_parent_index) = epsilon_lexicase_selection(_number_of_example_cases, other_parent_exclusions, _training_case_min_error);
+					std::tie(median_absolute_deviation, other_parent_index) = epsilon_lexicase_selection(_number_of_example_cases, _downsampled_training_cases, other_parent_exclusions, _training_case_min_error);
 				}
 
 				// Check that both parents are not the same individual
@@ -204,19 +205,19 @@ namespace pushGP
 
 				if (_include_best_individual_in_breeding_pool)
 				{
-					std::tie(median_absolute_deviation, first_parent_index) = epsilon_lexicase_selection(_number_of_example_cases, { -1 }, _training_case_min_error);
+					std::tie(median_absolute_deviation, first_parent_index) = epsilon_lexicase_selection(_number_of_example_cases, _downsampled_training_cases, { -1 }, _training_case_min_error);
 
 					other_parent_exclusions.insert(first_parent_index);
-					std::tie(median_absolute_deviation, other_parent_index) = epsilon_lexicase_selection(_number_of_example_cases, other_parent_exclusions, _training_case_min_error);
+					std::tie(median_absolute_deviation, other_parent_index) = epsilon_lexicase_selection(_number_of_example_cases, _downsampled_training_cases, other_parent_exclusions, _training_case_min_error);
 				}
 				else
 				{
 					first_parent_exclusions.insert(_best_individual);
-					std::tie(median_absolute_deviation, first_parent_index) = epsilon_lexicase_selection(_number_of_example_cases, first_parent_exclusions, _training_case_min_error);
+					std::tie(median_absolute_deviation, first_parent_index) = epsilon_lexicase_selection(_number_of_example_cases, _downsampled_training_cases, first_parent_exclusions, _training_case_min_error);
 
 					other_parent_exclusions.insert(_best_individual);
 					other_parent_exclusions.insert(first_parent_index);
-					std::tie(median_absolute_deviation, other_parent_index) = epsilon_lexicase_selection(_number_of_example_cases, other_parent_exclusions, _training_case_min_error);
+					std::tie(median_absolute_deviation, other_parent_index) = epsilon_lexicase_selection(_number_of_example_cases, _downsampled_training_cases, other_parent_exclusions, _training_case_min_error);
 				}
 
 				// Check that both parents are not the same individual
@@ -307,12 +308,12 @@ namespace pushGP
 			std::unordered_set<int> first_parent_exclusions;
 
 			if (_include_best_individual_in_breeding_pool)
-				std::tie(median_absolute_deviation, first_parent_index) = epsilon_lexicase_selection(_number_of_example_cases, { -1 }, _training_case_min_error);
+				std::tie(median_absolute_deviation, first_parent_index) = epsilon_lexicase_selection(_number_of_example_cases, _downsampled_training_cases, { -1 }, _training_case_min_error);
 
 			else
 			{
 				first_parent_exclusions.insert(_best_individual);
-				std::tie(median_absolute_deviation, first_parent_index) = epsilon_lexicase_selection(_number_of_example_cases, first_parent_exclusions, _training_case_min_error);
+				std::tie(median_absolute_deviation, first_parent_index) = epsilon_lexicase_selection(_number_of_example_cases, _downsampled_training_cases, first_parent_exclusions, _training_case_min_error);
 			}
 
 			uniform_mutation(first_parent_index, _individual_index);
