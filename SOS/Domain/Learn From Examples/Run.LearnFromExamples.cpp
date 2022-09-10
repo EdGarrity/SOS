@@ -1032,6 +1032,84 @@ namespace domain
 			delete sqlcmd_insert_new_individual;
 		}
 
+		std::tuple<int, double, double, unsigned long> compute_training_error_for_individual(Plush::Environment& _env,
+			unsigned long individual_index,
+			std::function<std::tuple<double, unsigned long>(Plush::Environment& _env,
+				unsigned long _individual_index,
+				std::vector<double>& _input_list,
+				std::vector<double>& _output_list)> _run_individual_program,
+			unsigned long _number_of_example_cases)
+		{
+			int individual_with_least_error = -1;
+			int individual_with_best_score = -1;
+			double min_error = (std::numeric_limits<double>::max)();
+			double min_score = (std::numeric_limits<double>::max)();
+			unsigned long max_effort_for_best_individual = 0;
+			unsigned long max_effort_for_best_individual_a = 0;
+			unsigned long max_effort_for_best_individual_b = 0;
+
+			Plush::Environment* envp_local = new Plush::Environment;
+
+			int error_count_for_individual = 0;
+			double avg_error_for_individual = 0.0;
+			unsigned long max_effort_for_individual = 0;
+
+
+			for (unsigned long example_case = 0; example_case < _number_of_example_cases; example_case++)
+			{
+				std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
+				std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
+
+				// Run program
+				auto [error, effort] = _run_individual_program(*envp_local, individual_index, example_problem, example_solution);
+
+				if (error > 0.0)
+					error_count_for_individual++;
+
+				avg_error_for_individual += error;
+				max_effort_for_individual = (max_effort_for_individual > effort) ? max_effort_for_individual : effort;
+
+				pushGP::globals::error_matrix.store(-1, example_case, individual_index, error);
+				pushGP::globals::effort_matrix.store(-1, example_case, individual_index, effort);
+			}
+
+			// Calculate the average error for all example cases
+			avg_error_for_individual /= (double)_number_of_example_cases;
+
+			double score = (double)error_count_for_individual / (double)_number_of_example_cases;
+
+			if ((score < 1.0) && (score < min_score))
+			{
+				min_score = score;
+				individual_with_best_score = individual_index;
+				max_effort_for_best_individual_a = max_effort_for_individual;
+			}
+
+			if (avg_error_for_individual < min_error)
+			{
+				min_error = avg_error_for_individual;
+				individual_with_least_error = individual_index;
+				max_effort_for_best_individual_b = max_effort_for_individual;
+			}
+
+
+			if (individual_with_best_score == -1)
+				max_effort_for_best_individual = max_effort_for_best_individual_b;
+
+			else
+				max_effort_for_best_individual = max_effort_for_best_individual_a;
+
+			delete envp_local;
+
+			return std::make_tuple
+			(
+				(individual_with_best_score == -1) ? individual_with_least_error : individual_with_best_score,
+				min_score,
+				min_error,
+				max_effort_for_best_individual
+			);
+		}
+
 		std::tuple<int, double, double, unsigned long> compute_training_errors(Plush::Environment& _env,
 			std::function<std::tuple<double, unsigned long>(Plush::Environment& _env,
 				unsigned long _individual_index,
@@ -1272,6 +1350,90 @@ namespace domain
 		//	);
 		//}
 
+		std::tuple<int, double, double, unsigned long> compute_training_error_for_individual_thread_safe(Plush::Environment& _env,
+			unsigned long individual_index,
+			std::function<std::tuple<double, unsigned long>(Plush::Environment& _env,
+				unsigned long _individual_index,
+				std::vector<double>& _input_list,
+				std::vector<double>& _output_list)> _run_individual_program,
+			unsigned long _number_of_example_cases)
+		{
+			long individual_with_least_error = -1;
+			long individual_with_best_score = -1;
+			double min_error = (std::numeric_limits<double>::max)();
+			double min_score = (std::numeric_limits<double>::max)();
+			unsigned long max_effort_for_best_individual = 0;
+
+			std::cout << "compute_training_error_for_individual_thread_safe() - Process threads" << std::endl;
+
+			Utilities::work_order_manager.stop();
+
+			for (int i = 0; i < domain::argmap::max_threads; i++)
+			{
+				pushGP::globals::thread_instruction_index[i] = 999998;
+				pushGP::globals::thread_individual_index[i] = 999998;
+				pushGP::globals::thread_example_case[i] = 999998;
+			}
+
+			for (unsigned long example_case = 0; example_case < _number_of_example_cases; example_case++)
+			{
+				std::vector<double> example_problem(training_cases_problem[example_case].begin(), training_cases_problem[example_case].end());
+				std::vector<double> example_solution(training_cases_solution[example_case].begin(), training_cases_solution[example_case].end());
+
+				Utilities::work_order_manager.push(individual_index, example_case, example_problem, example_solution);
+			}
+
+			Utilities::work_order_manager.start();
+			Utilities::work_order_manager.wait_for_all_threads_to_complete();
+
+			std::cout << "compute_training_error_for_individual_thread_safe() - Aggregate errors" << std::endl;
+
+			int error_count_for_individual = 0;
+			double avg_error_for_individual = 0.0;
+			unsigned long max_effort_for_individual = 0;
+
+			for (unsigned long example_case = 0; example_case < _number_of_example_cases; example_case++)
+			{
+				double error = pushGP::globals::error_matrix.load(example_case, individual_index);
+				unsigned long effort = pushGP::globals::effort_matrix.load(example_case, individual_index);
+
+				if (error > 0.0)
+					error_count_for_individual++;
+
+				avg_error_for_individual += error;
+				max_effort_for_individual = (max_effort_for_individual > effort) ? max_effort_for_individual : effort;
+			}
+
+			// Calculate the average error for all example cases
+			avg_error_for_individual /= (double)_number_of_example_cases;
+
+			double score = (double)error_count_for_individual / (double)_number_of_example_cases;
+
+			if ((score < 1.0) && (score < min_score))
+			{
+				min_score = score;
+				individual_with_best_score = individual_index;
+				max_effort_for_best_individual = max_effort_for_individual;
+			}
+
+			if (avg_error_for_individual < min_error)
+			{
+				min_error = avg_error_for_individual;
+				individual_with_least_error = individual_index;
+				max_effort_for_best_individual = max_effort_for_individual;
+			}
+
+			std::cout << "compute_training_error_for_individual_thread_safe() - Return result" << std::endl;
+
+			return std::make_tuple
+			(
+				(individual_with_best_score == -1) ? individual_with_least_error : individual_with_best_score,
+				min_score,
+				min_error,
+				max_effort_for_best_individual
+			);
+		}
+
 		std::tuple<int, double, double, unsigned long> compute_training_errors_thread_safe(Plush::Environment& _env,
 			std::function<std::tuple<double, unsigned long>(Plush::Environment& _env,
 				unsigned long _individual_index,
@@ -1376,7 +1538,7 @@ namespace domain
 			unsigned long max_effort_for_best_individual = 0;
 			size_t number_of_example_cases = downsampled_training_cases.size();
 
-			std::cout << "compute_training_errors_thread_safe() - Process threads" << std::endl;
+			std::cout << "compute_downsampled_training_errors_thread_safe() - Process threads" << std::endl;
 
 			Utilities::work_order_manager.stop();
 
@@ -1401,7 +1563,7 @@ namespace domain
 			Utilities::work_order_manager.start();
 			Utilities::work_order_manager.wait_for_all_threads_to_complete();
 
-			std::cout << "compute_training_errors_thread_safe() - Aggregate errors" << std::endl;
+			std::cout << "compute_downsampled_training_errors_thread_safe() - Aggregate errors" << std::endl;
 
 			for (unsigned long individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			{
@@ -1441,7 +1603,7 @@ namespace domain
 				}
 			}
 
-			std::cout << "compute_training_errors_thread_safe() - Return result" << std::endl;
+			std::cout << "compute_downsampled_training_errors_thread_safe() - Return result" << std::endl;
 
 			return std::make_tuple
 			(
@@ -1680,7 +1842,8 @@ namespace domain
 				pushGP::globals::population_agents[n].copy(pushGP::globals::child_agents[n]);
 		}
 
-		void generate_status_report(unsigned int _run_number,
+		void generate_status_report(bool reran_best_individual_with_all_training_cases,
+			unsigned int _run_number,
 			unsigned int _generation_number,
 			unsigned int _generations_completed_this_session,
 			unsigned int _best_individual_id,
@@ -1709,6 +1872,11 @@ namespace domain
 			if (_standard_deviation > 1000.0)
 				_standard_deviation = 1000.0;
 
+			unsigned long number_of_training_cases =
+				argmap::parent_selection != argmap::PerentSelection::downsampled_lexicase || reran_best_individual_with_all_training_cases
+				? argmap::number_of_training_cases
+				: argmap::downsample_factor * argmap::number_of_training_cases;
+
 			sqlcmd_save_status_report = new database::SQLCommand(&con, sqlstmt_save_status_report);
 
 			sqlcmd_save_status_report->set_as_integer(1, _generation_number);
@@ -1719,7 +1887,8 @@ namespace domain
 			sqlcmd_save_status_report->set_as_float(6, _average_traiing_error);
 			sqlcmd_save_status_report->set_as_float(7, _standard_deviation);
 			sqlcmd_save_status_report->set_as_float(8, _best_individual_test_score);
-			sqlcmd_save_status_report->set_as_integer(9, argmap::number_of_training_cases);
+//			sqlcmd_save_status_report->set_as_integer(9, argmap::number_of_training_cases);
+			sqlcmd_save_status_report->set_as_integer(9, number_of_training_cases);
 			sqlcmd_save_status_report->set_as_integer(10, argmap::number_of_test_cases);
 			sqlcmd_save_status_report->set_as_string(11, _best_gnome);
 			sqlcmd_save_status_report->set_as_integer(12, argmap::population_size);
@@ -2047,6 +2216,7 @@ namespace domain
 					//		argmap::number_of_training_cases);
 					else if ((!argmap::use_multithreading) && (argmap::parent_selection == argmap::PerentSelection::downsampled_lexicase))
 						best_individual_score_error = compute_downsampled_training_errors(env, run_individual_threadsafe);
+
 					else
 						best_individual_score_error = compute_training_errors(env, run_individual_threadsafe, argmap::number_of_training_cases);
 
@@ -2055,6 +2225,33 @@ namespace domain
 					best_individual_error = std::get<2>(best_individual_score_error);
 					best_individual_effort = std::get<3>(best_individual_score_error);
 
+					// If using the downsapled lexicase selection lethod and a solution was found using the smaller sample of example cases,
+					// rerun the solution's program using the entire example case set to confirm this is acutally a solution
+					bool reran_best_individual_with_all_training_cases = false;
+
+					if ((best_individual_score == 0) && (argmap::parent_selection == argmap::PerentSelection::downsampled_lexicase))
+					{
+						reran_best_individual_with_all_training_cases = true;
+
+						if (argmap::use_multithreading)
+							best_individual_score_error = compute_training_error_for_individual_thread_safe(
+								env,
+								best_individual,
+								run_individual_threadsafe,
+								argmap::number_of_training_cases);
+
+						else
+							best_individual_score_error = compute_training_error_for_individual(
+								env, 
+								best_individual,
+								run_individual_threadsafe, 
+								argmap::number_of_training_cases);
+
+						best_individual = std::get<0>(best_individual_score_error);
+						best_individual_score = std::get<1>(best_individual_score_error);
+						best_individual_error = std::get<2>(best_individual_score_error);
+						best_individual_effort = std::get<3>(best_individual_score_error);
+					}
 
 					std::cout << "Calculate Diversity" << std::endl;
 					auto[diversity, count_of_diverse_clusters] = pushGP::calculate_diversity();
@@ -2147,7 +2344,8 @@ namespace domain
 					standard_deviation /= (double)(domain::argmap::population_size * argmap::number_of_training_cases);
 					standard_deviation = std::sqrt(standard_deviation);
 
-					generate_status_report(run_number,
+					generate_status_report(reran_best_individual_with_all_training_cases,
+						run_number,
 						generation_number,
 						generations_completed_this_session,
 						best_individual,
