@@ -34,7 +34,7 @@ namespace pushGP
 		extern unsigned long thread_exec_size[domain::argmap::max_threads];
 		extern unsigned long thread_instruction_index[domain::argmap::max_threads];
 		extern unsigned long thread_individual_index[domain::argmap::max_threads];
-		extern unsigned long thread_example_case[domain::argmap::max_threads];
+		extern size_t thread_example_case[domain::argmap::max_threads];
 
 		struct Training_case_min_error
 		{

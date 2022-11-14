@@ -25,7 +25,7 @@
 namespace Plush
 {
 	extern thread_local unsigned long g_individual_index;
-	extern thread_local unsigned long g_example_case;
+	extern thread_local size_t g_example_case;
 
 
 
@@ -396,7 +396,7 @@ namespace Plush
 
 			Utilities::FixedSizeStack<T>::top_ = other.top_;
 
-			for (long n = 0; n < Utilities::FixedSizeStack<T>::top_; n++)
+			for (long n = 0; n < (long)Utilities::FixedSizeStack<T>::top_; n++)
 				Utilities::FixedSizeStack<T>::stack_[n] = other.stack_[n];
 
 			genome_string_ = other.genome_string_;
@@ -458,7 +458,7 @@ namespace Plush
 
 			Utilities::FixedSizeStack<T>::top_ = other.top_;
 
-			for (long n = 0; n < Utilities::FixedSizeStack<T>::top_; n++)
+			for (long n = 0; n < (long)Utilities::FixedSizeStack<T>::top_; n++)
 				Utilities::FixedSizeStack<T>::stack_[n] = other.stack_[n];
 
 			return Utilities::FixedSizeStack<T>::top_;
@@ -2295,7 +2295,7 @@ namespace Plush
 
 								effort++;
 							}
-							catch(const std::out_of_range& e)
+							catch(const std::out_of_range& /*e*/)
 							{
 								return 1;
 							}
@@ -2313,7 +2313,7 @@ namespace Plush
 
 							effort++;
 						}
-						catch (const std::out_of_range& e)
+						catch (const std::out_of_range& /*e*/)
 						{
 							return 1;
 						}
@@ -2335,7 +2335,7 @@ namespace Plush
 						j--;
 						effort++;
 					}
-					catch (const std::out_of_range& e)
+					catch (const std::out_of_range& /*e*/)
 					{
 						return 1;
 					}

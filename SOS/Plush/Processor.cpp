@@ -214,13 +214,13 @@ namespace Plush
 					break;
 				}
 			}
-			catch (std::underflow_error& e)
+			catch (std::underflow_error& /*e*/)
 			{
 				effort++;
 				//std::cerr << "Underflow exception caught.  effort = " << effort << std::endl;
 				//std::cerr << e.what() << std::endl;
 			}
-			catch (std::overflow_error& e)
+			catch (std::overflow_error& /*e*/)
 			{
 				effort++;
 				//std::cerr << "Overflow exception caught.  effort = " << effort << std::endl;

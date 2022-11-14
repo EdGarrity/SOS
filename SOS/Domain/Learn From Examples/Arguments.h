@@ -61,11 +61,11 @@ namespace domain
 		const unsigned long population_size = 1000; // 20000; // 200'000;
 
 		// The maximum number of generations to run GP.
-		const unsigned long max_generations_in_one_session = 10000;
+		const unsigned long max_generations_in_one_session = 300;
 
 		//		;; The limit for the number of point(instruction) evaluations to
 		//		;; execute during the run.
-		const unsigned long max_point_evaluations = 10000;  //10,000,000; //INT_MAX; // 100000; // 10e100
+		const unsigned long max_point_evaluations = 1000; //10000;  //10,000,000; //INT_MAX; // 100000; // 10e100
 
 			//		:genome - representation : plush
 			//		;; The representation for the genomes used for initialiation and inheritance.
@@ -93,7 +93,7 @@ namespace domain
 		const unsigned long example_case_max_length = 4;
 		
 		// Upper range of values in the example case
-		const unsigned long example_case_upper_range = 1'000;
+		const unsigned long example_case_upper_range = 1000;
 
 		// Threshold fpr cutting the merge between any two clusters.  Used to count the number of clusters that differ on at least the threshold amount of the training cases
 		const double cluster_break_threshold = 0.1;
@@ -407,9 +407,14 @@ namespace domain
 		//const unsigned int error_ratio_cap_for_retaining_parents = 0.2;
 
 		//	:parent - selection : lexicase
-		//	;; The parent selection method.Options include : tournament, : lexicase, : epsilon - lexicase,
-		//	;; :elitegroup - lexicase, : uniform, : leaky - lexicase, : random - threshold - lexicase,
-		//	;; :random - toggle - lexicase, : randomly - truncated - lexicase, : novelty - search
+		//	;; The parent selection method.Options include : epsilon_lexicase, downsampled_lexicase
+		enum class PerentSelection { epsilon_lexicase, downsampled_lexicase };
+		const PerentSelection parent_selection = PerentSelection::downsampled_lexicase;
+
+		//:downsample - factor 1
+		//	;; Determines the proportion of cases to use when using downsampled lexicase.
+		//	;; When set to 1, has no effect.Should be in the range(0, 1].
+		const double downsample_factor = 1.0;
 
 		//	: epsilon - lexicase - epsilon nil
 		//	;; When parent - selection is : epsilon - lexicase,

@@ -3,7 +3,7 @@
 namespace Plush
 {
 	thread_local unsigned long g_individual_index = 0;
-	thread_local unsigned long g_example_case = 0;
+	thread_local size_t g_example_case = 0;
 
 
 	//Genome_section::Genome_section()

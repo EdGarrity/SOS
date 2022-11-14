@@ -84,7 +84,7 @@ namespace Plush
 		//static thread_local unsigned long individual_index;
 		//static thread_local unsigned long example_case;
 		unsigned long individual_index = 0;
-		unsigned long example_case = 0;
+		size_t example_case = 0;
 
 		inline void set_current_thread(int new_current_thread)
 		{
@@ -97,7 +97,7 @@ namespace Plush
 			double_stack_.set_current_thread(new_current_thread);
 		};
 
-		inline void set_current_individual_index(int new_individual_index, int new_example_case)
+		inline void set_current_individual_index(int new_individual_index, size_t new_example_case)
 		{
 			individual_index = new_individual_index;
 			example_case = new_example_case;
