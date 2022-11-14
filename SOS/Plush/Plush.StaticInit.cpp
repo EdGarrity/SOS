@@ -101,7 +101,7 @@ namespace Plush
 		{
 			blocks = Func2BlockWantsMap.at(function_name);
 		}
-		catch (const std::out_of_range& oor)
+		catch (const std::out_of_range& /*oor*/)
 		{
 			return 0;
 		}

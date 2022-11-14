@@ -3,8 +3,10 @@
 #include <random>
 #include <limits>
 #include <numeric>
+#include <set>
 #include "Selection.h"
 #include "..\Domain\Arguments.h"
+#include "..\Utilities\Random.Utilities.h"
 
 namespace pushGP
 {
@@ -25,9 +27,9 @@ namespace pushGP
 	//
 	// Remarks:
 	//
-	std::vector<unsigned int> lshuffle(const unsigned int _end)
+	std::vector<size_t> lshuffle(const unsigned int _end)
 	{
-		std::vector<unsigned int> deck;
+		std::vector<size_t> deck;
 
 		for (unsigned int n = 0; n < _end; n++)
 			deck.push_back(n);
@@ -39,6 +41,38 @@ namespace pushGP
 
 		return deck;
 	}
+
+	// Purpose: 
+	//   Create a shuffled desk of N integers from 0 to N-1
+	//
+	// Parameters:
+	//    end - Number of elements to create in the deck
+	//
+	// Return value:
+	//   Vector of shufftled integers
+	//
+	// Side Effects:
+	//   None
+	//
+	// Thread Safe:
+	//   Yes
+	//
+	// Remarks:
+	//
+	//std::set<unsigned long>& lshuffle(const unsigned int _end, const unsigned int _size, std::set<unsigned long>& deck)
+	//{
+	//	do
+	//	{
+	//		deck.insert(Utilities::random_integer(_end));
+	//	} while (deck.size() < _size);
+
+	//	// obtain a time-based seed:
+	//	unsigned seed = (unsigned int)std::chrono::system_clock::now().time_since_epoch().count();
+
+	//	std::shuffle(deck.begin(), deck.end(), std::default_random_engine(seed));
+
+	//	return deck;
+	//}
 
 	// Purpose: 
 	//   Get the Median value of a vector of doubles
@@ -147,16 +181,35 @@ namespace pushGP
 	//
 	// Remarks:
 	//
-	std::tuple<double, unsigned int> epsilon_lexicase_selection(int _number_of_example_cases,
+	std::tuple<double, unsigned int> epsilon_lexicase_selection(int _number_of_example_cases, 
+		concurrent_unordered_set<size_t>& _downsampled_training_cases,
 		std::unordered_set<int> _black_list,
-		combinable<pushGP::globals::Training_case_min_error_type> & _training_case_min_error)
+		combinable<pushGP::globals::Training_case_min_error_type>& _training_case_min_error)
 	{
 		unsigned int chosen = 0;
 		unsigned individual_index = 0;
-		long number_of_survivors = domain::argmap::population_size;
+		__int64 number_of_survivors = domain::argmap::population_size;
 
 		// Get a randomized deck of test cases
-		std::vector<unsigned int> example_cases = lshuffle(_number_of_example_cases);
+		std::vector<size_t> example_cases;
+
+		if (domain::argmap::parent_selection == domain::argmap::PerentSelection::downsampled_lexicase)
+		{
+			for (auto example_case : _downsampled_training_cases)
+			{
+				if (Utilities::random_integer(2) == 0)
+				{
+					auto it = example_cases.begin();
+					example_cases.insert(it, example_case);
+				}
+
+				else
+					example_cases.push_back(example_case);
+			}
+		}
+
+		else
+			example_cases = lshuffle(_number_of_example_cases);
 
 		// Used to calculate static epsilon for each individual
 		std::vector<double> test_case_errors;
@@ -165,7 +218,7 @@ namespace pushGP
 		std::forward_list<unsigned int> survivors_index;
 
 		// Select the first training case
-		unsigned int example_case = example_cases.back();
+		size_t example_case = example_cases.back();
 
 		for (int n = 0; n < domain::argmap::population_size; n++)
 		{
@@ -260,7 +313,7 @@ namespace pushGP
 			before_it = survivors_index.begin();
 
 			// Advance to a random survivor
-			int n = Utilities::random_integer(0, number_of_survivors - static_cast<long>(1));
+			int n = Utilities::random_integer(0, number_of_survivors - static_cast<__int64>(1));
 
 			if (n > 0)
 				while (n > 0)
@@ -281,5 +334,4 @@ namespace pushGP
 
 		return std::make_tuple(median_absolute_deviation, chosen);
 	}
-
 }

@@ -5,6 +5,7 @@
 #include <ppl.h>
 #include <unordered_set>
 #include <vector>
+#include <concurrent_unordered_set.h>
 //#include <unordered_set>
 //#include "Individual.h"
 //#include "..\Domain\Arguments.h"
@@ -17,7 +18,7 @@ namespace pushGP
 	#define Number_Of_Test_Cases (pushGP::globals::population_agents[0].get_errors().size())
 
 	// Return a random permutation of a sequential range from [0 to n).
-	std::vector<unsigned int> lshuffle(unsigned int end);
+	std::vector<size_t> lshuffle(unsigned int end);
 
 	// Returns median absolute deviation (MAD)
 	double median(std::vector<double> x);
@@ -27,6 +28,7 @@ namespace pushGP
 	// Returns an individual that does within epsilon of the best on the fitness cases when 
 	// considered one at a time in random order.  Returns a selected parent.
 	std::tuple<double, unsigned int> epsilon_lexicase_selection(int _number_of_test_cases,
+		concurrent_unordered_set<size_t>& _downsampled_training_cases, 
 		std::unordered_set<int> _black_list,
 		combinable<pushGP::globals::Training_case_min_error_type> & _training_case_min_error);
 

@@ -66,7 +66,7 @@ namespace Utilities
 
 			if (num_threads > 0)
 			{
-				for (int i = 0; i < num_threads; i++)
+				for (int i = 0; i < (int)num_threads; i++)
 					myThreads[i] = std::thread(&WorkOrderManager::process_work_orders, this, i);
 			}
 		}
@@ -88,7 +88,7 @@ namespace Utilities
 		queue_state.store(QueueState::Stopped, std::memory_order_release);
 	}
 
-	void WorkOrderManager::push(unsigned long individual_index, unsigned long example_case, std::vector<double>& input_list, std::vector<double>& output_list)
+	void WorkOrderManager::push(unsigned long individual_index, size_t example_case, std::vector<double>& input_list, std::vector<double>& output_list)
 	{
 		WorkOrder work_order;
 
@@ -198,7 +198,7 @@ namespace Utilities
 					debug_log(env_index, "WorkOrderManager::process_work_orders", "run_finished", work_order.individual_index, work_order.example_case);
 #endif
 				}
-				catch (const std::exception& e)
+				catch (const std::exception& /*e*/)
 				{
 					// Log exception
 					std::stringstream warning_message;
@@ -220,7 +220,7 @@ namespace Utilities
 				}
 			}
 		}
-		catch (const std::exception& e)
+		catch (const std::exception& /*e*/)
 		{
 			// Log exception
 			std::stringstream warning_message;
@@ -260,7 +260,7 @@ namespace Utilities
 		debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", "entry_point");
 #endif
 
-		for (int i = 0; i < num_threads_; i++)
+		for (long i = 0; i < (long)num_threads_; i++)
 		{
 			pushGP::globals::thread_effort[i] = 0;
 			pushGP::globals::thread_exec_size[i] = 0;
@@ -269,7 +269,7 @@ namespace Utilities
 
 		if (num_threads_ > 0)
 		{
-			long queue_size = 0;
+			size_t queue_size = 0;
 
 #if DLEVEL > 0
 			debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", "wait_for_queue_to_empty");
@@ -335,7 +335,7 @@ namespace Utilities
 				//	all_done = true;
 				//}
 
-				for (int i = 0; i < num_threads_; i++)
+				for (long i = 0; i < (long)num_threads_; i++)
 				{
 					if (running_state[i].load(std::memory_order_acquire) == Plush::Environment::RunningState::Running)
 					{
@@ -346,7 +346,7 @@ namespace Utilities
 						unsigned long exec_size = pushGP::globals::thread_exec_size[i];
 						unsigned long instruction_index = pushGP::globals::thread_instruction_index[i];
 						unsigned long individual_index = pushGP::globals::thread_individual_index[i];
-						unsigned long example_case = pushGP::globals::thread_example_case[i];
+						size_t example_case = pushGP::globals::thread_example_case[i];
 
 						std::string instruction_name;
 
@@ -381,7 +381,7 @@ namespace Utilities
 					debug_push.store(false, std::memory_order_release);
 #endif
 
-				char current_instruction[81];
+				//char current_instruction[81];
 
 				//int n = 0;
 				//char ch = 0;

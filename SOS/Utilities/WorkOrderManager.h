@@ -19,7 +19,7 @@ namespace Utilities
 		struct WorkOrder
 		{
 			unsigned long individual_index = 0;
-			unsigned long example_case = 0;
+			size_t example_case = 0;
 			std::vector<double> example_problem;
 			std::vector<double> example_solution;
 		};
@@ -54,7 +54,7 @@ namespace Utilities
 		void initialize(unsigned long _num_threads);
 		void start();
 		void stop();
-		void push(unsigned long individual_index, unsigned long example_case, std::vector<double>& input_list, std::vector<double>& output_list);
+		void push(unsigned long individual_index, size_t example_case, std::vector<double>& input_list, std::vector<double>& output_list);
 		void process_work_orders(const unsigned long env_index);
 		void wait_for_all_threads_to_complete();
 	};
