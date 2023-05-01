@@ -52,6 +52,9 @@
     <Filter Include="Source Files\Database">
       <UniqueIdentifier>{84afd13c-2678-4fa3-aa84-67a87b3a6ee7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Domain\Develop Strategy">
+      <UniqueIdentifier>{d0223cd4-3dde-4d08-90da-671239a1da98}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -191,6 +194,9 @@
     </ClInclude>
     <ClInclude Include="PushGP\CalculateDiversity.h">
       <Filter>Header Files\PushGP</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Develop Strategy\Arguments.h">
+      <Filter>Header Files\Domain\Develop Strategy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -172,6 +172,7 @@
     <ClInclude Include="Database\SQLCommand.h" />
     <ClInclude Include="Database\SQLConnection.h" />
     <ClInclude Include="Domain\Arguments.h" />
+    <ClInclude Include="Domain\Develop Strategy\Arguments.h" />
     <ClInclude Include="Domain\Learn From Examples\Arguments.h" />
     <ClInclude Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.h" />
     <ClInclude Include="Domain\Learn From Examples\Run.LearnFromExamples.h" />
