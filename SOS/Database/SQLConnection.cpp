@@ -1,6 +1,7 @@
 #include <chrono>
 #include <iostream>
 #include <thread>
+#include <comutil.h>
 #include "SQLConnection.h"
 #include "..\Utilities\Conversion.h"
 
@@ -22,7 +23,7 @@ namespace database
 				attempts++;
 
 				// Obtain access to the OLE DB Driver for SQL Server.  
-				hr = CoCreateInstance(CLSID_MSOLEDBSQL,
+				hr = CoCreateInstance(CLSID_MSOLEDBSQL19,
 					NULL,
 					CLSCTX_INPROC_SERVER,
 					IID_IDBInitialize,

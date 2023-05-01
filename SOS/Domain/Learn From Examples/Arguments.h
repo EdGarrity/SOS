@@ -6,6 +6,10 @@ namespace domain
 {
 	namespace argmap
 	{
+		//	Select which algorithm to use
+		enum class AlgorithmSelection { learn_from_examples, strategy_development };
+		const AlgorithmSelection algorithm_selection = AlgorithmSelection::learn_from_examples;
+
 		// Default maximum size of the stack buffer.  Must be greater than max_points
 		const unsigned long maximum_stack_size = 2000;
 

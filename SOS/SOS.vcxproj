@@ -29,26 +29,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
@@ -72,19 +72,21 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files %28x86%29\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib\x64;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files %28x86%29\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib\x64;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -95,7 +97,7 @@
       <PreprocessorDefinitions>_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\183\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\183\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -115,7 +117,7 @@
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <OmitFramePointers>false</OmitFramePointers>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
-      <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\183\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\183\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ShowIncludes>false</ShowIncludes>
       <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -135,7 +137,7 @@
       <PreprocessorDefinitions>_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\183\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\183\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -156,7 +158,7 @@
       <PreprocessorDefinitions>_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\184\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\184\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -211,7 +213,12 @@
     <ClInclude Include="Utilities\MyException.h" />
     <ClInclude Include="Utilities\Random.Utilities.h" />
     <ClInclude Include="Utilities\Singleton.h" />
-    <ClInclude Include="Utilities\ThreadSafeArray.h" />
+    <ClInclude Include="Utilities\ThreadSafeArray.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Utilities\WorkOrderManager.h" />
   </ItemGroup>
   <ItemGroup>
