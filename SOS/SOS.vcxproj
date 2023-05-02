@@ -173,6 +173,7 @@
     <ClInclude Include="Database\SQLConnection.h" />
     <ClInclude Include="Domain\Arguments.h" />
     <ClInclude Include="Domain\Develop Strategy\Arguments.h" />
+    <ClInclude Include="Domain\Develop Strategy\Run.DevelopStrategy.h" />
     <ClInclude Include="Domain\Learn From Examples\Arguments.h" />
     <ClInclude Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.h" />
     <ClInclude Include="Domain\Learn From Examples\Run.LearnFromExamples.h" />
@@ -225,6 +226,7 @@
   <ItemGroup>
     <ClCompile Include="Database\SQLCommand.cpp" />
     <ClCompile Include="Database\SQLConnection.cpp" />
+    <ClCompile Include="Domain\Develop Strategy\Run.DevelopStrategy.cpp" />
     <ClCompile Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.cpp" />
     <ClCompile Include="Domain\Learn From Examples\Run.LearnFromExamples.cpp" />
     <ClCompile Include="pch.cpp">

@@ -55,6 +55,9 @@
     <Filter Include="Header Files\Domain\Develop Strategy">
       <UniqueIdentifier>{d0223cd4-3dde-4d08-90da-671239a1da98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Domain\Develop Strategy">
+      <UniqueIdentifier>{4a861c0d-cf88-4e13-bacf-9c5c3859bb88}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -198,6 +201,9 @@
     <ClInclude Include="Domain\Develop Strategy\Arguments.h">
       <Filter>Header Files\Domain\Develop Strategy</Filter>
     </ClInclude>
+    <ClInclude Include="Domain\Develop Strategy\Run.DevelopStrategy.h">
+      <Filter>Header Files\Domain\Develop Strategy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -310,6 +316,9 @@
     </ClCompile>
     <ClCompile Include="PushGP\CalculateDiversity.cpp">
       <Filter>Source Files\PushGP</Filter>
+    </ClCompile>
+    <ClCompile Include="Domain\Develop Strategy\Run.DevelopStrategy.cpp">
+      <Filter>Source Files\Domain\Develop Strategy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
