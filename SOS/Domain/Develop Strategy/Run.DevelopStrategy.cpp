@@ -25,7 +25,8 @@ namespace domain
 		//   Load the financial data which the agnets will use to make trading decisions.
 		//
 		// Parameters:
-		//   None
+		//   start_date
+		//   end_date
 		// 
 		// Return value:
 		//   
@@ -38,7 +39,7 @@ namespace domain
 		//
 		// Remarks:
 		//
-		void load_financial_data()
+		void load_training_financial_data()
 		{
 		}
 
@@ -62,6 +63,32 @@ namespace domain
 		void load_daily_close_data()
 		{
 		}
+
+		// Purpose: 
+		//   Use the PushP agent to generate the trading order for each trading day.
+		//
+		// Parameters:
+		//   None
+		// 
+		// Return value:
+		//   
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//
+		void generate_trading_orders()
+		{
+			for (unsigned long individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
+			{
+
+			}
+		}
+
 
 		// Purpose: 
 		//   
@@ -92,7 +119,7 @@ namespace domain
 				// *** Initialize ***
 				// ******************
 
-				//Plush::Environment env;	// Commented out because it consumes a lot of memory on the stack.
+				static Plush::Environment global_env;	// Needs to be statc because it consumes too much memory to be allocated on the stack.
 
 				//unsigned int generation_number = 1;
 				unsigned int generations_completed_this_session = 0;
@@ -107,7 +134,7 @@ namespace domain
 				con.connect(argmap::db_init_datasource, argmap::db_init_catalog, argmap::db_user_id, argmap::db_user_password);
 
 				// Load data
-				load_financial_data();
+				load_training_financial_data();
 				load_daily_close_data();
 
 				while ((!done)
@@ -118,6 +145,7 @@ namespace domain
 					// *****************************************************
 					// *** Calculate trading orders for each trading day ***
 					// *****************************************************
+
 
 					// ***********************
 					// *** Evaluate agents ***
