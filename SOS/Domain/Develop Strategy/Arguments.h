@@ -681,7 +681,8 @@ namespace domain
 		// connect to a specific instance of SQL Server the value init_datasource is specified as \\ServerName\InstanceName. The escape sequence \\ is used for 
 		// backslash itself
 //		const std::string db_init_datasource = "HOMEOFFICE";
-		const std::string db_init_datasource = "(local)";
+//		const std::string db_init_datasource = "(local)";
+		const std::string db_init_datasource = "EGARRITY-LT";
 
 		// Name of an existing SQL Server database to which to connect.
 		const std::string db_init_catalog = "SOS";

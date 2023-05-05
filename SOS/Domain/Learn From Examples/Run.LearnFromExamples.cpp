@@ -1,5 +1,7 @@
 #define NOMINMAX
 
+#if 0
+
 #include <functional>
 #include <concurrent_unordered_set.h>
 #include <concurrent_vector.h>
@@ -2434,3 +2436,4 @@ namespace domain
 		}
 	}
 }
+#endif

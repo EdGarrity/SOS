@@ -21,6 +21,10 @@ namespace domain
 {
 	namespace develop_strategy
 	{
+		database::SQLConnection con;
+
+		const std::string sqlstmt_sqlcmd_load_financial_data = "SELECT [Stock],CONVERT(varchar(25),[Date],120) AS [Date],[Key],[Value] FROM [SOS].[dbo].[TestData] ORDER BY [Stock],[Date],[Key];";
+
 		// Purpose: 
 		//   Load the financial data which the agnets will use to make trading decisions.
 		//
@@ -41,6 +45,53 @@ namespace domain
 		//
 		void load_training_financial_data()
 		{
+			std::cout << "Loading financial data..." << std::endl;
+
+			database::SQLCommand* sqlcmd_get_financial_data;
+
+			sqlcmd_get_financial_data = new database::SQLCommand(&con, sqlstmt_sqlcmd_load_financial_data);
+
+			try
+			{
+				std::cout << std::endl;
+				std::cout << "Stock Date Key Value" << std::endl;
+				std::cout << "--------------------" << std::endl;
+
+				sqlcmd_get_financial_data->execute();
+				while (sqlcmd_get_financial_data->fetch_next())
+				{
+					std::string stock = sqlcmd_get_financial_data->get_field_as_string(1);
+					std::string date = sqlcmd_get_financial_data->get_field_as_string(2);
+					std::string key = sqlcmd_get_financial_data->get_field_as_string(3);
+					double value = sqlcmd_get_financial_data->get_field_as_double(4);
+
+					std::cout << stock << " " << date << " " << key << " " << value << std::endl;
+				}
+			}
+			catch (const std::exception& e)
+			{
+				std::cout << "Exception: " << e.what() << std::endl;
+				//std::cout << "Debug message: " << sqlcmd_get_financial_data->get_debug_message() << std::endl;
+
+				delete sqlcmd_get_financial_data;
+
+				std::stringstream error;
+				error << "load_training_financial_data()";
+				std::cerr << error.str() << std::endl;
+			}
+			catch (...)
+			{
+				std::cout << "Unknown exception" << std::endl;
+				//std::cout << "Debug message: " << sqlcmd_get_financial_data->get_debug_message() << std::endl;
+
+				delete sqlcmd_get_financial_data;
+
+				std::stringstream error;
+				error << "load_training_financial_data()";
+				std::cerr << error.str() << std::endl;
+			}
+
+			delete sqlcmd_get_financial_data;
 		}
 
 		// Purpose: 
@@ -110,8 +161,6 @@ namespace domain
 		int run()
 		{
 			std::string debug_message;
-
-			database::SQLConnection con;
 
 			try
 			{
