@@ -204,6 +204,9 @@
     <ClInclude Include="Domain\Develop Strategy\Run.DevelopStrategy.h">
       <Filter>Header Files\Domain\Develop Strategy</Filter>
     </ClInclude>
+    <ClInclude Include="Utilities\ThreeDimensionalArray.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

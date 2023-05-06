@@ -17,7 +17,8 @@
 #include "Run.DevelopStrategy.h"
 #include "..\..\Database\SQLCommand.h"
 #include "..\..\Plush\Environment.h"
-#include "../../PushGP/Globals.h"
+#include "..\..\PushGP\Globals.h"
+#include "..\..\Utilities\ThreeDimensionalArray.h"
 
 namespace domain
 {
@@ -27,18 +28,8 @@ namespace domain
 
 		const std::string sqlstmt_sqlcmd_load_financial_data = "SELECT [Stock],CONVERT(varchar(25),[Date],120) AS [Date],[Key],[Value] FROM [SOS].[dbo].[TestData] ORDER BY [Stock],[Date],[Key];";
 
-		//ThreeDimensionalArray::ThreeDimensionalArray(size_t x, size_t y, size_t z) : data(x* y* z), x(x), y(y), z(z) {}
-
-
-
-		// define the dimensions of the array
-		//const int STOCKS = 2;
-		//const int DATES = 252;
-		//const int ATTRIBUTES = 1765512;
-
 		// create the array and initialize all elements to zero
-		//ThreeDimensionalArray testData(STOCKS, DATES, ATTRIBUTES);
-		ThreeDimensionalArray testData(1, 1, 1);
+		Utilities::ThreeDimensionalArray testData(1, 1, 1);
 
 		// Purpose: 
 		//   Load the financial data which the agnets will use to make trading decisions.
@@ -58,7 +49,7 @@ namespace domain
 		//
 		// Remarks:
 		//
-		void load_training_financial_data(ThreeDimensionalArray& testData)
+		void load_training_financial_data(Utilities::ThreeDimensionalArray& testData)
 		{
 			int debug_n = 0;
 
@@ -110,10 +101,9 @@ namespace domain
 				}
 
 				// Size the array
-				//testData = ThreeDimensionalArray(num_of_stocks, num_of_dates, num_of_attributes);
 				testData.resize(num_of_stocks, num_of_dates, num_of_attributes);
 
-				// retrieve the data and store it in the map
+				// Retrieve the data and store it in the map
 				sqlcmd_get_financial_data->execute();
 
 				debug_n = 10;
