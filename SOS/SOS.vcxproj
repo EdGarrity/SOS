@@ -171,6 +171,8 @@
   <ItemGroup>
     <ClInclude Include="Database\SQLCommand.h" />
     <ClInclude Include="Database\SQLConnection.h" />
+    <ClInclude Include="DataStore\DatabaseConnection.h" />
+    <ClInclude Include="DataStore\FinancialData.h" />
     <ClInclude Include="Domain\Arguments.h" />
     <ClInclude Include="Domain\Develop Strategy\Arguments.h" />
     <ClInclude Include="Domain\Develop Strategy\Run.DevelopStrategy.h" />
@@ -227,6 +229,8 @@
   <ItemGroup>
     <ClCompile Include="Database\SQLCommand.cpp" />
     <ClCompile Include="Database\SQLConnection.cpp" />
+    <ClCompile Include="DataStore\DatabaseConnection.cpp" />
+    <ClCompile Include="DataStore\FinancialData.cpp" />
     <ClCompile Include="Domain\Develop Strategy\Run.DevelopStrategy.cpp" />
     <ClCompile Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.cpp" />
     <ClCompile Include="Domain\Learn From Examples\Run.LearnFromExamples.cpp" />
