@@ -118,6 +118,7 @@ namespace domain
 					//&& (best_individual_score > 0.0)
 					)
 				{
+					done = true;
 					// *****************************************************
 					// *** Calculate trading orders for each trading day ***
 					// *****************************************************
