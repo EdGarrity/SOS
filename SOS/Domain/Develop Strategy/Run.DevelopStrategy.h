@@ -1,5 +1,7 @@
 #pragma once
 
+#include <valarray>
+
 namespace domain
 {
 	namespace develop_strategy
@@ -10,7 +12,8 @@ namespace domain
 			size_t x, y, z;
 
 		public:
-			class ThreeDimensionalArray(size_t x, size_t y, size_t z) : data(x * y * z), x(x), y(y), z(z) {}
+			ThreeDimensionalArray(size_t x, size_t y, size_t z) : data(x * y * z), x(x), y(y), z(z) {}
+			void resize(size_t x, size_t y, size_t z) { data.resize(x * y * z, 0); this->x = x; this->y = y; this->z = z; }
 			double& operator()(size_t i, size_t j, size_t k) { return data[i + x * (j + y * k)]; }
 			double operator()(size_t i, size_t j, size_t k) const { return data[i + x * (j + y * k)]; }
 		};

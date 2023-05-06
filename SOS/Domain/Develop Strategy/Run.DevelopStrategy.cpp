@@ -27,13 +27,18 @@ namespace domain
 
 		const std::string sqlstmt_sqlcmd_load_financial_data = "SELECT [Stock],CONVERT(varchar(25),[Date],120) AS [Date],[Key],[Value] FROM [SOS].[dbo].[TestData] ORDER BY [Stock],[Date],[Key];";
 
+		//ThreeDimensionalArray::ThreeDimensionalArray(size_t x, size_t y, size_t z) : data(x* y* z), x(x), y(y), z(z) {}
+
+
+
 		// define the dimensions of the array
-		const int STOCKS = 2;
-		const int DATES = 252;
-		const int ATTRIBUTES = 1765512;
+		//const int STOCKS = 2;
+		//const int DATES = 252;
+		//const int ATTRIBUTES = 1765512;
 
 		// create the array and initialize all elements to zero
-		ThreeDimensionalArray testData(STOCKS, DATES, ATTRIBUTES);
+		//ThreeDimensionalArray testData(STOCKS, DATES, ATTRIBUTES);
+		ThreeDimensionalArray testData(1, 1, 1);
 
 		// Purpose: 
 		//   Load the financial data which the agnets will use to make trading decisions.
@@ -55,6 +60,8 @@ namespace domain
 		//
 		void load_training_financial_data(ThreeDimensionalArray& testData)
 		{
+			int debug_n = 0;
+
 			std::cout << "Loading financial data..." << std::endl;
 
 			database::SQLCommand* sqlcmd_get_financial_data;
@@ -63,18 +70,21 @@ namespace domain
 
 			try
 			{
-				std::cout << std::endl;
-				std::cout << "Stock Date Key Value" << std::endl;
-				std::cout << "--------------------" << std::endl;
-
 				// create a map to store the indexes of each stock, date, and attribute
 				std::map<std::string, size_t> stocks;
 				std::map<std::string, size_t> dates;
 				std::map<std::string, size_t> attributes;
 
+				// retrieve the data and size the storage.
 				sqlcmd_get_financial_data->execute();
+
+
+				debug_n = 10;
 				while (sqlcmd_get_financial_data->fetch_next())
 				{
+					if (debug_n-- <= 0)
+						break;
+
 					std::string stock = sqlcmd_get_financial_data->get_field_as_string(1);
 					std::string date = sqlcmd_get_financial_data->get_field_as_string(2);
 					std::string key = sqlcmd_get_financial_data->get_field_as_string(3);
@@ -83,33 +93,57 @@ namespace domain
 					stocks[stock] = 0;
 					dates[date] = 0;
 					attributes[key] = 0;
-
-					testData(stock, date, key) = value;
 				}
 
 				// set the indexes of each stock, date, and attribute
-				int i = 0;
+				size_t num_of_stocks = 0;
 				for (auto& [key, value] : stocks) {
-					value = i++;
+					value = num_of_stocks++;
 				}
-				i = 0;
+				size_t num_of_dates = 0;
 				for (auto& [key, value] : dates) {
-					value = i++;
+					value = num_of_dates++;
 				}
-				i = 0;
+				size_t num_of_attributes = 0;
 				for (auto& [key, value] : attributes) {
-					value = i++;
+					value = num_of_attributes++;
 				}
 
+				// Size the array
+				//testData = ThreeDimensionalArray(num_of_stocks, num_of_dates, num_of_attributes);
+				testData.resize(num_of_stocks, num_of_dates, num_of_attributes);
+
+				// retrieve the data and store it in the map
+				sqlcmd_get_financial_data->execute();
+
+				debug_n = 10;
+				while (sqlcmd_get_financial_data->fetch_next())
+				{
+					if (debug_n-- <= 0)
+						break;
+
+					std::string stock = sqlcmd_get_financial_data->get_field_as_string(1);
+					std::string date = sqlcmd_get_financial_data->get_field_as_string(2);
+					std::string key = sqlcmd_get_financial_data->get_field_as_string(3);
+					double value = sqlcmd_get_financial_data->get_field_as_double(4);
+
+					std::cout << stocks[stock] << " " << dates[date] << " " << attributes[key] << " " << value << std::endl;
+
+					testData(stocks[stock], dates[date], attributes[key]) = value;
+				}
 
 				// Print the array
-				for (int i = 0; i < STOCKS; i++)
+				std::cout << std::endl;
+				std::cout << "Stock Date Key Value" << std::endl;
+				std::cout << "--------------------" << std::endl;
+
+				for (int i = 0; i < num_of_stocks; i++)
 				{
-					for (int j = 0; j < DATES; j++)
+					for (int j = 0; j < num_of_dates; j++)
 					{
-						for (int k = 0; k < ATTRIBUTES; k++)
+						for (int k = 0; k < num_of_attributes; k++)
 						{
-							std::cout << testData(i, j, k) << " ";
+							std::cout << i << " " << j << " " << k << " " << testData(i, j, k) << std::endl;
 						}
 						std::cout << std::endl;
 					}
