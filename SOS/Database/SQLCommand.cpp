@@ -279,14 +279,62 @@ namespace database
 		dwOffset_ = ROUNDUP(dwOffset_);
 	}
 
+	void SQLCommand::set_as_string(unsigned int parm_no, std::string parameter)
+	{
+		unsigned int n = parm_no - 1;
+
+		if (dwOffset_ > MAX_ROW_LENGTH)
+			throw MyException("dwOffset_ > MAX_ROW_LENGTH");
+
+		// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms725393(v=vs.85)"
+		ParamBindInfo_[n].pwszDataSourceType = wszDBTYPE_STR;
+		ParamBindInfo_[n].pwszName = NULL;
+		ParamBindInfo_[n].ulParamSize = parameter.size();
+		ParamBindInfo_[n].dwFlags = DBPARAMFLAGS_ISINPUT;
+		ParamBindInfo_[n].bPrecision = 0;
+		ParamBindInfo_[n].bScale = 0;
+		ParamOrdinals_[n] = parm_no;
+
+		// This binding applies to the ordinal of this column
+		// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms716845%28v%3dvs.85%29"
+		rgBindings_[n].iOrdinal = parm_no;
+		rgBindings_[n].obValue = dwOffset_;
+		rgBindings_[n].eParamIO = DBPARAMIO_INPUT;
+		rgBindings_[n].wType = DBTYPE_STR;
+		rgBindings_[n].cbMaxLen = parameter.length();
+
+		// Copy parameter data into buffer
+		memcpy(sprocparams + dwOffset_, parameter.c_str(), rgBindings_[n].cbMaxLen + 1);
+
+		// Update the offset past the end of this column's data, so
+		// that the next column will begin in the correct place in
+		// the buffer
+		dwOffset_ += (ULONG)rgBindings_[n].cbMaxLen + 1;
+
+		// Ensure that the data for the next column will be correctly
+		// aligned for all platforms, or, if we're done with columns,
+		// that if we allocate space for multiple rows that the data
+		// for every row is correctly aligned
+		dwOffset_ = ROUNDUP(dwOffset_);
+
+		if (dwOffset_ > MAX_ROW_LENGTH)
+			throw MyException("dwOffset_ > MAX_ROW_LENGTH");
+	}
+
 	wchar_t wszDBTYPE_I4[] = L"DBTYPE_I4";
 
-	//void SQLCommand::set_as_integer(DBPARAMIOENUM param_io, unsigned int parm_no, int &parameter)
-	//{
-	//	set_as_long(param_io, parm_no, (long&)parameter);
-	//}
+	void SQLCommand::set_as_GUID(unsigned int parm_no, const UUID _parameter)
+	{
+		set_as_string(parm_no, GuidToString(_parameter));
+	}
 
-	void SQLCommand::set_as_integer(DBPARAMIOENUM param_io, unsigned int parm_no, long &parameter)
+	void SQLCommand::set_as_integer(unsigned int parm_no, long parameter)
+	{
+		long parameter_copy = parameter;
+		set_as_integer(DBPARAMIO_INPUT, parm_no, parameter_copy);
+	}
+
+	void SQLCommand::set_as_integer(DBPARAMIOENUM param_io, unsigned int parm_no, long& parameter)
 	{
 		unsigned int n = parm_no - 1;
 
@@ -367,6 +415,11 @@ namespace database
 	}
 
 	wchar_t wszDBTYPE_R8[] = L"DBTYPE_R8";
+
+	void SQLCommand::set_as_float(unsigned int parm_no, double parameter)
+	{
+		set_as_float(DBPARAMIO_INPUT, parm_no, parameter);
+	}
 
 	void SQLCommand::set_as_float(DBPARAMIOENUM param_io, unsigned int parm_no, double parameter)
 	{

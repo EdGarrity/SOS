@@ -1,7 +1,5 @@
 #pragma once
 
-#if 0
-
 namespace domain
 {
 	namespace learn_from_examples
@@ -9,4 +7,3 @@ namespace domain
 		int run();
 	}
 }
-#endif

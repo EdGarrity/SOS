@@ -221,7 +221,38 @@ namespace database
 		//
 		void set_as_bit(DBPARAMIOENUM param_io, unsigned int parm_no, int parameter);
 
-//		void set_as_integer(DBPARAMIOENUM param_io, unsigned int parm_no, int & parameter);
+		// Sets value as character string data
+		//
+		// Description: 
+		//		Binds a string value to a command parameter and sets the data source type to DBTYPE_I4
+		//
+		// Parameters:
+		//		parm_no		The parameter index number.  1 is the first parameter in the command.
+		//		parameter	Integer value to be bound to the command parameter.
+		//
+		void set_as_string(unsigned int parm_no, std::string parameter);
+		
+		// Sets parameter value as long data
+		//
+		// Description: 
+		//		Binds a GUID value to a command parameter and sets the data source type to DBTYPE_I4
+		//
+		// Parameters:
+		//		parm_no		The parameter index number.  1 is the first parameter in the command.
+		//		parameter	Integer value to be bound to the command parameter.
+		//
+		void set_as_GUID(unsigned int parm_no, const UUID _parameter);
+
+		// Sets parameter value as long data
+		//
+		// Description: 
+		//		Binds a long value to a command parameter and sets the data source type to DBTYPE_I4
+		//
+		// Parameters:
+		//		parm_no		The parameter index number.  1 is the first parameter in the command.
+		//		parameter	Integer value to be bound to the command parameter.
+		//
+		void set_as_integer(unsigned int parm_no, long parameter);
 
 		// Sets parameter value as long data
 		//
@@ -248,6 +279,17 @@ namespace database
 		//		parameter	Integer value to be bound to the command parameter.
 		//
 		void set_as_bigint(DBPARAMIOENUM param_io, unsigned int parm_no, long long &parameter);
+
+		// Sets parameter value as float data
+		//
+		// Description: 
+		//		Binds a float value to a command parameter and sets the data source type to DBTYPE_R8
+		//
+		// Parameters:
+		//		parm_no		The parameter index number.  1 is the first parameter in the command.
+		//		parameter	Float value to be bound to the command parameter.
+		//
+		void set_as_float(unsigned int parm_no, double parameter);
 
 		// Sets parameter value as float data
 		//

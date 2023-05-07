@@ -1,7 +1,5 @@
 #define NOMINMAX
 
-#if 0
-
 #include <algorithm>
 #include "ErrorFunction.LearnFromExample.h"
 #include "..\..\PushGP\Globals.h"
@@ -171,4 +169,3 @@ namespace domain
 		}
 	}
 }
-#endif

@@ -1,7 +1,5 @@
 #define NOMINMAX
 
-#if 0
-
 #include <functional>
 #include <concurrent_unordered_set.h>
 #include <concurrent_vector.h>
@@ -941,7 +939,8 @@ namespace domain
 
 			for (int n = 0; n < argmap::population_size; n++)
 			{
-				sqlcmd_insert_new_individual->set_as_integer(1, n + 1);
+				long nn = n + 1;
+				sqlcmd_insert_new_individual->set_as_integer(DBPARAMIO_INPUT, 1, nn);
 				sqlcmd_insert_new_individual->set_as_string(2, pushGP::globals::population_agents[n]);
 
 				std::unordered_set<UUID> parents = pushGP::globals::population_agents[n].get_parents();
@@ -2436,4 +2435,3 @@ namespace domain
 		}
 	}
 }
-#endif
