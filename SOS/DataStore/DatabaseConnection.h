@@ -1,3 +1,5 @@
+#pragma once
+
 #include "..\Database\SQLConnection.h"
 #include "..\Database\SQLCommand.h"
 

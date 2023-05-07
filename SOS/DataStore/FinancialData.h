@@ -1,3 +1,5 @@
+#pragma once
+
 #include "..\Utilities\ThreeDimensionalArray.h"
 #include "DatabaseConnection.h"
 

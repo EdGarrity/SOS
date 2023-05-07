@@ -19,6 +19,7 @@
 #include "..\..\Plush\Environment.h"
 #include "..\..\PushGP\Globals.h"
 #include "..\..\DataStore\FinancialData.h"
+#include "..\..\DataStore\DailyCloseData.h"
 
 namespace domain
 {
@@ -111,7 +112,7 @@ namespace domain
 
 				// Load data
 				datastore::financial_data.load_training_financial_data();
-				load_daily_close_data();
+				datastore::daily_close_data.load_daily_close_data();
 
 				while ((!done)
 					//&& (generation_number <= argmap::max_generations_in_one_session)
@@ -122,6 +123,7 @@ namespace domain
 					// *****************************************************
 					// *** Calculate trading orders for each trading day ***
 					// *****************************************************
+					//best_individual_score = compute_training_score(env, run_agent, argmap::number_of_training_cases);
 
 
 					// ***********************

@@ -219,6 +219,9 @@
     <ClInclude Include="DataStore\DatabaseConnection.h">
       <Filter>Header Files\DataStore</Filter>
     </ClInclude>
+    <ClInclude Include="DataStore\DailyCloseData.h">
+      <Filter>Header Files\DataStore</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -339,6 +342,9 @@
       <Filter>Source Files\DataStore</Filter>
     </ClCompile>
     <ClCompile Include="DataStore\DatabaseConnection.cpp">
+      <Filter>Source Files\DataStore</Filter>
+    </ClCompile>
+    <ClCompile Include="DataStore\DailyCloseData.cpp">
       <Filter>Source Files\DataStore</Filter>
     </ClCompile>
   </ItemGroup>
