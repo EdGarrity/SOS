@@ -97,9 +97,6 @@ namespace Plush
 			env.temp_genes[i++] = gene;
 		}
 
-		// Load inputs
-		env.initialize(input);
-
 		if (i > 0)
 		{
 			int j = i;

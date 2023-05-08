@@ -10,7 +10,7 @@
 
 namespace domain
 {
-	namespace learn_from_examples
+	namespace develop_strategy
 	{
 //		__declspec(thread) Plush::Environment env_local;
 
