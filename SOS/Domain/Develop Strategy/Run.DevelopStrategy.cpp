@@ -20,6 +20,7 @@
 #include "..\..\PushGP\Globals.h"
 #include "..\..\DataStore\FinancialData.h"
 #include "..\..\DataStore\DailyCloseData.h"
+#include "ErrorFunction.LearnFromExample.h"
 
 namespace domain
 {
@@ -119,12 +120,21 @@ namespace domain
 					//&& (best_individual_score > 0.0)
 					)
 				{
-					done = true;
 					// *****************************************************
 					// *** Calculate trading orders for each trading day ***
 					// *****************************************************
 					//best_individual_score = compute_training_score(env, run_agent, argmap::number_of_training_cases);
 
+					for (unsigned long individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
+					{
+						unsigned long training_case_index = 0;
+
+						while (training_case_index < domain::argmap::training_case_length)
+						{
+							run_individual_threadsafe(global_env, individual_index, training_case_index);
+							training_case_index++;
+						}
+					}
 
 					// ***********************
 					// *** Evaluate agents ***

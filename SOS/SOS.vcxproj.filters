@@ -222,6 +222,9 @@
     <ClInclude Include="DataStore\DailyCloseData.h">
       <Filter>Header Files\DataStore</Filter>
     </ClInclude>
+    <ClInclude Include="Domain\Develop Strategy\ErrorFunction.LearnFromExample.h">
+      <Filter>Header Files\Domain\Develop Strategy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -346,6 +349,9 @@
     </ClCompile>
     <ClCompile Include="DataStore\DailyCloseData.cpp">
       <Filter>Source Files\DataStore</Filter>
+    </ClCompile>
+    <ClCompile Include="Domain\Develop Strategy\ErrorFunction.LearnFromExample.cpp">
+      <Filter>Source Files\Domain\Develop Strategy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

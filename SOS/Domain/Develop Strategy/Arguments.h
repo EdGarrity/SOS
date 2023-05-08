@@ -10,6 +10,10 @@ namespace domain
 		enum class AlgorithmSelection { learn_from_examples, strategy_development };
 		const AlgorithmSelection algorithm_selection = AlgorithmSelection::strategy_development;
 
+		// Define length of the training and test cases
+		const unsigned long training_case_length = 252; // 252 trading days in a year
+		const unsigned long test_case_length = 252; // 252 trading days in a year
+
 		// Default maximum size of the stack buffer.  Must be greater than max_points
 		const unsigned long maximum_stack_size = 2000;
 
