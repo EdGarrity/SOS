@@ -924,13 +924,17 @@ namespace Plush
 
 		if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
 		{
-			size_t size = datastore::financial_data.get_num_of_stocks() + datastore::financial_data.get_num_of_attributes();
-			index = std::abs((long)(index % size + _env.input_case));
+			size_t size_of_case = datastore::financial_data.get_num_of_stocks() * datastore::financial_data.get_num_of_attributes();
+			size_t size_of_window = datastore::financial_data.get_num_of_dates() * datastore::financial_data.get_num_of_attributes();
 
-			size_t stock = index / size;
-			size_t key = index % size;
+			size_t case_window_index = std::abs((long)(index / size_of_window));
+			size_t table_index = case_window_index + _env.input_case;
 
-			value = datastore::financial_data(stock, _env.input_case, key);
+			size_t stock_loc = table_index / size_of_window;
+			size_t date_loc = (table_index / datastore::financial_data.get_num_of_attributes()) % datastore::financial_data.get_num_of_dates();
+			size_t attribute_loc = table_index % datastore::financial_data.get_num_of_attributes();
+
+			value = datastore::financial_data(stock_loc, date_loc, attribute_loc);
 		}
 		else
 		{
@@ -963,12 +967,30 @@ namespace Plush
 	//
 	inline unsigned long inall2code(Environment & _env)
 	{
-		if (_env.input.size() > 0)
+		if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
 		{
-			for (unsigned int index = 0; index < _env.input.size(); index++)
+			size_t size_of_window = datastore::financial_data.get_num_of_dates() * datastore::financial_data.get_num_of_attributes();
+
+			for (unsigned int index = 0; index < size_of_window; index++)
 			{
-				double value = _env.input[index];
+				size_t table_index = index + _env.input_case;
+				size_t stock_loc = table_index / size_of_window;
+				size_t date_loc = (table_index / datastore::financial_data.get_num_of_attributes()) % datastore::financial_data.get_num_of_dates();
+				size_t attribute_loc = table_index % datastore::financial_data.get_num_of_attributes();
+
+				double value = datastore::financial_data(stock_loc, date_loc, attribute_loc);
 				_env.push<CodeAtom>(CodeAtom(value));
+			}
+		}
+		else
+		{
+			if (_env.input.size() > 0)
+			{
+				for (unsigned int index = 0; index < _env.input.size(); index++)
+				{
+					double value = _env.input[index];
+					_env.push<CodeAtom>(CodeAtom(value));
+				}
 			}
 		}
 
@@ -995,16 +1017,37 @@ namespace Plush
 	//
 	inline unsigned long inallrev2code(Environment & _env)
 	{
-		if (_env.input.size() > 0)
+		if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
 		{
-			size_t size = _env.input.size();
-			size_t index = size;
+			size_t size_of_window = datastore::financial_data.get_num_of_dates() * datastore::financial_data.get_num_of_attributes();
+			size_t index = size_of_window;
 
-			//for (unsigned long index = _env.input.size() - 1; index >= 0; index--)
-			for (size_t n = 0; n < size; n++)
+			for (unsigned int n = 0; n < size_of_window; n++)
 			{
-				double value = _env.input[--index];
+				index--;
+
+				size_t table_index = index + _env.input_case;
+				size_t stock_loc = table_index / size_of_window;
+				size_t date_loc = (table_index / datastore::financial_data.get_num_of_attributes()) % datastore::financial_data.get_num_of_dates();
+				size_t attribute_loc = table_index % datastore::financial_data.get_num_of_attributes();
+
+				double value = datastore::financial_data(stock_loc, date_loc, attribute_loc);
 				_env.push<CodeAtom>(CodeAtom(value));
+			}
+		}
+		else
+		{
+			if (_env.input.size() > 0)
+			{
+				size_t size = _env.input.size();
+				size_t index = size;
+
+				//for (unsigned long index = _env.input.size() - 1; index >= 0; index--)
+				for (size_t n = 0; n < size; n++)
+				{
+					double value = _env.input[--index];
+					_env.push<CodeAtom>(CodeAtom(value));
+				}
 			}
 		}
 
