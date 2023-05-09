@@ -159,7 +159,7 @@ namespace Plush
 	//};
 
 	unsigned int run(Environment& env, std::string _program, std::vector<double> & _input);
-	unsigned int run(Environment& env, std::string _program, unsigned long case_index);
+	unsigned int run(Environment& env, std::string _program, size_t case_index);
 	unsigned int run(Environment& env, std::string _program);
 	unsigned int run(Environment& env, unsigned _max_effort);
 

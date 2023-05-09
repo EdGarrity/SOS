@@ -40,16 +40,10 @@ namespace datastore
 
 		try
 		{
-			// create a map to store the indexes of each stock, date, and attribute
-			std::map<std::string, size_t> stocks;
-			std::map<std::string, size_t> dates;
-			std::map<std::string, size_t> attributes;
-
 			// retrieve the data and size the storage.
 			sqlcmd_get_financial_data->execute();
 
-
-			debug_n = 10;
+	debug_n = 10;
 			while (sqlcmd_get_financial_data->fetch_next())
 			{
 				if (debug_n-- <= 0)

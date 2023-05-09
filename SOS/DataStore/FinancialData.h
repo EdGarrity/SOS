@@ -13,11 +13,22 @@ namespace datastore
 		// create the array and initialize all elements to zero
 		Utilities::ThreeDimensionalArray table;
 
+		// create a map to store the indexes of each stock, date, and attribute
+		std::map<std::string, size_t> stocks;
+		std::map<std::string, size_t> dates;
+		std::map<std::string, size_t> attributes;
+
 	public:
 		FinancialData();
 		~FinancialData() {};
 		void load_training_financial_data();
 
+		size_t get_num_of_stocks() const { return stocks.size(); }
+		size_t get_num_of_dates() const { return dates.size(); }
+		size_t get_num_of_attributes() const { return attributes.size(); }
+
+		double& operator()(size_t i, size_t j, size_t k) { return table(i, j, k); }
+		double operator()(size_t i, size_t j, size_t k) const { return table(i, j, k); }
 	};
 
 	extern FinancialData financial_data;

@@ -127,9 +127,9 @@ namespace domain
 
 					for (unsigned long individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 					{
-						unsigned long training_case_index = 0;
+						size_t training_case_index = 0;
 
-						while (training_case_index < domain::argmap::training_case_length)
+						while (training_case_index < datastore::financial_data.get_num_of_dates() - domain::argmap::training_case_length)
 						{
 							run_individual_threadsafe(global_env, individual_index, training_case_index);
 							training_case_index++;

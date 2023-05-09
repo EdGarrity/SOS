@@ -1,11 +1,13 @@
 #include <set>
 #include <stack>
+#include "..\Domain\Arguments.h"
 #include "Genome.h"
 #include "Plush.ExecInstruction.h"
 #include "Processor.h"
 #include "Plush.StaticInit.h"
 #include "..\Utilities\String.h"
 #include "..\Domain\Arguments.h"
+#include "..\DataStore\FinancialData.h"
 
 namespace Plush
 {
@@ -918,9 +920,24 @@ namespace Plush
 	inline unsigned long in2code(Environment & _env)
 	{
 		long index = _env.pop<long>();
+		double value = 0;
 
-		index = std::abs((long)(index % _env.input.size()));
-		double value = _env.input[index];
+		if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
+		{
+			size_t size = datastore::financial_data.get_num_of_stocks() + datastore::financial_data.get_num_of_attributes();
+			index = std::abs((long)(index % size + _env.input_case));
+
+			size_t stock = index / size;
+			size_t key = index % size;
+
+			value = datastore::financial_data(stock, _env.input_case, key);
+		}
+		else
+		{
+			index = std::abs((long)(index % _env.input.size()));
+			value = _env.input[index];
+		}
+
 		_env.push<CodeAtom>(CodeAtom(value));
 
 		return 1;

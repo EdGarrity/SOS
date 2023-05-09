@@ -79,7 +79,7 @@ namespace Plush
 	}
 
 	// Run provided program with index to input vector
-	unsigned int run(Environment& env, std::string program, unsigned long case_index)
+	unsigned int run(Environment& env, std::string program, size_t case_index)
 	{
 		std::string gene;
 		int i = 0;
@@ -96,6 +96,9 @@ namespace Plush
 
 			env.temp_genes[i++] = gene;
 		}
+
+		// Load inputs
+		env.initialize(case_index);
 
 		if (i > 0)
 		{

@@ -73,6 +73,7 @@ namespace Plush
 		}
 
 		// Pointer to input & output data
+		size_t input_case;
 		std::vector<double> input = null_input;
 		std::vector<double> output;
 
@@ -121,6 +122,7 @@ namespace Plush
 			double_stack_.clear();
 
 			null_input.clear();
+			input_case = 0;
 			input = null_input;
 			output.clear();
 
@@ -133,7 +135,16 @@ namespace Plush
 		virtual void initialize(std::vector<double> & _input)
 		{
 			clear_stacks();
+			input_case = 0;
 			input = _input;
+			output.clear();
+		}
+
+		virtual void initialize(size_t case_index)
+		{
+			clear_stacks();
+			input_case = case_index;
+			input = null_input;
 			output.clear();
 		}
 
