@@ -207,9 +207,6 @@
     <ClInclude Include="Domain\Develop Strategy\Arguments.h">
       <Filter>Header Files\Domain\Develop Strategy</Filter>
     </ClInclude>
-    <ClInclude Include="Domain\Develop Strategy\Run.DevelopStrategy.h">
-      <Filter>Header Files\Domain\Develop Strategy</Filter>
-    </ClInclude>
     <ClInclude Include="Utilities\ThreeDimensionalArray.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
@@ -222,7 +219,10 @@
     <ClInclude Include="DataStore\DailyCloseData.h">
       <Filter>Header Files\DataStore</Filter>
     </ClInclude>
-    <ClInclude Include="Domain\Develop Strategy\ErrorFunction.LearnFromExample.h">
+    <ClInclude Include="Domain\Develop Strategy\Run.DevelopStrategy.h">
+      <Filter>Header Files\Domain\Develop Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Develop Strategy\ErrorFunction.DevelopStrategy.h">
       <Filter>Header Files\Domain\Develop Strategy</Filter>
     </ClInclude>
   </ItemGroup>
@@ -338,9 +338,6 @@
     <ClCompile Include="PushGP\CalculateDiversity.cpp">
       <Filter>Source Files\PushGP</Filter>
     </ClCompile>
-    <ClCompile Include="Domain\Develop Strategy\Run.DevelopStrategy.cpp">
-      <Filter>Source Files\Domain\Develop Strategy</Filter>
-    </ClCompile>
     <ClCompile Include="DataStore\FinancialData.cpp">
       <Filter>Source Files\DataStore</Filter>
     </ClCompile>
@@ -350,7 +347,10 @@
     <ClCompile Include="DataStore\DailyCloseData.cpp">
       <Filter>Source Files\DataStore</Filter>
     </ClCompile>
-    <ClCompile Include="Domain\Develop Strategy\ErrorFunction.LearnFromExample.cpp">
+    <ClCompile Include="Domain\Develop Strategy\Run.DevelopStrategy.cpp">
+      <Filter>Source Files\Domain\Develop Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="Domain\Develop Strategy\ErrorFunction.DevelopStrategy.cpp">
       <Filter>Source Files\Domain\Develop Strategy</Filter>
     </ClCompile>
   </ItemGroup>

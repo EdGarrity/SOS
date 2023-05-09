@@ -20,7 +20,7 @@
 #include "..\..\PushGP\Globals.h"
 #include "..\..\DataStore\FinancialData.h"
 #include "..\..\DataStore\DailyCloseData.h"
-#include "ErrorFunction.LearnFromExample.h"
+#include "ErrorFunction.DevelopStrategy.h"
 
 namespace domain
 {

@@ -1,7 +1,7 @@
 #define NOMINMAX
 
 #include <algorithm>
-#include "ErrorFunction.LearnFromExample.h"
+#include "ErrorFunction.DevelopStrategy.h"
 #include "..\..\PushGP\Globals.h"
 #include "..\..\PushGP\Individual.h"
 #include "..\..\Plush\Processor.h"
