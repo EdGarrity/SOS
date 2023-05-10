@@ -15,16 +15,15 @@ namespace domain
 //		__declspec(thread) Plush::Environment env_local;
 
 		// Purpose: 
-		//   Run a Push prgram and calculates error result
+		//   Run a Push prgram and calculate the orders
 		//
 		// Parameters:
 		//   program - The Push program to run
-		//   example_problem - The problem we are attempting to solve
-		//   example_solution - The solution to the problem the program is suppose to find
+		//   case_index - The financial case number we are to use
 		//
 		// Return value:
 		//   Tuple:
-		//     The vector difference between the program's result and the expected result.
+		//     Trading instruction
 		//     Execution Effort
 		//
 		// Side Effects:
@@ -34,11 +33,6 @@ namespace domain
 		//   No
 		//
 		// Remarks:
-		//   Examples are expected to be a vector of doubles in the following form:
-		//     X1 X2 X3 ...
-		//
-		//     Where:
-		//       X = 0 or more doubles.
 		//
 		std::tuple<double, unsigned long> run_program(Plush::Environment& env,
 			std::string program,
@@ -64,12 +58,11 @@ namespace domain
 		//
 		// Parameters:
 		//   individual_index - Index of individual whose program we are to run
-		//   example_problem - The problem we are attempting to solve
-		//   example_solution - The solution to the problem the program is suppose to find
+		//   case_index - The financial case number we are to use
 		//
 		// Return value:
 		//   Tuple:
-		//     The vector difference between the program's result and the expected result.
+		//     Trading instruction
 		//     Execution Effort
 		//
 		// Side Effects:
@@ -79,29 +72,7 @@ namespace domain
 		//   No
 		//
 		// Remarks:
-		//   Examples are expected to be a list of integers in the following form:
-		//     N X
 		//
-		//     Where:
-		//       N = number of integers in the example
-		//       X = 0 or more integers.  The number of integers must be equal to N
-		//
-		//double run_individual(
-		//	unsigned int _individual_index,
-		//	std::vector<double>& _example_problem,
-		//	std::vector<double>& _example_solution)
-		//{
-		//	double error = 0.0;
-		//	Plush::Environment* envp_local = new Plush::Environment;
-
-		//	std::string program = pushGP::globals::population_agents[_individual_index].get_genome_string();
-
-		//	error = run_program(*envp_local, program, _example_problem, _example_solution);
-
-		//	delete envp_local;
-
-		//	return error;
-		//}
 		std::tuple<double, unsigned long> run_individual_threadsafe(Plush::Environment& env,
 			unsigned int _individual_index,
 			unsigned long case_index)
