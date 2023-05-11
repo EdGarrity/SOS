@@ -922,25 +922,25 @@ namespace Plush
 		long index = std::abs((long)(_env.pop<long>()));
 		double value = 0;
 
-		if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
-		{
-			size_t number_of_case_columns = datastore::financial_data.get_num_of_stocks() * datastore::financial_data.get_num_of_attributes();
-			size_t size_of_window = datastore::financial_data.get_num_of_dates() * datastore::financial_data.get_num_of_attributes();
+		//if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
+		//{
+		//	size_t number_of_case_columns = datastore::financial_data.get_num_of_stocks() * datastore::financial_data.get_num_of_attributes();
+		//	size_t size_of_window = datastore::financial_data.get_num_of_dates() * datastore::financial_data.get_num_of_attributes();
 
-			size_t case_window_index = index % size_of_window;
-			size_t table_index = case_window_index + _env.input_case;
+		//	size_t case_window_index = index % size_of_window;
+		//	size_t table_index = case_window_index + _env.input_case;
 
-			size_t date_loc = table_index / number_of_case_columns;
-			size_t stock_loc = (size_t)(table_index % number_of_case_columns) / datastore::financial_data.get_num_of_attributes();
-			size_t attribute_loc = table_index % datastore::financial_data.get_num_of_attributes();
+		//	size_t date_loc = table_index / number_of_case_columns;
+		//	size_t stock_loc = (size_t)(table_index % number_of_case_columns) / datastore::financial_data.get_num_of_attributes();
+		//	size_t attribute_loc = table_index % datastore::financial_data.get_num_of_attributes();
 
-			value = datastore::financial_data(stock_loc, date_loc, attribute_loc);
-		}
-		else
-		{
+		//	value = datastore::financial_data(stock_loc, date_loc, attribute_loc);
+		//}
+		//else
+		//{
 			index = std::abs((long)(index % _env.input.size()));
 			value = _env.input[index];
-		}
+		//}
 
 		_env.push<CodeAtom>(CodeAtom(value));
 
@@ -967,23 +967,23 @@ namespace Plush
 	//
 	inline unsigned long inall2code(Environment & _env)
 	{
-		if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
-		{
-			size_t size_of_window = datastore::financial_data.get_num_of_dates() * datastore::financial_data.get_num_of_attributes();
+		//if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
+		//{
+		//	size_t size_of_window = datastore::financial_data.get_num_of_dates() * datastore::financial_data.get_num_of_attributes();
 
-			for (unsigned int index = 0; index < size_of_window; index++)
-			{
-				size_t table_index = index + _env.input_case;
-				size_t stock_loc = table_index / size_of_window;
-				size_t date_loc = (table_index / datastore::financial_data.get_num_of_attributes()) % datastore::financial_data.get_num_of_dates();
-				size_t attribute_loc = table_index % datastore::financial_data.get_num_of_attributes();
+		//	for (unsigned int index = 0; index < size_of_window; index++)
+		//	{
+		//		size_t table_index = index + _env.input_case;
+		//		size_t stock_loc = table_index / size_of_window;
+		//		size_t date_loc = (table_index / datastore::financial_data.get_num_of_attributes()) % datastore::financial_data.get_num_of_dates();
+		//		size_t attribute_loc = table_index % datastore::financial_data.get_num_of_attributes();
 
-				double value = datastore::financial_data(stock_loc, date_loc, attribute_loc);
-				_env.push<CodeAtom>(CodeAtom(value));
-			}
-		}
-		else
-		{
+		//		double value = datastore::financial_data(stock_loc, date_loc, attribute_loc);
+		//		_env.push<CodeAtom>(CodeAtom(value));
+		//	}
+		//}
+		//else
+		//{
 			if (_env.input.size() > 0)
 			{
 				for (unsigned int index = 0; index < _env.input.size(); index++)
@@ -992,7 +992,7 @@ namespace Plush
 					_env.push<CodeAtom>(CodeAtom(value));
 				}
 			}
-		}
+		//}
 
 		return 1;
 	}
@@ -1017,26 +1017,26 @@ namespace Plush
 	//
 	inline unsigned long inallrev2code(Environment & _env)
 	{
-		if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
-		{
-			size_t size_of_window = datastore::financial_data.get_num_of_dates() * datastore::financial_data.get_num_of_attributes();
-			size_t index = size_of_window;
+		//if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
+		//{
+		//	size_t size_of_window = datastore::financial_data.get_num_of_dates() * datastore::financial_data.get_num_of_attributes();
+		//	size_t index = size_of_window;
 
-			for (unsigned int n = 0; n < size_of_window; n++)
-			{
-				index--;
+		//	for (unsigned int n = 0; n < size_of_window; n++)
+		//	{
+		//		index--;
 
-				size_t table_index = index + _env.input_case;
-				size_t stock_loc = table_index / size_of_window;
-				size_t date_loc = (table_index / datastore::financial_data.get_num_of_attributes()) % datastore::financial_data.get_num_of_dates();
-				size_t attribute_loc = table_index % datastore::financial_data.get_num_of_attributes();
+		//		size_t table_index = index + _env.input_case;
+		//		size_t stock_loc = table_index / size_of_window;
+		//		size_t date_loc = (table_index / datastore::financial_data.get_num_of_attributes()) % datastore::financial_data.get_num_of_dates();
+		//		size_t attribute_loc = table_index % datastore::financial_data.get_num_of_attributes();
 
-				double value = datastore::financial_data(stock_loc, date_loc, attribute_loc);
-				_env.push<CodeAtom>(CodeAtom(value));
-			}
-		}
-		else
-		{
+		//		double value = datastore::financial_data(stock_loc, date_loc, attribute_loc);
+		//		_env.push<CodeAtom>(CodeAtom(value));
+		//	}
+		//}
+		//else
+		//{
 			if (_env.input.size() > 0)
 			{
 				size_t size = _env.input.size();
@@ -1049,7 +1049,7 @@ namespace Plush
 					_env.push<CodeAtom>(CodeAtom(value));
 				}
 			}
-		}
+		//}
 
 		return 1;
 	}

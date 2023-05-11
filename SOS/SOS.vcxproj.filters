@@ -216,7 +216,7 @@
     <ClInclude Include="DataStore\DatabaseConnection.h">
       <Filter>Header Files\DataStore</Filter>
     </ClInclude>
-    <ClInclude Include="DataStore\DailyCloseData.h">
+    <ClInclude Include="DataStore\CaseData.h">
       <Filter>Header Files\DataStore</Filter>
     </ClInclude>
     <ClInclude Include="Domain\Develop Strategy\Run.DevelopStrategy.h">
@@ -344,7 +344,7 @@
     <ClCompile Include="DataStore\DatabaseConnection.cpp">
       <Filter>Source Files\DataStore</Filter>
     </ClCompile>
-    <ClCompile Include="DataStore\DailyCloseData.cpp">
+    <ClCompile Include="DataStore\CaseData.cpp">
       <Filter>Source Files\DataStore</Filter>
     </ClCompile>
     <ClCompile Include="Domain\Develop Strategy\Run.DevelopStrategy.cpp">

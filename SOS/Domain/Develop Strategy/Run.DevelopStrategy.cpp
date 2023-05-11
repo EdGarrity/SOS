@@ -19,34 +19,13 @@
 #include "..\..\Plush\Environment.h"
 #include "..\..\PushGP\Globals.h"
 #include "..\..\DataStore\FinancialData.h"
-#include "..\..\DataStore\DailyCloseData.h"
+#include "..\..\DataStore\CaseData.h"
 #include "ErrorFunction.DevelopStrategy.h"
 
 namespace domain
 {
 	namespace develop_strategy
 	{
-		// Purpose: 
-		//   Load the financial data which the agnets will use to make trading decisions.
-		//
-		// Parameters:
-		//   None
-		// 
-		// Return value:
-		//   
-		//
-		// Side Effects:
-		//   None
-		//
-		// Thread Safe:
-		//   No
-		//
-		// Remarks:
-		//
-		void load_daily_close_data()
-		{
-		}
-
 		// Purpose: 
 		//   Use the PushP agent to generate the trading order for each trading day.
 		//
@@ -112,8 +91,8 @@ namespace domain
 				pushGP::globals::child_agents = new pushGP::Individual[sz];
 
 				// Load data
-				datastore::financial_data.load_training_financial_data();
-				datastore::daily_close_data.load_daily_close_data();
+				//datastore::case_data.load();
+				//datastore::financial_data.load();
 
 				while ((!done)
 					//&& (generation_number <= argmap::max_generations_in_one_session)
@@ -123,15 +102,13 @@ namespace domain
 					// *****************************************************
 					// *** Calculate trading orders for each trading day ***
 					// *****************************************************
-					//best_individual_score = compute_training_score(env, run_agent, argmap::number_of_training_cases);
-
-					for (unsigned long individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
-					{
-						for (unsigned long training_case_index = 0; training_case_index < (datastore::financial_data.get_num_of_dates() - domain::argmap::training_case_length); training_case_index++)
-						{
-							auto results = run_individual_threadsafe(global_env, individual_index, training_case_index);
-						}
-					}
+					//for (unsigned long training_case_index = 0; training_case_index < (datastore::financial_data.get_num_of_dates() - domain::argmap::training_case_length); training_case_index++)
+					//{
+					//	for (unsigned long individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
+					//	{
+					//		auto results = run_individual_threadsafe(global_env, individual_index, training_case_index);
+					//	}
+					//}
 
 					// ***********************
 					// *** Evaluate agents ***
