@@ -91,7 +91,7 @@ namespace domain
 				pushGP::globals::child_agents = new pushGP::Individual[sz];
 
 				// Load data
-				//datastore::case_data.load();
+				datastore::case_data.load();
 				//datastore::financial_data.load();
 
 				while ((!done)

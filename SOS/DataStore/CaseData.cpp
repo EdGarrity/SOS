@@ -5,9 +5,9 @@
 
 namespace datastore
 {
-	//CaseData case_data;
+	CaseData case_data;
 
-	CaseData::CaseData() : DatabaseConnection()
+	CaseData::CaseData()
 	{
 	}
 
@@ -41,7 +41,7 @@ namespace datastore
 		std::snprintf(&buf[0], buf.size(), fmt_str_load_case_data, "AAPL");
 		std::string sqlstmt_load_case_data(buf.begin(), buf.end() - 1); // omit the null terminator
 
-		sqlcmd_get_case_data = new database::SQLCommand(&con, sqlstmt_load_case_data);
+		sqlcmd_get_case_data = new database::SQLCommand(database_connection.get_connection(), sqlstmt_load_case_data);
 
 		dates.clear();
 		adj_open_values.clear();

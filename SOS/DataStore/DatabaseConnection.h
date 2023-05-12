@@ -1,5 +1,6 @@
 #pragma once
 
+#include "..\Domain\Arguments.h"
 #include "..\Database\SQLConnection.h"
 #include "..\Database\SQLCommand.h"
 
@@ -11,7 +12,8 @@ namespace datastore
 		database::SQLConnection con;
 
 	public:
-		DatabaseConnection();
-		~DatabaseConnection() {};
+		database::SQLConnection* get_connection();
 	};
+
+	extern DatabaseConnection database_connection;
 }

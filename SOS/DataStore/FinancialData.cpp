@@ -4,9 +4,9 @@
 
 namespace datastore
 {
-	FinancialData financial_data;
+	//FinancialData financial_data;
 
-	FinancialData::FinancialData() : DatabaseConnection()
+	FinancialData::FinancialData()
 	{
 	}
 

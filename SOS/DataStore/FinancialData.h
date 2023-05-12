@@ -6,7 +6,7 @@
 
 namespace datastore
 {
-	class FinancialData : public DatabaseConnection
+	class FinancialData //: public DatabaseConnection
 	{
 	private:
 		const std::string sqlstmt_sqlcmd_load_financial_data = "SELECT [Stock],CONVERT(varchar(25),[Date],120) AS [Date],[Key],[Value] FROM [SOS].[dbo].[TestData] ORDER BY [Stock],[Date],[Key];";
@@ -33,5 +33,5 @@ namespace datastore
 		//double operator()(size_t i, size_t j, size_t k) const { return table(i, j, k); }
 	};
 
-	extern FinancialData financial_data;
+	//extern FinancialData financial_data;
 }
