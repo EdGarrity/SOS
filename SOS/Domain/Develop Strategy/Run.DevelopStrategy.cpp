@@ -102,13 +102,13 @@ namespace domain
 					// *****************************************************
 					// *** Calculate trading orders for each trading day ***
 					// *****************************************************
-					//for (unsigned long training_case_index = 0; training_case_index < (datastore::financial_data.get_num_of_dates() - domain::argmap::training_case_length); training_case_index++)
-					//{
-					//	for (unsigned long individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
-					//	{
-					//		auto results = run_individual_threadsafe(global_env, individual_index, training_case_index);
-					//	}
-					//}
+					for (unsigned long training_case_index = 0; training_case_index < datastore::case_data.get_number_of_cases(); training_case_index++)
+					{
+						for (unsigned long individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
+						{
+							auto results = run_individual_threadsafe(global_env, individual_index, training_case_index);
+						}
+					}
 
 					// ***********************
 					// *** Evaluate agents ***

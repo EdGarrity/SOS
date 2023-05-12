@@ -18,7 +18,7 @@ namespace datastore
 		CaseData();
 		~CaseData() {};
 		void load();
-
+		size_t get_number_of_cases() const { return dates.size(); }
 	};
 
 	extern CaseData case_data;
