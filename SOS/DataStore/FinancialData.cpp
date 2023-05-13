@@ -1,141 +1,15 @@
 #include <iostream>
 #include <map>
 #include "FinancialData.h"
+#include "CaseData.h"
 
 namespace datastore
 {
-	//FinancialData financial_data;
+	FinancialData financial_data;
 
 	FinancialData::FinancialData()
 	{
 	}
-
-	//// Purpose: 
-	////   Load all the financial data which the agnets will use to make trading decisions.
-	////
-	//// Parameters:
-	////   None
-	//// 
-	//// Return value:
-	////   None
-	////
-	//// Side Effects:
-	////   None
-	////
-	//// Thread Safe:
-	////   No
-	////
-	//// Remarks:
-	////
-	//void FinancialData::load()
-	//{
-	//	int debug_n = 0;
-
-	//	std::cout << "Loading financial data..." << std::endl;
-
-	//	database::SQLCommand* sqlcmd_get_financial_data;
-
-	//	sqlcmd_get_financial_data = new database::SQLCommand(&con, sqlstmt_sqlcmd_load_financial_data);
-
-	//	try
-	//	{
-	//		// retrieve the data and size the storage.
-	//		sqlcmd_get_financial_data->execute();
-
-	//debug_n = 10;
-	//		while (sqlcmd_get_financial_data->fetch_next())
-	//		{
-	//			if (debug_n-- <= 0)
-	//				break;
-
-	//			std::string stock = sqlcmd_get_financial_data->get_field_as_string(1);
-	//			std::string date = sqlcmd_get_financial_data->get_field_as_string(2);
-	//			std::string key = sqlcmd_get_financial_data->get_field_as_string(3);
-	//			double value = sqlcmd_get_financial_data->get_field_as_double(4);
-
-	//			stocks[stock] = 0;
-	//			dates[date] = 0;
-	//			attributes[key] = 0;
-	//		}
-
-	//		// set the indexes of each stock, date, and attribute
-	//		size_t num_of_stocks = 0;
-	//		for (auto& [key, value] : stocks) {
-	//			value = num_of_stocks++;
-	//		}
-	//		size_t num_of_dates = 0;
-	//		for (auto& [key, value] : dates) {
-	//			value = num_of_dates++;
-	//		}
-	//		size_t num_of_attributes = 0;
-	//		for (auto& [key, value] : attributes) {
-	//			value = num_of_attributes++;
-	//		}
-
-	//		// Size the array
-	//		table.resize(num_of_stocks, num_of_dates, num_of_attributes);
-
-	//		// Retrieve the data and store it in the map
-	//		sqlcmd_get_financial_data->execute();
-
-	//		debug_n = 10;
-	//		while (sqlcmd_get_financial_data->fetch_next())
-	//		{
-	//			if (debug_n-- <= 0)
-	//				break;
-
-	//			std::string stock = sqlcmd_get_financial_data->get_field_as_string(1);
-	//			std::string date = sqlcmd_get_financial_data->get_field_as_string(2);
-	//			std::string key = sqlcmd_get_financial_data->get_field_as_string(3);
-	//			double value = sqlcmd_get_financial_data->get_field_as_double(4);
-
-	//			std::cout << stocks[stock] << " " << dates[date] << " " << attributes[key] << " " << value << std::endl;
-
-	//			table(stocks[stock], dates[date], attributes[key]) = value;
-	//		}
-
-	//		// Print the array
-	//		std::cout << std::endl;
-	//		std::cout << "Stock Date Key Value" << std::endl;
-	//		std::cout << "--------------------" << std::endl;
-
-	//		for (int i = 0; i < num_of_stocks; i++)
-	//		{
-	//			for (int j = 0; j < num_of_dates; j++)
-	//			{
-	//				for (int k = 0; k < num_of_attributes; k++)
-	//				{
-	//					std::cout << i << " " << j << " " << k << " " << table(i, j, k) << std::endl;
-	//				}
-	//				std::cout << std::endl;
-	//			}
-	//			std::cout << std::endl;
-	//		}
-	//	}
-	//	catch (const std::exception& e)
-	//	{
-	//		std::cout << "Exception: " << e.what() << std::endl;
-
-	//		delete sqlcmd_get_financial_data;
-
-	//		std::stringstream error;
-	//		error << "load_training_financial_data()";
-	//		std::cerr << error.str() << std::endl;
-	//	}
-	//	catch (...)
-	//	{
-	//		std::cout << "Unknown exception" << std::endl;
-
-	//		delete sqlcmd_get_financial_data;
-
-	//		std::stringstream error;
-	//		error << "load_training_financial_data()";
-	//		std::cerr << error.str() << std::endl;
-	//	}
-
-	//	delete sqlcmd_get_financial_data;
-	//}
-
 
 	// Purpose: 
 	//   Load the financial data for a case which the agnets will use to make trading decisions.
@@ -154,8 +28,90 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	void load(size_t case_index)
+	void FinancialData::load(size_t case_index)
 	{
+		std::cout << "Loading financial data for case " << case_index << std::endl;
 
+		database::SQLCommand* sqlcmd_get_case_data = nullptr;
+
+		try
+		{
+			// Construct the SQL statement.
+			int sz = std::snprintf(nullptr, 0, fmt_str_load_case_financial_data, "AAPL", case_data.get_gate(case_index));
+			std::vector<char> buf(sz + 1); // note +1 for null terminator
+			std::snprintf(&buf[0], buf.size(), fmt_str_load_case_financial_data, "AAPL", case_data.get_gate(case_index));
+			std::string sqlstmt_load_case_data(buf.begin(), buf.end() - 1); // omit the null terminator
+
+			sqlcmd_get_case_data = new database::SQLCommand(database_connection.get_connection(), sqlstmt_load_case_data);
+
+			values.clear();
+
+			// retrieve the case data.
+			sqlcmd_get_case_data->execute();
+
+			while (sqlcmd_get_case_data->fetch_next())
+			{
+				double data = sqlcmd_get_case_data->get_field_as_double(2);
+
+				std::cout << data << std::endl;
+
+				values.push_back(data);
+			}
+
+			case_cached = true;
+			current_case_index = case_index;
+
+			delete sqlcmd_get_case_data;
+		}
+		catch (const std::exception& e)
+		{
+			std::cout << "Exception: " << e.what() << std::endl;
+
+			if (sqlcmd_get_case_data != nullptr)
+				delete sqlcmd_get_case_data;
+
+			std::stringstream error;
+			error << "CaseData::load()";
+			std::cerr << error.str() << std::endl;
+		}
+		catch (...)
+		{
+			std::cout << "Unknown exception" << std::endl;
+
+			if (sqlcmd_get_case_data != nullptr)
+				delete sqlcmd_get_case_data;
+
+			std::stringstream error;
+			error << "CaseData::load()";
+			std::cerr << error.str() << std::endl;
+		}
+	}
+
+	// Purpose: 
+	//   Retrieve the financial data for the given case.
+	//
+	// Parameters:
+	//   case_index
+	//   index
+	// 
+	// Return value:
+	//   Value
+	//
+	// Side Effects:
+	//   None
+	//
+	// Thread Safe:
+	//   No
+	//
+	// Remarks:
+	//
+	double FinancialData::get_data(long index, size_t input_case)
+	{
+		if ((case_cached == false) || (input_case != current_case_index))
+			load(input_case);
+
+		index = std::abs((long)(index % get_size()));
+
+		return values[index];
 	}
 }

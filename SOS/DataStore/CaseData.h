@@ -19,6 +19,7 @@ namespace datastore
 		~CaseData() {};
 		void load();
 		size_t get_number_of_cases() const { return dates.size(); }
+		std::string get_gate(size_t index) const { return dates[index]; }
 	};
 
 	extern CaseData case_data;
