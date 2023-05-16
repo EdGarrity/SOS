@@ -169,6 +169,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Broker\Account.h" />
+    <ClInclude Include="Broker\Trader.h" />
     <ClInclude Include="Database\SQLCommand.h" />
     <ClInclude Include="Database\SQLConnection.h" />
     <ClInclude Include="DataStore\CaseData.h" />
@@ -225,10 +227,13 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="Utilities\ThreadSafeArray_V2.h" />
     <ClInclude Include="Utilities\ThreeDimensionalArray.h" />
     <ClInclude Include="Utilities\WorkOrderManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Broker\Account.cpp" />
+    <ClCompile Include="Broker\Trader.cpp" />
     <ClCompile Include="Database\SQLCommand.cpp" />
     <ClCompile Include="Database\SQLConnection.cpp" />
     <ClCompile Include="DataStore\CaseData.cpp" />
@@ -275,6 +280,7 @@
     <ClCompile Include="Utilities\MyException.cpp" />
     <ClCompile Include="Utilities\Random.Utilities.cpp" />
     <ClCompile Include="Utilities\ThreadSafeArray.cpp" />
+    <ClCompile Include="Utilities\ThreadSafeArray_V2.cpp" />
     <ClCompile Include="Utilities\WorkOrderManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

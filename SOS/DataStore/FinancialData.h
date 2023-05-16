@@ -6,7 +6,7 @@
 
 namespace datastore
 {
-	class FinancialData //: public DatabaseConnection
+	class FinancialData
 	{
 	private:
 		const char* fmt_str_load_case_financial_data = "SELECT [Value] FROM [SOS].[dbo].[TestData] WHERE [Stock]='%s' AND CONVERT(varchar(25),[Date],120)='%s' ORDER BY [Stock],[Date],[Key];";

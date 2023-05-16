@@ -64,6 +64,12 @@
     <Filter Include="Source Files\DataStore">
       <UniqueIdentifier>{269e5355-d148-4501-9232-145b351e84ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Broker">
+      <UniqueIdentifier>{01929479-beef-4e2d-b2c0-7d5e330f9763}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Broker">
+      <UniqueIdentifier>{5cf6f32a-a2e6-4844-9ea3-000f987ea5d2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -225,6 +231,15 @@
     <ClInclude Include="Domain\Develop Strategy\ErrorFunction.DevelopStrategy.h">
       <Filter>Header Files\Domain\Develop Strategy</Filter>
     </ClInclude>
+    <ClInclude Include="Broker\Account.h">
+      <Filter>Header Files\Broker</Filter>
+    </ClInclude>
+    <ClInclude Include="Broker\Trader.h">
+      <Filter>Header Files\Broker</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\ThreadSafeArray_V2.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -352,6 +367,15 @@
     </ClCompile>
     <ClCompile Include="Domain\Develop Strategy\ErrorFunction.DevelopStrategy.cpp">
       <Filter>Source Files\Domain\Develop Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="Broker\Account.cpp">
+      <Filter>Source Files\Broker</Filter>
+    </ClCompile>
+    <ClCompile Include="Broker\Trader.cpp">
+      <Filter>Source Files\Broker</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\ThreadSafeArray_V2.cpp">
+      <Filter>Source Files\Utilities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -22,6 +22,8 @@
 #include "..\..\DataStore\CaseData.h"
 #include "ErrorFunction.DevelopStrategy.h"
 #include "..\..\Utilities\ThreeDimensionalArray.h"
+#include "..\..\Broker\Trader.h"
+#include "..\..\Utilities\ThreadSafeArray_V2.h"
 
 namespace domain
 {
@@ -103,20 +105,40 @@ namespace domain
 					// *****************************************************
 					// *** Calculate trading orders for each trading day ***
 					// *****************************************************
-					Utilities::ThreeDimensionalArray orders(domain::argmap::population_size, datastore::case_data.get_number_of_cases());
+					//Utilities::ThreeDimensionalArray orders(domain::argmap::population_size, datastore::case_data.get_number_of_cases());
 
-					for (unsigned long training_case_index = 0; training_case_index < datastore::case_data.get_number_of_cases(); training_case_index++)
+					Utilities::ThreadSafeArray_2D_V2<unsigned long> orders(domain::argmap::population_size, datastore::case_data.get_number_of_cases());
+
+					for (size_t training_case_index = 0; training_case_index < datastore::case_data.get_number_of_cases(); training_case_index++)
 					{
-						for (unsigned long individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
+						for (size_t individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 						{
 							auto results = run_individual_threadsafe(global_env, individual_index, training_case_index);
-							orders(individual_index, training_case_index) = std::get<0>(results);
+							orders.store(0, individual_index, training_case_index, std::get<0>(results));
 						}
 					}
 
 					// ***********************
 					// *** Evaluate agents ***
 					// ***********************
+					//std::vector<Trader> trader;
+					Utilities::ThreadSafeArray_2D_V2<Trader> trader(domain::argmap::population_size, datastore::case_data.get_number_of_cases());
+
+					for (size_t training_case_index = 0; 
+						training_case_index < (datastore::case_data.get_number_of_cases() - domain::argmap::training_case_length); 
+						training_case_index++)
+					{
+						for (size_t individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
+						{
+							for (size_t trading_case = 0; trading_case < domain::argmap::training_case_length; trading_case++)
+							{
+								size_t trader_index = training_case_index * individual_index;
+								//trader[trader_index].execute(orders(individual_index, training_case_index + trading_case));
+
+								trader.store(0, trader_index, training_case_index + trading_case, orders.load(individual_index, training_case_index + trading_case));
+							}
+						}
+					}
 
 					// *********************
 					// *** Evolve agents ***
