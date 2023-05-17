@@ -5,7 +5,7 @@ namespace domain
 {
     void Trader::buy(size_t index)
     {
-        double price = datastore::case_data.get_price(index);
+        double price = datastore::case_data.get_stock_price(index);
         double balance = p_account->get_balance();
 
         if (price <= balance)
@@ -17,7 +17,7 @@ namespace domain
 
     void Trader::sell(size_t index)
     {
-        double price = datastore::case_data.get_price(index);
+        double price = datastore::case_data.get_stock_price(index);
 
         if (shares > 0)
         {
@@ -26,13 +26,15 @@ namespace domain
         }
     }
 
-    void Trader::execute(int order)
+    void Trader::execute(size_t index, unsigned long order)
     {
         switch (order)
         {
         case -1:// Buy
+            buy(index);
             break;
         case 1: // Sell
+            sell(index);
             break;
         }
     }

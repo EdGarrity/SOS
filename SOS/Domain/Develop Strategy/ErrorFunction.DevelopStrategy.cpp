@@ -54,10 +54,10 @@ namespace domain
 		}
 
 		// Purpose: 
-		//   Run an Individual's Push program and calculate error result
+		//   Run an strategy's Push program and calculate error result
 		//
 		// Parameters:
-		//   individual_index - Index of individual whose program we are to run
+		//   strategy_index - Index of strategy whose program we are to run
 		//   case_index - The financial case number we are to use
 		//
 		// Return value:
@@ -73,11 +73,11 @@ namespace domain
 		//
 		// Remarks:
 		//
-		std::tuple<double, unsigned long> run_individual_threadsafe(Plush::Environment& env,
-			unsigned int _individual_index,
+		std::tuple<double, unsigned long> run_strategy_threadsafe(Plush::Environment& env,
+			unsigned int strategy_index,
 			unsigned long case_index)
 		{
-			std::string program = pushGP::globals::population_agents[_individual_index].get_genome_string();
+			std::string program = pushGP::globals::population_agents[strategy_index].get_genome_string();
 
 			auto results = run_program(env, program, case_index);
 

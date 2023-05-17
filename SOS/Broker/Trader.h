@@ -18,6 +18,6 @@ namespace domain
 
 		void buy(size_t index);
 		void sell(size_t index);
-		void execute(int order);
+		void execute(size_t index, unsigned long order);
 	};
 }
