@@ -38,4 +38,17 @@ namespace domain
             break;
         }
     }
+
+    double Trader::unrealized_value(size_t index) const
+    {
+        double price = datastore::case_data.get_stock_price(index);
+        double balance = p_account->get_balance();
+
+        if (shares > 0)
+        {
+            balance += price * shares;
+        }
+
+        return balance;
+    }
 }

@@ -28,6 +28,8 @@
 #include "..\..\PushGP\SimulatedAnnealing.h"
 #include "..\..\PushGP\Individual.h"
 
+using namespace concurrency;
+
 namespace domain
 {
 	namespace develop_strategy
@@ -282,6 +284,11 @@ namespace domain
 					// *************************
 					// *** Evolve strategies ***
 					// *************************
+					produce_new_offspring(argmap::number_of_training_cases,
+						downsampled_training_cases,
+						best_individual,
+						sa,
+						include_best_individual_in_breeding_pool);
 				}
 			}
 			catch (const std::exception& e)

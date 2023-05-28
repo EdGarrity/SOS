@@ -19,5 +19,6 @@ namespace domain
 		void buy(size_t index);
 		void sell(size_t index);
 		void execute(size_t index, unsigned long order);
+		double unrealized_value(size_t index) const;
 	};
 }
