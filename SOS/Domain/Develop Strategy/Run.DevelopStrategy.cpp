@@ -24,6 +24,9 @@
 #include "..\..\Utilities\ThreeDimensionalArray.h"
 #include "..\..\Broker\Trader.h"
 #include "..\..\Utilities\ThreadSafeArray_V2.h"
+#include "..\..\PushGP\Globals.h"
+#include "..\..\PushGP\SimulatedAnnealing.h"
+#include "..\..\PushGP\Individual.h"
 
 namespace domain
 {
