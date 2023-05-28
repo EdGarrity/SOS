@@ -32,13 +32,21 @@ namespace domain
 		concurrent_unordered_set<size_t> downsampled_training_cases;
 
 		// Purpose: 
-		//   
+		//   This function produces new offspring.
 		//
+		//   This function produces new offspring by breeding the current population of agents. The 
+		//   best individual is kept and the rest are bred using simulated annealing. The children 
+		//   are then mutated and regenerated as necessary.
+		// 
 		// Parameters:
-		//   None
+		//   _number_of_example_cases The number of example cases.
+		//   _downsampled_training_cases The downsampled training cases.
+		//   _best_individual The best individual.
+		//   sa The simulated annealing object.
+		//   _include_best_individual_in_breeding_pool Whether or not to include the best individual in the breeding pool.
 		// 
 		// Return value:
-		//   
+		//   void  
 		//
 		// Side Effects:
 		//   None
@@ -47,24 +55,7 @@ namespace domain
 		//   No
 		//
 		// Remarks:
-		//
-
-		/**
-		 * @brief This function produces new offspring.
-		 *
-		 * This function produces new offspring by breeding the current population of agents. The best individual is kept and the rest are bred using simulated annealing. The children are then mutated and regenerated as necessary.
-		 *
-		 * @param _number_of_example_cases The number of example cases.
-		 * @param _downsampled_training_cases The downsampled training cases.
-		 * @param _best_individual The best individual.
-		 * @param sa The simulated annealing object.
-		 * @param _include_best_individual_in_breeding_pool Whether or not to include the best individual in the breeding pool.
-		 *
-		 * @return void
-		 *
-		 * @remarks This function is not thread safe.
-		 */
-
+		//  This function is not thread safe
 		void produce_new_offspring(unsigned long _number_of_example_cases,
 			concurrent_unordered_set<size_t>& _downsampled_training_cases,
 			unsigned long _best_individual,
