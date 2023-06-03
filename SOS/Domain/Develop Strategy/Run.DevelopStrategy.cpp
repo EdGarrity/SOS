@@ -212,13 +212,13 @@ namespace domain
 
 				// Load data from most recent database record
 				unsigned int run_number = datastore::case_data.get_last_saved_run_number();
-				unsigned int generation_number = get_last_saved_generation_number() + 1;
-				double best_individual_score = get_last_best_individual_score(std::numeric_limits<double>::min());
+				unsigned int generation_number = datastore::case_data.get_last_saved_generation_number() + 1;
+				double best_individual_score = datastore::case_data.get_last_best_individual_score(std::numeric_limits<double>::min());
 				//double best_individual_error = get_last_best_individual_error(std::numeric_limits<double>::max());
 				//double prev_best_individual_error = get_last_prev_best_individual_error(std::numeric_limits<double>::max());
-				int stalled_count = get_last_stalled_count(argmap::stalled_count_trigger);
-				int cool_down_count = get_last_cool_down_count(argmap::cool_down_period);
-				bool include_best_individual_in_breeding_pool = get_include_best_individual_in_breeding_pool(true);
+				int stalled_count = datastore::case_data.get_last_stalled_count(argmap::stalled_count_trigger);
+				int cool_down_count = datastore::case_data.get_last_cool_down_count(argmap::cool_down_period);
+				bool include_best_individual_in_breeding_pool = datastore::case_data.get_include_best_individual_in_breeding_pool(true);
 
 				sa.set_cold();
 				sa.set_temperature(get_last_saved_temperature(sa.get_temperature()));

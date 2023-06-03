@@ -105,7 +105,7 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	unsigned long get_last_saved_run_number()
+	unsigned long CaseData::get_last_saved_run_number()
 	{
 		unsigned long n = 0;
 
@@ -144,7 +144,7 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	unsigned long get_last_saved_generation_number()
+	unsigned long CaseData::get_last_saved_generation_number()
 	{
 		unsigned long n = 0;
 
@@ -183,7 +183,7 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	double get_last_saved_temperature(double _default_temperature)
+	double CaseData::get_last_saved_temperature(double _default_temperature)
 	{
 		double n = _default_temperature;
 
@@ -223,7 +223,7 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	double get_last_best_individual_score(double _default_score)
+	double CaseData::get_last_best_individual_score(double _default_score)
 	{
 		double n = _default_score;
 
@@ -259,7 +259,7 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	double get_last_best_individual_error(double _default_error)
+	double CaseData::get_last_best_individual_error(double _default_error)
 	{
 		double n = _default_error;
 
@@ -298,7 +298,7 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	double get_last_prev_best_individual_error(double _default_error)
+	double CaseData::get_last_prev_best_individual_error(double _default_error)
 	{
 		double n = _default_error;
 
@@ -336,7 +336,7 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	unsigned long get_last_stalled_count(unsigned long _default_stalled_count)
+	unsigned long CaseData::get_last_stalled_count(unsigned long _default_stalled_count)
 	{
 		unsigned long n = _default_stalled_count;
 
@@ -374,7 +374,7 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	unsigned long get_last_cool_down_count(unsigned long _default_cool_down_count)
+	unsigned long CaseData::get_last_cool_down_count(unsigned long _default_cool_down_count)
 	{
 		unsigned long n = _default_cool_down_count;
 
@@ -413,7 +413,7 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	bool get_include_best_individual_in_breeding_pool(unsigned long _default_include_best_individual_in_breeding_pool)
+	bool CaseData::get_include_best_individual_in_breeding_pool(unsigned long _default_include_best_individual_in_breeding_pool)
 	{
 		bool n = _default_include_best_individual_in_breeding_pool;
 
