@@ -173,6 +173,7 @@
     <ClInclude Include="Broker\Trader.h" />
     <ClInclude Include="Database\SQLCommand.h" />
     <ClInclude Include="Database\SQLConnection.h" />
+    <ClInclude Include="DataStore\AgentData.h" />
     <ClInclude Include="DataStore\CaseData.h" />
     <ClInclude Include="DataStore\DatabaseConnection.h" />
     <ClInclude Include="DataStore\FinancialData.h" />
@@ -236,6 +237,7 @@
     <ClCompile Include="Broker\Trader.cpp" />
     <ClCompile Include="Database\SQLCommand.cpp" />
     <ClCompile Include="Database\SQLConnection.cpp" />
+    <ClCompile Include="DataStore\AgentData.cpp" />
     <ClCompile Include="DataStore\CaseData.cpp" />
     <ClCompile Include="DataStore\DatabaseConnection.cpp" />
     <ClCompile Include="DataStore\FinancialData.cpp" />

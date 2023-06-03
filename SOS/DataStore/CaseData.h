@@ -9,7 +9,7 @@ namespace datastore
 	class CaseData
 	{
 	private:
-		const char *fmt_str_load_case_data = "SELECT CONVERT(varchar(25),[Date],120) AS [Date],[Value] FROM [SOS].[dbo].[TestData] WHERE [Key]='Adj_Open' AND [Stock]='%s' ORDER BY [Date];";
+		const char *fmt_str_load_case_data = "SELECT CONVERT(varchar(25),[Date],120) AS [Date],[Value] FROM [SOS].[dbo].[TestData] WHERE [Key]='Norm_Adj_Open' AND [Stock]='%s' ORDER BY [Date];";
 
 		std::vector<std::string> dates;
 		std::vector<double> adj_open_values;
@@ -26,26 +26,6 @@ namespace datastore
 		const std::string sqlstmt_sqlcmd_load_example_cases = "SELECT [Problem], [Solution] FROM [dbo].[ExampleCases];";
 		const std::string sqlstmt_delete_all_example_cases = "DELETE FROM [SOS].[dbo].[ExampleCases];";
 		const std::string sqlstmt_insert_new_example_case = "INSERT INTO [dbo].[ExampleCases] ([Problem], [Solution]) VALUES (?,?);";
-		const std::string sqlstmt_sqlcmd_get_individuals = "SELECT [Individual_ID],"
-			"[Genome], "
-			"[Parent_1],"
-			"[Parent_2],"
-			"[Parent_1_1],"
-			"[Parent_1_2],"
-			"[Parent_2_1],"
-			"[Parent_2_2],"
-			"[Parent_1_1_1],"
-			"[Parent_1_1_2],"
-			"[Parent_1_2_1],"
-			"[Parent_1_2_2],"
-			"[Parent_2_1_1],"
-			"[Parent_2_1_2],"
-			"[Parent_2_2_1],"
-			"[Parent_2_2_2] "
-			"FROM [dbo].[Individuals] ORDER BY [Individual_ID];";
-		const std::string sqlstmt_delete_individual = "DELETE FROM [SOS].[dbo].[Individuals];";
-		const std::string sqlstmt_insert_new_individual = "INSERT INTO [dbo].[Individuals] ([Individual_ID], [Genome], [Parent_1], [Parent_2], [Parent_1_1], [Parent_1_2], [Parent_2_1], [Parent_2_2], [Parent_1_1_1], [Parent_1_1_2], [Parent_1_2_1], [Parent_1_2_2], [Parent_2_1_1], [Parent_2_1_2], [Parent_2_2_1], [Parent_2_2_2]) VALUES	(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-		//                                                                     1  2  3  4  5  6  7  8  9  0  1  2  3  4  5  6
 
 		const std::string sqlstmt_save_status_report = "INSERT INTO [dbo].[ProgressLog]"
 			"           ("

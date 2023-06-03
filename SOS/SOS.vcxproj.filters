@@ -240,6 +240,9 @@
     <ClInclude Include="Utilities\ThreadSafeArray_V2.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="DataStore\AgentData.h">
+      <Filter>Header Files\DataStore</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -376,6 +379,9 @@
     </ClCompile>
     <ClCompile Include="Utilities\ThreadSafeArray_V2.cpp">
       <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="DataStore\AgentData.cpp">
+      <Filter>Source Files\DataStore</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

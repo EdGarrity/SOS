@@ -244,6 +244,23 @@ namespace domain
 				// Load data
 				datastore::case_data.load();
 
+				// Load population.  Create more if not enough loaded.
+				std::cout << "Create Population Agents" << std::endl;
+				agents_created = make_pop_agents(env, load_pop_agents());
+
+				if (agents_created > argmap::population_size / 2)
+				{
+					//					run_number = 1;
+					generation_number = 1;
+					best_individual_score = std::numeric_limits<double>::max();
+					best_individual_error = std::numeric_limits<double>::max();
+					prev_best_individual_error = std::numeric_limits<double>::max();
+					sa.set_temperature(0);
+					cool_down_count = argmap::cool_down_period;
+					stalled_count = argmap::stalled_count_trigger;
+					include_best_individual_in_breeding_pool = true;
+				}
+
 				while ((!done)
 					//&& (generation_number <= argmap::max_generations_in_one_session)
 					//&& (best_individual_score > 0.0)
