@@ -24,4 +24,13 @@ namespace datastore
 	};
 
 	extern CaseData case_data;
+	unsigned long get_last_saved_run_number();
+	unsigned long get_last_saved_generation_number();
+	double get_last_saved_temperature(double _default_temperature);
+	double get_last_best_individual_score(double _default_score);
+	double get_last_best_individual_error(double _default_error);
+	double get_last_prev_best_individual_error(double _default_error);
+	unsigned long get_last_stalled_count(unsigned long _default_stalled_count);
+	unsigned long get_last_cool_down_count(unsigned long _default_cool_down_count);
+	bool get_include_best_individual_in_breeding_pool(unsigned long _default_include_best_individual_in_breeding_pool);
 }
