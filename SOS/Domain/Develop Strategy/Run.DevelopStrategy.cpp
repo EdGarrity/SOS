@@ -200,6 +200,7 @@ namespace domain
 				// ******************
 
 				static Plush::Environment global_env;	// Needs to be statc because it consumes too much memory to be allocated on the stack.
+				pushGP::SimulatedAnnealing sa;
 
 				//unsigned int generation_number = 1;
 				unsigned int generations_completed_this_session = 0;
@@ -221,7 +222,7 @@ namespace domain
 				bool include_best_individual_in_breeding_pool = datastore::case_data.get_include_best_individual_in_breeding_pool(true);
 
 				sa.set_cold();
-				sa.set_temperature(get_last_saved_temperature(sa.get_temperature()));
+				sa.set_temperature(datastore::case_data.get_last_saved_temperature(sa.get_temperature()));
 
 				// If last run found a solution or exhausted the number of generations, 
 				// then clear the individuals table to force the creation of new individuals
@@ -314,7 +315,7 @@ namespace domain
 
 								(trader.load(strategy_index, training_case_index)).execute(stock_price_index, order);
 
-								double score = trader.load(strategy_index, training_case_index).unrealized_value();
+								double score = trader.load(strategy_index, training_case_index).unrealized_value(stock_price_index);
 
 								if (best_individual_score < score)
 								{
