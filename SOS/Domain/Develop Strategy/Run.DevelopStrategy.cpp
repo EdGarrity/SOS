@@ -29,6 +29,7 @@
 #include "..\..\PushGP\Individual.h"
 #include "..\..\PushGP\Breed.h"
 #include "..\..\PushGP\Random.h"
+#include "..\..\DataStore\AgentData.h"
 
 using namespace concurrency;
 
@@ -201,6 +202,7 @@ namespace domain
 
 				static Plush::Environment global_env;	// Needs to be statc because it consumes too much memory to be allocated on the stack.
 				pushGP::SimulatedAnnealing sa;
+				unsigned int agents_created = 0;
 
 				//unsigned int generation_number = 1;
 				unsigned int generations_completed_this_session = 0;
@@ -246,7 +248,7 @@ namespace domain
 
 				// Load population.  Create more if not enough loaded.
 				std::cout << "Create Population Agents" << std::endl;
-				agents_created = make_pop_agents(env, load_pop_agents());
+				agents_created = make_pop_agents(env, datastore::agent_data.load());
 
 				if (agents_created > argmap::population_size / 2)
 				{
