@@ -3,6 +3,7 @@
 #include <vector>
 #include "..\Utilities\ThreeDimensionalArray.h"
 #include "DatabaseConnection.h"
+#include "../Plush/Environment.h"
 
 namespace datastore
 {
@@ -34,7 +35,8 @@ namespace datastore
 	public:
 		AgentData();
 		~AgentData() {};
-		void load();
+		size_t load();
+		size_t make_pop_agents(Plush::Environment& _env, size_t _start);
 	};
 
 	extern AgentData agent_data;

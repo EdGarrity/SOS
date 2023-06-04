@@ -4,7 +4,9 @@
 #include "AgentData.h"
 #include "..\Utilities\String.h"
 #include "..\Domain\Arguments.h"
-#include "..\Domain\Globals.h"
+#include "../PushGP/Globals.h"
+#include "../Utilities/Conversion.h"
+#include "../PushGP/Random.h"
 
 namespace datastore
 {
@@ -32,9 +34,9 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	void AgentData::load()
+	size_t AgentData::load()
 	{
-		unsigned int n = 0;
+		size_t n = 0;
 
 		database::SQLCommand* sqlcmd_get_individuals;
 
@@ -98,5 +100,22 @@ namespace datastore
 		delete sqlcmd_get_individuals;
 
 		return n;
+	}
+
+
+	size_t AgentData::make_pop_agents(Plush::Environment& _env, size_t _start)
+	{
+		size_t agents_created = 0;
+
+		for (int n = _start; n < domain::argmap::population_size; n++)
+		{
+			pushGP::make_random_plush_genome(pushGP::globals::population_agents[n].get_genome());
+			agents_created++;
+		}
+
+		// Cleanup thread factories
+		_env.clear_stacks();
+
+		return agents_created;
 	}
 }

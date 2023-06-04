@@ -248,15 +248,15 @@ namespace domain
 
 				// Load population.  Create more if not enough loaded.
 				std::cout << "Create Population Agents" << std::endl;
-				agents_created = make_pop_agents(env, datastore::agent_data.load());
+				agents_created = datastore::agent_data.make_pop_agents(global_env, datastore::agent_data.load());
 
 				if (agents_created > argmap::population_size / 2)
 				{
 					//					run_number = 1;
 					generation_number = 1;
 					best_individual_score = std::numeric_limits<double>::max();
-					best_individual_error = std::numeric_limits<double>::max();
-					prev_best_individual_error = std::numeric_limits<double>::max();
+					//best_individual_error = std::numeric_limits<double>::max();
+					//prev_best_individual_error = std::numeric_limits<double>::max();
 					sa.set_temperature(0);
 					cool_down_count = argmap::cool_down_period;
 					stalled_count = argmap::stalled_count_trigger;
