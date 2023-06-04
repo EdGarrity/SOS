@@ -306,8 +306,12 @@ namespace domain
 					{
 						for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
 						{
+							std::cout << "Run strategy " << strategy_index << " on case " << training_case_index;
+
 							auto results = run_strategy_threadsafe(global_env, strategy_index, training_case_index);
 							orders.store(0, strategy_index, training_case_index, std::get<0>(results));
+
+							std::cout << " Order " << std::get<0>(results) << " Score " << std::get<1>(results) << std::endl;
 						}
 					}
 
