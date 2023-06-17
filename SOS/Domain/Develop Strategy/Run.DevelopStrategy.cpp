@@ -322,7 +322,7 @@ namespace domain
 					int best_individual = -1;
 
 					for (size_t training_case_index = 0; 
-						training_case_index < (datastore::case_data.get_number_of_cases() - domain::argmap::training_case_length); 
+						training_case_index < (datastore::case_data.get_number_of_cases() - domain::argmap::training_case_length + 1); 
 						training_case_index++)
 					{
 						for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
