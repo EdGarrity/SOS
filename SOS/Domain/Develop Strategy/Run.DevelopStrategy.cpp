@@ -38,6 +38,9 @@ namespace domain
 	namespace develop_strategy
 	{
 		concurrent_unordered_set<size_t> downsampled_training_cases;
+		Utilities::ThreadSafeArray_2D_V2<unsigned long> orders;
+		Utilities::ThreadSafeArray_2D_V2<Trader> trader;
+
 
 		// Purpose: 
 		//   This function produces new offspring.
@@ -300,7 +303,7 @@ namespace domain
 					// *****************************************************
 					// *** Calculate trading orders for each trading day ***
 					// *****************************************************
-					Utilities::ThreadSafeArray_2D_V2<unsigned long> orders(domain::argmap::population_size, datastore::case_data.get_number_of_cases());
+					orders.resize(domain::argmap::population_size, datastore::case_data.get_number_of_cases());
 
 					for (size_t training_case_index = 0; training_case_index < datastore::case_data.get_number_of_cases(); training_case_index++)
 					{
@@ -318,27 +321,27 @@ namespace domain
 					// ***************************
 					// *** Evaluate strategies ***
 					// ***************************
-					Utilities::ThreadSafeArray_2D_V2<Trader> trader(domain::argmap::population_size, datastore::case_data.get_number_of_cases());
+					trader.resize(domain::argmap::population_size, datastore::case_data.get_number_of_cases());
 					int best_individual = -1;
 
-					for (size_t training_case_index = 0; 
-						training_case_index < (datastore::case_data.get_number_of_cases() - domain::argmap::training_case_length + 1); 
-						training_case_index++)
+					for (size_t training_case_window_start = 0; 
+						training_case_window_start < (datastore::case_data.get_number_of_cases() - domain::argmap::training_case_length + 1); 
+						training_case_window_start++)
 					{
 						for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
 						{
 							double score = 0;
 
-							for (size_t trading_case = 0; trading_case < domain::argmap::training_case_length; trading_case++)
+							//(trader.load(strategy_index, training_case_window_start)).execute(stock_price_index, order);
+
+							for (size_t training_case_window_offset = 0; training_case_window_offset < domain::argmap::training_case_length; training_case_window_offset++)
 							{
-								size_t trader_index = training_case_index * strategy_index;
+								unsigned long order = orders.load(strategy_index, training_case_window_start + training_case_window_offset);
+								size_t stock_price_index = training_case_window_start + training_case_window_offset;
 
-								unsigned long order = orders.load(strategy_index, training_case_index + trading_case);
-								size_t stock_price_index = training_case_index + trading_case;
+								(trader.load(strategy_index, training_case_window_start)).execute(stock_price_index, order);
 
-								(trader.load(strategy_index, training_case_index)).execute(stock_price_index, order);
-
-								double score = trader.load(strategy_index, training_case_index).unrealized_value(stock_price_index);
+								double score = trader.load(strategy_index, training_case_window_start).unrealized_value(stock_price_index);
 
 								if (best_individual_score < score)
 								{
