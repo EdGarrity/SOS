@@ -324,19 +324,20 @@ namespace domain
 					trader.resize(domain::argmap::population_size, datastore::case_data.get_number_of_cases());
 					int best_individual = -1;
 
-					for (size_t training_case_window_start = 0; 
+					for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
+					{
+						for (size_t training_case_window_start = 0;
 						training_case_window_start < (datastore::case_data.get_number_of_cases() - domain::argmap::training_case_length + 1); 
 						training_case_window_start++)
-					{
-						for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
 						{
 							double score = 0;
 
-							//(trader.load(strategy_index, training_case_window_start)).execute(stock_price_index, order);
+							trader.store(strategy_index, training_case_window_start, new Trader(training_case_window_start, 10000));
 
 							for (size_t training_case_window_offset = 0; training_case_window_offset < domain::argmap::training_case_length; training_case_window_offset++)
 							{
 								unsigned long order = orders.load(strategy_index, training_case_window_start + training_case_window_offset);
+
 								size_t stock_price_index = training_case_window_start + training_case_window_offset;
 
 								(trader.load(strategy_index, training_case_window_start)).execute(stock_price_index, order);

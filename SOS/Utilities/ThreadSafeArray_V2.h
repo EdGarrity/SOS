@@ -96,20 +96,6 @@ namespace Utilities
 	template<class T>
 	inline T ThreadSafeArray_2D_V2<T>::load(size_t y, size_t x)
 	{
-		if (data_array == nullptr)
-		{
-			{
-				std::stringstream error_message;
-				error_message << "ThreadSafeArray_2D_V2 - Initialized";
-
-#if DLEVEL > 0
-				std::string debug_message = error_message.str();
-				Utilities::debug_log(-1, "ThreadSafeArray_2D_V2", debug_message);
-#endif
-				throw std::runtime_error(error_message.str());
-			}
-		}
-
 		if ((y >= n1) || (x >= n2))
 		{
 			std::stringstream error_message;
@@ -132,20 +118,6 @@ namespace Utilities
 	template<class T>
 	inline void ThreadSafeArray_2D_V2<T>::store(const unsigned int env_index, size_t y, size_t x, T d)
 	{
-		if (data_array == nullptr)
-		{
-			{
-				std::stringstream error_message;
-				error_message << "ThreadSafeArray_2D_V2 - Initialized";
-
-#if DLEVEL > 0
-				std::string debug_message = error_message.str();
-				Utilities::debug_log(-1, "ThreadSafeArray_2D_V2", debug_message);
-#endif
-				throw std::runtime_error(error_message.str());
-			}
-		}
-
 		if ((y >= n1) || (x >= n2))
 		{
 			std::stringstream error_message;
