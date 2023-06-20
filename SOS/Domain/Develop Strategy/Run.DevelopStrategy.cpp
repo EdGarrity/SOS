@@ -321,32 +321,31 @@ namespace domain
 					// ***************************
 					// *** Evaluate strategies ***
 					// ***************************
-					broker_account.resize(domain::argmap::population_size, datastore::test_data.size());
+					size_t training_case_window_end = datastore::test_data.size() - domain::argmap::training_case_length + 1;
+					broker_account.resize(domain::argmap::population_size, training_case_window_end);
 					int best_individual = -1;
 
 					for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
 					{
-						size_t training_case_window_end = datastore::test_data.size() - domain::argmap::training_case_length + 1;
-
 						for (size_t training_case_window_start = 0;	training_case_window_start < training_case_window_end; training_case_window_start++)
 						{
-							double score = 0;
+							size_t stock_data_index = training_case_window_start;
 
 							for (size_t training_case_window_offset = 0; training_case_window_offset < domain::argmap::training_case_length; training_case_window_offset++)
 							{
-								size_t stock_data_index = training_case_window_start + training_case_window_offset;
-
 								unsigned long order = orders.load(strategy_index, stock_data_index);
 
 								(broker_account.load(strategy_index, training_case_window_start)).execute(stock_data_index, order);
 
-								double score = broker_account.load(strategy_index, training_case_window_start).unrealized_value(stock_data_index);
+								stock_data_index++;
+							}
 
-								if (best_individual_score < score)
-								{
-									best_individual_score = score;
-									best_individual = strategy_index;
-								}
+							double score = broker_account.load(strategy_index, training_case_window_start).unrealized_value(--stock_data_index);
+
+							if (best_individual_score < score)
+							{
+								best_individual_score = score;
+								best_individual = strategy_index;
 							}
 						}
 					}
