@@ -34,10 +34,10 @@ namespace domain
         int sell_flag = order & 0x01;
         int hold_flag = order & 0x02;
 
-        if ((sell_flag == 0) && (hold_flag == 0))
+        if ((sell_flag == 0) && (hold_flag != 0))
             buy(index);
 
-        else if ((sell_flag != 0) && (hold_flag == 0))
+        else if ((sell_flag != 0) && (hold_flag != 0))
             sell(index);
     }
 
