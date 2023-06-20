@@ -4,7 +4,7 @@
 
 namespace domain
 {
-	class Trader
+	class BrokerAccount
 	{
 	private:
 		//size_t case_number = 0;
@@ -17,9 +17,9 @@ namespace domain
 		//Trader(size_t case_number, double opening_balance) : case_number(case_number),  p_account(new Account(opening_balance)), shares(0) {};
 		//~Trader() { delete p_account; };
 
-		Trader() : shares(0) { account.set_balance(10000); };
-		Trader(double opening_balance) : shares(0) { account.set_balance(opening_balance); };
-		~Trader() {};
+		BrokerAccount() : shares(0) { account.set_balance(10000); };
+		BrokerAccount(double opening_balance) : shares(0) { account.set_balance(opening_balance); };
+		~BrokerAccount() {};
 
 		//void initialize(double opening_balance) : shares(0) { account.set_balance(opening_balance) };
 		void buy(size_t index);

@@ -234,7 +234,7 @@
     <ClInclude Include="Broker\Account.h">
       <Filter>Header Files\Broker</Filter>
     </ClInclude>
-    <ClInclude Include="Broker\Trader.h">
+    <ClInclude Include="Broker\BrokerAccount.h">
       <Filter>Header Files\Broker</Filter>
     </ClInclude>
     <ClInclude Include="Utilities\ThreadSafeArray_V2.h">
@@ -374,7 +374,7 @@
     <ClCompile Include="Broker\Account.cpp">
       <Filter>Source Files\Broker</Filter>
     </ClCompile>
-    <ClCompile Include="Broker\Trader.cpp">
+    <ClCompile Include="Broker\BrokerAccount.cpp">
       <Filter>Source Files\Broker</Filter>
     </ClCompile>
     <ClCompile Include="Utilities\ThreadSafeArray_V2.cpp">

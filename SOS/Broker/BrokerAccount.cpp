@@ -1,9 +1,9 @@
-#include "Trader.h"
+#include "BrokerAccount.h"
 #include "..\DataStore\CaseData.h"
 
 namespace domain
 {
-    void Trader::buy(size_t index)
+    void BrokerAccount::buy(size_t index)
     {
         double price = datastore::case_data.get_stock_price(index);
         //double balance = p_account->get_balance();
@@ -17,7 +17,7 @@ namespace domain
 		}
     }
 
-    void Trader::sell(size_t index)
+    void BrokerAccount::sell(size_t index)
     {
         double price = datastore::case_data.get_stock_price(index);
 
@@ -29,7 +29,7 @@ namespace domain
         }
     }
 
-    void Trader::execute(size_t index, unsigned long order)
+    void BrokerAccount::execute(size_t index, unsigned long order)
     {
         switch (order)
         {
@@ -42,7 +42,7 @@ namespace domain
         }
     }
 
-    double Trader::unrealized_value(size_t index) const
+    double BrokerAccount::unrealized_value(size_t index) const
     {
         double price = datastore::case_data.get_stock_price(index);
         //double balance = p_account->get_balance();

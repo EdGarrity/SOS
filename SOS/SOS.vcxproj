@@ -170,7 +170,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Broker\Account.h" />
-    <ClInclude Include="Broker\Trader.h" />
+    <ClInclude Include="Broker\BrokerAccount.h" />
     <ClInclude Include="Database\SQLCommand.h" />
     <ClInclude Include="Database\SQLConnection.h" />
     <ClInclude Include="DataStore\AgentData.h" />
@@ -234,7 +234,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Broker\Account.cpp" />
-    <ClCompile Include="Broker\Trader.cpp" />
+    <ClCompile Include="Broker\BrokerAccount.cpp" />
     <ClCompile Include="Database\SQLCommand.cpp" />
     <ClCompile Include="Database\SQLConnection.cpp" />
     <ClCompile Include="DataStore\AgentData.cpp" />

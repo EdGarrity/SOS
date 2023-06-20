@@ -22,7 +22,7 @@
 #include "..\..\DataStore\CaseData.h"
 #include "ErrorFunction.DevelopStrategy.h"
 #include "..\..\Utilities\ThreeDimensionalArray.h"
-#include "..\..\Broker\Trader.h"
+#include "..\..\Broker\BrokerAccount.h"
 #include "..\..\Utilities\ThreadSafeArray_V2.h"
 #include "..\..\PushGP\Globals.h"
 #include "..\..\PushGP\SimulatedAnnealing.h"
@@ -39,7 +39,7 @@ namespace domain
 	{
 		concurrent_unordered_set<size_t> downsampled_training_cases;
 		Utilities::ThreadSafeArray_2D_V2<unsigned long> orders;
-		Utilities::ThreadSafeArray_2D_V2<Trader> trader;
+		Utilities::ThreadSafeArray_2D_V2<BrokerAccount> trader;
 
 
 		// Purpose: 
