@@ -31,15 +31,11 @@ namespace domain
 
     void BrokerAccount::execute(size_t index, unsigned long order)
     {
-        switch (order)
-        {
-        case -1:// Buy
+        if (order < 0)
             buy(index);
-            break;
-        case 1: // Sell
+
+        else if (order > 0)
             sell(index);
-            break;
-        }
     }
 
     double BrokerAccount::unrealized_value(size_t index) const
