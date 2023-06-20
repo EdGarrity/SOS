@@ -333,7 +333,7 @@ namespace domain
 
 							for (size_t training_case_window_offset = 0; training_case_window_offset < domain::argmap::training_case_length; training_case_window_offset++)
 							{
-								unsigned long order = orders.load(strategy_index, stock_data_index);
+								long order = orders.load(strategy_index, stock_data_index);
 
 								(broker_account.load(strategy_index, training_case_window_start)).execute(stock_data_index, order);
 

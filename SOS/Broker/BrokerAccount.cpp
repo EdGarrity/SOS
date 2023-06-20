@@ -31,10 +31,13 @@ namespace domain
 
     void BrokerAccount::execute(size_t index, unsigned long order)
     {
-        if (order < 0)
+        int sell_flag = order & 0x01;
+        int hold_flag = order & 0x02;
+
+        if ((sell_flag == 0) && (hold_flag == 0))
             buy(index);
 
-        else if (order > 0)
+        else if ((sell_flag != 0) && (hold_flag == 0))
             sell(index);
     }
 
@@ -45,9 +48,7 @@ namespace domain
         double balance = account.get_balance();
 
         if (shares > 0)
-        {
             balance += price * shares;
-        }
 
         return balance;
     }
