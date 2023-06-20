@@ -6,12 +6,14 @@ namespace domain
     void Trader::buy(size_t index)
     {
         double price = datastore::case_data.get_stock_price(index);
-        double balance = p_account->get_balance();
+        //double balance = p_account->get_balance();
+        double balance = account.get_balance();
 
         if (price <= balance)
         {
-			p_account->withdraw(price);
-			shares += balance / price;
+			//p_account->withdraw(price);
+            account.withdraw(price);
+            shares += balance / price;
 		}
     }
 
@@ -21,7 +23,8 @@ namespace domain
 
         if (shares > 0)
         {
-            p_account->deposit(price * shares);
+            //p_account->deposit(price * shares);
+            account.deposit(price * shares);
             shares = 0;
         }
     }
@@ -42,7 +45,8 @@ namespace domain
     double Trader::unrealized_value(size_t index) const
     {
         double price = datastore::case_data.get_stock_price(index);
-        double balance = p_account->get_balance();
+        //double balance = p_account->get_balance();
+        double balance = account.get_balance();
 
         if (shares > 0)
         {

@@ -14,6 +14,7 @@ namespace domain
 		Account(double opening_balance) : balance(opening_balance) {};
 
 		double get_balance() const { return balance; };
+		void set_balance(double amount) { balance = amount; };
 		void deposit(double amount) { balance += amount; };
 		void withdraw(double amount);
 	};

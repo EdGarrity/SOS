@@ -332,7 +332,7 @@ namespace domain
 						{
 							double score = 0;
 
-							trader.store(strategy_index, training_case_window_start, new Trader(training_case_window_start, 10000));
+							//trader.store(strategy_index, training_case_window_start, new Trader(training_case_window_start, 10000));
 
 							for (size_t training_case_window_offset = 0; training_case_window_offset < domain::argmap::training_case_length; training_case_window_offset++)
 							{
