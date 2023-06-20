@@ -1,13 +1,13 @@
 #include <cstdio>
 #include <iostream>
 #include <map>
-#include "CaseData.h"
+#include "TestData.h"
 
 namespace datastore
 {
-	CaseData case_data;
+	TestData test_data;
 
-	CaseData::CaseData()
+	TestData::TestData()
 	{
 	}
 
@@ -29,7 +29,7 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	void CaseData::load()
+	void TestData::load()
 	{
 		std::cout << "Loading all case data..." << std::endl;
 
@@ -38,9 +38,9 @@ namespace datastore
 		try
 		{
 			// Construct the SQL statement.
-			int sz = std::snprintf(nullptr, 0, fmt_str_load_case_data, "AAPL");
+			int sz = std::snprintf(nullptr, 0, fmt_str_load_test_data, "AAPL");
 			std::vector<char> buf(sz + 1); // note +1 for null terminator
-			std::snprintf(&buf[0], buf.size(), fmt_str_load_case_data, "AAPL");
+			std::snprintf(&buf[0], buf.size(), fmt_str_load_test_data, "AAPL");
 			std::string sqlstmt_load_case_data(buf.begin(), buf.end() - 1); // omit the null terminator
 
 			sqlcmd_get_case_data = new database::SQLCommand(database_connection.get_connection(), sqlstmt_load_case_data);
@@ -105,7 +105,7 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	unsigned long CaseData::get_last_saved_run_number()
+	unsigned long TestData::get_last_saved_run_number()
 	{
 		unsigned long n = 0;
 
@@ -144,7 +144,7 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	unsigned long CaseData::get_last_saved_generation_number()
+	unsigned long TestData::get_last_saved_generation_number()
 	{
 		unsigned long n = 0;
 
@@ -183,7 +183,7 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	double CaseData::get_last_saved_temperature(double _default_temperature)
+	double TestData::get_last_saved_temperature(double _default_temperature)
 	{
 		double n = _default_temperature;
 
@@ -223,7 +223,7 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	double CaseData::get_last_best_individual_score(double _default_score)
+	double TestData::get_last_best_individual_score(double _default_score)
 	{
 		double n = _default_score;
 
@@ -259,7 +259,7 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	double CaseData::get_last_best_individual_error(double _default_error)
+	double TestData::get_last_best_individual_error(double _default_error)
 	{
 		double n = _default_error;
 
@@ -298,7 +298,7 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	double CaseData::get_last_prev_best_individual_error(double _default_error)
+	double TestData::get_last_prev_best_individual_error(double _default_error)
 	{
 		double n = _default_error;
 
@@ -336,7 +336,7 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	unsigned long CaseData::get_last_stalled_count(unsigned long _default_stalled_count)
+	unsigned long TestData::get_last_stalled_count(unsigned long _default_stalled_count)
 	{
 		unsigned long n = _default_stalled_count;
 
@@ -374,7 +374,7 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	unsigned long CaseData::get_last_cool_down_count(unsigned long _default_cool_down_count)
+	unsigned long TestData::get_last_cool_down_count(unsigned long _default_cool_down_count)
 	{
 		unsigned long n = _default_cool_down_count;
 
@@ -413,7 +413,7 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	bool CaseData::get_include_best_individual_in_breeding_pool(unsigned long _default_include_best_individual_in_breeding_pool)
+	bool TestData::get_include_best_individual_in_breeding_pool(unsigned long _default_include_best_individual_in_breeding_pool)
 	{
 		bool n = _default_include_best_individual_in_breeding_pool;
 

@@ -19,7 +19,7 @@
 #include "..\..\Plush\Environment.h"
 #include "..\..\PushGP\Globals.h"
 #include "..\..\DataStore\FinancialData.h"
-#include "..\..\DataStore\CaseData.h"
+#include "..\..\DataStore\TestData.h"
 #include "ErrorFunction.DevelopStrategy.h"
 #include "..\..\Utilities\ThreeDimensionalArray.h"
 #include "..\..\Broker\BrokerAccount.h"
@@ -39,7 +39,7 @@ namespace domain
 	{
 		concurrent_unordered_set<size_t> downsampled_training_cases;
 		Utilities::ThreadSafeArray_2D_V2<unsigned long> orders;
-		Utilities::ThreadSafeArray_2D_V2<BrokerAccount> trader;
+		Utilities::ThreadSafeArray_2D_V2<BrokerAccount> broker_account;
 
 
 		// Purpose: 
@@ -217,17 +217,17 @@ namespace domain
 				pushGP::globals::child_agents = new pushGP::Individual[sz];
 
 				// Load data from most recent database record
-				unsigned int run_number = datastore::case_data.get_last_saved_run_number();
-				unsigned int generation_number = datastore::case_data.get_last_saved_generation_number() + 1;
-				double best_individual_score = datastore::case_data.get_last_best_individual_score(std::numeric_limits<double>::min());
+				unsigned int run_number = datastore::test_data.get_last_saved_run_number();
+				unsigned int generation_number = datastore::test_data.get_last_saved_generation_number() + 1;
+				double best_individual_score = datastore::test_data.get_last_best_individual_score(std::numeric_limits<double>::min());
 				//double best_individual_error = get_last_best_individual_error(std::numeric_limits<double>::max());
 				//double prev_best_individual_error = get_last_prev_best_individual_error(std::numeric_limits<double>::max());
-				int stalled_count = datastore::case_data.get_last_stalled_count(argmap::stalled_count_trigger);
-				int cool_down_count = datastore::case_data.get_last_cool_down_count(argmap::cool_down_period);
-				bool include_best_individual_in_breeding_pool = datastore::case_data.get_include_best_individual_in_breeding_pool(true);
+				int stalled_count = datastore::test_data.get_last_stalled_count(argmap::stalled_count_trigger);
+				int cool_down_count = datastore::test_data.get_last_cool_down_count(argmap::cool_down_period);
+				bool include_best_individual_in_breeding_pool = datastore::test_data.get_include_best_individual_in_breeding_pool(true);
 
 				sa.set_cold();
-				sa.set_temperature(datastore::case_data.get_last_saved_temperature(sa.get_temperature()));
+				sa.set_temperature(datastore::test_data.get_last_saved_temperature(sa.get_temperature()));
 
 				// If last run found a solution or exhausted the number of generations, 
 				// then clear the individuals table to force the creation of new individuals
@@ -247,7 +247,7 @@ namespace domain
 				}
 
 				// Load data
-				datastore::case_data.load();
+				datastore::test_data.load();
 
 				// Load population.  Create more if not enough loaded.
 				std::cout << "Create Population Agents" << std::endl;
@@ -303,9 +303,9 @@ namespace domain
 					// *****************************************************
 					// *** Calculate trading orders for each trading day ***
 					// *****************************************************
-					orders.resize(domain::argmap::population_size, datastore::case_data.get_number_of_cases());
+					orders.resize(domain::argmap::population_size, datastore::test_data.size());
 
-					for (size_t training_case_index = 0; training_case_index < datastore::case_data.get_number_of_cases(); training_case_index++)
+					for (size_t training_case_index = 0; training_case_index < datastore::test_data.size(); training_case_index++)
 					{
 						for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
 						{
@@ -321,28 +321,26 @@ namespace domain
 					// ***************************
 					// *** Evaluate strategies ***
 					// ***************************
-					trader.resize(domain::argmap::population_size, datastore::case_data.get_number_of_cases());
+					broker_account.resize(domain::argmap::population_size, datastore::test_data.size());
 					int best_individual = -1;
 
 					for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
 					{
-						for (size_t training_case_window_start = 0;
-						training_case_window_start < (datastore::case_data.get_number_of_cases() - domain::argmap::training_case_length + 1); 
-						training_case_window_start++)
+						size_t training_case_window_end = datastore::test_data.size() - domain::argmap::training_case_length + 1;
+
+						for (size_t training_case_window_start = 0;	training_case_window_start < training_case_window_end; training_case_window_start++)
 						{
 							double score = 0;
 
-							//trader.store(strategy_index, training_case_window_start, new Trader(training_case_window_start, 10000));
-
 							for (size_t training_case_window_offset = 0; training_case_window_offset < domain::argmap::training_case_length; training_case_window_offset++)
 							{
-								unsigned long order = orders.load(strategy_index, training_case_window_start + training_case_window_offset);
+								size_t stock_data_index = training_case_window_start + training_case_window_offset;
 
-								size_t stock_price_index = training_case_window_start + training_case_window_offset;
+								unsigned long order = orders.load(strategy_index, stock_data_index);
 
-								(trader.load(strategy_index, training_case_window_start)).execute(stock_price_index, order);
+								(broker_account.load(strategy_index, training_case_window_start)).execute(stock_data_index, order);
 
-								double score = trader.load(strategy_index, training_case_window_start).unrealized_value(stock_price_index);
+								double score = broker_account.load(strategy_index, training_case_window_start).unrealized_value(stock_data_index);
 
 								if (best_individual_score < score)
 								{

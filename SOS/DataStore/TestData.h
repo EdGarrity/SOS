@@ -6,10 +6,10 @@
 
 namespace datastore
 {
-	class CaseData
+	class TestData
 	{
 	private:
-		const char *fmt_str_load_case_data = "SELECT CONVERT(varchar(25),[Date],120) AS [Date],[Value] FROM [SOS].[dbo].[TestData] WHERE [Key]='Norm_Adj_Open' AND [Stock]='%s' ORDER BY [Date];";
+		const char *fmt_str_load_test_data = "SELECT CONVERT(varchar(25),[Date],120) AS [Date],[Value] FROM [SOS].[dbo].[TestData] WHERE [Key]='Norm_Adj_Open' AND [Stock]='%s' ORDER BY [Date];";
 
 		std::vector<std::string> dates;
 		std::vector<double> adj_open_values;
@@ -60,10 +60,10 @@ namespace datastore
 		//       1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
 
 	public:
-		CaseData();
-		~CaseData() {};
+		TestData();
+		~TestData() {};
 		void load();
-		size_t get_number_of_cases() const { return dates.size(); }
+		size_t size() const { return dates.size(); }
 		std::string get_date(size_t index) const { return dates[index]; }
 		double get_stock_price(size_t index) const { return adj_open_values[index]; }
 		unsigned long get_last_saved_run_number();
@@ -77,5 +77,5 @@ namespace datastore
 		bool get_include_best_individual_in_breeding_pool(unsigned long _default_include_best_individual_in_breeding_pool);
 	};
 
-	extern CaseData case_data;
+	extern TestData test_data;
 }

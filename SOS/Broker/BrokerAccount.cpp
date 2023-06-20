@@ -1,11 +1,11 @@
 #include "BrokerAccount.h"
-#include "..\DataStore\CaseData.h"
+#include "..\DataStore\TestData.h"
 
 namespace domain
 {
     void BrokerAccount::buy(size_t index)
     {
-        double price = datastore::case_data.get_stock_price(index);
+        double price = datastore::test_data.get_stock_price(index);
         //double balance = p_account->get_balance();
         double balance = account.get_balance();
 
@@ -19,7 +19,7 @@ namespace domain
 
     void BrokerAccount::sell(size_t index)
     {
-        double price = datastore::case_data.get_stock_price(index);
+        double price = datastore::test_data.get_stock_price(index);
 
         if (shares > 0)
         {
@@ -44,7 +44,7 @@ namespace domain
 
     double BrokerAccount::unrealized_value(size_t index) const
     {
-        double price = datastore::case_data.get_stock_price(index);
+        double price = datastore::test_data.get_stock_price(index);
         //double balance = p_account->get_balance();
         double balance = account.get_balance();
 

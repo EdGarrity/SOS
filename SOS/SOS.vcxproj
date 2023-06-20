@@ -174,7 +174,7 @@
     <ClInclude Include="Database\SQLCommand.h" />
     <ClInclude Include="Database\SQLConnection.h" />
     <ClInclude Include="DataStore\AgentData.h" />
-    <ClInclude Include="DataStore\CaseData.h" />
+    <ClInclude Include="DataStore\TestData.h" />
     <ClInclude Include="DataStore\DatabaseConnection.h" />
     <ClInclude Include="DataStore\FinancialData.h" />
     <ClInclude Include="Domain\Arguments.h" />
@@ -238,7 +238,7 @@
     <ClCompile Include="Database\SQLCommand.cpp" />
     <ClCompile Include="Database\SQLConnection.cpp" />
     <ClCompile Include="DataStore\AgentData.cpp" />
-    <ClCompile Include="DataStore\CaseData.cpp" />
+    <ClCompile Include="DataStore\TestData.cpp" />
     <ClCompile Include="DataStore\DatabaseConnection.cpp" />
     <ClCompile Include="DataStore\FinancialData.cpp" />
     <ClCompile Include="Domain\Develop Strategy\ErrorFunction.DevelopStrategy.cpp" />
