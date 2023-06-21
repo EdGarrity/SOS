@@ -331,6 +331,8 @@ namespace domain
 						{
 							size_t stock_data_index = training_case_window_start;
 
+							(broker_account.load(strategy_index, training_case_window_start)).initialize(10000);
+
 							for (size_t training_case_window_offset = 0; training_case_window_offset < domain::argmap::training_case_length; training_case_window_offset++)
 							{
 								long order = orders.load(strategy_index, stock_data_index);

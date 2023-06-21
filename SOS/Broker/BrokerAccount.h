@@ -21,7 +21,7 @@ namespace domain
 		BrokerAccount(double opening_balance) : shares(0) { account.set_balance(opening_balance); };
 		~BrokerAccount() {};
 
-		//void initialize(double opening_balance) : shares(0) { account.set_balance(opening_balance) };
+		void initialize(double opening_balance) { shares = 0; account.set_balance(opening_balance); };
 		void buy(size_t index);
 		void sell(size_t index);
 		void execute(size_t index, unsigned long order);
