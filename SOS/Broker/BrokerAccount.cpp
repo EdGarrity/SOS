@@ -31,13 +31,13 @@ namespace domain
 
     void BrokerAccount::execute(size_t index, unsigned long order)
     {
-        int sell_flag = order & 0x01;
-        int hold_flag = order & 0x02;
+        int buy_flag = order & 0x01;
+        int not_hold_flag = order & 0x02;
 
-        if ((sell_flag == 0) && (hold_flag != 0))
+        if ((buy_flag != 0) && (not_hold_flag != 0))
             buy(index);
 
-        else if ((sell_flag != 0) && (hold_flag != 0))
+        else if ((buy_flag == 0) && (not_hold_flag != 0))
             sell(index);
     }
 
