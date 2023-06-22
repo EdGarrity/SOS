@@ -331,24 +331,26 @@ namespace domain
 						{
 							size_t stock_data_index = training_case_window_start;
 
-							(broker_account.load(strategy_index, training_case_window_start)).initialize(10000);
+							BrokerAccount account = BrokerAccount(10000);
 
 							for (size_t training_case_window_offset = 0; training_case_window_offset < domain::argmap::training_case_length; training_case_window_offset++)
 							{
 								long order = orders.load(strategy_index, stock_data_index);
 
-								(broker_account.load(strategy_index, training_case_window_start)).execute(stock_data_index, order);
+								account.execute(stock_data_index, order);
 
 								stock_data_index++;
 							}
 
-							double score = broker_account.load(strategy_index, training_case_window_start).unrealized_value(--stock_data_index);
+							double score = account.unrealized_value(--stock_data_index);
 
 							if (best_individual_score < score)
 							{
 								best_individual_score = score;
 								best_individual = strategy_index;
 							}
+
+							broker_account.store(0, strategy_index, training_case_window_start, account);
 						}
 					}
 
