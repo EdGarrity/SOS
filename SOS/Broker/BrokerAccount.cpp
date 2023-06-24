@@ -11,10 +11,10 @@ namespace domain
 
         if (price <= balance)
         {
-			//p_account->withdraw(price);
-            account.withdraw(price);
             shares += balance / price;
-		}
+            double cost = shares * price;
+            account.withdraw(cost);
+        }
     }
 
     void BrokerAccount::sell(size_t index)
