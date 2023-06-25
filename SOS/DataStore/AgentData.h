@@ -36,6 +36,7 @@ namespace datastore
 		AgentData();
 		~AgentData() {};
 		size_t load();
+		void save();
 		size_t make_pop_agents(Plush::Environment& _env, size_t _start);
 	};
 

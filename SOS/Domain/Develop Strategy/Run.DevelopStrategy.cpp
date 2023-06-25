@@ -253,6 +253,9 @@ namespace domain
 				std::cout << "Create Population Agents" << std::endl;
 				agents_created = datastore::agent_data.make_pop_agents(global_env, datastore::agent_data.load());
 
+				//if (agents_created > 0)
+				//	datastore::agent_data.save();
+
 				if (agents_created > argmap::population_size / 2)
 				{
 					//					run_number = 1;

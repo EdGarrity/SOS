@@ -45,7 +45,6 @@ namespace domain
     double BrokerAccount::unrealized_value(size_t index) const
     {
         double price = datastore::test_data.get_stock_price(index);
-        //double balance = p_account->get_balance();
         double balance = account.get_balance();
 
         if (shares > 0)
