@@ -257,7 +257,7 @@ namespace domain
 				{
 					//					run_number = 1;
 					generation_number = 1;
-					best_individual_score = std::numeric_limits<double>::max();
+					best_individual_score = std::numeric_limits<double>::min();
 					//best_individual_error = std::numeric_limits<double>::max();
 					//prev_best_individual_error = std::numeric_limits<double>::max();
 					sa.set_temperature(0);
