@@ -11,9 +11,10 @@ namespace domain
 
         if (price <= balance)
         {
-            shares += balance / price;
-            double cost = shares * price;
-            account.withdraw(cost);
+            size_t saheres_to_purchase = balance / price;
+            double cost_to_purchase = saheres_to_purchase * price;
+            account.withdraw(cost_to_purchase);
+            shares += saheres_to_purchase;
         }
     }
 
