@@ -88,6 +88,24 @@ namespace Utilities
 		queue_state.store(QueueState::Stopped, std::memory_order_release);
 	}
 
+	void WorkOrderManager::push(unsigned long individual_index, size_t example_case)
+	{
+		WorkOrder work_order;
+
+		work_order.individual_index = individual_index;
+		work_order.example_case = example_case;
+		
+		std::unique_lock<std::mutex> work_in_process_lock(work_in_process_mutex_);
+		std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
+		work_order_queue_.push_front(work_order);
+
+		// when we send the notification immediately, the consumer will try to get the lock, so unlock asap
+		work_order_lock.unlock();
+		work_in_process_lock.unlock();
+
+		data_condition_.notify_one();
+	}
+
 	void WorkOrderManager::push(unsigned long individual_index, size_t example_case, std::vector<double>& input_list, std::vector<double>& output_list)
 	{
 		WorkOrder work_order;
@@ -97,14 +115,7 @@ namespace Utilities
 		work_order.example_problem = input_list;
 		work_order.example_solution = output_list;
 
-		
-		
-		if ((example_case > 100) && (individual_index == 124))
-			std::cout << "WorkOrderManager::push(individual_index=" << individual_index << ", example_case=" << example_case << ", std::vector<double>& input_list, std::vector<double>& output_list)" << std::endl;
 
-
-		
-		
 		std::unique_lock<std::mutex> work_in_process_lock(work_in_process_mutex_);
 		std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
 		work_order_queue_.push_front(work_order);
