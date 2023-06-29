@@ -1,6 +1,7 @@
 #include <chrono>
 #include <iostream>
 #include <thread>
+//#include <sql.h>
 #include "SQLCommand.h"
 #include "..\Utilities\Conversion.h"
 //#include "..\Utilities\EventLogManager.h"
@@ -199,44 +200,44 @@ namespace database
 	// See "https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/ole-db-data-type-mappings"
 	wchar_t wszDBTYPE_STR[] = L"DBTYPE_STR";
 
-	void SQLCommand::set_as_text(DBPARAMIOENUM param_io, unsigned int parm_no, std::string parameter)
-	{
-		if (param_io != DBPARAMIO_INPUT)
-			throw std::runtime_error("set_as_text() - Output parqameters not supported");
+	//void SQLCommand::set_as_text(DBPARAMIOENUM param_io, unsigned int parm_no, std::string parameter)
+	//{
+	//	if (param_io != DBPARAMIO_INPUT)
+	//		throw std::runtime_error("set_as_text() - Output parameters not supported");
 
-		unsigned int n = parm_no - 1;
+	//	unsigned int n = parm_no - 1;
 
-		// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms725393(v=vs.85)"
-		ParamBindInfo_[n].pwszDataSourceType = wszDBTYPE_STR;
-		ParamBindInfo_[n].pwszName = NULL;
-		ParamBindInfo_[n].ulParamSize = parameter.size();
-		ParamBindInfo_[n].dwFlags = (param_io == DBPARAMIO_INPUT ? DBPARAMFLAGS_ISINPUT : DBPARAMFLAGS_ISOUTPUT);
-		ParamBindInfo_[n].bPrecision = 0;
-		ParamBindInfo_[n].bScale = 0;
-		ParamOrdinals_[n] = parm_no;
+	//	// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms725393(v=vs.85)"
+	//	ParamBindInfo_[n].pwszDataSourceType = wszDBTYPE_STR;
+	//	ParamBindInfo_[n].pwszName = NULL;
+	//	ParamBindInfo_[n].ulParamSize = parameter.size();
+	//	ParamBindInfo_[n].dwFlags = (param_io == DBPARAMIO_INPUT ? DBPARAMFLAGS_ISINPUT : DBPARAMFLAGS_ISOUTPUT);
+	//	ParamBindInfo_[n].bPrecision = 0;
+	//	ParamBindInfo_[n].bScale = 0;
+	//	ParamOrdinals_[n] = parm_no;
 
-		// This binding applies to the ordinal of this column
-		// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms716845%28v%3dvs.85%29"
-		rgBindings_[n].iOrdinal = parm_no;
-		rgBindings_[n].obValue = dwOffset_;
-		rgBindings_[n].eParamIO = param_io;
-		rgBindings_[n].wType = DBTYPE_STR;
-		rgBindings_[n].cbMaxLen = parameter.length();
+	//	// This binding applies to the ordinal of this column
+	//	// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms716845%28v%3dvs.85%29"
+	//	rgBindings_[n].iOrdinal = parm_no;
+	//	rgBindings_[n].obValue = dwOffset_;
+	//	rgBindings_[n].eParamIO = param_io;
+	//	rgBindings_[n].wType = DBTYPE_STR;
+	//	rgBindings_[n].cbMaxLen = parameter.length();
 
-		// Copy parameter data into buffer
-		memcpy(sprocparams + dwOffset_, parameter.c_str(), rgBindings_[n].cbMaxLen + 1);
+	//	// Copy parameter data into buffer
+	//	memcpy(sprocparams + dwOffset_, parameter.c_str(), rgBindings_[n].cbMaxLen + 1);
 
-		// Update the offset past the end of this column's data, so
-		// that the next column will begin in the correct place in
-		// the buffer
-		dwOffset_ += rgBindings_[n].cbMaxLen + 1;
+	//	// Update the offset past the end of this column's data, so
+	//	// that the next column will begin in the correct place in
+	//	// the buffer
+	//	dwOffset_ += rgBindings_[n].cbMaxLen + 1;
 
-		// Ensure that the data for the next column will be correctly
-		// aligned for all platforms, or, if we're done with columns,
-		// that if we allocate space for multiple rows that the data
-		// for every row is correctly aligned
-		dwOffset_ = ROUNDUP(dwOffset_);
-	}
+	//	// Ensure that the data for the next column will be correctly
+	//	// aligned for all platforms, or, if we're done with columns,
+	//	// that if we allocate space for multiple rows that the data
+	//	// for every row is correctly aligned
+	//	dwOffset_ = ROUNDUP(dwOffset_);
+	//}
 
 	wchar_t wszDBTYPE_BOOL[] = L"DBTYPE_BOOL";
 
@@ -283,8 +284,8 @@ namespace database
 	{
 		unsigned int n = parm_no - 1;
 
-		if (dwOffset_ > MAX_ROW_LENGTH)
-			throw MyException("dwOffset_ > MAX_ROW_LENGTH");
+		//if (dwOffset_ > MAX_ROW_LENGTH)
+		//	throw MyException("dwOffset_ > MAX_ROW_LENGTH");
 
 		// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms725393(v=vs.85)"
 		ParamBindInfo_[n].pwszDataSourceType = wszDBTYPE_STR;
@@ -317,9 +318,51 @@ namespace database
 		// for every row is correctly aligned
 		dwOffset_ = ROUNDUP(dwOffset_);
 
-		if (dwOffset_ > MAX_ROW_LENGTH)
-			throw MyException("dwOffset_ > MAX_ROW_LENGTH");
+		//if (dwOffset_ > MAX_ROW_LENGTH)
+		//	throw MyException("dwOffset_ > MAX_ROW_LENGTH");
 	}
+
+	//void SQLCommand::set_as_text(unsigned int parm_no, std::string parameter)
+	//{
+	//	unsigned int n = parm_no - 1;
+
+	//	if (dwOffset_ > MAX_ROW_LENGTH)
+	//		throw MyException("dwOffset_ > MAX_ROW_LENGTH");
+
+	//	// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms725393(v=vs.85)"
+	//	ParamBindInfo_[n].pwszDataSourceType = wszDBTYPE_NVARCHAR;
+	//	ParamBindInfo_[n].pwszName = NULL;
+	//	ParamBindInfo_[n].ulParamSize = parameter.size();
+	//	ParamBindInfo_[n].dwFlags = DBPARAMFLAGS_ISINPUT;
+	//	ParamBindInfo_[n].bPrecision = 0;
+	//	ParamBindInfo_[n].bScale = 0;
+	//	ParamOrdinals_[n] = parm_no;
+
+	//	// This binding applies to the ordinal of this column
+	//	// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms716845%28v%3dvs.85%29"
+	//	rgBindings_[n].iOrdinal = parm_no;
+	//	rgBindings_[n].obValue = dwOffset_;
+	//	rgBindings_[n].eParamIO = DBPARAMIO_INPUT;
+	//	rgBindings_[n].wType = DBTYPE_NVARCHAR;
+	//	rgBindings_[n].cbMaxLen = SQL_MAX_NVARCHAR;
+
+	//	// Copy parameter data into buffer
+	//	memcpy(sprocparams + dwOffset_, parameter.c_str(), rgBindings_[n].cbMaxLen + 1);
+
+	//	// Update the offset past the end of this column's data, so
+	//	// that the next column will begin in the correct place in
+	//	// the buffer
+	//	dwOffset_ += (ULONG)rgBindings_[n].cbMaxLen + 1;
+
+	//	// Ensure that the data for the next column will be correctly
+	//	// aligned for all platforms, or, if we're done with columns,
+	//	// that if we allocate space for multiple rows that the data
+	//	// for every row is correctly aligned
+	//	dwOffset_ = ROUNDUP(dwOffset_);
+
+	//	if (dwOffset_ > MAX_ROW_LENGTH)
+	//		throw MyException("dwOffset_ > MAX_ROW_LENGTH");
+	//}
 
 	wchar_t wszDBTYPE_I4[] = L"DBTYPE_I4";
 

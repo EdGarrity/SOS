@@ -39,7 +39,6 @@ namespace domain
 	{
 		concurrent_unordered_set<size_t> downsampled_training_cases;
 		Utilities::ThreadSafeArray_2D_V2<unsigned long> orders;
-		Utilities::ThreadSafeArray_2D_V2<BrokerAccount> broker_account;
 
 
 		// Purpose: 
@@ -253,8 +252,8 @@ namespace domain
 				std::cout << "Create Population Agents" << std::endl;
 				agents_created = datastore::agent_data.make_pop_agents(global_env, datastore::agent_data.load());
 
-				//if (agents_created > 0)
-				//	datastore::agent_data.save();
+				if (agents_created > 0)
+					datastore::agent_data.save();
 
 				if (agents_created > argmap::population_size / 2)
 				{
@@ -329,13 +328,13 @@ namespace domain
 					// ***************************
 					// *** Evaluate strategies ***
 					// ***************************
-					size_t training_case_window_end = datastore::test_data.size() - domain::argmap::training_case_length + 1;
-					broker_account.resize(domain::argmap::population_size, training_case_window_end);
+					size_t number_of_training_cases = datastore::test_data.size() - domain::argmap::training_case_length + 1;
+					//broker_account.resize(domain::argmap::population_size, number_of_training_cases);
 					int best_individual = -1;
 
 					for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
 					{
-						for (size_t training_case_window_start = 0;	training_case_window_start < training_case_window_end; training_case_window_start++)
+						for (size_t training_case_window_start = 0;	training_case_window_start < number_of_training_cases; training_case_window_start++)
 						{
 							size_t stock_data_index = training_case_window_start;
 
@@ -358,14 +357,17 @@ namespace domain
 								best_individual = strategy_index;
 							}
 
-							broker_account.store(0, strategy_index, training_case_window_start, account);
+							double error = -1.0 * score;
+							pushGP::globals::error_matrix.store(-1, training_case_window_start, strategy_index, error);
+							pushGP::globals::effort_matrix.store(-1, training_case_window_start, strategy_index, 1000);
+
 						}
 					}
 
 					// *************************
 					// *** Evolve strategies ***
 					// *************************
-					produce_new_offspring(argmap::number_of_training_cases,
+					produce_new_offspring(number_of_training_cases,
 						downsampled_training_cases,
 						best_individual,
 						sa,

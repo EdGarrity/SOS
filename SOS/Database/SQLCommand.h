@@ -207,7 +207,8 @@ namespace database
 		//		parm_no		The parameter index number.  1 is the first parameter in the command.
 		//		parameter	Text to be bound to the command parameter.
 		//
-		void set_as_text(DBPARAMIOENUM param_io, unsigned int parm_no, std::string parameter);
+		//void set_as_text(DBPARAMIOENUM param_io, unsigned int parm_no, std::string parameter);
+		//void set_as_text(unsigned int parm_no, std::string parameter);
 
 		// Sets parameter value as bit data
 		//

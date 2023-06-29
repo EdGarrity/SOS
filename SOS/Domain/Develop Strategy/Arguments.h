@@ -417,7 +417,7 @@ namespace domain
 		//	:parent - selection : lexicase
 		//	;; The parent selection method.Options include : epsilon_lexicase, downsampled_lexicase
 		enum class PerentSelection { epsilon_lexicase, downsampled_lexicase };
-		const PerentSelection parent_selection = PerentSelection::downsampled_lexicase;
+		const PerentSelection parent_selection = PerentSelection::epsilon_lexicase;
 
 		//:downsample - factor 1
 		//	;; Determines the proportion of cases to use when using downsampled lexicase.
