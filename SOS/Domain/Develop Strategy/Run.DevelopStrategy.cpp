@@ -314,10 +314,15 @@ namespace domain
 						{
 							std::cout << "Run strategy " << strategy_index << " on case " << training_case_index;
 
-							auto results = run_strategy_threadsafe(global_env, strategy_index, training_case_index);
-							orders.store(0, strategy_index, training_case_index, std::get<0>(results));
+							//auto results = run_strategy_threadsafe(global_env, strategy_index, training_case_index);
+							//orders.store(0, strategy_index, training_case_index, std::get<0>(results));
 
-							std::cout << " Order " << std::get<0>(results) << " Score " << std::get<1>(results) << std::endl;
+							//std::cout << " Order " << std::get<0>(results) << " Score " << std::get<1>(results) << std::endl;
+
+							// Generate random orders for debugging purposes
+							unsigned int order = Utilities::random_integer(4);
+							orders.store(0, strategy_index, training_case_index, order);
+							std::cout << " Order " << order << std::endl;
 						}
 					}
 
