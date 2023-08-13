@@ -403,7 +403,7 @@ namespace domain
 				}
 
 				// Load data
-				datastore::test_data.load();
+				datastore::test_data.load("2021-01-01", "2022-12-31");
 
 				// Load population.  Create more if not enough loaded.
 				std::cout << "Create Population Agents" << std::endl;

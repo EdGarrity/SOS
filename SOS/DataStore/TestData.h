@@ -9,7 +9,14 @@ namespace datastore
 	class TestData
 	{
 	private:
-		const char *fmt_str_load_test_data = "SELECT CONVERT(varchar(25),[Date],120) AS [Date],[Value] FROM [SOS].[dbo].[TestData] WHERE [Key]='Norm_Adj_Open' AND [Stock]='%s' ORDER BY [Date];";
+//		const char *fmt_str_load_test_data = "SELECT CONVERT(varchar(25),[Date],120) AS [Date],[Value] FROM [SOS].[dbo].[TestData] WHERE [Key]='Norm_Adj_Open' AND [Stock]='%s' ORDER BY [Date];";
+		const char* fmt_str_load_test_data = "SELECT [Stock]"
+			" ,CONVERT(varchar(25),[Date],120) AS [Date]"
+			" ,[Key]"
+			" ,[Value]"
+			" FROM [SOS].[dbo].[TestData]"
+			" WHERE [Date] >= '%s' AND [Date] <= '%s'"
+			" ORDER BY [Date]";
 
 		std::vector<std::string> dates;
 		std::vector<double> adj_open_values;
@@ -62,7 +69,7 @@ namespace datastore
 	public:
 		TestData();
 		~TestData() {};
-		void load();
+		void load(const std::string& start_date, const std::string& end_date);
 		size_t size() const { return dates.size(); }
 		std::string get_date(size_t index) const { return dates[index]; }
 		double get_stock_price(size_t index) const { return adj_open_values[index]; }

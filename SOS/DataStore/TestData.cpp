@@ -29,7 +29,7 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	void TestData::load()
+	void TestData::load(const std::string& start_date, const std::string& end_date)
 	{
 		std::cout << "Loading all case data..." << std::endl;
 
@@ -37,8 +37,8 @@ namespace datastore
 
 		try
 		{
-			// Construct the SQL statement.
-			int sz = std::snprintf(nullptr, 0, fmt_str_load_test_data, "AAPL");
+			// Construct SQL statement with date range filters
+			int sz = std::snprintf(nullptr, 0, fmt_str_load_test_data, start_date, end_date);
 			std::vector<char> buf(sz + 1); // note +1 for null terminator
 			std::snprintf(&buf[0], buf.size(), fmt_str_load_test_data, "AAPL");
 			std::string sqlstmt_load_case_data(buf.begin(), buf.end() - 1); // omit the null terminator
