@@ -12,7 +12,7 @@ namespace datastore
 	}
 
 	// Purpose: 
-	//   Load the financial data which the agnets will use to make trading decisions.
+	//   Load the financial data which the agents will use to make trading decisions.
 	//
 	// Parameters:
 	//   start_date
