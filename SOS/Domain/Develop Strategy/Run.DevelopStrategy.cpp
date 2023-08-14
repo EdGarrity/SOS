@@ -281,6 +281,12 @@ namespace domain
 			}
 		}
 
+		/**
+		 * Computes the training errors for all strategies and cases.
+		 *
+		 * @param _env The Plush environment.
+		 * @param _run_strategy_threadsafe A function that runs a strategy in a thread-safe way.
+		 */
 		void compute_training_errors(Plush::Environment& _env,
 			std::function<std::tuple<double, unsigned long>(Plush::Environment& env,
 				unsigned int strategy_index,

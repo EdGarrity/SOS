@@ -924,21 +924,7 @@ namespace Plush
 		double value = 0;
 
 		if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
-		{
-		//	size_t number_of_case_columns = datastore::financial_data.get_num_of_stocks() * datastore::financial_data.get_num_of_attributes();
-		//	size_t size_of_window = datastore::financial_data.get_num_of_dates() * datastore::financial_data.get_num_of_attributes();
-
-		//	size_t case_window_index = index % size_of_window;
-		//	size_t table_index = case_window_index + _env.input_case;
-
-		//	size_t date_loc = table_index / number_of_case_columns;
-		//	size_t stock_loc = (size_t)(table_index % number_of_case_columns) / datastore::financial_data.get_num_of_attributes();
-		//	size_t attribute_loc = table_index % datastore::financial_data.get_num_of_attributes();
-
-		//	value = datastore::financial_data(stock_loc, date_loc, attribute_loc);
-
 			value = datastore::financial_data.get_data(index, _env.input_case);
-		}
 		else
 		{
 			index = std::abs((long)(index % _env.input.size()));

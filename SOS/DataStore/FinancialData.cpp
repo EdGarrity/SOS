@@ -21,7 +21,7 @@ namespace datastore
 	//   None
 	//
 	// Side Effects:
-	//   None
+	//   Loads the values collection with the financial data for the case.
 	//
 	// Thread Safe:
 	//   No

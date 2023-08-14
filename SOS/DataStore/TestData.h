@@ -15,7 +15,9 @@ namespace datastore
 			" ,[Key]"
 			" ,[Value]"
 			" FROM [SOS].[dbo].[TestData]"
-			" WHERE [Date] >= '%s' AND [Date] <= '%s'"
+			" WHERE [Key]='Adj_Open'"
+			" AND [Stock]='%s'"
+			" AND [Date]>='%s' AND [Date]<='%s'"
 			" ORDER BY [Date]";
 
 		std::vector<std::string> dates;
