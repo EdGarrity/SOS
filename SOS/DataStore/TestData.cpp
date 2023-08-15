@@ -39,9 +39,9 @@ namespace datastore
 		{
 			// Construct SQL statement with date range filters
 			//int sz = std::snprintf(nullptr, 0, fmt_str_load_test_data, start_date, end_date);
-			int sz = std::snprintf(nullptr, 0, fmt_str_load_test_data, "AAPL", start_date, end_date);
+			int sz = std::snprintf(nullptr, 0, fmt_str_load_test_data, "AAPL", start_date.c_str(), end_date.c_str());
 			std::vector<char> buf(sz + 1); // note +1 for null terminator
-			std::snprintf(&buf[0], buf.size(), fmt_str_load_test_data, "AAPL", start_date, end_date);
+			std::snprintf(&buf[0], buf.size(), fmt_str_load_test_data, "AAPL", start_date.c_str(), end_date.c_str());
 			std::string sqlstmt_load_case_data(buf.begin(), buf.end() - 1); // omit the null terminator
 
 			sqlcmd_get_case_data = new database::SQLCommand(database_connection.get_connection(), sqlstmt_load_case_data);

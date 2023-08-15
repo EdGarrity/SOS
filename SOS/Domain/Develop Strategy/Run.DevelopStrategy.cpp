@@ -409,7 +409,7 @@ namespace domain
 				}
 
 				// Load data
-				datastore::test_data.load("2021-01-01", "2022-12-31");
+				datastore::test_data.load("2020-01-01", "2021-12-31");
 
 				// Load population.  Create more if not enough loaded.
 				std::cout << "Create Population Agents" << std::endl;
@@ -468,6 +468,9 @@ namespace domain
 					// *****************************************************
 					// *** Calculate trading orders for each trading day ***
 					// *****************************************************
+
+					size_t t = datastore::test_data.size();
+
 					orders.resize(domain::argmap::population_size, datastore::test_data.size());
 
 					for (size_t training_case_index = 0; training_case_index < datastore::test_data.size(); training_case_index++)

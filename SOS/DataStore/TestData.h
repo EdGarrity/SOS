@@ -10,14 +10,14 @@ namespace datastore
 	{
 	private:
 //		const char *fmt_str_load_test_data = "SELECT CONVERT(varchar(25),[Date],120) AS [Date],[Value] FROM [SOS].[dbo].[TestData] WHERE [Key]='Norm_Adj_Open' AND [Stock]='%s' ORDER BY [Date];";
-		const char* fmt_str_load_test_data = "SELECT [Stock]"
-			" ,CONVERT(varchar(25),[Date],120) AS [Date]"
-			" ,[Key]"
+		const char* fmt_str_load_test_data = "SELECT CONVERT(varchar(25),[Date],120) AS [Date]"
 			" ,[Value]"
 			" FROM [SOS].[dbo].[TestData]"
 			" WHERE [Key]='Adj_Open'"
-			" AND [Stock]='%s'"
-			" AND [Date]>='%s' AND [Date]<='%s'"
+			" AND [Symbol]='%s'"
+			" AND [Date] >= CAST('%s' AS DATETIME)" 
+			" AND[Date] <= CAST('%s' AS DATETIME)"
+			//" AND [Date]>='%s' AND [Date]<='%s'"
 			" ORDER BY [Date]";
 
 		std::vector<std::string> dates;
