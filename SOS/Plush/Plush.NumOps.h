@@ -1,4 +1,7 @@
 #pragma once
+
+#define NOMINMAX
+
 #include <algorithm>
 #include "Processor.h"
 #include "..\DataStore\FinancialData.h"
@@ -198,12 +201,9 @@ namespace Plush
 	template <class T>
 	inline unsigned _max(Environment & _env)
 	{
-		//if (_env.has_elements<T>(2))
-		//{
-			T first = _env.pop<T>();
-			T second = _env.pop<T>();
-			_env.push<T>(std::max(first, second));
-		//}
+		T first = _env.pop<T>();
+		T second = _env.pop<T>();
+		_env.push<T>(std::max(first, second));
 
 		return 1;
 	}
@@ -414,7 +414,7 @@ namespace Plush
 				index--;
 
 				T value = datastore::financial_data.get_data(index, _env.input_case);
-				_env.push<T>(CodeAtom(value));
+				_env.push<T>(value);
 			}
 		}
 		else
