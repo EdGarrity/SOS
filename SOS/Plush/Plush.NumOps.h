@@ -1,6 +1,7 @@
 #pragma once
 #include <algorithm>
 #include "Processor.h"
+#include "..\DataStore\FinancialData.h"
 
 namespace Plush
 {
@@ -244,15 +245,24 @@ namespace Plush
 	}
 
 	template <class T>
-	inline unsigned in(Environment & _env)
+	inline unsigned in(Environment& _env)
 	{
-		if (_env.input.size() > 0)
-		{
-			long index = _env.pop<long>();
+		long index = std::abs((long)(_env.pop<long>()));
+		T value = 0;
 
-			size_t i = std::abs((long)(index % _env.input.size()));
-			T value = (T)_env.input[i];
+		if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
+		{
+			value = datastore::financial_data.get_data(index, _env.input_case);
 			_env.push<T>(value);
+		}
+		else
+		{
+			if (_env.input.size() > 0)
+			{
+				size_t i = std::abs((long)(index % _env.input.size()));
+				value = (T)_env.input[i];
+				_env.push<T>(value);
+			}
 		}
 
 		return 1;
@@ -347,16 +357,27 @@ namespace Plush
 	template <class T>
 	inline unsigned inall(Environment & _env)
 	{
-		if (_env.input.size() > 0)
+		if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
 		{
-			//if (_env.has_elements<T>(_env.input.size()))
-			//{
+			size_t size_of_window = datastore::financial_data.get_size();
+
+			for (unsigned int index = 0; index < size_of_window; index++)
+			{
+				// ToDo: Add check available space in stack
+				T value = datastore::financial_data.get_data(index, _env.input_case);
+				_env.push<T>(value);
+			}
+		}
+		else
+		{
+			if (_env.input.size() > 0)
+			{
 				for (size_t index = 0; index < _env.input.size(); index++)
 				{
 					T value = (T)_env.input[index];
 					_env.push<T>(value);
 				}
-			//}
+			}
 		}
 
 		return 1;
@@ -383,16 +404,29 @@ namespace Plush
 	template <class T>
 	inline unsigned inallrev(Environment & _env)
 	{
-		if (_env.input.size() > 0)
+		if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
 		{
-			//if (_env.has_elements<T>(_env.input.size()))
-			//{
+			size_t size_of_window = datastore::financial_data.get_size();
+			size_t index = size_of_window;
+
+			for (unsigned int n = 0; n < size_of_window; n++)
+			{
+				index--;
+
+				T value = datastore::financial_data.get_data(index, _env.input_case);
+				_env.push<T>(CodeAtom(value));
+			}
+		}
+		else
+		{
+			if (_env.input.size() > 0)
+			{
 				for (long long index = _env.input.size() - 1; index >= 0; index--)
 				{
 					T value = (T)_env.input[index];
 					_env.push<T>(value);
 				}
-			//}
+			}
 		}
 
 		return 1;
