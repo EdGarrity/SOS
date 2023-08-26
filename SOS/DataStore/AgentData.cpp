@@ -91,7 +91,7 @@ namespace datastore
 			delete sqlcmd_get_individuals;
 
 			std::stringstream error;
-			error << "SQLConnection::load_pop_agents()";
+			error << "AgentData::load_pop_agents()";
 			std::cerr << error.str() << std::endl;
 
 			return n;
@@ -112,115 +112,111 @@ namespace datastore
 		if (ret != RPC_S_OK)
 			std::cout << "UuidCreateNil() did not return RPC_S_OK" << std::endl;
 
-		//database::SQLCommand* sqlcmd_delete_individuals;
-		database::SQLCommand* sqlcmd_insert_new_individual;
+		database::SQLCommand* sqlcmd;
 
-		//sqlcmd_delete_individuals = new database::SQLCommand(&con, sqlstmt_delete_individual);
-		sqlcmd_insert_new_individual = new database::SQLCommand(database_connection.get_connection());
+		sqlcmd = new database::SQLCommand(database_connection.get_connection());
 
 		// Begin a transaction
-		sqlcmd_insert_new_individual->begin_transaction();  //transaction->begin();
+		sqlcmd->begin_transaction();  //transaction->begin();
 
 		// Delete previously saved generation
-		sqlcmd_insert_new_individual->execute(sqlstmt_delete_individual);
+		sqlcmd->execute(sqlstmt_clear_individual_table);
 
 		// Save new generation
-		sqlcmd_insert_new_individual->set_command(sqlstmt_insert_new_individual);
+		sqlcmd->set_command(sqlstmt_insert_new_individual);
 
 		for (int n = 0; n < domain::argmap::population_size; n++)
 		{
 			long nn = n + 1;
-			sqlcmd_insert_new_individual->set_as_integer(DBPARAMIO_INPUT, 1, nn);
-			sqlcmd_insert_new_individual->set_as_string(2, pushGP::globals::population_agents[n]);
+			sqlcmd->set_as_integer(DBPARAMIO_INPUT, 1, nn);
+			sqlcmd->set_as_string(2, pushGP::globals::population_agents[n]);
 
 			std::unordered_set<UUID> parents = pushGP::globals::population_agents[n].get_parents();
 			auto it = parents.begin();
 
 			if (it != parents.end())
-				sqlcmd_insert_new_individual->set_as_GUID(3, *it++);
+				sqlcmd->set_as_GUID(3, *it++);
 			else
-				sqlcmd_insert_new_individual->set_as_GUID(3, NilUuid);
+				sqlcmd->set_as_GUID(3, NilUuid);
 
 			if (it != parents.end())
-				sqlcmd_insert_new_individual->set_as_GUID(4, *it);
+				sqlcmd->set_as_GUID(4, *it);
 			else
-				sqlcmd_insert_new_individual->set_as_GUID(4, NilUuid);
+				sqlcmd->set_as_GUID(4, NilUuid);
 
 			parents = pushGP::globals::population_agents[n].get_grandparents();
 			it = parents.begin();
 
 			if (it != parents.end())
-				sqlcmd_insert_new_individual->set_as_GUID(5, *it++);
+				sqlcmd->set_as_GUID(5, *it++);
 			else
-				sqlcmd_insert_new_individual->set_as_GUID(5, NilUuid);
+				sqlcmd->set_as_GUID(5, NilUuid);
 
 			if (it != parents.end())
-				sqlcmd_insert_new_individual->set_as_GUID(6, *it++);
+				sqlcmd->set_as_GUID(6, *it++);
 			else
-				sqlcmd_insert_new_individual->set_as_GUID(6, NilUuid);
+				sqlcmd->set_as_GUID(6, NilUuid);
 
 			if (it != parents.end())
-				sqlcmd_insert_new_individual->set_as_GUID(7, *it++);
+				sqlcmd->set_as_GUID(7, *it++);
 			else
-				sqlcmd_insert_new_individual->set_as_GUID(7, NilUuid);
+				sqlcmd->set_as_GUID(7, NilUuid);
 
 			if (it != parents.end())
-				sqlcmd_insert_new_individual->set_as_GUID(8, *it);
+				sqlcmd->set_as_GUID(8, *it);
 			else
-				sqlcmd_insert_new_individual->set_as_GUID(8, NilUuid);
+				sqlcmd->set_as_GUID(8, NilUuid);
 
 			parents = pushGP::globals::population_agents[n].get_greatgrandparents();
 			it = parents.begin();
 
 			if (it != parents.end())
-				sqlcmd_insert_new_individual->set_as_GUID(9, *it++);
+				sqlcmd->set_as_GUID(9, *it++);
 			else
-				sqlcmd_insert_new_individual->set_as_GUID(9, NilUuid);
+				sqlcmd->set_as_GUID(9, NilUuid);
 
 			if (it != parents.end())
-				sqlcmd_insert_new_individual->set_as_GUID(10, *it++);
+				sqlcmd->set_as_GUID(10, *it++);
 			else
-				sqlcmd_insert_new_individual->set_as_GUID(10, NilUuid);
+				sqlcmd->set_as_GUID(10, NilUuid);
 
 			if (it != parents.end())
-				sqlcmd_insert_new_individual->set_as_GUID(11, *it++);
+				sqlcmd->set_as_GUID(11, *it++);
 			else
-				sqlcmd_insert_new_individual->set_as_GUID(11, NilUuid);
+				sqlcmd->set_as_GUID(11, NilUuid);
 
 			if (it != parents.end())
-				sqlcmd_insert_new_individual->set_as_GUID(12, *it++);
+				sqlcmd->set_as_GUID(12, *it++);
 			else
-				sqlcmd_insert_new_individual->set_as_GUID(12, NilUuid);
+				sqlcmd->set_as_GUID(12, NilUuid);
 
 			if (it != parents.end())
-				sqlcmd_insert_new_individual->set_as_GUID(13, *it++);
+				sqlcmd->set_as_GUID(13, *it++);
 			else
-				sqlcmd_insert_new_individual->set_as_GUID(13, NilUuid);
+				sqlcmd->set_as_GUID(13, NilUuid);
 
 			if (it != parents.end())
-				sqlcmd_insert_new_individual->set_as_GUID(14, *it++);
+				sqlcmd->set_as_GUID(14, *it++);
 			else
-				sqlcmd_insert_new_individual->set_as_GUID(14, NilUuid);
+				sqlcmd->set_as_GUID(14, NilUuid);
 
 			if (it != parents.end())
-				sqlcmd_insert_new_individual->set_as_GUID(15, *it++);
+				sqlcmd->set_as_GUID(15, *it++);
 			else
-				sqlcmd_insert_new_individual->set_as_GUID(15, NilUuid);
+				sqlcmd->set_as_GUID(15, NilUuid);
 
 			if (it != parents.end())
-				sqlcmd_insert_new_individual->set_as_GUID(16, *it);
+				sqlcmd->set_as_GUID(16, *it);
 			else
-				sqlcmd_insert_new_individual->set_as_GUID(16, NilUuid);
+				sqlcmd->set_as_GUID(16, NilUuid);
 
-			//Utilities::debug_log(-1, "save_generation", "sqlcmd");
-			sqlcmd_insert_new_individual->execute();
+			sqlcmd->execute();
 		}
 
 		// Commit transaction
-		sqlcmd_insert_new_individual->commit_transaction();  //transaction->commit();
+		sqlcmd->commit_transaction();  //transaction->commit();
 
-		//delete sqlcmd_delete_individuals;
-		delete sqlcmd_insert_new_individual;
+		delete sqlcmd;
 	}
 
 

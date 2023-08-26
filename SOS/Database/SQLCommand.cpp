@@ -457,6 +457,45 @@ namespace database
 		dwOffset_ = ROUNDUP(dwOffset_);
 	}
 
+	void SQLCommand::set_as_bigint(DBPARAMIOENUM param_io, unsigned int parm_no, size_t& parameter)
+	{
+		unsigned int n = parm_no - 1;
+
+		parameter_pointers[n] = (void*)&parameter;
+
+		// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms725393(v=vs.85)"
+		ParamBindInfo_[n].pwszDataSourceType = wszDBTYPE_I8;
+		ParamBindInfo_[n].pwszName = NULL;
+		ParamBindInfo_[n].ulParamSize = sizeof(long long);
+		ParamBindInfo_[n].dwFlags = (param_io == DBPARAMIO_INPUT ? DBPARAMFLAGS_ISINPUT : DBPARAMFLAGS_ISOUTPUT);
+		ParamBindInfo_[n].bPrecision = 11;
+		ParamBindInfo_[n].bScale = 0;
+		ParamOrdinals_[n] = parm_no;
+
+		// This binding applies to the ordinal of this column
+		// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms716845%28v%3dvs.85%29"
+		rgBindings_[n].iOrdinal = parm_no;
+		rgBindings_[n].obValue = dwOffset_;
+		rgBindings_[n].eParamIO = param_io;
+		rgBindings_[n].wType = DBTYPE_I8;
+		rgBindings_[n].cbMaxLen = sizeof(size_t);
+		rgBindings_[n].bPrecision = 11;
+
+		// Copy parameter data into buffer
+		memcpy(sprocparams + dwOffset_, &parameter, rgBindings_[n].cbMaxLen);
+
+		// Update the offset past the end of this column's data, so
+		// that the next column will begin in the correct place in
+		// the buffer
+		dwOffset_ += rgBindings_[n].cbMaxLen;
+
+		// Ensure that the data for the next column will be correctly
+		// aligned for all platforms, or, if we're done with columns,
+		// that if we allocate space for multiple rows that the data
+		// for every row is correctly aligned
+		dwOffset_ = ROUNDUP(dwOffset_);
+	}
+
 	wchar_t wszDBTYPE_R8[] = L"DBTYPE_R8";
 
 	void SQLCommand::set_as_float(unsigned int parm_no, double parameter)

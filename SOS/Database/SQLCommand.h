@@ -281,6 +281,19 @@ namespace database
 		//
 		void set_as_bigint(DBPARAMIOENUM param_io, unsigned int parm_no, long long &parameter);
 
+		// Sets parameter value as big integer data
+		//
+		// Description: 
+		//		Binds a long value to a command parameter and sets the data source type to DBTYPE_I8
+		//
+		// Parameters:
+		//		param_io	Associates the specified member variable with an input or output parameter.  Set to DBPARAMIO_INPUT if the specified parameter is an 
+		//					input parameter.  Set to DBPARAMIO_OUTPUT if the specified parameter is an output parameter.
+		//		parm_no		The parameter index number.  1 is the first parameter in the command.
+		//		parameter	Integer value to be bound to the command parameter.
+		//
+		void set_as_bigint(DBPARAMIOENUM param_io, unsigned int parm_no, size_t& parameter);
+
 		// Sets parameter value as float data
 		//
 		// Description: 

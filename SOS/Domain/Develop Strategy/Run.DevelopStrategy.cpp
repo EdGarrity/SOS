@@ -292,7 +292,7 @@ namespace domain
 				unsigned int strategy_index,
 				unsigned long case_index)> _run_strategy_threadsafe)
 		{
-
+			orders.resize(domain::argmap::population_size, datastore::test_data.size());
 
 			for (size_t training_case_index = 0; training_case_index < datastore::test_data.size(); training_case_index++)
 			{
@@ -471,19 +471,19 @@ namespace domain
 
 					size_t t = datastore::test_data.size();
 
-					orders.resize(domain::argmap::population_size, datastore::test_data.size());
+					//orders.resize(domain::argmap::population_size, datastore::test_data.size());
 
-					for (size_t training_case_index = 0; training_case_index < datastore::test_data.size(); training_case_index++)
-					{
-						for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
-						{
-							std::cout << "Run strategy " << strategy_index << " on case " << training_case_index;
+					//for (size_t training_case_index = 0; training_case_index < datastore::test_data.size(); training_case_index++)
+					//{
+					//	for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
+					//	{
+					//		std::cout << "Run strategy " << strategy_index << " on case " << training_case_index;
 
-							auto results = run_strategy_threadsafe(global_env, strategy_index, training_case_index);
-							orders.store(0, strategy_index, training_case_index, std::get<0>(results));
-							std::cout << " Order " << std::get<0>(results) << " Score " << std::get<1>(results) << std::endl;
-						}
-					}
+					//		auto results = run_strategy_threadsafe(global_env, strategy_index, training_case_index);
+					//		orders.store(0, strategy_index, training_case_index, std::get<0>(results));
+					//		std::cout << " Order " << std::get<0>(results) << " Score " << std::get<1>(results) << std::endl;
+					//	}
+					//}
 
 
 
