@@ -14,9 +14,11 @@ namespace datastore
 		const std::string sqlstmt_get_all_orders = "SELECT [Training_Case_Index], [Strategy_Index], [Order] FROM [dbo].[Order_Matrix] ;";
 
 		Utilities::ThreadSafeArray_2D_V2<unsigned long> orders;
+		size_t population_size;
+		size_t test_data_size;
 
 	public:
-		OrderMatrix() {};
+		OrderMatrix();
 		~OrderMatrix() {};
 
 		// Purpose: 

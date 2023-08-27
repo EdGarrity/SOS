@@ -2,6 +2,19 @@
 #include <iostream>
 #include "OrderMatrix.h"
 
+datastore::OrderMatrix::OrderMatrix()
+{
+	population_size = 0;
+	test_data_size = 0;
+}
+
+void datastore::OrderMatrix::resize(const size_t population_size, const size_t test_data_size)
+{
+	this->population_size = population_size;
+	this->test_data_size = test_data_size;
+	orders.resize(population_size, test_data_size);
+}
+
 void datastore::OrderMatrix::clearOrderMatrix()
 {
 	database::SQLCommand* sqlcmd_clear_order_matrix;
@@ -26,28 +39,6 @@ void datastore::OrderMatrix::clearOrderMatrix()
 		delete sqlcmd_clear_order_matrix;
 		throw;
 	}
-}
-
-void datastore::OrderMatrix::store(size_t trainingCaseIndex, size_t strategyIndex, unsigned long order)
-{
-#if DLEVEL > 0
-	Utilities::debug_log(-1, "insertNewOrder", "OrderMatrix");
-#endif
-
-	orders.store(0, strategyIndex, trainingCaseIndex, order);
-
-	database::SQLCommand* sqlcmd;
-
-	sqlcmd = new database::SQLCommand(database_connection.get_connection());
-	sqlcmd->set_command(sqlstmt_insert_new_order);
-
-	sqlcmd->set_as_bigint(DBPARAMIO_INPUT, 1, trainingCaseIndex);
-	sqlcmd->set_as_bigint(DBPARAMIO_INPUT, 2, strategyIndex);
-	sqlcmd->set_as_integer(3, order);
-
-	sqlcmd->execute();
-
-	delete sqlcmd;
 }
 
 void datastore::OrderMatrix::getAllOrders(Utilities::ThreadSafeArray_2D_V2<unsigned long>& orders)
@@ -88,7 +79,24 @@ void datastore::OrderMatrix::getAllOrders(Utilities::ThreadSafeArray_2D_V2<unsig
 	}
 }
 
-void datastore::OrderMatrix::resize(const size_t population_size, const size_t test_data_size)
+void datastore::OrderMatrix::store(size_t trainingCaseIndex, size_t strategyIndex, unsigned long order)
 {
-	orders.resize(population_size, test_data_size);
+#if DLEVEL > 0
+	Utilities::debug_log(-1, "insertNewOrder", "OrderMatrix");
+#endif
+
+	orders.store(0, strategyIndex, trainingCaseIndex, order);
+
+	database::SQLCommand* sqlcmd;
+
+	sqlcmd = new database::SQLCommand(database_connection.get_connection());
+	sqlcmd->set_command(sqlstmt_insert_new_order);
+
+	sqlcmd->set_as_bigint(DBPARAMIO_INPUT, 1, trainingCaseIndex);
+	sqlcmd->set_as_bigint(DBPARAMIO_INPUT, 2, strategyIndex);
+	sqlcmd->set_as_integer(3, order);
+
+	sqlcmd->execute();
+
+	delete sqlcmd;
 }
