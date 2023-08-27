@@ -387,7 +387,7 @@
       <Filter>Source Files\DataStore</Filter>
     </ClCompile>
     <ClCompile Include="DataStore\OrderMatrix.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\DataStore</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
