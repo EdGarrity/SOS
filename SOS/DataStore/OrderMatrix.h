@@ -13,6 +13,8 @@ namespace datastore
 		const std::string sqlstmt_get_order = "SELECT [Order] FROM [dbo].[Order_Matrix] WHERE [Training_Case_Index] = ? AND [Strategy_Index] = ?;";
 		const std::string sqlstmt_get_all_orders = "SELECT [Training_Case_Index], [Strategy_Index], [Order] FROM [dbo].[Order_Matrix] ;";
 
+		Utilities::ThreadSafeArray_2D_V2<unsigned long> orders;
+
 	public:
 		OrderMatrix() {};
 		~OrderMatrix() {};
@@ -55,7 +57,7 @@ namespace datastore
 		//
 		// Remarks:
 		//
-		void insertNewOrder(size_t trainingCaseIndex, size_t strategyIndex, unsigned long order);
+		void store(size_t trainingCaseIndex, size_t strategyIndex, unsigned long order);
 
 		// Purpose: 
 		//   Loads all records from the Order Matrix table in the database into the Order matrix
@@ -76,7 +78,29 @@ namespace datastore
 		// 	 orders.resize(domain::argmap::population_size, datastore::test_data.size());
 
 		void getAllOrders(Utilities::ThreadSafeArray_2D_V2<unsigned long>& orders);
+
+
+		// Purpose: 
+		//   Reallocates storage for the Order Matrix
+		//
+		// Parameters:
+		//   population_size
+		//   test_data_size
+		// 
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   All data in the matrix is deleted and new stroage is allocated
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//
+		void resize(const size_t population_size, const size_t test_data_size);
 	};
+
 
 	extern OrderMatrix order_matrix;
 }

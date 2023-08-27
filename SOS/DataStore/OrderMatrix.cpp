@@ -28,11 +28,14 @@ void datastore::OrderMatrix::clearOrderMatrix()
 	}
 }
 
-void datastore::OrderMatrix::insertNewOrder(size_t trainingCaseIndex, size_t strategyIndex, unsigned long order)
+void datastore::OrderMatrix::store(size_t trainingCaseIndex, size_t strategyIndex, unsigned long order)
 {
 #if DLEVEL > 0
 	Utilities::debug_log(-1, "insertNewOrder", "OrderMatrix");
 #endif
+
+	orders.store(0, strategyIndex, trainingCaseIndex, order);
+
 	database::SQLCommand* sqlcmd;
 
 	sqlcmd = new database::SQLCommand(database_connection.get_connection());
@@ -83,4 +86,9 @@ void datastore::OrderMatrix::getAllOrders(Utilities::ThreadSafeArray_2D_V2<unsig
 		delete sqlcmd;
 		throw;
 	}
+}
+
+void datastore::OrderMatrix::resize(const size_t population_size, const size_t test_data_size)
+{
+	orders.resize(population_size, test_data_size);
 }

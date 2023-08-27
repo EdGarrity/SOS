@@ -39,7 +39,7 @@ namespace domain
 	namespace develop_strategy
 	{
 		concurrent_unordered_set<size_t> downsampled_training_cases;
-		Utilities::ThreadSafeArray_2D_V2<unsigned long> orders;
+		//Utilities::ThreadSafeArray_2D_V2<unsigned long> orders;
 
 		const std::string sqlstmt_save_status_report("INSERT INTO [dbo].[ProgressLog]"
 			"           ("
@@ -292,7 +292,7 @@ namespace domain
 				unsigned int strategy_index,
 				unsigned long case_index)> _run_strategy_threadsafe)
 		{
-			orders.resize(domain::argmap::population_size, datastore::test_data.size());
+			order_matrix.resize(domain::argmap::population_size, datastore::test_data.size());
 
 			for (size_t training_case_index = 0; training_case_index < datastore::test_data.size(); training_case_index++)
 			{
@@ -301,7 +301,7 @@ namespace domain
 					std::cout << "Run strategy " << strategy_index << " on case " << training_case_index;
 
 					auto results = _run_strategy_threadsafe(_env, strategy_index, training_case_index);
-					orders.store(0, strategy_index, training_case_index, std::get<0>(results));
+					order_matrix.store(0, strategy_index, training_case_index, std::get<0>(results));
 					std::cout << " Order " << std::get<0>(results) << " Score " << std::get<1>(results) << std::endl;
 				}
 			}
