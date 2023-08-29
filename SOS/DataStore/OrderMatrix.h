@@ -22,6 +22,27 @@ namespace datastore
 		~OrderMatrix() {};
 
 		// Purpose: 
+		//   Reallocates storage for the Order Matrix
+		//
+		// Parameters:
+		//   population_size
+		//   test_data_size
+		// 
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   All data in the in-memory matrix is deleted, new stroage is allocated, and the matrix 
+		//   is loaded from the Order Matrix table in the database
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//
+		void initialize(const size_t population_size, const size_t test_data_size);
+
+		// Purpose: 
 		//   Clears the Order Matrix table in the database
 		//
 		// Parameters:
@@ -41,7 +62,7 @@ namespace datastore
 		void clearOrderMatrix();
 
 		// Purpose: 
-		//   Saves order to OMatrix table in the database
+		//   Saves order to Order Matrix table in the database
 		//
 		// Parameters:
 		//   trainingCaseIndex
@@ -62,45 +83,46 @@ namespace datastore
 		void store(size_t trainingCaseIndex, size_t strategyIndex, unsigned long order);
 
 		// Purpose: 
-		//   Loads all records from the Order Matrix table in the database into the Order matrix
+		//   Saves order to Order Matrix table in the database
 		//
 		// Parameters:
-		//   orders
+		//   trainingCaseIndex
+		//   strategyIndex
+		//   order
 		// 
 		// Return value:
 		//   None
 		//
 		// Side Effects:
-		//   All records in the SQL table Order_Matrix are loaded into the orders matrix
+		//   Record in the SQL table Order_Matrix is updated for the Trading Case and Staregy
 		//
 		// Thread Safe:
-		//   No
+		//   Yes
 		//
 		// Remarks:
-		// 	 orders.resize(domain::argmap::population_size, datastore::test_data.size());
-
-		void getAllOrders(Utilities::ThreadSafeArray_2D_V2<unsigned long>& orders);
-
+		//
+		void store(size_t env_index, size_t trainingCaseIndex, size_t strategyIndex, unsigned long order);
 
 		// Purpose: 
-		//   Reallocates storage for the Order Matrix
+		//   Loads order from in-memory Order Matrix
 		//
 		// Parameters:
-		//   population_size
-		//   test_data_size
+		//   trainingCaseIndex
+		//   strategyIndex
+		//   order
 		// 
 		// Return value:
 		//   None
 		//
 		// Side Effects:
-		//   All data in the matrix is deleted and new stroage is allocated
+		//   Record in the SQL table Order_Matrix is updated for the Trading Case and Staregy
 		//
 		// Thread Safe:
-		//   No
+		//   Yes
 		//
 		// Remarks:
 		//
-		void resize(const size_t population_size, const size_t test_data_size);
+		unsigned long load(size_t strategyIndex, size_t trainingCaseIndex);
 	};
 
 

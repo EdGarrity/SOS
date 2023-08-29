@@ -182,7 +182,7 @@ namespace Utilities
 					pushGP::globals::thread_example_case[env_index] = work_order.example_case;
 
 					auto results = domain::develop_strategy::run_strategy_threadsafe(env, work_order.individual_index, work_order.example_case);
-					domain::develop_strategy::orders.store(env_index, work_order.individual_index, work_order.example_case, std::get<0>(results));
+					domain::develop_strategy::order_matrix.store(env_index, work_order.individual_index, work_order.example_case, std::get<0>(results));
 					std::cout << " Finished Order " << std::get<0>(results) << " Score " << std::get<1>(results) << std::endl;
 
 					running_state[env_index].store(Plush::Environment::RunningState::Waiting, std::memory_order_release);

@@ -31,7 +31,6 @@
 #include "..\..\DataStore\AgentData.h"
 #include "..\..\DataStore\DatabaseConnection.h"
 #include "..\..\Utilities\WorkOrderManager.h"
-#include "..\..\DataStore\OrderMatrix.h"
 
 using namespace concurrency;
 
@@ -40,7 +39,8 @@ namespace domain
 	namespace develop_strategy
 	{
 		concurrent_unordered_set<size_t> downsampled_training_cases;
-		//Utilities::ThreadSafeArray_2D_V2<unsigned long> orders;
+		Utilities::ThreadSafeArray_2D_V2<unsigned long> orders;
+		datastore::OrderMatrix order_matrix;
 
 		const std::string sqlstmt_save_status_report("INSERT INTO [dbo].[ProgressLog]"
 			"           ("
@@ -300,7 +300,7 @@ namespace domain
 					std::cout << "Run strategy " << strategy_index << " on case " << training_case_index;
 
 					auto results = _run_strategy_threadsafe(_env, strategy_index, training_case_index);
-					datastore::order_matrix.store(strategy_index, training_case_index, std::get<0>(results));
+					order_matrix.store(strategy_index, training_case_index, std::get<0>(results));
 					std::cout << " Order " << std::get<0>(results) << " Score " << std::get<1>(results) << std::endl;
 				}
 			}
@@ -515,7 +515,7 @@ namespace domain
 
 							for (size_t training_case_window_offset = 0; training_case_window_offset < domain::argmap::training_case_length; training_case_window_offset++)
 							{
-								long order = orders.load(strategy_index, stock_data_index);
+								long order = order_matrix.load(strategy_index, stock_data_index);
 
 								account.execute(stock_data_index, order);
 
