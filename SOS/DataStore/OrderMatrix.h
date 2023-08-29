@@ -8,10 +8,10 @@ namespace datastore
 	class OrderMatrix
 	{
 	private:
-		const std::string sqlstmt_clear_order_matrix = "DELETE [dbo].[Order_Matrix];";
-		const std::string sqlstmt_insert_new_order = "INSERT INTO [dbo].[Order_Matrix] ([Training_Case_Index], [Strategy_Index], [Order]) VALUES (?, ?, ?);";
-		const std::string sqlstmt_get_order = "SELECT [Order] FROM [dbo].[Order_Matrix] WHERE [Training_Case_Index] = ? AND [Strategy_Index] = ?;";
-		const std::string sqlstmt_get_all_orders = "SELECT [Training_Case_Index], [Strategy_Index], [Order] FROM [dbo].[Order_Matrix] ;";
+		const std::string sqlstmt_clear_order_matrix = "DELETE [dbo].[OrderMatrix];";
+		const std::string sqlstmt_insert_new_order = "INSERT INTO [dbo].[OrderMatrix] ([Training_Case_Index], [Strategy_Index], [Order]) VALUES (?, ?, ?);";
+		const std::string sqlstmt_get_order = "SELECT [Order] FROM [dbo].[OrderMatrix] WHERE [Training_Case_Index] = ? AND [Strategy_Index] = ?;";
+		const std::string sqlstmt_get_all_orders = "SELECT [Training_Case_Index], [Strategy_Index], [Order] FROM [dbo].[OrderMatrix] ;";
 
 		Utilities::ThreadSafeArray_2D_V2<unsigned long> orders;
 		size_t population_size;
