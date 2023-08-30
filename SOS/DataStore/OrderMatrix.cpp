@@ -17,6 +17,16 @@ void datastore::OrderMatrix::initialize(const size_t population_size, const size
 	this->population_size = population_size;
 	this->test_data_size = test_data_size;
 	orders.resize(population_size, test_data_size);
+	processed.resize(population_size, test_data_size);
+
+	for (size_t training_case_index = 0; training_case_index < test_data_size; training_case_index++)
+	{
+		for (size_t strategy_index = 0; strategy_index < population_size; strategy_index++)
+		{
+			orders.store(0, strategy_index, training_case_index, 0);
+			processed.store(0, strategy_index, training_case_index, false);
+		}
+	}
 
 	database::SQLCommand* sqlcmd;
 
@@ -35,6 +45,7 @@ void datastore::OrderMatrix::initialize(const size_t population_size, const size
 				unsigned long order = sqlcmd->get_field_as_long(3);
 
 				orders.store(0, strategy_index, training_case_index, order);
+				processed.store(0, strategy_index, training_case_index, true);
 			}
 		}
 
@@ -89,6 +100,7 @@ void datastore::OrderMatrix::store(size_t env_index, size_t trainingCaseIndex, s
 #endif
 
 	orders.store(env_index, strategyIndex, trainingCaseIndex, order);
+	processed.store(env_index, strategyIndex, trainingCaseIndex, true);
 
 	database::SQLCommand* sqlcmd;
 
@@ -107,4 +119,9 @@ void datastore::OrderMatrix::store(size_t env_index, size_t trainingCaseIndex, s
 unsigned long datastore::OrderMatrix::load(size_t strategyIndex, size_t trainingCaseIndex)
 {
 	return orders.load(strategyIndex, trainingCaseIndex);
+}
+
+bool datastore::OrderMatrix::is_processed(size_t strategyIndex, size_t trainingCaseIndex)
+{
+	return processed.load(strategyIndex, trainingCaseIndex);
 }

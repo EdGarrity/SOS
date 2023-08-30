@@ -301,9 +301,18 @@ namespace domain
 				{
 					std::cout << "Run strategy " << strategy_index << " on case " << training_case_index;
 
-					auto results = _run_strategy_threadsafe(_env, strategy_index, training_case_index);
-					order_matrix.store(strategy_index, training_case_index, std::get<0>(results));
-					std::cout << " Order " << std::get<0>(results) << " Score " << std::get<1>(results) << std::endl;
+					unsigned long order = 0;
+					unsigned long score = 0;
+
+					if (!order_matrix.is_processed(strategy_index, training_case_index))
+					{
+						auto results = _run_strategy_threadsafe(_env, strategy_index, training_case_index);
+						order = std::get<0>(results);
+						score = std::get<1>(results);
+						order_matrix.store(strategy_index, training_case_index, order);
+					}
+
+					std::cout << " Order " << order << " Score " << score << std::endl;
 				}
 			}
 		}

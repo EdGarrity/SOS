@@ -1,4 +1,4 @@
-#pragma once
+#pragma once	
 
 #include "DatabaseConnection.h"
 #include "..\Utilities\ThreadSafeArray_V2.h"
@@ -14,6 +14,7 @@ namespace datastore
 		const std::string sqlstmt_get_all_orders = "SELECT [Training_Case_Index], [Strategy_Index], [Order] FROM [dbo].[OrderMatrix] ;";
 
 		Utilities::ThreadSafeArray_2D_V2<unsigned long> orders;
+		Utilities::ThreadSafeArray_2D_V2<bool> processed;
 		size_t population_size;
 		size_t test_data_size;
 
@@ -123,6 +124,26 @@ namespace datastore
 		// Remarks:
 		//
 		unsigned long load(size_t strategyIndex, size_t trainingCaseIndex);
+
+		// Purpose: 
+		//   Returns true if the order has been processed, false otherwise
+		//
+		// Parameters:
+		//   trainingCaseIndex
+		//   strategyIndex
+		// 
+		// Return value:
+		//   Ture if the order has been processed, false otherwise
+		//
+		// Side Effects:
+		//   None
+		//
+		// Thread Safe:
+		//   Yes
+		//
+		// Remarks:
+		//
+		bool is_processed(size_t strategyIndex, size_t trainingCaseIndex);
 	};
 
 
