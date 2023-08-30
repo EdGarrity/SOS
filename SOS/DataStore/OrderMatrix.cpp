@@ -121,7 +121,7 @@ unsigned long datastore::OrderMatrix::load(size_t strategyIndex, size_t training
 	return orders.load(strategyIndex, trainingCaseIndex);
 }
 
-bool datastore::OrderMatrix::is_processed(size_t strategyIndex, size_t trainingCaseIndex)
+bool datastore::OrderMatrix::is_generated(size_t strategyIndex, size_t trainingCaseIndex)
 {
 	return processed.load(strategyIndex, trainingCaseIndex);
 }

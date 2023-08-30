@@ -304,7 +304,7 @@ namespace domain
 					unsigned long order = 0;
 					unsigned long score = 0;
 
-					if (!order_matrix.is_processed(strategy_index, training_case_index))
+					if (!order_matrix.is_generated(strategy_index, training_case_index))
 					{
 						auto results = _run_strategy_threadsafe(_env, strategy_index, training_case_index);
 						order = std::get<0>(results);

@@ -143,7 +143,7 @@ namespace datastore
 		//
 		// Remarks:
 		//
-		bool is_processed(size_t strategyIndex, size_t trainingCaseIndex);
+		bool is_generated(size_t strategyIndex, size_t trainingCaseIndex);
 	};
 
 
