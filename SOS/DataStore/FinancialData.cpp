@@ -30,7 +30,7 @@ namespace datastore
 	//
 	void FinancialData::load(size_t case_index)
 	{
-		std::cout << "Loading financial data for case " << case_index << std::endl;
+		std::cout << std::endl << "Loading financial data for case " << case_index << std::endl;
 
 		database::SQLCommand* sqlcmd_get_case_data = nullptr;
 
