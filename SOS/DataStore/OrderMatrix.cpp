@@ -24,7 +24,7 @@ void datastore::OrderMatrix::initialize(const size_t population_size, const size
 		for (size_t strategy_index = 0; strategy_index < population_size; strategy_index++)
 		{
 			orders.store(0, strategy_index, training_case_index, 0);
-			processed.store(0, strategy_index, training_case_index, false);
+			processed.store(0, strategy_index, training_case_index, 0);
 		}
 	}
 
@@ -45,7 +45,7 @@ void datastore::OrderMatrix::initialize(const size_t population_size, const size
 				unsigned long order = sqlcmd->get_field_as_long(3);
 
 				orders.store(0, strategy_index, training_case_index, order);
-				processed.store(0, strategy_index, training_case_index, true);
+				processed.store(0, strategy_index, training_case_index, 1);
 			}
 		}
 
@@ -100,7 +100,7 @@ void datastore::OrderMatrix::store(size_t env_index, size_t trainingCaseIndex, s
 #endif
 
 	orders.store(env_index, strategyIndex, trainingCaseIndex, order);
-	processed.store(env_index, strategyIndex, trainingCaseIndex, true);
+	processed.store(env_index, strategyIndex, trainingCaseIndex, 1);
 
 	database::SQLCommand* sqlcmd;
 
@@ -123,5 +123,5 @@ unsigned long datastore::OrderMatrix::load(size_t strategyIndex, size_t training
 
 bool datastore::OrderMatrix::is_generated(size_t strategyIndex, size_t trainingCaseIndex)
 {
-	return processed.load(strategyIndex, trainingCaseIndex);
+	return (processed.load(strategyIndex, trainingCaseIndex)==0 ? false : true);
 }

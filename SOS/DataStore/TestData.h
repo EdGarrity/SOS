@@ -73,7 +73,10 @@ namespace datastore
 		~TestData() {};
 		void load(const std::string& start_date, const std::string& end_date);
 		size_t size() const { return dates.size(); }
-		std::string get_date(size_t index) const { return dates[index]; }
+
+		//std::string get_date(size_t index) const { return dates[index]; }
+		std::string get_date(size_t index);
+
 		double get_stock_price(size_t index) const { return adj_open_values[index]; }
 		unsigned long get_last_saved_run_number();
 		unsigned long get_last_saved_generation_number();

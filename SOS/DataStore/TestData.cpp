@@ -89,6 +89,12 @@ namespace datastore
 		}
 	}
 
+	std::string TestData::get_date(size_t index)
+	{
+		std::string date = dates[index];
+		return date;
+	}
+
 	// Purpose: 
 	//   Returns the number of the last run saved to the database.
 	//

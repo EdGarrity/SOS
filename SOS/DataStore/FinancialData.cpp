@@ -37,9 +37,12 @@ namespace datastore
 		try
 		{
 			// Construct the SQL statement.
-			int sz = std::snprintf(nullptr, 0, fmt_str_load_case_financial_data, "AAPL", test_data.get_date(case_index));
+			char date[22];
+			date[0] = '\0';
+			strcpy_s(date, 22, test_data.get_date(case_index).c_str());
+			int sz = std::snprintf(nullptr, 0, fmt_str_load_case_financial_data, "AAPL", date);
 			std::vector<char> buf(sz + 1); // note +1 for null terminator
-			std::snprintf(&buf[0], buf.size(), fmt_str_load_case_financial_data, "AAPL", test_data.get_date(case_index));
+			std::snprintf(&buf[0], buf.size(), fmt_str_load_case_financial_data, "AAPL", date);
 			std::string sqlstmt_load_case_data(buf.begin(), buf.end() - 1); // omit the null terminator
 
 			sqlcmd_get_case_data = new database::SQLCommand(database_connection.get_connection(), sqlstmt_load_case_data);
