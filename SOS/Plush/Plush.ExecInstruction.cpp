@@ -1052,7 +1052,7 @@ namespace Plush
 		push_make_instruction((Operator)exec_do_range, "EXEC", "DO*RANGE", integerType + integerType + execType, nullType);
 		push_make_instruction((Operator)exec_do_count, "EXEC", "DO*COUNT", integerType + execType, integerType + execType);
 		push_make_instruction((Operator)exec_do_times, "EXEC", "DO*TIMES", integerType + execType, integerType + execType + execType);
-		push_make_instruction((Operator)exec_while, "EXEC", "WHILE", integerType + execType, execType + execType);
+		push_make_instruction((Operator)exec_while, "EXEC", "WHILE", integerType + execType + boolType, execType + execType);
 		push_make_instruction((Operator)do_while, "EXEC", "DO*WHILE", execType, execType + execType);
 		push_make_instruction((Operator)exec_when, "EXEC", "DO*WHEN", boolType + execType, nullType);
 

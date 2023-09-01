@@ -357,28 +357,29 @@ namespace Plush
 	template <class T>
 	inline unsigned inall(Environment & _env)
 	{
-		if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
-		{
-			size_t size_of_window = datastore::financial_data.get_size();
+		// INALLL Not applicable to Boolean stack
+		//if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
+		//{
+		//	size_t size_of_window = datastore::financial_data.get_size();
 
-			for (unsigned int index = 0; index < size_of_window; index++)
-			{
-				// ToDo: Add check available space in stack
-				T value = datastore::financial_data.get_data(index, _env.input_case);
-				_env.push<T>(value);
-			}
-		}
-		else
-		{
-			if (_env.input.size() > 0)
-			{
-				for (size_t index = 0; index < _env.input.size(); index++)
-				{
-					T value = (T)_env.input[index];
-					_env.push<T>(value);
-				}
-			}
-		}
+		//	for (unsigned int index = 0; index < size_of_window; index++)
+		//	{
+		//		// ToDo: Add check available space in stack
+		//		T value = datastore::financial_data.get_data(index, _env.input_case);
+		//		_env.push<T>(value);
+		//	}
+		//}
+		//else
+		//{
+		//	if (_env.input.size() > 0)
+		//	{
+		//		for (size_t index = 0; index < _env.input.size(); index++)
+		//		{
+		//			T value = (T)_env.input[index];
+		//			_env.push<T>(value);
+		//		}
+		//	}
+		//}
 
 		return 1;
 	}
@@ -404,30 +405,31 @@ namespace Plush
 	template <class T>
 	inline unsigned inallrev(Environment & _env)
 	{
-		if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
-		{
-			size_t size_of_window = datastore::financial_data.get_size();
-			size_t index = size_of_window;
+		// INALLL Not applicable to Boolean stack
+		//if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
+		//{
+		//	size_t size_of_window = datastore::financial_data.get_size();
+		//	size_t index = size_of_window;
 
-			for (unsigned int n = 0; n < size_of_window; n++)
-			{
-				index--;
+		//	for (unsigned int n = 0; n < size_of_window; n++)
+		//	{
+		//		index--;
 
-				T value = datastore::financial_data.get_data(index, _env.input_case);
-				_env.push<T>(value);
-			}
-		}
-		else
-		{
-			if (_env.input.size() > 0)
-			{
-				for (long long index = _env.input.size() - 1; index >= 0; index--)
-				{
-					T value = (T)_env.input[index];
-					_env.push<T>(value);
-				}
-			}
-		}
+		//		T value = datastore::financial_data.get_data(index, _env.input_case);
+		//		_env.push<T>(value);
+		//	}
+		//}
+		//else
+		//{
+		//	if (_env.input.size() > 0)
+		//	{
+		//		for (long long index = _env.input.size() - 1; index >= 0; index--)
+		//		{
+		//			T value = (T)_env.input[index];
+		//			_env.push<T>(value);
+		//		}
+		//	}
+		//}
 
 		return 1;
 	}

@@ -54,7 +54,7 @@ namespace datastore
 
 			while (sqlcmd_get_case_data->fetch_next())
 			{
-				double data = sqlcmd_get_case_data->get_field_as_double(2);
+				double data = sqlcmd_get_case_data->get_field_as_double(1);
 
 				std::cout << data << std::endl;
 
