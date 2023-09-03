@@ -34,7 +34,7 @@ namespace Utilities
 		std::string debug_message = "Allocating,N1=" + std::to_string(N1) + ",N2=" + std::to_string(N2);
 		Utilities::debug_log_nolock(-1, "ThreadSafeArray_2D_V2", debug_message);
 #endif
-		data_array = (T*)calloc(N1 * N2, sizeof(T));
+		data_array = (T*)std::calloc(N1 * N2, sizeof(T));
 		n1 = N1;
 		n2 = N2;
 
@@ -61,7 +61,7 @@ namespace Utilities
 		Utilities::debug_log_nolock(-1, "ThreadSafeArray_2D_V2", debug_message);
 #endif
 		if (data_array != nullptr)
-			free(data_array);
+			std::free(data_array);
 	}
 
 	template<class T>
@@ -72,9 +72,9 @@ namespace Utilities
 		Utilities::debug_log_nolock(-1, "ThreadSafeArray_2D_V2", debug_message);
 #endif
 		if (data_array != nullptr)
-			free(data_array);
+			std::free(data_array);
 
-		data_array = (T*)calloc(N1 * N2, sizeof(T));
+		data_array = (T*)std::calloc(N1 * N2, sizeof(T));
 		n1 = N1;
 		n2 = N2;
 

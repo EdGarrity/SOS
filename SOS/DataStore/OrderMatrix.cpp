@@ -88,12 +88,12 @@ void datastore::OrderMatrix::clearOrderMatrix()
 	}
 }
 
-void datastore::OrderMatrix::store(size_t trainingCaseIndex, size_t strategyIndex, unsigned long order)
+void datastore::OrderMatrix::store(size_t strategyIndex, size_t trainingCaseIndex, unsigned long order)
 {
-	store(0, trainingCaseIndex, strategyIndex, order);
+	store(0, strategyIndex, trainingCaseIndex, order);
 }
 
-void datastore::OrderMatrix::store(size_t env_index, size_t trainingCaseIndex, size_t strategyIndex, unsigned long order)
+void datastore::OrderMatrix::store(size_t env_index, size_t strategyIndex, size_t trainingCaseIndex, unsigned long order)
 {
 #if DLEVEL > 0
 	Utilities::debug_log(-1, "insertNewOrder", "OrderMatrix");

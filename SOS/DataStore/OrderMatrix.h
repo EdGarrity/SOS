@@ -81,7 +81,7 @@ namespace datastore
 		//
 		// Remarks:
 		//
-		void store(size_t trainingCaseIndex, size_t strategyIndex, unsigned long order);
+		void store(size_t strategyIndex, size_t trainingCaseIndex, unsigned long order);
 
 		// Purpose: 
 		//   Saves order to Order Matrix table in the database
@@ -102,7 +102,7 @@ namespace datastore
 		//
 		// Remarks:
 		//
-		void store(size_t env_index, size_t trainingCaseIndex, size_t strategyIndex, unsigned long order);
+		void store(size_t env_index, size_t strategyIndex, size_t trainingCaseIndex, unsigned long order);
 
 		// Purpose: 
 		//   Loads order from in-memory Order Matrix

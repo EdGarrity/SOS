@@ -299,7 +299,7 @@ namespace domain
 			{
 				for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
 				{
-					std::cout << "Run strategy " << strategy_index << " on case " << training_case_index;
+					std::cout << "Run strategy " << strategy_index << " on case " << training_case_index << " is_generated " << order_matrix.is_generated(strategy_index, training_case_index);
 
 					unsigned long order = 0;
 					unsigned long score = 0;
