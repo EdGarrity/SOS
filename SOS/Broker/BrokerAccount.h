@@ -17,14 +17,16 @@ namespace domain
 		//Trader(size_t case_number, double opening_balance) : case_number(case_number),  p_account(new Account(opening_balance)), shares(0) {};
 		//~Trader() { delete p_account; };
 
-		BrokerAccount() : shares(0) { account.set_balance(10000); };
+		BrokerAccount() : shares(0) { account.set_balance(seed_money); };
 		BrokerAccount(double opening_balance) : shares(0) { account.set_balance(opening_balance); };
 		~BrokerAccount() {};
+
+		static constexpr double seed_money = 10000.0;
 
 		void initialize(double opening_balance) { shares = 0; account.set_balance(opening_balance); };
 		void buy(size_t index);
 		void sell(size_t index);
 		void execute(size_t index, unsigned long order);
-		double unrealized_value(size_t index) const;
+		double unrealized_gain(size_t index) const;
 	};
 }

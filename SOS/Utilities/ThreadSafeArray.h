@@ -25,6 +25,7 @@ namespace Utilities
 		ThreadSafeArray_2D<T,N1,N2>();
 		~ThreadSafeArray_2D<T,N1, N2>(void);
 
+		void resize(size_t n1, size_t n2);
 		T load(size_t n1, size_t n2);
 		void store(const unsigned int env_index, size_t y, size_t x, T d);
 	};
@@ -64,10 +65,41 @@ namespace Utilities
 #endif
 		free(data_array);
 	}
+
+	template<class T, size_t N1, size_t N2>
+	inline void ThreadSafeArray_2D<T, N1, N2>::resize(size_t _n1, size_t _n2)
+	{
+#if DLEVEL > 0
+		std::string debug_message = "Reallocating,n1=" + std::to_string(_n1) + ",n2=" + std::to_string(_n2);
+		Utilities::debug_log_nolock(-1, "ThreadSafeArray_2D", debug_message);
+#endif
+
+		if (data_array != nullptr)
+			free(data_array);
+
+		data_array = (T*)calloc(_n1 * _n2, sizeof(T));
+		n1 = _n1;
+		n2 = _n2;
+
+		if (data_array == nullptr)
+		{
+			{
+				std::stringstream error_message;
+				error_message << "ThreadSafeArray_2D - Out of memory";
+
+#if DLEVEL > 0
+				std::string debug_message = error_message.str();
+				Utilities::debug_log(-1, "ThreadSafeArray_2D", debug_message);
+#endif
+				throw std::runtime_error(error_message.str());
+			}
+		}
+	}
+
 	template<class T, size_t N1, size_t N2>
 	inline T ThreadSafeArray_2D<T, N1, N2>::load(size_t y, size_t x)
 	{
-		if ((y >= N1) || (x >= N2))
+		if ((y >= n1) || (x >= n2))
 		{
 			std::stringstream error_message;
 			error_message << "ThreadSafeArray_2D::load(" << y << "," << x << ") - Index out of bounds";
@@ -88,7 +120,7 @@ namespace Utilities
 	template<class T, size_t N1, size_t N2>
 	inline void ThreadSafeArray_2D<T, N1, N2>::store(const unsigned int env_index, size_t y, size_t x, T d)
 	{
-		if ((y >= N1) || (x >= N2))
+		if ((y >= n1) || (x >= n2))
 		{
 			std::stringstream error_message;
 			error_message << "ThreadSafeArray_2D::store(" << y << "," << x << ") - Index out of bounds";

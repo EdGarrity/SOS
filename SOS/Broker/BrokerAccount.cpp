@@ -33,16 +33,16 @@ namespace domain
     void BrokerAccount::execute(size_t index, unsigned long order)
     {
         int buy_flag = order & 0x01;
-        int not_hold_flag = order & 0x02;
+        int hold_flag = order & 0x02;
 
-        if ((buy_flag != 0) && (not_hold_flag != 0))
+        if ((buy_flag != 0) && (hold_flag == 0))
             buy(index);
 
-        else if ((buy_flag == 0) && (not_hold_flag != 0))
+        else if ((buy_flag == 0) && (hold_flag == 0))
             sell(index);
     }
 
-    double BrokerAccount::unrealized_value(size_t index) const
+    double BrokerAccount::unrealized_gain(size_t index) const
     {
         double price = datastore::test_data.get_stock_price(index);
         double balance = account.get_balance();
@@ -50,6 +50,6 @@ namespace domain
         if (shares > 0)
             balance += price * shares;
 
-        return balance;
+        return balance - seed_money;
     }
 }

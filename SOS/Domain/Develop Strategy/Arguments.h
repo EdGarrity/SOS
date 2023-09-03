@@ -89,7 +89,7 @@ namespace domain
 		const unsigned long max_genome_size_in_initial_program = max_points / 4;
 
 		// Number of Available Training Cases
-		const unsigned long number_of_training_cases = 100;
+		const unsigned long number_of_training_cases = 300;
 
 		// Number of Available Test Cases
 		const unsigned long number_of_test_cases = 10;

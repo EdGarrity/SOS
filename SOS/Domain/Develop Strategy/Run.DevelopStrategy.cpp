@@ -110,9 +110,9 @@ namespace domain
 			if (_standard_deviation > 1000.0)
 				_standard_deviation = 1000.0;
 
-			unsigned long number_of_training_cases =
+			unsigned long number_of_training_cases2 =
 				argmap::parent_selection != argmap::PerentSelection::downsampled_lexicase || reran_best_individual_with_all_training_cases
-				? argmap::number_of_training_cases
+				? number_of_training_cases
 				: argmap::downsample_factor * argmap::number_of_training_cases;
 
 			sqlcmd_save_status_report = new database::SQLCommand(datastore::database_connection.get_connection(), sqlstmt_save_status_report);
@@ -125,7 +125,7 @@ namespace domain
 			sqlcmd_save_status_report->set_as_float(6, _average_traiing_error);
 			sqlcmd_save_status_report->set_as_float(7, _standard_deviation);
 			sqlcmd_save_status_report->set_as_float(8, _best_individual_test_score);
-			sqlcmd_save_status_report->set_as_integer(9, number_of_training_cases);
+			sqlcmd_save_status_report->set_as_integer(9, number_of_training_cases2);
 			sqlcmd_save_status_report->set_as_integer(10, argmap::number_of_test_cases);
 			sqlcmd_save_status_report->set_as_string(11, _best_gnome);
 			sqlcmd_save_status_report->set_as_integer(12, argmap::population_size);
@@ -514,6 +514,8 @@ namespace domain
 					// ***************************
 					size_t number_of_training_cases = datastore::test_data.size() - domain::argmap::training_case_length + 1;
 					//broker_account.resize(domain::argmap::population_size, number_of_training_cases);
+					pushGP::globals::error_matrix.resize(number_of_training_cases, domain::argmap::population_size);
+					pushGP::globals::effort_matrix.resize(number_of_training_cases, domain::argmap::population_size);
 					int best_individual = -1;
 
 					for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
@@ -522,7 +524,7 @@ namespace domain
 						{
 							size_t stock_data_index = training_case_window_start;
 
-							BrokerAccount account = BrokerAccount(10000);
+							BrokerAccount account = BrokerAccount(BrokerAccount::seed_money);
 
 							for (size_t training_case_window_offset = 0; training_case_window_offset < domain::argmap::training_case_length; training_case_window_offset++)
 							{
@@ -533,7 +535,7 @@ namespace domain
 								stock_data_index++;
 							}
 
-							double score = account.unrealized_value(--stock_data_index);
+							double score = account.unrealized_gain(--stock_data_index);
 
 							if (best_individual_score < score)
 							{
@@ -542,8 +544,7 @@ namespace domain
 								best_individual_effort = 0;
 							}
 
-							double error = -1.0 * score;
-							pushGP::globals::error_matrix.store(-1, training_case_window_start, strategy_index, error);
+							pushGP::globals::error_matrix.store(-1, training_case_window_start, strategy_index, score);
 							pushGP::globals::effort_matrix.store(-1, training_case_window_start, strategy_index, 1000);
 
 						}
