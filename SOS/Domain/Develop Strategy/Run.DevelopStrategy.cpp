@@ -112,7 +112,7 @@ namespace domain
 
 			unsigned long number_of_training_cases2 =
 				argmap::parent_selection != argmap::PerentSelection::downsampled_lexicase || reran_best_individual_with_all_training_cases
-				? number_of_training_cases
+				? argmap::number_of_training_cases
 				: argmap::downsample_factor * argmap::number_of_training_cases;
 
 			sqlcmd_save_status_report = new database::SQLCommand(datastore::database_connection.get_connection(), sqlstmt_save_status_report);
