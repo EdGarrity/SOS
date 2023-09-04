@@ -412,7 +412,7 @@ namespace domain
 				{
 					run_number++;
 					generation_number = 1;
-					best_individual_score = std::numeric_limits<double>::min();
+					best_individual_score = BrokerAccount::seed_money * -2.0;			// std::numeric_limits<double>::min();
 					best_individual_error = std::numeric_limits<double>::max();
 					prev_best_individual_error = std::numeric_limits<double>::max();
 					sa.set_temperature(0);
@@ -544,7 +544,7 @@ namespace domain
 
 							double score = account.unrealized_gain(--stock_data_index);
 
-							if (best_individual_score < score)
+							if (best_individual_score <= score)
 							{
 								best_individual_score = score;
 								best_individual = strategy_index;
@@ -623,6 +623,8 @@ namespace domain
 						diversity,
 						count_of_diverse_clusters
 					);
+
+					order_matrix.clearOrderMatrix();
 
 					// ******************************
 					// *** Install New Generation ***
