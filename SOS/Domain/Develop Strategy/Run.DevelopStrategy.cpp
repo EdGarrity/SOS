@@ -81,6 +81,7 @@ namespace domain
 		}
 
 		void generate_status_report(bool reran_best_individual_with_all_training_cases,
+			size_t number_of_training_cases,
 			unsigned int _run_number,
 			unsigned int _generation_number,
 			unsigned int _generations_completed_this_session,
@@ -110,9 +111,9 @@ namespace domain
 			if (_standard_deviation > 1000.0)
 				_standard_deviation = 1000.0;
 
-			unsigned long number_of_training_cases2 =
+			unsigned long adjusted_number_of_training_cases =
 				argmap::parent_selection != argmap::PerentSelection::downsampled_lexicase || reran_best_individual_with_all_training_cases
-				? argmap::number_of_training_cases
+				? number_of_training_cases
 				: argmap::downsample_factor * argmap::number_of_training_cases;
 
 			sqlcmd_save_status_report = new database::SQLCommand(datastore::database_connection.get_connection(), sqlstmt_save_status_report);
@@ -125,7 +126,7 @@ namespace domain
 			sqlcmd_save_status_report->set_as_float(6, _average_traiing_error);
 			sqlcmd_save_status_report->set_as_float(7, _standard_deviation);
 			sqlcmd_save_status_report->set_as_float(8, _best_individual_test_score);
-			sqlcmd_save_status_report->set_as_integer(9, number_of_training_cases2);
+			sqlcmd_save_status_report->set_as_integer(9, adjusted_number_of_training_cases);
 			sqlcmd_save_status_report->set_as_integer(10, argmap::number_of_test_cases);
 			sqlcmd_save_status_report->set_as_string(11, _best_gnome);
 			sqlcmd_save_status_report->set_as_integer(12, argmap::population_size);
@@ -157,6 +158,7 @@ namespace domain
 		// 
 		// Parameters:
 		//   _number_of_example_cases The number of example cases.
+		//  number_of_training_cases The number of training cases.
 		//   _downsampled_training_cases The downsampled training cases.
 		//   _best_individual The best individual.
 		//   sa The simulated annealing object.
@@ -174,6 +176,7 @@ namespace domain
 		// Remarks:
 		//  This function is not thread safe
 		void produce_new_offspring(unsigned long _number_of_example_cases,
+			size_t _number_of_training_cases,
 			concurrent_unordered_set<size_t>& _downsampled_training_cases,
 			unsigned long _best_individual,
 			pushGP::SimulatedAnnealing& sa,
@@ -247,7 +250,7 @@ namespace domain
 				std::cout << ".";
 				if (!_include_best_individual_in_breeding_pool)
 				{
-					for (unsigned long training_case = 0; training_case < domain::argmap::number_of_training_cases; training_case++)
+					for (unsigned long training_case = 0; training_case < _number_of_training_cases; training_case++)
 					{
 						unsigned long best_individual_for_training_case = training_case_min_error.local().individual_with_minimum_error_for_training_case[training_case];
 
@@ -377,6 +380,7 @@ namespace domain
 				static Plush::Environment global_env;	// Needs to be statc because it consumes too much memory to be allocated on the stack.
 				pushGP::SimulatedAnnealing sa;
 				unsigned int agents_created = 0;
+				size_t number_of_training_cases = 0;
 
 				//unsigned int generation_number = 1;
 				unsigned int generations_completed_this_session = 0;
@@ -512,10 +516,13 @@ namespace domain
 					// ***************************
 					// *** Evaluate strategies ***
 					// ***************************
-					size_t number_of_training_cases = datastore::test_data.size() - domain::argmap::training_case_length + 1;
+					number_of_training_cases = datastore::test_data.size() - domain::argmap::training_case_length + 1;
 					//broker_account.resize(domain::argmap::population_size, number_of_training_cases);
-					pushGP::globals::error_matrix.resize(number_of_training_cases, domain::argmap::population_size);
-					pushGP::globals::effort_matrix.resize(number_of_training_cases, domain::argmap::population_size);
+					//pushGP::globals::error_matrix.resize(number_of_training_cases, domain::argmap::population_size);
+					//pushGP::globals::effort_matrix.resize(number_of_training_cases, domain::argmap::population_size);
+					if (number_of_training_cases > domain::argmap::number_of_training_cases)
+						throw std::overflow_error("Not enough training cases");
+
 					int best_individual = -1;
 
 					for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
@@ -558,6 +565,7 @@ namespace domain
 					// *** Evolve strategies ***
 					// *************************
 					produce_new_offspring(number_of_training_cases,
+						number_of_training_cases,
 						downsampled_training_cases,
 						best_individual,
 						sa,
@@ -570,22 +578,22 @@ namespace domain
 
 					for (int ind = 0; ind < argmap::population_size; ind++)
 					{
-						for (int training_case_index = 0; training_case_index < argmap::number_of_training_cases; training_case_index++)
+						for (int training_case_index = 0; training_case_index < number_of_training_cases; training_case_index++)
 							average_traiing_error += pushGP::globals::error_matrix.load(training_case_index, ind);
 					}
-					average_traiing_error /= (double)(domain::argmap::population_size * argmap::number_of_training_cases);
+					average_traiing_error /= (double)(domain::argmap::population_size * number_of_training_cases);
 
 					double standard_deviation = 0.0;
 					for (int ind = 0; ind < argmap::population_size; ind++)
 					{
-						for (int training_case_index = 0; training_case_index < argmap::number_of_training_cases; training_case_index++)
+						for (int training_case_index = 0; training_case_index < number_of_training_cases; training_case_index++)
 						{
 							double error = pushGP::globals::error_matrix.load(training_case_index, ind);
 
 							standard_deviation += (error - average_traiing_error) * (error - average_traiing_error);
 						}
 					}
-					standard_deviation /= (double)(domain::argmap::population_size * argmap::number_of_training_cases);
+					standard_deviation /= (double)(domain::argmap::population_size * number_of_training_cases);
 					standard_deviation = std::sqrt(standard_deviation);
 
 					bool reran_best_individual_with_all_training_cases = false;
@@ -594,6 +602,7 @@ namespace domain
 					long count_of_diverse_clusters = 0;
 
 					generate_status_report(reran_best_individual_with_all_training_cases,
+						number_of_training_cases,
 						run_number,
 						generation_number,
 						generations_completed_this_session,
