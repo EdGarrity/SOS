@@ -120,6 +120,7 @@
       <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\183\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ShowIncludes>false</ShowIncludes>
       <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -160,6 +161,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\184\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
