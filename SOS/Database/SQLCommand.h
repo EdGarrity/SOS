@@ -6,7 +6,7 @@ namespace database
 {
 	const unsigned int NUMROWS_CHUNK = 1000;
 	const unsigned int MAX_PARAMETERS = 100;
-	const unsigned int MAX_ROW_LENGTH = 8000;
+	const unsigned int MAX_ROW_LENGTH = 65535; // 8000;
 
 	// Represents a Transact-SQL statement or stored procedure to execute against a SQL Server database.
 	//

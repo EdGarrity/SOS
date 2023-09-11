@@ -131,7 +131,8 @@ namespace Utilities
 		}
 
 		std::unique_lock<std::mutex> ThreadSafeArray_V2_array_access_lock(ThreadSafeArray_V2_array_access_);
-		data_array[y * n2 + x] = d;
+		int index = y * n2 + x;
+		data_array[index] = d;
 		ThreadSafeArray_V2_array_access_lock.unlock();
 	}
 }
