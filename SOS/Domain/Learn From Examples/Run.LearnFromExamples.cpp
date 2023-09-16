@@ -25,7 +25,7 @@
 #include "../../PushGP/Breed.h"
 #include "../../PushGP/AsyncBreed.h"
 #include "../../PushGP/Random.h"
-#include "..\..\Utilities\WorkOrderManager.h"
+#include "..\..\Utilities\LFE_WorkOrderManager.h"
 #include "..\..\Utilities\Debug.h"
 #include "..\..\PushGP\CalculateDiversity.h"
 

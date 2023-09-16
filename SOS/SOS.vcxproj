@@ -98,7 +98,6 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\183\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -119,7 +118,6 @@
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\183\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ShowIncludes>false</ShowIncludes>
-      <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -139,7 +137,6 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\183\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -160,7 +157,6 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\184\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -220,6 +216,7 @@
     <ClInclude Include="Utilities\CSVIterator.h" />
     <ClInclude Include="Utilities\Debug.h" />
     <ClInclude Include="Utilities\FixedSizeStack.h" />
+    <ClInclude Include="Utilities\LFE_WorkOrderManager.h" />
     <ClInclude Include="Utilities\String.h" />
     <ClInclude Include="Utilities\SystemInfo.h" />
     <ClInclude Include="Utilities\MyException.h" />
@@ -233,7 +230,6 @@
     </ClInclude>
     <ClInclude Include="Utilities\ThreadSafeArray_V2.h" />
     <ClInclude Include="Utilities\ThreeDimensionalArray.h" />
-    <ClInclude Include="Utilities\WorkOrderManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Broker\Account.cpp" />
@@ -281,13 +277,13 @@
     <ClCompile Include="Utilities\Conversion.cpp" />
     <ClCompile Include="Utilities\Debug.cpp" />
     <ClCompile Include="Utilities\FixedSizeStack.cpp" />
+    <ClCompile Include="Utilities\LFE_WorkOrderManager.cpp" />
     <ClCompile Include="Utilities\String.cpp" />
     <ClCompile Include="Utilities\SystemInfo.cpp" />
     <ClCompile Include="Utilities\MyException.cpp" />
     <ClCompile Include="Utilities\Random.Utilities.cpp" />
     <ClCompile Include="Utilities\ThreadSafeArray.cpp" />
     <ClCompile Include="Utilities\ThreadSafeArray_V2.cpp" />
-    <ClCompile Include="Utilities\WorkOrderManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

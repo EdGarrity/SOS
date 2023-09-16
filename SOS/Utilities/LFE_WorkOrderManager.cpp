@@ -4,7 +4,7 @@
 #include <thread>
 #include <time.h>
 #include <atomic>
-#include "WorkOrderManager.h"
+#include "LFE_WorkOrderManager.h"
 #include "..\Domain\Arguments.h"
 #include "..\Domain\Learn From Examples\ErrorFunction.LearnFromExample.h"
 #include "..\PushGP\Globals.h"
@@ -98,7 +98,7 @@ namespace Utilities
 		
 		std::unique_lock<std::mutex> work_in_process_lock(work_in_process_mutex_);
 		std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
-		work_order_queue_.push_front(work_order);
+		work_order_queue_.push_front(work_order);  // TODO: Use push emplace instead
 
 		// when we send the notification immediately, the consumer will try to get the lock, so unlock asap
 		work_order_lock.unlock();

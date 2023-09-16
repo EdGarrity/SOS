@@ -30,7 +30,7 @@
 #include "..\..\PushGP\Random.h"
 #include "..\..\DataStore\AgentData.h"
 #include "..\..\DataStore\DatabaseConnection.h"
-#include "..\..\Utilities\WorkOrderManager.h"
+#include "..\..\Utilities\LFE_WorkOrderManager.h"
 
 using namespace concurrency;
 
