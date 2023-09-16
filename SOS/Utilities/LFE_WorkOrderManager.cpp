@@ -21,11 +21,11 @@ std::atomic_bool debug_push = ATOMIC_FLAG_INIT;
 
 namespace Utilities
 {
-	WorkOrderManager work_order_manager(domain::argmap::max_threads);
+	LFE_WorkOrderManager work_order_manager(domain::argmap::max_threads);
 	std::thread myThreads[domain::argmap::max_threads];
 	std::atomic<Plush::Environment::RunningState> running_state[domain::argmap::max_threads];
 
-	WorkOrderManager::WorkOrderManager() : 
+	LFE_WorkOrderManager::LFE_WorkOrderManager() : 
 		work_order_queue_(), 
 		work_order_mutex_(), 
 		work_in_process_mutex_(), 
@@ -35,7 +35,7 @@ namespace Utilities
 		queue_state.store(QueueState::Stopped, std::memory_order_release);
 	}
 
-	WorkOrderManager::WorkOrderManager(unsigned long num_threads) :
+	LFE_WorkOrderManager::LFE_WorkOrderManager(unsigned long num_threads) :
 		work_order_queue_(), 
 		work_order_mutex_(), 
 		work_in_process_mutex_(), 
@@ -46,7 +46,7 @@ namespace Utilities
 		initialize(num_threads);
 	}
 
-	WorkOrderManager::~WorkOrderManager()
+	LFE_WorkOrderManager::~LFE_WorkOrderManager()
 	{
 #if DLEVEL > 0
 		debug_log(-1, "WorkOrderManager::~WorkOrderManager", "destructor");
@@ -54,7 +54,7 @@ namespace Utilities
 		wait_for_all_threads_to_complete();
 	}
 
-	void WorkOrderManager::initialize(unsigned long num_threads)
+	void LFE_WorkOrderManager::initialize(unsigned long num_threads)
 	{
 		if (num_threads_ > 0)
 		{
@@ -68,12 +68,12 @@ namespace Utilities
 			if (num_threads > 0)
 			{
 				for (int i = 0; i < (int)num_threads; i++)
-					myThreads[i] = std::thread(&WorkOrderManager::process_work_orders, this, i);
+					myThreads[i] = std::thread(&LFE_WorkOrderManager::process_work_orders, this, i);
 			}
 		}
 	}
 
-	void WorkOrderManager::start()
+	void LFE_WorkOrderManager::start()
 	{
 #if DLEVEL > 0
 		debug_log(-1, "WorkOrderManager::start", "start");
@@ -81,7 +81,7 @@ namespace Utilities
 		queue_state.store(QueueState::Running, std::memory_order_release);
 	}
 
-	void WorkOrderManager::stop()
+	void LFE_WorkOrderManager::stop()
 	{
 #if DLEVEL > 0
 		debug_log(-1, "WorkOrderManager::stop", "stop");
@@ -89,7 +89,7 @@ namespace Utilities
 		queue_state.store(QueueState::Stopped, std::memory_order_release);
 	}
 
-	void WorkOrderManager::push(unsigned long individual_index, size_t example_case)
+	void LFE_WorkOrderManager::push(unsigned long individual_index, size_t example_case)
 	{
 		WorkOrder work_order;
 
@@ -107,7 +107,7 @@ namespace Utilities
 		data_condition_.notify_one();
 	}
 
-	void WorkOrderManager::push(unsigned long individual_index, size_t example_case, std::vector<double>& input_list, std::vector<double>& output_list)
+	void LFE_WorkOrderManager::push(unsigned long individual_index, size_t example_case, std::vector<double>& input_list, std::vector<double>& output_list)
 	{
 		WorkOrder work_order;
 
@@ -128,7 +128,7 @@ namespace Utilities
 		data_condition_.notify_one();
 	}
 
-	void WorkOrderManager::process_work_orders(const unsigned long env_index)
+	void LFE_WorkOrderManager::process_work_orders(const unsigned long env_index)
 	{
 		// Process stratergy work orders
 		using namespace std::chrono_literals;
@@ -232,7 +232,7 @@ namespace Utilities
 		}
 	}
 
-	void WorkOrderManager::wait_for_all_threads_to_complete()
+	void LFE_WorkOrderManager::wait_for_all_threads_to_complete()
 	{
 		using namespace std::chrono_literals;
 
