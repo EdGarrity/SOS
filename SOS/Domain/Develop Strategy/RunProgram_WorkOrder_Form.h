@@ -13,6 +13,9 @@ namespace domain
 				: stratergy_index{ _stratergy_index },
 				training_case_index{ _training_case_index }
 			{}
+
+			size_t get_stratergy_index() const { return stratergy_index; };
+			size_t get_training_case_index() const { return training_case_index; };
 		};
 	}
 }
