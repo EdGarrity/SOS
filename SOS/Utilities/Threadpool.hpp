@@ -11,10 +11,10 @@
 
 namespace Utilities
 {
-    class threadpool
+    class Threadpool
     {
     public:
-        explicit threadpool(const std::size_t threadCount)
+        explicit Threadpool(const std::size_t threadCount)
         {
             //std::cout << "threadpool(" << threadCount << ") from thread : " << std::this_thread::get_id() << "\n";
             for (std::size_t i = 0; i < threadCount; ++i)
@@ -26,7 +26,7 @@ namespace Utilities
             }
         }
 
-        ~threadpool()
+        ~Threadpool()
         {
             shutdown();
         }
@@ -35,7 +35,7 @@ namespace Utilities
         {
             struct awaiter
             {
-                threadpool* m_threadpool;
+                Threadpool* m_threadpool;
 
                 constexpr bool await_ready() const noexcept { return false; }
                 constexpr void await_resume() const noexcept { }

@@ -5,8 +5,11 @@
 
 namespace domain
 {
-    Utilities::task RunProgram::operator()(Utilities::threadpool& pool, develop_strategy::RunStratergyWorkOrder const&) const
+    Utilities::Task RunProgram::operator()(Utilities::Threadpool& pool, develop_strategy::RunProgram_WorkOrder_Form const&) const
     {
-        Utilities::co_await pool.schedule();
+        // Schedule the program to run in its own thread and wait to be activated.  co_wait() will return control to the caller.
+        co_await pool.schedule();
+
+        // Run the program in seperate thread.
     }
 }

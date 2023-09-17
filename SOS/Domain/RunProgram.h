@@ -1,7 +1,7 @@
 #include "..\Utilities\Task.hpp"
 #include "..\Utilities\Threadpool.hpp"
 
-#include "Develop Strategy/RunStratergy.WorkOrder.h"
+#include "Develop Strategy/RunProgram_WorkOrder_Form.h"
 
 namespace domain
 {
@@ -10,6 +10,6 @@ namespace domain
 	private:
 
 	public:
-		Utilities::task operator()(Utilities::threadpool& pool, develop_strategy::RunStratergyWorkOrder const&) const;
+		Utilities::Task operator()(Utilities::Threadpool& pool, develop_strategy::RunProgram_WorkOrder_Form const&) const;
 	};
 }

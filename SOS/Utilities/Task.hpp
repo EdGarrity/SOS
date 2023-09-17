@@ -8,7 +8,7 @@ namespace Utilities
 {
     struct task_promise;
 
-    class [[nodiscard]] task
+    class [[nodiscard]] Task
     {
     public:
         using promise_type = task_promise;
@@ -18,12 +18,12 @@ namespace Utilities
         //{
         //}
 
-        explicit task(std::coroutine_handle<task_promise> handle)
+        explicit Task(std::coroutine_handle<task_promise> handle)
             : m_handle(handle)
         {
         }
 
-        task() {};
+        Task() {};
 
     private:
         std::coroutine_handle<task_promise> m_handle;
@@ -31,8 +31,8 @@ namespace Utilities
 
     struct task_promise
     {
-        task get_return_object() noexcept {
-            return task{ std::coroutine_handle<task_promise>::from_promise(*this) };
+        Task get_return_object() noexcept {
+            return Task{ std::coroutine_handle<task_promise>::from_promise(*this) };
         };
 
         std::suspend_never initial_suspend() const noexcept { return {}; }
