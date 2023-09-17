@@ -179,6 +179,7 @@
     <ClInclude Include="Domain\Arguments.h" />
     <ClInclude Include="Domain\Develop Strategy\Arguments.h" />
     <ClInclude Include="Domain\Develop Strategy\ErrorFunction.DevelopStrategy.h" />
+    <ClInclude Include="Domain\Develop Strategy\RunStratergy.WorkOrder.h" />
     <ClInclude Include="Domain\Develop Strategy\Run.DevelopStrategy.h" />
     <ClInclude Include="Domain\Learn From Examples\Arguments.h" />
     <ClInclude Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.h" />
@@ -242,6 +243,7 @@
     <ClCompile Include="DataStore\DatabaseConnection.cpp" />
     <ClCompile Include="DataStore\FinancialData.cpp" />
     <ClCompile Include="Domain\Develop Strategy\ErrorFunction.DevelopStrategy.cpp" />
+    <ClCompile Include="Domain\Develop Strategy\RunStratergy.WorkOrder.cpp" />
     <ClCompile Include="Domain\Develop Strategy\Run.DevelopStrategy.cpp" />
     <ClCompile Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.cpp" />
     <ClCompile Include="Domain\Learn From Examples\Run.LearnFromExamples.cpp" />

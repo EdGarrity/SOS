@@ -246,6 +246,9 @@
     <ClInclude Include="Utilities\LFE_WorkOrderManager.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="Domain\Develop Strategy\RunStratergy.WorkOrder.h">
+      <Filter>Header Files\Domain\Develop Strategy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -388,6 +391,9 @@
     </ClCompile>
     <ClCompile Include="Utilities\LFE_WorkOrderManager.cpp">
       <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Domain\Develop Strategy\RunStratergy.WorkOrder.cpp">
+      <Filter>Source Files\Domain\Develop Strategy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -300,19 +300,19 @@ namespace domain
 
 			for (size_t training_case_index = 0; training_case_index < datastore::test_data.size(); training_case_index++)
 			{
-				for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
+				for (size_t stratergy_index = 0; stratergy_index < domain::argmap::population_size; stratergy_index++)
 				{
-					std::cout << "Run strategy " << strategy_index << " on case " << training_case_index << " is_generated " << order_matrix.is_generated(strategy_index, training_case_index);
+					std::cout << "Run strategy " << stratergy_index << " on case " << training_case_index << " is_generated " << order_matrix.is_generated(stratergy_index, training_case_index);
 
 					unsigned long order = 0;
 					unsigned long score = 0;
 
-					if (!order_matrix.is_generated(strategy_index, training_case_index))
+					if (!order_matrix.is_generated(stratergy_index, training_case_index))
 					{
-						auto results = _run_strategy_threadsafe(_env, strategy_index, training_case_index);
+						auto results = _run_strategy_threadsafe(_env, stratergy_index, training_case_index);
 						order = std::get<0>(results);
 						score = std::get<1>(results);
-						order_matrix.store(strategy_index, training_case_index, order);
+						order_matrix.store(stratergy_index, training_case_index, order);
 					}
 
 					std::cout << " Order " << order << " Score " << score << std::endl;
