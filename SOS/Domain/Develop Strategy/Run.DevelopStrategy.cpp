@@ -14,6 +14,7 @@
 #include <unordered_set>
 #include <vector>
 #include <map>
+#include <variant>
 #include "Run.DevelopStrategy.h"
 #include "..\..\Database\SQLCommand.h"
 #include "..\..\Plush\Environment.h"
@@ -31,6 +32,9 @@
 #include "..\..\DataStore\AgentData.h"
 #include "..\..\DataStore\DatabaseConnection.h"
 #include "..\..\Utilities\LFE_WorkOrderManager.h"
+#include "..\..\Utilities\Threadpool.hpp"
+#include "..\Develop Strategy\RunProgram_WorkOrder_Form.h"
+#include "..\RunProgram.h"
 
 using namespace concurrency;
 
@@ -327,14 +331,7 @@ namespace domain
 		{
 			std::cout << "compute_training_errors_thread_safe() - Process threads" << std::endl;
 
-			Utilities::work_order_manager.stop();
-
-			for (int i = 0; i < domain::argmap::max_threads; i++)
-			{
-				pushGP::globals::thread_instruction_index[i] = 999998;
-				pushGP::globals::thread_individual_index[i] = 999998;
-				pushGP::globals::thread_example_case[i] = 999998;
-			}
+			Utilities::Threadpool pool( 8 );
 
 			for (size_t training_case_index = 0; training_case_index < datastore::test_data.size(); training_case_index++)
 			{
@@ -342,12 +339,46 @@ namespace domain
 				{
 					std::cout << "Schedule to run strategy " << strategy_index << " on case " << training_case_index;
 
-					Utilities::work_order_manager.push(strategy_index, training_case_index);
+					develop_strategy::RunProgram_WorkOrder_Form form(strategy_index, training_case_index);
+					//domain::RunProgram(pool, form);
+					//std::visit(RunProgram{},form)
+
+					//domain::RunProgram processor;
+					//processor.run(pool, form);
+
+					domain::RunProgram processor(pool);
+					processor.run(form);
 				}
 			}
 
-			Utilities::work_order_manager.start();
-			Utilities::work_order_manager.wait_for_all_threads_to_complete();
+
+
+
+
+
+
+
+			//Utilities::work_order_manager.stop();
+
+			//for (int i = 0; i < domain::argmap::max_threads; i++)
+			//{
+			//	pushGP::globals::thread_instruction_index[i] = 999998;
+			//	pushGP::globals::thread_individual_index[i] = 999998;
+			//	pushGP::globals::thread_example_case[i] = 999998;
+			//}
+
+			//for (size_t training_case_index = 0; training_case_index < datastore::test_data.size(); training_case_index++)
+			//{
+			//	for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
+			//	{
+			//		std::cout << "Schedule to run strategy " << strategy_index << " on case " << training_case_index;
+
+			//		Utilities::work_order_manager.push(strategy_index, training_case_index);
+			//	}
+			//}
+
+			//Utilities::work_order_manager.start();
+			//Utilities::work_order_manager.wait_for_all_threads_to_complete();
 		}
 
 		// Purpose: 
