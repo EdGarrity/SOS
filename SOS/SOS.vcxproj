@@ -224,6 +224,8 @@
     <ClInclude Include="Utilities\MyException.h" />
     <ClInclude Include="Utilities\Random.Utilities.h" />
     <ClInclude Include="Utilities\Singleton.h" />
+    <ClInclude Include="Utilities\Task.hpp" />
+    <ClInclude Include="Utilities\Threadpool.hpp" />
     <ClInclude Include="Utilities\ThreadSafeArray.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>

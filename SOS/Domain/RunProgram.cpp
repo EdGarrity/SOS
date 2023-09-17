@@ -1,8 +1,12 @@
+#include <iostream>
+#include <thread>
+
 #include "RunProgram.h"
 
 namespace domain
 {
-    void RunProgram::operator()(develop_strategy::RunStratergyWorkOrder const&) const
+    Utilities::task RunProgram::operator()(Utilities::threadpool& pool, develop_strategy::RunStratergyWorkOrder const&) const
     {
+        Utilities::co_await pool.schedule();
     }
 }

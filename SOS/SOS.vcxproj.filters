@@ -252,6 +252,12 @@
     <ClInclude Include="Domain\RunProgram.h">
       <Filter>Header Files\Domain</Filter>
     </ClInclude>
+    <ClInclude Include="Utilities\Task.hpp">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Threadpool.hpp">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
