@@ -331,7 +331,9 @@ namespace domain
 		{
 			std::cout << "compute_training_errors_thread_safe() - Process threads" << std::endl;
 
-			Utilities::Threadpool pool( 8 );
+			Utilities::Threadpool pool(8);
+
+			domain::RunProgram processor(pool);
 
 			for (size_t training_case_index = 0; training_case_index < datastore::test_data.size(); training_case_index++)
 			{
@@ -340,13 +342,6 @@ namespace domain
 					std::cout << "Schedule to run strategy " << strategy_index << " on case " << training_case_index;
 
 					develop_strategy::RunProgram_WorkOrder_Form form(strategy_index, training_case_index);
-					//domain::RunProgram(pool, form);
-					//std::visit(RunProgram{},form)
-
-					//domain::RunProgram processor;
-					//processor.run(pool, form);
-
-					domain::RunProgram processor(pool);
 					processor.run(form);
 				}
 			}
