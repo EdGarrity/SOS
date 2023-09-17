@@ -249,6 +249,9 @@
     <ClInclude Include="Domain\Develop Strategy\RunStratergy.WorkOrder.h">
       <Filter>Header Files\Domain\Develop Strategy</Filter>
     </ClInclude>
+    <ClInclude Include="Domain\RunProgram.h">
+      <Filter>Header Files\Domain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -393,6 +396,9 @@
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="Domain\Develop Strategy\RunStratergy.WorkOrder.cpp">
+      <Filter>Source Files\Domain\Develop Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="Domain\RunProgram.cpp">
       <Filter>Source Files\Domain\Develop Strategy</Filter>
     </ClCompile>
   </ItemGroup>

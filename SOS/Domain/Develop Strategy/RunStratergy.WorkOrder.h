@@ -13,6 +13,6 @@ namespace domain
 				: stratergy_index{ _stratergy_index },
 				training_case_index{ _training_case_index }
 			{}
-		}
+		};
 	}
 }
