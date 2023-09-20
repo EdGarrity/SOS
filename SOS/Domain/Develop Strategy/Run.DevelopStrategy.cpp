@@ -324,14 +324,14 @@ namespace domain
 			}
 		}
 
+		Utilities::Threadpool pool(1);
+
 		void compute_training_errors_thread_safe(Plush::Environment& _env,
 			std::function<std::tuple<double, unsigned long>(Plush::Environment& env,
 				unsigned int strategy_index,
 				unsigned long case_index)> _run_strategy_threadsafe)
 		{
 			std::cout << "compute_training_errors_thread_safe() - Process threads" << std::endl;
-
-			Utilities::Threadpool pool(8);
 
 			domain::RunProgram processor(pool);
 
