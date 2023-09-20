@@ -339,7 +339,7 @@ namespace domain
 			{
 				for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
 				{
-					std::cout << "Schedule to run strategy " << strategy_index << " on case " << training_case_index;
+					std::cout << "Schedule to run strategy " << strategy_index << " on case " << training_case_index << " on thread " << std::this_thread::get_id() << std::endl;
 
 					develop_strategy::RunProgram_WorkOrder_Form form(strategy_index, training_case_index);
 					processor.run(form);
@@ -539,127 +539,127 @@ namespace domain
 
 
 
-					// ***************************
-					// *** Evaluate strategies ***
-					// ***************************
-					number_of_training_cases = datastore::test_data.size() - domain::argmap::training_case_length + 1;
-					//broker_account.resize(domain::argmap::population_size, number_of_training_cases);
-					//pushGP::globals::error_matrix.resize(number_of_training_cases, domain::argmap::population_size);
-					//pushGP::globals::effort_matrix.resize(number_of_training_cases, domain::argmap::population_size);
-					if (number_of_training_cases > domain::argmap::number_of_training_cases)
-						throw std::overflow_error("Not enough training cases");
+					//// ***************************
+					//// *** Evaluate strategies ***
+					//// ***************************
+					//number_of_training_cases = datastore::test_data.size() - domain::argmap::training_case_length + 1;
+					////broker_account.resize(domain::argmap::population_size, number_of_training_cases);
+					////pushGP::globals::error_matrix.resize(number_of_training_cases, domain::argmap::population_size);
+					////pushGP::globals::effort_matrix.resize(number_of_training_cases, domain::argmap::population_size);
+					//if (number_of_training_cases > domain::argmap::number_of_training_cases)
+					//	throw std::overflow_error("Not enough training cases");
 
-					int best_individual = -1;
+					//int best_individual = -1;
 
-					for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
-					{
-						for (size_t training_case_window_start = 0;	training_case_window_start < number_of_training_cases; training_case_window_start++)
-						{
-							size_t stock_data_index = training_case_window_start;
+					//for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
+					//{
+					//	for (size_t training_case_window_start = 0;	training_case_window_start < number_of_training_cases; training_case_window_start++)
+					//	{
+					//		size_t stock_data_index = training_case_window_start;
 
-							BrokerAccount account = BrokerAccount(BrokerAccount::seed_money);
+					//		BrokerAccount account = BrokerAccount(BrokerAccount::seed_money);
 
-							for (size_t training_case_window_offset = 0; training_case_window_offset < domain::argmap::training_case_length; training_case_window_offset++)
-							{
-								long order = order_matrix.load(strategy_index, stock_data_index);
+					//		for (size_t training_case_window_offset = 0; training_case_window_offset < domain::argmap::training_case_length; training_case_window_offset++)
+					//		{
+					//			long order = order_matrix.load(strategy_index, stock_data_index);
 
-								account.execute(stock_data_index, order);
+					//			account.execute(stock_data_index, order);
 
-								stock_data_index++;
-							}
+					//			stock_data_index++;
+					//		}
 
-							double score = account.unrealized_gain(--stock_data_index);
+					//		double score = account.unrealized_gain(--stock_data_index);
 
-							if (best_individual_score <= score)
-							{
-								best_individual_score = score;
-								best_individual = strategy_index;
-								best_individual_effort = 0;
-							}
+					//		if (best_individual_score <= score)
+					//		{
+					//			best_individual_score = score;
+					//			best_individual = strategy_index;
+					//			best_individual_effort = 0;
+					//		}
 
-							pushGP::globals::error_matrix.store(-1, training_case_window_start, strategy_index, score);
-							pushGP::globals::effort_matrix.store(-1, training_case_window_start, strategy_index, 1000);
+					//		pushGP::globals::error_matrix.store(-1, training_case_window_start, strategy_index, score);
+					//		pushGP::globals::effort_matrix.store(-1, training_case_window_start, strategy_index, 1000);
 
-						}
-					}
+					//	}
+					//}
 
-					// *********************************************
-					// *** Evaluate best strategy with test data ***
-					// *********************************************
+					//// *********************************************
+					//// *** Evaluate best strategy with test data ***
+					//// *********************************************
 
-					// *************************
-					// *** Evolve strategies ***
-					// *************************
-					produce_new_offspring(number_of_training_cases,
-						number_of_training_cases,
-						downsampled_training_cases,
-						best_individual,
-						sa,
-						include_best_individual_in_breeding_pool);
+					//// *************************
+					//// *** Evolve strategies ***
+					//// *************************
+					//produce_new_offspring(number_of_training_cases,
+					//	number_of_training_cases,
+					//	downsampled_training_cases,
+					//	best_individual,
+					//	sa,
+					//	include_best_individual_in_breeding_pool);
 
-					// ******************************
-					// *** Generate Status Report ***
-					// ******************************
-					double average_traiing_error = 0.0;
+					//// ******************************
+					//// *** Generate Status Report ***
+					//// ******************************
+					//double average_traiing_error = 0.0;
 
-					for (int ind = 0; ind < argmap::population_size; ind++)
-					{
-						for (int training_case_index = 0; training_case_index < number_of_training_cases; training_case_index++)
-							average_traiing_error += pushGP::globals::error_matrix.load(training_case_index, ind);
-					}
-					average_traiing_error /= (double)(domain::argmap::population_size * number_of_training_cases);
+					//for (int ind = 0; ind < argmap::population_size; ind++)
+					//{
+					//	for (int training_case_index = 0; training_case_index < number_of_training_cases; training_case_index++)
+					//		average_traiing_error += pushGP::globals::error_matrix.load(training_case_index, ind);
+					//}
+					//average_traiing_error /= (double)(domain::argmap::population_size * number_of_training_cases);
 
-					double standard_deviation = 0.0;
-					for (int ind = 0; ind < argmap::population_size; ind++)
-					{
-						for (int training_case_index = 0; training_case_index < number_of_training_cases; training_case_index++)
-						{
-							double error = pushGP::globals::error_matrix.load(training_case_index, ind);
+					//double standard_deviation = 0.0;
+					//for (int ind = 0; ind < argmap::population_size; ind++)
+					//{
+					//	for (int training_case_index = 0; training_case_index < number_of_training_cases; training_case_index++)
+					//	{
+					//		double error = pushGP::globals::error_matrix.load(training_case_index, ind);
 
-							standard_deviation += (error - average_traiing_error) * (error - average_traiing_error);
-						}
-					}
-					standard_deviation /= (double)(domain::argmap::population_size * number_of_training_cases);
-					standard_deviation = std::sqrt(standard_deviation);
+					//		standard_deviation += (error - average_traiing_error) * (error - average_traiing_error);
+					//	}
+					//}
+					//standard_deviation /= (double)(domain::argmap::population_size * number_of_training_cases);
+					//standard_deviation = std::sqrt(standard_deviation);
 
-					bool reran_best_individual_with_all_training_cases = false;
-					double test_case_score = 0;
-					double diversity = 0;
-					long count_of_diverse_clusters = 0;
+					//bool reran_best_individual_with_all_training_cases = false;
+					//double test_case_score = 0;
+					//double diversity = 0;
+					//long count_of_diverse_clusters = 0;
 
-					generate_status_report(reran_best_individual_with_all_training_cases,
-						number_of_training_cases,
-						run_number,
-						generation_number,
-						generations_completed_this_session,
-						best_individual,
-						best_individual_score,
-						best_individual_effort,
-						//traiing_effort,
-						best_individual_error,
-						prev_best_individual_error,
-						average_traiing_error,
-						standard_deviation,
-						test_case_score,
-						sa.get_temperature(),
-						stalled_count,
-						cool_down_count,
-						include_best_individual_in_breeding_pool,
-						pushGP::globals::population_agents[best_individual],
-						diversity,
-						count_of_diverse_clusters
-					);
+					//generate_status_report(reran_best_individual_with_all_training_cases,
+					//	number_of_training_cases,
+					//	run_number,
+					//	generation_number,
+					//	generations_completed_this_session,
+					//	best_individual,
+					//	best_individual_score,
+					//	best_individual_effort,
+					//	//traiing_effort,
+					//	best_individual_error,
+					//	prev_best_individual_error,
+					//	average_traiing_error,
+					//	standard_deviation,
+					//	test_case_score,
+					//	sa.get_temperature(),
+					//	stalled_count,
+					//	cool_down_count,
+					//	include_best_individual_in_breeding_pool,
+					//	pushGP::globals::population_agents[best_individual],
+					//	diversity,
+					//	count_of_diverse_clusters
+					//);
 
-					order_matrix.clearOrderMatrix();
+					//order_matrix.clearOrderMatrix();
 
-					// ******************************
-					// *** Install New Generation ***
-					// ******************************
-					std::cout << "Install New Generation" << std::endl;
+					//// ******************************
+					//// *** Install New Generation ***
+					//// ******************************
+					//std::cout << "Install New Generation" << std::endl;
 
-					install_next_generation();
-					generation_number++;
-					generations_completed_this_session++;
+					//install_next_generation();
+					//generation_number++;
+					//generations_completed_this_session++;
 
 					std::cout << "---------------------------------------------" << std::endl << std::endl << std::endl;
 				}

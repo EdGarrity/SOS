@@ -99,6 +99,8 @@ namespace domain
 		co_await m_pool.schedule();
 
 		// Run the stratergy and case specified in the work order, in a seperate thread.
+		std::cout << "Running strategy " << workorder_form.get_stratergy_index() << " on case " << workorder_form.get_training_case_index() << " on thread " << std::this_thread::get_id() << std::endl;
+
 		int env_index = 99;
 
 		try
@@ -111,7 +113,7 @@ namespace domain
 				workorder_form.get_stratergy_index(),
 				workorder_form.get_training_case_index(),
 				std::get<0>(results));
-			std::cout << " Finished Order " << std::get<0>(results) << " Score " << std::get<1>(results) << std::endl;
+			std::cout << " Finished Order " << std::get<0>(results) << " Score " << std::get<1>(results) << " on thread " << std::this_thread::get_id() << std::endl;
 		}
 		catch (const std::exception& /*e*/)
 		{
