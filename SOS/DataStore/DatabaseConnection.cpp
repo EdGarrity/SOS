@@ -1,5 +1,6 @@
 #include <stddef.h>  // defines NULL
 #include "DatabaseConnection.h"
+#include "..\Utilities\Debug.h"
 
 #include <cstdio>
 #include <iostream>

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <map>
 #include "TestData.h"
+#include "..\Utilities\Debug.h"
 
 namespace datastore
 {

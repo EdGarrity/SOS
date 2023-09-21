@@ -3,7 +3,7 @@
 #include <thread>
 #include "SQLConnection.h"
 #include "..\Utilities\Conversion.h"
-//#include "..\Utilities\EventLogManager.h"
+#include "..\Utilities\Debug.h"
 
 namespace database
 {

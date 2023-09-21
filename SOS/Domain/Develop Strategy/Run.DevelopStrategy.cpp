@@ -36,6 +36,7 @@
 #include "..\Develop Strategy\RunProgram_WorkOrder_Form.h"
 #include "..\RunProgram.h"
 #include "..\..\Utilities\Debug.h"
+
 using namespace concurrency;
 
 namespace domain

@@ -2,6 +2,7 @@
 #include <map>
 #include "FinancialData.h"
 #include "TestData.h"
+#include "..\Utilities\Debug.h"
 
 namespace datastore
 {
