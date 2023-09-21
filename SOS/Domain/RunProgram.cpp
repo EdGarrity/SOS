@@ -7,6 +7,7 @@
 #include "..\Plush\Environment.h"
 #include "Develop Strategy/ErrorFunction.DevelopStrategy.h"
 #include "Develop Strategy/Run.DevelopStrategy.h"
+#include "..\Utilities\Debug.h"
 
 namespace domain
 {
@@ -99,7 +100,7 @@ namespace domain
 		co_await m_pool.schedule();
 
 		// Run the stratergy and case specified in the work order, in a seperate thread.
-		std::cout << "Running strategy " << workorder_form.get_stratergy_index() << " on case " << workorder_form.get_training_case_index() << " on thread " << std::this_thread::get_id() << std::endl;
+		Utilities::quick_log << "Running strategy " << workorder_form.get_stratergy_index() << " on case " << workorder_form.get_training_case_index() << " on thread " << std::this_thread::get_id() << Utilities::endl;
 
 		int env_index = 99;
 
@@ -113,7 +114,8 @@ namespace domain
 				workorder_form.get_stratergy_index(),
 				workorder_form.get_training_case_index(),
 				std::get<0>(results));
-			std::cout << " Finished Order " << std::get<0>(results) << " Score " << std::get<1>(results) << " on thread " << std::this_thread::get_id() << std::endl;
+
+			Utilities::quick_log << " Finished Order " << std::get<0>(results) << " Score " << std::get<1>(results) << " on thread " << std::this_thread::get_id() << Utilities::endl;
 		}
 		catch (const std::exception& /*e*/)
 		{
@@ -135,5 +137,10 @@ namespace domain
 
 			throw std::runtime_error(warning_message.str());
 		}
-	};
+	}
+
+	void RunProgram::wait_for_all_threads_to_complete()
+	{
+	}
+	;
 }

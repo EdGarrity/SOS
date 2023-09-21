@@ -54,7 +54,7 @@ namespace datastore
 				while ((sqlcmd_get_individuals->fetch_next()) && (n < domain::argmap::population_size))
 				{
 					if ((n % 1'000) == 0)
-						std::cout << "n = " << n << std::endl;
+						Utilities::quick_log << "n = " << n << Utilities::endl;
 
 					std::string genome = Utilities::trim_copy(sqlcmd_get_individuals->get_field_as_string(2));
 
@@ -82,7 +82,7 @@ namespace datastore
 					}
 
 					else
-						std::cout << "n = " << n << "  Ignoring empty genome string" << std::endl;
+						Utilities::quick_log << "n = " << n << "  Ignoring empty genome string" << Utilities::endl;
 				}
 			}
 		}
@@ -110,7 +110,7 @@ namespace datastore
 		RPC_STATUS ret = UuidCreateNil(&NilUuid);
 
 		if (ret != RPC_S_OK)
-			std::cout << "UuidCreateNil() did not return RPC_S_OK" << std::endl;
+			Utilities::quick_log << "UuidCreateNil() did not return RPC_S_OK" << Utilities::endl;
 
 		database::SQLCommand* sqlcmd;
 

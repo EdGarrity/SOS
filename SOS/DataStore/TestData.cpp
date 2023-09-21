@@ -31,7 +31,7 @@ namespace datastore
 	//
 	void TestData::load(const std::string& start_date, const std::string& end_date)
 	{
-		std::cout << "Loading all case data..." << std::endl;
+		Utilities::quick_log << "Loading all case data..." << Utilities::endl;
 
 		database::SQLCommand* sqlcmd_get_case_data = nullptr;
 
@@ -57,7 +57,7 @@ namespace datastore
 				std::string date = sqlcmd_get_case_data->get_field_as_string(1);
 				double adj_open = sqlcmd_get_case_data->get_field_as_double(2);
 
-				std::cout << date << " " << adj_open << std::endl;
+				Utilities::quick_log << date << " " << adj_open << Utilities::endl;
 
 				dates.push_back(date);
 				adj_open_values.push_back(adj_open);
@@ -67,7 +67,7 @@ namespace datastore
 		}
 		catch (const std::exception& e)
 		{
-			std::cout << "Exception: " << e.what() << std::endl;
+			Utilities::quick_log << "Exception: " << e.what() << Utilities::endl;
 
 			if (sqlcmd_get_case_data != nullptr)
 				delete sqlcmd_get_case_data;
@@ -78,7 +78,7 @@ namespace datastore
 		}
 		catch (...)
 		{
-			std::cout << "Unknown exception" << std::endl;
+			Utilities::quick_log << "Unknown exception" << Utilities::endl;
 
 			if (sqlcmd_get_case_data != nullptr)
 				delete sqlcmd_get_case_data;

@@ -31,6 +31,7 @@ namespace datastore
 	void FinancialData::load(size_t case_index)
 	{
 		std::cout << std::endl << "Loading financial data for case " << case_index << std::endl;
+		Utilities::quick_log << Utilities::endl << "Loading financial data for case " << case_index << Utilities::endl;
 
 		database::SQLCommand* sqlcmd_get_case_data = nullptr;
 
@@ -56,7 +57,7 @@ namespace datastore
 			{
 				double data = sqlcmd_get_case_data->get_field_as_double(1);
 
-				std::cout << data << std::endl;
+				Utilities::quick_log << data << Utilities::endl;
 
 				values.push_back(data);
 			}
@@ -68,7 +69,7 @@ namespace datastore
 		}
 		catch (const std::exception& e)
 		{
-			std::cout << "Exception: " << e.what() << std::endl;
+			Utilities::quick_log << "Exception: " << e.what() << Utilities::endl;
 
 			if (sqlcmd_get_case_data != nullptr)
 				delete sqlcmd_get_case_data;
@@ -79,7 +80,7 @@ namespace datastore
 		}
 		catch (...)
 		{
-			std::cout << "Unknown exception" << std::endl;
+			Utilities::quick_log << "Unknown exception" << Utilities::endl;
 
 			if (sqlcmd_get_case_data != nullptr)
 				delete sqlcmd_get_case_data;

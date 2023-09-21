@@ -46,6 +46,24 @@ namespace Utilities
             return awaiter{ this };
         }
 
+        void wait_for_all_threads_to_complete()
+        {
+            while (m_coros.size() != 0)
+            {
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            }
+
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+            for (std::thread& thread : m_threads)
+            {
+                if (thread.joinable())
+                {
+                    thread.join();
+                }
+            }
+        }
+
     private:
         std::list<std::thread> m_threads;
 
@@ -78,7 +96,8 @@ namespace Utilities
             }
         }
 
-        void enqueue_task(std::coroutine_handle<> coro) noexcept {
+        void enqueue_task(std::coroutine_handle<> coro) noexcept 
+        {
             std::unique_lock<std::mutex> lock(m_mutex);
             m_coros.emplace(coro);
             m_cond.notify_one();

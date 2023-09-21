@@ -35,7 +35,7 @@
 #include "..\..\Utilities\Threadpool.hpp"
 #include "..\Develop Strategy\RunProgram_WorkOrder_Form.h"
 #include "..\RunProgram.h"
-
+#include "..\..\Utilities\Debug.h"
 using namespace concurrency;
 
 namespace domain
@@ -192,7 +192,8 @@ namespace domain
 				combinable<pushGP::globals::Training_case_min_error_type> training_case_min_error;
 
 				// Reset children.
-				std::cout << "  Reset children" << std::endl;
+				Utilities::quick_log << "  Reset children" << Utilities::endl;
+
 				for (unsigned long n = 0; n < argmap::population_size; n++)
 					pushGP::globals::child_agents[n].clear_genome();
 
@@ -306,7 +307,7 @@ namespace domain
 			{
 				for (size_t stratergy_index = 0; stratergy_index < domain::argmap::population_size; stratergy_index++)
 				{
-					std::cout << "Run strategy " << stratergy_index << " on case " << training_case_index << " is_generated " << order_matrix.is_generated(stratergy_index, training_case_index);
+					Utilities::quick_log << "Run strategy " << stratergy_index << " on case " << training_case_index << " is_generated " << order_matrix.is_generated(stratergy_index, training_case_index);
 
 					unsigned long order = 0;
 					unsigned long score = 0;
@@ -319,7 +320,7 @@ namespace domain
 						order_matrix.store(stratergy_index, training_case_index, order);
 					}
 
-					std::cout << " Order " << order << " Score " << score << std::endl;
+					Utilities::quick_log << " Order " << order << " Score " << score << Utilities::endl;
 				}
 			}
 		}
@@ -331,7 +332,7 @@ namespace domain
 				unsigned int strategy_index,
 				unsigned long case_index)> _run_strategy_threadsafe)
 		{
-			std::cout << "compute_training_errors_thread_safe() - Process threads" << std::endl;
+			Utilities::quick_log << "compute_training_errors_thread_safe() - Process threads" << Utilities::endl;
 
 			domain::RunProgram processor(pool);
 
@@ -339,15 +340,15 @@ namespace domain
 			{
 				for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
 				{
-					std::cout << "Schedule to run strategy " << strategy_index << " on case " << training_case_index << " on thread " << std::this_thread::get_id() << std::endl;
-
+					Utilities::quick_log << "Schedule to run strategy " << strategy_index << " on case " << training_case_index << " on thread " << std::this_thread::get_id() << Utilities::endl;
 					develop_strategy::RunProgram_WorkOrder_Form form(strategy_index, training_case_index);
 					processor.run(form);
 				}
 			}
 
-
-
+			Utilities::quick_log << "compute_training_errors_thread_safe() - Wait for all threads to complete" << Utilities::endl;
+			pool.wait_for_all_threads_to_complete();
+			Utilities::quick_log << "compute_training_errors_thread_safe() - All threads to complete" << Utilities::endl;
 
 
 
@@ -538,6 +539,8 @@ namespace domain
 							run_strategy_threadsafe);
 
 
+					Utilities::quick_log << "run() - compute_training_errors_thread_safe() - Done";
+					done = true;
 
 					//// ***************************
 					//// *** Evaluate strategies ***

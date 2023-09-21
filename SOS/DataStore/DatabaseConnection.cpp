@@ -15,7 +15,7 @@ namespace datastore
 		if (!con.connected())
 		{
 			std::string db_init_datasource = domain::argmap::db_init_datasource;
-			std::cout << "db_init_datasource: " << db_init_datasource << std::endl;
+			Utilities::quick_log << "db_init_datasource: " << db_init_datasource << Utilities::endl;
 
 			con.connect(domain::argmap::db_init_datasource, domain::argmap::db_init_catalog, domain::argmap::db_user_id, domain::argmap::db_user_password);
 		}

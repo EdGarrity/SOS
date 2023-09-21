@@ -10,6 +10,8 @@
 #include <queue>
 #include <sstream>
 #include <fstream>
+#include <ostream>
+#include <syncstream>
 
 #include "SystemInfo.h"
 //#include "..\Plush\Atom.h"
@@ -164,4 +166,105 @@ namespace Utilities
 		generation++;
 	}
 #endif
+
+	//class Quick_Log
+	//{
+	//public:
+	//	//void operator<<(const std::string& msg) {
+	//	//	std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
+
+	//	//	std::cout << getCurrentTimestamp()
+	//	//		<< ",LineNumber=" << std::to_string(line_number++)
+	//	//		<< ",Message=" << msg
+	//	//		<< std::endl;
+
+	//	//	work_order_print_lock.unlock();
+	//	//}
+
+	//	//void operator<<(const unsigned int msg) {
+	//	//	std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
+
+	//	//	std::cout << getCurrentTimestamp()
+	//	//		<< ",LineNumber=" << std::to_string(line_number++)
+	//	//		<< ",Message=" << msg
+	//	//		<< std::endl;
+
+	//	//	work_order_print_lock.unlock();
+	//	//}
+
+	//	//void operator<<(const std::ostream& stream)
+	//	//{
+	//	//	std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
+
+	//	//	std::cout << stream
+	//	//		<< std::endl;
+
+	//	//	work_order_print_lock.unlock();
+	//	//}
+
+	//	// Overload the << operator to print to std::out
+	//	template <typename T>
+	//	Quick_Log& operator<<(const T& value) 
+	//	{
+	//		std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
+	//		std::cout << value;
+	//		work_order_print_lock.unlock();
+	//		return *this; // Return a reference to the Log object for chaining
+	//	}
+
+
+	//};
+
+	//// Define a custom class that represents std::endl
+	//class Endl 
+	//{
+	//public:
+	//	// Overload the << operator for std::ostream
+	//	friend std::ostream& operator<<(std::ostream& os, const Endl& e) 
+	//	{
+	//		std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
+	//		os.put(os.widen('\n')); // Insert a newline character
+	//		os.flush();            // Flush the output buffer
+	//		work_order_print_lock.unlock();
+	//		return os;
+	//	}
+	//};
+
+	//extern Quick_Log quick_log;
+	//extern Endl endl;
+
+
+
+	class Quick_Log
+	{
+	public:
+		// Overload the << operator to print to std::out
+		template <typename T>
+		Quick_Log& operator<<(const T& value) 
+		{
+			{
+				std::osyncstream synced_out(std::cout); // synchronized wrapper for std::cout
+				synced_out << value;
+			} // characters are transferred and std::cout is flushed
+			return *this; // Return a reference to the Log object for chaining
+		}
+	};
+
+	// Define a custom class that represents std::endl
+	class Endl 
+	{
+	public:
+		// Overload the << operator for std::ostream
+		friend std::ostream& operator<<(std::ostream& os, const Endl& e) 
+		{
+			{
+				std::osyncstream synced_out(std::cout); // synchronized wrapper for std::cout
+				synced_out << std::endl;
+			} // characters are transferred and std::cout is flushed
+			return os;
+		}
+	};
+
+	extern Quick_Log quick_log;
+	extern Endl endl;
 }
