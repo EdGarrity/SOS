@@ -183,7 +183,7 @@ namespace Utilities
 
 					auto results = domain::develop_strategy::run_strategy_threadsafe(env, work_order.individual_index, work_order.example_case);
 					domain::develop_strategy::order_matrix.store(env_index, work_order.individual_index, work_order.example_case, std::get<0>(results));
-					std::cout << " Finished Order " << std::get<0>(results) << " Score " << std::get<1>(results) << std::endl;
+					Utilities::quick_log << " Finished Order " << std::get<0>(results) << " Score " << std::get<1>(results) << Utilities::endl;
 
 					running_state[env_index].store(Plush::Environment::RunningState::Waiting, std::memory_order_release);
 
@@ -194,7 +194,7 @@ namespace Utilities
 					std::stringstream warning_message;
 					warning_message << "WorkOrderManager::process_work_orders() - unable to insert work into queue.  env_index=" << env_index;
 
-					std::cerr << warning_message.str() << std::endl;
+					std::cerr << warning_message.str() << Utilities::endl;
 
 					throw std::runtime_error(warning_message.str());
 				}
@@ -204,7 +204,7 @@ namespace Utilities
 					std::stringstream warning_message;
 					warning_message << "WorkOrderManager::process_work_orders() - An unknown error has occured.  env_index=" << env_index;
 
-					std::cerr << warning_message.str() << std::endl;
+					std::cerr << warning_message.str() << Utilities::endl;
 
 					throw std::runtime_error(warning_message.str());
 				}
@@ -216,7 +216,7 @@ namespace Utilities
 			std::stringstream warning_message;
 			warning_message << "WorkOrderManager::process_work_orders() - Outer while loop.  env_index=" << env_index;
 
-			std::cerr << warning_message.str() << std::endl;
+			std::cerr << warning_message.str() << Utilities::endl;
 
 			throw std::runtime_error(warning_message.str());
 		}
@@ -226,7 +226,7 @@ namespace Utilities
 			std::stringstream warning_message;
 			warning_message << "WorkOrderManager::process_work_orders() - Outer while loop - An unknown error has occured.  env_index=" << env_index;
 
-			std::cerr << warning_message.str() << std::endl;
+			std::cerr << warning_message.str() << Utilities::endl;
 
 			throw std::runtime_error(warning_message.str());
 		}
@@ -269,7 +269,7 @@ namespace Utilities
 				debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 #endif
 				debug_message = "wait_for_queue_to_empty,queue_size=" + std::to_string(queue_size);
-				std::cout << debug_message << std::endl;
+				Utilities::quick_log << debug_message << Utilities::endl;
 
 			} while (queue_size > 0);
 
@@ -288,14 +288,14 @@ namespace Utilities
 			// wait for all threads to stop
 			bool all_done = true;
 
-			std::cout << "Queue empty" << std::endl << std::endl;
+			Utilities::quick_log << "Queue empty" << Utilities::endl << Utilities::endl;
 
 			do
 			{
-				std::cout << std::endl;
-				std::cout << std::endl;
-				std::cout << "N" << std::setw(30) << "effort" << std::setw(30) << "exec_size" << std::setw(30) << "instruction" << std::setw(30) << "individual" << std::setw(30) << "case"  << std::endl;
-				std::cout << "-" << std::setw(30) << "------" << std::setw(30) << "---------" << std::setw(30) << "-----------" << std::setw(30) << "----------" << std::setw(30) << "----" << std::endl;
+				Utilities::quick_log << Utilities::endl;
+				Utilities::quick_log << Utilities::endl;
+				Utilities::quick_log << "N" << std::setw(30) << "effort" << std::setw(30) << "exec_size" << std::setw(30) << "instruction" << std::setw(30) << "individual" << std::setw(30) << "case"  << Utilities::endl;
+				Utilities::quick_log << "-" << std::setw(30) << "------" << std::setw(30) << "---------" << std::setw(30) << "-----------" << std::setw(30) << "----------" << std::setw(30) << "----" << Utilities::endl;
 
 				// Don't do the first time.
 				if (all_done == false)
@@ -325,13 +325,13 @@ namespace Utilities
 						else
 							instruction_name = Plush::static_initializer.get_function_name(instruction_index) + " (" + std::to_string(instruction_index) + ")";
 
-						std::cout << i 
+						Utilities::quick_log << i 
 							<< std::setw(30) << effort 
 							<< std::setw(30) << exec_size 
 							<< std::setw(30) << instruction_name 
 							<< std::setw(30) << individual_index
 							<< std::setw(30) << example_case
-							<< std::endl;
+							<< Utilities::endl;
 					}
 				}
 

@@ -29,7 +29,7 @@ namespace domain
 	//			workorder_form.get_stratergy_index(),
 	//			workorder_form.get_training_case_index(),
 	//			std::get<0>(results));
-	//		std::cout << " Finished Order " << std::get<0>(results) << " Score " << std::get<1>(results) << std::endl;
+	//		Utilities::quick_log << " Finished Order " << std::get<0>(results) << " Score " << std::get<1>(results) << Utilities::endl;
 	//	}
 	//	catch (const std::exception& /*e*/)
 	//	{
@@ -37,7 +37,7 @@ namespace domain
 	//		std::stringstream warning_message;
 	//		warning_message << "domain::Utilities::Task RunProgram::operator() - unable to insert work into queue.  env_index=" << env_index;
 
-	//		std::cerr << warning_message.str() << std::endl;
+	//		std::cerr << warning_message.str() << Utilities::endl;
 
 	//		throw std::runtime_error(warning_message.str());
 	//	}
@@ -47,7 +47,7 @@ namespace domain
 	//		std::stringstream warning_message;
 	//		warning_message << "domain::Utilities::Task RunProgram::operator() - An unknown error has occured.  env_index=" << env_index;
 
-	//		std::cerr << warning_message.str() << std::endl;
+	//		std::cerr << warning_message.str() << Utilities::endl;
 
 	//		throw std::runtime_error(warning_message.str());
 	//	}
@@ -71,7 +71,7 @@ namespace domain
 	//			workorder_form.get_stratergy_index(),
 	//			workorder_form.get_training_case_index(),
 	//			std::get<0>(results));
-	//		std::cout << " Finished Order " << std::get<0>(results) << " Score " << std::get<1>(results) << std::endl;
+	//		Utilities::quick_log << " Finished Order " << std::get<0>(results) << " Score " << std::get<1>(results) << Utilities::endl;
 	//	}
 	//	catch (const std::exception& /*e*/)
 	//	{
@@ -79,7 +79,7 @@ namespace domain
 	//		std::stringstream warning_message;
 	//		warning_message << "domain::Utilities::Task RunProgram::operator() - unable to insert work into queue.  env_index=" << env_index;
 
-	//		std::cerr << warning_message.str() << std::endl;
+	//		std::cerr << warning_message.str() << Utilities::endl;
 
 	//		throw std::runtime_error(warning_message.str());
 	//	}
@@ -89,7 +89,7 @@ namespace domain
 	//		std::stringstream warning_message;
 	//		warning_message << "domain::Utilities::Task RunProgram::operator() - An unknown error has occured.  env_index=" << env_index;
 
-	//		std::cerr << warning_message.str() << std::endl;
+	//		std::cerr << warning_message.str() << Utilities::endl;
 
 	//		throw std::runtime_error(warning_message.str());
 	//	}
@@ -123,7 +123,7 @@ namespace domain
 			std::stringstream warning_message;
 			warning_message << "domain::Utilities::Task RunProgram::operator() - unable to insert work into queue.  env_index=" << env_index;
 
-			std::cerr << warning_message.str() << std::endl;
+			std::cerr << warning_message.str() << Utilities::endl;
 
 			throw std::runtime_error(warning_message.str());
 		}
@@ -133,7 +133,7 @@ namespace domain
 			std::stringstream warning_message;
 			warning_message << "domain::Utilities::Task RunProgram::operator() - An unknown error has occured.  env_index=" << env_index;
 
-			std::cerr << warning_message.str() << std::endl;
+			std::cerr << warning_message.str() << Utilities::endl;
 
 			throw std::runtime_error(warning_message.str());
 		}

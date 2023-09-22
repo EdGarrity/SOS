@@ -75,7 +75,7 @@ namespace datastore
 
 			std::stringstream error;
 			error << "CaseData::load()";
-			std::cerr << error.str() << std::endl;
+			std::cerr << error.str() << Utilities::endl;
 		}
 		catch (...)
 		{
@@ -86,7 +86,7 @@ namespace datastore
 
 			std::stringstream error;
 			error << "CaseData::load()";
-			std::cerr << error.str() << std::endl;
+			std::cerr << error.str() << Utilities::endl;
 		}
 	}
 

@@ -31,7 +31,7 @@ namespace datastore
 	//
 	void FinancialData::load(size_t case_index)
 	{
-		std::cout << std::endl << "Loading financial data for case " << case_index << std::endl;
+		Utilities::quick_log << Utilities::endl << "Loading financial data for case " << case_index << Utilities::endl;
 		Utilities::quick_log << Utilities::endl << "Loading financial data for case " << case_index << Utilities::endl;
 
 		database::SQLCommand* sqlcmd_get_case_data = nullptr;
@@ -77,7 +77,7 @@ namespace datastore
 
 			std::stringstream error;
 			error << "CaseData::load()";
-			std::cerr << error.str() << std::endl;
+			std::cerr << error.str() << Utilities::endl;
 		}
 		catch (...)
 		{
@@ -88,7 +88,7 @@ namespace datastore
 
 			std::stringstream error;
 			error << "CaseData::load()";
-			std::cerr << error.str() << std::endl;
+			std::cerr << error.str() << Utilities::endl;
 		}
 	}
 

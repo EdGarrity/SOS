@@ -92,7 +92,7 @@ namespace datastore
 
 			std::stringstream error;
 			error << "AgentData::load_pop_agents()";
-			std::cerr << error.str() << std::endl;
+			std::cerr << error.str() << Utilities::endl;
 
 			return n;
 		}

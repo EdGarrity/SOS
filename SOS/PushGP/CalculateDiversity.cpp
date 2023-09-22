@@ -239,34 +239,34 @@ namespace pushGP
 
 			double cluster_diversity = 0;
 
-			//std::cout << "Calculate Diversity() - Construct the elitized error vectors that indicate whether an individual achieved the best error on each training case" << std::endl;
+			//Utilities::quick_log << "Calculate Diversity() - Construct the elitized error vectors that indicate whether an individual achieved the best error on each training case" << Utilities::endl;
 
 
 
 			// Print out the error matrix
-			//std::cout << std::endl;
-			//std::cout << "Calculate Diversity,individual_index";
+			//Utilities::quick_log << Utilities::endl;
+			//Utilities::quick_log << "Calculate Diversity,individual_index";
 
 			//for (int n = 0; n < domain::argmap::number_of_training_cases; n++)
-			//	std::cout << ",error_" << n;
+			//	Utilities::quick_log << ",error_" << n;
 
-			//std::cout << std::endl;
+			//Utilities::quick_log << Utilities::endl;
 
 			//for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			//{
-			//	std::cout << "Calculate Diversity, " << individual_index;
+			//	Utilities::quick_log << "Calculate Diversity, " << individual_index;
 
 			//	for (int case_index = 0; case_index < domain::argmap::number_of_training_cases; case_index++)
 			//	{
 			//		double error = pushGP::globals::error_matrix.load(case_index, individual_index);
-			//		std::cout << ", " << error;
+			//		Utilities::quick_log << ", " << error;
 			//	}
 
-			//	std::cout << std::endl;
+			//	Utilities::quick_log << Utilities::endl;
 			//}
 
-			//std::cout << std::endl;
-			//std::cout << std::endl;
+			//Utilities::quick_log << Utilities::endl;
+			//Utilities::quick_log << Utilities::endl;
 
 		
 			// Construct the elitized error vectors that indicate whether an individual achieved the best error on each training case
@@ -326,72 +326,72 @@ namespace pushGP
 			}
 
 			// Print out the error matrix
-			//std::cout << "Calculate Diversity,";
+			//Utilities::quick_log << "Calculate Diversity,";
 
 			//for (int n = 0; n < domain::argmap::number_of_training_cases; n++)
-			//	std::cout << ",case_index_" << n;
+			//	Utilities::quick_log << ",case_index_" << n;
 
-			//std::cout << std::endl;
+			//Utilities::quick_log << Utilities::endl;
 
-			//std::cout << debug_training_case_threashold << std::endl;
-			//std::cout << debug_training_case_minimum_error << std::endl;
-			//std::cout << debug_error_threshold << std::endl;
+			//Utilities::quick_log << debug_training_case_threashold << Utilities::endl;
+			//Utilities::quick_log << debug_training_case_minimum_error << Utilities::endl;
+			//Utilities::quick_log << debug_error_threshold << Utilities::endl;
 
-			//std::cout << std::endl;
-			//std::cout << std::endl;
-
-
+			//Utilities::quick_log << Utilities::endl;
+			//Utilities::quick_log << Utilities::endl;
 
 
 
 
-			//std::cout << "Calculate Diversity() - Initialize tree" << std::endl;
+
+
+			//Utilities::quick_log << "Calculate Diversity() - Initialize tree" << Utilities::endl;
 
 
 
 			// Initialize tree
-			//std::cout << "Calculate Diversity() - Initialize tree.  tree.size() = " << tree.size() << std::endl;
+			//Utilities::quick_log << "Calculate Diversity() - Initialize tree.  tree.size() = " << tree.size() << Utilities::endl;
 			tree.clear();
 
-			//std::cout << "Calculate Diversity,id,distance,failed_test_cases_count,diversity,count_of_diverse_clusters,parent_1,parent_2";
+			//Utilities::quick_log << "Calculate Diversity,id,distance,failed_test_cases_count,diversity,count_of_diverse_clusters,parent_1,parent_2";
 
 			//for (int n=0; n < domain::argmap::number_of_training_cases;n++)
-			//	std::cout << ",error_" << n;
+			//	Utilities::quick_log << ",error_" << n;
 
-			//std::cout << std::endl;
+			//Utilities::quick_log << Utilities::endl;
 
 			for (int n = 0; n < domain::argmap::population_size; n++)
 			{
 				Cluster* cluster = new Cluster(elitized[n]);
 
 				unsigned long id=cluster->get_id();
-				//std::cout << "Calculate Diversity() - Initialize tree[" << id << "]" << std::endl;
+				//Utilities::quick_log << "Calculate Diversity() - Initialize tree[" << id << "]" << Utilities::endl;
 
 				tree[cluster->get_id()] = cluster;
 
-				//std::cout << "Calculate Diversity," << cluster->get_id() << ", 0, 0, 0, 0, -1, -1";
+				//Utilities::quick_log << "Calculate Diversity," << cluster->get_id() << ", 0, 0, 0, 0, -1, -1";
 
 				//for (int n = 0; n < domain::argmap::number_of_training_cases; n++)
 				//{
 				//	int id = cluster->error_array[n];
-				//	std::cout << ", " << id;
+				//	Utilities::quick_log << ", " << id;
 				//}
 
-				//std::cout << std::endl;
+				//Utilities::quick_log << Utilities::endl;
 			}
 
 
 
 
 
-			//std::cout << "Calculate Diversity() - Grow tree" << std::endl;
+			//Utilities::quick_log << "Calculate Diversity() - Grow tree" << Utilities::endl;
 
 
 
 			// Grow tree
 			while (tree.size() > 1)
 			{
-				//std::cout << "Calculate Diversity() - tree.size() = " << tree.size() << std::endl;
+				//Utilities::quick_log << "Calculate Diversity() - tree.size() = " << tree.size() << Utilities::endl;
 
 
 
@@ -413,7 +413,7 @@ namespace pushGP
 
 
 
-						//std::cout << "Calculate Diversity() - get_distance(" << cluster_1_key << ", " << cluster_2_key << ") = " << dist << std::endl;
+						//Utilities::quick_log << "Calculate Diversity() - get_distance(" << cluster_1_key << ", " << cluster_2_key << ") = " << dist << Utilities::endl;
 
 
 
@@ -427,7 +427,7 @@ namespace pushGP
 
 
 
-				//std::cout << "Calculate Diversity() - min_dist = " << min_dist << ", closest_cluster_key = " << closest_cluster_key << std::endl;
+				//Utilities::quick_log << "Calculate Diversity() - min_dist = " << min_dist << ", closest_cluster_key = " << closest_cluster_key << Utilities::endl;
 
 
 
@@ -438,7 +438,7 @@ namespace pushGP
 
 
 				unsigned long id = cluster->get_id();
-				//std::cout << "Calculate Diversity() - create tree[" << id << "] from " << cluster_1_key << " and " << closest_cluster_key << std::endl;
+				//Utilities::quick_log << "Calculate Diversity() - create tree[" << id << "] from " << cluster_1_key << " and " << closest_cluster_key << Utilities::endl;
 
 
 				tree[cluster->get_id()] = cluster;
@@ -453,15 +453,15 @@ namespace pushGP
 
 
 
-				//std::cout << "Calculate Diversity," << cluster->get_id() << ", " << min_dist << ", " << failed_test_cases_count << ", " << cluster_diversity << ", " << count_of_diverse_clusters << ", " << cluster_1_key << ", " << closest_cluster_key;
+				//Utilities::quick_log << "Calculate Diversity," << cluster->get_id() << ", " << min_dist << ", " << failed_test_cases_count << ", " << cluster_diversity << ", " << count_of_diverse_clusters << ", " << cluster_1_key << ", " << closest_cluster_key;
 
 				//for (int n = 0; n < domain::argmap::number_of_training_cases; n++)
 				//{
 				//	int id = cluster->error_array[n];
-				//	std::cout << ", " << id;
+				//	Utilities::quick_log << ", " << id;
 				//}
 
-				//std::cout << std::endl;
+				//Utilities::quick_log << Utilities::endl;
 
 
 
@@ -469,30 +469,30 @@ namespace pushGP
 
 
 				Cluster* cluster1 = tree[cluster_1_key];
-				//std::cout << "Calculate Diversity() - delete tree1[" << cluster_1_key << "] = " << cluster1->get_id() << std::endl;
+				//Utilities::quick_log << "Calculate Diversity() - delete tree1[" << cluster_1_key << "] = " << cluster1->get_id() << Utilities::endl;
 				delete cluster1;
 
 
 				Cluster* cluster2 = tree[closest_cluster_key];
-				//std::cout << "Calculate Diversity() - delete tree1[" << closest_cluster_key << "] = " << cluster2->get_id() << std::endl;
+				//Utilities::quick_log << "Calculate Diversity() - delete tree1[" << closest_cluster_key << "] = " << cluster2->get_id() << Utilities::endl;
 				delete cluster2;
 
 
 
-				//std::cout << "Calculate Diversity() - tree.erase1[" << cluster_1_key << "]" << std::endl;
+				//Utilities::quick_log << "Calculate Diversity() - tree.erase1[" << cluster_1_key << "]" << Utilities::endl;
 				tree.erase(cluster_1_key);
 
-				//std::cout << "Calculate Diversity() - tree.erase2[" << closest_cluster_key << "]" << std::endl;
+				//Utilities::quick_log << "Calculate Diversity() - tree.erase2[" << closest_cluster_key << "]" << Utilities::endl;
 				tree.erase(closest_cluster_key);
 			}
 
 
-			//std::cout << std::endl;
-			//std::cout << std::endl;
+			//Utilities::quick_log << Utilities::endl;
+			//Utilities::quick_log << Utilities::endl;
 
 
 
-			//std::cout << "Calculate Diversity() - Clean up" << std::endl;
+			//Utilities::quick_log << "Calculate Diversity() - Clean up" << Utilities::endl;
 
 
 
@@ -503,7 +503,7 @@ namespace pushGP
 
 
 
-			//std::cout << "Calculate Diversity() - Done, cluster_diversity = " << cluster_diversity  << ", count_of_diverse_clusters = " << count_of_diverse_clusters << std::endl;
+			//Utilities::quick_log << "Calculate Diversity() - Done, cluster_diversity = " << cluster_diversity  << ", count_of_diverse_clusters = " << count_of_diverse_clusters << Utilities::endl;
 
 
 			return std::make_tuple(cluster_diversity, count_of_diverse_clusters);
@@ -514,7 +514,7 @@ namespace pushGP
 
 			error << "Standard exception: " << e.what();
 
-			std::cerr << error.str() << std::endl;
+			std::cerr << error.str() << Utilities::endl;
 
 			throw;
 		}
@@ -524,7 +524,7 @@ namespace pushGP
 
 			error << "Exception occurred";
 
-			std::cerr << error.str() << std::endl;
+			std::cerr << error.str() << Utilities::endl;
 
 			throw;
 		}

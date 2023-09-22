@@ -109,7 +109,7 @@ namespace Plush
 
 
 			if ((new_example_case > 100) && (new_individual_index == 124))
-				std::cout << "set_current_individual_index(new_individual_index=" << new_individual_index << ", new_example_case=" << new_example_case << ")" << std::endl;
+				Utilities::quick_log << "set_current_individual_index(new_individual_index=" << new_individual_index << ", new_example_case=" << new_example_case << ")" << Utilities::endl;
 
 		}
 

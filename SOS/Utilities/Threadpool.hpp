@@ -16,7 +16,7 @@ namespace Utilities
     public:
         explicit Threadpool(const std::size_t threadCount)
         {
-            //std::cout << "threadpool(" << threadCount << ") from thread : " << std::this_thread::get_id() << "\n";
+            //Utilities::quick_log << "threadpool(" << threadCount << ") from thread : " << std::this_thread::get_id() << "\n";
             for (std::size_t i = 0; i < threadCount; ++i)
             {
                 std::thread worker_thread([this]() {

@@ -550,7 +550,7 @@ namespace domain
 					{
 						CSVRow row;
 
-						std::cout << "training case n = " << training_case_index << std::endl;
+						Utilities::quick_log << "training case n = " << training_case_index << Utilities::endl;
 
 						// Get problem
 						training_case_problem_str = fitness_cases_problem.back();
@@ -585,7 +585,7 @@ namespace domain
 					{
 						CSVRow row;
 
-						std::cout << "test case n = " << test_case_index << std::endl;
+						Utilities::quick_log << "test case n = " << test_case_index << Utilities::endl;
 
 						// Get problem
 						test_case_problem_str = fitness_cases_problem.back();
@@ -622,7 +622,7 @@ namespace domain
 
 				std::stringstream error;
 				error << "SQLConnection::load_example_cases()";
-				std::cerr << error.str() << std::endl;
+				std::cerr << error.str() << Utilities::endl;
 
 				return training_case_index + test_case_index;
 			}
@@ -848,7 +848,7 @@ namespace domain
 					while ((sqlcmd_get_individuals->fetch_next()) && (n < argmap::population_size))
 					{
 						if ((n % 1'000) == 0)
-							std::cout << "n = " << n << std::endl;
+							Utilities::quick_log << "n = " << n << Utilities::endl;
 
 						std::string genome = Utilities::trim_copy(sqlcmd_get_individuals->get_field_as_string(2));
 
@@ -876,7 +876,7 @@ namespace domain
 						}
 
 						else
-							std::cout << "n = " << n << "  Ignoring empty genome string" << std::endl;
+							Utilities::quick_log << "n = " << n << "  Ignoring empty genome string" << Utilities::endl;
 					}
 				}
 			}
@@ -886,7 +886,7 @@ namespace domain
 
 				std::stringstream error;
 				error << "SQLConnection::load_pop_agents()";
-				std::cerr << error.str() << std::endl;
+				std::cerr << error.str() << Utilities::endl;
 
 				return n;
 			}
@@ -920,7 +920,7 @@ namespace domain
 			RPC_STATUS ret=UuidCreateNil(&NilUuid);
 
 			if (ret != RPC_S_OK)
-				std::cout << "UuidCreateNil() did not return RPC_S_OK" << std::endl;
+				Utilities::quick_log << "UuidCreateNil() did not return RPC_S_OK" << Utilities::endl;
 
 			//database::SQLCommand* sqlcmd_delete_individuals;
 			database::SQLCommand* sqlcmd_insert_new_individual;
@@ -1135,7 +1135,7 @@ namespace domain
 				unsigned long max_effort_for_individual = 0;
 
 				if ((individual_index % 100) == 0)
-					std::cout << individual_index;
+					Utilities::quick_log << individual_index;
 
 				for (unsigned long example_case = 0; example_case < _number_of_example_cases; example_case++)
 				{
@@ -1175,7 +1175,7 @@ namespace domain
 				}
 
 				if ((individual_index % 100) == 0)
-					std::cout << std::endl;
+					Utilities::quick_log << Utilities::endl;
 			}
 
 			if (individual_with_best_score == -1)
@@ -1186,7 +1186,7 @@ namespace domain
 
 			delete envp_local;
 
-			std::cout << std::endl;
+			Utilities::quick_log << Utilities::endl;
 
 			return std::make_tuple
 			(
@@ -1222,7 +1222,7 @@ namespace domain
 				unsigned long max_effort_for_individual = 0;
 
 				if ((individual_index % 100) == 0)
-					std::cout << individual_index;
+					Utilities::quick_log << individual_index;
 
 				for (size_t example_case : downsampled_training_cases)
 				{
@@ -1262,7 +1262,7 @@ namespace domain
 				}
 
 				if ((individual_index % 100) == 0)
-					std::cout << std::endl;
+					Utilities::quick_log << Utilities::endl;
 			}
 
 			if (individual_with_best_score == -1)
@@ -1273,7 +1273,7 @@ namespace domain
 
 			delete envp_local;
 
-			std::cout << std::endl;
+			Utilities::quick_log << Utilities::endl;
 
 			return std::make_tuple
 			(
@@ -1365,7 +1365,7 @@ namespace domain
 			double min_score = (std::numeric_limits<double>::max)();
 			unsigned long max_effort_for_best_individual = 0;
 
-			std::cout << "compute_training_error_for_individual_thread_safe() - Process threads" << std::endl;
+			Utilities::quick_log << "compute_training_error_for_individual_thread_safe() - Process threads" << Utilities::endl;
 
 			Utilities::work_order_manager.stop();
 
@@ -1387,7 +1387,7 @@ namespace domain
 			Utilities::work_order_manager.start();
 			Utilities::work_order_manager.wait_for_all_threads_to_complete();
 
-			std::cout << "compute_training_error_for_individual_thread_safe() - Aggregate errors" << std::endl;
+			Utilities::quick_log << "compute_training_error_for_individual_thread_safe() - Aggregate errors" << Utilities::endl;
 
 			int error_count_for_individual = 0;
 			double avg_error_for_individual = 0.0;
@@ -1424,7 +1424,7 @@ namespace domain
 				max_effort_for_best_individual = max_effort_for_individual;
 			}
 
-			std::cout << "compute_training_error_for_individual_thread_safe() - Return result" << std::endl;
+			Utilities::quick_log << "compute_training_error_for_individual_thread_safe() - Return result" << Utilities::endl;
 
 			return std::make_tuple
 			(
@@ -1448,7 +1448,7 @@ namespace domain
 			double min_score = (std::numeric_limits<double>::max)();
 			unsigned long max_effort_for_best_individual = 0;
 
-			std::cout << "compute_training_errors_thread_safe() - Process threads" << std::endl;
+			Utilities::quick_log << "compute_training_errors_thread_safe() - Process threads" << Utilities::endl;
 
 			Utilities::work_order_manager.stop();
 
@@ -1474,7 +1474,7 @@ namespace domain
 			Utilities::work_order_manager.start();
 			Utilities::work_order_manager.wait_for_all_threads_to_complete();
 
-			std::cout << "compute_training_errors_thread_safe() - Aggregate errors" << std::endl;
+			Utilities::quick_log << "compute_training_errors_thread_safe() - Aggregate errors" << Utilities::endl;
 
 			for (unsigned long individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			{
@@ -1514,7 +1514,7 @@ namespace domain
 				}
 			}
 
-			std::cout << "compute_training_errors_thread_safe() - Return result" << std::endl;
+			Utilities::quick_log << "compute_training_errors_thread_safe() - Return result" << Utilities::endl;
 
 			return std::make_tuple
 			(
@@ -1539,7 +1539,7 @@ namespace domain
 			unsigned long max_effort_for_best_individual = 0;
 			size_t number_of_example_cases = downsampled_training_cases.size();
 
-			std::cout << "compute_downsampled_training_errors_thread_safe() - Process threads" << std::endl;
+			Utilities::quick_log << "compute_downsampled_training_errors_thread_safe() - Process threads" << Utilities::endl;
 
 			Utilities::work_order_manager.stop();
 
@@ -1564,7 +1564,7 @@ namespace domain
 			Utilities::work_order_manager.start();
 			Utilities::work_order_manager.wait_for_all_threads_to_complete();
 
-			std::cout << "compute_downsampled_training_errors_thread_safe() - Aggregate errors" << std::endl;
+			Utilities::quick_log << "compute_downsampled_training_errors_thread_safe() - Aggregate errors" << Utilities::endl;
 
 			for (unsigned long individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			{
@@ -1604,7 +1604,7 @@ namespace domain
 				}
 			}
 
-			std::cout << "compute_downsampled_training_errors_thread_safe() - Return result" << std::endl;
+			Utilities::quick_log << "compute_downsampled_training_errors_thread_safe() - Return result" << Utilities::endl;
 
 			return std::make_tuple
 			(
@@ -1627,7 +1627,7 @@ namespace domain
 
 			for (unsigned long example_case = 0; example_case < argmap::number_of_test_cases; ++example_case)
 			{
-				std::cout << ".";
+				Utilities::quick_log << ".";
 
 				std::vector<double> example_problem(test_cases_problem[example_case].begin(), test_cases_problem[example_case].end());
 				std::vector<double> example_solution(test_cases_solution[example_case].begin(), test_cases_solution[example_case].end());
@@ -1640,8 +1640,8 @@ namespace domain
 
 			error = (double)error_count / (double)argmap::number_of_test_cases;
 
-			std::cout << std::endl;
-			std::cout << std::endl;
+			Utilities::quick_log << Utilities::endl;
+			Utilities::quick_log << Utilities::endl;
 
 			return error;
 		}
@@ -1658,12 +1658,12 @@ namespace domain
 				combinable<pushGP::globals::Training_case_min_error_type> training_case_min_error;
 
 				// Reset children.
-				std::cout << "  Reset children" << std::endl;
+				Utilities::quick_log << "  Reset children" << Utilities::endl;
 				for (unsigned long n = 0; n < argmap::population_size; n++)
 					pushGP::globals::child_agents[n].clear_genome();
 
 				// Breed new generation
-				std::cout << "  Breed new generation" << std::endl;
+				Utilities::quick_log << "  Breed new generation" << Utilities::endl;
 
 				std::map<pushGP::SimulatedAnnealing_States, int> state_count;
 
@@ -1677,15 +1677,15 @@ namespace domain
 					Plush::Genome<Plush::CodeAtom>& child_genome = pushGP::globals::child_agents[individual_index].get_genome();
 
 					// Keep the best individual
-	//				std::cout << "  Keep the best individual" << std::endl;
+	//				Utilities::quick_log << "  Keep the best individual" << Utilities::endl;
 					if ((!_include_best_individual_in_breeding_pool) && (individual_index == _best_individual))
 						pushGP::globals::child_agents[individual_index].copy(pushGP::globals::population_agents[individual_index]);
 
 					else
 					{
-						//					std::cout << "  breed(" << individual_index << ")" << std::endl;
+						//					Utilities::quick_log << "  breed(" << individual_index << ")" << Utilities::endl;
 						if (individual_index % 100 == 0)
-							std::cout << "B";
+							Utilities::quick_log << "B";
 
 						pushGP::SimulatedAnnealing_States state = pushGP::breed(individual_index,
 							_number_of_example_cases,
@@ -1698,32 +1698,32 @@ namespace domain
 						state_count[state]++;
 
 						// If a child with the same genome already exists, create a new random child.
-	//					std::cout << "  If a child with the same genome already exists, create a new random child." << std::endl;
+	//					Utilities::quick_log << "  If a child with the same genome already exists, create a new random child." << Utilities::endl;
 						if (set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string()).second == false)
 						{
-							//						std::cout << "  create a new random child." << std::endl;
+							//						Utilities::quick_log << "  create a new random child." << Utilities::endl;
 							//						pushGP::globals::child_agents[individual_index].set_genome(pushGP::make_random_plush_genome(genome));
 							pushGP::make_random_plush_genome(child_genome);
 						}
 					}
 				}
 
-				std::cout << std::endl;
-				std::cout << std::endl;
+				Utilities::quick_log << Utilities::endl;
+				Utilities::quick_log << Utilities::endl;
 
-				std::cout << "Selection distribution" << std::endl;
-				std::cout << "  Alternate = " << (double)state_count[pushGP::SimulatedAnnealing_States::alternate] / (double)argmap::population_size * 100.0 << std::endl;
-				std::cout << "  Alternate_elite = " << (double)state_count[pushGP::SimulatedAnnealing_States::alternate_elite] / (double)argmap::population_size * 100.0 << std::endl;
-				std::cout << "  Cloan = " << (double)state_count[pushGP::SimulatedAnnealing_States::cloan] / (double)argmap::population_size * 100.0 << std::endl;
-				std::cout << "  Mutate = " << (double)state_count[pushGP::SimulatedAnnealing_States::mutate] / (double)argmap::population_size * 100.0 << std::endl;
-				std::cout << "  Regenerate = " << (double)state_count[pushGP::SimulatedAnnealing_States::regenerate] / (double)argmap::population_size * 100.0 << std::endl;
+				Utilities::quick_log << "Selection distribution" << Utilities::endl;
+				Utilities::quick_log << "  Alternate = " << (double)state_count[pushGP::SimulatedAnnealing_States::alternate] / (double)argmap::population_size * 100.0 << Utilities::endl;
+				Utilities::quick_log << "  Alternate_elite = " << (double)state_count[pushGP::SimulatedAnnealing_States::alternate_elite] / (double)argmap::population_size * 100.0 << Utilities::endl;
+				Utilities::quick_log << "  Cloan = " << (double)state_count[pushGP::SimulatedAnnealing_States::cloan] / (double)argmap::population_size * 100.0 << Utilities::endl;
+				Utilities::quick_log << "  Mutate = " << (double)state_count[pushGP::SimulatedAnnealing_States::mutate] / (double)argmap::population_size * 100.0 << Utilities::endl;
+				Utilities::quick_log << "  Regenerate = " << (double)state_count[pushGP::SimulatedAnnealing_States::regenerate] / (double)argmap::population_size * 100.0 << Utilities::endl;
 
-				std::cout << std::endl;
-				std::cout << std::endl;
+				Utilities::quick_log << Utilities::endl;
+				Utilities::quick_log << Utilities::endl;
 
 				// Keep the best individuals for each test case
-	//			std::cout << "  Keep the best individuals for each test case" << std::endl;
-				std::cout << ".";
+	//			Utilities::quick_log << "  Keep the best individuals for each test case" << Utilities::endl;
+				Utilities::quick_log << ".";
 				if (!_include_best_individual_in_breeding_pool)
 				{
 					for (unsigned long training_case = 0; training_case < domain::argmap::number_of_training_cases; training_case++)
@@ -1732,13 +1732,13 @@ namespace domain
 
 						if (best_individual_for_training_case < (std::numeric_limits<unsigned int>::max)())
 						{
-							//						std::cout << "  						pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);" << std::endl;
+							//						Utilities::quick_log << "  						pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);" << Utilities::endl;
 							pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);
 						}
 					}
 				}
 
-				std::cout << std::endl;
+				Utilities::quick_log << Utilities::endl;
 			}
 			catch (const std::exception& e)
 			{
@@ -1746,7 +1746,7 @@ namespace domain
 
 				error << "Standard exception: " << e.what();
 
-				std::cerr << error.str() << std::endl;
+				std::cerr << error.str() << Utilities::endl;
 
 				throw;
 			}
@@ -1756,7 +1756,7 @@ namespace domain
 
 				error << "Exception occurred";
 
-				std::cerr << error.str() << std::endl;
+				std::cerr << error.str() << Utilities::endl;
 
 				throw;
 			}
@@ -1772,12 +1772,12 @@ namespace domain
 		//	pushGP::globals::Training_case_min_error_type training_case_min_error;
 
 		//	// Reset children.
-		//	std::cout << "  Reset children" << std::endl;
+		//	Utilities::quick_log << "  Reset children" << Utilities::endl;
 		//	for (unsigned int n = 0; n < argmap::population_size; n++)
 		//		pushGP::globals::child_agents[n].clear_genome();
 
 		//	// Breed new generation
-		//	std::cout << "  Breed new generation" << std::endl;
+		//	Utilities::quick_log << "  Breed new generation" << Utilities::endl;
 
 		//	const unsigned int zero = 0;
 		//	parallel_for(zero, domain::argmap::population_size, [&, _best_individual, _number_of_example_cases](const unsigned int individual_index)
@@ -1834,7 +1834,7 @@ namespace domain
 		//		}
 		//	}
 
-		//	std::cout << std::endl;
+		//	Utilities::quick_log << Utilities::endl;
 		//}
 
 		void install_next_generation()
@@ -1955,7 +1955,7 @@ namespace domain
 			// Check if CPU is too hot and if so, wait for it to cool down.
 			double temp = Utilities::GetCpuTemperature();
 
-			std::cout << "CPU Temperature is " << temp << std::endl;
+			Utilities::quick_log << "CPU Temperature is " << temp << Utilities::endl;
 
 			// Check if there is enough memory to continue
 			unsigned long percent_memory_use = Utilities::GetMemoryLoad();
@@ -1966,7 +1966,7 @@ namespace domain
 
 				error << "Not enough free memory to continue.  Percent used = " << percent_memory_use;
 
-				std::cerr << error.str() << std::endl;
+				std::cerr << error.str() << Utilities::endl;
 
 #if DLEVEL > 0
 				debug_message = error.str();
@@ -2026,14 +2026,14 @@ namespace domain
 				}
 
 				// Load example cases.  Create more if not enough loaded.
-				std::cout << "Load Example Cases" << std::endl;
+				Utilities::quick_log << "Load Example Cases" << Utilities::endl;
 				unsigned int example_cases_created = make_example_cases(load_example_cases());
 
 				if (example_cases_created > 0)
 					save_example_cases();
 
 				// Load population.  Create more if not enough loaded.
-				std::cout << "Create Population Agents" << std::endl;
+				Utilities::quick_log << "Create Population Agents" << Utilities::endl;
 				agents_created = make_pop_agents(env, load_pop_agents());
 
 				if (agents_created > argmap::population_size / 2)
@@ -2079,14 +2079,14 @@ namespace domain
 					//	cool_down_count = argmap::cool_down_period;
 					//	include_best_individual_in_breeding_pool = false;
 
-					//	std::cout << "Heat up " << sa.get_tempareture() << std::endl;
+					//	Utilities::quick_log << "Heat up " << sa.get_tempareture() << Utilities::endl;
 					//}
 					//else
 					//{
 					//	sa.cool_down();
 					//	cool_down_count = (cool_down_count < 0) ? 0 : cool_down_count - 1;
 
-					//	std::cout << "Cool down " << sa.get_tempareture() << std::endl;
+					//	Utilities::quick_log << "Cool down " << sa.get_tempareture() << Utilities::endl;
 					//}
 
 
@@ -2105,7 +2105,7 @@ namespace domain
 							cool_down_count = argmap::cool_down_period;
 							include_best_individual_in_breeding_pool = false;
 
-							std::cout << "Heat up " << sa.get_temperature() << std::endl;
+							Utilities::quick_log << "Heat up " << sa.get_temperature() << Utilities::endl;
 						}
 					}
 
@@ -2117,7 +2117,7 @@ namespace domain
 						cool_down_count = (cool_down_count < 0) ? 0 : cool_down_count - 1;
 						include_best_individual_in_breeding_pool = true;
 
-						std::cout << "Cool down " << sa.get_temperature() << std::endl;
+						Utilities::quick_log << "Cool down " << sa.get_temperature() << Utilities::endl;
 					}
 
 					prev_best_individual_error = best_individual_error;
@@ -2125,22 +2125,22 @@ namespace domain
 					// Check if CPU is too hot and if so, wait for it to cool down.
 					double temp = Utilities::GetCpuTemperature();
 
-					std::cout << "CPU Temperature: Min = " << argmap::cool_temperature << " Max = " << argmap::hot_temperature << " Current Temp = " << temp << std::endl;
+					Utilities::quick_log << "CPU Temperature: Min = " << argmap::cool_temperature << " Max = " << argmap::hot_temperature << " Current Temp = " << temp << Utilities::endl;
 
 					if (temp > argmap::hot_temperature)
 					{
-						std::cout << "CPU is too hot.  Waiting for it to cool down." << std::endl;
+						Utilities::quick_log << "CPU is too hot.  Waiting for it to cool down." << Utilities::endl;
 
 						do
 						{
 							std::this_thread::sleep_for(std::chrono::minutes(argmap::cool_down_minutes));
 							temp = Utilities::GetCpuTemperature();
 
-							std::cout << "CPU Temperature is " << temp << std::endl;
+							Utilities::quick_log << "CPU Temperature is " << temp << Utilities::endl;
 						} while (temp > argmap::cool_temperature);
 
-						std::cout << "CPU is now cool enough to continue." << std::endl;
-						std::cout << std::endl;
+						Utilities::quick_log << "CPU is now cool enough to continue." << Utilities::endl;
+						Utilities::quick_log << Utilities::endl;
 					}
 
 					// Check if there is enough memory to continue
@@ -2157,7 +2157,7 @@ namespace domain
 
 						error << "Not enough free memory to continue.  Percent used = " << percent_memory_use;
 
-						std::cerr << error.str() << std::endl;
+						std::cerr << error.str() << Utilities::endl;
 
 #if DLEVEL > 0
 						debug_message = error.str();
@@ -2169,7 +2169,7 @@ namespace domain
 					}
 
 					// Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
-					std::cout << "Reset variables which track the minimum error for this test case and the individual who achived the minimum error " << std::endl;
+					Utilities::quick_log << "Reset variables which track the minimum error for this test case and the individual who achived the minimum error " << Utilities::endl;
 
 					for (int ind = 0; ind < argmap::population_size; ind++)
 					{
@@ -2180,8 +2180,8 @@ namespace domain
 						}
 					}
 
-					std::cout << "Generation " << generation_number << std::endl;
-					std::cout << "Session " << generations_completed_this_session << std::endl;
+					Utilities::quick_log << "Generation " << generation_number << Utilities::endl;
+					Utilities::quick_log << "Session " << generations_completed_this_session << Utilities::endl;
 
 #if DLEVEL > 0
 					debug_message = "Reset variables which track the minimum error for this test case and the individual who achived the minimum error";
@@ -2191,7 +2191,7 @@ namespace domain
 #endif
 					save_generation();
 
-					std::cout << "Run Programs with Training Cases" << std::endl;
+					Utilities::quick_log << "Run Programs with Training Cases" << Utilities::endl;
 #if DLEVEL > 0
 					Utilities::debug_log(-1, "run", "Run Programs with Training Cases");
 #endif
@@ -2254,10 +2254,10 @@ namespace domain
 						best_individual_effort = std::get<3>(best_individual_score_error);
 					}
 
-					std::cout << "Calculate Diversity" << std::endl;
+					Utilities::quick_log << "Calculate Diversity" << Utilities::endl;
 					auto[diversity, count_of_diverse_clusters] = pushGP::calculate_diversity();
 
-					std::cout << "Produce New Offspring" << std::endl;
+					Utilities::quick_log << "Produce New Offspring" << Utilities::endl;
 #if DLEVEL > 0
 					Utilities::debug_log(-1, "run", "Produce New Offspring");
 #endif
@@ -2280,12 +2280,12 @@ namespace domain
 							sa,
 							include_best_individual_in_breeding_pool);
 
-					std::cout << "Run Best Individual's Program with Test Cases" << std::endl;
+					Utilities::quick_log << "Run Best Individual's Program with Test Cases" << Utilities::endl;
 
 					std::string genome = pushGP::globals::population_agents[best_individual].get_genome_as_string();
 
-					std::cout << "best_individual = " << best_individual << std::endl;
-					//std::cout << "genome = " << genome << std::endl;
+					Utilities::quick_log << "best_individual = " << best_individual << Utilities::endl;
+					//Utilities::quick_log << "genome = " << genome << Utilities::endl;
 
 #if DLEVEL > 0
 					debug_message = "Run Best Individual's Program with Test Cases";
@@ -2295,15 +2295,15 @@ namespace domain
 #endif
 					double test_case_score = compute_test_errors(env, run_individual_threadsafe, best_individual);
 
-					std::cout << "test_case_error = " << test_case_score << std::endl;
-					std::cout << std::endl;
+					Utilities::quick_log << "test_case_error = " << test_case_score << Utilities::endl;
+					Utilities::quick_log << Utilities::endl;
 
 #if DLEVEL > 0
 					debug_message = "compute_test_errors";
 					debug_message += ",test_case_error=" + std::to_string(test_case_score);
 					Utilities::debug_log(-1, "run", debug_message);
 #endif
-					std::cout << "Generate Status Report" << std::endl;
+					Utilities::quick_log << "Generate Status Report" << Utilities::endl;
 
 #if DLEVEL > 0
 					Utilities::debug_log(-1, "run", "Generate Status Report");
@@ -2367,7 +2367,7 @@ namespace domain
 						count_of_diverse_clusters
 					);
 
-					std::cout << "Install New Generation" << std::endl;
+					Utilities::quick_log << "Install New Generation" << Utilities::endl;
 
 #if DLEVEL > 0
 					Utilities::debug_log(-1, "run", "Install New Generation");
@@ -2376,7 +2376,7 @@ namespace domain
 					generation_number++;
 					generations_completed_this_session++;
 
-					std::cout << "---------------------------------------------" << std::endl << std::endl << std::endl;
+					Utilities::quick_log << "---------------------------------------------" << Utilities::endl << Utilities::endl << Utilities::endl;
 				}
 
 				delete[] pushGP::globals::population_agents;
@@ -2394,12 +2394,12 @@ namespace domain
 #endif
 				env.clear_stacks();
 
-//				std::cerr << "Standard exception: " << e.what() << std::endl;
+//				std::cerr << "Standard exception: " << e.what() << Utilities::endl;
 				std::stringstream error;
 
 				error << "Standard exception: " << e.what();
 
-				std::cerr << error.str() << std::endl;
+				std::cerr << error.str() << Utilities::endl;
 
 #if DLEVEL > 0
 				debug_message = error.str();
@@ -2417,12 +2417,12 @@ namespace domain
 #endif
 				env.clear_stacks();
 
-//				std::cerr << "Exception occurred" << std::endl;
+//				std::cerr << "Exception occurred" << Utilities::endl;
 				std::stringstream error;
 
 				error << "Exception occurred";
 
-				std::cerr << error.str() << std::endl;
+				std::cerr << error.str() << Utilities::endl;
 
 #if DLEVEL > 0
 				debug_message = error.str();

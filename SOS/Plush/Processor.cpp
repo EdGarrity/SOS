@@ -245,7 +245,7 @@ namespace Plush
 
 					else
 					{
-						std::cout << atom.instruction_name << " ";
+						Utilities::quick_log << atom.instruction_name << " ";
 					}
 
 
@@ -255,24 +255,24 @@ namespace Plush
 			catch (std::underflow_error& /*e*/)
 			{
 				effort++;
-				//std::cerr << "Underflow exception caught.  effort = " << effort << std::endl;
-				//std::cerr << e.what() << std::endl;
+				//std::cerr << "Underflow exception caught.  effort = " << effort << Utilities::endl;
+				//std::cerr << e.what() << Utilities::endl;
 			}
 			catch (std::overflow_error& /*e*/)
 			{
 				effort++;
-				//std::cerr << "Overflow exception caught.  effort = " << effort << std::endl;
-				//std::cerr << e.what() << std::endl;
+				//std::cerr << "Overflow exception caught.  effort = " << effort << Utilities::endl;
+				//std::cerr << e.what() << Utilities::endl;
 			}
 			catch (std::exception& e)
 			{
 				effort++;
-				//std::cerr << "Unknown std exception caught.  effort = " << effort << std::endl;
-				//std::cerr << e.what() << std::endl;
+				//std::cerr << "Unknown std exception caught.  effort = " << effort << Utilities::endl;
+				//std::cerr << e.what() << Utilities::endl;
 
 				std::stringstream error;
 
-				error << "Unknown std exception caught.effort = " << effort << std::endl << e.what() << std::endl;
+				error << "Unknown std exception caught.effort = " << effort << Utilities::endl << e.what() << Utilities::endl;
 
 				std::cerr << error.str();
 				std::string debug_message;
@@ -285,11 +285,11 @@ namespace Plush
 			catch (...)
 			{
 				effort++;
-				//std::cerr << "Unknown exception caught.  effort = " << effort << std::endl;
+				//std::cerr << "Unknown exception caught.  effort = " << effort << Utilities::endl;
 
 				std::stringstream error;
 
-				error << "Unknown exception caught.  effort = " << effort << std::endl;
+				error << "Unknown exception caught.  effort = " << effort << Utilities::endl;
 
 				std::cerr << error.str();
 #if DLEVEL > 0

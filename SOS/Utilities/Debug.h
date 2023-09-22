@@ -61,13 +61,13 @@ namespace Utilities
 
 			unsigned long percent_memory_use = GetMemoryLoad();
 
-			std::cout << getCurrentTimestamp()
+			Utilities::quick_log << getCurrentTimestamp()
 				<< ",LineNumber=" << std::to_string(line_number++)
 				<< ",Percent_Free_Memory=" << std::to_string(percent_memory_use)
 				<< ",Thread=" << env_index
 				<< ",Function=" << function
 				<< ",Status=" << status
-				<< std::endl;
+				<< Utilities::endl;
 
 			work_order_print_lock.unlock();
 		//}
@@ -83,13 +83,13 @@ namespace Utilities
 
 			unsigned long percent_memory_use = GetMemoryLoad();
 
-			std::cout << getCurrentTimestamp()
+			Utilities::quick_log << getCurrentTimestamp()
 				<< ",LineNumber=" << std::to_string(line_number++)
 				<< ",Percent_Free_Memory=" << std::to_string(percent_memory_use)
 				<< ",Thread=" << env_index
 				<< ",Function=" << function
 				<< ",Status=" << status
-				<< std::endl;
+				<< Utilities::endl;
 		//}
 	}
 
@@ -109,7 +109,7 @@ namespace Utilities
 
 			unsigned long percent_memory_use = GetMemoryLoad();
 
-			std::cout << getCurrentTimestamp()
+			Utilities::quick_log << getCurrentTimestamp()
 				<< ",LineNumber=" << std::to_string(line_number++)
 				<< ",Percent_Free_Memory=" << std::to_string(percent_memory_use)
 				<< ",Thread=" << env_index
@@ -117,7 +117,7 @@ namespace Utilities
 				<< ",Status=" << status
 				<< ",work_order.individual_index = " << individual_index
 				<< ",work_order.example_case=" << example_case
-				<< std::endl;
+				<< Utilities::endl;
 
 			work_order_print_lock.unlock();
 		//}
@@ -139,7 +139,7 @@ namespace Utilities
 			<< "," << line_number
 			<< "," << generation
 			<< trace_msg
-			<< std::endl;
+			<< Utilities::endl;
 
 		std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
 
@@ -151,7 +151,7 @@ namespace Utilities
 			first = false;
 
 			myfile << "time,line_number,generation,thread,individual_index,example_case,ip,instruction,enabled,Exec_size,Exec,Code_size,Code,long_size,long,double_size,double,bool_size,bool,instructions";
-			myfile << std::endl;
+			myfile << Utilities::endl;
 		}
 
 		myfile << ss.str();
@@ -173,10 +173,10 @@ namespace Utilities
 	//	//void operator<<(const std::string& msg) {
 	//	//	std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
 
-	//	//	std::cout << getCurrentTimestamp()
+	//	//	Utilities::quick_log << getCurrentTimestamp()
 	//	//		<< ",LineNumber=" << std::to_string(line_number++)
 	//	//		<< ",Message=" << msg
-	//	//		<< std::endl;
+	//	//		<< Utilities::endl;
 
 	//	//	work_order_print_lock.unlock();
 	//	//}
@@ -184,10 +184,10 @@ namespace Utilities
 	//	//void operator<<(const unsigned int msg) {
 	//	//	std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
 
-	//	//	std::cout << getCurrentTimestamp()
+	//	//	Utilities::quick_log << getCurrentTimestamp()
 	//	//		<< ",LineNumber=" << std::to_string(line_number++)
 	//	//		<< ",Message=" << msg
-	//	//		<< std::endl;
+	//	//		<< Utilities::endl;
 
 	//	//	work_order_print_lock.unlock();
 	//	//}
@@ -196,8 +196,8 @@ namespace Utilities
 	//	//{
 	//	//	std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
 
-	//	//	std::cout << stream
-	//	//		<< std::endl;
+	//	//	Utilities::quick_log << stream
+	//	//		<< Utilities::endl;
 
 	//	//	work_order_print_lock.unlock();
 	//	//}
@@ -207,7 +207,7 @@ namespace Utilities
 	//	Quick_Log& operator<<(const T& value) 
 	//	{
 	//		std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
-	//		std::cout << value;
+	//		Utilities::quick_log << value;
 	//		work_order_print_lock.unlock();
 	//		return *this; // Return a reference to the Log object for chaining
 	//	}
@@ -215,7 +215,7 @@ namespace Utilities
 
 	//};
 
-	//// Define a custom class that represents std::endl
+	//// Define a custom class that represents Utilities::endl
 	//class Endl 
 	//{
 	//public:
@@ -243,14 +243,14 @@ namespace Utilities
 		Quick_Log& operator<<(const T& value) 
 		{
 			{
-				std::osyncstream synced_out(std::cout); // synchronized wrapper for std::cout
+				std::osyncstream synced_out(std::cout); // synchronized wrapper for Utilities::quick_log
 				synced_out << value;
-			} // characters are transferred and std::cout is flushed
+			} // characters are transferred and Utilities::quick_log is flushed
 			return *this; // Return a reference to the Log object for chaining
 		}
 	};
 
-	// Define a custom class that represents std::endl
+	// Define a custom class that represents Utilities::endl
 	class Endl 
 	{
 	public:
@@ -258,9 +258,9 @@ namespace Utilities
 		friend std::ostream& operator<<(std::ostream& os, const Endl& e) 
 		{
 			{
-				std::osyncstream synced_out(std::cout); // synchronized wrapper for std::cout
+				std::osyncstream synced_out(std::cout); // synchronized wrapper for Utilities::quick_log
 				synced_out << std::endl;
-			} // characters are transferred and std::cout is flushed
+			} // characters are transferred and Utilities::quick_log is flushed
 			return os;
 		}
 	};

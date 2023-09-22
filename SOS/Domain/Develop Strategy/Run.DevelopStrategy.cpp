@@ -199,7 +199,7 @@ namespace domain
 					pushGP::globals::child_agents[n].clear_genome();
 
 				// Breed new generation
-				std::cout << "  Breed new generation" << std::endl;
+				Utilities::quick_log << "  Breed new generation" << Utilities::endl;
 
 				std::map<pushGP::SimulatedAnnealing_States, int> state_count;
 
@@ -219,7 +219,7 @@ namespace domain
 					else
 					{
 						if (individual_index % 100 == 0)
-							std::cout << "B";
+							Utilities::quick_log << "B";
 
 						pushGP::SimulatedAnnealing_States state = pushGP::breed(individual_index,
 							_number_of_example_cases,
@@ -239,21 +239,21 @@ namespace domain
 					}
 				}
 
-				std::cout << std::endl;
-				std::cout << std::endl;
+				Utilities::quick_log << Utilities::endl;
+				Utilities::quick_log << Utilities::endl;
 
-				std::cout << "Selection distribution" << std::endl;
-				std::cout << "  Alternate = " << (double)state_count[pushGP::SimulatedAnnealing_States::alternate] / (double)argmap::population_size * 100.0 << std::endl;
-				std::cout << "  Alternate_elite = " << (double)state_count[pushGP::SimulatedAnnealing_States::alternate_elite] / (double)argmap::population_size * 100.0 << std::endl;
-				std::cout << "  Cloan = " << (double)state_count[pushGP::SimulatedAnnealing_States::cloan] / (double)argmap::population_size * 100.0 << std::endl;
-				std::cout << "  Mutate = " << (double)state_count[pushGP::SimulatedAnnealing_States::mutate] / (double)argmap::population_size * 100.0 << std::endl;
-				std::cout << "  Regenerate = " << (double)state_count[pushGP::SimulatedAnnealing_States::regenerate] / (double)argmap::population_size * 100.0 << std::endl;
+				Utilities::quick_log << "Selection distribution" << Utilities::endl;
+				Utilities::quick_log << "  Alternate = " << (double)state_count[pushGP::SimulatedAnnealing_States::alternate] / (double)argmap::population_size * 100.0 << Utilities::endl;
+				Utilities::quick_log << "  Alternate_elite = " << (double)state_count[pushGP::SimulatedAnnealing_States::alternate_elite] / (double)argmap::population_size * 100.0 << Utilities::endl;
+				Utilities::quick_log << "  Cloan = " << (double)state_count[pushGP::SimulatedAnnealing_States::cloan] / (double)argmap::population_size * 100.0 << Utilities::endl;
+				Utilities::quick_log << "  Mutate = " << (double)state_count[pushGP::SimulatedAnnealing_States::mutate] / (double)argmap::population_size * 100.0 << Utilities::endl;
+				Utilities::quick_log << "  Regenerate = " << (double)state_count[pushGP::SimulatedAnnealing_States::regenerate] / (double)argmap::population_size * 100.0 << Utilities::endl;
 
-				std::cout << std::endl;
-				std::cout << std::endl;
+				Utilities::quick_log << Utilities::endl;
+				Utilities::quick_log << Utilities::endl;
 
 				// Keep the best individuals for each test case
-				std::cout << ".";
+				Utilities::quick_log << ".";
 				if (!_include_best_individual_in_breeding_pool)
 				{
 					for (unsigned long training_case = 0; training_case < _number_of_training_cases; training_case++)
@@ -267,7 +267,7 @@ namespace domain
 					}
 				}
 
-				std::cout << std::endl;
+				Utilities::quick_log << Utilities::endl;
 			}
 			catch (const std::exception& e)
 			{
@@ -275,7 +275,7 @@ namespace domain
 
 				error << "Standard exception: " << e.what();
 
-				std::cerr << error.str() << std::endl;
+				std::cerr << error.str() << Utilities::endl;
 
 				throw;
 			}
@@ -285,7 +285,7 @@ namespace domain
 
 				error << "Exception occurred";
 
-				std::cerr << error.str() << std::endl;
+				std::cerr << error.str() << Utilities::endl;
 
 				throw;
 			}
@@ -368,7 +368,7 @@ namespace domain
 			//{
 			//	for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
 			//	{
-			//		std::cout << "Schedule to run strategy " << strategy_index << " on case " << training_case_index;
+			//		Utilities::quick_log << "Schedule to run strategy " << strategy_index << " on case " << training_case_index;
 
 			//		Utilities::work_order_manager.push(strategy_index, training_case_index);
 			//	}
@@ -454,7 +454,7 @@ namespace domain
 				datastore::test_data.load("2020-01-01", "2021-12-31");
 
 				// Load population.  Create more if not enough loaded.
-				std::cout << "Create Population Agents" << std::endl;
+				Utilities::quick_log << "Create Population Agents" << Utilities::endl;
 				agents_created = datastore::agent_data.make_pop_agents(global_env, datastore::agent_data.load());
 
 				if (agents_created > 0)
@@ -492,7 +492,7 @@ namespace domain
 							cool_down_count = argmap::cool_down_period;
 							include_best_individual_in_breeding_pool = false;
 
-							std::cout << "Heat up " << sa.get_temperature() << std::endl;
+							Utilities::quick_log << "Heat up " << sa.get_temperature() << Utilities::endl;
 						}
 					}
 
@@ -504,7 +504,7 @@ namespace domain
 						cool_down_count = (cool_down_count < 0) ? 0 : cool_down_count - 1;
 						include_best_individual_in_breeding_pool = true;
 
-						std::cout << "Cool down " << sa.get_temperature() << std::endl;
+						Utilities::quick_log << "Cool down " << sa.get_temperature() << Utilities::endl;
 					}
 
 					// *****************************************************
@@ -519,11 +519,11 @@ namespace domain
 					//{
 					//	for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
 					//	{
-					//		std::cout << "Run strategy " << strategy_index << " on case " << training_case_index;
+					//		Utilities::quick_log << "Run strategy " << strategy_index << " on case " << training_case_index;
 
 					//		auto results = run_strategy_threadsafe(global_env, strategy_index, training_case_index);
 					//		orders.store(0, strategy_index, training_case_index, std::get<0>(results));
-					//		std::cout << " Order " << std::get<0>(results) << " Score " << std::get<1>(results) << std::endl;
+					//		Utilities::quick_log << " Order " << std::get<0>(results) << " Score " << std::get<1>(results) << Utilities::endl;
 					//	}
 					//}
 
@@ -659,13 +659,13 @@ namespace domain
 					//// ******************************
 					//// *** Install New Generation ***
 					//// ******************************
-					//std::cout << "Install New Generation" << std::endl;
+					//Utilities::quick_log << "Install New Generation" << Utilities::endl;
 
 					//install_next_generation();
 					//generation_number++;
 					//generations_completed_this_session++;
 
-					std::cout << "---------------------------------------------" << std::endl << std::endl << std::endl;
+					Utilities::quick_log << "---------------------------------------------" << Utilities::endl << Utilities::endl << Utilities::endl;
 				}
 
 				delete[] pushGP::globals::population_agents;
@@ -676,16 +676,16 @@ namespace domain
 				delete[] pushGP::globals::population_agents;
 				delete[] pushGP::globals::child_agents;
 
-				std::cout << "Exception: " << e.what() << std::endl;
-				std::cout << "Debug message: " << debug_message << std::endl;
+				Utilities::quick_log << "Exception: " << e.what() << Utilities::endl;
+				Utilities::quick_log << "Debug message: " << debug_message << Utilities::endl;
 			}
 			catch (...)
 			{
 				delete[] pushGP::globals::population_agents;
 				delete[] pushGP::globals::child_agents;
 
-				std::cout << "Unknown exception" << std::endl;
-				std::cout << "Debug message: " << debug_message << std::endl;
+				Utilities::quick_log << "Unknown exception" << Utilities::endl;
+				Utilities::quick_log << "Debug message: " << debug_message << Utilities::endl;
 			}
 			return 0;
 		}

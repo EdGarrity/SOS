@@ -45,7 +45,7 @@ namespace Utilities
 		//	
 		//	error << "popen() failed";
 		//	
-		//	std::cerr << error.str() << std::endl;
+		//	std::cerr << error.str() << Utilities::endl;
 		//	throw MyException(error);
 		//}
 
