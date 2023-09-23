@@ -33,7 +33,7 @@ namespace database
 					char error_message[80];
 					sprintf_s(error_message, 80, "Attempt %d.  Failed to obtain access to the OLE DB Driver.  hr = %lX", attempts, hr);
 
-					Utilities::quick_log << error_message << Utilities::endl;
+					Utilities::logline_threadsafe << error_message /*<< Utilities::endl */;
 
 					std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
@@ -219,7 +219,7 @@ namespace database
 		catch (...)
 		{
 			//Utilities::log_warning("SQLConnection::disconnect() - Error freeeing resources");
-			Utilities::quick_log << "SQLConnection::disconnect() - Error freeeing resources" << Utilities::endl;
+			Utilities::logline_threadsafe << "SQLConnection::disconnect() - Error freeeing resources" /*<< Utilities::endl */;
 
 		}
 

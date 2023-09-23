@@ -10,6 +10,8 @@ namespace Utilities
 	int generation = 0;
 #endif
 
-	Quick_Log quick_log;
-	Endl endl;
+	//Quick_Log quick_log;
+	//Endl endl;
+
+	LogLine_ThreadSafe logline_threadsafe;
 }

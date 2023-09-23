@@ -60,7 +60,7 @@ namespace datastore
 		{
 			std::stringstream error;
 			error << "OrderMatrix::getAllOrders()";
-			std::cerr << error.str() << Utilities::endl;
+			std::cerr << error.str() /*<< Utilities::endl */;
 
 			delete sqlcmd;
 			throw;
@@ -86,7 +86,7 @@ namespace datastore
 		{
 			std::stringstream error;
 			error << "OrderMatrix::clearOrderMatrix()";
-			std::cerr << error.str() << Utilities::endl;
+			std::cerr << error.str() /*<< Utilities::endl */;
 
 			delete sqlcmd_clear_order_matrix;
 			throw;

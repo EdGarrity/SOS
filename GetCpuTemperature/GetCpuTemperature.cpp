@@ -57,18 +57,18 @@ int _tmain(int argc, _TCHAR* argv[])
 //			}
 //		}
 //
-//		Utilities::quick_log << temp << Utilities::endl;
+//		Utilities::quick_log << temp /*<< Utilities::endl */;
 //	}
 //	else
 //	{
 //		//Display DLL related errors.
 //		std::stringstream error;
 //
-//		error << "Error: Core Temp's shared memory could not be read." << Utilities::endl;
-//		error << "Error number: " << coreTempProxy.GetDllError() << Utilities::endl;
-//		error << "Error description: " << coreTempProxy.GetErrorMessage() << Utilities::endl;
+//		error << "Error: Core Temp's shared memory could not be read." /*<< Utilities::endl */;
+//		error << "Error number: " << coreTempProxy.GetDllError() /*<< Utilities::endl */;
+//		error << "Error description: " << coreTempProxy.GetErrorMessage() /*<< Utilities::endl */;
 //
-//		std::cerr << error.str() << Utilities::endl;
+//		std::cerr << error.str() /*<< Utilities::endl */;
 //	}
 //}
 
@@ -115,7 +115,7 @@ void GetCoreTempInfoAlternative()
 					}
 				}
 				
-				Utilities::quick_log << temp << Utilities::endl;
+				Utilities::quick_log << temp /*<< Utilities::endl */;
 			}
 			else
 			{
@@ -138,29 +138,29 @@ void GetCoreTempInfoAlternative()
 				lastError = GetLastError();
 				std::stringstream error;
 				
-				error << "Error: Core Temp's shared memory could not be read." << Utilities::endl;
-				error << "Error number: " << GetLastError() << Utilities::endl;
+				error << "Error: Core Temp's shared memory could not be read." /*<< Utilities::endl */;
+				error << "Error number: " << GetLastError() /*<< Utilities::endl */;
 
 				if ((lastError & UNKNOWN_EXCEPTION) > 0)
-					error << "Error description : Unknown error occured while copying shared memory." << Utilities::endl;
+					error << "Error description : Unknown error occured while copying shared memory." /*<< Utilities::endl */;
 				
 				else
 				{
 					FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, lastError, 0, errMsg, 100, NULL);
-					error << "Error description: " << errMsg << Utilities::endl;
+					error << "Error description: " << errMsg /*<< Utilities::endl */;
 				}
 
-				std::cerr << error.str() << Utilities::endl;
+				std::cerr << error.str() /*<< Utilities::endl */;
 			}
 		}
 		else
-			std::cerr << "Error: The function \"fnGetCoreTempInfo\" in \"GetCoreTempInfo.dll\" could not be found." << Utilities::endl;
+			std::cerr << "Error: The function \"fnGetCoreTempInfo\" in \"GetCoreTempInfo.dll\" could not be found." /*<< Utilities::endl */;
 
 		FreeLibrary(hCT);
 		hCT = NULL;
 	}
 	else
-		std::cerr << "Error: \"GetCoreTempInfo.dll\" could not be loaded." << Utilities::endl;
+		std::cerr << "Error: \"GetCoreTempInfo.dll\" could not be loaded." /*<< Utilities::endl */;
 
 	//Free resources.
 	delete CoreTempData;

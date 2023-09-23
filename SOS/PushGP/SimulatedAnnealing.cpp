@@ -40,11 +40,11 @@ namespace pushGP
 		probability_level_of_regeneration_ = probability_level_of_cloaning_ + regeneration_factor / total_factor;
 
 
-		Utilities::quick_log << " probability_level_of_alternation_ = " << probability_level_of_alternation_ << Utilities::endl;
-		Utilities::quick_log << " probability_level_of_elite_alternation_ = " << probability_level_of_elite_alternation_ << Utilities::endl;
-		Utilities::quick_log << " probability_level_of_mutation_ = " << probability_level_of_mutation_ << Utilities::endl;
-		Utilities::quick_log << " probability_level_of_cloaning_ = " << probability_level_of_cloaning_ << Utilities::endl;
-		Utilities::quick_log << " probability_level_of_regeneration_ = " << probability_level_of_regeneration_ << Utilities::endl;
+		Utilities::logline_threadsafe << " probability_level_of_alternation_ = " << probability_level_of_alternation_ /*<< Utilities::endl */;
+		Utilities::logline_threadsafe << " probability_level_of_elite_alternation_ = " << probability_level_of_elite_alternation_ /*<< Utilities::endl */;
+		Utilities::logline_threadsafe << " probability_level_of_mutation_ = " << probability_level_of_mutation_ /*<< Utilities::endl */;
+		Utilities::logline_threadsafe << " probability_level_of_cloaning_ = " << probability_level_of_cloaning_ /*<< Utilities::endl */;
+		Utilities::logline_threadsafe << " probability_level_of_regeneration_ = " << probability_level_of_regeneration_ /*<< Utilities::endl */;
 	}
 
 	SimulatedAnnealing_States SimulatedAnnealing::get_state(double _random_variable)

@@ -29,7 +29,7 @@ namespace domain
 	//			workorder_form.get_stratergy_index(),
 	//			workorder_form.get_training_case_index(),
 	//			std::get<0>(results));
-	//		Utilities::quick_log << " Finished Order " << std::get<0>(results) << " Score " << std::get<1>(results) << Utilities::endl;
+	//		Utilities::quick_log << " Finished Order " << std::get<0>(results) << " Score " << std::get<1>(results) /*<< Utilities::endl */;
 	//	}
 	//	catch (const std::exception& /*e*/)
 	//	{
@@ -37,7 +37,7 @@ namespace domain
 	//		std::stringstream warning_message;
 	//		warning_message << "domain::Utilities::Task RunProgram::operator() - unable to insert work into queue.  env_index=" << env_index;
 
-	//		std::cerr << warning_message.str() << Utilities::endl;
+	//		std::cerr << warning_message.str() /*<< Utilities::endl */;
 
 	//		throw std::runtime_error(warning_message.str());
 	//	}
@@ -47,7 +47,7 @@ namespace domain
 	//		std::stringstream warning_message;
 	//		warning_message << "domain::Utilities::Task RunProgram::operator() - An unknown error has occured.  env_index=" << env_index;
 
-	//		std::cerr << warning_message.str() << Utilities::endl;
+	//		std::cerr << warning_message.str() /*<< Utilities::endl */;
 
 	//		throw std::runtime_error(warning_message.str());
 	//	}
@@ -71,7 +71,7 @@ namespace domain
 	//			workorder_form.get_stratergy_index(),
 	//			workorder_form.get_training_case_index(),
 	//			std::get<0>(results));
-	//		Utilities::quick_log << " Finished Order " << std::get<0>(results) << " Score " << std::get<1>(results) << Utilities::endl;
+	//		Utilities::quick_log << " Finished Order " << std::get<0>(results) << " Score " << std::get<1>(results) /*<< Utilities::endl */;
 	//	}
 	//	catch (const std::exception& /*e*/)
 	//	{
@@ -79,7 +79,7 @@ namespace domain
 	//		std::stringstream warning_message;
 	//		warning_message << "domain::Utilities::Task RunProgram::operator() - unable to insert work into queue.  env_index=" << env_index;
 
-	//		std::cerr << warning_message.str() << Utilities::endl;
+	//		std::cerr << warning_message.str() /*<< Utilities::endl */;
 
 	//		throw std::runtime_error(warning_message.str());
 	//	}
@@ -89,7 +89,7 @@ namespace domain
 	//		std::stringstream warning_message;
 	//		warning_message << "domain::Utilities::Task RunProgram::operator() - An unknown error has occured.  env_index=" << env_index;
 
-	//		std::cerr << warning_message.str() << Utilities::endl;
+	//		std::cerr << warning_message.str() /*<< Utilities::endl */;
 
 	//		throw std::runtime_error(warning_message.str());
 	//	}
@@ -100,7 +100,7 @@ namespace domain
 		co_await m_pool.schedule();
 
 		// Run the stratergy and case specified in the work order, in a seperate thread.
-		Utilities::quick_log << "Running strategy " << workorder_form.get_stratergy_index() << " on case " << workorder_form.get_training_case_index() << " on thread " << std::this_thread::get_id() << Utilities::endl;
+		Utilities::logline_threadsafe << "Running strategy " << workorder_form.get_stratergy_index() << " on case " << workorder_form.get_training_case_index() << " on thread " << std::this_thread::get_id() /*<< Utilities::endl */;
 
 		int env_index = 99;
 
@@ -115,7 +115,7 @@ namespace domain
 				workorder_form.get_training_case_index(),
 				std::get<0>(results));
 
-			Utilities::quick_log << " Finished Order " << std::get<0>(results) << " Score " << std::get<1>(results) << " on thread " << std::this_thread::get_id() << Utilities::endl;
+			Utilities::logline_threadsafe << " Finished Order " << std::get<0>(results) << " Score " << std::get<1>(results) << " on thread " << std::this_thread::get_id() /*<< Utilities::endl */;
 		}
 		catch (const std::exception& /*e*/)
 		{
@@ -123,7 +123,7 @@ namespace domain
 			std::stringstream warning_message;
 			warning_message << "domain::Utilities::Task RunProgram::operator() - unable to insert work into queue.  env_index=" << env_index;
 
-			std::cerr << warning_message.str() << Utilities::endl;
+			std::cerr << warning_message.str() /*<< Utilities::endl */;
 
 			throw std::runtime_error(warning_message.str());
 		}
@@ -133,7 +133,7 @@ namespace domain
 			std::stringstream warning_message;
 			warning_message << "domain::Utilities::Task RunProgram::operator() - An unknown error has occured.  env_index=" << env_index;
 
-			std::cerr << warning_message.str() << Utilities::endl;
+			std::cerr << warning_message.str() /*<< Utilities::endl */;
 
 			throw std::runtime_error(warning_message.str());
 		}

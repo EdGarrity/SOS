@@ -31,8 +31,7 @@ namespace datastore
 	//
 	void FinancialData::load(size_t case_index)
 	{
-		Utilities::quick_log << Utilities::endl << "Loading financial data for case " << case_index << Utilities::endl;
-		Utilities::quick_log << Utilities::endl << "Loading financial data for case " << case_index << Utilities::endl;
+		Utilities::logline_threadsafe /*<< Utilities::endl */ << "Loading financial data for case " << case_index /*<< Utilities::endl */;
 
 		database::SQLCommand* sqlcmd_get_case_data = nullptr;
 
@@ -58,7 +57,7 @@ namespace datastore
 			{
 				double data = sqlcmd_get_case_data->get_field_as_double(1);
 
-				Utilities::quick_log << data << Utilities::endl;
+				//Utilities::quick_log << data /*<< Utilities::endl */;
 
 				values.push_back(data);
 			}
@@ -70,25 +69,25 @@ namespace datastore
 		}
 		catch (const std::exception& e)
 		{
-			Utilities::quick_log << "Exception: " << e.what() << Utilities::endl;
+			Utilities::logline_threadsafe << "Exception: " << e.what() /*<< Utilities::endl */;
 
 			if (sqlcmd_get_case_data != nullptr)
 				delete sqlcmd_get_case_data;
 
 			std::stringstream error;
 			error << "CaseData::load()";
-			std::cerr << error.str() << Utilities::endl;
+			std::cerr << error.str() /*<< Utilities::endl */;
 		}
 		catch (...)
 		{
-			Utilities::quick_log << "Unknown exception" << Utilities::endl;
+			Utilities::logline_threadsafe << "Unknown exception" /*<< Utilities::endl */;
 
 			if (sqlcmd_get_case_data != nullptr)
 				delete sqlcmd_get_case_data;
 
 			std::stringstream error;
 			error << "CaseData::load()";
-			std::cerr << error.str() << Utilities::endl;
+			std::cerr << error.str() /*<< Utilities::endl */;
 		}
 	}
 

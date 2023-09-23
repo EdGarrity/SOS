@@ -67,7 +67,7 @@ namespace Utilities
 				<< ",Thread=" << env_index
 				<< ",Function=" << function
 				<< ",Status=" << status
-				<< Utilities::endl;
+				/*<< Utilities::endl */;
 
 			work_order_print_lock.unlock();
 		//}
@@ -89,7 +89,7 @@ namespace Utilities
 				<< ",Thread=" << env_index
 				<< ",Function=" << function
 				<< ",Status=" << status
-				<< Utilities::endl;
+				/*<< Utilities::endl */;
 		//}
 	}
 
@@ -117,7 +117,7 @@ namespace Utilities
 				<< ",Status=" << status
 				<< ",work_order.individual_index = " << individual_index
 				<< ",work_order.example_case=" << example_case
-				<< Utilities::endl;
+				/*<< Utilities::endl */;
 
 			work_order_print_lock.unlock();
 		//}
@@ -139,7 +139,7 @@ namespace Utilities
 			<< "," << line_number
 			<< "," << generation
 			<< trace_msg
-			<< Utilities::endl;
+			/*<< Utilities::endl */;
 
 		std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
 
@@ -151,7 +151,7 @@ namespace Utilities
 			first = false;
 
 			myfile << "time,line_number,generation,thread,individual_index,example_case,ip,instruction,enabled,Exec_size,Exec,Code_size,Code,long_size,long,double_size,double,bool_size,bool,instructions";
-			myfile << Utilities::endl;
+			myfile /*<< Utilities::endl */;
 		}
 
 		myfile << ss.str();
@@ -176,7 +176,7 @@ namespace Utilities
 	//	//	Utilities::quick_log << getCurrentTimestamp()
 	//	//		<< ",LineNumber=" << std::to_string(line_number++)
 	//	//		<< ",Message=" << msg
-	//	//		<< Utilities::endl;
+	//	//		/*<< Utilities::endl */;
 
 	//	//	work_order_print_lock.unlock();
 	//	//}
@@ -187,7 +187,7 @@ namespace Utilities
 	//	//	Utilities::quick_log << getCurrentTimestamp()
 	//	//		<< ",LineNumber=" << std::to_string(line_number++)
 	//	//		<< ",Message=" << msg
-	//	//		<< Utilities::endl;
+	//	//		/*<< Utilities::endl */;
 
 	//	//	work_order_print_lock.unlock();
 	//	//}
@@ -197,7 +197,7 @@ namespace Utilities
 	//	//	std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
 
 	//	//	Utilities::quick_log << stream
-	//	//		<< Utilities::endl;
+	//	//		/*<< Utilities::endl */;
 
 	//	//	work_order_print_lock.unlock();
 	//	//}
@@ -235,20 +235,20 @@ namespace Utilities
 
 
 
-	class Quick_Log
-	{
-	public:
-		// Overload the << operator to print to std::out
-		template <typename T>
-		Quick_Log& operator<<(const T& value) 
-		{
-			{
-				std::osyncstream synced_out(std::cout); // synchronized wrapper for Utilities::quick_log
-				synced_out << value;
-			} // characters are transferred and Utilities::quick_log is flushed
-			return *this; // Return a reference to the Log object for chaining
-		}
-	};
+	//class Quick_Log
+	//{
+	//public:
+	//	// Overload the << operator to print to std::out
+	//	template <typename T>
+	//	Quick_Log& operator<<(const T& value) 
+	//	{
+	//		{
+	//			std::osyncstream synced_out(std::cout); // synchronized wrapper for Utilities::quick_log
+	//			synced_out << value;
+	//		} // characters are transferred and Utilities::quick_log is flushed
+	//		return *this; // Return a reference to the Log object for chaining
+	//	}
+	//};
 
 	// Define a custom class that represents Utilities::endl
 	class Endl 
@@ -265,6 +265,26 @@ namespace Utilities
 		}
 	};
 
-	extern Quick_Log quick_log;
-	extern Endl endl;
+	//extern Quick_Log quick_log;
+	//extern Endl endl;
+
+
+
+	class LogLine_ThreadSafe
+	{
+	public:
+		// Overload the << operator to print to std::out
+		template <typename T>
+		LogLine_ThreadSafe& operator<<(const T& value)
+		{
+			{
+				std::osyncstream synced_out(std::cout); // synchronized wrapper for Utilities::LogLine_ThreadSafe
+				synced_out << value;
+				synced_out << std::endl;
+			} // characters are transferred and Utilities::LogLine_ThreadSafe is flushed
+			return *this; // Return a reference to the Log object for chaining
+		}
+	};
+
+	extern LogLine_ThreadSafe logline_threadsafe;
 }
