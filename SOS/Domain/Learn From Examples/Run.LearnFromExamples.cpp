@@ -550,7 +550,7 @@ namespace domain
 					{
 						CSVRow row;
 
-						Utilities::logline_threadsafe << "training case n = " << training_case_index /*<< Utilities::endl */;
+						std::ostringstream ss; ss  << "training case n = " << training_case_index; Utilities::logline_threadsafe << ss.str();
 
 						// Get problem
 						training_case_problem_str = fitness_cases_problem.back();
@@ -585,7 +585,7 @@ namespace domain
 					{
 						CSVRow row;
 
-						Utilities::logline_threadsafe << "test case n = " << test_case_index /*<< Utilities::endl */;
+						std::ostringstream ss; ss  << "test case n = " << test_case_index; Utilities::logline_threadsafe << ss.str();
 
 						// Get problem
 						test_case_problem_str = fitness_cases_problem.back();
@@ -622,7 +622,7 @@ namespace domain
 
 				std::stringstream error;
 				error << "SQLConnection::load_example_cases()";
-				std::cerr << error.str() /*<< Utilities::endl */;
+				std::cerr << error.str();
 
 				return training_case_index + test_case_index;
 			}
@@ -848,7 +848,9 @@ namespace domain
 					while ((sqlcmd_get_individuals->fetch_next()) && (n < argmap::population_size))
 					{
 						if ((n % 1'000) == 0)
-							Utilities::logline_threadsafe << "n = " << n /*<< Utilities::endl */;
+						{
+							std::ostringstream ss; ss << "n = " << n; Utilities::logline_threadsafe << ss.str();
+						}
 
 						std::string genome = Utilities::trim_copy(sqlcmd_get_individuals->get_field_as_string(2));
 
@@ -876,7 +878,9 @@ namespace domain
 						}
 
 						else
-							Utilities::logline_threadsafe << "n = " << n << "  Ignoring empty genome string" /*<< Utilities::endl */;
+						{
+							std::ostringstream ss; ss << "n = " << n << "  Ignoring empty genome string"; Utilities::logline_threadsafe << ss.str();
+						}
 					}
 				}
 			}
@@ -886,7 +890,7 @@ namespace domain
 
 				std::stringstream error;
 				error << "SQLConnection::load_pop_agents()";
-				std::cerr << error.str() /*<< Utilities::endl */;
+				std::cerr << error.str(); 
 
 				return n;
 			}
@@ -920,7 +924,9 @@ namespace domain
 			RPC_STATUS ret=UuidCreateNil(&NilUuid);
 
 			if (ret != RPC_S_OK)
-				Utilities::logline_threadsafe << "UuidCreateNil() did not return RPC_S_OK" /*<< Utilities::endl */;
+			{
+				std::ostringstream ss; ss << "UuidCreateNil() did not return RPC_S_OK"; Utilities::logline_threadsafe << ss.str();
+			}
 
 			//database::SQLCommand* sqlcmd_delete_individuals;
 			database::SQLCommand* sqlcmd_insert_new_individual;
@@ -1135,7 +1141,9 @@ namespace domain
 				unsigned long max_effort_for_individual = 0;
 
 				if ((individual_index % 100) == 0)
-					Utilities::logline_threadsafe << individual_index;
+				{
+					std::ostringstream ss; ss << individual_index; Utilities::logline_threadsafe << ss.str();
+				}
 
 				for (unsigned long example_case = 0; example_case < _number_of_example_cases; example_case++)
 				{
@@ -1175,7 +1183,9 @@ namespace domain
 				}
 
 				if ((individual_index % 100) == 0)
-					Utilities::logline_threadsafe /*<< Utilities::endl */;
+				{
+					std::ostringstream ss; ss << " "; Utilities::logline_threadsafe << ss.str();
+				}
 			}
 
 			if (individual_with_best_score == -1)
@@ -1186,7 +1196,7 @@ namespace domain
 
 			delete envp_local;
 
-			Utilities::logline_threadsafe /*<< Utilities::endl */;
+			{std::ostringstream ss; ss << " "; Utilities::logline_threadsafe << ss.str(); }
 
 			return std::make_tuple
 			(
@@ -1222,7 +1232,9 @@ namespace domain
 				unsigned long max_effort_for_individual = 0;
 
 				if ((individual_index % 100) == 0)
-					Utilities::logline_threadsafe << individual_index;
+				{
+					std::ostringstream ss; ss << individual_index; Utilities::logline_threadsafe << ss.str();
+				}
 
 				for (size_t example_case : downsampled_training_cases)
 				{
@@ -1262,7 +1274,9 @@ namespace domain
 				}
 
 				if ((individual_index % 100) == 0)
-					Utilities::logline_threadsafe /*<< Utilities::endl */;
+				{
+					std::ostringstream ss; ss; Utilities::logline_threadsafe << ss.str();
+				}
 			}
 
 			if (individual_with_best_score == -1)
@@ -1273,7 +1287,7 @@ namespace domain
 
 			delete envp_local;
 
-			Utilities::logline_threadsafe /*<< Utilities::endl */;
+			{std::ostringstream ss; ss; Utilities::logline_threadsafe << ss.str(); }
 
 			return std::make_tuple
 			(
@@ -1365,7 +1379,7 @@ namespace domain
 			double min_score = (std::numeric_limits<double>::max)();
 			unsigned long max_effort_for_best_individual = 0;
 
-			Utilities::logline_threadsafe << "compute_training_error_for_individual_thread_safe() - Process threads" /*<< Utilities::endl */;
+			std::ostringstream ss; ss  << "compute_training_error_for_individual_thread_safe() - Process threads"; Utilities::logline_threadsafe << ss.str();
 
 			Utilities::work_order_manager.stop();
 
@@ -1387,7 +1401,7 @@ namespace domain
 			Utilities::work_order_manager.start();
 			Utilities::work_order_manager.wait_for_all_threads_to_complete();
 
-			Utilities::logline_threadsafe << "compute_training_error_for_individual_thread_safe() - Aggregate errors" /*<< Utilities::endl */;
+			{std::ostringstream ss; ss << "compute_training_error_for_individual_thread_safe() - Aggregate errors"; Utilities::logline_threadsafe << ss.str(); }
 
 			int error_count_for_individual = 0;
 			double avg_error_for_individual = 0.0;
@@ -1424,7 +1438,7 @@ namespace domain
 				max_effort_for_best_individual = max_effort_for_individual;
 			}
 
-			Utilities::logline_threadsafe << "compute_training_error_for_individual_thread_safe() - Return result" /*<< Utilities::endl */;
+			{std::ostringstream ss; ss << "compute_training_error_for_individual_thread_safe() - Return result"; Utilities::logline_threadsafe << ss.str(); }
 
 			return std::make_tuple
 			(
@@ -1448,7 +1462,7 @@ namespace domain
 			double min_score = (std::numeric_limits<double>::max)();
 			unsigned long max_effort_for_best_individual = 0;
 
-			Utilities::logline_threadsafe << "compute_training_errors_thread_safe() - Process threads" /*<< Utilities::endl */;
+			{std::ostringstream ss; ss << "compute_training_errors_thread_safe() - Process threads"; Utilities::logline_threadsafe << ss.str(); }
 
 			Utilities::work_order_manager.stop();
 
@@ -1474,7 +1488,7 @@ namespace domain
 			Utilities::work_order_manager.start();
 			Utilities::work_order_manager.wait_for_all_threads_to_complete();
 
-			Utilities::logline_threadsafe << "compute_training_errors_thread_safe() - Aggregate errors" /*<< Utilities::endl */;
+			{std::ostringstream ss; ss << "compute_training_errors_thread_safe() - Aggregate errors"; Utilities::logline_threadsafe << ss.str(); }
 
 			for (unsigned long individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			{
@@ -1514,7 +1528,7 @@ namespace domain
 				}
 			}
 
-			Utilities::logline_threadsafe << "compute_training_errors_thread_safe() - Return result" /*<< Utilities::endl */;
+			{std::ostringstream ss; ss << "compute_training_errors_thread_safe() - Return result"; Utilities::logline_threadsafe << ss.str(); }
 
 			return std::make_tuple
 			(
@@ -1539,7 +1553,7 @@ namespace domain
 			unsigned long max_effort_for_best_individual = 0;
 			size_t number_of_example_cases = downsampled_training_cases.size();
 
-			Utilities::logline_threadsafe << "compute_downsampled_training_errors_thread_safe() - Process threads" /*<< Utilities::endl */;
+			{std::ostringstream ss; ss << "compute_downsampled_training_errors_thread_safe() - Process threads"; Utilities::logline_threadsafe << ss.str(); }
 
 			Utilities::work_order_manager.stop();
 
@@ -1564,7 +1578,7 @@ namespace domain
 			Utilities::work_order_manager.start();
 			Utilities::work_order_manager.wait_for_all_threads_to_complete();
 
-			Utilities::logline_threadsafe << "compute_downsampled_training_errors_thread_safe() - Aggregate errors" /*<< Utilities::endl */;
+			{std::ostringstream ss; ss << "compute_downsampled_training_errors_thread_safe() - Aggregate errors"; Utilities::logline_threadsafe << ss.str(); }
 
 			for (unsigned long individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			{
@@ -1604,7 +1618,7 @@ namespace domain
 				}
 			}
 
-			Utilities::logline_threadsafe << "compute_downsampled_training_errors_thread_safe() - Return result" /*<< Utilities::endl */;
+			{std::ostringstream ss; ss << "compute_downsampled_training_errors_thread_safe() - Return result"; Utilities::logline_threadsafe << ss.str(); }
 
 			return std::make_tuple
 			(
@@ -1627,7 +1641,7 @@ namespace domain
 
 			for (unsigned long example_case = 0; example_case < argmap::number_of_test_cases; ++example_case)
 			{
-				Utilities::logline_threadsafe << ".";
+				{std::ostringstream ss; ss << "."; }
 
 				std::vector<double> example_problem(test_cases_problem[example_case].begin(), test_cases_problem[example_case].end());
 				std::vector<double> example_solution(test_cases_solution[example_case].begin(), test_cases_solution[example_case].end());
@@ -1640,8 +1654,11 @@ namespace domain
 
 			error = (double)error_count / (double)argmap::number_of_test_cases;
 
-			Utilities::logline_threadsafe /*<< Utilities::endl */;
-			Utilities::logline_threadsafe /*<< Utilities::endl */;
+			{
+				std::ostringstream ss; 
+				ss << " "; 
+				Utilities::logline_threadsafe << ss.str(); 
+			}
 
 			return error;
 		}
@@ -1658,12 +1675,12 @@ namespace domain
 				combinable<pushGP::globals::Training_case_min_error_type> training_case_min_error;
 
 				// Reset children.
-				Utilities::logline_threadsafe << "  Reset children" /*<< Utilities::endl */;
+				{std::ostringstream ss; ss << "  Reset children"; Utilities::logline_threadsafe << ss.str(); }
 				for (unsigned long n = 0; n < argmap::population_size; n++)
 					pushGP::globals::child_agents[n].clear_genome();
 
 				// Breed new generation
-				Utilities::logline_threadsafe << "  Breed new generation" /*<< Utilities::endl */;
+				{std::ostringstream ss; ss << "  Breed new generation"; Utilities::logline_threadsafe << ss.str(); }
 
 				std::map<pushGP::SimulatedAnnealing_States, int> state_count;
 
@@ -1677,15 +1694,16 @@ namespace domain
 					Plush::Genome<Plush::CodeAtom>& child_genome = pushGP::globals::child_agents[individual_index].get_genome();
 
 					// Keep the best individual
-	//				Utilities::quick_log << "  Keep the best individual" /*<< Utilities::endl */;
+	//				Utilities::quick_log << "  Keep the best individual"; Utilities::logline_threadsafe << ss.str();
 					if ((!_include_best_individual_in_breeding_pool) && (individual_index == _best_individual))
 						pushGP::globals::child_agents[individual_index].copy(pushGP::globals::population_agents[individual_index]);
 
 					else
 					{
-						//					Utilities::quick_log << "  breed(" << individual_index << ")" /*<< Utilities::endl */;
 						if (individual_index % 100 == 0)
-							Utilities::logline_threadsafe << "B";
+						{
+							std::ostringstream ss; ss << "B";
+						}
 
 						pushGP::SimulatedAnnealing_States state = pushGP::breed(individual_index,
 							_number_of_example_cases,
@@ -1698,32 +1716,40 @@ namespace domain
 						state_count[state]++;
 
 						// If a child with the same genome already exists, create a new random child.
-	//					Utilities::quick_log << "  If a child with the same genome already exists, create a new random child." /*<< Utilities::endl */;
+	//					Utilities::quick_log << "  If a child with the same genome already exists, create a new random child."; Utilities::logline_threadsafe << ss.str();
 						if (set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string()).second == false)
 						{
-							//						Utilities::quick_log << "  create a new random child." /*<< Utilities::endl */;
+							//						Utilities::quick_log << "  create a new random child."; Utilities::logline_threadsafe << ss.str();
 							//						pushGP::globals::child_agents[individual_index].set_genome(pushGP::make_random_plush_genome(genome));
 							pushGP::make_random_plush_genome(child_genome);
 						}
 					}
 				}
 
-				Utilities::logline_threadsafe /*<< Utilities::endl */;
-				Utilities::logline_threadsafe /*<< Utilities::endl */;
+				{
+					std::ostringstream ss; 
+					ss << " "; 
+					Utilities::logline_threadsafe << ss.str(); 
+					Utilities::logline_threadsafe << ss.str();
+				}
 
-				Utilities::logline_threadsafe << "Selection distribution" /*<< Utilities::endl */;
-				Utilities::logline_threadsafe << "  Alternate = " << (double)state_count[pushGP::SimulatedAnnealing_States::alternate] / (double)argmap::population_size * 100.0 /*<< Utilities::endl */;
-				Utilities::logline_threadsafe << "  Alternate_elite = " << (double)state_count[pushGP::SimulatedAnnealing_States::alternate_elite] / (double)argmap::population_size * 100.0 /*<< Utilities::endl */;
-				Utilities::logline_threadsafe << "  Cloan = " << (double)state_count[pushGP::SimulatedAnnealing_States::cloan] / (double)argmap::population_size * 100.0 /*<< Utilities::endl */;
-				Utilities::logline_threadsafe << "  Mutate = " << (double)state_count[pushGP::SimulatedAnnealing_States::mutate] / (double)argmap::population_size * 100.0 /*<< Utilities::endl */;
-				Utilities::logline_threadsafe << "  Regenerate = " << (double)state_count[pushGP::SimulatedAnnealing_States::regenerate] / (double)argmap::population_size * 100.0 /*<< Utilities::endl */;
+				{std::ostringstream ss; ss << "Selection distribution"; Utilities::logline_threadsafe << ss.str(); }
+				{std::ostringstream ss; ss << "  Alternate = " << (double)state_count[pushGP::SimulatedAnnealing_States::alternate] / (double)argmap::population_size * 100.0; Utilities::logline_threadsafe << ss.str(); }
+				{std::ostringstream ss; ss << "  Alternate_elite = " << (double)state_count[pushGP::SimulatedAnnealing_States::alternate_elite] / (double)argmap::population_size * 100.0; Utilities::logline_threadsafe << ss.str(); }
+				{std::ostringstream ss; ss << "  Cloan = " << (double)state_count[pushGP::SimulatedAnnealing_States::cloan] / (double)argmap::population_size * 100.0; Utilities::logline_threadsafe << ss.str(); }
+				{std::ostringstream ss; ss << "  Mutate = " << (double)state_count[pushGP::SimulatedAnnealing_States::mutate] / (double)argmap::population_size * 100.0; Utilities::logline_threadsafe << ss.str(); }
+				{std::ostringstream ss; ss << "  Regenerate = " << (double)state_count[pushGP::SimulatedAnnealing_States::regenerate] / (double)argmap::population_size * 100.0; Utilities::logline_threadsafe << ss.str(); }
 
-				Utilities::logline_threadsafe /*<< Utilities::endl */;
-				Utilities::logline_threadsafe /*<< Utilities::endl */;
+				{
+					std::ostringstream ss;
+					ss << " ";
+					Utilities::logline_threadsafe << ss.str();
+					Utilities::logline_threadsafe << ss.str();
+				}
 
 				// Keep the best individuals for each test case
-	//			Utilities::quick_log << "  Keep the best individuals for each test case" /*<< Utilities::endl */;
-				Utilities::logline_threadsafe << ".";
+	//			Utilities::quick_log << "  Keep the best individuals for each test case"; Utilities::logline_threadsafe << ss.str();
+				std::ostringstream ss; ss  << ".";
 				if (!_include_best_individual_in_breeding_pool)
 				{
 					for (unsigned long training_case = 0; training_case < domain::argmap::number_of_training_cases; training_case++)
@@ -1732,13 +1758,13 @@ namespace domain
 
 						if (best_individual_for_training_case < (std::numeric_limits<unsigned int>::max)())
 						{
-							//						Utilities::quick_log << "  						pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);" /*<< Utilities::endl */;
+							//						Utilities::quick_log << "  						pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);"; Utilities::logline_threadsafe << ss.str();
 							pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);
 						}
 					}
 				}
 
-				Utilities::logline_threadsafe /*<< Utilities::endl */;
+				{std::ostringstream ss; ss; Utilities::logline_threadsafe << ss.str(); }
 			}
 			catch (const std::exception& e)
 			{
@@ -1746,7 +1772,7 @@ namespace domain
 
 				error << "Standard exception: " << e.what();
 
-				std::cerr << error.str() /*<< Utilities::endl */;
+				std::cerr << error.str(); 
 
 				throw;
 			}
@@ -1756,7 +1782,7 @@ namespace domain
 
 				error << "Exception occurred";
 
-				std::cerr << error.str() /*<< Utilities::endl */;
+				std::cerr << error.str(); 
 
 				throw;
 			}
@@ -1772,12 +1798,12 @@ namespace domain
 		//	pushGP::globals::Training_case_min_error_type training_case_min_error;
 
 		//	// Reset children.
-		//	Utilities::quick_log << "  Reset children" /*<< Utilities::endl */;
+		//	Utilities::quick_log << "  Reset children"; Utilities::logline_threadsafe << ss.str();
 		//	for (unsigned int n = 0; n < argmap::population_size; n++)
 		//		pushGP::globals::child_agents[n].clear_genome();
 
 		//	// Breed new generation
-		//	Utilities::quick_log << "  Breed new generation" /*<< Utilities::endl */;
+		//	Utilities::quick_log << "  Breed new generation"; Utilities::logline_threadsafe << ss.str();
 
 		//	const unsigned int zero = 0;
 		//	parallel_for(zero, domain::argmap::population_size, [&, _best_individual, _number_of_example_cases](const unsigned int individual_index)
@@ -1834,7 +1860,7 @@ namespace domain
 		//		}
 		//	}
 
-		//	Utilities::quick_log /*<< Utilities::endl */;
+		//	Utilities::quick_log; Utilities::logline_threadsafe << ss.str();
 		//}
 
 		void install_next_generation()
@@ -1955,7 +1981,7 @@ namespace domain
 			// Check if CPU is too hot and if so, wait for it to cool down.
 			double temp = Utilities::GetCpuTemperature();
 
-			Utilities::logline_threadsafe << "CPU Temperature is " << temp /*<< Utilities::endl */;
+			{std::ostringstream ss; ss << "CPU Temperature is " << temp; Utilities::logline_threadsafe << ss.str(); }
 
 			// Check if there is enough memory to continue
 			unsigned long percent_memory_use = Utilities::GetMemoryLoad();
@@ -1966,7 +1992,7 @@ namespace domain
 
 				error << "Not enough free memory to continue.  Percent used = " << percent_memory_use;
 
-				std::cerr << error.str() /*<< Utilities::endl */;
+				std::cerr << error.str(); 
 
 #if DLEVEL > 0
 				debug_message = error.str();
@@ -2026,14 +2052,14 @@ namespace domain
 				}
 
 				// Load example cases.  Create more if not enough loaded.
-				Utilities::logline_threadsafe << "Load Example Cases" /*<< Utilities::endl */;
+				{std::ostringstream ss; ss << "Load Example Cases"; Utilities::logline_threadsafe << ss.str(); }
 				unsigned int example_cases_created = make_example_cases(load_example_cases());
 
 				if (example_cases_created > 0)
 					save_example_cases();
 
 				// Load population.  Create more if not enough loaded.
-				Utilities::logline_threadsafe << "Create Population Agents" /*<< Utilities::endl */;
+				{std::ostringstream ss; ss << "Create Population Agents"; Utilities::logline_threadsafe << ss.str(); }
 				agents_created = make_pop_agents(env, load_pop_agents());
 
 				if (agents_created > argmap::population_size / 2)
@@ -2079,14 +2105,14 @@ namespace domain
 					//	cool_down_count = argmap::cool_down_period;
 					//	include_best_individual_in_breeding_pool = false;
 
-					//	Utilities::quick_log << "Heat up " << sa.get_tempareture() /*<< Utilities::endl */;
+					//	Utilities::quick_log << "Heat up " << sa.get_tempareture(); Utilities::logline_threadsafe << ss.str();
 					//}
 					//else
 					//{
 					//	sa.cool_down();
 					//	cool_down_count = (cool_down_count < 0) ? 0 : cool_down_count - 1;
 
-					//	Utilities::quick_log << "Cool down " << sa.get_tempareture() /*<< Utilities::endl */;
+					//	Utilities::quick_log << "Cool down " << sa.get_tempareture(); Utilities::logline_threadsafe << ss.str();
 					//}
 
 
@@ -2105,7 +2131,7 @@ namespace domain
 							cool_down_count = argmap::cool_down_period;
 							include_best_individual_in_breeding_pool = false;
 
-							Utilities::logline_threadsafe << "Heat up " << sa.get_temperature() /*<< Utilities::endl */;
+							std::ostringstream ss; ss  << "Heat up " << sa.get_temperature(); Utilities::logline_threadsafe << ss.str();
 						}
 					}
 
@@ -2117,7 +2143,7 @@ namespace domain
 						cool_down_count = (cool_down_count < 0) ? 0 : cool_down_count - 1;
 						include_best_individual_in_breeding_pool = true;
 
-						Utilities::logline_threadsafe << "Cool down " << sa.get_temperature() /*<< Utilities::endl */;
+						std::ostringstream ss; ss  << "Cool down " << sa.get_temperature(); Utilities::logline_threadsafe << ss.str();
 					}
 
 					prev_best_individual_error = best_individual_error;
@@ -2125,31 +2151,26 @@ namespace domain
 					// Check if CPU is too hot and if so, wait for it to cool down.
 					double temp = Utilities::GetCpuTemperature();
 
-					Utilities::logline_threadsafe << "CPU Temperature: Min = " << argmap::cool_temperature << " Max = " << argmap::hot_temperature << " Current Temp = " << temp /*<< Utilities::endl */;
+					{std::ostringstream ss; ss << "CPU Temperature: Min = " << argmap::cool_temperature << " Max = " << argmap::hot_temperature << " Current Temp = " << temp; Utilities::logline_threadsafe << ss.str(); }
 
 					if (temp > argmap::hot_temperature)
 					{
-						Utilities::logline_threadsafe << "CPU is too hot.  Waiting for it to cool down." /*<< Utilities::endl */;
+						std::ostringstream ss; ss  << "CPU is too hot.  Waiting for it to cool down."; Utilities::logline_threadsafe << ss.str();
 
 						do
 						{
 							std::this_thread::sleep_for(std::chrono::minutes(argmap::cool_down_minutes));
 							temp = Utilities::GetCpuTemperature();
 
-							Utilities::logline_threadsafe << "CPU Temperature is " << temp /*<< Utilities::endl */;
+							std::ostringstream ss; ss  << "CPU Temperature is " << temp; Utilities::logline_threadsafe << ss.str();
 						} while (temp > argmap::cool_temperature);
 
-						Utilities::logline_threadsafe << "CPU is now cool enough to continue." /*<< Utilities::endl */;
-						Utilities::logline_threadsafe /*<< Utilities::endl */;
+						{std::ostringstream ss; ss << "CPU is now cool enough to continue."; Utilities::logline_threadsafe << ss.str(); }
+						{std::ostringstream ss; ss << " "; Utilities::logline_threadsafe << ss.str(); }
 					}
 
 					// Check if there is enough memory to continue
 					unsigned long percent_memory_use = Utilities::GetMemoryLoad();
-
-					//debug_message = ",Percent_Free_Memory=" + std::to_string(percent_memory_use);
-					//debug_message += ",Generation=" + std::to_string(generation_number);
-					//debug_message += ",Session=" + std::to_string(generations_completed_this_session);
-					//Utilities::debug_log(-1, "run", debug_message);
 
 					if (percent_memory_use > argmap::percent_memory_cap)
 					{
@@ -2157,7 +2178,7 @@ namespace domain
 
 						error << "Not enough free memory to continue.  Percent used = " << percent_memory_use;
 
-						std::cerr << error.str() /*<< Utilities::endl */;
+						std::cerr << error.str(); 
 
 #if DLEVEL > 0
 						debug_message = error.str();
@@ -2169,7 +2190,7 @@ namespace domain
 					}
 
 					// Reset variables which track the minimum error for this test case and the individual who achived the minimum error 
-					Utilities::logline_threadsafe << "Reset variables which track the minimum error for this test case and the individual who achived the minimum error " /*<< Utilities::endl */;
+					{std::ostringstream ss; ss << "Reset variables which track the minimum error for this test case and the individual who achived the minimum error "; Utilities::logline_threadsafe << ss.str(); }
 
 					for (int ind = 0; ind < argmap::population_size; ind++)
 					{
@@ -2180,8 +2201,8 @@ namespace domain
 						}
 					}
 
-					Utilities::logline_threadsafe << "Generation " << generation_number /*<< Utilities::endl */;
-					Utilities::logline_threadsafe << "Session " << generations_completed_this_session /*<< Utilities::endl */;
+					{std::ostringstream ss; ss << "Generation " << generation_number; Utilities::logline_threadsafe << ss.str(); }
+					{std::ostringstream ss; ss << "Session " << generations_completed_this_session; Utilities::logline_threadsafe << ss.str(); }
 
 #if DLEVEL > 0
 					debug_message = "Reset variables which track the minimum error for this test case and the individual who achived the minimum error";
@@ -2191,7 +2212,7 @@ namespace domain
 #endif
 					save_generation();
 
-					Utilities::logline_threadsafe << "Run Programs with Training Cases" /*<< Utilities::endl */;
+					{std::ostringstream ss; ss << "Run Programs with Training Cases"; Utilities::logline_threadsafe << ss.str(); }
 #if DLEVEL > 0
 					Utilities::debug_log(-1, "run", "Run Programs with Training Cases");
 #endif
@@ -2254,10 +2275,10 @@ namespace domain
 						best_individual_effort = std::get<3>(best_individual_score_error);
 					}
 
-					Utilities::logline_threadsafe << "Calculate Diversity" /*<< Utilities::endl */;
+					{std::ostringstream ss; ss << "Calculate Diversity"; Utilities::logline_threadsafe << ss.str(); }
 					auto[diversity, count_of_diverse_clusters] = pushGP::calculate_diversity();
 
-					Utilities::logline_threadsafe << "Produce New Offspring" /*<< Utilities::endl */;
+					{std::ostringstream ss; ss  << "Produce New Offspring"; Utilities::logline_threadsafe << ss.str();}
 #if DLEVEL > 0
 					Utilities::debug_log(-1, "run", "Produce New Offspring");
 #endif
@@ -2280,12 +2301,12 @@ namespace domain
 							sa,
 							include_best_individual_in_breeding_pool);
 
-					Utilities::logline_threadsafe << "Run Best Individual's Program with Test Cases" /*<< Utilities::endl */;
+						{std::ostringstream ss; ss << "Run Best Individual's Program with Test Cases"; Utilities::logline_threadsafe << ss.str(); }
 
 					std::string genome = pushGP::globals::population_agents[best_individual].get_genome_as_string();
 
-					Utilities::logline_threadsafe << "best_individual = " << best_individual /*<< Utilities::endl */;
-					//Utilities::quick_log << "genome = " << genome /*<< Utilities::endl */;
+					{std::ostringstream ss; ss << "best_individual = " << best_individual; Utilities::logline_threadsafe << ss.str(); }
+					//Utilities::quick_log << "genome = " << genome; Utilities::logline_threadsafe << ss.str();
 
 #if DLEVEL > 0
 					debug_message = "Run Best Individual's Program with Test Cases";
@@ -2295,15 +2316,15 @@ namespace domain
 #endif
 					double test_case_score = compute_test_errors(env, run_individual_threadsafe, best_individual);
 
-					Utilities::logline_threadsafe << "test_case_error = " << test_case_score /*<< Utilities::endl */;
-					Utilities::logline_threadsafe /*<< Utilities::endl */;
+					{std::ostringstream ss; ss << "test_case_error = " << test_case_score; Utilities::logline_threadsafe << ss.str(); }
+					{std::ostringstream ss; ss << " "; Utilities::logline_threadsafe << ss.str(); }
 
 #if DLEVEL > 0
 					debug_message = "compute_test_errors";
 					debug_message += ",test_case_error=" + std::to_string(test_case_score);
 					Utilities::debug_log(-1, "run", debug_message);
 #endif
-					Utilities::logline_threadsafe << "Generate Status Report" /*<< Utilities::endl */;
+					{std::ostringstream ss; ss << "Generate Status Report"; Utilities::logline_threadsafe << ss.str(); }
 
 #if DLEVEL > 0
 					Utilities::debug_log(-1, "run", "Generate Status Report");
@@ -2367,7 +2388,7 @@ namespace domain
 						count_of_diverse_clusters
 					);
 
-					Utilities::logline_threadsafe << "Install New Generation" /*<< Utilities::endl */;
+					{std::ostringstream ss; ss << "Install New Generation"; Utilities::logline_threadsafe << ss.str(); }
 
 #if DLEVEL > 0
 					Utilities::debug_log(-1, "run", "Install New Generation");
@@ -2376,7 +2397,7 @@ namespace domain
 					generation_number++;
 					generations_completed_this_session++;
 
-					Utilities::logline_threadsafe << "---------------------------------------------" /*<< Utilities::endl */ /*<< Utilities::endl */ /*<< Utilities::endl */;
+					{std::ostringstream ss; ss << "---------------------------------------------" /*<< Utilities::endl */ /*<< Utilities::endl */; Utilities::logline_threadsafe << ss.str(); }
 				}
 
 				delete[] pushGP::globals::population_agents;
@@ -2394,12 +2415,11 @@ namespace domain
 #endif
 				env.clear_stacks();
 
-//				std::cerr << "Standard exception: " << e.what() /*<< Utilities::endl */;
 				std::stringstream error;
 
 				error << "Standard exception: " << e.what();
 
-				std::cerr << error.str() /*<< Utilities::endl */;
+				std::cerr << error.str(); 
 
 #if DLEVEL > 0
 				debug_message = error.str();
@@ -2417,12 +2437,12 @@ namespace domain
 #endif
 				env.clear_stacks();
 
-//				std::cerr << "Exception occurred" /*<< Utilities::endl */;
+//				std::cerr << "Exception occurred"; Utilities::logline_threadsafe << ss.str();
 				std::stringstream error;
 
 				error << "Exception occurred";
 
-				std::cerr << error.str() /*<< Utilities::endl */;
+				std::cerr << error.str(); 
 
 #if DLEVEL > 0
 				debug_message = error.str();

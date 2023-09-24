@@ -4,6 +4,7 @@
 #include "SQLConnection.h"
 #include "..\Utilities\Conversion.h"
 #include "..\Utilities\Debug.h"
+#include <sstream>
 
 namespace database
 {
@@ -33,7 +34,7 @@ namespace database
 					char error_message[80];
 					sprintf_s(error_message, 80, "Attempt %d.  Failed to obtain access to the OLE DB Driver.  hr = %lX", attempts, hr);
 
-					Utilities::logline_threadsafe << error_message /*<< Utilities::endl */;
+					std::ostringstream ss; ss  << error_message; Utilities::logline_threadsafe << ss.str();
 
 					std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
@@ -219,7 +220,7 @@ namespace database
 		catch (...)
 		{
 			//Utilities::log_warning("SQLConnection::disconnect() - Error freeeing resources");
-			Utilities::logline_threadsafe << "SQLConnection::disconnect() - Error freeeing resources" /*<< Utilities::endl */;
+			std::ostringstream ss; ss  << "SQLConnection::disconnect() - Error freeeing resources"; Utilities::logline_threadsafe << ss.str();
 
 		}
 

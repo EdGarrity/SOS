@@ -54,7 +54,9 @@ namespace datastore
 				while ((sqlcmd_get_individuals->fetch_next()) && (n < domain::argmap::population_size))
 				{
 					if ((n % 1'000) == 0)
-						Utilities::logline_threadsafe << "n = " << n /*<< Utilities::endl */;
+					{
+						std::ostringstream ss; ss << "n = " << n; Utilities::logline_threadsafe << ss.str();
+					}
 
 					std::string genome = Utilities::trim_copy(sqlcmd_get_individuals->get_field_as_string(2));
 
@@ -82,7 +84,9 @@ namespace datastore
 					}
 
 					else
-						Utilities::logline_threadsafe << "n = " << n << "  Ignoring empty genome string" /*<< Utilities::endl */;
+					{
+						std::ostringstream ss; ss << "n = " << n << "  Ignoring empty genome string"; Utilities::logline_threadsafe << ss.str();
+					}
 				}
 			}
 		}
@@ -92,7 +96,7 @@ namespace datastore
 
 			std::stringstream error;
 			error << "AgentData::load_pop_agents()";
-			std::cerr << error.str() /*<< Utilities::endl */;
+			std::cerr << error.str(); 
 
 			return n;
 		}
@@ -110,7 +114,9 @@ namespace datastore
 		RPC_STATUS ret = UuidCreateNil(&NilUuid);
 
 		if (ret != RPC_S_OK)
-			Utilities::logline_threadsafe << "UuidCreateNil() did not return RPC_S_OK" /*<< Utilities::endl */;
+		{
+			std::ostringstream ss; ss << "UuidCreateNil() did not return RPC_S_OK"; Utilities::logline_threadsafe << ss.str();
+		}
 
 		database::SQLCommand* sqlcmd;
 

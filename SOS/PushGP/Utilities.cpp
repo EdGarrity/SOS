@@ -131,11 +131,11 @@ namespace pushGP
 //
 //		if (_genome.size() != count_points(program))
 //		{
-//			Utilities::quick_log << "_genome.size() != count_points(program)" /*<< Utilities::endl */;
-//			Utilities::quick_log << "_genome.size() " << _genome.size() /*<< Utilities::endl */;
-//			Utilities::quick_log << "_genome " << genome_to_string(_genome) /*<< Utilities::endl */;
-//			Utilities::quick_log << "count_points(program) " << count_points(program) /*<< Utilities::endl */;
-//			Utilities::quick_log << "program " << program /*<< Utilities::endl */;
+//			Utilities::quick_log << "_genome.size() != count_points(program)"; Utilities::logline_threadsafe << ss.str();
+//			Utilities::quick_log << "_genome.size() " << _genome.size(); Utilities::logline_threadsafe << ss.str();
+//			Utilities::quick_log << "_genome " << genome_to_string(_genome); Utilities::logline_threadsafe << ss.str();
+//			Utilities::quick_log << "count_points(program) " << count_points(program); Utilities::logline_threadsafe << ss.str();
+//			Utilities::quick_log << "program " << program; Utilities::logline_threadsafe << ss.str();
 //
 //			throw MyException("translate_plush_genome_to_push_program() - _genome.size() != count_points(program)");
 //		}

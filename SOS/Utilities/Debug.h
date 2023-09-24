@@ -151,7 +151,7 @@ namespace Utilities
 			first = false;
 
 			myfile << "time,line_number,generation,thread,individual_index,example_case,ip,instruction,enabled,Exec_size,Exec,Code_size,Code,long_size,long,double_size,double,bool_size,bool,instructions";
-			myfile /*<< Utilities::endl */;
+			myfile; Utilities::logline_threadsafe << ss.str();
 		}
 
 		myfile << ss.str();
@@ -251,19 +251,19 @@ namespace Utilities
 	//};
 
 	// Define a custom class that represents Utilities::endl
-	class Endl 
-	{
-	public:
-		// Overload the << operator for std::ostream
-		friend std::ostream& operator<<(std::ostream& os, const Endl& e) 
-		{
-			{
-				std::osyncstream synced_out(std::cout); // synchronized wrapper for Utilities::quick_log
-				synced_out << std::endl;
-			} // characters are transferred and Utilities::quick_log is flushed
-			return os;
-		}
-	};
+	//class Endl 
+	//{
+	//public:
+	//	// Overload the << operator for std::ostream
+	//	friend std::ostream& operator<<(std::ostream& os, const Endl& e) 
+	//	{
+	//		{
+	//			std::osyncstream synced_out(std::cout); // synchronized wrapper for Utilities::quick_log
+	//			synced_out << std::endl;
+	//		} // characters are transferred and Utilities::quick_log is flushed
+	//		return os;
+	//	}
+	//};
 
 	//extern Quick_Log quick_log;
 	//extern Endl endl;
@@ -275,11 +275,14 @@ namespace Utilities
 	public:
 		// Overload the << operator to print to std::out
 		template <typename T>
-		LogLine_ThreadSafe& operator<<(const T& value)
+		LogLine_ThreadSafe& operator<<(const T& message)
 		{
 			{
 				std::osyncstream synced_out(std::cout); // synchronized wrapper for Utilities::LogLine_ThreadSafe
-				synced_out << value;
+
+				synced_out << getCurrentTimestamp();
+				synced_out << ",LineNumber=" << std::to_string(line_number++);
+				synced_out << message;
 				synced_out << std::endl;
 			} // characters are transferred and Utilities::LogLine_ThreadSafe is flushed
 			return *this; // Return a reference to the Log object for chaining

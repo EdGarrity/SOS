@@ -7,6 +7,7 @@
 #include "Genome.h"
 #include "Type.h"
 #include "TypeDef.h"
+#include <sstream>
 
 namespace Plush
 {
@@ -109,7 +110,9 @@ namespace Plush
 
 
 			if ((new_example_case > 100) && (new_individual_index == 124))
-				Utilities::logline_threadsafe << "set_current_individual_index(new_individual_index=" << new_individual_index << ", new_example_case=" << new_example_case << ")" /*<< Utilities::endl */;
+			{
+				std::ostringstream ss; ss << "set_current_individual_index(new_individual_index=" << new_individual_index << ", new_example_case=" << new_example_case << ")"; Utilities::logline_threadsafe << ss.str();
+			}
 
 		}
 

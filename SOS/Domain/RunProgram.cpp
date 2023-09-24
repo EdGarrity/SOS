@@ -29,7 +29,7 @@ namespace domain
 	//			workorder_form.get_stratergy_index(),
 	//			workorder_form.get_training_case_index(),
 	//			std::get<0>(results));
-	//		Utilities::quick_log << " Finished Order " << std::get<0>(results) << " Score " << std::get<1>(results) /*<< Utilities::endl */;
+	//		Utilities::quick_log << " Finished Order " << std::get<0>(results) << " Score " << std::get<1>(results); Utilities::logline_threadsafe << ss.str();
 	//	}
 	//	catch (const std::exception& /*e*/)
 	//	{
@@ -37,7 +37,7 @@ namespace domain
 	//		std::stringstream warning_message;
 	//		warning_message << "domain::Utilities::Task RunProgram::operator() - unable to insert work into queue.  env_index=" << env_index;
 
-	//		std::cerr << warning_message.str() /*<< Utilities::endl */;
+	//		std::cerr << warning_message.str(); Utilities::logline_threadsafe << ss.str();
 
 	//		throw std::runtime_error(warning_message.str());
 	//	}
@@ -47,7 +47,7 @@ namespace domain
 	//		std::stringstream warning_message;
 	//		warning_message << "domain::Utilities::Task RunProgram::operator() - An unknown error has occured.  env_index=" << env_index;
 
-	//		std::cerr << warning_message.str() /*<< Utilities::endl */;
+	//		std::cerr << warning_message.str(); Utilities::logline_threadsafe << ss.str();
 
 	//		throw std::runtime_error(warning_message.str());
 	//	}
@@ -71,7 +71,7 @@ namespace domain
 	//			workorder_form.get_stratergy_index(),
 	//			workorder_form.get_training_case_index(),
 	//			std::get<0>(results));
-	//		Utilities::quick_log << " Finished Order " << std::get<0>(results) << " Score " << std::get<1>(results) /*<< Utilities::endl */;
+	//		Utilities::quick_log << " Finished Order " << std::get<0>(results) << " Score " << std::get<1>(results); Utilities::logline_threadsafe << ss.str();
 	//	}
 	//	catch (const std::exception& /*e*/)
 	//	{
@@ -79,7 +79,7 @@ namespace domain
 	//		std::stringstream warning_message;
 	//		warning_message << "domain::Utilities::Task RunProgram::operator() - unable to insert work into queue.  env_index=" << env_index;
 
-	//		std::cerr << warning_message.str() /*<< Utilities::endl */;
+	//		std::cerr << warning_message.str(); Utilities::logline_threadsafe << ss.str();
 
 	//		throw std::runtime_error(warning_message.str());
 	//	}
@@ -89,20 +89,40 @@ namespace domain
 	//		std::stringstream warning_message;
 	//		warning_message << "domain::Utilities::Task RunProgram::operator() - An unknown error has occured.  env_index=" << env_index;
 
-	//		std::cerr << warning_message.str() /*<< Utilities::endl */;
+	//		std::cerr << warning_message.str(); Utilities::logline_threadsafe << ss.str();
 
 	//		throw std::runtime_error(warning_message.str());
 	//	}
 	//};
 	Utilities::Task RunProgram::run(develop_strategy::RunProgram_WorkOrder_Form const& workorder_form) const
 	{
+		int env_index = 99;
+
+		{
+			std::ostringstream ss;
+			ss << ",thread=" << std::this_thread::get_id()
+				<< ",env_index = " << env_index
+				<< ",stratergy=" << workorder_form.get_stratergy_index()
+				<< ",case=" << workorder_form.get_training_case_index()
+				<< ",method=RunProgram_run"
+				<< ",message=co_await";
+			Utilities::logline_threadsafe << ss.str();
+		}
+
 		// Schedule the program to run in its own thread and wait for it to be activated.  co_wait() will return control to the caller while we wait.
 		co_await m_pool.schedule();
 
 		// Run the stratergy and case specified in the work order, in a seperate thread.
-		Utilities::logline_threadsafe << "Running strategy " << workorder_form.get_stratergy_index() << " on case " << workorder_form.get_training_case_index() << " on thread " << std::this_thread::get_id() /*<< Utilities::endl */;
-
-		int env_index = 99;
+		{
+			std::ostringstream ss;
+			ss << ",thread=" << std::this_thread::get_id()
+				<< ",env_index = " << env_index
+				<< ",stratergy=" << workorder_form.get_stratergy_index()
+				<< ",case=" << workorder_form.get_training_case_index()
+				<< ",method=RunProgram_run"
+				<< ",message=Running";
+			Utilities::logline_threadsafe << ss.str();
+		}
 
 		try
 		{
@@ -115,15 +135,36 @@ namespace domain
 				workorder_form.get_training_case_index(),
 				std::get<0>(results));
 
-			Utilities::logline_threadsafe << " Finished Order " << std::get<0>(results) << " Score " << std::get<1>(results) << " on thread " << std::this_thread::get_id() /*<< Utilities::endl */;
+			{
+				std::ostringstream ss;
+				ss << ",thread=" << std::this_thread::get_id()
+					<< ",env_index = " << env_index
+					<< ",stratergy=" << workorder_form.get_stratergy_index()
+					<< ",case=" << workorder_form.get_training_case_index()
+					<< ",method=RunProgram_run"
+					<< ",score=" << std::get<1>(results)
+					<< ",message=Done";
+				Utilities::logline_threadsafe << ss.str();
+			}
 		}
-		catch (const std::exception& /*e*/)
+		catch (const std::exception& e)
 		{
 			// Log exception
 			std::stringstream warning_message;
-			warning_message << "domain::Utilities::Task RunProgram::operator() - unable to insert work into queue.  env_index=" << env_index;
+			warning_message << "Unable to insert work into queue";
 
-			std::cerr << warning_message.str() /*<< Utilities::endl */;
+			std::cerr << warning_message.str(); 
+			{
+				std::ostringstream ss; 
+				ss << ",thread=" << std::this_thread::get_id()
+					<< ",env_index = " << env_index
+					<< ",stratergy=" << workorder_form.get_stratergy_index()
+					<< ",case=" << workorder_form.get_training_case_index()
+					<< ",exception=" << e.what()
+					<< ",method=RunProgram::run()"
+					<< "," << warning_message.str();
+				Utilities::logline_threadsafe << ss.str();
+			}
 
 			throw std::runtime_error(warning_message.str());
 		}
@@ -131,9 +172,19 @@ namespace domain
 		{
 			// Log exception
 			std::stringstream warning_message;
-			warning_message << "domain::Utilities::Task RunProgram::operator() - An unknown error has occured.  env_index=" << env_index;
+			warning_message << "An unknown error has occured";
 
-			std::cerr << warning_message.str() /*<< Utilities::endl */;
+			std::cerr << warning_message.str(); 
+			{
+				std::ostringstream ss;
+				ss << ",thread=" << std::this_thread::get_id()
+					<< ",env_index = " << env_index
+					<< ",stratergy=" << workorder_form.get_stratergy_index()
+					<< ",case=" << workorder_form.get_training_case_index()
+					<< ",method=RunProgram_run"
+					<< "," << warning_message.str();
+				Utilities::logline_threadsafe << ss.str();
+			}
 
 			throw std::runtime_error(warning_message.str());
 		}

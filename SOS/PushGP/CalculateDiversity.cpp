@@ -239,18 +239,18 @@ namespace pushGP
 
 			double cluster_diversity = 0;
 
-			//Utilities::quick_log << "Calculate Diversity() - Construct the elitized error vectors that indicate whether an individual achieved the best error on each training case" /*<< Utilities::endl */;
+			//Utilities::quick_log << "Calculate Diversity() - Construct the elitized error vectors that indicate whether an individual achieved the best error on each training case"; Utilities::logline_threadsafe << ss.str();
 
 
 
 			// Print out the error matrix
-			//Utilities::quick_log /*<< Utilities::endl */;
+			//Utilities::quick_log; Utilities::logline_threadsafe << ss.str();
 			//Utilities::quick_log << "Calculate Diversity,individual_index";
 
 			//for (int n = 0; n < domain::argmap::number_of_training_cases; n++)
 			//	Utilities::quick_log << ",error_" << n;
 
-			//Utilities::quick_log /*<< Utilities::endl */;
+			//Utilities::quick_log; Utilities::logline_threadsafe << ss.str();
 
 			//for (int individual_index = 0; individual_index < domain::argmap::population_size; individual_index++)
 			//{
@@ -262,11 +262,11 @@ namespace pushGP
 			//		Utilities::quick_log << ", " << error;
 			//	}
 
-			//	Utilities::quick_log /*<< Utilities::endl */;
+			//	Utilities::quick_log; Utilities::logline_threadsafe << ss.str();
 			//}
 
-			//Utilities::quick_log /*<< Utilities::endl */;
-			//Utilities::quick_log /*<< Utilities::endl */;
+			//Utilities::quick_log; Utilities::logline_threadsafe << ss.str();
+			//Utilities::quick_log; Utilities::logline_threadsafe << ss.str();
 
 		
 			// Construct the elitized error vectors that indicate whether an individual achieved the best error on each training case
@@ -331,26 +331,26 @@ namespace pushGP
 			//for (int n = 0; n < domain::argmap::number_of_training_cases; n++)
 			//	Utilities::quick_log << ",case_index_" << n;
 
-			//Utilities::quick_log /*<< Utilities::endl */;
+			//Utilities::quick_log; Utilities::logline_threadsafe << ss.str();
 
-			//Utilities::quick_log << debug_training_case_threashold /*<< Utilities::endl */;
-			//Utilities::quick_log << debug_training_case_minimum_error /*<< Utilities::endl */;
-			//Utilities::quick_log << debug_error_threshold /*<< Utilities::endl */;
+			//Utilities::quick_log << debug_training_case_threashold; Utilities::logline_threadsafe << ss.str();
+			//Utilities::quick_log << debug_training_case_minimum_error; Utilities::logline_threadsafe << ss.str();
+			//Utilities::quick_log << debug_error_threshold; Utilities::logline_threadsafe << ss.str();
 
-			//Utilities::quick_log /*<< Utilities::endl */;
-			//Utilities::quick_log /*<< Utilities::endl */;
-
-
+			//Utilities::quick_log; Utilities::logline_threadsafe << ss.str();
+			//Utilities::quick_log; Utilities::logline_threadsafe << ss.str();
 
 
 
 
-			//Utilities::quick_log << "Calculate Diversity() - Initialize tree" /*<< Utilities::endl */;
+
+
+			//Utilities::quick_log << "Calculate Diversity() - Initialize tree"; Utilities::logline_threadsafe << ss.str();
 
 
 
 			// Initialize tree
-			//Utilities::quick_log << "Calculate Diversity() - Initialize tree.  tree.size() = " << tree.size() /*<< Utilities::endl */;
+			//Utilities::quick_log << "Calculate Diversity() - Initialize tree.  tree.size() = " << tree.size(); Utilities::logline_threadsafe << ss.str();
 			tree.clear();
 
 			//Utilities::quick_log << "Calculate Diversity,id,distance,failed_test_cases_count,diversity,count_of_diverse_clusters,parent_1,parent_2";
@@ -358,14 +358,14 @@ namespace pushGP
 			//for (int n=0; n < domain::argmap::number_of_training_cases;n++)
 			//	Utilities::quick_log << ",error_" << n;
 
-			//Utilities::quick_log /*<< Utilities::endl */;
+			//Utilities::quick_log; Utilities::logline_threadsafe << ss.str();
 
 			for (int n = 0; n < domain::argmap::population_size; n++)
 			{
 				Cluster* cluster = new Cluster(elitized[n]);
 
 				unsigned long id=cluster->get_id();
-				//Utilities::quick_log << "Calculate Diversity() - Initialize tree[" << id << "]" /*<< Utilities::endl */;
+				//Utilities::quick_log << "Calculate Diversity() - Initialize tree[" << id << "]"; Utilities::logline_threadsafe << ss.str();
 
 				tree[cluster->get_id()] = cluster;
 
@@ -377,21 +377,21 @@ namespace pushGP
 				//	Utilities::quick_log << ", " << id;
 				//}
 
-				//Utilities::quick_log /*<< Utilities::endl */;
+				//Utilities::quick_log; Utilities::logline_threadsafe << ss.str();
 			}
 
 
 
 
 
-			//Utilities::quick_log << "Calculate Diversity() - Grow tree" /*<< Utilities::endl */;
+			//Utilities::quick_log << "Calculate Diversity() - Grow tree"; Utilities::logline_threadsafe << ss.str();
 
 
 
 			// Grow tree
 			while (tree.size() > 1)
 			{
-				//Utilities::quick_log << "Calculate Diversity() - tree.size() = " << tree.size() /*<< Utilities::endl */;
+				//Utilities::quick_log << "Calculate Diversity() - tree.size() = " << tree.size(); Utilities::logline_threadsafe << ss.str();
 
 
 
@@ -413,7 +413,7 @@ namespace pushGP
 
 
 
-						//Utilities::quick_log << "Calculate Diversity() - get_distance(" << cluster_1_key << ", " << cluster_2_key << ") = " << dist /*<< Utilities::endl */;
+						//Utilities::quick_log << "Calculate Diversity() - get_distance(" << cluster_1_key << ", " << cluster_2_key << ") = " << dist; Utilities::logline_threadsafe << ss.str();
 
 
 
@@ -427,7 +427,7 @@ namespace pushGP
 
 
 
-				//Utilities::quick_log << "Calculate Diversity() - min_dist = " << min_dist << ", closest_cluster_key = " << closest_cluster_key /*<< Utilities::endl */;
+				//Utilities::quick_log << "Calculate Diversity() - min_dist = " << min_dist << ", closest_cluster_key = " << closest_cluster_key; Utilities::logline_threadsafe << ss.str();
 
 
 
@@ -438,7 +438,7 @@ namespace pushGP
 
 
 				unsigned long id = cluster->get_id();
-				//Utilities::quick_log << "Calculate Diversity() - create tree[" << id << "] from " << cluster_1_key << " and " << closest_cluster_key /*<< Utilities::endl */;
+				//Utilities::quick_log << "Calculate Diversity() - create tree[" << id << "] from " << cluster_1_key << " and " << closest_cluster_key; Utilities::logline_threadsafe << ss.str();
 
 
 				tree[cluster->get_id()] = cluster;
@@ -461,7 +461,7 @@ namespace pushGP
 				//	Utilities::quick_log << ", " << id;
 				//}
 
-				//Utilities::quick_log /*<< Utilities::endl */;
+				//Utilities::quick_log; Utilities::logline_threadsafe << ss.str();
 
 
 
@@ -469,30 +469,30 @@ namespace pushGP
 
 
 				Cluster* cluster1 = tree[cluster_1_key];
-				//Utilities::quick_log << "Calculate Diversity() - delete tree1[" << cluster_1_key << "] = " << cluster1->get_id() /*<< Utilities::endl */;
+				//Utilities::quick_log << "Calculate Diversity() - delete tree1[" << cluster_1_key << "] = " << cluster1->get_id(); Utilities::logline_threadsafe << ss.str();
 				delete cluster1;
 
 
 				Cluster* cluster2 = tree[closest_cluster_key];
-				//Utilities::quick_log << "Calculate Diversity() - delete tree1[" << closest_cluster_key << "] = " << cluster2->get_id() /*<< Utilities::endl */;
+				//Utilities::quick_log << "Calculate Diversity() - delete tree1[" << closest_cluster_key << "] = " << cluster2->get_id(); Utilities::logline_threadsafe << ss.str();
 				delete cluster2;
 
 
 
-				//Utilities::quick_log << "Calculate Diversity() - tree.erase1[" << cluster_1_key << "]" /*<< Utilities::endl */;
+				//Utilities::quick_log << "Calculate Diversity() - tree.erase1[" << cluster_1_key << "]"; Utilities::logline_threadsafe << ss.str();
 				tree.erase(cluster_1_key);
 
-				//Utilities::quick_log << "Calculate Diversity() - tree.erase2[" << closest_cluster_key << "]" /*<< Utilities::endl */;
+				//Utilities::quick_log << "Calculate Diversity() - tree.erase2[" << closest_cluster_key << "]"; Utilities::logline_threadsafe << ss.str();
 				tree.erase(closest_cluster_key);
 			}
 
 
-			//Utilities::quick_log /*<< Utilities::endl */;
-			//Utilities::quick_log /*<< Utilities::endl */;
+			//Utilities::quick_log; Utilities::logline_threadsafe << ss.str();
+			//Utilities::quick_log; Utilities::logline_threadsafe << ss.str();
 
 
 
-			//Utilities::quick_log << "Calculate Diversity() - Clean up" /*<< Utilities::endl */;
+			//Utilities::quick_log << "Calculate Diversity() - Clean up"; Utilities::logline_threadsafe << ss.str();
 
 
 
@@ -503,7 +503,7 @@ namespace pushGP
 
 
 
-			//Utilities::quick_log << "Calculate Diversity() - Done, cluster_diversity = " << cluster_diversity  << ", count_of_diverse_clusters = " << count_of_diverse_clusters /*<< Utilities::endl */;
+			//Utilities::quick_log << "Calculate Diversity() - Done, cluster_diversity = " << cluster_diversity  << ", count_of_diverse_clusters = " << count_of_diverse_clusters; Utilities::logline_threadsafe << ss.str();
 
 
 			return std::make_tuple(cluster_diversity, count_of_diverse_clusters);
@@ -514,7 +514,7 @@ namespace pushGP
 
 			error << "Standard exception: " << e.what();
 
-			std::cerr << error.str() /*<< Utilities::endl */;
+			std::cerr << error.str(); 
 
 			throw;
 		}
@@ -524,7 +524,7 @@ namespace pushGP
 
 			error << "Exception occurred";
 
-			std::cerr << error.str() /*<< Utilities::endl */;
+			std::cerr << error.str(); 
 
 			throw;
 		}

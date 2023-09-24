@@ -245,7 +245,7 @@ namespace Plush
 
 					else
 					{
-						Utilities::logline_threadsafe << atom.instruction_name << " ";
+						std::ostringstream ss; ss  << atom.instruction_name << " ";
 					}
 
 
@@ -255,24 +255,32 @@ namespace Plush
 			catch (std::underflow_error& /*e*/)
 			{
 				effort++;
-				//std::cerr << "Underflow exception caught.  effort = " << effort /*<< Utilities::endl */;
-				//std::cerr << e.what() /*<< Utilities::endl */;
+
+				std::stringstream error;
+
+				error << "Unknown std exception caught.effort";
+
+				std::cerr << error.str();
+				std::string debug_message;
 			}
 			catch (std::overflow_error& /*e*/)
 			{
+				std::stringstream error;
+
 				effort++;
-				//std::cerr << "Overflow exception caught.  effort = " << effort /*<< Utilities::endl */;
-				//std::cerr << e.what() /*<< Utilities::endl */;
+
+				error << "Unknown std exception caught.effort";
+
+				std::cerr << error.str();
+				std::string debug_message;
 			}
 			catch (std::exception& e)
 			{
 				effort++;
-				//std::cerr << "Unknown std exception caught.  effort = " << effort /*<< Utilities::endl */;
-				//std::cerr << e.what() /*<< Utilities::endl */;
 
 				std::stringstream error;
 
-				error << "Unknown std exception caught.effort = " << effort /*<< Utilities::endl */ << e.what() /*<< Utilities::endl */;
+				error << "Unknown std exception caught.effort = " << effort << e.what(); 
 
 				std::cerr << error.str();
 				std::string debug_message;
@@ -285,11 +293,10 @@ namespace Plush
 			catch (...)
 			{
 				effort++;
-				//std::cerr << "Unknown exception caught.  effort = " << effort /*<< Utilities::endl */;
 
 				std::stringstream error;
 
-				error << "Unknown exception caught.  effort = " << effort /*<< Utilities::endl */;
+				error << "Unknown exception caught.  effort = " << effort;
 
 				std::cerr << error.str();
 #if DLEVEL > 0

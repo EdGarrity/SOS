@@ -32,7 +32,7 @@ namespace datastore
 	//
 	void TestData::load(const std::string& start_date, const std::string& end_date)
 	{
-		Utilities::logline_threadsafe << "Loading all case data..." /*<< Utilities::endl */;
+		std::ostringstream ss; ss  << "Loading all case data..."; Utilities::logline_threadsafe << ss.str();
 
 		database::SQLCommand* sqlcmd_get_case_data = nullptr;
 
@@ -58,7 +58,7 @@ namespace datastore
 				std::string date = sqlcmd_get_case_data->get_field_as_string(1);
 				double adj_open = sqlcmd_get_case_data->get_field_as_double(2);
 
-				Utilities::logline_threadsafe << date << " " << adj_open /*<< Utilities::endl */;
+				std::ostringstream ss; ss  << date << " " << adj_open; Utilities::logline_threadsafe << ss.str();
 
 				dates.push_back(date);
 				adj_open_values.push_back(adj_open);
@@ -68,25 +68,25 @@ namespace datastore
 		}
 		catch (const std::exception& e)
 		{
-			Utilities::logline_threadsafe << "Exception: " << e.what() /*<< Utilities::endl */;
+			std::ostringstream ss; ss  << "Exception: " << e.what(); Utilities::logline_threadsafe << ss.str();
 
 			if (sqlcmd_get_case_data != nullptr)
 				delete sqlcmd_get_case_data;
 
 			std::stringstream error;
 			error << "CaseData::load()";
-			std::cerr << error.str() /*<< Utilities::endl */;
+			std::cerr << error.str(); Utilities::logline_threadsafe << ss.str();
 		}
 		catch (...)
 		{
-			Utilities::logline_threadsafe << "Unknown exception" /*<< Utilities::endl */;
+			std::ostringstream ss; ss  << "Unknown exception"; Utilities::logline_threadsafe << ss.str();
 
 			if (sqlcmd_get_case_data != nullptr)
 				delete sqlcmd_get_case_data;
 
 			std::stringstream error;
 			error << "CaseData::load()";
-			std::cerr << error.str() /*<< Utilities::endl */;
+			std::cerr << error.str(); Utilities::logline_threadsafe << ss.str();
 		}
 	}
 

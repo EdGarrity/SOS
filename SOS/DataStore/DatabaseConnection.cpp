@@ -5,6 +5,7 @@
 #include <cstdio>
 #include <iostream>
 #include <string>
+#include <sstream>
 
 namespace datastore
 {
@@ -16,7 +17,7 @@ namespace datastore
 		if (!con.connected())
 		{
 			std::string db_init_datasource = domain::argmap::db_init_datasource;
-			Utilities::logline_threadsafe << "db_init_datasource: " << db_init_datasource /*<< Utilities::endl */;
+			std::ostringstream ss; ss  << "db_init_datasource: " << db_init_datasource; Utilities::logline_threadsafe << ss.str();
 
 			con.connect(domain::argmap::db_init_datasource, domain::argmap::db_init_catalog, domain::argmap::db_user_id, domain::argmap::db_user_password);
 		}

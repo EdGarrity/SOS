@@ -193,13 +193,13 @@ namespace domain
 				combinable<pushGP::globals::Training_case_min_error_type> training_case_min_error;
 
 				// Reset children.
-				Utilities::logline_threadsafe << "  Reset children" /*<< Utilities::endl */;
+				{std::ostringstream ss; ss << "  Reset children"; Utilities::logline_threadsafe << ss.str(); }
 
 				for (unsigned long n = 0; n < argmap::population_size; n++)
 					pushGP::globals::child_agents[n].clear_genome();
 
 				// Breed new generation
-				Utilities::logline_threadsafe << "  Breed new generation" /*<< Utilities::endl */;
+				{std::ostringstream ss; ss << "  Breed new generation"; Utilities::logline_threadsafe << ss.str(); }
 
 				std::map<pushGP::SimulatedAnnealing_States, int> state_count;
 
@@ -219,7 +219,9 @@ namespace domain
 					else
 					{
 						if (individual_index % 100 == 0)
-							Utilities::logline_threadsafe << "B";
+						{
+							std::ostringstream ss; ss << "B"; Utilities::logline_threadsafe << ss.str();
+						}
 
 						pushGP::SimulatedAnnealing_States state = pushGP::breed(individual_index,
 							_number_of_example_cases,
@@ -239,21 +241,29 @@ namespace domain
 					}
 				}
 
-				Utilities::logline_threadsafe /*<< Utilities::endl */;
-				Utilities::logline_threadsafe /*<< Utilities::endl */;
+				{
+					std::ostringstream ss;
+					ss << " ";
+					Utilities::logline_threadsafe << ss.str();
+					Utilities::logline_threadsafe << ss.str(); 
+				}
 
-				Utilities::logline_threadsafe << "Selection distribution" /*<< Utilities::endl */;
-				Utilities::logline_threadsafe << "  Alternate = " << (double)state_count[pushGP::SimulatedAnnealing_States::alternate] / (double)argmap::population_size * 100.0 /*<< Utilities::endl */;
-				Utilities::logline_threadsafe << "  Alternate_elite = " << (double)state_count[pushGP::SimulatedAnnealing_States::alternate_elite] / (double)argmap::population_size * 100.0 /*<< Utilities::endl */;
-				Utilities::logline_threadsafe << "  Cloan = " << (double)state_count[pushGP::SimulatedAnnealing_States::cloan] / (double)argmap::population_size * 100.0 /*<< Utilities::endl */;
-				Utilities::logline_threadsafe << "  Mutate = " << (double)state_count[pushGP::SimulatedAnnealing_States::mutate] / (double)argmap::population_size * 100.0 /*<< Utilities::endl */;
-				Utilities::logline_threadsafe << "  Regenerate = " << (double)state_count[pushGP::SimulatedAnnealing_States::regenerate] / (double)argmap::population_size * 100.0 /*<< Utilities::endl */;
+				{std::ostringstream ss; ss << "Selection distribution"; Utilities::logline_threadsafe << ss.str(); }
+				{std::ostringstream ss; ss << "  Alternate = " << (double)state_count[pushGP::SimulatedAnnealing_States::alternate] / (double)argmap::population_size * 100.0; Utilities::logline_threadsafe << ss.str(); }
+				{std::ostringstream ss; ss << "  Alternate_elite = " << (double)state_count[pushGP::SimulatedAnnealing_States::alternate_elite] / (double)argmap::population_size * 100.0; Utilities::logline_threadsafe << ss.str(); }
+				{std::ostringstream ss; ss << "  Cloan = " << (double)state_count[pushGP::SimulatedAnnealing_States::cloan] / (double)argmap::population_size * 100.0; Utilities::logline_threadsafe << ss.str(); }
+				{std::ostringstream ss; ss << "  Mutate = " << (double)state_count[pushGP::SimulatedAnnealing_States::mutate] / (double)argmap::population_size * 100.0; Utilities::logline_threadsafe << ss.str(); }
+				{std::ostringstream ss; ss << "  Regenerate = " << (double)state_count[pushGP::SimulatedAnnealing_States::regenerate] / (double)argmap::population_size * 100.0; Utilities::logline_threadsafe << ss.str(); }
 
-				Utilities::logline_threadsafe /*<< Utilities::endl */;
-				Utilities::logline_threadsafe /*<< Utilities::endl */;
+				{
+					std::ostringstream ss;
+					ss << " ";
+					Utilities::logline_threadsafe << ss.str();
+					Utilities::logline_threadsafe << ss.str();
+				}
 
 				// Keep the best individuals for each test case
-				Utilities::logline_threadsafe << ".";
+				std::ostringstream ss; ss  << ".";
 				if (!_include_best_individual_in_breeding_pool)
 				{
 					for (unsigned long training_case = 0; training_case < _number_of_training_cases; training_case++)
@@ -267,7 +277,7 @@ namespace domain
 					}
 				}
 
-				Utilities::logline_threadsafe /*<< Utilities::endl */;
+				{std::ostringstream ss; ss; Utilities::logline_threadsafe << ss.str(); }
 			}
 			catch (const std::exception& e)
 			{
@@ -275,7 +285,7 @@ namespace domain
 
 				error << "Standard exception: " << e.what();
 
-				std::cerr << error.str() /*<< Utilities::endl */;
+				std::cerr << error.str();
 
 				throw;
 			}
@@ -285,7 +295,7 @@ namespace domain
 
 				error << "Exception occurred";
 
-				std::cerr << error.str() /*<< Utilities::endl */;
+				std::cerr << error.str();
 
 				throw;
 			}
@@ -308,7 +318,7 @@ namespace domain
 			{
 				for (size_t stratergy_index = 0; stratergy_index < domain::argmap::population_size; stratergy_index++)
 				{
-					Utilities::logline_threadsafe << "Run strategy " << stratergy_index << " on case " << training_case_index << " is_generated " << order_matrix.is_generated(stratergy_index, training_case_index);
+					{std::ostringstream ss; ss << "Run strategy " << stratergy_index << " on case " << training_case_index << " is_generated " << order_matrix.is_generated(stratergy_index, training_case_index); }
 
 					unsigned long order = 0;
 					unsigned long score = 0;
@@ -321,7 +331,7 @@ namespace domain
 						order_matrix.store(stratergy_index, training_case_index, order);
 					}
 
-					Utilities::logline_threadsafe << " Order " << order << " Score " << score /*<< Utilities::endl */;
+					{std::ostringstream ss; ss << " Order " << order << " Score " << score; Utilities::logline_threadsafe << ss.str(); }
 				}
 			}
 		}
@@ -333,7 +343,7 @@ namespace domain
 				unsigned int strategy_index,
 				unsigned long case_index)> _run_strategy_threadsafe)
 		{
-			Utilities::logline_threadsafe << "compute_training_errors_thread_safe() - Process threads" /*<< Utilities::endl */;
+			{std::ostringstream ss; ss << "compute_training_errors_thread_safe() - Process threads"; Utilities::logline_threadsafe << ss.str(); }
 
 			domain::RunProgram processor(pool);
 
@@ -341,15 +351,15 @@ namespace domain
 			{
 				for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
 				{
-					Utilities::logline_threadsafe << "Schedule to run strategy " << strategy_index << " on case " << training_case_index << " on thread " << std::this_thread::get_id() /*<< Utilities::endl */;
+					std::ostringstream ss; ss  << "Schedule to run strategy " << strategy_index << " on case " << training_case_index << " on thread " << std::this_thread::get_id(); Utilities::logline_threadsafe << ss.str();
 					develop_strategy::RunProgram_WorkOrder_Form form(strategy_index, training_case_index);
 					processor.run(form);
 				}
 			}
 
-			Utilities::logline_threadsafe << "compute_training_errors_thread_safe() - Wait for all threads to complete" /*<< Utilities::endl */;
+			{std::ostringstream ss; ss << "compute_training_errors_thread_safe() - Wait for all threads to complete"; Utilities::logline_threadsafe << ss.str(); }
 			pool.wait_for_all_threads_to_complete();
-			Utilities::logline_threadsafe << "compute_training_errors_thread_safe() - All threads to complete" /*<< Utilities::endl */;
+			{std::ostringstream ss; ss  << "compute_training_errors_thread_safe() - All threads to complete"; Utilities::logline_threadsafe << ss.str();}
 
 
 
@@ -454,7 +464,7 @@ namespace domain
 				datastore::test_data.load("2020-01-01", "2021-12-31");
 
 				// Load population.  Create more if not enough loaded.
-				Utilities::logline_threadsafe << "Create Population Agents" /*<< Utilities::endl */;
+				std::ostringstream ss; ss  << "Create Population Agents"; Utilities::logline_threadsafe << ss.str();
 				agents_created = datastore::agent_data.make_pop_agents(global_env, datastore::agent_data.load());
 
 				if (agents_created > 0)
@@ -492,7 +502,7 @@ namespace domain
 							cool_down_count = argmap::cool_down_period;
 							include_best_individual_in_breeding_pool = false;
 
-							Utilities::logline_threadsafe << "Heat up " << sa.get_temperature() /*<< Utilities::endl */;
+							std::ostringstream ss; ss  << "Heat up " << sa.get_temperature(); Utilities::logline_threadsafe << ss.str();
 						}
 					}
 
@@ -504,7 +514,7 @@ namespace domain
 						cool_down_count = (cool_down_count < 0) ? 0 : cool_down_count - 1;
 						include_best_individual_in_breeding_pool = true;
 
-						Utilities::logline_threadsafe << "Cool down " << sa.get_temperature() /*<< Utilities::endl */;
+						std::ostringstream ss; ss  << "Cool down " << sa.get_temperature(); Utilities::logline_threadsafe << ss.str();
 					}
 
 					// *****************************************************
@@ -523,7 +533,7 @@ namespace domain
 
 					//		auto results = run_strategy_threadsafe(global_env, strategy_index, training_case_index);
 					//		orders.store(0, strategy_index, training_case_index, std::get<0>(results));
-					//		Utilities::quick_log << " Order " << std::get<0>(results) << " Score " << std::get<1>(results) /*<< Utilities::endl */;
+					//		Utilities::quick_log << " Order " << std::get<0>(results) << " Score " << std::get<1>(results); Utilities::logline_threadsafe << ss.str();
 					//	}
 					//}
 
@@ -540,7 +550,7 @@ namespace domain
 							run_strategy_threadsafe);
 
 
-					Utilities::logline_threadsafe << "run() - compute_training_errors_thread_safe() - Done";
+					std::ostringstream ss; ss  << "run() - compute_training_errors_thread_safe() - Done";
 					done = true;
 
 					//// ***************************
@@ -659,13 +669,13 @@ namespace domain
 					//// ******************************
 					//// *** Install New Generation ***
 					//// ******************************
-					//Utilities::quick_log << "Install New Generation" /*<< Utilities::endl */;
+					//Utilities::quick_log << "Install New Generation"; Utilities::logline_threadsafe << ss.str();
 
 					//install_next_generation();
 					//generation_number++;
 					//generations_completed_this_session++;
 
-					Utilities::logline_threadsafe << "---------------------------------------------" /*<< Utilities::endl */ /*<< Utilities::endl */ /*<< Utilities::endl */;
+					{std::ostringstream ss; ss << "---------------------------------------------" /*<< Utilities::endl */ /*<< Utilities::endl */; Utilities::logline_threadsafe << ss.str(); }
 				}
 
 				delete[] pushGP::globals::population_agents;
@@ -676,16 +686,16 @@ namespace domain
 				delete[] pushGP::globals::population_agents;
 				delete[] pushGP::globals::child_agents;
 
-				Utilities::logline_threadsafe << "Exception: " << e.what() /*<< Utilities::endl */;
-				Utilities::logline_threadsafe << "Debug message: " << debug_message /*<< Utilities::endl */;
+				{std::ostringstream ss; ss << "Exception: " << e.what(); Utilities::logline_threadsafe << ss.str(); }
+				{std::ostringstream ss; ss << "Debug message: " << debug_message; Utilities::logline_threadsafe << ss.str(); }
 			}
 			catch (...)
 			{
 				delete[] pushGP::globals::population_agents;
 				delete[] pushGP::globals::child_agents;
 
-				Utilities::logline_threadsafe << "Unknown exception" /*<< Utilities::endl */;
-				Utilities::logline_threadsafe << "Debug message: " << debug_message /*<< Utilities::endl */;
+				{std::ostringstream ss; ss << "Unknown exception"; Utilities::logline_threadsafe << ss.str(); }
+				{std::ostringstream ss; ss << "Debug message: " << debug_message; Utilities::logline_threadsafe << ss.str(); }
 			}
 			return 0;
 		}

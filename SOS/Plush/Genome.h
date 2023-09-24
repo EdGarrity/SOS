@@ -1152,10 +1152,10 @@ namespace Plush
 #endif
 			//if (g_individual_index == 124)
 			//{
-			//	Utilities::quick_log /*<< Utilities::endl */;
-			//	Utilities::quick_log /*<< Utilities::endl */;
-			//	Utilities::quick_log << "case" << std::setw(15) << "item_number" << std::setw(15) << "item" << std::setw(15) << "i" << std::setw(15) << "closing" << std::setw(15) << "wanted_blocks" << std::setw(15) << "extra_blocks" << std::setw(20) << "instruction" << std::setw(15) << "close_parenthesis" << std::setw(15) << "block_wants" << std::setw(15) << "atom.close_parenthesis" /*<< Utilities::endl */;
-			//	Utilities::quick_log << "----" << std::setw(15) << "-----------" << std::setw(15) << "----" << std::setw(15) << "-" << std::setw(15) << "-------" << std::setw(15) << "-------------" << std::setw(15) << "------------" << std::setw(20) << "-----------" << std::setw(15) << "-----------------" << std::setw(15) << "-----------" << std::setw(15) << "----------------------" /*<< Utilities::endl */;
+			//	Utilities::quick_log; Utilities::logline_threadsafe << ss.str();
+			//	Utilities::quick_log; Utilities::logline_threadsafe << ss.str();
+			//	Utilities::quick_log << "case" << std::setw(15) << "item_number" << std::setw(15) << "item" << std::setw(15) << "i" << std::setw(15) << "closing" << std::setw(15) << "wanted_blocks" << std::setw(15) << "extra_blocks" << std::setw(20) << "instruction" << std::setw(15) << "close_parenthesis" << std::setw(15) << "block_wants" << std::setw(15) << "atom.close_parenthesis"; Utilities::logline_threadsafe << ss.str();
+			//	Utilities::quick_log << "----" << std::setw(15) << "-----------" << std::setw(15) << "----" << std::setw(15) << "-" << std::setw(15) << "-------" << std::setw(15) << "-------------" << std::setw(15) << "------------" << std::setw(20) << "-----------" << std::setw(15) << "-----------------" << std::setw(15) << "-----------" << std::setw(15) << "----------------------"; Utilities::logline_threadsafe << ss.str();
 			//}
 
 			Genome_section<T> subsection;
