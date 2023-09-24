@@ -9,19 +9,42 @@ namespace datastore
 	class TestData
 	{
 	private:
-//		const char *fmt_str_load_test_data = "SELECT CONVERT(varchar(25),[Date],120) AS [Date],[Value] FROM [SOS].[dbo].[TestData] WHERE [Key]='Norm_Adj_Open' AND [Stock]='%s' ORDER BY [Date];";
-		const char* fmt_str_load_test_data = "SELECT CONVERT(varchar(25),[Date],120) AS [Date]"
-			" ,[Value]"
-			" FROM [SOS].[dbo].[TestData]"
-			" WHERE [Key]='Adj_Open'"
-			" AND [Symbol]='%s'"
-			" AND [Date] >= CAST('%s' AS DATETIME)" 
-			" AND[Date] <= CAST('%s' AS DATETIME)"
-			//" AND [Date]>='%s' AND [Date]<='%s'"
-			" ORDER BY [Date]";
+		//const char* fmt_str_load_test_data = "SELECT CONVERT(varchar(25),[Date],120) AS [Date]"
+		//	" ,[Value]"
+		//	" FROM [SOS].[dbo].[TestData]"
+		//	" WHERE [Key]='Adj_Open'"
+		//	" AND [Symbol]='%s'"
+		//	" AND [Date] >= CAST('%s' AS DATETIME)" 
+		//	" AND [Date] <= CAST('%s' AS DATETIME)"
+		//	" ORDER BY [Date]";
 
-		std::vector<std::string> dates;
-		std::vector<double> adj_open_values;
+		//std::vector<std::string> dates;
+		//std::vector<double> adj_open_values;
+
+		//const char* fmt_str_load_test_data = "SELECT [Symbol],CONVERT(varchar(25),[Date],120) AS [Date],[Key],[Value]"
+		//	" FROM [SOS].[dbo].[TestData]"
+		//	" WHERE [Symbol]='%s'"
+		//	" AND [Date] >= CAST('%s' AS DATETIME)"
+		//	" AND [Date] <= CAST('%s' AS DATETIME)"
+		//	" ORDER BY [Date],[Key]";
+
+		//struct record_t
+		//{
+		//	std::string symbol;
+		//	std::string date;
+		//	std::string key;
+		//	double value;
+		//};
+
+		//struct index_t
+		//{
+		//	std::string date;
+		//	size_t first_record;
+		//	size_t last_record;
+		//};
+
+		//std::vector<record_t> record;
+		//std::vector<index_t> index;
 
 		const std::string sqlstmt_get_last_saved_run_number = "SELECT TOP 1 [Run_Number] FROM [SOS].[dbo].[ProgressLog] ORDER BY [Created_DTS] DESC;";
 		const std::string sqlstmt_get_last_saved_generation_number = "SELECT TOP 1 [Generation] FROM [SOS].[dbo].[ProgressLog] ORDER BY [Created_DTS] DESC;";
@@ -71,13 +94,13 @@ namespace datastore
 	public:
 		TestData();
 		~TestData() {};
-		void load(const std::string& start_date, const std::string& end_date);
-		size_t size() const { return dates.size(); }
+		//void load(const std::string& start_date, const std::string& end_date);
+		//size_t size() const { return dates.size(); }
 
 		//std::string get_date(size_t index) const { return dates[index]; }
-		std::string get_date(size_t index);
+		//std::string get_date(size_t index);
 
-		double get_stock_price(size_t index) const { return adj_open_values[index]; }
+		//double get_stock_price(size_t index) const { return adj_open_values[index]; }
 		unsigned long get_last_saved_run_number();
 		unsigned long get_last_saved_generation_number();
 		double get_last_saved_temperature(double _default_temperature);

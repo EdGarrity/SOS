@@ -312,9 +312,16 @@ namespace domain
 				unsigned int strategy_index,
 				unsigned long case_index)> _run_strategy_threadsafe)
 		{
-			order_matrix.initialize(domain::argmap::population_size, datastore::test_data.size());
+			{
+				std::ostringstream ss;
+				ss << ",method=RunProgram.compute_training_errors"
+					<< ",message=Enter";
+				Utilities::logline_threadsafe << ss.str();
+			}
 
-			for (size_t training_case_index = 0; training_case_index < datastore::test_data.size(); training_case_index++)
+			order_matrix.initialize(domain::argmap::population_size, datastore::financial_data.get_count());
+
+			for (size_t training_case_index = 0; training_case_index < datastore::financial_data.get_count(); training_case_index++)
 			{
 				for (size_t stratergy_index = 0; stratergy_index < domain::argmap::population_size; stratergy_index++)
 				{
@@ -331,7 +338,14 @@ namespace domain
 						order_matrix.store(stratergy_index, training_case_index, order);
 					}
 
-					{std::ostringstream ss; ss << " Order " << order << " Score " << score; Utilities::logline_threadsafe << ss.str(); }
+					{
+						std::ostringstream ss;
+						ss << ",stratergy=" << stratergy_index
+							<< ",case=" << training_case_index
+							<< ",method=RunProgram.compute_training_errors"
+							<< ",message=Schedule_to_run_strategy";
+						Utilities::logline_threadsafe << ss.str();
+					}
 				}
 			}
 		}
@@ -340,26 +354,52 @@ namespace domain
 
 		void compute_training_errors_thread_safe(Plush::Environment& _env,
 			std::function<std::tuple<double, unsigned long>(Plush::Environment& env,
-				unsigned int strategy_index,
+				unsigned int stratergy_index,
 				unsigned long case_index)> _run_strategy_threadsafe)
 		{
-			{std::ostringstream ss; ss << "compute_training_errors_thread_safe() - Process threads"; Utilities::logline_threadsafe << ss.str(); }
+			{
+				std::ostringstream ss;
+				ss << ",method=RunProgram.compute_training_errors_thread_safe"
+					<< ",message=Enter";
+				Utilities::logline_threadsafe << ss.str();
+			}
 
-			domain::RunProgram processor(pool);
+			order_matrix.initialize(domain::argmap::population_size, datastore::financial_data.get_count());
+ 			domain::RunProgram processor(pool);
 
-			for (size_t training_case_index = 0; training_case_index < datastore::test_data.size(); training_case_index++)
+			for (size_t training_case_index = 0; training_case_index < datastore::financial_data.get_count(); training_case_index++)
 			{
 				for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
 				{
-					std::ostringstream ss; ss  << "Schedule to run strategy " << strategy_index << " on case " << training_case_index << " on thread " << std::this_thread::get_id(); Utilities::logline_threadsafe << ss.str();
+					{
+						std::ostringstream ss;
+						ss << ",stratergy=" << strategy_index
+							<< ",case=" << training_case_index
+							<< ",method=RunProgram.compute_training_errors_thread_safe"
+							<< ",message=Schedule_to_run_strategy";
+						Utilities::logline_threadsafe << ss.str();
+					}
+
 					develop_strategy::RunProgram_WorkOrder_Form form(strategy_index, training_case_index);
 					processor.run(form);
 				}
 			}
 
-			{std::ostringstream ss; ss << "compute_training_errors_thread_safe() - Wait for all threads to complete"; Utilities::logline_threadsafe << ss.str(); }
+			{
+				std::ostringstream ss;
+				ss << ",method=RunProgram.compute_training_errors_thread_safe"
+					<< ",message=Waiting_for_all_threads_to_complete";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
 			pool.wait_for_all_threads_to_complete();
-			{std::ostringstream ss; ss  << "compute_training_errors_thread_safe() - All threads to complete"; Utilities::logline_threadsafe << ss.str();}
+
+			{
+				std::ostringstream ss;
+				ss << ",method=RunProgram.compute_training_errors_thread_safe"
+					<< ",message=All_threads_complete";
+				Utilities::logline_threadsafe << ss.str();
+			}
 
 
 
@@ -461,10 +501,16 @@ namespace domain
 				}
 
 				// Load data
-				datastore::test_data.load("2020-01-01", "2021-12-31");
+				datastore::financial_data.load("2020-01-01", "2021-12-31");
 
 				// Load population.  Create more if not enough loaded.
-				std::ostringstream ss; ss  << "Create Population Agents"; Utilities::logline_threadsafe << ss.str();
+				{
+					std::ostringstream ss;
+					ss << ",method=DevelopStrategy.run"
+						<< ",message=Create_Population_Agents";
+					Utilities::logline_threadsafe << ss.str();
+				}
+
 				agents_created = datastore::agent_data.make_pop_agents(global_env, datastore::agent_data.load());
 
 				if (agents_created > 0)
@@ -502,7 +548,13 @@ namespace domain
 							cool_down_count = argmap::cool_down_period;
 							include_best_individual_in_breeding_pool = false;
 
-							std::ostringstream ss; ss  << "Heat up " << sa.get_temperature(); Utilities::logline_threadsafe << ss.str();
+							{
+								std::ostringstream ss;
+								ss << ",method=DevelopStrategy.run"
+									<< "temperature=" << sa.get_temperature()
+									<< ",message=Heat_up";
+								Utilities::logline_threadsafe << ss.str();
+							}
 						}
 					}
 
@@ -514,7 +566,13 @@ namespace domain
 						cool_down_count = (cool_down_count < 0) ? 0 : cool_down_count - 1;
 						include_best_individual_in_breeding_pool = true;
 
-						std::ostringstream ss; ss  << "Cool down " << sa.get_temperature(); Utilities::logline_threadsafe << ss.str();
+						{
+							std::ostringstream ss;
+							ss << ",method=DevelopStrategy.run"
+								<< "temperature=" << sa.get_temperature()
+								<< ",message=Cool_down";
+							Utilities::logline_threadsafe << ss.str();
+						}
 					}
 
 					// *****************************************************
@@ -550,7 +608,13 @@ namespace domain
 							run_strategy_threadsafe);
 
 
-					std::ostringstream ss; ss  << "run() - compute_training_errors_thread_safe() - Done";
+					{
+						std::ostringstream ss;
+						ss << ",method=DevelopStrategy.run"
+							<< ",message=Returned_from_compute_training_errors_thread_safe";
+						Utilities::logline_threadsafe << ss.str();
+					}
+
 					done = true;
 
 					//// ***************************
@@ -675,7 +739,12 @@ namespace domain
 					//generation_number++;
 					//generations_completed_this_session++;
 
-					{std::ostringstream ss; ss << "---------------------------------------------" /*<< Utilities::endl */ /*<< Utilities::endl */; Utilities::logline_threadsafe << ss.str(); }
+					{
+						std::ostringstream ss;
+						ss << ",method=DevelopStrategy.run"
+							<< ",message=Done";
+						Utilities::logline_threadsafe << ss.str();
+					}
 				}
 
 				delete[] pushGP::globals::population_agents;
@@ -686,16 +755,32 @@ namespace domain
 				delete[] pushGP::globals::population_agents;
 				delete[] pushGP::globals::child_agents;
 
-				{std::ostringstream ss; ss << "Exception: " << e.what(); Utilities::logline_threadsafe << ss.str(); }
-				{std::ostringstream ss; ss << "Debug message: " << debug_message; Utilities::logline_threadsafe << ss.str(); }
+				std::stringstream warning_message;
+				warning_message << "Run_exception";
+				{
+					std::ostringstream ss;
+					ss << ",method=DevelopStrategy.run"
+						<< ",exception=" << e.what()
+						<< "," << warning_message.str();
+					Utilities::logline_threadsafe << ss.str();
+				}
+				throw std::runtime_error(warning_message.str());
 			}
 			catch (...)
 			{
 				delete[] pushGP::globals::population_agents;
 				delete[] pushGP::globals::child_agents;
 
-				{std::ostringstream ss; ss << "Unknown exception"; Utilities::logline_threadsafe << ss.str(); }
-				{std::ostringstream ss; ss << "Debug message: " << debug_message; Utilities::logline_threadsafe << ss.str(); }
+				std::stringstream warning_message;
+				warning_message << "Run_exception";
+				{
+					std::ostringstream ss;
+					ss << ",method=DevelopStrategy.run"
+						<< ",exception=Unknown"
+						<< "," << warning_message.str();
+					Utilities::logline_threadsafe << ss.str();
+				}
+				throw std::runtime_error(warning_message.str());
 			}
 			return 0;
 		}

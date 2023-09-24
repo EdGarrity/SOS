@@ -100,11 +100,10 @@ namespace domain
 
 		{
 			std::ostringstream ss;
-			ss << ",thread=" << std::this_thread::get_id()
-				<< ",env_index = " << env_index
+			ss << ",env_index = " << env_index
 				<< ",stratergy=" << workorder_form.get_stratergy_index()
 				<< ",case=" << workorder_form.get_training_case_index()
-				<< ",method=RunProgram_run"
+				<< ",method=RunProgram.run"
 				<< ",message=co_await";
 			Utilities::logline_threadsafe << ss.str();
 		}
@@ -115,11 +114,10 @@ namespace domain
 		// Run the stratergy and case specified in the work order, in a seperate thread.
 		{
 			std::ostringstream ss;
-			ss << ",thread=" << std::this_thread::get_id()
-				<< ",env_index = " << env_index
+			ss << ",env_index = " << env_index
 				<< ",stratergy=" << workorder_form.get_stratergy_index()
 				<< ",case=" << workorder_form.get_training_case_index()
-				<< ",method=RunProgram_run"
+				<< ",method=RunProgram.run"
 				<< ",message=Running";
 			Utilities::logline_threadsafe << ss.str();
 		}
@@ -137,11 +135,10 @@ namespace domain
 
 			{
 				std::ostringstream ss;
-				ss << ",thread=" << std::this_thread::get_id()
-					<< ",env_index = " << env_index
+				ss << ",env_index = " << env_index
 					<< ",stratergy=" << workorder_form.get_stratergy_index()
 					<< ",case=" << workorder_form.get_training_case_index()
-					<< ",method=RunProgram_run"
+					<< ",method=RunProgram.run"
 					<< ",score=" << std::get<1>(results)
 					<< ",message=Done";
 				Utilities::logline_threadsafe << ss.str();
@@ -151,17 +148,16 @@ namespace domain
 		{
 			// Log exception
 			std::stringstream warning_message;
-			warning_message << "Unable to insert work into queue";
+			warning_message << "Unable_to_insert_work_into_queue";
 
 			std::cerr << warning_message.str(); 
 			{
 				std::ostringstream ss; 
-				ss << ",thread=" << std::this_thread::get_id()
-					<< ",env_index = " << env_index
+				ss << ",env_index = " << env_index
 					<< ",stratergy=" << workorder_form.get_stratergy_index()
 					<< ",case=" << workorder_form.get_training_case_index()
 					<< ",exception=" << e.what()
-					<< ",method=RunProgram::run()"
+					<< ",method=RunProgram.run"
 					<< "," << warning_message.str();
 				Utilities::logline_threadsafe << ss.str();
 			}
@@ -172,16 +168,16 @@ namespace domain
 		{
 			// Log exception
 			std::stringstream warning_message;
-			warning_message << "An unknown error has occured";
+			warning_message << "An_unknown_error_has_occured";
 
 			std::cerr << warning_message.str(); 
 			{
 				std::ostringstream ss;
-				ss << ",thread=" << std::this_thread::get_id()
-					<< ",env_index = " << env_index
+				ss << ",env_index = " << env_index
 					<< ",stratergy=" << workorder_form.get_stratergy_index()
 					<< ",case=" << workorder_form.get_training_case_index()
-					<< ",method=RunProgram_run"
+					<< ",exception=Unknown"
+					<< ",method=RunProgram.run"
 					<< "," << warning_message.str();
 				Utilities::logline_threadsafe << ss.str();
 			}
@@ -193,5 +189,4 @@ namespace domain
 	void RunProgram::wait_for_all_threads_to_complete()
 	{
 	}
-	;
 }

@@ -50,17 +50,62 @@ namespace Utilities
         {
             while (m_coros.size() != 0)
             {
-                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                {
+                    std::ostringstream ss;
+                    ss << ",method=Threadpool.wait_for_all_threads_to_complete"
+                        << ",work_queue_size=" << m_coros.size()
+                        << ",message=Waiting_for_work_queue_to_be_empty";
+                    Utilities::logline_threadsafe << ss.str();
+                }
+
+                std::this_thread::sleep_for(std::chrono::seconds(10));
+            }
+
+            {
+                std::ostringstream ss;
+                ss << ",method=Threadpool.wait_for_all_threads_to_complete"
+                    << ",work_queue_size=" << m_coros.size()
+                    << ",message=Work_queue_empty";
+                Utilities::logline_threadsafe << ss.str();
             }
 
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+            {
+                std::ostringstream ss;
+                ss << ",method=Threadpool.wait_for_all_threads_to_complete"
+                    << ",thread_count=" << m_threads.size()
+                    << ",message=Waiting_for_all_threads_to_complete";
+                Utilities::logline_threadsafe << ss.str();
+            }
 
             for (std::thread& thread : m_threads)
             {
                 if (thread.joinable())
                 {
+                    {
+                        std::ostringstream ss;
+                        ss << ",method=Threadpool.wait_for_all_threads_to_complete"
+                            << ",message=Joining_thread";
+                        Utilities::logline_threadsafe << ss.str();
+                    }
+
                     thread.join();
+
+                    {
+                        std::ostringstream ss;
+                        ss << ",method=Threadpool.wait_for_all_threads_to_complete"
+                            << ",message=Thread_done";
+                        Utilities::logline_threadsafe << ss.str();
+                    }
                 }
+            }
+
+            {
+                std::ostringstream ss;
+                ss << ",method=Threadpool.wait_for_all_threads_to_complete"
+                    << ",message=All_work_done";
+                Utilities::logline_threadsafe << ss.str();
             }
         }
 

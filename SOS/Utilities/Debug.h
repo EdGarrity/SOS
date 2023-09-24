@@ -281,7 +281,8 @@ namespace Utilities
 				std::osyncstream synced_out(std::cout); // synchronized wrapper for Utilities::LogLine_ThreadSafe
 
 				synced_out << getCurrentTimestamp();
-				synced_out << ",LineNumber=" << std::to_string(line_number++);
+				synced_out << ",line_number=" << std::to_string(line_number++);
+				synced_out << ",thread=" << std::this_thread::get_id();
 				synced_out << message;
 				synced_out << std::endl;
 			} // characters are transferred and Utilities::LogLine_ThreadSafe is flushed

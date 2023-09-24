@@ -269,8 +269,12 @@ namespace Utilities
 				debug_message = "wait_for_queue_to_empty,queue_size=" + std::to_string(queue_size);
 				debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 #endif
-				debug_message = "wait_for_queue_to_empty,queue_size=" + std::to_string(queue_size);
-				std::ostringstream ss; ss  << debug_message; Utilities::logline_threadsafe << ss.str();
+				{
+					std::ostringstream ss;
+					ss << ",method=LFE_WorkOrderManager.wait_for_all_threads_to_complete"
+						<< ",message=Waiting_for_queue_to_empty";
+					Utilities::logline_threadsafe << ss.str();
+				}
 
 			} while (queue_size > 0);
 
@@ -289,14 +293,19 @@ namespace Utilities
 			// wait for all threads to stop
 			bool all_done = true;
 
-			{std::ostringstream ss; ss << "Queue empty" /*<< Utilities::endl */; Utilities::logline_threadsafe << ss.str(); }
+			{
+				std::ostringstream ss;
+				ss << ",method=LFE_WorkOrderManager.wait_for_all_threads_to_complete"
+					<< ",message=Queue_empty";
+				Utilities::logline_threadsafe << ss.str();
+			}
 
 			do
 			{
-				{std::ostringstream ss; ss; Utilities::logline_threadsafe << ss.str(); }
-				{std::ostringstream ss; ss; Utilities::logline_threadsafe << ss.str(); }
-				{std::ostringstream ss; ss << "N" << std::setw(30) << "effort" << std::setw(30) << "exec_size" << std::setw(30) << "instruction" << std::setw(30) << "individual" << std::setw(30) << "case"; Utilities::logline_threadsafe << ss.str(); }
-				{std::ostringstream ss; ss << "-" << std::setw(30) << "------" << std::setw(30) << "---------" << std::setw(30) << "-----------" << std::setw(30) << "----------" << std::setw(30) << "----"; Utilities::logline_threadsafe << ss.str(); }
+				//{std::ostringstream ss; ss; Utilities::logline_threadsafe << ss.str(); }
+				//{std::ostringstream ss; ss; Utilities::logline_threadsafe << ss.str(); }
+				//{std::ostringstream ss; ss << "N" << std::setw(30) << "effort" << std::setw(30) << "exec_size" << std::setw(30) << "instruction" << std::setw(30) << "individual" << std::setw(30) << "case"; Utilities::logline_threadsafe << ss.str(); }
+				//{std::ostringstream ss; ss << "-" << std::setw(30) << "------" << std::setw(30) << "---------" << std::setw(30) << "-----------" << std::setw(30) << "----------" << std::setw(30) << "----"; Utilities::logline_threadsafe << ss.str(); }
 
 				// Don't do the first time.
 				if (all_done == false)
@@ -326,13 +335,13 @@ namespace Utilities
 						else
 							instruction_name = Plush::static_initializer.get_function_name(instruction_index) + " (" + std::to_string(instruction_index) + ")";
 
-						{std::ostringstream ss; ss << i
-							<< std::setw(30) << effort
-							<< std::setw(30) << exec_size
-							<< std::setw(30) << instruction_name
-							<< std::setw(30) << individual_index
-							<< std::setw(30) << example_case
-							/*<< Utilities::endl */; }
+						//{std::ostringstream ss; ss << i
+						//	<< std::setw(30) << effort
+						//	<< std::setw(30) << exec_size
+						//	<< std::setw(30) << instruction_name
+						//	<< std::setw(30) << individual_index
+						//	<< std::setw(30) << example_case
+						//	/*<< Utilities::endl */; }
 					}
 				}
 

@@ -12,89 +12,126 @@ namespace datastore
 	{
 	}
 
-	// Purpose: 
-	//   Load the financial data which the agents will use to make trading decisions.
-	//
-	// Parameters:
-	//   start_date
-	//   end_date
-	// 
-	// Return value:
-	//   
-	//
-	// Side Effects:
-	//   None
-	//
-	// Thread Safe:
-	//   No
-	//
-	// Remarks:
-	//
-	void TestData::load(const std::string& start_date, const std::string& end_date)
-	{
-		std::ostringstream ss; ss  << "Loading all case data..."; Utilities::logline_threadsafe << ss.str();
+	//// Purpose: 
+	////   Load the financial data which the agents will use to make trading decisions.
+	////
+	//// Parameters:
+	////   start_date - inclusive
+	////   end_date - inclusive
+	//// 
+	//// Return value:
+	////   
+	////
+	//// Side Effects:
+	////   None
+	////
+	//// Thread Safe:
+	////   No
+	////
+	//// Remarks:
+	////
+	//void TestData::load(const std::string& start_date, const std::string& end_date)
+	//{
+	//	{
+	//		std::ostringstream ss;
+	//		ss << ",method=TestData.load"
+	//			<< ",start_date=" << start_date
+	//			<< ",end_date=" << end_date
+	//			<< ",message=loading_all_case_data";
+	//		Utilities::logline_threadsafe << ss.str();
+	//	}
 
-		database::SQLCommand* sqlcmd_get_case_data = nullptr;
+	//	database::SQLCommand* sqlcmd_get_case_data = nullptr;
 
-		try
-		{
-			// Construct SQL statement with date range filters
-			//int sz = std::snprintf(nullptr, 0, fmt_str_load_test_data, start_date, end_date);
-			int sz = std::snprintf(nullptr, 0, fmt_str_load_test_data, "AAPL", start_date.c_str(), end_date.c_str());
-			std::vector<char> buf(sz + 1); // note +1 for null terminator
-			std::snprintf(&buf[0], buf.size(), fmt_str_load_test_data, "AAPL", start_date.c_str(), end_date.c_str());
-			std::string sqlstmt_load_case_data(buf.begin(), buf.end() - 1); // omit the null terminator
+	//	try
+	//	{
+	//		// Construct SQL statement with date range filters
+	//		int sz = std::snprintf(nullptr, 0, fmt_str_load_test_data, "AAPL", start_date.c_str(), end_date.c_str());
+	//		std::vector<char> buf(sz + 1); // note +1 for null terminator
+	//		std::snprintf(&buf[0], buf.size(), fmt_str_load_test_data, "AAPL", start_date.c_str(), end_date.c_str());
+	//		std::string sqlstmt_load_case_data(buf.begin(), buf.end() - 1); // omit the null terminator
 
-			sqlcmd_get_case_data = new database::SQLCommand(database_connection.get_connection(), sqlstmt_load_case_data);
+	//		sqlcmd_get_case_data = new database::SQLCommand(database_connection.get_connection(), sqlstmt_load_case_data);
 
-			dates.clear();
-			adj_open_values.clear();
+	//		//dates.clear();
+	//		//adj_open_values.clear();
 
-			// retrieve the case data.
-			sqlcmd_get_case_data->execute();
+	//		// retrieve the case data.
+	//		sqlcmd_get_case_data->execute();
 
-			while (sqlcmd_get_case_data->fetch_next())
-			{
-				std::string date = sqlcmd_get_case_data->get_field_as_string(1);
-				double adj_open = sqlcmd_get_case_data->get_field_as_double(2);
+	//		size_t first_record = 0;
+	//		size_t last_record = 0;
+	//		std::string date = "";
 
-				std::ostringstream ss; ss  << date << " " << adj_open; Utilities::logline_threadsafe << ss.str();
+	//		while (sqlcmd_get_case_data->fetch_next())
+	//		{
+	//			//std::string date = sqlcmd_get_case_data->get_field_as_string(1);
+	//			//double adj_open = sqlcmd_get_case_data->get_field_as_double(2);
 
-				dates.push_back(date);
-				adj_open_values.push_back(adj_open);
-			}
+	//			//dates.push_back(date);
+	//			//adj_open_values.push_back(adj_open);
 
-			delete sqlcmd_get_case_data;
-		}
-		catch (const std::exception& e)
-		{
-			std::ostringstream ss; ss  << "Exception: " << e.what(); Utilities::logline_threadsafe << ss.str();
+	//			record.emplace_back(record_t{ sqlcmd_get_case_data->get_field_as_string(1), sqlcmd_get_case_data->get_field_as_string(2), sqlcmd_get_case_data->get_field_as_string(3), sqlcmd_get_case_data->get_field_as_double(4) });
+	//			last_record++;
 
-			if (sqlcmd_get_case_data != nullptr)
-				delete sqlcmd_get_case_data;
+	//			if (date != sqlcmd_get_case_data->get_field_as_string(2))
+	//			{
+	//				if (date != "")
+	//				{
+	//					index.emplace_back(index_t{ date, first_record, last_record });
+	//				}
 
-			std::stringstream error;
-			error << "CaseData::load()";
-			std::cerr << error.str(); Utilities::logline_threadsafe << ss.str();
-		}
-		catch (...)
-		{
-			std::ostringstream ss; ss  << "Unknown exception"; Utilities::logline_threadsafe << ss.str();
+	//				date = sqlcmd_get_case_data->get_field_as_string(2);
+	//				first_record = last_record;
+	//			}
+	//		}
 
-			if (sqlcmd_get_case_data != nullptr)
-				delete sqlcmd_get_case_data;
+	//		index.emplace_back(index_t{ date, first_record, last_record });
 
-			std::stringstream error;
-			error << "CaseData::load()";
-			std::cerr << error.str(); Utilities::logline_threadsafe << ss.str();
-		}
-	}
+	//		delete sqlcmd_get_case_data;
+	//	}
+	//	catch (const std::exception& e)
+	//	{
+	//		{
+	//			std::ostringstream ss;
+	//			ss << ",method=TestData.load"
+	//				<< ",exception=" << e.what()
+	//				<< ",message=Error_loading_data";
+	//			Utilities::logline_threadsafe << ss.str();
+	//		}
 
-	std::string TestData::get_date(size_t index)
-	{
-		std::string date = dates[index];
-		return date;
-	}
+	//		if (sqlcmd_get_case_data != nullptr)
+	//			delete sqlcmd_get_case_data;
+
+	//		std::stringstream error;
+	//		error << "CaseData::load()";
+	//		std::cerr << error.str(); 
+	//	}
+	//	catch (...)
+	//	{
+	//		std::ostringstream ss; ss  << "Unknown exception"; Utilities::logline_threadsafe << ss.str();
+	//		{
+	//			std::ostringstream ss;
+	//			ss << ",method=TestData.load"
+	//				<< ",exception=Unknown"
+	//				<< ",message=An_unknown_error_has_occured";
+	//			Utilities::logline_threadsafe << ss.str();
+	//		}
+
+	//		if (sqlcmd_get_case_data != nullptr)
+	//			delete sqlcmd_get_case_data;
+
+	//		std::stringstream error;
+	//		error << "CaseData::load()";
+	//		std::cerr << error.str();
+	//	}
+	//}
+
+	//std::string TestData::get_date(size_t index)
+	//{
+	//	std::string date = dates[index];
+	//	return date;
+	//}
 
 	// Purpose: 
 	//   Returns the number of the last run saved to the database.
