@@ -24,9 +24,9 @@ namespace domain
 		static constexpr double seed_money = 10000.0;
 
 		void initialize(double opening_balance) { shares = 0; account.set_balance(opening_balance); };
-		void buy(size_t index);
-		void sell(size_t index);
-		void execute(size_t index, unsigned long order);
-		double unrealized_gain(size_t index) const;
+		//void buy(size_t index);
+		//void sell(size_t index);
+		//void execute(size_t index, unsigned long order);
+		//double unrealized_gain(size_t index) const;
 	};
 }

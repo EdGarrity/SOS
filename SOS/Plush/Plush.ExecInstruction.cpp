@@ -958,13 +958,14 @@ namespace Plush
 	{
 		if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
 		{
-			size_t size_of_window = datastore::financial_data.get_size();
+			//size_t size_of_window = datastore::financial_data.get_size();
 
-			for (unsigned int index = 0; index < size_of_window; index++)
-			{
-				double value = datastore::financial_data.get_data(index, _env.input_case);
-				_env.push<CodeAtom>(CodeAtom(value));
-			}
+			//for (unsigned int index = 0; index < size_of_window; index++)
+			//{
+			//	double value = datastore::financial_data.get_data(index, _env.input_case);
+			//	_env.push<CodeAtom>(CodeAtom(value));
+			//}
+			;
 		}
 		else
 		{
@@ -1003,16 +1004,17 @@ namespace Plush
 	{
 		if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
 		{
-			size_t size_of_window = datastore::financial_data.get_size();
-			size_t index = size_of_window;
+			//size_t size_of_window = datastore::financial_data.get_size();
+			//size_t index = size_of_window;
 
-			for (unsigned int n = 0; n < size_of_window; n++)
-			{
-				index--;
+			//for (unsigned int n = 0; n < size_of_window; n++)
+			//{
+			//	index--;
 
-				double value = datastore::financial_data.get_data(index, _env.input_case);
-				_env.push<CodeAtom>(CodeAtom(value));
-			}
+			//	double value = datastore::financial_data.get_data(index, _env.input_case);
+			//	_env.push<CodeAtom>(CodeAtom(value));
+			//}
+			;
 		}
 		else
 		{

@@ -8,6 +8,9 @@
 #include <mutex>
 #include <queue>
 #include <thread>
+#include <sstream>
+
+#include "..\Utilities\Debug.h"
 
 namespace Utilities
 {

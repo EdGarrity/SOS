@@ -579,7 +579,7 @@ namespace domain
 					// *** Calculate trading orders for each trading day ***
 					// *****************************************************
 
-					size_t t = datastore::test_data.size();
+					//size_t t = datastore::test_data.size();
 
 					//orders.resize(domain::argmap::population_size, datastore::test_data.size());
 
