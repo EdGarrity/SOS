@@ -13,5 +13,5 @@ namespace Utilities
 	//Quick_Log quick_log;
 	//Endl endl;
 
-	LogLine_ThreadSafe logline_threadsafe;
+	thread_local LogLine_ThreadSafe logline_threadsafe;
 }

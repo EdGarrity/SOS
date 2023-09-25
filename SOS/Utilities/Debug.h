@@ -290,5 +290,5 @@ namespace Utilities
 		}
 	};
 
-	extern LogLine_ThreadSafe logline_threadsafe;
+	extern thread_local LogLine_ThreadSafe logline_threadsafe;
 }
