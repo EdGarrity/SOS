@@ -140,7 +140,22 @@ namespace Utilities
                 auto coro = m_coros.front();
                 m_coros.pop();
                 lock.unlock();
+
+                {
+                    std::ostringstream ss;
+                    ss << ",method=Threadpool.thread_loop"
+                        << ",message=coro.resuming";
+                    Utilities::logline_threadsafe << ss.str();
+                }
+
                 coro.resume();
+
+                {
+                    std::ostringstream ss;
+                    ss << ",method=Threadpool.thread_loop"
+                        << ",message=coro.resumed";
+                    Utilities::logline_threadsafe << ss.str();
+                }
             }
         }
 
