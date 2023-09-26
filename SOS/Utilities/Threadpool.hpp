@@ -19,7 +19,14 @@ namespace Utilities
     public:
         explicit Threadpool(const std::size_t threadCount)
         {
-            //Utilities::quick_log << "threadpool(" << threadCount << ") from thread : " << std::this_thread::get_id() << "\n";
+            {
+                std::ostringstream ss;
+                ss << ",method=Threadpool.Threadpool()"
+                    << ",threadCount=" << threadCount
+                    << ",message=Constructor";
+                Utilities::logline_threadsafe << ss.str();
+            }
+
             for (std::size_t i = 0; i < threadCount; ++i)
             {
                 std::thread worker_thread([this]() {
@@ -123,8 +130,23 @@ namespace Utilities
 
         void thread_loop()
         {
+            {
+                std::ostringstream ss;
+                ss << ",method=Threadpool.thread_loop()"
+                    << ",message=Started";
+                Utilities::logline_threadsafe << ss.str();
+            }
+            
             while (!m_stop_thread)
             {
+                {
+                    std::ostringstream ss;
+                    ss << ",method=Threadpool.thread_loop()"
+                        << "m_coros.size()=" << m_coros.size()
+                        << ",message=Entered_loop";
+                    Utilities::logline_threadsafe << ss.str();
+                }
+
                 std::unique_lock<std::mutex> lock(m_mutex);
 
                 while (!m_stop_thread && m_coros.size() == 0)
@@ -137,6 +159,14 @@ namespace Utilities
                     break;
                 }
 
+                {
+                    std::ostringstream ss;
+                    ss << ",method=Threadpool.thread_loop()"
+                        << "m_coros.size()=" << m_coros.size()
+                        << ",message=Found_work";
+                    Utilities::logline_threadsafe << ss.str();
+                }
+
                 auto coro = m_coros.front();
                 m_coros.pop();
                 lock.unlock();
@@ -144,6 +174,7 @@ namespace Utilities
                 {
                     std::ostringstream ss;
                     ss << ",method=Threadpool.thread_loop"
+                        << "m_coros.size()=" << m_coros.size()
                         << ",message=coro.resuming";
                     Utilities::logline_threadsafe << ss.str();
                 }
@@ -153,6 +184,7 @@ namespace Utilities
                 {
                     std::ostringstream ss;
                     ss << ",method=Threadpool.thread_loop"
+                        << "m_coros.size()=" << m_coros.size()
                         << ",message=coro.resumed";
                     Utilities::logline_threadsafe << ss.str();
                 }
