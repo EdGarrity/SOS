@@ -182,8 +182,8 @@ namespace datastore
 				ss << ",method=FinancialData.load"
 					<< ",start_date=" << start_date
 					<< ",end_date=" << end_date
-					<< ",index_records_size=" << index_records.size()
-					<< ",data_records_size=" << data_records.size()
+					<< ",record_count=" << index_records.size()
+					<< ",table_size=" << data_records.size()
 					<< ",message=case_data_loaded";
 				Utilities::logline_threadsafe << ss.str();
 			}

@@ -94,7 +94,7 @@ namespace domain
 	//		throw std::runtime_error(warning_message.str());
 	//	}
 	//};
-	Utilities::Task RunProgram::run(develop_strategy::RunProgram_WorkOrder_Form const& workorder_form) const
+	Utilities::Task RunProgram::run(develop_strategy::RunProgram_WorkOrder_Form const workorder_form) const
 	{
 		int env_index = 99;
 
