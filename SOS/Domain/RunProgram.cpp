@@ -94,7 +94,7 @@ namespace domain
 	//		throw std::runtime_error(warning_message.str());
 	//	}
 	//};
-	Utilities::Task RunProgram::run(develop_strategy::RunProgram_WorkOrder_Form const workorder_form) const
+	Utilities::Task RunProgram::run(develop_strategy::RunProgram_WorkOrder_Form const workorder_form, std::latch &work_done) const
 	{
 		int env_index = 99;
 
@@ -132,6 +132,7 @@ namespace domain
 				workorder_form.get_stratergy_index(),
 				workorder_form.get_training_case_index(),
 				std::get<0>(results));
+			work_done.count_down();
 
 			{
 				std::ostringstream ss;

@@ -364,6 +364,7 @@ namespace domain
 				Utilities::logline_threadsafe << ss.str();
 			}
 
+			std::latch work_done(domain::argmap::population_size * datastore::financial_data.get_count());
 			order_matrix.initialize(domain::argmap::population_size, datastore::financial_data.get_count());
  			domain::RunProgram processor(pool);
 
@@ -381,7 +382,7 @@ namespace domain
 					}
 
 					develop_strategy::RunProgram_WorkOrder_Form form(strategy_index, training_case_index);
-					processor.run(form);
+					processor.run(form, work_done);
 				}
 			}
 
@@ -392,7 +393,7 @@ namespace domain
 				Utilities::logline_threadsafe << ss.str();
 			}
 
-			pool.wait_for_all_threads_to_complete();
+			pool.wait_for_all_threads_to_complete(work_done);
 
 			{
 				std::ostringstream ss;

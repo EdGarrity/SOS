@@ -4,6 +4,7 @@
 #include <condition_variable>
 #include <coroutine>
 #include <cstdint>
+#include <latch>
 #include <list>
 #include <mutex>
 #include <queue>
@@ -56,7 +57,7 @@ namespace Utilities
             return awaiter{ this };
         }
 
-        void wait_for_all_threads_to_complete()
+        void wait_for_all_threads_to_complete(std::latch const& work_done)
         {
             while (m_coros.size() != 0)
             {
@@ -89,27 +90,30 @@ namespace Utilities
                 Utilities::logline_threadsafe << ss.str();
             }
 
-            for (std::thread& thread : m_threads)
-            {
-                if (thread.joinable())
-                {
-                    {
-                        std::ostringstream ss;
-                        ss << ",method=Threadpool.wait_for_all_threads_to_complete"
-                            << ",message=Joining_thread";
-                        Utilities::logline_threadsafe << ss.str();
-                    }
+            //for (std::thread& thread : m_threads)
+            //{
+            //    if (thread.joinable())
+            //    {
+            //        {
+            //            std::ostringstream ss;
+            //            ss << ",method=Threadpool.wait_for_all_threads_to_complete"
+            //                << ",message=Joining_thread";
+            //            Utilities::logline_threadsafe << ss.str();
+            //        }
 
-                    thread.join();
+            //        thread.join();
 
-                    {
-                        std::ostringstream ss;
-                        ss << ",method=Threadpool.wait_for_all_threads_to_complete"
-                            << ",message=Thread_done";
-                        Utilities::logline_threadsafe << ss.str();
-                    }
-                }
-            }
+            //        {
+            //            std::ostringstream ss;
+            //            ss << ",method=Threadpool.wait_for_all_threads_to_complete"
+            //                << ",message=Thread_done";
+            //            Utilities::logline_threadsafe << ss.str();
+            //        }
+            //    }
+            //}
+
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            work_done.wait();
 
             {
                 std::ostringstream ss;
