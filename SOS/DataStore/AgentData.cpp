@@ -65,20 +65,20 @@ namespace datastore
 						pushGP::globals::population_agents[n].set_genome(genome);
 
 						pushGP::globals::population_agents[n].record_family_tree(
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(3)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(4)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(5)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(6)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(7)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(8)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(9)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(10)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(11)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(12)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(13)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(14)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(15)),
-							StringToGuid(sqlcmd_get_individuals->get_field_as_string(16)));
+							Utilities::StringToGuid(sqlcmd_get_individuals->get_field_as_string(3)),
+							Utilities::StringToGuid(sqlcmd_get_individuals->get_field_as_string(4)),
+							Utilities::StringToGuid(sqlcmd_get_individuals->get_field_as_string(5)),
+							Utilities::StringToGuid(sqlcmd_get_individuals->get_field_as_string(6)),
+							Utilities::StringToGuid(sqlcmd_get_individuals->get_field_as_string(7)),
+							Utilities::StringToGuid(sqlcmd_get_individuals->get_field_as_string(8)),
+							Utilities::StringToGuid(sqlcmd_get_individuals->get_field_as_string(9)),
+							Utilities::StringToGuid(sqlcmd_get_individuals->get_field_as_string(10)),
+							Utilities::StringToGuid(sqlcmd_get_individuals->get_field_as_string(11)),
+							Utilities::StringToGuid(sqlcmd_get_individuals->get_field_as_string(12)),
+							Utilities::StringToGuid(sqlcmd_get_individuals->get_field_as_string(13)),
+							Utilities::StringToGuid(sqlcmd_get_individuals->get_field_as_string(14)),
+							Utilities::StringToGuid(sqlcmd_get_individuals->get_field_as_string(15)),
+							Utilities::StringToGuid(sqlcmd_get_individuals->get_field_as_string(16)));
 
 						n++;
 					}

@@ -7,9 +7,10 @@
 
 #include <stdio.h>
 #include <string>
-#include <oledb.h>  
-#include <oledberr.h>  
-#include "C:\Program Files\Microsoft SQL Server\110\SDK\Include\SQLNCLI.h"	// https://docs.microsoft.com/en-us/sql/relational-databases/native-client/applications/using-the-sql-server-native-client-header-and-library-files?view=sql-server-2017
+//#include <oledb.h>  
+//#include <oledberr.h>  
+//#include "C:\Program Files\Microsoft SQL Server\110\SDK\Include\SQLNCLI.h"	// https://docs.microsoft.com/en-us/sql/relational-databases/native-client/applications/using-the-sql-server-native-client-header-and-library-files?view=sql-server-2017
+#include <msoledbsql.h>
 #include "..\Utilities\MyException.h"
 
 
@@ -60,10 +61,12 @@ namespace database
 		//		user_id		A string containing a user name to use when establishing the connection
 		//		password	A string containing a password to use when establishing the connection
 		//
-		HRESULT initialize_and_establish_connection(const OLECHAR * server, 
-													const OLECHAR * db_string, 
-													const OLECHAR * user_id, 
-													const OLECHAR * password);
+		//HRESULT initialize_and_establish_connection(const OLECHAR * server, 
+		//											const OLECHAR * db_string, 
+		//											const OLECHAR * user_id, 
+		//											const OLECHAR * password);
+
+		HRESULT initialize_and_establish_connection(LPCWSTR lpwszProviderString);
 
 	public:
 		// Constructs a connection object to a data source

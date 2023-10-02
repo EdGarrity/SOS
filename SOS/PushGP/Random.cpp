@@ -130,7 +130,7 @@ namespace pushGP
 
 		genome.clear();
 
-		atom.instruction_name = toString(1);
+		atom.instruction_name = Utilities::toString(1);
 		atom.type = Plush::Atom::AtomType::integer;
 		genome.push(atom);
 
@@ -184,7 +184,7 @@ namespace pushGP
 				genome.push(atom);
 			}
 
-			atom.instruction_name = toString(num_of_instructions);
+			atom.instruction_name = Utilities::toString(num_of_instructions);
 			atom.type = Plush::Atom::AtomType::integer;
 			genome.push(atom);
 
@@ -207,7 +207,7 @@ namespace pushGP
 					atom.type = Plush::Atom::AtomType::ins;
 					genome.push(atom);
 
-					atom.instruction_name = toString(r);
+					atom.instruction_name = Utilities::toString(r);
 					atom.type = Plush::Atom::AtomType::integer;
 					genome.push(atom);
 
@@ -232,7 +232,7 @@ namespace pushGP
 					atom.type = Plush::Atom::AtomType::ins;
 					genome.push(atom);
 
-					atom.instruction_name = toString(r);
+					atom.instruction_name = Utilities::toString(r);
 					atom.type = Plush::Atom::AtomType::integer;
 					genome.push(atom);
 
@@ -251,7 +251,7 @@ namespace pushGP
 			}
 		}
 
-		atom.instruction_name = toString(1);
+		atom.instruction_name = Utilities::toString(1);
 		atom.type = Plush::Atom::AtomType::integer;
 		genome.push(atom);
 

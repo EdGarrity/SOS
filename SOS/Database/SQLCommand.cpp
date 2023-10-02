@@ -194,7 +194,7 @@ namespace database
 
 		// The command requires the actual text as well as an indicator of its language and dialect.
 		//pICommandText_->SetCommandText(DBGUID_DBSQL /*DBGUID_DEFAULT*/, Utilities::strtowstr(command_).c_str());
-		pICommandText_->SetCommandText(DBGUID_DBSQL /*DBGUID_DEFAULT*/, strtowstr(command_).c_str());
+		pICommandText_->SetCommandText(DBGUID_DBSQL /*DBGUID_DEFAULT*/, Utilities::strtowstr(command_).c_str());
 	}
 
 	// See "https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/ole-db-data-type-mappings"
@@ -368,7 +368,7 @@ namespace database
 
 	void SQLCommand::set_as_GUID(unsigned int parm_no, const UUID _parameter)
 	{
-		set_as_string(parm_no, GuidToString(_parameter));
+		set_as_string(parm_no, Utilities::GuidToString(_parameter));
 	}
 
 	void SQLCommand::set_as_integer(unsigned int parm_no, long parameter)
