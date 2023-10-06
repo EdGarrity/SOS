@@ -21,6 +21,7 @@
 #include "..\..\PushGP\Globals.h"
 #include "..\..\DataStore\FinancialData.h"
 #include "..\..\DataStore\TestData.h"
+#include "..\..\DataStore\OrderMatrix.h"
 #include "ErrorFunction.DevelopStrategy.h"
 #include "..\..\Utilities\ThreeDimensionalArray.h"
 #include "..\..\Broker\BrokerAccount.h"
@@ -319,6 +320,8 @@ namespace domain
 				Utilities::logline_threadsafe << ss.str();
 			}
 
+			order_matrix.clearOrderMatrix();
+
 			order_matrix.initialize(domain::argmap::population_size, datastore::financial_data.get_count());
 
 			for (size_t training_case_index = 0; training_case_index < datastore::financial_data.get_count(); training_case_index++)
@@ -364,6 +367,8 @@ namespace domain
 				Utilities::logline_threadsafe << ss.str();
 			}
 
+			order_matrix.clearOrderMatrix();
+
 			std::latch work_done(domain::argmap::population_size * datastore::financial_data.get_count());
 			order_matrix.initialize(domain::argmap::population_size, datastore::financial_data.get_count());
  			domain::RunProgram processor(pool);
@@ -401,32 +406,6 @@ namespace domain
 					<< ",message=All_threads_complete";
 				Utilities::logline_threadsafe << ss.str();
 			}
-
-
-
-
-
-			//Utilities::work_order_manager.stop();
-
-			//for (int i = 0; i < domain::argmap::max_threads; i++)
-			//{
-			//	pushGP::globals::thread_instruction_index[i] = 999998;
-			//	pushGP::globals::thread_individual_index[i] = 999998;
-			//	pushGP::globals::thread_example_case[i] = 999998;
-			//}
-
-			//for (size_t training_case_index = 0; training_case_index < datastore::test_data.size(); training_case_index++)
-			//{
-			//	for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
-			//	{
-			//		Utilities::quick_log << "Schedule to run strategy " << strategy_index << " on case " << training_case_index;
-
-			//		Utilities::work_order_manager.push(strategy_index, training_case_index);
-			//	}
-			//}
-
-			//Utilities::work_order_manager.start();
-			//Utilities::work_order_manager.wait_for_all_threads_to_complete();
 		}
 
 		// Purpose: 
@@ -579,24 +558,12 @@ namespace domain
 					// *****************************************************
 					// *** Calculate trading orders for each trading day ***
 					// *****************************************************
-
-					//size_t t = datastore::test_data.size();
-
-					//orders.resize(domain::argmap::population_size, datastore::test_data.size());
-
-					//for (size_t training_case_index = 0; training_case_index < datastore::test_data.size(); training_case_index++)
-					//{
-					//	for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
-					//	{
-					//		Utilities::quick_log << "Run strategy " << strategy_index << " on case " << training_case_index;
-
-					//		auto results = run_strategy_threadsafe(global_env, strategy_index, training_case_index);
-					//		orders.store(0, strategy_index, training_case_index, std::get<0>(results));
-					//		Utilities::quick_log << " Order " << std::get<0>(results) << " Score " << std::get<1>(results); Utilities::logline_threadsafe << ss.str();
-					//	}
-					//}
-
-
+					{
+						std::ostringstream ss;
+						ss << ",method=DevelopStrategy.run"
+							<< ",message=Calculate_trading_orders_for_each_trading_day";
+						Utilities::logline_threadsafe << ss.str();
+					}
 
 					if (argmap::use_multithreading)
 						compute_training_errors_thread_safe(
@@ -607,7 +574,6 @@ namespace domain
 						compute_training_errors(
 							global_env,
 							run_strategy_threadsafe);
-
 
 					{
 						std::ostringstream ss;
