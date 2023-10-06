@@ -252,43 +252,73 @@ namespace Plush
 					break;
 				}
 			}
-			catch (std::underflow_error& /*e*/)
+			catch (std::underflow_error& ex)
 			{
 				effort++;
 
 				std::stringstream error;
 
-				error << "Unknown std exception caught.effort";
+				error << "underflow_error std exception caught.";
 
 				std::cerr << error.str();
-				std::string debug_message;
+
+				{
+					std::ostringstream ss;
+					ss << ",method=Plunk.run"
+						<< ",thread_instruction_index=" << pushGP::globals::thread_instruction_index[env.current_thread]
+						<< ",current_instruction=" << env.current_instruction
+						<< ",effort=" << effort
+						<< ",exception=" << ex.what()
+						<< ",message=underflow_error";
+					Utilities::logline_threadsafe << ss.str();
+				}
 			}
-			catch (std::overflow_error& /*e*/)
+			catch (std::overflow_error& ex)
 			{
 				std::stringstream error;
 
 				effort++;
 
-				error << "Unknown std exception caught.effort";
+				error << "overflow_error std exception caught";
 
 				std::cerr << error.str();
-				std::string debug_message;
+
+				{
+					std::ostringstream ss;
+					ss << ",method=Plunk.run"
+						<< ",thread_instruction_index=" << pushGP::globals::thread_instruction_index[env.current_thread]
+						<< ",current_instruction=" << env.current_instruction
+						<< ",effort=" << effort
+						<< ",exception=" << ex.what()
+						<< ",message=overflow_error";
+					Utilities::logline_threadsafe << ss.str();
+				}
 			}
-			catch (std::exception& e)
+			catch (std::exception& ex)
 			{
 				effort++;
 
 				std::stringstream error;
 
-				error << "Unknown std exception caught.effort = " << effort << e.what(); 
+				error << "Unknown std exception caught.effort = " << effort << ex.what(); 
 
 				std::cerr << error.str();
-				std::string debug_message;
 
 #if DLEVEL > 0
+				std::string debug_message;
 				debug_message = error.str();
 				Utilities::debug_log(-1, "run", debug_message);
 #endif
+				{
+					std::ostringstream ss;
+					ss << ",method=Plunk.run"
+						<< ",thread_instruction_index=" << pushGP::globals::thread_instruction_index[env.current_thread]
+						<< ",current_instruction=" << env.current_instruction
+						<< ",effort=" << effort
+						<< ",exception=" << ex.what()
+						<< ",message=Unknown_exception";
+					Utilities::logline_threadsafe << ss.str();
+				}
 			}
 			catch (...)
 			{
@@ -305,6 +335,15 @@ namespace Plush
 				debug_message = error.str();
 				Utilities::debug_log(-1, "run", debug_message);
 #endif
+				{
+					std::ostringstream ss;
+					ss << ",method=Plunk.run"
+						<< ",thread_instruction_index=" << pushGP::globals::thread_instruction_index[env.current_thread]
+						<< ",current_instruction=" << env.current_instruction
+						<< ",effort=" << effort
+						<< ",message=Unknown_exception";
+					Utilities::logline_threadsafe << ss.str();
+				}
 			}
 
 			effort += (1u) > (unit) ? (1u) : (unit);

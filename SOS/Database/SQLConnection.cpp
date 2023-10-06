@@ -312,16 +312,41 @@ namespace database
 			//hr = initialize_and_establish_connection(output.c_str());
 
 
-			std::wstring output = Utilities::strtowstr(server)
-				+ Utilities::strtowstr(";").c_str()
-				+ Utilities::strtowstr(dbString).c_str()
-				+ Utilities::strtowstr(";").c_str()
-				+ Utilities::strtowstr(userID).c_str()
-				+ Utilities::strtowstr(";").c_str()
-				+ Utilities::strtowstr(password).c_str()
-				+ Utilities::strtowstr(";Encrypt=Optional").c_str();
+			//std::wstring output = Utilities::strtowstr(server)
+			//	+ Utilities::strtowstr(";").c_str()
+			//	+ Utilities::strtowstr(dbString).c_str()
+			//	+ Utilities::strtowstr(";").c_str()
+			//	+ Utilities::strtowstr(userID).c_str()
+			//	+ Utilities::strtowstr(";").c_str()
+			//	+ Utilities::strtowstr(password).c_str()
+			//	+ Utilities::strtowstr(";Encrypt=Optional").c_str();
 
-			hr = initialize_and_establish_connection(output.c_str());
+			//hr = initialize_and_establish_connection(output.c_str());
+
+			// Create the connection string
+			std::string connection_str = "Server=" + server + ";Database=" + dbString + ";UID=" + userID + ";PWD=" + password + ";Encrypt=Optional";
+
+			// newsize describes the length of the
+			// wchar_t string called wcstring in terms of the number
+			// of wide characters, not the number of bytes.
+			size_t newsize = strlen(connection_str.c_str()) + 1;
+
+			// The following creates a buffer large enough to contain
+			// the exact number of characters in the original string
+			// in the new format. If you want to add more characters
+			// to the end of the string, increase the value of newsize
+			// to increase the size of the buffer.
+			wchar_t* wcstring = new wchar_t[newsize];
+
+			// Convert char* string to a wchar_t* string.
+			size_t convertedChars = 0;
+			mbstowcs_s(&convertedChars, wcstring, newsize, connection_str.c_str(), _TRUNCATE);
+
+			// Establish connection to the SQL server.
+			hr = initialize_and_establish_connection(wcstring);
+
+			// Clean-up
+			delete[]wcstring;
 
 			if (FAILED(hr))
 				throw std::runtime_error("Failed to establish connection.");
