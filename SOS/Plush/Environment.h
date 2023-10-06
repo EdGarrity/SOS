@@ -51,6 +51,13 @@ namespace Plush
 
 		Environment()
 		{
+			{
+				std::ostringstream ss;
+				ss << ",method=Plush_Environment"
+					<< ",message=Constructing";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
 			clear_stacks();
 			//null_input.clear();
 			//input = null_input;

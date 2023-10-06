@@ -41,6 +41,14 @@ namespace domain
 			unsigned long effort = 0;
 			double trading_instruction = 0;
 
+			{
+				std::ostringstream ss;
+				ss << ",case=" << case_index
+					<< ",method=develop_strategy.run_program"
+					<< ",message=Started";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
 			if (Utilities::trim_copy(program).length() > 0)
 			{
 				// Evaluate
@@ -50,6 +58,15 @@ namespace domain
 				if (env.output.size() > 0)
 					trading_instruction = env.output[0];
 			}
+
+			{
+				std::ostringstream ss;
+				ss << ",case=" << case_index
+					<< ",method=develop_strategy.run_program"
+					<< ",message=Done";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
 			return std::make_tuple(trading_instruction, effort);
 		}
 
@@ -77,9 +94,27 @@ namespace domain
 			unsigned int strategy_index,
 			unsigned long case_index)
 		{
+			{
+				std::ostringstream ss;
+				ss << ",stratergy=" << strategy_index
+					<< ",case=" << case_index
+					<< ",method=develop_strategy.run_strategy_threadsafe"
+					<< ",message=Started";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
 			std::string program = pushGP::globals::population_agents[strategy_index].get_genome_string();
 
 			auto results = run_program(env, program, case_index);
+
+			{
+				std::ostringstream ss;
+				ss << ",stratergy=" << strategy_index
+					<< ",case=" << case_index
+					<< ",method=develop_strategy.run_strategy_threadsafe"
+					<< ",message=Done";
+				Utilities::logline_threadsafe << ss.str();
+			}
 
 			return results;
 		}

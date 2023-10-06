@@ -22,7 +22,7 @@ namespace Utilities
         {
             {
                 std::ostringstream ss;
-                ss << ",method=Threadpool.Threadpool()"
+                ss << ",method=Threadpool.Threadpool"
                     << ",threadCount=" << threadCount
                     << ",message=Constructor";
                 Utilities::logline_threadsafe << ss.str();
@@ -30,6 +30,14 @@ namespace Utilities
 
             for (std::size_t i = 0; i < threadCount; ++i)
             {
+                {
+                    std::ostringstream ss;
+                    ss << ",method=Threadpool.Threadpool"
+                        << ",i=" << i
+                        << ",message=Creating_Thread";
+                    Utilities::logline_threadsafe << ss.str();
+                }
+
                 std::thread worker_thread([this]() {
                     this->thread_loop();
                     });
@@ -90,28 +98,6 @@ namespace Utilities
                 Utilities::logline_threadsafe << ss.str();
             }
 
-            //for (std::thread& thread : m_threads)
-            //{
-            //    if (thread.joinable())
-            //    {
-            //        {
-            //            std::ostringstream ss;
-            //            ss << ",method=Threadpool.wait_for_all_threads_to_complete"
-            //                << ",message=Joining_thread";
-            //            Utilities::logline_threadsafe << ss.str();
-            //        }
-
-            //        thread.join();
-
-            //        {
-            //            std::ostringstream ss;
-            //            ss << ",method=Threadpool.wait_for_all_threads_to_complete"
-            //                << ",message=Thread_done";
-            //            Utilities::logline_threadsafe << ss.str();
-            //        }
-            //    }
-            //}
-
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
             work_done.wait();
 
@@ -150,7 +136,7 @@ namespace Utilities
         {
             {
                 std::ostringstream ss;
-                ss << ",method=Threadpool.thread_loop()"
+                ss << ",method=Threadpool.thread_loop"
                     << ",message=Started";
                 Utilities::logline_threadsafe << ss.str();
             }
@@ -159,13 +145,21 @@ namespace Utilities
             {
                 {
                     std::ostringstream ss;
-                    ss << ",method=Threadpool.thread_loop()"
-                        << "m_coros.size()=" << m_coros.size()
-                        << ",message=Entered_loop";
+                    ss << ",method=Threadpool.thread_loop"
+                        << ",m_coros.size()=" << m_coros.size()
+                        << ",message=Entered_lock";
                     Utilities::logline_threadsafe << ss.str();
                 }
 
                 std::unique_lock<std::mutex> lock(m_mutex);
+
+                {
+                    std::ostringstream ss;
+                    ss << ",method=Threadpool.thread_loop"
+                        << ",m_coros.size()=" << m_coros.size()
+                        << ",message=Entered_loop";
+                    Utilities::logline_threadsafe << ss.str();
+                }
 
                 while (!m_stop_thread && m_coros.size() == 0)
                 {
@@ -179,7 +173,7 @@ namespace Utilities
 
                 {
                     std::ostringstream ss;
-                    ss << ",method=Threadpool.thread_loop()"
+                    ss << ",method=Threadpool.thread_loop"
                         << "m_coros.size()=" << m_coros.size()
                         << ",message=Found_work";
                     Utilities::logline_threadsafe << ss.str();
@@ -206,6 +200,13 @@ namespace Utilities
                         << ",message=coro.resumed";
                     Utilities::logline_threadsafe << ss.str();
                 }
+            }
+
+            {
+                std::ostringstream ss;
+                ss << ",method=Threadpool.thread_loop"
+                    << ",message=Done";
+                Utilities::logline_threadsafe << ss.str();
             }
         }
 

@@ -81,6 +81,14 @@ namespace Plush
 	// Run provided program with index to input vector
 	unsigned int run(Environment& env, std::string program, size_t case_index)
 	{
+		{
+			std::ostringstream ss;
+			ss << ",case=" << case_index
+				<< ",method=Plush.run"
+				<< ",message=Started";
+			Utilities::logline_threadsafe << ss.str();
+		}
+
 		std::string gene;
 		int i = 0;
 
@@ -113,12 +121,30 @@ namespace Plush
 		}
 
 		// Execute
-		return run(env, domain::argmap::max_point_evaluations);
+		unsigned int result=run(env, domain::argmap::max_point_evaluations);
+
+		{
+			std::ostringstream ss;
+			ss << ",case=" << case_index
+				<< ",method=Plush.run"
+				<< ",message=Done";
+			Utilities::logline_threadsafe << ss.str();
+		}
+
+		return result;
 	}
 
 	// Run program on the EXEC stack
 	unsigned int run(Environment& env, unsigned _max_effort)
 	{
+		{
+			std::ostringstream ss;
+			ss << ",method=Plush.run"
+				<< ",max_effort=" << _max_effort
+				<< ",message=Started";
+			Utilities::logline_threadsafe << ss.str();
+		}
+
 		// The basic pop-exec cycle
 		unsigned int effort = 0;
 		unsigned int unit = 0;
@@ -264,7 +290,7 @@ namespace Plush
 
 				{
 					std::ostringstream ss;
-					ss << ",method=Plunk.run"
+					ss << ",method=Plush.run"
 						<< ",thread_instruction_index=" << pushGP::globals::thread_instruction_index[env.current_thread]
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
@@ -285,7 +311,7 @@ namespace Plush
 
 				{
 					std::ostringstream ss;
-					ss << ",method=Plunk.run"
+					ss << ",method=Plush.run"
 						<< ",thread_instruction_index=" << pushGP::globals::thread_instruction_index[env.current_thread]
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
@@ -311,7 +337,7 @@ namespace Plush
 #endif
 				{
 					std::ostringstream ss;
-					ss << ",method=Plunk.run"
+					ss << ",method=Plush.run"
 						<< ",thread_instruction_index=" << pushGP::globals::thread_instruction_index[env.current_thread]
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
@@ -337,7 +363,7 @@ namespace Plush
 #endif
 				{
 					std::ostringstream ss;
-					ss << ",method=Plunk.run"
+					ss << ",method=Plush.run"
 						<< ",thread_instruction_index=" << pushGP::globals::thread_instruction_index[env.current_thread]
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
@@ -360,6 +386,14 @@ namespace Plush
 		}
 
 		pushGP::globals::thread_exec_size[env.current_thread] = 0;
+
+		{
+			std::ostringstream ss;
+			ss << ",method=Plush.run"
+				<< ",max_effort=" << _max_effort
+				<< ",message=Started";
+			Utilities::logline_threadsafe << ss.str();
+		}
 
 		return effort;
 	}
