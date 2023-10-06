@@ -181,9 +181,6 @@
     <ClInclude Include="Domain\Develop Strategy\ErrorFunction.DevelopStrategy.h" />
     <ClInclude Include="Domain\Develop Strategy\RunProgram_WorkOrder_Form.h" />
     <ClInclude Include="Domain\Develop Strategy\Run.DevelopStrategy.h" />
-    <ClInclude Include="Domain\Learn From Examples\Arguments.h" />
-    <ClInclude Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.h" />
-    <ClInclude Include="Domain\Learn From Examples\Run.LearnFromExamples.h" />
     <ClInclude Include="Domain\RunProgram.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Plush\Atom.h" />
@@ -218,7 +215,6 @@
     <ClInclude Include="Utilities\CSVIterator.h" />
     <ClInclude Include="Utilities\Debug.h" />
     <ClInclude Include="Utilities\FixedSizeStack.h" />
-    <ClInclude Include="Utilities\LFE_WorkOrderManager.h" />
     <ClInclude Include="Utilities\String.h" />
     <ClInclude Include="Utilities\SystemInfo.h" />
     <ClInclude Include="Utilities\MyException.h" />
@@ -248,8 +244,6 @@
     <ClCompile Include="Domain\Develop Strategy\ErrorFunction.DevelopStrategy.cpp" />
     <ClCompile Include="Domain\Develop Strategy\RunProgram_WorkOrder_Form.cpp" />
     <ClCompile Include="Domain\Develop Strategy\Run.DevelopStrategy.cpp" />
-    <ClCompile Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.cpp" />
-    <ClCompile Include="Domain\Learn From Examples\Run.LearnFromExamples.cpp" />
     <ClCompile Include="Domain\RunProgram.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -283,7 +277,6 @@
     <ClCompile Include="Utilities\Conversion.cpp" />
     <ClCompile Include="Utilities\Debug.cpp" />
     <ClCompile Include="Utilities\FixedSizeStack.cpp" />
-    <ClCompile Include="Utilities\LFE_WorkOrderManager.cpp" />
     <ClCompile Include="Utilities\String.cpp" />
     <ClCompile Include="Utilities\SystemInfo.cpp" />
     <ClCompile Include="Utilities\MyException.cpp" />

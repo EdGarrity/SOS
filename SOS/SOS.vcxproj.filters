@@ -144,9 +144,6 @@
     <ClInclude Include="Domain\Arguments.h">
       <Filter>Header Files\Domain</Filter>
     </ClInclude>
-    <ClInclude Include="Domain\Learn From Examples\Arguments.h">
-      <Filter>Header Files\Domain\Learn From Examples</Filter>
-    </ClInclude>
     <ClInclude Include="Database\SQLCommand.h">
       <Filter>Header Files\Database</Filter>
     </ClInclude>
@@ -156,17 +153,11 @@
     <ClInclude Include="PushGP\Globals.h">
       <Filter>Header Files\PushGP</Filter>
     </ClInclude>
-    <ClInclude Include="Domain\Learn From Examples\Run.LearnFromExamples.h">
-      <Filter>Header Files\Domain\Learn From Examples</Filter>
-    </ClInclude>
     <ClInclude Include="PushGP\SimulatedAnnealing.h">
       <Filter>Header Files\PushGP</Filter>
     </ClInclude>
     <ClInclude Include="PushGP\Individual.h">
       <Filter>Header Files\PushGP</Filter>
-    </ClInclude>
-    <ClInclude Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.h">
-      <Filter>Header Files\Domain\Learn From Examples</Filter>
     </ClInclude>
     <ClInclude Include="PushGP\Breed.h">
       <Filter>Header Files\PushGP</Filter>
@@ -242,9 +233,6 @@
     </ClInclude>
     <ClInclude Include="DataStore\OrderMatrix.h">
       <Filter>Header Files\DataStore</Filter>
-    </ClInclude>
-    <ClInclude Include="Utilities\LFE_WorkOrderManager.h">
-      <Filter>Header Files\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="Domain\Develop Strategy\RunProgram_WorkOrder_Form.h">
       <Filter>Header Files\Domain\Develop Strategy</Filter>
@@ -323,9 +311,6 @@
     <ClCompile Include="Database\SQLConnection.cpp">
       <Filter>Source Files\Database</Filter>
     </ClCompile>
-    <ClCompile Include="Domain\Learn From Examples\Run.LearnFromExamples.cpp">
-      <Filter>Source Files\Domain\Learn From Examples</Filter>
-    </ClCompile>
     <ClCompile Include="PushGP\SimulatedAnnealing.cpp">
       <Filter>Source Files\PushGP</Filter>
     </ClCompile>
@@ -334,9 +319,6 @@
     </ClCompile>
     <ClCompile Include="PushGP\Individual.cpp">
       <Filter>Source Files\PushGP</Filter>
-    </ClCompile>
-    <ClCompile Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.cpp">
-      <Filter>Source Files\Domain\Learn From Examples</Filter>
     </ClCompile>
     <ClCompile Include="PushGP\Breed.cpp">
       <Filter>Source Files\PushGP</Filter>
@@ -397,9 +379,6 @@
     </ClCompile>
     <ClCompile Include="DataStore\OrderMatrix.cpp">
       <Filter>Source Files\DataStore</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities\LFE_WorkOrderManager.cpp">
-      <Filter>Source Files\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="Domain\Develop Strategy\RunProgram_WorkOrder_Form.cpp">
       <Filter>Source Files\Domain\Develop Strategy</Filter>
