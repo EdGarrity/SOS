@@ -750,6 +750,8 @@ namespace domain
 
 				delete[] pushGP::globals::population_agents;
 				delete[] pushGP::globals::child_agents;
+
+				pool.shutdown();
 			}
 			catch (const std::exception& e)
 			{

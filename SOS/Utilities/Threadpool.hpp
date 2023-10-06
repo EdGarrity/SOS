@@ -123,6 +123,20 @@ namespace Utilities
             }
         }
 
+        void shutdown()
+        {
+            m_stop_thread = true;
+            while (m_threads.size() > 0)
+            {
+                std::thread& thread = m_threads.back();
+                if (thread.joinable())
+                {
+                    thread.join();
+                }
+                m_threads.pop_back();
+            }
+        }
+
     private:
         std::list<std::thread> m_threads;
 
@@ -200,20 +214,6 @@ namespace Utilities
             std::unique_lock<std::mutex> lock(m_mutex);
             m_coros.emplace(coro);
             m_cond.notify_one();
-        }
-
-        void shutdown()
-        {
-            m_stop_thread = true;
-            while (m_threads.size() > 0)
-            {
-                std::thread& thread = m_threads.back();
-                if (thread.joinable())
-                {
-                    thread.join();
-                }
-                m_threads.pop_back();
-            }
         }
     };
 }
