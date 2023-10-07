@@ -161,19 +161,19 @@ namespace Plush
 			size_t int_stack_count = length<long>();
 			long int_stack_top_value = 0;
 
-			if (has_elements<long>(2))
+			if (has_elements<long>(1))
 				int_stack_top_value = get_atom_at_position<long>(0);
 
 			size_t double_stack_count = length<long>();
 			double double_stack_top_value = 0.0;
 
-			if (has_elements<double>(2))
+			if (has_elements<double>(1))
 				double_stack_top_value = get_atom_at_position<double>(0);
 
 			size_t bool_stack_count = length<bool>();
 			bool bool_stack_top_value = false;
 
-			if (has_elements<bool>(2))
+			if (has_elements<bool>(1))
 				bool_stack_top_value = get_atom_at_position<bool>(0);
 
 
