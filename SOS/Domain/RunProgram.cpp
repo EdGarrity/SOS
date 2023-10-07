@@ -11,7 +11,7 @@
 
 namespace domain
 {
-	thread_local Plush::Environment env;
+	//thread_local Plush::Environment env;
 
 	Utilities::Task RunProgram::run(develop_strategy::RunProgram_WorkOrder_Form const workorder_form, std::latch &work_done) const
 	{
@@ -43,7 +43,7 @@ namespace domain
 
 		try
 		{
-			//static thread_local Plush::Environment env;
+			static thread_local Plush::Environment env;
 
 			auto results = domain::develop_strategy::run_strategy_threadsafe(env, workorder_form.get_stratergy_index(), workorder_form.get_training_case_index());
 			domain::develop_strategy::order_matrix.store(
