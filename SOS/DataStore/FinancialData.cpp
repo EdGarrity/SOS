@@ -163,7 +163,7 @@ namespace datastore
 				{
 					if (last_written_date != "")
 					{
-						index_records.emplace_back(index_record_t{ last_written_date, first_record_index, last_record_index });
+						data_window_records.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index });
 					}
 
 					last_written_date = sqlcmd_get_case_data->get_field_as_string(2);
@@ -173,7 +173,7 @@ namespace datastore
 				last_record_index++;
 			}
 
-			index_records.emplace_back(index_record_t{ last_written_date, first_record_index, index_records.size() - 1});
+			data_window_records.emplace_back(data_window_record_t{ last_written_date, first_record_index, data_window_records.size() - 1});
 
 			delete sqlcmd_get_case_data;
 
@@ -182,7 +182,7 @@ namespace datastore
 				ss << ",method=FinancialData.load"
 					<< ",start_date=" << start_date
 					<< ",end_date=" << end_date
-					<< ",record_count=" << index_records.size()
+					<< ",record_count=" << data_window_records.size()
 					<< ",table_size=" << data_records.size()
 					<< ",message=case_data_loaded";
 				Utilities::logline_threadsafe << ss.str();
@@ -250,7 +250,7 @@ namespace datastore
 
 		//return values[index];
 
-		index_record_t index_record = index_records[training_case_index];
+		data_window_record_t index_record = data_window_records[training_case_index];
 
 		size_t data_record_range = index_record.last_record - index_record.first_record + 1;
 		size_t data_record_index = std::abs((long)(data_index % data_record_range));

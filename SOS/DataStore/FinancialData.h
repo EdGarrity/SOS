@@ -31,7 +31,7 @@ namespace datastore
 			double value;
 		};
 
-		struct index_record_t
+		struct data_window_record_t
 		{
 			std::string date;
 			size_t first_record;
@@ -39,7 +39,7 @@ namespace datastore
 		};
 
 		std::vector<data_record_t> data_records;
-		std::vector<index_record_t> index_records;
+		std::vector<data_window_record_t> data_window_records;
 
 	public:
 		FinancialData();
@@ -50,7 +50,7 @@ namespace datastore
 
 		double get_data(const size_t index, const size_t input_case);
 		//size_t get_size() const { return record.size(); }
-		size_t get_count() const { return index_records.size(); }
+		size_t get_count() const { return data_window_records.size(); }
 	};
 
 	extern FinancialData financial_data;
