@@ -241,6 +241,7 @@ namespace datastore
 	//
 	// Remarks:
 	//
+	std::mutex data_records_mutex;
 	double FinancialData::get_data(const size_t data_index, const size_t training_case_index)
 	{
 		//if ((case_cached == false) || (input_case != current_case_index))
@@ -259,6 +260,8 @@ namespace datastore
 
 		try
 		{
+			std::unique_lock<std::mutex> lock(data_records_mutex);
+
 			value = data_records.at(index_record.first_record + data_record_index).value;
 		}
 		catch (std::out_of_range const& e)
