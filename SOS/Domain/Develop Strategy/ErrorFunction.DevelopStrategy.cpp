@@ -36,7 +36,8 @@ namespace domain
 		//
 		std::tuple<double, unsigned long> run_program(Plush::Environment& env,
 			std::string program,
-			unsigned long case_index)
+			unsigned long case_index,
+			bool trace)
 		{
 			unsigned long effort = 0;
 			double trading_instruction = 0;
@@ -52,7 +53,7 @@ namespace domain
 			if (Utilities::trim_copy(program).length() > 0)
 			{
 				// Evaluate
-				effort = Plush::run(env, program, case_index);
+				effort = Plush::run(env, program, case_index, trace);
 
 				// Get trading instruction
 				if (env.output.size() > 0)
@@ -105,7 +106,9 @@ namespace domain
 
 			std::string program = pushGP::globals::population_agents[strategy_index].get_genome_string();
 
-			auto results = run_program(env, program, case_index);
+			bool trace = (strategy_index == 2 && case_index == 0);
+
+			auto results = run_program(env, program, case_index, trace);
 
 			{
 				std::ostringstream ss;

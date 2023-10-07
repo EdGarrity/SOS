@@ -23,13 +23,13 @@ namespace Plush
 	extern std::vector<double> null_input;
 
 	// Run provided program without inputs
-	unsigned int run(Environment& env, std::string program)
+	unsigned int run(Environment& env, std::string program, bool trace)
 	{
-		return run(env, program, null_input);
+		return run(env, program, null_input, trace);
 	}
 
 	// Run provided program with input vector
-	unsigned int run(Environment& env, std::string program, std::vector<double>& input)
+	unsigned int run(Environment& env, std::string program, std::vector<double>& input, bool trace)
 	{
 		std::string gene;
 		//Utilities::FixedSizeStack<Atom> program_stack;
@@ -75,11 +75,11 @@ namespace Plush
 		}
 
 		// Execute
-		return run(env, domain::argmap::max_point_evaluations);
+		return run(env, domain::argmap::max_point_evaluations, trace);
 	}
 
 	// Run provided program with index to input vector
-	unsigned int run(Environment& env, std::string program, size_t case_index)
+	unsigned int run(Environment& env, std::string program, size_t case_index, bool trace)
 	{
 		{
 			std::ostringstream ss;
@@ -121,7 +121,7 @@ namespace Plush
 		}
 
 		// Execute
-		unsigned int result=run(env, domain::argmap::max_point_evaluations);
+		unsigned int result=run(env, domain::argmap::max_point_evaluations, trace);
 
 		{
 			std::ostringstream ss;
@@ -135,7 +135,7 @@ namespace Plush
 	}
 
 	// Run program on the EXEC stack
-	unsigned int run(Environment& env, unsigned _max_effort)
+	unsigned int run(Environment& env, unsigned _max_effort, bool trace)
 	{
 		{
 			std::ostringstream ss;
@@ -171,13 +171,6 @@ namespace Plush
 				// Debug - Remember current instruction
 				env.current_instruction = atom.instruction_name;
 
-				//for (int n = 0; n < atom.instruction_name.length(); n++)
-				//	pushGP::globals::thread_current_instruction.store(env.current_thread, n, env.current_thread, atom.instruction_name[n]);
-
-				//pushGP::globals::thread_current_instruction.store(env.current_thread, atom.instruction_name.length(), env.current_thread, 0);
-
-				//strcpy_s(pushGP::globals::thread_current_instruction[env.current_thread], 80, atom.instruction_name.c_str());
-				//pushGP::globals::thread_current_instruction[env.current_thread][atom.instruction_name.length()] = '\0';
 				pushGP::globals::thread_current_instruction[env.current_thread][0] = '\0';
 #if DLEVEL > 0
 				if (debug_push.load(std::memory_order_acquire))
@@ -186,14 +179,16 @@ namespace Plush
 					Utilities::debug_log(env.current_thread, "Processor::run", debug);
 				}
 #endif
-				//if (print_push.load(std::memory_order_acquire))
-				//	env_state[env.current_thread] = env.print_state();
+				std::string instruction_type = "";
 
 				switch (atom.type)
 				{
 				case Atom::AtomType::integer:
 					env.push<long>(std::stol(atom.instruction_name));
 					unit = 1;
+
+					instruction_type = "integer";
+
 #if TRACE_LEVEL>0
 					env.stack_dump("true", atom.instruction_name, debug_ip);
 #endif
@@ -201,6 +196,9 @@ namespace Plush
 				case Atom::AtomType::floating_point:
 					env.push<double>(std::stod(atom.instruction_name));
 					unit = 1;
+
+					instruction_type = "floating_point";
+
 #if TRACE_LEVEL>0
 					env.stack_dump("true", atom.instruction_name, debug_ip);
 #endif
@@ -208,6 +206,9 @@ namespace Plush
 				case Atom::AtomType::boolean:
 					env.push<bool>(atom.instruction_name == Plush::Atom::boolean_true);
 					unit = 1;
+
+					instruction_type = "boolean";
+
 #if TRACE_LEVEL>0
 					env.stack_dump("true", atom.instruction_name, debug_ip);
 #endif
@@ -215,8 +216,9 @@ namespace Plush
 				case Atom::AtomType::ins:
 					// Push open parenthesis onto stack if instruction expects any blocks
 
-					//int blocks_needed = Func2BlockWantsMap[atom.instruction];
 					int blocks_closed = atom.close_parenthesis;
+
+					instruction_type = "ins";
 
 					// Close expected blocks for each block the instruction is expecting if the instruction closes that block.
 					if (atom.instruction_name != "EXEC.NOOP")
@@ -232,15 +234,8 @@ namespace Plush
 					}
 
 					// Execute the instruction
-					//auto search = Func2CodeMap.find(atom.instruction);
-
-					//if (search != Func2CodeMap.end())
-					//if (static_initializer.is_function_supported(atom.instruction))
-					//if ((static_initializer.is_function_supported(atom.instruction_name)) && (env.is_function_enabled(atom.instruction_name)))
 					if (static_initializer.is_function_supported(atom.instruction_name))
 					{
-						//Instruction * pI = Func2CodeMap[atom.instruction];
-						//Instruction * pI = static_initializer.get_function(atom.instruction_name);
 						Instruction* pI = env.get_function(atom.instruction_name);
 
 						pushGP::globals::thread_instruction_index[env.current_thread] = Plush::static_initializer.get_function_index(atom.instruction_name);;
@@ -261,7 +256,10 @@ namespace Plush
 #if TRACE_LEVEL>0
 							env.stack_dump("true", debug_ip);
 #endif
-						}
+							}
+
+						else
+							instruction_type = "cannot run";
 #if TRACE_LEVEL>0
 						else
 							env.stack_dump("false", atom.instruction_name, debug_ip);
@@ -271,9 +269,20 @@ namespace Plush
 
 					else
 					{
+						instruction_type = "unsupported_instruction";
 						std::ostringstream ss; ss  << atom.instruction_name << " ";
 					}
 
+					if (trace)
+					{
+						std::ostringstream ss;
+						ss << ",method=Plush.run"
+							<< ",max_effort=" << _max_effort
+							<< ",message=trace"
+							<< ",instruction_type=" << instruction_type
+							<< env.print_state();
+						Utilities::logline_threadsafe << ss.str();
+					}
 
 					break;
 				}

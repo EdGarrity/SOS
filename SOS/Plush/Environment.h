@@ -59,11 +59,6 @@ namespace Plush
 			}
 
 			clear_stacks();
-			//null_input.clear();
-			//input = null_input;
-			//output.clear();
-
-			//running_state = Idle;
 
 			if (domain::argmap::static_instruction_set)
 			{
@@ -90,8 +85,6 @@ namespace Plush
 		unsigned long current_effort;
 		unsigned long current_unit;
 		unsigned long current_thread = 0;
-		//static thread_local unsigned long individual_index;
-		//static thread_local unsigned long example_case;
 		unsigned long individual_index = 0;
 		size_t example_case = 0;
 
@@ -135,11 +128,6 @@ namespace Plush
 			input_case = 0;
 			input = null_input;
 			output.clear();
-
-			//current_instruction.clear();
-			//current_effort = 0;
-			//current_unit = 0;
-			//current_thread = -99;
 		}
 
 		virtual void initialize(std::vector<double> & _input)
@@ -161,17 +149,53 @@ namespace Plush
 		/* Debug functions */
 		inline std::string print_state()
 		{
+			size_t output_stack_count = 0;
+			double output_stack_top_value = 0.0;
+
+			if (output.size() > 0)
+			{
+				output_stack_count = output.size();
+				output_stack_top_value = output[0];
+			}
+
+			size_t int_stack_count = length<long>();
+			long int_stack_top_value = 0;
+
+			if (has_elements<long>(2))
+				int_stack_top_value = get_atom_at_position<long>(0);
+
+			size_t double_stack_count = length<long>();
+			double double_stack_top_value = 0.0;
+
+			if (has_elements<double>(2))
+				double_stack_top_value = get_atom_at_position<double>(0);
+
+			size_t bool_stack_count = length<bool>();
+			bool bool_stack_top_value = false;
+
+			if (has_elements<bool>(2))
+				bool_stack_top_value = get_atom_at_position<bool>(0);
+
+
 			std::string debug_msg;
 
-			debug_msg = "Instruction=" + current_instruction;
+			debug_msg = "instruction_name=" + current_instruction;
 			debug_msg += ",effort=" + std::to_string(current_effort);
 			debug_msg += ",unit=" + std::to_string(current_unit);
 			debug_msg += ",current_thread=" + std::to_string(current_thread);
+
+
 			debug_msg += ",exec_stack_size=" + std::to_string(exec_stack_.size());
 			debug_msg += ",code_stack_size=" + std::to_string(code_stack_.size());
-			debug_msg += ",int_stack_size=" + std::to_string(int_stack_.size());
-			debug_msg += ",double_stack_size=" + std::to_string(double_stack_.size());
-			debug_msg += ",bool_stack_size=" + std::to_string(bool_stack_.size());
+			debug_msg += ",int_stack_count=" + std::to_string(int_stack_count);
+			debug_msg += ",int_stack_top_value=" + std::to_string(int_stack_top_value);
+			debug_msg += ",double_stack_count=" + std::to_string(double_stack_count);
+			debug_msg += ",double_stack_top_value=" + std::to_string(double_stack_top_value);
+			debug_msg += ",bool_stack_count=" + std::to_string(bool_stack_count);
+			debug_msg += ",bool_stack_top_value=" + std::to_string(bool_stack_top_value);
+
+			debug_msg += ",output_stack_count=" + std::to_string(output_stack_count);
+			debug_msg += ",output_stack_top_value=" + std::to_string(output_stack_top_value);
 
 			return debug_msg;
 		}
