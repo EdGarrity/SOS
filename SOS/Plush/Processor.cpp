@@ -154,7 +154,7 @@ namespace Plush
 					ss << ",case=" << case_index
 						<< ",i=" << i
 						<< ",j=" << j
-						<< "atom=" << atom.instruction_name
+						<< ",atom=" << atom.instruction_name
 						<< ",method=Plush.run"
 						<< ",message=Load_inputs";
 					Utilities::logline_threadsafe << ss.str();
