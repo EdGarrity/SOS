@@ -155,6 +155,7 @@ namespace Plush
 						<< ",i=" << i
 						<< ",j=" << j
 						<< ",atom=" << atom.instruction_name
+						<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
 						<< ",method=Plush.run"
 						<< ",message=Load_inputs";
 					Utilities::logline_threadsafe << ss.str();
@@ -167,6 +168,7 @@ namespace Plush
 			std::ostringstream ss;
 			ss << ",case=" << case_index
 				<< ",method=Plush.run"
+				<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
 				<< ",message=Execute";
 			Utilities::logline_threadsafe << ss.str();
 		}
@@ -176,6 +178,7 @@ namespace Plush
 			std::ostringstream ss;
 			ss << ",case=" << case_index
 				<< ",method=Plush.run"
+				<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
 				<< ",message=Done";
 			Utilities::logline_threadsafe << ss.str();
 		}
@@ -190,6 +193,7 @@ namespace Plush
 			std::ostringstream ss;
 			ss << ",method=Plush.run2"
 				<< ",max_effort=" << _max_effort
+				<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
 				<< ",message=Started";
 			Utilities::logline_threadsafe << ss.str();
 		}
@@ -205,6 +209,15 @@ namespace Plush
 		{
 			try
 			{
+				{
+					std::ostringstream ss;
+					ss << ",method=Plush.run2"
+						<< ",max_effort=" << _max_effort
+						<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
+						<< ",message=Looping";
+					Utilities::logline_threadsafe << ss.str();
+				}
+
 				//pushGP::globals::thread_effort[env.current_thread] = effort;
 				//pushGP::globals::thread_exec_size[env.current_thread] = env.get_stack<ExecAtom>().size();
 				//pushGP::globals::thread_instruction_index[env.current_thread] = 99999999;
@@ -229,6 +242,16 @@ namespace Plush
 				}
 #endif
 				std::string instruction_type = "";
+
+				{
+					std::ostringstream ss;
+					ss << ",method=Plush.run2"
+						<< ",max_effort=" << _max_effort
+						<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
+						<< ",instruction_name=" << atom.instruction_name
+						<< ",message=Poped_Exec_Stack";
+					Utilities::logline_threadsafe << ss.str();
+				}
 
 				switch (atom.type)
 				{
@@ -276,6 +299,17 @@ namespace Plush
 						{
 							if (blocks_closed > 0)
 							{
+								{
+									std::ostringstream ss;
+									ss << ",method=Plush.run2"
+										<< ",max_effort=" << _max_effort
+										<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
+										<< ",instruction_name=" << atom.instruction_name
+										<< ",instruction_type=" << instruction_type
+										<< ",message=Pushing_NOOP";
+									Utilities::logline_threadsafe << ss.str();
+								}
+
 								std::string noop = "{:instruction EXEC.NOOP :close " + std::to_string(blocks_closed) + "}";
 								env.push<ExecAtom>(ExecAtom(noop));
 							}
@@ -297,6 +331,7 @@ namespace Plush
 								ss << ",method=Plush.run2"
 									<< ",max_effort=" << _max_effort
 									<< ",message=executing"
+									<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
 									<< ",instruction_name=" << atom.instruction_name
 									<< ",instruction_type=" << instruction_type
 									<< env.print_state();
@@ -312,6 +347,7 @@ namespace Plush
 								ss << ",method=Plush.run2"
 									<< ",max_effort=" << _max_effort
 									<< ",message=executed"
+									<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
 									<< ",instruction_name=" << atom.instruction_name
 									<< ",instruction_type=" << instruction_type
 									<< env.print_state();
@@ -352,6 +388,7 @@ namespace Plush
 						ss << ",method=Plush.run2"
 							<< ",max_effort=" << _max_effort
 							<< ",message=trace"
+							<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
 							<< ",instruction_name=" << atom.instruction_name
 							<< ",instruction_type=" << instruction_type
 							<< env.print_state();
@@ -374,6 +411,7 @@ namespace Plush
 				{
 					std::ostringstream ss;
 					ss << ",method=Plush.run2"
+						<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
 						<< ",exception=" << ex.what()
@@ -394,6 +432,7 @@ namespace Plush
 				{
 					std::ostringstream ss;
 					ss << ",method=Plush.run2"
+						<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
 						<< ",exception=" << ex.what()
@@ -419,6 +458,7 @@ namespace Plush
 				{
 					std::ostringstream ss;
 					ss << ",method=Plush.run2"
+						<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
 						<< ",exception=" << ex.what()
@@ -444,6 +484,7 @@ namespace Plush
 				{
 					std::ostringstream ss;
 					ss << ",method=Plush.run2"
+						<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
 						<< ",message=Unknown_exception";
@@ -469,6 +510,7 @@ namespace Plush
 		{
 			std::ostringstream ss;
 			ss << ",method=Plush.run2"
+				<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
 				<< ",max_effort=" << _max_effort
 				<< ",message=Started";
 			Utilities::logline_threadsafe << ss.str();
