@@ -174,7 +174,7 @@ namespace Utilities
                 {
                     std::ostringstream ss;
                     ss << ",method=Threadpool.thread_loop"
-                        << "m_coros.size()=" << m_coros.size()
+                        << ",m_coros.size()=" << m_coros.size()
                         << ",message=Found_work";
                     Utilities::logline_threadsafe << ss.str();
                 }
@@ -186,7 +186,7 @@ namespace Utilities
                 {
                     std::ostringstream ss;
                     ss << ",method=Threadpool.thread_loop"
-                        << "m_coros.size()=" << m_coros.size()
+                        << ",m_coros.size()=" << m_coros.size()
                         << ",message=coro.resuming";
                     Utilities::logline_threadsafe << ss.str();
                 }
@@ -196,7 +196,7 @@ namespace Utilities
                 {
                     std::ostringstream ss;
                     ss << ",method=Threadpool.thread_loop"
-                        << "m_coros.size()=" << m_coros.size()
+                        << ",m_coros.size()=" << m_coros.size()
                         << ",message=coro.resumed";
                     Utilities::logline_threadsafe << ss.str();
                 }

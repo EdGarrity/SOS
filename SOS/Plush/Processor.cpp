@@ -85,6 +85,7 @@ namespace Plush
 			std::ostringstream ss;
 			ss << ",case=" << case_index
 				<< ",method=Plush.run"
+				<< ",trace=" << (trace ? "True" : "False")
 				<< ",message=Started";
 			Utilities::logline_threadsafe << ss.str();
 		}
@@ -93,9 +94,24 @@ namespace Plush
 		int i = 0;
 
 		// Initialize environment
+		{
+			std::ostringstream ss;
+			ss << ",case=" << case_index
+				<< ",method=Plush.run"
+				<< ",trace=" << (trace ? "True" : "False")
+				<< ",message=Initialize_environment";
+			Utilities::logline_threadsafe << ss.str();
+		}
 		env.clear_stacks();
 
 		// Load program into temp
+		{
+			std::ostringstream ss;
+			ss << ",case=" << case_index
+				<< ",method=Plush.run"
+				<< ",message=Load_program_into_temp";
+			Utilities::logline_threadsafe << ss.str();
+		}
 		while ((program.length() > 0) && (i < domain::argmap::maximum_stack_size))
 		{
 			gene = first_atom(program);
@@ -105,9 +121,23 @@ namespace Plush
 			env.temp_genes[i++] = gene;
 		}
 
-		// Load inputs
+		{
+			std::ostringstream ss;
+			ss << ",case=" << case_index
+				<< ",method=Plush.run"
+				<< ",message=Initialize_Environment";
+			Utilities::logline_threadsafe << ss.str();
+		}
 		env.initialize(case_index);
 
+		// Load inputs
+		{
+			std::ostringstream ss;
+			ss << ",case=" << case_index
+				<< ",method=Plush.run"
+				<< ",message=Load_inputs";
+			Utilities::logline_threadsafe << ss.str();
+		}
 		if (i > 0)
 		{
 			int j = i;
@@ -121,6 +151,13 @@ namespace Plush
 		}
 
 		// Execute
+		{
+			std::ostringstream ss;
+			ss << ",case=" << case_index
+				<< ",method=Plush.run"
+				<< ",message=Execute";
+			Utilities::logline_threadsafe << ss.str();
+		}
 		unsigned int result=run(env, domain::argmap::max_point_evaluations, trace);
 
 		{
@@ -139,7 +176,7 @@ namespace Plush
 	{
 		{
 			std::ostringstream ss;
-			ss << ",method=Plush.run"
+			ss << ",method=Plush.run2"
 				<< ",max_effort=" << _max_effort
 				<< ",message=Started";
 			Utilities::logline_threadsafe << ss.str();
@@ -259,7 +296,7 @@ namespace Plush
 							}
 
 						else
-							instruction_type = "cannot run";
+							instruction_type = "cannot_run";
 #if TRACE_LEVEL>0
 						else
 							env.stack_dump("false", atom.instruction_name, debug_ip);
@@ -276,7 +313,7 @@ namespace Plush
 					if (trace)
 					{
 						std::ostringstream ss;
-						ss << ",method=Plush.run"
+						ss << ",method=Plush.run2"
 							<< ",max_effort=" << _max_effort
 							<< ",message=trace"
 							<< ",instruction_type=" << instruction_type
@@ -299,7 +336,7 @@ namespace Plush
 
 				{
 					std::ostringstream ss;
-					ss << ",method=Plush.run"
+					ss << ",method=Plush.run2"
 						<< ",thread_instruction_index=" << pushGP::globals::thread_instruction_index[env.current_thread]
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
@@ -320,7 +357,7 @@ namespace Plush
 
 				{
 					std::ostringstream ss;
-					ss << ",method=Plush.run"
+					ss << ",method=Plush.run2"
 						<< ",thread_instruction_index=" << pushGP::globals::thread_instruction_index[env.current_thread]
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
@@ -346,7 +383,7 @@ namespace Plush
 #endif
 				{
 					std::ostringstream ss;
-					ss << ",method=Plush.run"
+					ss << ",method=Plush.run2"
 						<< ",thread_instruction_index=" << pushGP::globals::thread_instruction_index[env.current_thread]
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
@@ -372,7 +409,7 @@ namespace Plush
 #endif
 				{
 					std::ostringstream ss;
-					ss << ",method=Plush.run"
+					ss << ",method=Plush.run2"
 						<< ",thread_instruction_index=" << pushGP::globals::thread_instruction_index[env.current_thread]
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
@@ -398,7 +435,7 @@ namespace Plush
 
 		{
 			std::ostringstream ss;
-			ss << ",method=Plush.run"
+			ss << ",method=Plush.run2"
 				<< ",max_effort=" << _max_effort
 				<< ",message=Started";
 			Utilities::logline_threadsafe << ss.str();
