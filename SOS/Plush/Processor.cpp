@@ -134,7 +134,7 @@ namespace Plush
 		{
 			std::ostringstream ss;
 			ss << ",case=" << case_index
-				<< "i=" << i
+				<< ",i=" << i
 				<< ",method=Plush.run"
 				<< ",message=Load_inputs";
 			Utilities::logline_threadsafe << ss.str();
@@ -148,6 +148,17 @@ namespace Plush
 
 				env.get_stack<CodeAtom>().push(CodeAtom(atom));
 				env.get_stack<ExecAtom>().push(ExecAtom(atom));
+
+				{
+					std::ostringstream ss;
+					ss << ",case=" << case_index
+						<< ",i=" << i
+						<< ",j=" << j
+						<< "atom=" << atom.instruction_name
+						<< ",method=Plush.run"
+						<< ",message=Load_inputs";
+					Utilities::logline_threadsafe << ss.str();
+				}
 			}
 		}
 
