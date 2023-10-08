@@ -257,12 +257,14 @@ namespace Plush
 		}
 		else
 		{
-			if (_env.input.size() > 0)
-			{
-				size_t i = std::abs((long)(index % _env.input.size()));
-				value = (T)_env.input[i];
-				_env.push<T>(value);
-			}
+			//if (_env.input.size() > 0)
+			//{
+			//	size_t i = std::abs((long)(index % _env.input.size()));
+			//	value = (T)_env.input[i];
+			//	_env.push<T>(value);
+			//}
+
+			throw std::logic_error("Plush.in() - AlgorithmSelection Not supported");
 		}
 
 		return 1;

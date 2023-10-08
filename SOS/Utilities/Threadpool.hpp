@@ -12,6 +12,7 @@
 #include <sstream>
 
 #include "..\Utilities\Debug.h"
+#include "..\Plush\EnvironmentPool.h"
 
 namespace Utilities
 {
@@ -140,7 +141,9 @@ namespace Utilities
                     << ",message=Started";
                 Utilities::logline_threadsafe << ss.str();
             }
-            
+
+            Plush::environment_pool.register_thread();
+
             while (!m_stop_thread)
             {
                 {

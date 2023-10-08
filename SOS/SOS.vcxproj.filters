@@ -246,6 +246,9 @@
     <ClInclude Include="Utilities\Threadpool.hpp">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="Plush\EnvironmentPool.h">
+      <Filter>Header Files\Plush</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -385,6 +388,9 @@
     </ClCompile>
     <ClCompile Include="Domain\RunProgram.cpp">
       <Filter>Source Files\Domain\Develop Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="Plush\EnvironmentPool.cpp">
+      <Filter>Source Files\Plush</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

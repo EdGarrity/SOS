@@ -77,7 +77,7 @@ namespace Plush
 
 		// Pointer to input & output data
 		size_t input_case;
-		std::vector<double> input = null_input;
+		//std::vector<double> input = null_input;
 		std::vector<double> output;
 
 		// Debug - Rember current state
@@ -126,7 +126,7 @@ namespace Plush
 
 			null_input.clear();
 			input_case = 0;
-			input = null_input;
+			//input = null_input;
 			output.clear();
 		}
 
@@ -134,7 +134,7 @@ namespace Plush
 		{
 			clear_stacks();
 			input_case = 0;
-			input = _input;
+			//input = _input;
 			output.clear();
 		}
 
@@ -142,7 +142,7 @@ namespace Plush
 		{
 			clear_stacks();
 			input_case = case_index;
-			input = null_input;
+			//input = null_input;
 			output.clear();
 		}
 
@@ -179,7 +179,7 @@ namespace Plush
 
 			std::string debug_msg;
 
-			debug_msg = "instruction_name=" + current_instruction;
+			debug_msg = ",current_instruction=" + current_instruction;
 			debug_msg += ",effort=" + std::to_string(current_effort);
 			debug_msg += ",unit=" + std::to_string(current_unit);
 			//debug_msg += ",current_thread=" + std::to_string(current_thread);

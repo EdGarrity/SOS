@@ -918,23 +918,23 @@ namespace Plush
 	//   N is popped from the Integer stack first. If N < 0, or if N >= size of input array, or the Integer 
 	//	 stack is empty then a NO-OP is executed instead.
 	//
-	inline unsigned long in2code(Environment & _env)
-	{
-		long index = std::abs((long)(_env.pop<long>()));
-		double value = 0;
+	//inline unsigned long in2code(Environment & _env)
+	//{
+	//	long index = std::abs((long)(_env.pop<long>()));
+	//	double value = 0;
 
-		if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
-			value = datastore::financial_data.get_data(index, _env.input_case);
-		else
-		{
-			index = std::abs((long)(index % _env.input.size()));
-			value = _env.input[index];
-		}
+	//	if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
+	//		value = datastore::financial_data.get_data(index, _env.input_case);
+	//	else
+	//	{
+	//		index = std::abs((long)(index % _env.input.size()));
+	//		value = _env.input[index];
+	//	}
 
-		_env.push<CodeAtom>(CodeAtom(value));
+	//	_env.push<CodeAtom>(CodeAtom(value));
 
-		return 1;
-	}
+	//	return 1;
+	//}
 
 	// Purpose: 
 	//   Push all elements from the input array onto a stack.
@@ -954,33 +954,33 @@ namespace Plush
 	// Remarks:
 	//   if input array is empty, NO-OP is executed.
 	//
-	inline unsigned long inall2code(Environment & _env)
-	{
-		if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
-		{
-			//size_t size_of_window = datastore::financial_data.get_size();
+	//inline unsigned long inall2code(Environment & _env)
+	//{
+	//	if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
+	//	{
+	//		//size_t size_of_window = datastore::financial_data.get_size();
 
-			//for (unsigned int index = 0; index < size_of_window; index++)
-			//{
-			//	double value = datastore::financial_data.get_data(index, _env.input_case);
-			//	_env.push<CodeAtom>(CodeAtom(value));
-			//}
-			;
-		}
-		else
-		{
-			if (_env.input.size() > 0)
-			{
-				for (unsigned int index = 0; index < _env.input.size(); index++)
-				{
-					double value = _env.input[index];
-					_env.push<CodeAtom>(CodeAtom(value));
-				}
-			}
-		}
+	//		//for (unsigned int index = 0; index < size_of_window; index++)
+	//		//{
+	//		//	double value = datastore::financial_data.get_data(index, _env.input_case);
+	//		//	_env.push<CodeAtom>(CodeAtom(value));
+	//		//}
+	//		;
+	//	}
+	//	else
+	//	{
+	//		if (_env.input.size() > 0)
+	//		{
+	//			for (unsigned int index = 0; index < _env.input.size(); index++)
+	//			{
+	//				double value = _env.input[index];
+	//				_env.push<CodeAtom>(CodeAtom(value));
+	//			}
+	//		}
+	//	}
 
-		return 1;
-	}
+	//	return 1;
+	//}
 
 	// Purpose: 
 	//   Push all elements from the input array onto a stack in reverse order.
@@ -1000,40 +1000,40 @@ namespace Plush
 	// Remarks:
 	//   if input array is empty, NO-OP is executed.
 	//
-	inline unsigned long inallrev2code(Environment & _env)
-	{
-		if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
-		{
-			//size_t size_of_window = datastore::financial_data.get_size();
-			//size_t index = size_of_window;
+	//inline unsigned long inallrev2code(Environment & _env)
+	//{
+	//	if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
+	//	{
+	//		//size_t size_of_window = datastore::financial_data.get_size();
+	//		//size_t index = size_of_window;
 
-			//for (unsigned int n = 0; n < size_of_window; n++)
-			//{
-			//	index--;
+	//		//for (unsigned int n = 0; n < size_of_window; n++)
+	//		//{
+	//		//	index--;
 
-			//	double value = datastore::financial_data.get_data(index, _env.input_case);
-			//	_env.push<CodeAtom>(CodeAtom(value));
-			//}
-			;
-		}
-		else
-		{
-			if (_env.input.size() > 0)
-			{
-				size_t size = _env.input.size();
-				size_t index = size;
+	//		//	double value = datastore::financial_data.get_data(index, _env.input_case);
+	//		//	_env.push<CodeAtom>(CodeAtom(value));
+	//		//}
+	//		;
+	//	}
+	//	else
+	//	{
+	//		if (_env.input.size() > 0)
+	//		{
+	//			size_t size = _env.input.size();
+	//			size_t index = size;
 
-				//for (unsigned long index = _env.input.size() - 1; index >= 0; index--)
-				for (size_t n = 0; n < size; n++)
-				{
-					double value = _env.input[--index];
-					_env.push<CodeAtom>(CodeAtom(value));
-				}
-			}
-		}
+	//			//for (unsigned long index = _env.input.size() - 1; index >= 0; index--)
+	//			for (size_t n = 0; n < size; n++)
+	//			{
+	//				double value = _env.input[--index];
+	//				_env.push<CodeAtom>(CodeAtom(value));
+	//			}
+	//		}
+	//	}
 
-		return 1;
-	}
+	//	return 1;
+	//}
 
 	void initExec()
 	{

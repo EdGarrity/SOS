@@ -8,6 +8,7 @@
 #include "Develop Strategy/ErrorFunction.DevelopStrategy.h"
 #include "Develop Strategy/Run.DevelopStrategy.h"
 #include "..\Utilities\Debug.h"
+#include "..\Plush\EnvironmentPool.h"
 
 namespace domain
 {
@@ -43,7 +44,9 @@ namespace domain
 
 		try
 		{
-			static thread_local Plush::Environment env;
+			// Get refernece to the thread's environment from the environment pool
+			//static thread_local Plush::Environment env;
+			Plush::Environment& env = Plush::environment_pool.get_env();
 
 			auto results = domain::develop_strategy::run_strategy_threadsafe(env, workorder_form.get_stratergy_index(), workorder_form.get_training_case_index());
 			domain::develop_strategy::order_matrix.store(
