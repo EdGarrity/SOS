@@ -406,6 +406,17 @@ namespace domain
 					<< ",message=All_threads_complete";
 				Utilities::logline_threadsafe << ss.str();
 			}
+
+			order_matrix.save(datastore::financial_data.get_count(), domain::argmap::population_size);
+
+			{
+				std::ostringstream ss;
+				ss << ",method=RunProgram.compute_training_errors_thread_safe"
+					<< ",training_case_indexes=" << datastore::financial_data.get_count()
+					<< ",stratergy_indexes=" << domain::argmap::population_size
+					<< ",message=Orders_Saved_to_DB";
+				Utilities::logline_threadsafe << ss.str();
+			}
 		}
 
 		// Purpose: 

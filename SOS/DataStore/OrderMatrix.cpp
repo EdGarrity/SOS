@@ -107,20 +107,44 @@ namespace datastore
 		orders.store(env_index, strategyIndex, trainingCaseIndex, order);
 		processed.store(env_index, strategyIndex, trainingCaseIndex, 1);
 
-		std::unique_lock<std::mutex> ThreadSafeArray_V2_array_access_lock(OrderMatrix_SQL_access);
+		//std::unique_lock<std::mutex> ThreadSafeArray_V2_array_access_lock(OrderMatrix_SQL_access);
+		//database::SQLCommand* sqlcmd;
+
+		//sqlcmd = new database::SQLCommand(database_connection.get_connection());
+		//sqlcmd->set_command(sqlstmt_insert_new_order);
+
+		//sqlcmd->set_as_bigint(DBPARAMIO_INPUT, 1, trainingCaseIndex);
+		//sqlcmd->set_as_bigint(DBPARAMIO_INPUT, 2, strategyIndex);
+		//sqlcmd->set_as_integer(3, order);
+
+		//sqlcmd->execute();
+
+		//delete sqlcmd;
+		//ThreadSafeArray_V2_array_access_lock.unlock();
+	}
+
+	void datastore::OrderMatrix::save(size_t training_case_indexes, size_t strategy_indexes)
+	{
 		database::SQLCommand* sqlcmd;
 
 		sqlcmd = new database::SQLCommand(database_connection.get_connection());
 		sqlcmd->set_command(sqlstmt_insert_new_order);
 
-		sqlcmd->set_as_bigint(DBPARAMIO_INPUT, 1, trainingCaseIndex);
-		sqlcmd->set_as_bigint(DBPARAMIO_INPUT, 2, strategyIndex);
-		sqlcmd->set_as_integer(3, order);
+		for (size_t training_case_index = 0; training_case_index < training_case_indexes; training_case_index++)
+		{
+			for (size_t stratergy_index = 0; stratergy_index < strategy_indexes; stratergy_index++)
+			{
+				unsigned long order = orders.load(stratergy_index, training_case_index);
 
-		sqlcmd->execute();
+				sqlcmd->set_as_bigint(DBPARAMIO_INPUT, 1, training_case_index);
+				sqlcmd->set_as_bigint(DBPARAMIO_INPUT, 2, stratergy_index);
+				sqlcmd->set_as_integer(3, order);
+
+				sqlcmd->execute();
+			}
+		}
 
 		delete sqlcmd;
-		ThreadSafeArray_V2_array_access_lock.unlock();
 	}
 
 	unsigned long datastore::OrderMatrix::load(size_t strategyIndex, size_t trainingCaseIndex)
