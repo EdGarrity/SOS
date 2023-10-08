@@ -182,7 +182,7 @@ namespace Plush
 			debug_msg = "instruction_name=" + current_instruction;
 			debug_msg += ",effort=" + std::to_string(current_effort);
 			debug_msg += ",unit=" + std::to_string(current_unit);
-			debug_msg += ",current_thread=" + std::to_string(current_thread);
+			//debug_msg += ",current_thread=" + std::to_string(current_thread);
 
 
 			debug_msg += ",exec_stack_size=" + std::to_string(exec_stack_.size());

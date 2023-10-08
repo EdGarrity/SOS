@@ -29,10 +29,12 @@ namespace pushGP
 		Utilities::ThreadSafeArray_2D<unsigned long, domain::argmap::number_of_training_cases, domain::argmap::population_size> effort_matrix;
 
 		//Utilities::ThreadSafeArray_2D<char, 80, domain::argmap::population_size> thread_current_instruction;
-		char thread_current_instruction[domain::argmap::max_threads][81];
-		unsigned long thread_effort[domain::argmap::max_threads];
-		unsigned long thread_exec_size[domain::argmap::max_threads];
-		unsigned long thread_instruction_index[domain::argmap::max_threads];
+
+		// Potential problem here.  These global variables may not be thread safe if the index is not unique to each thread.
+		//char thread_current_instruction[domain::argmap::max_threads][81];
+		//unsigned long thread_effort[domain::argmap::max_threads];
+		//unsigned long thread_exec_size[domain::argmap::max_threads];
+		//unsigned long thread_instruction_index[domain::argmap::max_threads];
 		unsigned long thread_individual_index[domain::argmap::max_threads];
 		size_t thread_example_case[domain::argmap::max_threads];
 

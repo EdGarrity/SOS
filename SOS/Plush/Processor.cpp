@@ -205,9 +205,9 @@ namespace Plush
 		{
 			try
 			{
-				pushGP::globals::thread_effort[env.current_thread] = effort;
-				pushGP::globals::thread_exec_size[env.current_thread] = env.get_stack<ExecAtom>().size();
-				pushGP::globals::thread_instruction_index[env.current_thread] = 99999999;
+				//pushGP::globals::thread_effort[env.current_thread] = effort;
+				//pushGP::globals::thread_exec_size[env.current_thread] = env.get_stack<ExecAtom>().size();
+				//pushGP::globals::thread_instruction_index[env.current_thread] = 99999999;
 
 				env.current_effort = effort;
 				env.current_unit = unit;
@@ -220,7 +220,7 @@ namespace Plush
 				// Debug - Remember current instruction
 				env.current_instruction = atom.instruction_name;
 
-				pushGP::globals::thread_current_instruction[env.current_thread][0] = '\0';
+				//pushGP::globals::thread_current_instruction[env.current_thread][0] = '\0';
 #if DLEVEL > 0
 				if (debug_push.load(std::memory_order_acquire))
 				{
@@ -287,12 +287,36 @@ namespace Plush
 					{
 						Instruction* pI = env.get_function(atom.instruction_name);
 
-						pushGP::globals::thread_instruction_index[env.current_thread] = Plush::static_initializer.get_function_index(atom.instruction_name);;
+						//pushGP::globals::thread_instruction_index[env.current_thread] = Plush::static_initializer.get_function_index(atom.instruction_name);;
 
 						if ((pI != nullptr) && (pI->can_run(env)))
 						{
+							if (trace)
+							{
+								std::ostringstream ss;
+								ss << ",method=Plush.run2"
+									<< ",max_effort=" << _max_effort
+									<< ",message=executing"
+									<< ",instruction_name=" << atom.instruction_name
+									<< ",instruction_type=" << instruction_type
+									<< env.print_state();
+								Utilities::logline_threadsafe << ss.str();
+							}
+
 							Operator op = pI->get_op();
 							unit = op(env);
+
+							if (trace)
+							{
+								std::ostringstream ss;
+								ss << ",method=Plush.run2"
+									<< ",max_effort=" << _max_effort
+									<< ",message=executed"
+									<< ",instruction_name=" << atom.instruction_name
+									<< ",instruction_type=" << instruction_type
+									<< env.print_state();
+								Utilities::logline_threadsafe << ss.str();
+							}
 
 #if DLEVEL > 0
 							if (debug_push.load(std::memory_order_acquire))
@@ -328,6 +352,7 @@ namespace Plush
 						ss << ",method=Plush.run2"
 							<< ",max_effort=" << _max_effort
 							<< ",message=trace"
+							<< ",instruction_name=" << atom.instruction_name
 							<< ",instruction_type=" << instruction_type
 							<< env.print_state();
 						Utilities::logline_threadsafe << ss.str();
@@ -349,7 +374,6 @@ namespace Plush
 				{
 					std::ostringstream ss;
 					ss << ",method=Plush.run2"
-						<< ",thread_instruction_index=" << pushGP::globals::thread_instruction_index[env.current_thread]
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
 						<< ",exception=" << ex.what()
@@ -370,7 +394,6 @@ namespace Plush
 				{
 					std::ostringstream ss;
 					ss << ",method=Plush.run2"
-						<< ",thread_instruction_index=" << pushGP::globals::thread_instruction_index[env.current_thread]
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
 						<< ",exception=" << ex.what()
@@ -396,7 +419,6 @@ namespace Plush
 				{
 					std::ostringstream ss;
 					ss << ",method=Plush.run2"
-						<< ",thread_instruction_index=" << pushGP::globals::thread_instruction_index[env.current_thread]
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
 						<< ",exception=" << ex.what()
@@ -422,7 +444,6 @@ namespace Plush
 				{
 					std::ostringstream ss;
 					ss << ",method=Plush.run2"
-						<< ",thread_instruction_index=" << pushGP::globals::thread_instruction_index[env.current_thread]
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
 						<< ",message=Unknown_exception";
@@ -443,7 +464,7 @@ namespace Plush
 			//	env_state[env.current_thread] = env.print_state();
 		}
 
-		pushGP::globals::thread_exec_size[env.current_thread] = 0;
+		//pushGP::globals::thread_exec_size[env.current_thread] = 0;
 
 		{
 			std::ostringstream ss;
