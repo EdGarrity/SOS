@@ -194,7 +194,8 @@ namespace Plush
 			ss << ",method=Plush.run2"
 				<< ",max_effort=" << _max_effort
 				<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
-				<< ",message=Started";
+				<< env.print_state()
+			    << ",message=Started";
 			Utilities::logline_threadsafe << ss.str();
 		}
 
@@ -215,6 +216,7 @@ namespace Plush
 					ss << ",method=Plush.run2"
 						<< ",max_effort=" << _max_effort
 						<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
+						<< env.print_state()
 						<< ",message=Looping";
 					Utilities::logline_threadsafe << ss.str();
 				}
@@ -251,6 +253,7 @@ namespace Plush
 						<< ",max_effort=" << _max_effort
 						<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
 						<< ",instruction_name=" << atom.instruction_name
+						<< env.print_state()
 						<< ",message=Poped_Exec_Stack";
 					Utilities::logline_threadsafe << ss.str();
 				}
@@ -309,6 +312,7 @@ namespace Plush
 										<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
 										<< ",instruction_name=" << atom.instruction_name
 										<< ",instruction_type=" << instruction_type
+										<< env.print_state()
 										<< ",message=Pushing_NOOP";
 									Utilities::logline_threadsafe << ss.str();
 								}
@@ -418,6 +422,7 @@ namespace Plush
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
 						<< ",exception=" << ex.what()
+						<< env.print_state()
 						<< ",message=underflow_error";
 					Utilities::logline_threadsafe << ss.str();
 				}
@@ -439,6 +444,7 @@ namespace Plush
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
 						<< ",exception=" << ex.what()
+						<< env.print_state()
 						<< ",message=overflow_error";
 					Utilities::logline_threadsafe << ss.str();
 				}
@@ -465,6 +471,7 @@ namespace Plush
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
 						<< ",exception=" << ex.what()
+						<< env.print_state()
 						<< ",message=Unknown_exception";
 					Utilities::logline_threadsafe << ss.str();
 				}
@@ -490,6 +497,7 @@ namespace Plush
 						<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
+						<< env.print_state()
 						<< ",message=Unknown_exception";
 					Utilities::logline_threadsafe << ss.str();
 				}
@@ -515,6 +523,7 @@ namespace Plush
 			ss << ",method=Plush.run2"
 				<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
 				<< ",max_effort=" << _max_effort
+				<< env.print_state()
 				<< ",message=Started";
 			Utilities::logline_threadsafe << ss.str();
 		}
