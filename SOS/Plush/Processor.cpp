@@ -209,6 +209,7 @@ namespace Plush
 		{
 			try
 			{
+				if (trace)
 				{
 					std::ostringstream ss;
 					ss << ",method=Plush.run2"
@@ -243,6 +244,7 @@ namespace Plush
 #endif
 				std::string instruction_type = "";
 
+				if (trace)
 				{
 					std::ostringstream ss;
 					ss << ",method=Plush.run2"
@@ -299,6 +301,7 @@ namespace Plush
 						{
 							if (blocks_closed > 0)
 							{
+								if (trace)
 								{
 									std::ostringstream ss;
 									ss << ",method=Plush.run2"
