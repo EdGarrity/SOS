@@ -369,7 +369,7 @@ namespace domain
 
 			order_matrix.clearOrderMatrix();
 
-			std::latch work_done(domain::argmap::population_size * datastore::financial_data.get_count());
+			std::latch work_done(domain::argmap::population_size * datastore::financial_data.get_count());	// Check that we are allocating sufficient work tokens.
 			order_matrix.initialize(domain::argmap::population_size, datastore::financial_data.get_count());
  			domain::RunProgram processor(pool);
 

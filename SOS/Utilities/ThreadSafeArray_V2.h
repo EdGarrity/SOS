@@ -80,6 +80,16 @@ namespace Utilities
 	template<class T>
 	inline void ThreadSafeArray_2D_V2<T>::resize(size_t N1, size_t N2)
 	{
+		{
+			std::ostringstream ss;
+			ss << ",N1=" << N1
+				<< ",N2=" << N2
+				<< ",method=ThreadSafeArray_2D_V2.resize"
+				<< ",message=Enter";
+			Utilities::logline_threadsafe << ss.str();
+		}
+
+
 #if DLEVEL > 0
 		std::string debug_message = "Allocating,N1=" + std::to_string(N1) + ",N2=" + std::to_string(N2);
 		Utilities::debug_log_nolock(-1, "ThreadSafeArray_2D_V2", debug_message);
@@ -87,9 +97,9 @@ namespace Utilities
 		if (data_array != nullptr)
 			std::free(data_array);
 
-		data_array = (T*)std::calloc(N1 * N2, sizeof(T));
-		n1 = N1;
-		n2 = N2;
+		n1 = N1 + 1;
+		n2 = N2 + 1;
+		data_array = (T*)std::calloc(n1 * n2, sizeof(T));
 
 		if (data_array == nullptr)
 		{
@@ -101,6 +111,15 @@ namespace Utilities
 				std::string debug_message = error_message.str();
 				Utilities::debug_log(-1, "ThreadSafeArray_2D_V2", debug_message);
 #endif
+				{
+					std::ostringstream ss;
+					ss << ",N1=" << N1
+						<< ",N2=" << N2
+						<< ",method=ThreadSafeArray_2D_V2.resize"
+						<< ",message=Out_of_memory";
+					Utilities::logline_threadsafe << ss.str();
+				}
+
 				throw std::runtime_error(error_message.str());
 			}
 		}

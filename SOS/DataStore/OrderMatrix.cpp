@@ -18,6 +18,14 @@ namespace datastore
 #if DLEVEL > 0
 		Utilities::debug_log(-1, "initialize", "OrderMatrix");
 #endif
+		{
+			std::ostringstream ss;
+			ss << ",population_size=" << population_size
+				<< ",test_data_size=" << test_data_size
+				<< ",method=datastore.OrderMatrix.initialize"
+				<< ",message=Enter";
+			Utilities::logline_threadsafe << ss.str();
+		}
 
 		this->population_size = population_size;
 		this->test_data_size = test_data_size;
@@ -134,26 +142,26 @@ namespace datastore
 			Utilities::logline_threadsafe << ss.str();
 		}
 
-		database::SQLCommand* sqlcmd;
-
-		sqlcmd = new database::SQLCommand(database_connection.get_connection());
-		sqlcmd->set_command(sqlstmt_insert_new_order);
-
 		for (size_t training_case_index = 0; training_case_index < training_case_indexes; training_case_index++)
 		{
 			for (size_t stratergy_index = 0; stratergy_index < strategy_indexes; stratergy_index++)
 			{
 				unsigned long order = orders.load(stratergy_index, training_case_index);
 
+				database::SQLCommand* sqlcmd;
+
+				sqlcmd = new database::SQLCommand(database_connection.get_connection());
+				sqlcmd->set_command(sqlstmt_insert_new_order);
+
 				sqlcmd->set_as_bigint(DBPARAMIO_INPUT, 1, training_case_index);
 				sqlcmd->set_as_bigint(DBPARAMIO_INPUT, 2, stratergy_index);
 				sqlcmd->set_as_integer(3, order);
 
 				sqlcmd->execute();
+
+				delete sqlcmd;
 			}
 		}
-
-		delete sqlcmd;
 
 		{
 			std::ostringstream ss;
