@@ -125,6 +125,15 @@ namespace datastore
 
 	void datastore::OrderMatrix::save(size_t training_case_indexes, size_t strategy_indexes)
 	{
+		{
+			std::ostringstream ss;
+			ss << ",method=OrderMatrix.save"
+				<< ",training_case_indexes=" << training_case_indexes
+				<< ",stratergy_indexes=" << strategy_indexes
+				<< ",message=Enter";
+			Utilities::logline_threadsafe << ss.str();
+		}
+
 		database::SQLCommand* sqlcmd;
 
 		sqlcmd = new database::SQLCommand(database_connection.get_connection());
@@ -145,6 +154,15 @@ namespace datastore
 		}
 
 		delete sqlcmd;
+
+		{
+			std::ostringstream ss;
+			ss << ",method=OrderMatrix.save"
+				<< ",training_case_indexes=" << training_case_indexes
+				<< ",stratergy_indexes=" << strategy_indexes
+				<< ",message=Done";
+			Utilities::logline_threadsafe << ss.str();
+		}
 	}
 
 	unsigned long datastore::OrderMatrix::load(size_t strategyIndex, size_t trainingCaseIndex)

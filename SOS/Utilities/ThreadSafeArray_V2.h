@@ -105,6 +105,17 @@ namespace Utilities
 			std::string debug_message = error_message.str();
 			Utilities::debug_log(-1, "ThreadSafeArray_2D_V2", debug_message);
 #endif
+			{
+				std::ostringstream ss;
+				ss << ",method=ThreadSafeArray_2D_V2.load"
+					<< ",y=" << y
+					<< ",x=" << x
+					<< ",n1=" << n1
+					<< ",n2=" << n2
+					<< ",message=Index_out_of_bounds";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
 			throw std::out_of_range(error_message.str());
 		}
 
