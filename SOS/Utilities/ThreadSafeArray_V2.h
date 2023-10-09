@@ -19,13 +19,27 @@ namespace Utilities
 
 	public:
 		ThreadSafeArray_2D_V2<T>(size_t N1, size_t N2);
-		ThreadSafeArray_2D_V2<T>() : data_array(nullptr), n1(0), n2(0) {};
+		//ThreadSafeArray_2D_V2<T>() : data_array(nullptr), n1(0), n2(0) {};
+		ThreadSafeArray_2D_V2<T>();
 		~ThreadSafeArray_2D_V2<T>(void);
 
 		void resize(size_t N1, size_t N2);
 		T load(size_t n1, size_t n2);
 		void store(const unsigned int env_index, size_t y, size_t x, T d);
 	};
+
+	template<class T>
+	inline ThreadSafeArray_2D_V2<T>::ThreadSafeArray_2D_V2()
+	{
+		{
+			std::ostringstream ss;
+			ss << ",method=ThreadSafeArray_2D_V2.load"
+				<< ",message=Array_bounds_not_defined";
+			Utilities::logline_threadsafe << ss.str();
+		}
+
+		throw std::runtime_error("ThreadSafeArray_2D_V2 - Array bounds not defined");
+	}
 
 	template<class T>
 	inline ThreadSafeArray_2D_V2<T>::ThreadSafeArray_2D_V2(size_t N1, size_t N2)
