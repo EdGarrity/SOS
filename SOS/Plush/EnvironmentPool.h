@@ -14,27 +14,7 @@ namespace Plush
 		std::map<std::thread::id, size_t> m_pool;  //std::this_thread::get_id()
 		size_t m_env_count = 0;
 		size_t m_max_env_count = 8;
-		std::mutex m_mutex;
-
-	public:
-		// Purpose: 
-		//   Constructs an environment pool with the size specified
-		//
-		// Parameters:
-		//   None
-		//
-		// Return value:
-		//   None
-		//
-		// Side Effects:
-		//   Creates a pool of environments
-		//
-		// Thread Safe:
-		//   No
-		//
-		// Remarks:
-		//   Creates a pool of environments to be used by the threadpool.  The pool is created with the size specified.
-		//EnvironmentPool();
+		std::mutex m_env_mutex;
 
 		// Purpose: 
 		//   Register a new thread with the ppol
@@ -56,6 +36,27 @@ namespace Plush
 		//	 thread is assigned the next available environment and added to the pool.  The 
 		//	 m_env_count is incremented in a thread safe manner.
 		void register_thread();
+
+	public:
+		EnvironmentPool();
+		// Purpose: 
+		//   Constructs an environment pool with the size specified
+		//
+		// Parameters:
+		//   None
+		//
+		// Return value:
+		//   None
+		//
+		// Side Effects:
+		//   Creates a pool of environments
+		//
+		// Thread Safe:
+		//   No
+		//
+		// Remarks:
+		//   Creates a pool of environments to be used by the threadpool.  The pool is created with the size specified.
+		//EnvironmentPool();
 
 		// Purpose: 
 		//   Get reference to the envirent for the calling thread

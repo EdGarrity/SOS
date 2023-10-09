@@ -16,6 +16,8 @@
 
 namespace Utilities
 {
+    extern 	Plush::EnvironmentPool env_pool_1;
+
     class Threadpool
     {
     public:
@@ -141,8 +143,6 @@ namespace Utilities
                     << ",message=Started";
                 Utilities::logline_threadsafe << ss.str();
             }
-
-            Plush::environment_pool.register_thread();
 
             while (!m_stop_thread)
             {

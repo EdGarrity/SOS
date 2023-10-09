@@ -1,4 +1,5 @@
 #include "Debug.h"
+#include "..\Plush\EnvironmentPool.h"
 
 namespace Utilities
 {

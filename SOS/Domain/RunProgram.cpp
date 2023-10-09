@@ -12,8 +12,6 @@
 
 namespace domain
 {
-	//thread_local Plush::Environment env;
-
 	Utilities::Task RunProgram::run(develop_strategy::RunProgram_WorkOrder_Form const workorder_form, std::latch &work_done) const
 	{
 		int env_index = 99;
@@ -45,7 +43,6 @@ namespace domain
 		try
 		{
 			// Get refernece to the thread's environment from the environment pool
-			//static thread_local Plush::Environment env;
 			Plush::Environment& env = Plush::environment_pool.get_env();
 
 			auto results = domain::develop_strategy::run_strategy_threadsafe(env, workorder_form.get_stratergy_index(), workorder_form.get_training_case_index());
