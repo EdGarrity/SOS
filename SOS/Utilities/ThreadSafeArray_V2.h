@@ -13,14 +13,13 @@ namespace Utilities
 	class ThreadSafeArray_2D_V2
 	{
 	private:
-		T *data_array = nullptr;
+		T* data_array = nullptr;
 		size_t n1 = 0;
 		size_t n2 = 0;
 
 	public:
 		ThreadSafeArray_2D_V2<T>(size_t N1, size_t N2);
-		//ThreadSafeArray_2D_V2<T>() : data_array(nullptr), n1(0), n2(0) {};
-		ThreadSafeArray_2D_V2<T>();
+		ThreadSafeArray_2D_V2<T>() : data_array(nullptr), n1(0), n2(0) {};
 		~ThreadSafeArray_2D_V2<T>(void);
 
 		void resize(size_t N1, size_t N2);
@@ -28,18 +27,18 @@ namespace Utilities
 		void store(const unsigned int env_index, size_t y, size_t x, T d);
 	};
 
-	template<class T>
-	inline ThreadSafeArray_2D_V2<T>::ThreadSafeArray_2D_V2()
-	{
-		{
-			std::ostringstream ss;
-			ss << ",method=ThreadSafeArray_2D_V2.load"
-				<< ",message=Array_bounds_not_defined";
-			Utilities::logline_threadsafe << ss.str();
-		}
+	//template<class T>
+	//inline ThreadSafeArray_2D_V2<T>::ThreadSafeArray_2D_V2()
+	//{
+	//	{
+	//		std::ostringstream ss;
+	//		ss << ",method=ThreadSafeArray_2D_V2.load"
+	//			<< ",message=Array_bounds_not_defined";
+	//		Utilities::logline_threadsafe << ss.str();
+	//	}
 
-		throw std::runtime_error("ThreadSafeArray_2D_V2 - Array bounds not defined");
-	}
+	//	throw std::runtime_error("ThreadSafeArray_2D_V2 - Array bounds not defined");
+	//}
 
 	template<class T>
 	inline ThreadSafeArray_2D_V2<T>::ThreadSafeArray_2D_V2(size_t N1, size_t N2)
@@ -110,6 +109,25 @@ namespace Utilities
 	template<class T>
 	inline T ThreadSafeArray_2D_V2<T>::load(size_t y, size_t x)
 	{
+		if ((n1 == 0) || (n2 == 0))
+		{
+			std::stringstream error_message;
+			error_message << "ThreadSafeArray_2D_V2::load(" << y << "," << x << ") - Array bounds not defined";
+
+			{
+				std::ostringstream ss;
+				ss << ",method=ThreadSafeArray_2D_V2.load"
+					<< ",y=" << y
+					<< ",x=" << x
+					<< ",n1=" << n1
+					<< ",n2=" << n2
+					<< ",message=Array_bounds_not_defined";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
+			throw std::out_of_range(error_message.str());
+		}
+
 		if ((y >= n1) || (x >= n2))
 		{
 			std::stringstream error_message;
