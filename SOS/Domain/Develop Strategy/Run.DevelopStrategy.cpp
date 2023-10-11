@@ -377,17 +377,20 @@ namespace domain
 			{
 				for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
 				{
+					if (!order_matrix.is_generated(strategy_index, training_case_index))
 					{
-						std::ostringstream ss;
-						ss << ",stratergy=" << strategy_index
-							<< ",case=" << training_case_index
-							<< ",method=RunProgram.compute_training_errors_thread_safe"
-							<< ",message=Schedule_to_run_strategy";
-						Utilities::logline_threadsafe << ss.str();
-					}
+						{
+							std::ostringstream ss;
+							ss << ",stratergy=" << strategy_index
+								<< ",case=" << training_case_index
+								<< ",method=RunProgram.compute_training_errors_thread_safe"
+								<< ",message=Schedule_to_run_strategy";
+							Utilities::logline_threadsafe << ss.str();
+						}
 
-					develop_strategy::RunProgram_WorkOrder_Form form(strategy_index, training_case_index);
-					processor.run(form, work_done);
+						develop_strategy::RunProgram_WorkOrder_Form form(strategy_index, training_case_index);
+						processor.run(form, work_done);
+					}
 				}
 			}
 
