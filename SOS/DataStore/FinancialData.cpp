@@ -159,18 +159,34 @@ namespace datastore
 
 			while (sqlcmd_get_case_data->fetch_next())
 			{
-				data_records.emplace_back(data_record_t{ sqlcmd_get_case_data->get_field_as_string(1), sqlcmd_get_case_data->get_field_as_string(2), sqlcmd_get_case_data->get_field_as_string(3), sqlcmd_get_case_data->get_field_as_double(4) });
+				data_records.emplace_back(data_record_t{ sqlcmd_get_case_data->get_field_as_string(1), 
+					sqlcmd_get_case_data->get_field_as_string(2), 
+					sqlcmd_get_case_data->get_field_as_string(3), 
+					sqlcmd_get_case_data->get_field_as_double(4) });
 
 				if (last_written_date != sqlcmd_get_case_data->get_field_as_string(2))
 				{
 					if (last_written_date != "")
-					{
 						data_window_records.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index });
-					}
 
 					last_written_date = sqlcmd_get_case_data->get_field_as_string(2);
 					first_record_index = last_record_index;
 					dirty = true;
+				}
+
+				if (sqlcmd_get_case_data->get_field_as_string(3) == "Adj_Open")
+				{
+					//{
+					//	std::ostringstream ss;
+					//	ss << "record"
+					//		<< ",symbol=" << sqlcmd_get_case_data->get_field_as_string(1)
+					//		<< ",date=" << sqlcmd_get_case_data->get_field_as_string(2)
+					//		<< ",key=" << sqlcmd_get_case_data->get_field_as_string(3)
+					//		<< ",value=" << sqlcmd_get_case_data->get_field_as_double(4);
+					//	Utilities::logline_threadsafe << ss.str();
+					//}
+
+					adj_open_values.push_back(sqlcmd_get_case_data->get_field_as_double(4));
 				}
 
 				last_record_index++;

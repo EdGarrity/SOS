@@ -394,10 +394,10 @@ namespace database
 		//		Using field smaller than 1 and greater then the value returned by fieldCount method will result in a failed assertion.
 		//
 		// Parameters:
-		//		field	A one-based field number in a result set.
+		//		int - A one-based field number in a result set.
 		//
 		// Returns:
-		//		THe value returned for the specified field as a long integer.
+		//		std::string - The specified field.
 		//
 		std::string get_field_as_string(int _field);
 

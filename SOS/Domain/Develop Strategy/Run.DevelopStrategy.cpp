@@ -506,6 +506,9 @@ namespace domain
 				sa.set_cold();
 				sa.set_temperature(datastore::test_data.get_last_saved_temperature(sa.get_temperature()));
 
+				// Force new generation for debugging purposes
+				best_individual_score = -1;
+
 				// If last run found a solution or exhausted the number of generations, 
 				// then clear the individuals table to force the creation of new individuals
 				// and reset to start a new run
@@ -625,51 +628,49 @@ namespace domain
 						Utilities::logline_threadsafe << ss.str();
 					}
 
-					done = true;
-
 					//// ***************************
 					//// *** Evaluate strategies ***
 					//// ***************************
-					//number_of_training_cases = datastore::test_data.size() - domain::argmap::training_case_length + 1;
-					////broker_account.resize(domain::argmap::population_size, number_of_training_cases);
-					////pushGP::globals::error_matrix.resize(number_of_training_cases, domain::argmap::population_size);
-					////pushGP::globals::effort_matrix.resize(number_of_training_cases, domain::argmap::population_size);
-					//if (number_of_training_cases > domain::argmap::number_of_training_cases)
-					//	throw std::overflow_error("Not enough training cases");
+					number_of_training_cases = datastore::financial_data.get_count() - domain::argmap::training_case_length + 1;
+					//broker_account.resize(domain::argmap::population_size, number_of_training_cases);
+					pushGP::globals::error_matrix.resize(number_of_training_cases, domain::argmap::population_size);
+					pushGP::globals::effort_matrix.resize(number_of_training_cases, domain::argmap::population_size);
+					if (number_of_training_cases > domain::argmap::number_of_training_cases)
+						throw std::overflow_error("Not enough training cases");
 
-					//int best_individual = -1;
+					int best_individual = -1;
 
-					//for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
-					//{
-					//	for (size_t training_case_window_start = 0;	training_case_window_start < number_of_training_cases; training_case_window_start++)
-					//	{
-					//		size_t stock_data_index = training_case_window_start;
+					for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
+					{
+						for (size_t training_case_window_start = 0;	training_case_window_start < number_of_training_cases; training_case_window_start++)
+						{
+							size_t stock_data_index = training_case_window_start;
 
-					//		BrokerAccount account = BrokerAccount(BrokerAccount::seed_money);
+							BrokerAccount account = BrokerAccount(BrokerAccount::seed_money);
 
-					//		for (size_t training_case_window_offset = 0; training_case_window_offset < domain::argmap::training_case_length; training_case_window_offset++)
-					//		{
-					//			long order = order_matrix.load(strategy_index, stock_data_index);
+							for (size_t training_case_window_offset = 0; training_case_window_offset < domain::argmap::training_case_length; training_case_window_offset++)
+							{
+								long order = order_matrix.load(strategy_index, stock_data_index);
 
-					//			account.execute(stock_data_index, order);
+								account.execute(stock_data_index, order);
 
-					//			stock_data_index++;
-					//		}
+								stock_data_index++;
+							}
 
-					//		double score = account.unrealized_gain(--stock_data_index);
+							double score = account.unrealized_gain(--stock_data_index);
 
-					//		if (best_individual_score <= score)
-					//		{
-					//			best_individual_score = score;
-					//			best_individual = strategy_index;
-					//			best_individual_effort = 0;
-					//		}
+							if (best_individual_score <= score)
+							{
+								best_individual_score = score;
+								best_individual = strategy_index;
+								best_individual_effort = 0;
+							}
 
-					//		pushGP::globals::error_matrix.store(-1, training_case_window_start, strategy_index, score);
-					//		pushGP::globals::effort_matrix.store(-1, training_case_window_start, strategy_index, 1000);
+							pushGP::globals::error_matrix.store(-1, training_case_window_start, strategy_index, score);
+							pushGP::globals::effort_matrix.store(-1, training_case_window_start, strategy_index, 1000);
 
-					//	}
-					//}
+						}
+					}
 
 					//// *********************************************
 					//// *** Evaluate best strategy with test data ***
@@ -755,6 +756,8 @@ namespace domain
 							<< ",message=Done";
 						Utilities::logline_threadsafe << ss.str();
 					}
+
+					done = true;
 				}
 
 				delete[] pushGP::globals::population_agents;

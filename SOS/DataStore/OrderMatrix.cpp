@@ -67,7 +67,7 @@ namespace datastore
 		catch (...)
 		{
 			std::stringstream error;
-			error << "OrderMatrix::getAllOrders()";
+			error << "OrderMatrix::initialize()";
 			std::cerr << error.str();
 
 			delete sqlcmd;

@@ -40,6 +40,7 @@ namespace datastore
 
 		std::vector<data_record_t> data_records;
 		std::vector<data_window_record_t> data_window_records;
+		std::vector<double> adj_open_values;
 
 	public:
 		FinancialData();
@@ -51,6 +52,7 @@ namespace datastore
 		double get_data(const size_t index, const size_t input_case);
 		//size_t get_size() const { return record.size(); }
 		size_t get_count() const { return data_window_records.size(); }
+		double get_stock_price(size_t index) const { return adj_open_values[index]; }
 	};
 
 	extern FinancialData financial_data;
