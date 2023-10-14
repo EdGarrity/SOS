@@ -173,6 +173,49 @@ namespace datastore
 		}
 	}
 
+	void datastore::OrderMatrix::save_training_case(size_t training_case_index, size_t strategy_indexes)
+	{
+		{
+			std::ostringstream ss;
+			ss << ",method=OrderMatrix.save"
+				<< ",training_case_indexes=" << training_case_index
+				<< ",stratergy_indexes=" << strategy_indexes
+				<< ",message=Enter";
+			Utilities::logline_threadsafe << ss.str();
+		}
+
+		std::unique_lock<std::mutex> ThreadSafeArray_V2_array_access_lock(OrderMatrix_SQL_access);
+
+		for (size_t stratergy_index = 0; stratergy_index < strategy_indexes; stratergy_index++)
+		{
+			unsigned long order = orders.load(stratergy_index, training_case_index);
+
+			database::SQLCommand* sqlcmd;
+
+			sqlcmd = new database::SQLCommand(database_connection.get_connection());
+			sqlcmd->set_command(sqlstmt_insert_new_order);
+
+			sqlcmd->set_as_bigint(DBPARAMIO_INPUT, 1, training_case_index);
+			sqlcmd->set_as_bigint(DBPARAMIO_INPUT, 2, stratergy_index);
+			sqlcmd->set_as_integer(3, order);
+
+			sqlcmd->execute();
+
+			delete sqlcmd;
+		}
+
+		ThreadSafeArray_V2_array_access_lock.unlock();
+
+		{
+			std::ostringstream ss;
+			ss << ",method=OrderMatrix.save"
+				<< ",training_case_indexes=" << training_case_index
+				<< ",stratergy_indexes=" << strategy_indexes
+				<< ",message=Done";
+			Utilities::logline_threadsafe << ss.str();
+		}
+	}
+
 	unsigned long datastore::OrderMatrix::load(size_t strategyIndex, size_t trainingCaseIndex)
 	{
 		return orders.load(strategyIndex, trainingCaseIndex);

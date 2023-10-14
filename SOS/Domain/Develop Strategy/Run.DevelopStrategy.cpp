@@ -320,7 +320,7 @@ namespace domain
 				Utilities::logline_threadsafe << ss.str();
 			}
 
-			order_matrix.clearOrderMatrix();
+			//order_matrix.clearOrderMatrix();
 
 			order_matrix.initialize(domain::argmap::population_size, datastore::financial_data.get_count());
 
@@ -367,11 +367,12 @@ namespace domain
 				Utilities::logline_threadsafe << ss.str();
 			}
 
-			order_matrix.clearOrderMatrix();
+			//order_matrix.clearOrderMatrix();
 
 			std::latch work_done(domain::argmap::population_size * datastore::financial_data.get_count());	// Check that we are allocating sufficient work tokens.
 			order_matrix.initialize(domain::argmap::population_size, datastore::financial_data.get_count());
- 			domain::RunProgram processor(pool);
+			domain::RunProgram processor(pool);
+			bool dirty = false;
 
 			for (size_t training_case_index = 0; training_case_index < datastore::financial_data.get_count(); training_case_index++)
 			{
@@ -390,6 +391,20 @@ namespace domain
 
 						develop_strategy::RunProgram_WorkOrder_Form form(strategy_index, training_case_index);
 						processor.run(form, work_done);
+						dirty = true;
+					}
+					else
+					{
+						{
+							std::ostringstream ss;
+							ss << ",stratergy=" << strategy_index
+								<< ",case=" << training_case_index
+								<< ",method=RunProgram.compute_training_errors_thread_safe"
+								<< ",message=Order already processed";
+							Utilities::logline_threadsafe << ss.str();
+						}
+
+						work_done.count_down();
 					}
 				}
 			}
@@ -410,16 +425,30 @@ namespace domain
 				Utilities::logline_threadsafe << ss.str();
 			}
 
-			order_matrix.save(datastore::financial_data.get_count(), domain::argmap::population_size);
+			if (dirty)
+			{
+				order_matrix.clearOrderMatrix();
+				order_matrix.save(datastore::financial_data.get_count(), domain::argmap::population_size);
 
+				{
+					std::ostringstream ss;
+					ss << ",method=RunProgram.compute_training_errors_thread_safe"
+						<< ",training_case_indexes=" << datastore::financial_data.get_count()
+						<< ",stratergy_indexes=" << domain::argmap::population_size
+						<< ",message=Orders_Saved_to_DB";
+					Utilities::logline_threadsafe << ss.str();
+				}
+			}
+			else
 			{
 				std::ostringstream ss;
 				ss << ",method=RunProgram.compute_training_errors_thread_safe"
 					<< ",training_case_indexes=" << datastore::financial_data.get_count()
 					<< ",stratergy_indexes=" << domain::argmap::population_size
-					<< ",message=Orders_Saved_to_DB";
+					<< ",message=No_Orders_Saved_to_DB";
 				Utilities::logline_threadsafe << ss.str();
 			}
+
 		}
 
 		// Purpose: 

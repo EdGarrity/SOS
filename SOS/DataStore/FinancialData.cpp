@@ -155,6 +155,8 @@ namespace datastore
 			size_t last_record_index = 0;
 			std::string last_written_date = "";
 
+			bool dirty = false;
+
 			while (sqlcmd_get_case_data->fetch_next())
 			{
 				data_records.emplace_back(data_record_t{ sqlcmd_get_case_data->get_field_as_string(1), sqlcmd_get_case_data->get_field_as_string(2), sqlcmd_get_case_data->get_field_as_string(3), sqlcmd_get_case_data->get_field_as_double(4) });
@@ -168,12 +170,14 @@ namespace datastore
 
 					last_written_date = sqlcmd_get_case_data->get_field_as_string(2);
 					first_record_index = last_record_index;
+					dirty = true;
 				}
 
 				last_record_index++;
 			}
 
-			data_window_records.emplace_back(data_window_record_t{ last_written_date, first_record_index, data_window_records.size() - 1});
+			if (dirty)
+				data_window_records.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
 
 			delete sqlcmd_get_case_data;
 
@@ -270,6 +274,12 @@ namespace datastore
 				std::ostringstream ss;
 				ss << ",method=FinancialData.get_data"
 					<< ",exception=" << e.what()
+					<< ",data_index=" << data_index
+					<< ",training_case_index=" << training_case_index
+					<< ",index_record.first_record=" << index_record.first_record
+					<< ",index_record.last_record=" << index_record.last_record
+					<< ",data_record_range=" << data_record_range
+					<< ",data_record_index=" << data_record_index
 					<< ",message=Error_loading_data";
 				Utilities::logline_threadsafe << ss.str();
 			}
@@ -282,6 +292,12 @@ namespace datastore
 				std::ostringstream ss;
 				ss << ",method=FinancialData.get_data"
 					<< ",exception=Unknown"
+					<< ",data_index=" << data_index
+					<< ",training_case_index=" << training_case_index
+					<< ",index_record.first_record=" << index_record.first_record
+					<< ",index_record.last_record=" << index_record.last_record
+					<< ",data_record_range=" << data_record_range
+					<< ",data_record_index=" << data_record_index
 					<< ",message=An_unknown_error_has_occured";
 				Utilities::logline_threadsafe << ss.str();
 			}
