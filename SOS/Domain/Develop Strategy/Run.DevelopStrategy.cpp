@@ -672,19 +672,19 @@ namespace domain
 						}
 					}
 
-					//// *********************************************
-					//// *** Evaluate best strategy with test data ***
-					//// *********************************************
+					// *********************************************
+					// *** Evaluate best strategy with test data ***
+					// *********************************************
 
-					//// *************************
-					//// *** Evolve strategies ***
-					//// *************************
-					//produce_new_offspring(number_of_training_cases,
-					//	number_of_training_cases,
-					//	downsampled_training_cases,
-					//	best_individual,
-					//	sa,
-					//	include_best_individual_in_breeding_pool);
+					// *************************
+					// *** Evolve strategies ***
+					// *************************
+					produce_new_offspring(number_of_training_cases,
+						number_of_training_cases,
+						downsampled_training_cases,
+						best_individual,
+						sa,
+						include_best_individual_in_breeding_pool);
 
 					//// ******************************
 					//// *** Generate Status Report ***
