@@ -131,19 +131,19 @@ namespace Plush
 	{
 		try
 		{
-		Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
-		Genome_section<CodeAtom> block_a = genome[0];
-		Genome_section<CodeAtom> block_b = genome[1];
+			Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
+			Genome_section<CodeAtom> block_a = genome[0];
+			Genome_section<CodeAtom> block_b = genome[1];
 
-		if (genome.comp(block_a, block_b))
-			_env.push<bool>(true);
-		else
-			_env.push<bool>(false);
+			if (genome.comp(block_a, block_b))
+				_env.push<bool>(true);
+			else
+				_env.push<bool>(false);
 
-		_env.pop_genome<CodeAtom>();
-		_env.pop_genome<CodeAtom>();
+			_env.pop_genome<CodeAtom>();
+			_env.pop_genome<CodeAtom>();
 
-		return 1;
+			return 1;
 		}
 		catch (const std::exception& e)
 		{
@@ -189,6 +189,18 @@ namespace Plush
 	{
 		try
 		{
+			// Debug Log
+			std::stringstream debud_message;
+			debud_message << "Debug: Enter";
+
+			std::cerr << debud_message.str();
+			{
+				std::ostringstream ss;
+				ss << ",number_of_blocks=" << _env.length<ExecAtom>()
+					<< ",method=equals<ExecAtom>"
+					<< "," << debud_message.str();
+				Utilities::logline_threadsafe << ss.str();
+			}
 
 			Genome<ExecAtom>& genome = _env.get_stack<ExecAtom>();
 

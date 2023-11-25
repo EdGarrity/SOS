@@ -78,7 +78,7 @@ namespace domain
 					<< ",case=" << workorder_form.get_training_case_index()
 					<< ",exception=" << e.what()
 					<< ",method=RunProgram.run"
-					<< "," << warning_message.str();
+					<< "," << warning_message.str() << " ";
 				Utilities::logline_threadsafe << ss.str();
 			}
 

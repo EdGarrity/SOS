@@ -150,12 +150,14 @@ namespace Plush
 				env.get_stack<ExecAtom>().push(ExecAtom(atom));
 
 				{
+					unsigned long stack_size = env.get_stack<ExecAtom>().size();
+					std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
 					std::ostringstream ss;
 					ss << ",case=" << case_index
 						<< ",i=" << i
 						<< ",j=" << j
 						<< ",atom=" << atom.instruction_name
-						<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
+						<< ",top=" << top
 						<< ",method=Plush.run"
 						<< ",message=Load_inputs";
 					Utilities::logline_threadsafe << ss.str();
@@ -165,20 +167,24 @@ namespace Plush
 
 		// Execute
 		{
+			unsigned long stack_size = env.get_stack<ExecAtom>().size();
+			std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
 			std::ostringstream ss;
 			ss << ",case=" << case_index
 				<< ",method=Plush.run"
-				<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
+				<< ",top=" << top
 				<< ",message=Execute";
 			Utilities::logline_threadsafe << ss.str();
 		}
 		unsigned int result=run(env, domain::argmap::max_point_evaluations, trace);
 
 		{
+			unsigned long stack_size = env.get_stack<ExecAtom>().size();
+			std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
 			std::ostringstream ss;
 			ss << ",case=" << case_index
 				<< ",method=Plush.run"
-				<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
+				<< ",top=" << top
 				<< ",message=Done";
 			Utilities::logline_threadsafe << ss.str();
 		}
@@ -190,10 +196,12 @@ namespace Plush
 	unsigned int run(Environment& env, unsigned _max_effort, bool trace)
 	{
 		{
+			unsigned long stack_size = env.get_stack<ExecAtom>().size();
+			std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
 			std::ostringstream ss;
 			ss << ",method=Plush.run2"
 				<< ",max_effort=" << _max_effort
-				<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
+				<< ",top=" << top
 				<< env.print_state()
 			    << ",message=Started";
 			Utilities::logline_threadsafe << ss.str();
@@ -212,10 +220,12 @@ namespace Plush
 			{
 				if (trace)
 				{
+					unsigned long stack_size = env.get_stack<ExecAtom>().size();
+					std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
 					std::ostringstream ss;
 					ss << ",method=Plush.run2"
 						<< ",max_effort=" << _max_effort
-						<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
+						<< ",top=" << top
 						<< env.print_state()
 						<< ",message=Looping";
 					Utilities::logline_threadsafe << ss.str();
@@ -248,10 +258,12 @@ namespace Plush
 
 				if (trace)
 				{
+					unsigned long stack_size = env.get_stack<ExecAtom>().size();
+					std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
 					std::ostringstream ss;
 					ss << ",method=Plush.run2"
 						<< ",max_effort=" << _max_effort
-						<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
+						<< ",top=" << top
 						<< ",instruction_name=" << atom.instruction_name
 						<< env.print_state()
 						<< ",message=Poped_Exec_Stack";
@@ -306,10 +318,12 @@ namespace Plush
 							{
 								if (trace)
 								{
+									unsigned long stack_size = env.get_stack<ExecAtom>().size();
+									std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
 									std::ostringstream ss;
 									ss << ",method=Plush.run2"
 										<< ",max_effort=" << _max_effort
-										<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
+										<< ",top=" << top
 										<< ",instruction_name=" << atom.instruction_name
 										<< ",instruction_type=" << instruction_type
 										<< env.print_state()
@@ -334,11 +348,13 @@ namespace Plush
 						{
 							if (trace)
 							{
+								unsigned long stack_size = env.get_stack<ExecAtom>().size();
+								std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
 								std::ostringstream ss;
 								ss << ",method=Plush.run2"
 									<< ",max_effort=" << _max_effort
 									<< ",message=executing"
-									<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
+									<< ",top=" << top
 									<< ",instruction_name=" << atom.instruction_name
 									<< ",instruction_type=" << instruction_type
 									<< env.print_state();
@@ -350,11 +366,13 @@ namespace Plush
 
 							if (trace)
 							{
+								unsigned long stack_size= env.get_stack<ExecAtom>().size();
+								std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
 								std::ostringstream ss;
 								ss << ",method=Plush.run2"
 									<< ",max_effort=" << _max_effort
 									<< ",message=executed"
-									<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
+									<< ",top=" << top
 									<< ",instruction_name=" << atom.instruction_name
 									<< ",instruction_type=" << instruction_type
 									<< env.print_state();
@@ -391,11 +409,13 @@ namespace Plush
 
 					if (trace)
 					{
+						unsigned long stack_size = env.get_stack<ExecAtom>().size();
+						std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
 						std::ostringstream ss;
 						ss << ",method=Plush.run2"
 							<< ",max_effort=" << _max_effort
 							<< ",message=trace"
-							<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
+							<< ",top=" << top
 							<< ",instruction_name=" << atom.instruction_name
 							<< ",instruction_type=" << instruction_type
 							<< env.print_state();
@@ -416,9 +436,11 @@ namespace Plush
 				std::cerr << error.str();
 
 				{
+					unsigned long stack_size = env.get_stack<ExecAtom>().size();
+					std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
 					std::ostringstream ss;
 					ss << ",method=Plush.run2"
-						<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
+						<< ",top=" << top
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
 						<< ",exception=" << ex.what()
@@ -438,9 +460,11 @@ namespace Plush
 				std::cerr << error.str();
 
 				{
+					unsigned long stack_size = env.get_stack<ExecAtom>().size();
+					std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
 					std::ostringstream ss;
 					ss << ",method=Plush.run2"
-						<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
+						<< ",top=" << top
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
 						<< ",exception=" << ex.what()
@@ -465,9 +489,11 @@ namespace Plush
 				Utilities::debug_log(-1, "run", debug_message);
 #endif
 				{
+					unsigned long stack_size = env.get_stack<ExecAtom>().size();
+					std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
 					std::ostringstream ss;
 					ss << ",method=Plush.run2"
-						<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
+						<< ",top=" << top
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
 						<< ",exception=" << ex.what()
@@ -492,9 +518,11 @@ namespace Plush
 				Utilities::debug_log(-1, "run", debug_message);
 #endif
 				{
+					unsigned long stack_size = env.get_stack<ExecAtom>().size();
+					std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
 					std::ostringstream ss;
 					ss << ",method=Plush.run2"
-						<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
+						<< ",top=" << top
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
 						<< env.print_state()
@@ -519,9 +547,11 @@ namespace Plush
 		//pushGP::globals::thread_exec_size[env.current_thread] = 0;
 
 		{
+			unsigned long stack_size = env.get_stack<ExecAtom>().size();
+			std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
 			std::ostringstream ss;
 			ss << ",method=Plush.run2"
-				<< ",top=" << env.get_stack<ExecAtom>().get_top_atom().instruction_name
+				<< ",top=" << top
 				<< ",max_effort=" << _max_effort
 				<< env.print_state()
 				<< ",message=Started";
