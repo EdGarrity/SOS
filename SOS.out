@@ -1,0 +1,418 @@
+2023-11-24 17:38:05.8654856,line_number=0,thread=36384,method=Threadpool.Threadpool,threadCount=8,message=Constructor
+2023-11-24 17:38:05.8654856,line_number=1,thread=36384,method=Threadpool.Threadpool,i=0,message=Creating_Thread
+2023-11-24 17:38:05.8654856,line_number=2,thread=36384,method=Threadpool.Threadpool,i=1,message=Creating_Thread
+2023-11-24 17:38:05.8654856,line_number=3,thread=36384,method=Threadpool.Threadpool,i=2,message=Creating_Thread
+2023-11-24 17:38:05.8654856,line_number=4,thread=36384,method=Threadpool.Threadpool,i=3,message=Creating_Thread
+2023-11-24 17:38:05.8654856,line_number=5,thread=36384,method=Threadpool.Threadpool,i=4,message=Creating_Thread
+2023-11-24 17:38:05.8654856,line_number=6,thread=36384,method=Threadpool.Threadpool,i=5,message=Creating_Thread
+2023-11-24 17:38:05.8654856,line_number=7,thread=27944,method=Threadpool.thread_loop,message=Started
+2023-11-24 17:38:05.8654856,line_number=8,thread=34792,method=Threadpool.thread_loop,message=Started
+2023-11-24 17:38:05.8654856,line_number=9,thread=35964,method=Threadpool.thread_loop,message=Started
+2023-11-24 17:38:05.8654856,line_number=10,thread=37720,method=Threadpool.thread_loop,message=Started
+2023-11-24 17:38:05.8654856,line_number=11,thread=34324,method=Threadpool.thread_loop,message=Started
+2023-11-24 17:38:05.8654856,line_number=12,thread=27944,method=Threadpool.thread_loop,m_coros.size=0,message=Entered_lock
+2023-11-24 17:38:05.8654856,line_number=13,thread=34792,method=Threadpool.thread_loop,m_coros.size=0,message=Entered_lock
+2023-11-24 17:38:05.8654856,line_number=14,thread=36384,method=Threadpool.Threadpool,i=6,message=Creating_Thread
+2023-11-24 17:38:05.8654856,line_number=15,thread=35964,method=Threadpool.thread_loop,m_coros.size=0,message=Entered_lock
+2023-11-24 17:38:05.8654856,line_number=16,thread=37720,method=Threadpool.thread_loop,m_coros.size=0,message=Entered_lock
+2023-11-24 17:38:05.8654856,line_number=17,thread=34324,method=Threadpool.thread_loop,m_coros.size=0,message=Entered_lock
+2023-11-24 17:38:05.8654856,line_number=18,thread=27944,method=Threadpool.thread_loop,m_coros.size=0,message=Entered_loop
+2023-11-24 17:38:05.8654856,line_number=19,thread=34792,method=Threadpool.thread_loop,m_coros.size=0,message=Entered_loop
+2023-11-24 17:38:05.8654856,line_number=20,thread=36384,method=Threadpool.Threadpool,i=7,message=Creating_Thread
+2023-11-24 17:38:05.8654856,line_number=21,thread=35964,method=Threadpool.thread_loop,m_coros.size=0,message=Entered_loop
+2023-11-24 17:38:05.8654856,line_number=22,thread=37720,method=Threadpool.thread_loop,m_coros.size=0,message=Entered_loop
+2023-11-24 17:38:05.8654856,line_number=23,thread=10712,method=Threadpool.thread_loop,message=Started
+2023-11-24 17:38:05.8654856,line_number=24,thread=34324,method=Threadpool.thread_loop,m_coros.size=0,message=Entered_loop
+2023-11-24 17:38:05.8654856,line_number=25,thread=10712,method=Threadpool.thread_loop,m_coros.size=0,message=Entered_lock
+2023-11-24 17:38:05.8654856,line_number=26,thread=10712,method=Threadpool.thread_loop,m_coros.size=0,message=Entered_loop
+2023-11-24 17:38:05.8654856,line_number=27,thread=36384,method=Plush_Environment,message=Constructing
+2023-11-24 17:38:05.8654856,line_number=28,thread=10624,method=Threadpool.thread_loop,message=Started
+2023-11-24 17:38:05.8654856,line_number=29,thread=10624,method=Threadpool.thread_loop,m_coros.size=0,message=Entered_lock
+2023-11-24 17:38:05.8654856,line_number=30,thread=10624,method=Threadpool.thread_loop,m_coros.size=0,message=Entered_loop
+2023-11-24 17:38:05.8654856,line_number=31,thread=36384,method=Plush_Environment,message=Constructing
+2023-11-24 17:38:05.8654856,line_number=32,thread=13296,method=Threadpool.thread_loop,message=Started
+2023-11-24 17:38:05.8654856,line_number=33,thread=36384,method=Plush_Environment,message=Constructing
+2023-11-24 17:38:05.8654856,line_number=34,thread=13296,method=Threadpool.thread_loop,m_coros.size=0,message=Entered_lock
+2023-11-24 17:38:05.8654856,line_number=35,thread=13296,method=Threadpool.thread_loop,m_coros.size=0,message=Entered_loop
+2023-11-24 17:38:05.8654856,line_number=36,thread=36384,method=Plush_Environment,message=Constructing
+2023-11-24 17:38:05.8654856,line_number=37,thread=36384,method=Plush_Environment,message=Constructing
+2023-11-24 17:38:05.8654856,line_number=38,thread=36384,method=Plush_Environment,message=Constructing
+2023-11-24 17:38:05.8654856,line_number=39,thread=36384,method=Plush_Environment,message=Constructing
+2023-11-24 17:38:05.8654856,line_number=40,thread=36384,method=Plush_Environment,message=Constructing
+2023-11-24 17:38:05.8654856,line_number=41,thread=36384,method=main,message=Start
+2023-11-24 17:38:05.8654856,line_number=42,thread=36384,method=Plush_Environment,message=Constructing
+2023-11-24 17:38:05.8654856,line_number=43,thread=36384,method=DatabaseConnection.get_connection,db_init_datasource=192.168.1.42,message=connecting
+2023-11-24 17:38:05.8654857,line_number=44,thread=36384,method=SimulatedAnnealing.set_cold,_temperature= 1,message=configuration
+2023-11-24 17:38:05.8654857,line_number=45,thread=36384,method=SimulatedAnnealing.calculate_state_probability_levels,probability_level_of_alternation_= 0.238095,probability_level_of_elite_alternation_= 0.238095,probability_level_of_mutation_= 0.47619,probability_level_of_cloaning_= 0.52381,probability_level_of_regeneration_= 1,message=configuration
+2023-11-24 17:38:05.8654857,line_number=46,thread=36384,method=SimulatedAnnealing.set_temperature,_temperature= 0,message=configuration
+2023-11-24 17:38:05.8654857,line_number=47,thread=36384,method=SimulatedAnnealing.calculate_state_probability_levels,probability_level_of_alternation_= 0.4375,probability_level_of_elite_alternation_= 0.875,probability_level_of_mutation_= 0.9375,probability_level_of_cloaning_= 1,probability_level_of_regeneration_= 1,message=configuration
+2023-11-24 17:38:05.8654857,line_number=48,thread=36384,method=SimulatedAnnealing.set_temperature,_temperature= 0,message=configuration
+2023-11-24 17:38:05.8654857,line_number=49,thread=36384,method=SimulatedAnnealing.calculate_state_probability_levels,probability_level_of_alternation_= 0.4375,probability_level_of_elite_alternation_= 0.875,probability_level_of_mutation_= 0.9375,probability_level_of_cloaning_= 1,probability_level_of_regeneration_= 1,message=configuration
+2023-11-24 17:38:05.8654857,line_number=50,thread=36384,method=FinancialData.load,start_date=2020-01-01,end_date=2021-12-31,message=loading_all_case_data
+2023-11-24 17:38:12.8654921,line_number=51,thread=36384,method=FinancialData.load,start_date=2020-01-01,end_date=2021-12-31,record_count=504,table_size=1771560,message=case_data_loaded
+2023-11-24 17:38:12.8654921,line_number=52,thread=36384,method=DevelopStrategy.run,message=Create_Population_Agents
+2023-11-24 17:38:12.8654921,line_number=53,thread=36384n = 0
+2023-11-24 17:38:12.8654921,line_number=54,thread=36384,method=SimulatedAnnealing.cool_down,_temperature= 1,message=configuration
+2023-11-24 17:38:12.8654921,line_number=55,thread=36384,method=SimulatedAnnealing.calculate_state_probability_levels,probability_level_of_alternation_= 0.238095,probability_level_of_elite_alternation_= 0.238095,probability_level_of_mutation_= 0.47619,probability_level_of_cloaning_= 0.52381,probability_level_of_regeneration_= 1,message=configuration
+2023-11-24 17:38:12.8654921,line_number=56,thread=36384,method=DevelopStrategy.runtemperature=1,message=Cool_down
+2023-11-24 17:38:12.8654921,line_number=57,thread=36384,method=DevelopStrategy.run,message=Calculate_trading_orders_for_each_trading_day
+2023-11-24 17:38:12.8654921,line_number=58,thread=36384,method=RunProgram.compute_training_errors_thread_safe,message=Enter
+2023-11-24 17:38:12.8654921,line_number=59,thread=36384,population_size=10,test_data_size=504,method=datastore.OrderMatrix.initialize,message=Enter
+2023-11-24 17:38:12.8654921,line_number=60,thread=36384,N1=10,N2=504,method=ThreadSafeArray_2D_V2.resize,message=Enter
+2023-11-24 17:38:12.8654921,line_number=61,thread=36384,N1=10,N2=504,method=ThreadSafeArray_2D_V2.resize,message=Enter
+2023-11-24 17:38:12.8654921,line_number=62,thread=36384,stratergy=0,case=0,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=63,thread=36384,env_index = 99,stratergy=0,case=0,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=64,thread=36384,stratergy=1,case=0,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=65,thread=10712,method=Threadpool.thread_loop,m_coros.size=1,message=Found_work
+2023-11-24 17:38:12.8654921,line_number=66,thread=36384,env_index = 99,stratergy=1,case=0,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=67,thread=10712,method=Threadpool.thread_loop,m_coros.size=0,message=coro.resuming
+2023-11-24 17:38:12.8654921,line_number=68,thread=36384,stratergy=2,case=0,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=70,thread=10712,env_index = 99,stratergy=0,case=0,method=RunProgram.run,message=Running
+2023-11-24 17:38:12.8654921,line_number=69,thread=27944,method=Threadpool.thread_loop,m_coros.size=1,message=Found_work
+2023-11-24 17:38:12.8654921,line_number=71,thread=36384,env_index = 99,stratergy=2,case=0,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=72,thread=10712,stratergy=0,case=0,method=develop_strategy.run_strategy_threadsafe,message=Started
+2023-11-24 17:38:12.8654921,line_number=73,thread=27944,method=Threadpool.thread_loop,m_coros.size=0,message=coro.resuming
+2023-11-24 17:38:12.8654921,line_number=74,thread=36384,stratergy=3,case=0,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=75,thread=27944,env_index = 99,stratergy=1,case=0,method=RunProgram.run,message=Running
+2023-11-24 17:38:12.8654921,line_number=78,thread=36384,env_index = 99,stratergy=3,case=0,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=77,thread=10712,case=0,method=develop_strategy.run_program,message=Started
+2023-11-24 17:38:12.8654921,line_number=76,thread=34792,method=Threadpool.thread_loop,m_coros.size=1,message=Found_work
+2023-11-24 17:38:12.8654921,line_number=79,thread=27944,stratergy=1,case=0,method=develop_strategy.run_strategy_threadsafe,message=Started
+2023-11-24 17:38:12.8654921,line_number=80,thread=10712,case=0,method=Plush.run,trace=False,message=Started
+2023-11-24 17:38:12.8654921,line_number=83,thread=27944,case=0,method=develop_strategy.run_program,message=Started
+2023-11-24 17:38:12.8654921,line_number=84,thread=10712,case=0,method=Plush.run,trace=False,message=Initialize_environment
+2023-11-24 17:38:12.8654921,line_number=81,thread=34792,method=Threadpool.thread_loop,m_coros.size=0,message=coro.resuming
+2023-11-24 17:38:12.8654921,line_number=85,thread=35964,method=Threadpool.thread_loop,m_coros.size=1,message=Found_work
+2023-11-24 17:38:12.8654921,line_number=82,thread=36384,stratergy=4,case=0,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=86,thread=10712,case=0,method=Plush.run,message=Load_program_into_temp
+2023-11-24 17:38:12.8654921,line_number=87,thread=27944,case=0,method=Plush.run,trace=False,message=Started
+2023-11-24 17:38:12.8654921,line_number=88,thread=34792,env_index = 99,stratergy=2,case=0,method=RunProgram.run,message=Running
+2023-11-24 17:38:12.8654921,line_number=89,thread=35964,method=Threadpool.thread_loop,m_coros.size=0,message=coro.resuming
+2023-11-24 17:38:12.8654921,line_number=90,thread=36384,env_index = 99,stratergy=4,case=0,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=91,thread=27944,case=0,method=Plush.run,trace=False,message=Initialize_environment
+2023-11-24 17:38:12.8654921,line_number=92,thread=34792,stratergy=2,case=0,method=develop_strategy.run_strategy_threadsafe,message=Started
+2023-11-24 17:38:12.8654921,line_number=93,thread=35964,env_index = 99,stratergy=3,case=0,method=RunProgram.run,message=Running
+2023-11-24 17:38:12.8654921,line_number=94,thread=36384,stratergy=5,case=0,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=95,thread=27944,case=0,method=Plush.run,message=Load_program_into_temp
+2023-11-24 17:38:12.8654921,line_number=96,thread=10624,method=Threadpool.thread_loop,m_coros.size=1,message=Found_work
+2023-11-24 17:38:12.8654921,line_number=97,thread=34792,case=0,method=develop_strategy.run_program,message=Started
+2023-11-24 17:38:12.8654921,line_number=98,thread=35964,stratergy=3,case=0,method=develop_strategy.run_strategy_threadsafe,message=Started
+2023-11-24 17:38:12.8654921,line_number=99,thread=36384,env_index = 99,stratergy=5,case=0,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=100,thread=10624,method=Threadpool.thread_loop,m_coros.size=0,message=coro.resuming
+2023-11-24 17:38:12.8654921,line_number=101,thread=34792,case=0,method=Plush.run,trace=True,message=Started
+2023-11-24 17:38:12.8654921,line_number=104,thread=10624,env_index = 99,stratergy=4,case=0,method=RunProgram.run,message=Running
+2023-11-24 17:38:12.8654921,line_number=103,thread=13296,method=Threadpool.thread_loop,m_coros.size=1,message=Found_work
+2023-11-24 17:38:12.8654921,line_number=102,thread=36384,stratergy=6,case=0,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=105,thread=34792,case=0,method=Plush.run,trace=True,message=Initialize_environment
+2023-11-24 17:38:12.8654921,line_number=106,thread=35964,case=0,method=develop_strategy.run_program,message=Started
+2023-11-24 17:38:12.8654921,line_number=107,thread=10624,stratergy=4,case=0,method=develop_strategy.run_strategy_threadsafe,message=Started
+2023-11-24 17:38:12.8654921,line_number=111,thread=35964,case=0,method=Plush.run,trace=False,message=Started
+2023-11-24 17:38:12.8654921,line_number=112,thread=10624,case=0,method=develop_strategy.run_program,message=Started
+2023-11-24 17:38:12.8654921,line_number=110,thread=34792,case=0,method=Plush.run,message=Load_program_into_temp
+2023-11-24 17:38:12.8654921,line_number=108,thread=13296,method=Threadpool.thread_loop,m_coros.size=0,message=coro.resuming
+2023-11-24 17:38:12.8654921,line_number=109,thread=36384,env_index = 99,stratergy=6,case=0,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=113,thread=35964,case=0,method=Plush.run,trace=False,message=Initialize_environment
+2023-11-24 17:38:12.8654921,line_number=114,thread=10624,case=0,method=Plush.run,trace=False,message=Started
+2023-11-24 17:38:12.8654921,line_number=115,thread=13296,env_index = 99,stratergy=5,case=0,method=RunProgram.run,message=Running
+2023-11-24 17:38:12.8654921,line_number=116,thread=36384,stratergy=7,case=0,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=117,thread=34324,method=Threadpool.thread_loop,m_coros.size=1,message=Found_work
+2023-11-24 17:38:12.8654921,line_number=118,thread=34792,case=0,method=Plush.run,message=Initialize_Environment
+2023-11-24 17:38:12.8654921,line_number=119,thread=35964,case=0,method=Plush.run,message=Load_program_into_temp
+2023-11-24 17:38:12.8654921,line_number=120,thread=10624,case=0,method=Plush.run,trace=False,message=Initialize_environment
+2023-11-24 17:38:12.8654921,line_number=121,thread=13296,stratergy=5,case=0,method=develop_strategy.run_strategy_threadsafe,message=Started
+2023-11-24 17:38:12.8654921,line_number=122,thread=36384,env_index = 99,stratergy=7,case=0,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=123,thread=34324,method=Threadpool.thread_loop,m_coros.size=0,message=coro.resuming
+2023-11-24 17:38:12.8654921,line_number=124,thread=34792,case=0,i=20,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=125,thread=10624,case=0,method=Plush.run,message=Load_program_into_temp
+2023-11-24 17:38:12.8654921,line_number=126,thread=13296,case=0,method=develop_strategy.run_program,message=Started
+2023-11-24 17:38:12.8654921,line_number=127,thread=36384,stratergy=8,case=0,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=128,thread=37720,method=Threadpool.thread_loop,m_coros.size=1,message=Found_work
+2023-11-24 17:38:12.8654921,line_number=129,thread=34324,env_index = 99,stratergy=6,case=0,method=RunProgram.run,message=Running
+2023-11-24 17:38:12.8654921,line_number=130,thread=34792,case=0,i=20,j=19,atom=INTEGER.IN,top=INTEGER.IN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=131,thread=27944,case=0,method=Plush.run,message=Initialize_Environment
+2023-11-24 17:38:12.8654921,line_number=132,thread=13296,case=0,method=Plush.run,trace=False,message=Started
+2023-11-24 17:38:12.8654921,line_number=133,thread=36384,env_index = 99,stratergy=8,case=0,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=134,thread=37720,method=Threadpool.thread_loop,m_coros.size=0,message=coro.resuming
+2023-11-24 17:38:12.8654921,line_number=135,thread=34324,stratergy=6,case=0,method=develop_strategy.run_strategy_threadsafe,message=Started
+2023-11-24 17:38:12.8654921,line_number=136,thread=34792,case=0,i=20,j=18,atom=1,top=1,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=137,thread=27944,case=0,i=150,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=138,thread=13296,case=0,method=Plush.run,trace=False,message=Initialize_environment
+2023-11-24 17:38:12.8654921,line_number=139,thread=36384,stratergy=9,case=0,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=144,thread=27944,case=0,i=150,j=149,atom=INTEGER.IN,top=INTEGER.IN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=141,thread=34324,case=0,method=develop_strategy.run_program,message=Started
+2023-11-24 17:38:12.8654921,line_number=142,thread=34792,case=0,i=20,j=17,atom=INTEGER.INALLREV,top=INTEGER.INALLREV,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=143,thread=13296,case=0,method=Plush.run,message=Load_program_into_temp
+2023-11-24 17:38:12.8654921,line_number=140,thread=37720,env_index = 99,stratergy=7,case=0,method=RunProgram.run,message=Running
+2023-11-24 17:38:12.8654921,line_number=145,thread=36384,env_index = 99,stratergy=9,case=0,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=146,thread=27944,case=0,i=150,j=148,atom=1,top=1,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=147,thread=34324,case=0,method=Plush.run,trace=False,message=Started
+2023-11-24 17:38:12.8654921,line_number=148,thread=34792,case=0,i=20,j=16,atom=FLOAT.+,top=FLOAT.+,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=152,thread=34324,case=0,method=Plush.run,trace=False,message=Initialize_environment
+2023-11-24 17:38:12.8654921,line_number=150,thread=36384,stratergy=0,case=1,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=151,thread=27944,case=0,i=150,j=147,atom=INTEGER.%,top=INTEGER.%,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=149,thread=37720,stratergy=7,case=0,method=develop_strategy.run_strategy_threadsafe,message=Started
+2023-11-24 17:38:12.8654921,line_number=153,thread=34792,case=0,i=20,j=15,atom=BOOLEAN.NAND,top=BOOLEAN.NAND,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=154,thread=34324,case=0,method=Plush.run,message=Load_program_into_temp
+2023-11-24 17:38:12.8654921,line_number=155,thread=36384,env_index = 99,stratergy=0,case=1,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=156,thread=27944,case=0,i=150,j=146,atom=BOOLEAN.AND,top=BOOLEAN.AND,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=157,thread=37720,case=0,method=develop_strategy.run_program,message=Started
+2023-11-24 17:38:12.8654921,line_number=158,thread=34792,case=0,i=20,j=14,atom=CODE.LENGTH,top=CODE.LENGTH,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=159,thread=36384,stratergy=1,case=1,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=160,thread=37720,case=0,method=Plush.run,trace=False,message=Started
+2023-11-24 17:38:12.8654921,line_number=161,thread=13296,case=0,method=Plush.run,message=Initialize_Environment
+2023-11-24 17:38:12.8654921,line_number=162,thread=27944,case=0,i=150,j=145,atom=INTEGER.INALLREV,top=INTEGER.INALLREV,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=163,thread=36384,env_index = 99,stratergy=1,case=1,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=164,thread=34792,case=0,i=20,j=13,atom=INTEGER.INALL,top=INTEGER.INALL,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=165,thread=37720,case=0,method=Plush.run,trace=False,message=Initialize_environment
+2023-11-24 17:38:12.8654921,line_number=169,thread=34792,case=0,i=20,j=12,atom=149732817,top=149732817,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=167,thread=36384,stratergy=2,case=1,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=168,thread=27944,case=0,i=150,j=144,atom=EXEC.POP,top=EXEC.POP,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=166,thread=13296,case=0,i=52,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=173,thread=27944,case=0,i=150,j=143,atom=FLOAT.=,top=FLOAT.=,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=171,thread=34792,case=0,i=20,j=11,atom=INTEGER.OUT,top=INTEGER.OUT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=172,thread=36384,env_index = 99,stratergy=2,case=1,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=170,thread=37720,case=0,method=Plush.run,message=Load_program_into_temp
+2023-11-24 17:38:12.8654921,line_number=174,thread=27944,case=0,i=150,j=142,atom=CODE.CAR,top=CODE.CAR,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=175,thread=13296,case=0,i=52,j=51,atom=INTEGER.IN,top=INTEGER.IN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=176,thread=36384,stratergy=3,case=1,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=177,thread=34792,case=0,i=20,j=10,atom=BOOLEAN.STACKDEPTH,top=BOOLEAN.STACKDEPTH,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=180,thread=13296,case=0,i=52,j=50,atom=1,top=1,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=179,thread=36384,env_index = 99,stratergy=3,case=1,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=178,thread=27944,case=0,i=150,j=141,atom=2041409631,top=2041409631,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=183,thread=13296,case=0,i=52,j=49,atom=FLOAT.-,top=FLOAT.-,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=182,thread=36384,stratergy=4,case=1,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=185,thread=27944,case=0,i=150,j=140,atom=INTEGER.OUT,top=INTEGER.OUT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=184,thread=34324,case=0,method=Plush.run,message=Initialize_Environment
+2023-11-24 17:38:12.8654921,line_number=181,thread=34792,case=0,i=20,j=9,atom=INTEGER.%,top=INTEGER.%,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=190,thread=35964,case=0,method=Plush.run,message=Initialize_Environment
+2023-11-24 17:38:12.8654921,line_number=192,thread=34792,case=0,i=20,j=8,atom=FLOAT.DUP,top=FLOAT.DUP,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=188,thread=27944,case=0,i=150,j=139,atom=CODE.SUBST,top=CODE.SUBST,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=189,thread=34324,case=0,i=64,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=186,thread=36384,env_index = 99,stratergy=4,case=1,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=191,thread=10712,case=0,method=Plush.run,message=Initialize_Environment
+2023-11-24 17:38:12.8654921,line_number=198,thread=34324,case=0,i=64,j=63,atom=INTEGER.IN,top=INTEGER.IN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=193,thread=35964,case=0,i=267,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=194,thread=10624,case=0,method=Plush.run,message=Initialize_Environment
+2023-11-24 17:38:12.8654921,line_number=195,thread=34792,case=0,i=20,j=7,atom=753883513,top=753883513,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=196,thread=27944,case=0,i=150,j=138,atom=EXEC.DO*TIMES,top=EXEC.DO*TIMES,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=197,thread=36384,stratergy=5,case=1,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=204,thread=27944,case=0,i=150,j=137,atom=CODE.DO*TIMES,top=CODE.DO*TIMES,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=199,thread=10712,case=0,i=350,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=200,thread=34324,case=0,i=64,j=62,atom=1,top=1,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=201,thread=10624,case=0,i=218,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=207,thread=10712,case=0,i=350,j=349,atom=INTEGER.IN,top=INTEGER.IN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=203,thread=34792,case=0,i=20,j=6,atom=INTEGER.IN,top=INTEGER.IN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=210,thread=10624,case=0,i=218,j=217,atom=INTEGER.IN,top=INTEGER.IN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=205,thread=36384,env_index = 99,stratergy=5,case=1,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=206,thread=27944,case=0,i=150,j=136,atom=FLOAT.OUT,top=FLOAT.OUT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=202,thread=35964,case=0,i=267,j=266,atom=INTEGER.IN,top=INTEGER.IN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=208,thread=34324,case=0,i=64,j=61,atom=INTEGER.=,top=INTEGER.=,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=209,thread=10712,case=0,i=350,j=348,atom=1,top=1,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=217,thread=34324,case=0,i=64,j=60,atom=EXEC.=,top=EXEC.=,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=211,thread=10624,case=0,i=218,j=216,atom=1,top=1,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=212,thread=34792,case=0,i=20,j=5,atom=FLOAT.TAN,top=FLOAT.TAN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=213,thread=37720,case=0,method=Plush.run,message=Initialize_Environment
+2023-11-24 17:38:12.8654921,line_number=214,thread=36384,stratergy=6,case=1,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=215,thread=27944,case=0,i=150,j=135,atom=INTEGER.INALL,top=INTEGER.INALL,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=216,thread=35964,case=0,i=267,j=265,atom=1,top=1,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=224,thread=27944,case=0,i=150,j=134,atom=BOOLEAN.OUT,top=BOOLEAN.OUT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=218,thread=10712,case=0,i=350,j=347,atom=BOOLEAN.NAND,top=BOOLEAN.NAND,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=219,thread=34324,case=0,i=64,j=59,atom=FLOAT.YANKDUP,top=FLOAT.YANKDUP,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=220,thread=10624,case=0,i=218,j=215,atom=FLOAT.<,top=FLOAT.<,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=221,thread=37720,case=0,i=252,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=222,thread=34792,case=0,i=20,j=4,atom=CODE.DUP,top=CODE.DUP,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=223,thread=36384,env_index = 99,stratergy=6,case=1,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=230,thread=37720,case=0,i=252,j=251,atom=INTEGER.IN,top=INTEGER.IN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=233,thread=37720,case=0,i=252,j=250,atom=1,top=1,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=226,thread=27944,case=0,i=150,j=133,atom=BOOLEAN.AND,top=BOOLEAN.AND,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=227,thread=10712,case=0,i=350,j=346,atom=FLOAT.IN,top=FLOAT.IN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=228,thread=34324,case=0,i=64,j=58,atom=INTEGER.DUP,top=INTEGER.DUP,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=229,thread=10624,case=0,i=218,j=214,atom=FLOAT.FROMINTEGER,top=FLOAT.FROMINTEGER,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=225,thread=35964,case=0,i=267,j=264,atom=EXEC.YANKDUP,top=EXEC.YANKDUP,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=231,thread=36384,stratergy=7,case=1,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=232,thread=34792,case=0,i=20,j=3,atom=EXEC.=,top=EXEC.=,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=234,thread=37720,case=0,i=252,j=249,atom=INTEGER.ROT,top=INTEGER.ROT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=241,thread=37720,case=0,i=252,j=248,atom=1558161667,top=1558161667,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=235,thread=27944,case=0,i=150,j=132,atom=CODE.FROMINTEGER,top=CODE.FROMINTEGER,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=236,thread=10712,case=0,i=350,j=345,atom=FLOAT.MIN,top=FLOAT.MIN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=237,thread=34324,case=0,i=64,j=57,atom=CODE.DO,top=CODE.DO,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=238,thread=10624,case=0,i=218,j=213,atom=FLOAT./,top=FLOAT./,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=239,thread=35964,case=0,i=267,j=263,atom=BOOLEAN.FLUSH,top=BOOLEAN.FLUSH,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=240,thread=36384,env_index = 99,stratergy=7,case=1,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=242,thread=34792,case=0,i=20,j=2,atom=INTEGER.INALLREV,top=INTEGER.INALLREV,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=243,thread=37720,case=0,i=252,j=247,atom=INTEGER.OUT,top=INTEGER.OUT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=244,thread=27944,case=0,i=150,j=131,atom=BOOLEAN.NAND,top=BOOLEAN.NAND,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=245,thread=10712,case=0,i=350,j=344,atom=INTEGER.INALL,top=INTEGER.INALL,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=252,thread=27944,case=0,i=150,j=130,atom=CODE.CAR,top=CODE.CAR,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=246,thread=34324,case=0,i=64,j=56,atom=EXEC.ENABLE*INSTRUCTION,top=EXEC.ENABLE*INSTRUCTION,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=247,thread=10624,case=0,i=218,j=212,atom=EXEC.IF,top=EXEC.IF,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=248,thread=36384,stratergy=8,case=1,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=249,thread=35964,case=0,i=267,j=262,atom=CODE.CDR,top=CODE.CDR,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=250,thread=34792,case=0,i=20,j=1,atom=INTEGER.IN,top=INTEGER.IN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=251,thread=37720,case=0,i=252,j=246,atom=680784668,top=680784668,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=259,thread=34792,case=0,i=20,j=0,atom=1,top=1,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=260,thread=34792,case=0,method=Plush.run,top=1,message=Execute
+2023-11-24 17:38:12.8654921,line_number=261,thread=37720,case=0,i=252,j=245,atom=INTEGER.OUT,top=INTEGER.OUT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=255,thread=34324,case=0,i=64,j=55,atom=CODE.ROT,top=CODE.ROT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=256,thread=10624,case=0,i=218,j=211,atom=CODE.DISCREPANCY,top=CODE.DISCREPANCY,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=257,thread=36384,env_index = 99,stratergy=8,case=1,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=258,thread=35964,case=0,i=267,j=261,atom=INTEGER.YANK,top=INTEGER.YANK,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=253,thread=10712,case=0,i=350,j=343,atom=INTEGER.INALLREV,top=INTEGER.INALLREV,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=254,thread=27944,case=0,i=150,j=129,atom=INTEGER.YANK,top=INTEGER.YANK,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=267,thread=35964,case=0,i=267,j=260,atom=CODE.FROMINTEGER,top=CODE.FROMINTEGER,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=263,thread=37720,case=0,i=252,j=244,atom=839363580,top=839363580,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=264,thread=34324,case=0,i=64,j=54,atom=FLOAT.INALL,top=FLOAT.INALL,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=265,thread=36384,stratergy=9,case=1,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=266,thread=10624,case=0,i=218,j=210,atom=BOOLEAN.NOT,top=BOOLEAN.NOT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=274,thread=10624,case=0,i=218,j=209,atom=CODE.SIZE,top=CODE.SIZE,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=268,thread=10712,case=0,i=350,j=342,atom=1421964434,top=1421964434,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=262,thread=34792,method=Plush.run2,max_effort=1000,top=1,current_instruction=,effort=0,unit=0,exec_stack_size=20,code_stack_size=20,int_stack_count=0,int_stack_top_value=0,double_stack_count=0,double_stack_top_value=0.000000,bool_stack_count=0,bool_stack_top_value=0,output_stack_count=0,output_stack_top_value=0.000000,message=Started
+2023-11-24 17:38:12.8654921,line_number=269,thread=27944,case=0,i=150,j=128,atom=BOOLEAN.NAND,top=BOOLEAN.NAND,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=277,thread=34792,method=Plush.run2,max_effort=1000,top=1,current_instruction=,effort=0,unit=0,exec_stack_size=20,code_stack_size=20,int_stack_count=0,int_stack_top_value=0,double_stack_count=0,double_stack_top_value=0.000000,bool_stack_count=0,bool_stack_top_value=0,output_stack_count=0,output_stack_top_value=0.000000,message=Looping
+2023-11-24 17:38:12.8654921,line_number=271,thread=37720,case=0,i=252,j=243,atom=INTEGER.IN,top=INTEGER.IN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=272,thread=34324,case=0,i=64,j=53,atom=693634961,top=693634961,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=273,thread=36384,env_index = 99,stratergy=9,case=1,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=275,thread=10624,case=0,i=218,j=208,atom=INTEGER.STACKDEPTH,top=INTEGER.STACKDEPTH,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=276,thread=10712,case=0,i=350,j=341,atom=INTEGER.IN,top=INTEGER.IN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=270,thread=35964,case=0,i=267,j=259,atom=EXEC.POP,top=EXEC.POP,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=284,thread=10712,case=0,i=350,j=340,atom=FLOAT.SIN,top=FLOAT.SIN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=285,thread=35964,case=0,i=267,j=258,atom=FLOAT.DUP,top=FLOAT.DUP,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=279,thread=34792,method=Plush.run2,max_effort=1000,top=INTEGER.IN,instruction_name=1,current_instruction=1,effort=0,unit=0,exec_stack_size=19,code_stack_size=20,int_stack_count=0,int_stack_top_value=0,double_stack_count=0,double_stack_top_value=0.000000,bool_stack_count=0,bool_stack_top_value=0,output_stack_count=0,output_stack_top_value=0.000000,message=Poped_Exec_Stack
+2023-11-24 17:38:12.8654921,line_number=280,thread=37720,case=0,i=252,j=242,atom=1406347603,top=1406347603,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=288,thread=34792,method=Plush.run2,max_effort=1000,top=INTEGER.IN,current_instruction=1,effort=0,unit=0,exec_stack_size=19,code_stack_size=20,int_stack_count=1,int_stack_top_value=1,double_stack_count=1,double_stack_top_value=0.000000,bool_stack_count=0,bool_stack_top_value=0,output_stack_count=0,output_stack_top_value=0.000000,message=Looping
+2023-11-24 17:38:12.8654921,line_number=282,thread=36384,stratergy=0,case=2,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=290,thread=34792,method=Plush.run2,max_effort=1000,top=INTEGER.INALLREV,instruction_name=INTEGER.IN,current_instruction=INTEGER.IN,effort=1,unit=1,exec_stack_size=18,code_stack_size=20,int_stack_count=1,int_stack_top_value=1,double_stack_count=1,double_stack_top_value=0.000000,bool_stack_count=0,bool_stack_top_value=0,output_stack_count=0,output_stack_top_value=0.000000,message=Poped_Exec_Stack
+2023-11-24 17:38:12.8654921,line_number=278,thread=27944,case=0,i=150,j=127,atom=169779032,top=169779032,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=187,thread=13296,case=0,i=52,j=48,atom=CODE.FROMFLOAT,top=CODE.FROMFLOAT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=287,thread=35964,case=0,i=267,j=257,atom=297208787,top=297208787,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=281,thread=34324,case=0,i=64,j=52,atom=INTEGER.OUT,top=INTEGER.OUT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=289,thread=37720,case=0,i=252,j=241,atom=INTEGER.IN,top=INTEGER.IN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=283,thread=10624,case=0,i=218,j=207,atom=INTEGER.IN,top=INTEGER.IN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=297,thread=37720,case=0,i=252,j=240,atom=CODE.CONTAINER,top=CODE.CONTAINER,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=292,thread=34792,method=Plush.run2,max_effort=1000,message=executing,top=INTEGER.INALLREV,instruction_name=INTEGER.IN,instruction_type=ins,current_instruction=INTEGER.IN,effort=1,unit=1,exec_stack_size=18,code_stack_size=20,int_stack_count=1,int_stack_top_value=1,double_stack_count=1,double_stack_top_value=0.000000,bool_stack_count=0,bool_stack_top_value=0,output_stack_count=0,output_stack_top_value=0.000000
+2023-11-24 17:38:12.8654921,line_number=286,thread=10712,case=0,i=350,j=339,atom=CODE.DO*COUNT,top=CODE.DO*COUNT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=300,thread=34792,method=Plush.run2,max_effort=1000,message=executed,top=INTEGER.INALLREV,instruction_name=INTEGER.IN,instruction_type=ins,current_instruction=INTEGER.IN,effort=1,unit=1,exec_stack_size=18,code_stack_size=20,int_stack_count=1,int_stack_top_value=0,double_stack_count=1,double_stack_top_value=0.000000,bool_stack_count=0,bool_stack_top_value=0,output_stack_count=0,output_stack_top_value=0.000000
+2023-11-24 17:38:12.8654921,line_number=294,thread=13296,case=0,i=52,j=47,atom=INTEGER.=,top=INTEGER.=,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=295,thread=35964,case=0,i=267,j=256,atom=INTEGER.OUT,top=INTEGER.OUT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=296,thread=34324,case=0,i=64,j=51,atom=EXEC.SWAP,top=EXEC.SWAP,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=291,thread=36384,env_index = 99,stratergy=0,case=2,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=298,thread=10624,case=0,i=218,j=206,atom=BOOLEAN.NOT,top=BOOLEAN.NOT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=299,thread=37720,case=0,i=252,j=239,atom=BOOLEAN.STACKDEPTH,top=BOOLEAN.STACKDEPTH,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=293,thread=27944,case=0,i=150,j=126,atom=INTEGER.IN,top=INTEGER.IN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=301,thread=10712,case=0,i=350,j=338,atom=FLOAT.-,top=FLOAT.-,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=302,thread=34792,method=Plush.run2,max_effort=1000,message=trace,top=INTEGER.INALLREV,instruction_name=INTEGER.IN,instruction_type=ins,current_instruction=INTEGER.IN,effort=1,unit=1,exec_stack_size=18,code_stack_size=20,int_stack_count=1,int_stack_top_value=0,double_stack_count=1,double_stack_top_value=0.000000,bool_stack_count=0,bool_stack_top_value=0,output_stack_count=0,output_stack_top_value=0.000000
+2023-11-24 17:38:12.8654921,line_number=303,thread=13296,case=0,i=52,j=46,atom=231966309,top=231966309,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=311,thread=34792,method=Plush.run2,max_effort=1000,top=INTEGER.INALLREV,current_instruction=INTEGER.IN,effort=1,unit=1,exec_stack_size=18,code_stack_size=20,int_stack_count=1,int_stack_top_value=0,double_stack_count=1,double_stack_top_value=0.000000,bool_stack_count=0,bool_stack_top_value=0,output_stack_count=0,output_stack_top_value=0.000000,message=Looping
+2023-11-24 17:38:12.8654921,line_number=305,thread=34324,case=0,i=64,j=50,atom=BOOLEAN.=,top=BOOLEAN.=,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=313,thread=13296,case=0,i=52,j=45,atom=INTEGER.IN,top=INTEGER.IN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=307,thread=10624,case=0,i=218,j=205,atom=FLOAT.YANKDUP,top=FLOAT.YANKDUP,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=308,thread=37720,case=0,i=252,j=238,atom=INTEGER.MAX,top=INTEGER.MAX,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=309,thread=27944,case=0,i=150,j=125,atom=CODE.DO*TIMES,top=CODE.DO*TIMES,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=310,thread=10712,case=0,i=350,j=337,atom=INTEGER.STACKDEPTH,top=INTEGER.STACKDEPTH,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=304,thread=35964,case=0,i=267,j=255,atom=CODE.ROT,top=CODE.ROT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=312,thread=34792,method=Plush.run2,max_effort=1000,top=EXEC.=,instruction_name=INTEGER.INALLREV,current_instruction=INTEGER.INALLREV,effort=2,unit=1,exec_stack_size=17,code_stack_size=20,int_stack_count=1,int_stack_top_value=0,double_stack_count=1,double_stack_top_value=0.000000,bool_stack_count=0,bool_stack_top_value=0,output_stack_count=0,output_stack_top_value=0.000000,message=Poped_Exec_Stack
+2023-11-24 17:38:12.8654921,line_number=306,thread=36384,stratergy=1,case=2,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=321,thread=34792,method=Plush.run2,max_effort=1000,message=executing,top=EXEC.=,instruction_name=INTEGER.INALLREV,instruction_type=ins,current_instruction=INTEGER.INALLREV,effort=2,unit=1,exec_stack_size=17,code_stack_size=20,int_stack_count=1,int_stack_top_value=0,double_stack_count=1,double_stack_top_value=0.000000,bool_stack_count=0,bool_stack_top_value=0,output_stack_count=0,output_stack_top_value=0.000000
+2023-11-24 17:38:12.8654921,line_number=315,thread=13296,case=0,i=52,j=44,atom=FLOAT.SHOVE,top=FLOAT.SHOVE,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=316,thread=10624,case=0,i=218,j=204,atom=BOOLEAN.NAND,top=BOOLEAN.NAND,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=317,thread=37720,case=0,i=252,j=237,atom=CODE.QUOTE,top=CODE.QUOTE,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=318,thread=27944,case=0,i=150,j=124,atom=CODE.CONTAINS,top=CODE.CONTAINS,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=319,thread=10712,case=0,i=350,j=336,atom=1182482059,top=1182482059,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=320,thread=35964,case=0,i=267,j=254,atom=EXEC.WHILE,top=EXEC.WHILE,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=314,thread=34324,case=0,i=64,j=49,atom=CODE.NTHCDR,top=CODE.NTHCDR,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=322,thread=36384,env_index = 99,stratergy=1,case=2,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=323,thread=34792,method=Plush.run2,max_effort=1000,message=executed,top=EXEC.=,instruction_name=INTEGER.INALLREV,instruction_type=ins,current_instruction=INTEGER.INALLREV,effort=2,unit=1,exec_stack_size=17,code_stack_size=20,int_stack_count=1,int_stack_top_value=0,double_stack_count=1,double_stack_top_value=0.000000,bool_stack_count=0,bool_stack_top_value=0,output_stack_count=0,output_stack_top_value=0.000000
+2023-11-24 17:38:12.8654921,line_number=324,thread=13296,case=0,i=52,j=43,atom=INTEGER.INALL,top=INTEGER.INALL,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=332,thread=34792,method=Plush.run2,max_effort=1000,message=trace,top=EXEC.=,instruction_name=INTEGER.INALLREV,instruction_type=ins,current_instruction=INTEGER.INALLREV,effort=2,unit=1,exec_stack_size=17,code_stack_size=20,int_stack_count=1,int_stack_top_value=0,double_stack_count=1,double_stack_top_value=0.000000,bool_stack_count=0,bool_stack_top_value=0,output_stack_count=0,output_stack_top_value=0.000000
+2023-11-24 17:38:12.8654921,line_number=326,thread=37720,case=0,i=252,j=236,atom=CODE.ATOM,top=CODE.ATOM,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=327,thread=27944,case=0,i=150,j=123,atom=EXEC.ENABLE*INSTRUCTIONS,top=EXEC.ENABLE*INSTRUCTIONS,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=328,thread=10712,case=0,i=350,j=335,atom=INTEGER.IN,top=INTEGER.IN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=329,thread=35964,case=0,i=267,j=253,atom=CODE.YANK,top=CODE.YANK,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=330,thread=36384,stratergy=2,case=2,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=331,thread=34324,case=0,i=64,j=48,atom=INTEGER.INALL,top=INTEGER.INALL,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=325,thread=10624,case=0,i=218,j=203,atom=CODE.NULL,top=CODE.NULL,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=333,thread=34792,method=Plush.run2,max_effort=1000,top=EXEC.=,current_instruction=INTEGER.INALLREV,effort=2,unit=1,exec_stack_size=17,code_stack_size=20,int_stack_count=1,int_stack_top_value=0,double_stack_count=1,double_stack_top_value=0.000000,bool_stack_count=0,bool_stack_top_value=0,output_stack_count=0,output_stack_top_value=0.000000,message=Looping
+2023-11-24 17:38:12.8654921,line_number=334,thread=13296,case=0,i=52,j=42,atom=FLOAT.ROT,top=FLOAT.ROT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=342,thread=34792,method=Plush.run2,max_effort=1000,top=CODE.DUP,instruction_name=EXEC.=,current_instruction=EXEC.=,effort=3,unit=1,exec_stack_size=16,code_stack_size=20,int_stack_count=1,int_stack_top_value=0,double_stack_count=1,double_stack_top_value=0.000000,bool_stack_count=0,bool_stack_top_value=0,output_stack_count=0,output_stack_top_value=0.000000,message=Poped_Exec_Stack
+2023-11-24 17:38:12.8654921,line_number=336,thread=27944,case=0,i=150,j=122,atom=CODE.YANK,top=CODE.YANK,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=337,thread=10712,case=0,i=350,j=334,atom=BOOLEAN.ROT,top=BOOLEAN.ROT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=338,thread=35964,case=0,i=267,j=252,atom=1368182156,top=1368182156,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=339,thread=36384,env_index = 99,stratergy=2,case=2,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=340,thread=34324,case=0,i=64,j=47,atom=INTEGER.MAX,top=INTEGER.MAX,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=341,thread=10624,case=0,i=218,j=202,atom=CODE.YANK,top=CODE.YANK,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=335,thread=37720,case=0,i=252,j=235,atom=BOOLEAN.SWAP,top=BOOLEAN.SWAP,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=343,thread=13296,case=0,i=52,j=41,atom=FLOAT./,top=FLOAT./,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=344,thread=27944,case=0,i=150,j=121,atom=INTEGER.FROMBOOLEAN,top=INTEGER.FROMBOOLEAN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=345,thread=10712,case=0,i=350,j=333,atom=EXEC.ENABLE*INSTRUCTION,top=EXEC.ENABLE*INSTRUCTION,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=346,thread=36384,stratergy=3,case=2,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=347,thread=35964,case=0,i=267,j=251,atom=INTEGER.OUT,top=INTEGER.OUT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=348,thread=34792,method=Plush.run2,max_effort=1000,message=executing,top=CODE.DUP,instruction_name=EXEC.=,instruction_type=ins,current_instruction=EXEC.=,effort=3,unit=1,exec_stack_size=16,code_stack_size=20,int_stack_count=1,int_stack_top_value=0,double_stack_count=1,double_stack_top_value=0.000000,bool_stack_count=0,bool_stack_top_value=0,output_stack_count=0,output_stack_top_value=0.000000
+2023-11-24 17:38:12.8654921,line_number=349,thread=34324,case=0,i=64,j=46,atom=CODE.DO*RANGE,top=CODE.DO*RANGE,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=350,thread=10624,case=0,i=218,j=201,atom=EXEC.S,top=EXEC.S,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=351,thread=37720,case=0,i=252,j=234,atom=INTEGER.YANKDUP,top=INTEGER.YANKDUP,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=352,thread=13296,case=0,i=52,j=40,atom=BOOLEAN.POP,top=BOOLEAN.POP,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=359,thread=37720,case=0,i=252,j=233,atom=INTEGER.FROMBOOLEAN,top=INTEGER.FROMBOOLEAN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=354,thread=10712,case=0,i=350,j=332,atom=1023116745,top=1023116745,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=355,thread=36384,env_index = 99,stratergy=3,case=2,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=356,thread=35964,case=0,i=267,j=250,atom=EXEC.DO*TIMES,top=EXEC.DO*TIMES,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=357,thread=34324,case=0,i=64,j=45,atom=BOOLEAN.POP,top=BOOLEAN.POP,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=358,thread=10624,case=0,i=218,j=200,atom=EXEC.DISABLE*INSTRUCTION,top=EXEC.DISABLE*INSTRUCTION,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=353,thread=27944,case=0,i=150,j=120,atom=CODE.FROMFLOAT,top=CODE.FROMFLOAT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=360,thread=13296,case=0,i=52,j=39,atom=BOOLEAN.ROT,top=BOOLEAN.ROT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=367,thread=27944,case=0,i=150,j=119,atom=FLOAT.>,top=FLOAT.>,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=362,thread=36384,stratergy=4,case=2,method=RunProgram.compute_training_errors_thread_safe,message=Schedule_to_run_strategy
+2023-11-24 17:38:12.8654921,line_number=368,thread=13296,case=0,i=52,j=38,atom=CODE.LIST,top=CODE.LIST,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=364,thread=35964,case=0,i=267,j=249,atom=CODE.CAR,top=CODE.CAR,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=365,thread=34324,case=0,i=64,j=44,atom=EXEC.FLUSH,top=EXEC.FLUSH,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=366,thread=10624,case=0,i=218,j=199,atom=EXEC.DO*RANGE,top=EXEC.DO*RANGE,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=361,thread=37720,case=0,i=252,j=232,atom=BOOLEAN.POP,top=BOOLEAN.POP,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=374,thread=10624,case=0,i=218,j=198,atom=BOOLEAN.SHOVE,top=BOOLEAN.SHOVE,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=369,thread=27944,case=0,i=150,j=118,atom=CODE.LIST,top=CODE.LIST,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=376,thread=37720,case=0,i=252,j=231,atom=CODE.DUP,top=CODE.DUP,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=371,thread=13296,case=0,i=52,j=37,atom=EXEC.SWAP,top=EXEC.SWAP,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=372,thread=35964,case=0,i=267,j=248,atom=INTEGER.%,top=INTEGER.%,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=373,thread=34324,case=0,i=64,j=43,atom=INTEGER.OUT,top=INTEGER.OUT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=379,thread=13296,case=0,i=52,j=36,atom=FLOAT.%,top=FLOAT.%,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=380,thread=35964,case=0,i=267,j=247,atom=BOOLEAN.INALL,top=BOOLEAN.INALL,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=381,thread=34324,case=0,i=64,j=42,atom=CODE.LIST,top=CODE.LIST,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=382,thread=13296,case=0,i=52,j=35,atom=EXEC.K,top=EXEC.K,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=378,thread=37720,case=0,i=252,j=230,atom=1200884607,top=1200884607,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=385,thread=13296,case=0,i=52,j=34,atom=INTEGER.=,top=INTEGER.=,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=375,thread=10624,case=0,i=218,j=197,atom=391338937,top=391338937,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=387,thread=13296,case=0,i=52,j=33,atom=INTEGER.+,top=INTEGER.+,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=377,thread=27944,case=0,i=150,j=117,atom=CODE.LENGTH,top=CODE.LENGTH,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=383,thread=35964,case=0,i=267,j=246,atom=CODE.CONTAINS,top=CODE.CONTAINS,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=384,thread=34324,case=0,i=64,j=41,atom=CODE.LENGTH,top=CODE.LENGTH,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=391,thread=35964,case=0,i=267,j=245,atom=CODE.APPEND,top=CODE.APPEND,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=386,thread=37720,case=0,i=252,j=229,atom=INTEGER.IN,top=INTEGER.IN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=370,thread=36384,env_index = 99,stratergy=4,case=2,method=RunProgram.run,message=co_await
+2023-11-24 17:38:12.8654921,line_number=388,thread=10624,case=0,i=218,j=196,atom=INTEGER.IN,top=INTEGER.IN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=389,thread=13296,case=0,i=52,j=32,atom=INTEGER.-,top=INTEGER.-,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=390,thread=27944,case=0,i=150,j=116,atom=INTEGER.STACKDEPTH,top=INTEGER.STACKDEPTH,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=396,thread=10624,case=0,i=218,j=195,atom=EXEC.DO*TIMES,top=EXEC.DO*TIMES,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=399,thread=10624,case=0,i=218,j=194,atom=INTEGER.INALLREV,top=INTEGER.INALLREV,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=393,thread=35964,case=0,i=267,j=244,atom=INTEGER.MIN,top=INTEGER.MIN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=400,thread=34792,env_index = 99,stratergy=2,case=0,exception=Utilities::FixedSizeStack::top() - Stack empty.,method=RunProgram.run,Unable_to_insert_work_into_queue
+2023-11-24 17:38:12.8654921,line_number=402,thread=35964,case=0,i=267,j=243,atom=343928620,top=343928620,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=392,thread=34324,case=0,i=64,j=40,atom=1112743133,top=1112743133,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=397,thread=13296,case=0,i=52,j=31,atom=CODE.YANKDUP,top=CODE.YANKDUP,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=398,thread=27944,case=0,i=150,j=115,atom=943564218,top=943564218,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=405,thread=13296,case=0,i=52,j=30,atom=INTEGER.=,top=INTEGER.=,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=406,thread=27944,case=0,i=150,j=114,atom=INTEGER.OUT,top=INTEGER.OUT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=401,thread=10624,case=0,i=218,j=193,atom=INTEGER.=,top=INTEGER.=,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=394,thread=37720,case=0,i=252,j=228,atom=INTEGER.>,top=INTEGER.>,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=409,thread=10624,case=0,i=218,j=192,atom=BOOLEAN.YANK,top=BOOLEAN.YANK,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=404,thread=34324,case=0,i=64,j=39,atom=INTEGER.IN,top=INTEGER.IN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=410,thread=10624,case=0,i=218,j=191,atom=CODE.DUP,top=CODE.DUP,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=412,thread=34324,case=0,i=64,j=38,atom=INTEGER.IN,top=INTEGER.IN,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=413,thread=10624,case=0,i=218,j=190,atom=BOOLEAN.FROMFLOAT,top=BOOLEAN.FROMFLOAT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=408,thread=27944,case=0,i=150,j=113,atom=FLOAT.FROMINTEGER,top=FLOAT.FROMINTEGER,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=415,thread=10624,case=0,i=218,j=189,atom=BOOLEAN.INALL,top=BOOLEAN.INALL,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=411,thread=37720,case=0,i=252,j=227,atom=BOOLEAN.FROMINTEGER,top=BOOLEAN.FROMINTEGER,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=417,thread=10624,case=0,i=218,j=188,atom=EXEC.DO*RANGE,top=EXEC.DO*RANGE,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=407,thread=13296,case=0,i=52,j=29,atom=EXEC.YANKDUP,top=EXEC.YANKDUP,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=418,thread=10624,case=0,i=218,j=187,atom=CODE.POP,top=CODE.POP,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=403,thread=35964,case=0,i=267,j=242,atom=INTEGER.OUT,top=INTEGER.OUT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=416,thread=27944,case=0,i=150,j=112,atom=CODE.EXTRACT,top=CODE.EXTRACT,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=421,thread=35964,case=0,i=267,j=241,atom=CODE.NULL,top=CODE.NULL,method=Plush.run,message=Load_inputs
+2023-11-24 17:38:12.8654921,line_number=422,thread=27944,case=0,i=150,j=111,atom=EXEC.FLUSH,top=EXEC.FLUSH,method=Plush.run,message=Load_inputs

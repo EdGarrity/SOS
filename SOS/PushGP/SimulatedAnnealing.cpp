@@ -42,11 +42,11 @@ namespace pushGP
 		{
 			std::ostringstream ss;
 			ss << ",method=SimulatedAnnealing.calculate_state_probability_levels"
-				<< "probability_level_of_alternation_= " << probability_level_of_alternation_
-				<< "probability_level_of_elite_alternation_= " << probability_level_of_elite_alternation_
-				<< "probability_level_of_mutation_= " << probability_level_of_mutation_
-				<< "probability_level_of_cloaning_= " << probability_level_of_cloaning_
-				<< "probability_level_of_regeneration_= " << probability_level_of_regeneration_
+				<< ",probability_level_of_alternation_= " << probability_level_of_alternation_
+				<< ",probability_level_of_elite_alternation_= " << probability_level_of_elite_alternation_
+				<< ",probability_level_of_mutation_= " << probability_level_of_mutation_
+				<< ",probability_level_of_cloaning_= " << probability_level_of_cloaning_
+				<< ",probability_level_of_regeneration_= " << probability_level_of_regeneration_
 				<< ",message=configuration";
 			Utilities::logline_threadsafe << ss.str();
 		}

@@ -1,6 +1,8 @@
 #pragma once
 
+#include <sstream>
 #include "..\Domain\Arguments.h"
+#include "..\Utilities\Debug.h"
 
 namespace pushGP
 {
@@ -36,6 +38,13 @@ namespace pushGP
 
 		void set_temperature(double _temperature)
 		{
+			{
+				std::ostringstream ss;
+				ss << ",method=SimulatedAnnealing.set_temperature"
+					<< ",_temperature= " << _temperature
+					<< ",message=configuration";
+				Utilities::logline_threadsafe << ss.str();
+			}
 			temperature_ = _temperature;
 			calculate_state_probability_levels();
 		}
@@ -43,12 +52,27 @@ namespace pushGP
 		void set_hot()
 		{
 			temperature_ = 1.0;
+			{
+				std::ostringstream ss;
+				ss << ",method=SimulatedAnnealing.set_hot"
+					<< ",_temperature= " << temperature_
+					<< ",message=configuration";
+				Utilities::logline_threadsafe << ss.str();
+			}
 			calculate_state_probability_levels();
 		}
 
 		void set_cold()
 		{
 			temperature_ = 0.0;
+			temperature_ = 1.0;
+			{
+				std::ostringstream ss;
+				ss << ",method=SimulatedAnnealing.set_cold"
+					<< ",_temperature= " << temperature_
+					<< ",message=configuration";
+				Utilities::logline_threadsafe << ss.str();
+			}
 			calculate_state_probability_levels();
 		}
 
@@ -57,6 +81,14 @@ namespace pushGP
 			temperature_ = (temperature_ < domain::argmap::heat_up_rate) ? domain::argmap::heat_up_rate : temperature_ * (1.0 + domain::argmap::heat_up_rate);
 			temperature_ = (temperature_ > 1.0) ? 1.0 : temperature_;
 
+			temperature_ = 1.0;
+			{
+				std::ostringstream ss;
+				ss << ",method=SimulatedAnnealing.heat_up"
+					<< ",_temperature= " << temperature_
+					<< ",message=configuration";
+				Utilities::logline_threadsafe << ss.str();
+			}
 			calculate_state_probability_levels();
 		}
 
@@ -65,6 +97,14 @@ namespace pushGP
 			temperature_ *= (1.0 - domain::argmap::cool_down_rate);
 			temperature_ = (temperature_ < 0.0) ? 0.0 : temperature_;
 
+			temperature_ = 1.0;
+			{
+				std::ostringstream ss;
+				ss << ",method=SimulatedAnnealing.cool_down"
+					<< ",_temperature= " << temperature_
+					<< ",message=configuration";
+				Utilities::logline_threadsafe << ss.str();
+			}
 			calculate_state_probability_levels();
 		}
 
