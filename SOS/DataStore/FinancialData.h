@@ -8,15 +8,12 @@ namespace datastore
 {
 	class FinancialData
 	{
+	public:
+		enum FinancialInstrumentType { Primary = 0, Benchmark };
+		FinancialInstrumentType financial_instrument_type = FinancialInstrumentType::Primary;
+
 	private:
-		//const char* fmt_str_load_case_financial_data = "SELECT [Value] FROM [SOS].[dbo].[TestData] WHERE [Symbol]='%s' AND CONVERT(varchar(25),[Date],120)='%s' ORDER BY [Symbol],[Date],[Key];";
-		//const char* fmt_str_load_all_financial_data = "SELECT [Value] FROM [SOS].[dbo].[TestData] WHERE [Symbol]='%s' AND CONVERT(varchar(25),[Date],120)='%s' ORDER BY [Symbol],[Date],[Key];";
-
-		//bool case_cached = false;
-		//std::vector<double> values;
-		//size_t current_case_index = 0;
-
-		const char* fmt_str_load_test_data = "SELECT [Symbol],CONVERT(varchar(25),[Date],120) AS [Date],[Key],[Value]"
+		static constexpr const char* fmt_str_load_test_data = "SELECT [Symbol],CONVERT(varchar(25),[Date],120) AS [Date],[Key],[Value]"
 			" FROM [SOS].[dbo].[TestData]"
 			" WHERE [Symbol]='%s'"
 			" AND [Date] >= CAST('%s' AS DATETIME)"
@@ -46,14 +43,15 @@ namespace datastore
 		FinancialData();
 		~FinancialData() {};
 
-		//void load(size_t case_index);
-		void load(const std::string& start_date, const std::string& end_date);
+		void load(const FinancialInstrumentType financial_instrument_type, const std::string& start_date, const std::string& end_date);
 
 		double get_data(const size_t index, const size_t input_case);
-		//size_t get_size() const { return record.size(); }
 		size_t get_count() const { return data_window_records.size(); }
 		double get_stock_price(size_t index) const { return adj_open_values[index]; }
 	};
 
-	extern FinancialData financial_data;
+	//extern FinancialData financial_instrument_data;
+	//extern FinancialData financial_index_data;
+
+	extern FinancialData financial_data[2];
 }

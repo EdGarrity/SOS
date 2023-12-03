@@ -25,8 +25,10 @@ namespace pushGP
 		//std::array<std::array<double, domain::argmap::number_of_training_cases>, domain::argmap::population_size> error_matrix;
 		//Utilities::ThreadSafeArray_2D<double, domain::argmap::number_of_training_cases, domain::argmap::population_size> error_matrix;
 		//std::array<std::array<std::atomic<double>, domain::argmap::population_size>, domain::argmap::number_of_training_cases> error_matrix;
-		Utilities::ThreadSafeArray_2D<double, domain::argmap::number_of_training_cases, domain::argmap::population_size> error_matrix;
+		Utilities::ThreadSafeArray_2D<double, domain::argmap::number_of_training_cases, domain::argmap::population_size> score_matrix;
 		Utilities::ThreadSafeArray_2D<unsigned long, domain::argmap::number_of_training_cases, domain::argmap::population_size> effort_matrix;
+		Utilities::ThreadSafeArray_2D<double, domain::argmap::number_of_training_cases, domain::argmap::population_size> baseline_matrix;
+		Utilities::ThreadSafeArray_2D<double, domain::argmap::number_of_training_cases, domain::argmap::population_size> benchmark_matrix;
 
 		//Utilities::ThreadSafeArray_2D<char, 80, domain::argmap::population_size> thread_current_instruction;
 
@@ -42,12 +44,12 @@ namespace pushGP
 		std::vector<double> epsilons;
 		std::vector<unsigned int> non_zero_epsilons;
 
-		Training_case_min_error::Training_case_min_error()
+		Training_case_best_score::Training_case_best_score()
 		{
 			for (unsigned int example_case = 0; example_case < domain::argmap::number_of_training_cases; example_case++)
 			{
-				minimum_error_array_by_example_case[example_case] = std::numeric_limits<double>::max();
-				individual_with_minimum_error_for_training_case[example_case] = std::numeric_limits<unsigned int>::max();
+				best_score_array_by_example_case[example_case] = std::numeric_limits<double>::max();
+				individual_with_best_score_for_training_case[example_case] = std::numeric_limits<unsigned int>::max();
 			}
 		}
 	}

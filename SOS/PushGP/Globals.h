@@ -25,8 +25,10 @@ namespace pushGP
 		//extern std::array<std::array<double, domain::argmap::number_of_training_cases>, domain::argmap::population_size> error_matrix;
 		//extern Utilities::ThreadSafeArray_2D<double, domain::argmap::number_of_training_cases, domain::argmap::population_size> error_matrix;
 		//extern std::array<std::array<std::atomic<double>, domain::argmap::population_size>, domain::argmap::number_of_training_cases> error_matrix;
-		extern Utilities::ThreadSafeArray_2D<double, domain::argmap::number_of_training_cases, domain::argmap::population_size> error_matrix;
+		extern Utilities::ThreadSafeArray_2D<double, domain::argmap::number_of_training_cases, domain::argmap::population_size> score_matrix;
 		extern Utilities::ThreadSafeArray_2D<unsigned long, domain::argmap::number_of_training_cases, domain::argmap::population_size> effort_matrix;
+		extern Utilities::ThreadSafeArray_2D<double, domain::argmap::number_of_training_cases, domain::argmap::population_size> baseline_matrix;
+		extern Utilities::ThreadSafeArray_2D<double, domain::argmap::number_of_training_cases, domain::argmap::population_size> benchmark_matrix;
 
 		//extern Utilities::ThreadSafeArray_2D<char, 80, domain::argmap::population_size> thread_current_instruction;
 
@@ -38,16 +40,16 @@ namespace pushGP
 		extern unsigned long thread_individual_index[domain::argmap::max_threads];
 		extern size_t thread_example_case[domain::argmap::max_threads];
 
-		struct Training_case_min_error
+		struct Training_case_best_score
 		{
-			double minimum_error_array_by_example_case[domain::argmap::number_of_training_cases];
-			unsigned int individual_with_minimum_error_for_training_case[domain::argmap::number_of_training_cases];
+			double best_score_array_by_example_case[domain::argmap::number_of_training_cases];
+			unsigned int individual_with_best_score_for_training_case[domain::argmap::number_of_training_cases];
 
-			Training_case_min_error();
+			Training_case_best_score();
 
 		};
 
-		typedef struct Training_case_min_error Training_case_min_error_type;
+		typedef struct Training_case_best_score Training_case_best_score_type;
 
 		// Used in epsilon lexicase. Only calculated once per population
 		extern std::vector<double> epsilons;

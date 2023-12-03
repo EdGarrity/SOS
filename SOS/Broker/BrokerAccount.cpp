@@ -1,11 +1,11 @@
 #include "BrokerAccount.h"
-#include "..\DataStore\FinancialData.h"
+#include "..\Utilities\Debug.h"
 
 namespace domain
 {
     void BrokerAccount::buy(size_t index)
     {
-        double price = datastore::financial_data.get_stock_price(index);
+        double price = datastore::financial_data[financial_instrument_type].get_stock_price(index);
         double balance = account.get_balance();
 
         if (price <= balance)
@@ -19,7 +19,7 @@ namespace domain
 
     void BrokerAccount::sell(size_t index)
     {
-        double price = datastore::financial_data.get_stock_price(index);
+        double price = datastore::financial_data[financial_instrument_type].get_stock_price(index);
 
         if (shares > 0)
         {
@@ -28,6 +28,73 @@ namespace domain
         }
     }
 
+    void BrokerAccount::trace_execute(size_t index, unsigned long order_bitmask)
+    {
+        int buy_flag = order_bitmask & 0x01;
+        int hold_flag = order_bitmask & 0x02;
+
+        if ((buy_flag != 0) && (hold_flag == 0))
+        {
+            buy(index);
+            {
+                double price = datastore::financial_data[financial_instrument_type].get_stock_price(index);
+                double balance = account.get_balance();
+                double unrealized_gain = 0;
+
+                if (shares > 0)
+                    unrealized_gain += price * shares - seed_money;
+
+                std::ostringstream ss;
+                ss << ",method=BrokerAccount.execute"
+                    << ",index=" << index
+                    << ",order_bitmask=" << order_bitmask
+                    << ",order=buy"
+                    << ",price=" << price
+                    << ",shares=" << shares
+                    << ",balance=" << balance
+                    << ",unrealized_gain=" << unrealized_gain
+                    << ",message=check";
+                Utilities::logline_threadsafe << ss.str();
+            }
+        }
+
+        else if ((buy_flag == 0) && (hold_flag == 0))
+        {
+            sell(index);
+            {
+                double price = datastore::financial_data[financial_instrument_type].get_stock_price(index);
+                double balance = account.get_balance();
+                double unrealized_gain = 0;
+
+                if (shares > 0)
+                    unrealized_gain += price * shares - seed_money;
+
+                std::ostringstream ss;
+                ss << ",method=BrokerAccount.execute"
+                    << ",index=" << index
+                    << ",order_bitmask=" << order_bitmask
+                    << ",order=sell"
+                    << ",price=" << price
+                    << ",shares=" << shares
+                    << ",balance=" << balance
+                    << ",unrealized_gain=" << unrealized_gain
+                    << ",message=check";
+                Utilities::logline_threadsafe << ss.str();
+            }
+        }
+    }
+
+    /**
+    * @brief Executes the given order on the broker account.
+    *
+    * @param index The index of the stock to be bought or sold.
+    * @param order The order to be executed. The order is a bitmask where:
+    *              - The least significant bit represents a buy order.
+    *              - The second least significant bit represents a hold order.
+    *
+    * If the buy bit is set and the hold bit is not set, a buy order is executed.
+    * If the buy bit is not set and the hold bit is not set, a sell order is executed.
+    */
     void BrokerAccount::execute(size_t index, unsigned long order)
     {
         int buy_flag = order & 0x01;
@@ -42,7 +109,7 @@ namespace domain
 
     double BrokerAccount::unrealized_gain(size_t index) const
     {
-        double price = datastore::financial_data.get_stock_price(index);
+        double price = datastore::financial_data[financial_instrument_type].get_stock_price(index);
         double balance = account.get_balance();
 
         if (shares > 0)

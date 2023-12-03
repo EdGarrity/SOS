@@ -32,11 +32,22 @@ namespace pushGP
 	pushGP::SimulatedAnnealing_States breed(unsigned int _individual_index,
 		int _number_of_example_cases, 
 		concurrent_unordered_set<size_t>& _downsampled_training_cases,
-		combinable<pushGP::globals::Training_case_min_error_type>& _training_case_min_error,
+		combinable<pushGP::globals::Training_case_best_score_type>& _training_case_min_error,
 		pushGP::SimulatedAnnealing& _sa,
 		bool _include_best_individual_in_breeding_pool,
 		int _best_individual)
 	{
+		{
+			std::ostringstream ss;
+			ss << ",method=pushGP.SimulatedAnnealing_States"
+				<< ",_individual_index=" << _individual_index
+				<< ",_number_of_example_cases=" << _number_of_example_cases
+				<< ",_include_best_individual_in_breeding_pool=" << _include_best_individual_in_breeding_pool
+				<< ",_best_individual=" << _best_individual
+				<< ",message=Enter";
+			Utilities::logline_threadsafe << ss.str();
+		}
+
 		unsigned int first_parent_index = 0;
 		unsigned int other_parent_index = 0;
 		double random_variable = Utilities::random_double(0.0, 1.0);
@@ -48,6 +59,14 @@ namespace pushGP
 
 		if (state == pushGP::SimulatedAnnealing_States::alternate)
 		{
+			{
+				std::ostringstream ss;
+				ss << ",method=pushGP.SimulatedAnnealing_States"
+					<< ",state=" << "alternate"
+					<< ",message=get_state";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
 			bool done = false;
 			bool first = true;
 			int count_down = 3;
@@ -56,6 +75,16 @@ namespace pushGP
 
 			while ((!done) && (--attempts_left >= 0))
 			{
+				{
+					std::ostringstream ss;
+					ss << ",method=pushGP.SimulatedAnnealing_States"
+						<< ",done=" << done
+						<< ",attempts_left=" << attempts_left
+						<< ",first=" << first
+						<< ",count_down=" << count_down
+						<< ",message=while";
+					Utilities::logline_threadsafe << ss.str();
+				}
 				if (!first)
 				{
 					count_down--;
@@ -178,6 +207,13 @@ namespace pushGP
 
 		else if (state == pushGP::SimulatedAnnealing_States::alternate_elite)
 		{
+			{
+				std::ostringstream ss;
+				ss << ",method=pushGP.SimulatedAnnealing_States"
+					<< ",state=" << "alternate_elite"
+					<< ",message=get_state";
+				Utilities::logline_threadsafe << ss.str();
+			}
 			bool done = false;
 			bool first = true;
 			int count_down = 3;
@@ -303,6 +339,13 @@ namespace pushGP
 
 		else if (state == pushGP::SimulatedAnnealing_States::mutate)
 		{
+			{
+				std::ostringstream ss;
+				ss << ",method=pushGP.SimulatedAnnealing_States"
+					<< ",state=" << "mutate"
+					<< ",message=get_state";
+				Utilities::logline_threadsafe << ss.str();
+			}
 			//first_parent_index = epsilon_lexicase_selection(_number_of_example_cases, -1, _training_case_min_error);
 
 			std::unordered_set<int> first_parent_exclusions;
@@ -321,6 +364,13 @@ namespace pushGP
 
 		else if (state == pushGP::SimulatedAnnealing_States::cloan)
 		{
+			{
+				std::ostringstream ss;
+				ss << ",method=pushGP.SimulatedAnnealing_States"
+					<< ",state=" << "cloan"
+					<< ",message=get_state";
+				Utilities::logline_threadsafe << ss.str();
+			}
 			if ((!_include_best_individual_in_breeding_pool) && (_individual_index == _best_individual))
 				make_random_plush_genome(child_genome);
 
@@ -330,6 +380,13 @@ namespace pushGP
 
 		else
 		{
+			{
+				std::ostringstream ss;
+				ss << ",method=pushGP.SimulatedAnnealing_States"
+					<< ",state=" << "unknnown"
+					<< ",message=get_state";
+				Utilities::logline_threadsafe << ss.str();
+			}
 			make_random_plush_genome(child_genome);
 			state = pushGP::SimulatedAnnealing_States::regenerate;
 		}

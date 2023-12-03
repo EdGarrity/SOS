@@ -3,10 +3,14 @@
 #include "FinancialData.h"
 #include "TestData.h"
 #include "..\Utilities\Debug.h"
+#include "..\Domain\Arguments.h"
 
 namespace datastore
 {
-	FinancialData financial_data;
+	//FinancialData financial_data;
+	//FinancialData financial_index_data;
+
+	FinancialData financial_data[2];
 
 	FinancialData::FinancialData()
 	{
@@ -126,7 +130,7 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	void FinancialData::load(const std::string& start_date, const std::string& end_date)
+	void FinancialData::load(const FinancialInstrumentType _financial_instrument_type, const std::string& start_date, const std::string& end_date)
 	{
 		{
 			std::ostringstream ss;
@@ -141,10 +145,14 @@ namespace datastore
 
 		try
 		{
+			financial_instrument_type = _financial_instrument_type;
+
+			std::string financial_instrument = (financial_instrument_type == FinancialInstrumentType::Primary) ? domain::argmap::financial_instrument : domain::argmap::financial_index;
+
 			// Construct SQL statement with date range filters
-			int sz = std::snprintf(nullptr, 0, fmt_str_load_test_data, "AAPL", start_date.c_str(), end_date.c_str());
+			int sz = std::snprintf(nullptr, 0, fmt_str_load_test_data, financial_instrument.c_str(), start_date.c_str(), end_date.c_str());
 			std::vector<char> buf(sz + 1); // note +1 for null terminator
-			std::snprintf(&buf[0], buf.size(), fmt_str_load_test_data, "AAPL", start_date.c_str(), end_date.c_str());
+			std::snprintf(&buf[0], buf.size(), fmt_str_load_test_data, financial_instrument.c_str(), start_date.c_str(), end_date.c_str());
 			std::string sqlstmt_load_case_data(buf.begin(), buf.end() - 1); // omit the null terminator
 
 			sqlcmd_get_case_data = new database::SQLCommand(database_connection.get_connection(), sqlstmt_load_case_data);
