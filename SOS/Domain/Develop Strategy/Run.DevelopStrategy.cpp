@@ -690,11 +690,17 @@ namespace domain
 					if (number_of_training_cases > domain::argmap::number_of_training_cases)
 						throw std::overflow_error("Not enough training cases");
 
-					int best_individual = -1;
+					int best_strategy = -1;
+					size_t maximum_number_of_passing_training_cases = 0;
 					size_t best_training_case_window_start = -1;
+					double best_sortino_ratio = 0.0;
 
 					for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
 					{
+						size_t number_of_passing_training_cases = 0;
+						double average_score = 0.0;
+						double average_benhmark_score = 0.0;
+
 						for (size_t training_case_window_start = 0;	training_case_window_start < number_of_training_cases; training_case_window_start++)
 						{
 							size_t stock_data_index = training_case_window_start;
@@ -711,7 +717,7 @@ namespace domain
 							}
 
 							double score = account.unrealized_gain(--stock_data_index);
-
+							average_score += score;
 							pushGP::globals::score_matrix.store(-1, training_case_window_start, strategy_index, score);
 							pushGP::globals::effort_matrix.store(-1, training_case_window_start, strategy_index, 1000);
 
@@ -726,24 +732,12 @@ namespace domain
 							stock_data_index = training_case_window_start;
 							account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Benchmark, BrokerAccount::seed_money);
 							account.execute(stock_data_index, 0x01);
-							score = account.unrealized_gain(stock_data_index + number_of_training_cases - 1);
-							pushGP::globals::benchmark_matrix.store(-1, training_case_window_start, strategy_index, score);
+							double benchmark_score = account.unrealized_gain(stock_data_index + number_of_training_cases - 1);
+							average_benhmark_score += benchmark_score;
+							pushGP::globals::benchmark_matrix.store(-1, training_case_window_start, strategy_index, benchmark_score);
 
-							// calculate the Sharpe ratio
-
-
-
-
-
-							if (best_individual_score <= score)
-							{
-								best_individual_score = score;
-								best_individual = strategy_index;
-								best_training_case_window_start = training_case_window_start;
-								best_individual_effort = 0;
-								//best_individual_baseline = pushGP::globals::baseline_matrix.load(-1, training_case_window_start, strategy_index);
-								//best_individual_benchmark = pushGP::globals::benchmark_matrix.load(-1, training_case_window_start, strategy_index);
-							}
+							if (score > 0.0)
+								number_of_passing_training_cases++;
 
 							std::ostringstream ss;
 							ss << ",method=develop_strategy.run"
@@ -754,6 +748,51 @@ namespace domain
 							Utilities::logline_threadsafe << ss.str();
 
 						}
+
+						// calculate the Sortino ratio
+						average_score = average_score / (double)number_of_training_cases;
+						average_benhmark_score = average_benhmark_score / (double)number_of_training_cases;
+
+						double downside_deviation = 0.0;
+
+						for (size_t training_case_window_start = 0; training_case_window_start < number_of_training_cases; training_case_window_start++)
+						{
+							double score = pushGP::globals::score_matrix.load(training_case_window_start, strategy_index);
+							double benchmark_score = pushGP::globals::benchmark_matrix.load(training_case_window_start, strategy_index);
+
+							if (score < average_score)
+								downside_deviation += (score - average_score) * (score - average_score);
+						}
+
+						downside_deviation = std::sqrt(downside_deviation / (double)number_of_training_cases);
+						double sortino_ratio = (average_score - average_benhmark_score) / downside_deviation;
+
+						if (number_of_passing_training_cases >= maximum_number_of_passing_training_cases)
+						{
+							if (number_of_passing_training_cases > maximum_number_of_passing_training_cases)
+								best_sortino_ratio = 0.0;
+
+							maximum_number_of_passing_training_cases = number_of_passing_training_cases;
+
+							if (sortino_ratio > best_sortino_ratio)
+							{
+								best_sortino_ratio = sortino_ratio;
+								best_training_case_window_start = 0;
+								best_strategy = strategy_index;
+							}
+						}
+
+						{
+							std::ostringstream ss;
+							ss << ",method=develop_strategy.run"
+								<< ",strategy=" << strategy_index
+								<< ",number_of_passing_training_cases=" << number_of_passing_training_cases
+								<< ",average_score=" << average_score
+								<< ",average_benhmark_score=" << average_benhmark_score
+								<< ",sortino_ratio=" << sortino_ratio
+								<< ",message=Sortino_ratio";
+							Utilities::logline_threadsafe << ss.str();
+						}
 					}
 
 					{
@@ -761,12 +800,12 @@ namespace domain
 							std::ostringstream ss;
 							ss << ",method=develop_strategy.run"
 								<< ",best_individual_score=" << best_individual_score
-								<< ",best_individual=" << best_individual
+								<< ",best_individual=" << best_strategy
 								<< ",message=Evaluate_strategies_results";
 							Utilities::logline_threadsafe << ss.str();
 						}
 
-						size_t strategy_index = best_individual;
+						size_t strategy_index = best_strategy;
 						size_t training_case_window_start = best_training_case_window_start;
 						size_t stock_data_index = training_case_window_start;
 
@@ -804,7 +843,7 @@ namespace domain
 					produce_new_offspring(number_of_training_cases,
 						number_of_training_cases,
 						downsampled_training_cases,
-						best_individual,
+						best_strategy,
 						sa,
 						include_best_individual_in_breeding_pool);
 
@@ -843,7 +882,7 @@ namespace domain
 						run_number,
 						generation_number,
 						generations_completed_this_session,
-						best_individual,
+						best_strategy,
 						best_individual_score,
 						best_individual_effort,
 						best_individual_error,
@@ -855,7 +894,7 @@ namespace domain
 						stalled_count,
 						cool_down_count,
 						include_best_individual_in_breeding_pool,
-						pushGP::globals::population_agents[best_individual],
+						pushGP::globals::population_agents[best_strategy],
 						diversity,
 						count_of_diverse_clusters
 					);

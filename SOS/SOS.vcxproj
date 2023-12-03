@@ -72,21 +72,21 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>D:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files %28x86%29\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib\x64;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files %28x86%29\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib\x64;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib\x64;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>D:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files %28x86%29\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib\x64;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files %28x86%29\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib\x64;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib\x64;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
