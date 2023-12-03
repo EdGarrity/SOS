@@ -5,7 +5,13 @@ namespace domain
 {
     void BrokerAccount::buy(size_t index)
     {
-        double price = datastore::financial_data[financial_instrument_type].get_stock_price(index);
+        double price = 0;
+
+        if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary)
+            price = datastore::financial_data.get_primary_stock_price(index);
+        else
+            price = datastore::financial_data.get_index_stock_price(index);
+        
         double balance = account.get_balance();
 
         if (price <= balance)
@@ -19,7 +25,12 @@ namespace domain
 
     void BrokerAccount::sell(size_t index)
     {
-        double price = datastore::financial_data[financial_instrument_type].get_stock_price(index);
+        double price = 0;
+
+        if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary)
+            price = datastore::financial_data.get_primary_stock_price(index);
+        else
+            price = datastore::financial_data.get_index_stock_price(index);
 
         if (shares > 0)
         {
@@ -37,7 +48,13 @@ namespace domain
         {
             buy(index);
             {
-                double price = datastore::financial_data[financial_instrument_type].get_stock_price(index);
+                double price = 0;
+
+                if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary)
+                    price = datastore::financial_data.get_primary_stock_price(index);
+                else
+                    price = datastore::financial_data.get_index_stock_price(index);
+
                 double balance = account.get_balance();
                 double unrealized_gain = 0;
 
@@ -62,7 +79,13 @@ namespace domain
         {
             sell(index);
             {
-                double price = datastore::financial_data[financial_instrument_type].get_stock_price(index);
+                double price = 0;
+
+                if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary)
+                    price = datastore::financial_data.get_primary_stock_price(index);
+                else
+                    price = datastore::financial_data.get_index_stock_price(index);
+
                 double balance = account.get_balance();
                 double unrealized_gain = 0;
 
@@ -109,7 +132,13 @@ namespace domain
 
     double BrokerAccount::unrealized_gain(size_t index) const
     {
-        double price = datastore::financial_data[financial_instrument_type].get_stock_price(index);
+        double price = 0;
+
+        if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary)
+            price = datastore::financial_data.get_primary_stock_price(index);
+        else
+            price = datastore::financial_data.get_index_stock_price(index);
+
         double balance = account.get_balance();
 
         if (shares > 0)

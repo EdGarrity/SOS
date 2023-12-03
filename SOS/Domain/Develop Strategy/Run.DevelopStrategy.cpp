@@ -357,9 +357,9 @@ namespace domain
 
 			//order_matrix.clearOrderMatrix();
 
-			order_matrix.initialize(domain::argmap::population_size, datastore::financial_data[datastore::FinancialData::FinancialInstrumentType::Primary].get_count());
+			order_matrix.initialize(domain::argmap::population_size, datastore::financial_data.get_count());
 
-			for (size_t training_case_index = 0; training_case_index < datastore::financial_data[datastore::FinancialData::FinancialInstrumentType::Primary].get_count(); training_case_index++)
+			for (size_t training_case_index = 0; training_case_index < datastore::financial_data.get_count(); training_case_index++)
 			{
 				for (size_t stratergy_index = 0; stratergy_index < domain::argmap::population_size; stratergy_index++)
 				{
@@ -404,7 +404,7 @@ namespace domain
 
 			//order_matrix.clearOrderMatrix();
 
-			size_t data_size = datastore::financial_data[datastore::FinancialData::FinancialInstrumentType::Primary].get_count();
+			size_t data_size = datastore::financial_data.get_count();
 			std::latch work_done(domain::argmap::population_size * data_size);	// Check that we are allocating sufficient work tokens.
 			order_matrix.initialize(domain::argmap::population_size, data_size);
 			domain::RunProgram processor(pool);
@@ -466,12 +466,12 @@ namespace domain
 			if (dirty)
 			{
 				order_matrix.clearOrderMatrix();
-				order_matrix.save(datastore::financial_data[datastore::FinancialData::FinancialInstrumentType::Primary].get_count(), domain::argmap::population_size);
+				order_matrix.save(datastore::financial_data.get_count(), domain::argmap::population_size);
 
 				{
 					std::ostringstream ss;
 					ss << ",method=RunProgram.compute_training_errors_thread_safe"
-						<< ",training_case_indexes=" << datastore::financial_data[datastore::FinancialData::FinancialInstrumentType::Primary].get_count()
+						<< ",training_case_indexes=" << datastore::financial_data.get_count()
 						<< ",stratergy_indexes=" << domain::argmap::population_size
 						<< ",message=Orders_Saved_to_DB";
 					Utilities::logline_threadsafe << ss.str();
@@ -481,7 +481,7 @@ namespace domain
 			{
 				std::ostringstream ss;
 				ss << ",method=RunProgram.compute_training_errors_thread_safe"
-					<< ",training_case_indexes=" << datastore::financial_data[datastore::FinancialData::FinancialInstrumentType::Primary].get_count()
+					<< ",training_case_indexes=" << datastore::financial_data.get_count()
 					<< ",stratergy_indexes=" << domain::argmap::population_size
 					<< ",message=No_Orders_Saved_to_DB";
 				Utilities::logline_threadsafe << ss.str();
@@ -534,7 +534,7 @@ namespace domain
 				unsigned int run_number = datastore::test_data.get_last_saved_run_number();
 				unsigned int generation_number = datastore::test_data.get_last_saved_generation_number() + 1;
 				double best_individual_score = datastore::test_data.get_last_best_individual_score(std::numeric_limits<double>::min());
-				double best_individual_error = datastore::test_data.get_last_best_individual_error(std::numeric_limits<double>::max());
+				double best_sortino_ratio = datastore::test_data.get_last_best_individual_error(std::numeric_limits<double>::min());
 				double best_individual_baseline = datastore::test_data.get_last_best_individual_score(std::numeric_limits<double>::min());
 				double best_individual_benchmark = datastore::test_data.get_last_best_individual_score(std::numeric_limits<double>::min());
 				double prev_best_individual_error = datastore::test_data.get_last_prev_best_individual_error(std::numeric_limits<double>::max());
@@ -552,12 +552,12 @@ namespace domain
 				// If last run found a solution or exhausted the number of generations, 
 				// then clear the individuals table to force the creation of new individuals
 				// and reset to start a new run
-				if ((best_individual_score <= 0.0) || (generation_number > argmap::max_generations_in_one_session))
+				if ((best_individual_score > 0.0) || (generation_number > argmap::max_generations_in_one_session))
 				{
 					run_number++;
 					generation_number = 1;
-					best_individual_score = BrokerAccount::seed_money * -2.0;			// std::numeric_limits<double>::min();
-					best_individual_error = std::numeric_limits<double>::max();
+					best_individual_score = 0.0;			// std::numeric_limits<double>::min();
+					best_sortino_ratio = 0.0;
 					prev_best_individual_error = std::numeric_limits<double>::max();
 					sa.set_temperature(0);
 					cool_down_count = argmap::cool_down_period;
@@ -567,15 +567,20 @@ namespace domain
 				}
 
 				// Load data
-				datastore::financial_data[datastore::FinancialData::FinancialInstrumentType::Primary].load
+				//datastore::financial_data[datastore::FinancialData::FinancialInstrumentType::Primary].load
+				//(
+				//	datastore::FinancialData::FinancialInstrumentType::Primary, 
+				//	domain::argmap::financial_data_start_date,
+				//	domain::argmap::financial_data_end_date
+				//);
+				//datastore::financial_data[datastore::FinancialData::FinancialInstrumentType::Benchmark].load
+				//(
+				//	datastore::FinancialData::FinancialInstrumentType::Benchmark, 
+				//	domain::argmap::financial_data_start_date,
+				//	domain::argmap::financial_data_end_date
+				//);
+				datastore::financial_data.load
 				(
-					datastore::FinancialData::FinancialInstrumentType::Primary, 
-					domain::argmap::financial_data_start_date,
-					domain::argmap::financial_data_end_date
-				);
-				datastore::financial_data[datastore::FinancialData::FinancialInstrumentType::Benchmark].load
-				(
-					datastore::FinancialData::FinancialInstrumentType::Benchmark, 
 					domain::argmap::financial_data_start_date,
 					domain::argmap::financial_data_end_date
 				);
@@ -598,7 +603,7 @@ namespace domain
 					//					run_number = 1;
 					generation_number = 1;
 					best_individual_score = std::numeric_limits<double>::min();
-					best_individual_error = std::numeric_limits<double>::max();
+					best_sortino_ratio = std::numeric_limits<double>::min();
 					prev_best_individual_error = std::numeric_limits<double>::max();
 					sa.set_temperature(0);
 					cool_down_count = argmap::cool_down_period;
@@ -682,7 +687,7 @@ namespace domain
 					//// ***************************
 					//// *** Evaluate strategies ***
 					//// ***************************
-					number_of_training_cases = datastore::financial_data[datastore::FinancialData::FinancialInstrumentType::Primary].get_count() - domain::argmap::training_case_length + 1;
+					number_of_training_cases = datastore::financial_data.get_count() - domain::argmap::training_case_length + 1;
 					pushGP::globals::score_matrix.resize(number_of_training_cases, domain::argmap::population_size);
 					pushGP::globals::effort_matrix.resize(number_of_training_cases, domain::argmap::population_size);
 					pushGP::globals::baseline_matrix.resize(number_of_training_cases, domain::argmap::population_size);
@@ -693,7 +698,7 @@ namespace domain
 					int best_strategy = -1;
 					size_t maximum_number_of_passing_training_cases = 0;
 					size_t best_training_case_window_start = -1;
-					double best_sortino_ratio = 0.0;
+					best_sortino_ratio = 0.0;
 
 					for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
 					{
@@ -885,7 +890,7 @@ namespace domain
 						best_strategy,
 						best_individual_score,
 						best_individual_effort,
-						best_individual_error,
+						best_sortino_ratio,
 						prev_best_individual_error,
 						average_traiing_score,
 						standard_deviation,

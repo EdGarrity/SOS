@@ -10,7 +10,8 @@ namespace datastore
 	//FinancialData financial_data;
 	//FinancialData financial_index_data;
 
-	FinancialData financial_data[2];
+	//FinancialData financial_data[2];
+	FinancialData financial_data;
 
 	FinancialData::FinancialData()
 	{
@@ -130,7 +131,128 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	void FinancialData::load(const FinancialInstrumentType _financial_instrument_type, const std::string& start_date, const std::string& end_date)
+	//void FinancialData::load(const FinancialInstrumentType _financial_instrument_type, const std::string& start_date, const std::string& end_date)
+	//{
+	//	{
+	//		std::ostringstream ss;
+	//		ss << ",method=FinancialData.load"
+	//			<< ",start_date=" << start_date
+	//			<< ",end_date=" << end_date
+	//			<< ",message=loading_all_case_data";
+	//		Utilities::logline_threadsafe << ss.str();
+	//	}
+
+	//	database::SQLCommand* sqlcmd_get_case_data = nullptr;
+
+	//	try
+	//	{
+	//		financial_instrument_type = _financial_instrument_type;
+
+	//		std::string financial_instrument = (financial_instrument_type == FinancialInstrumentType::Primary) ? domain::argmap::financial_instrument : domain::argmap::financial_index;
+
+	//		// Construct SQL statement with date range filters
+	//		int sz = std::snprintf(nullptr, 0, fmt_str_load_test_data, financial_instrument.c_str(), start_date.c_str(), end_date.c_str());
+	//		std::vector<char> buf(sz + 1); // note +1 for null terminator
+	//		std::snprintf(&buf[0], buf.size(), fmt_str_load_test_data, financial_instrument.c_str(), start_date.c_str(), end_date.c_str());
+	//		std::string sqlstmt_load_case_data(buf.begin(), buf.end() - 1); // omit the null terminator
+
+	//		sqlcmd_get_case_data = new database::SQLCommand(database_connection.get_connection(), sqlstmt_load_case_data);
+
+	//		sqlcmd_get_case_data->execute();
+
+	//		size_t first_record_index = 0;
+	//		size_t last_record_index = 0;
+	//		std::string last_written_date = "";
+
+	//		bool dirty = false;
+
+	//		while (sqlcmd_get_case_data->fetch_next())
+	//		{
+	//			data_records.emplace_back(data_record_t{ sqlcmd_get_case_data->get_field_as_string(1), 
+	//				sqlcmd_get_case_data->get_field_as_string(2), 
+	//				sqlcmd_get_case_data->get_field_as_string(3), 
+	//				sqlcmd_get_case_data->get_field_as_double(4) });
+
+	//			if (last_written_date != sqlcmd_get_case_data->get_field_as_string(2))
+	//			{
+	//				if (last_written_date != "")
+	//					data_window_records.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index });
+
+	//				last_written_date = sqlcmd_get_case_data->get_field_as_string(2);
+	//				first_record_index = last_record_index;
+	//				dirty = true;
+	//			}
+
+	//			if (sqlcmd_get_case_data->get_field_as_string(3) == "Adj_Open")
+	//			{
+	//				//{
+	//				//	std::ostringstream ss;
+	//				//	ss << "record"
+	//				//		<< ",symbol=" << sqlcmd_get_case_data->get_field_as_string(1)
+	//				//		<< ",date=" << sqlcmd_get_case_data->get_field_as_string(2)
+	//				//		<< ",key=" << sqlcmd_get_case_data->get_field_as_string(3)
+	//				//		<< ",value=" << sqlcmd_get_case_data->get_field_as_double(4);
+	//				//	Utilities::logline_threadsafe << ss.str();
+	//				//}
+
+	//				primary_adj_open_values.push_back(sqlcmd_get_case_data->get_field_as_double(4));
+	//			}
+
+	//			last_record_index++;
+	//		}
+
+	//		if (dirty)
+	//			data_window_records.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
+
+	//		delete sqlcmd_get_case_data;
+
+	//		{
+	//			std::ostringstream ss;
+	//			ss << ",method=FinancialData.load"
+	//				<< ",start_date=" << start_date
+	//				<< ",end_date=" << end_date
+	//				<< ",record_count=" << data_window_records.size()
+	//				<< ",table_size=" << data_records.size()
+	//				<< ",message=case_data_loaded";
+	//			Utilities::logline_threadsafe << ss.str();
+	//		}
+	//	}
+	//	catch (const std::exception& e)
+	//	{
+	//		{
+	//			std::ostringstream ss;
+	//			ss << ",method=FinancialData.load"
+	//				<< ",exception=" << e.what()
+	//				<< ",message=Error_loading_data";
+	//			Utilities::logline_threadsafe << ss.str();
+	//		}
+
+	//		if (sqlcmd_get_case_data != nullptr)
+	//			delete sqlcmd_get_case_data;
+
+	//		std::cerr << e.what() << '\n';
+	//	}
+	//	catch (...)
+	//	{
+	//		std::ostringstream ss; ss << "Unknown exception"; Utilities::logline_threadsafe << ss.str();
+	//		{
+	//			std::ostringstream ss;
+	//			ss << ",method=FinancialData.load"
+	//				<< ",exception=Unknown"
+	//				<< ",message=An_unknown_error_has_occured";
+	//			Utilities::logline_threadsafe << ss.str();
+	//		}
+
+	//		if (sqlcmd_get_case_data != nullptr)
+	//			delete sqlcmd_get_case_data;
+
+	//		std::stringstream error;
+	//		error << "CaseData::load()";
+	//		std::cerr << error.str();
+	//	}
+	//}
+
+	void FinancialData::load(const std::string& start_date, const std::string& end_date)
 	{
 		{
 			std::ostringstream ss;
@@ -145,14 +267,10 @@ namespace datastore
 
 		try
 		{
-			financial_instrument_type = _financial_instrument_type;
-
-			std::string financial_instrument = (financial_instrument_type == FinancialInstrumentType::Primary) ? domain::argmap::financial_instrument : domain::argmap::financial_index;
-
 			// Construct SQL statement with date range filters
-			int sz = std::snprintf(nullptr, 0, fmt_str_load_test_data, financial_instrument.c_str(), start_date.c_str(), end_date.c_str());
+			int sz = std::snprintf(nullptr, 0, fmt_str_load_all_test_data, start_date.c_str(), end_date.c_str());
 			std::vector<char> buf(sz + 1); // note +1 for null terminator
-			std::snprintf(&buf[0], buf.size(), fmt_str_load_test_data, financial_instrument.c_str(), start_date.c_str(), end_date.c_str());
+			std::snprintf(&buf[0], buf.size(), fmt_str_load_all_test_data, start_date.c_str(), end_date.c_str());
 			std::string sqlstmt_load_case_data(buf.begin(), buf.end() - 1); // omit the null terminator
 
 			sqlcmd_get_case_data = new database::SQLCommand(database_connection.get_connection(), sqlstmt_load_case_data);
@@ -167,9 +285,9 @@ namespace datastore
 
 			while (sqlcmd_get_case_data->fetch_next())
 			{
-				data_records.emplace_back(data_record_t{ sqlcmd_get_case_data->get_field_as_string(1), 
-					sqlcmd_get_case_data->get_field_as_string(2), 
-					sqlcmd_get_case_data->get_field_as_string(3), 
+				data_records.emplace_back(data_record_t{ sqlcmd_get_case_data->get_field_as_string(1),
+					sqlcmd_get_case_data->get_field_as_string(2),
+					sqlcmd_get_case_data->get_field_as_string(3),
 					sqlcmd_get_case_data->get_field_as_double(4) });
 
 				if (last_written_date != sqlcmd_get_case_data->get_field_as_string(2))
@@ -194,7 +312,10 @@ namespace datastore
 					//	Utilities::logline_threadsafe << ss.str();
 					//}
 
-					adj_open_values.push_back(sqlcmd_get_case_data->get_field_as_double(4));
+					if (sqlcmd_get_case_data->get_field_as_string(1) == domain::argmap::financial_instrument)
+						primary_adj_open_values.push_back(sqlcmd_get_case_data->get_field_as_double(4));
+					else 
+						index_adj_open_values.push_back(sqlcmd_get_case_data->get_field_as_double(4));
 				}
 
 				last_record_index++;
