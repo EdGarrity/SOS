@@ -48,37 +48,35 @@ namespace domain
 		Utilities::ThreadSafeArray_2D_V2<unsigned long> orders;
 		datastore::OrderMatrix order_matrix;
 
-		const std::string sqlstmt_save_status_report("INSERT INTO [dbo].[ProgressReport]"
+		const std::string sqlstmt_save_status_report("INSERT INTO [dbo].[TestingProgressReport]"
 			"           ("
-			"            [Generation]"								// 1
-			"           ,[Generations_Completed_This_Session]"		// 2
-			"           ,[BestIndividual_ID]"						// 3
-			"           ,[BestIndividual_Training_Score]"			// 4
-			"           ,[BestIndividual_Training_Error]"			// 5
-			"           ,[Average_Training_Error]"					// 6
-			"           ,[Standard_Deviation]"						// 7
-			"           ,[BestIndividual_Test_Score]"				// 8
-			"           ,[Number_Of_Training_Cases]"				// 9
-			"           ,[Number_Of_Test_Cases]"					// 10
-			"           ,[Best_Genome]"								// 11
-			"           ,[Population_Size]"							// 12
-			"           ,[Alternation_Rate]"						// 13
-			"           ,[Uniform_Mutation_Rate]"					// 14
-			"           ,[Example_Case_Max_Length]"					// 15
-			"           ,[Example_Case_Upper_Range]"				// 16
-			"           ,[Tempareture]"								// 17
-			"           ,[BestIndividual_Prev_Training_Error]"		// 18
-			"           ,[Stalled_Count]"							// 19
-			"           ,[Cool_Down_Count]"							// 20
-			"           ,[Include_Best_Individual_In_Breeding_Pool]"// 21
-			"           ,[BestIndividual_Training_Effort]"			// 22
-			"           ,[Diversity]"								// 23
-			"           ,[Diverse_Clusters]"						// 24
-			"           ,[Run_Number]"								// 25
+			"            [Run_Number]"								// 1
+			"           ,[Generation]"								// 2
+			"           ,[Generations_Completed_This_Session]"		// 3
+			"           ,[Best_Strategy_ID]"						// 4
+			"           ,[Best_Strategy_Score]"						// 5
+			"           ,[Best_Strategy_Effort]"					// 6
+			"           ,[Best_Sortino_Ratio]"						// 7
+			"           ,[Best_Previous_Strategy_Score]"			// 8
+			"           ,[Best_Strategy_Avg_Score]"					// 9
+			"           ,[Best_Standard_Deviation]"					// 10
+			"           ,[Best_Strategy_Test_Score]"				// 11
+			"           ,[Number_Of_Training_Cases]"				// 12
+			"           ,[Number_Of_Test_Cases]"					// 13
+			"           ,[Tempareture]"								// 14
+			"           ,[Stalled_Count]"							// 15
+			"           ,[Cool_Down_Count]"							// 16
+			"           ,[Include_Best_Strategy_In_Breeding_Pool]"	// 17
+			"           ,[Best_Strategy_Genome]"					// 18
+			"           ,[Population_Size]"							// 19
+			"           ,[Alternation_Rate]"						// 20
+			"           ,[Uniform_Mutation_Rate]"					// 21
+			"           ,[Max_Length]"								// 22
+			"           ,[Upper_Range]"								// 23
 			"           )"
 			"     VALUES"
-			"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-			//           1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+			"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			//           1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3
 
 		void install_next_generation()
 		{
@@ -86,69 +84,60 @@ namespace domain
 				pushGP::globals::population_agents[n].copy(pushGP::globals::child_agents[n]);
 		}
 
-		void generate_status_report(bool reran_best_individual_with_all_training_cases,
-			size_t number_of_training_cases,
+		void generate_status_report(size_t number_of_training_cases,
 			unsigned int _run_number,
 			unsigned int _generation_number,
 			unsigned int _generations_completed_this_session,
-			unsigned int _best_individual_id,
-			double _best_individual_training_score,
-			size_t _best_individual_training_effort,
-			double _best_individual_training_error,
-			double _best_individual_prev_training_error,
-			double _average_traiing_error,
+			unsigned int _best_strategy,
+			double _best_strategy_score,
+			size_t _best_strategy_effort,
+			double _best_sortino_ratio,
+			double _prev_best_strategy_score,
+			double _average_strategy_score,
 			double _standard_deviation,
-			double _best_individual_test_score,
+			double _test_case_score,
 			double _temperature,
 			unsigned long _stalled_count,
 			unsigned int _cool_down_count,
 			bool _include_best_individual_in_breeding_pool,
-			std::string _best_gnome,
-			double _diversity,
-			unsigned int _count_of_diverse_clusters
+			std::string _best_gnome
 		)
 		{
 			database::SQLCommand* sqlcmd_save_status_report;
+			size_t number_of_test_cases = 0;
 
 			// Normalize data
-			if (_average_traiing_error > 1000.0)
-				_average_traiing_error = 1000.0;
+			if (_average_strategy_score > 1000.0)
+				_average_strategy_score = 1000.0;
 
 			if (_standard_deviation > 1000.0)
 				_standard_deviation = 1000.0;
 
-			unsigned long adjusted_number_of_training_cases =
-				argmap::parent_selection != argmap::PerentSelection::downsampled_lexicase || reran_best_individual_with_all_training_cases
-				? number_of_training_cases
-				: argmap::downsample_factor * argmap::number_of_training_cases;
-
 			sqlcmd_save_status_report = new database::SQLCommand(datastore::database_connection.get_connection(), sqlstmt_save_status_report);
 
-			sqlcmd_save_status_report->set_as_integer(1, _generation_number);
-			sqlcmd_save_status_report->set_as_integer(2, _generations_completed_this_session);
-			sqlcmd_save_status_report->set_as_integer(3, _best_individual_id);
-			sqlcmd_save_status_report->set_as_float(4, _best_individual_training_score);
-			sqlcmd_save_status_report->set_as_float(5, _best_individual_training_error);
-			sqlcmd_save_status_report->set_as_float(6, _average_traiing_error);
-			sqlcmd_save_status_report->set_as_float(7, _standard_deviation);
-			sqlcmd_save_status_report->set_as_float(8, _best_individual_test_score);
-			sqlcmd_save_status_report->set_as_integer(9, adjusted_number_of_training_cases);
-			sqlcmd_save_status_report->set_as_integer(10, argmap::number_of_test_cases);
-			sqlcmd_save_status_report->set_as_string(11, _best_gnome);
-			sqlcmd_save_status_report->set_as_integer(12, argmap::population_size);
-			sqlcmd_save_status_report->set_as_float(13, argmap::alternation_rate);
-			sqlcmd_save_status_report->set_as_float(14, argmap::uniform_mutation_rate);
-			sqlcmd_save_status_report->set_as_integer(15, argmap::example_case_max_length);
-			sqlcmd_save_status_report->set_as_integer(16, argmap::example_case_upper_range);
-			sqlcmd_save_status_report->set_as_float(17, _temperature);
-			sqlcmd_save_status_report->set_as_float(18, _best_individual_prev_training_error);
-			sqlcmd_save_status_report->set_as_integer(19, _stalled_count);
-			sqlcmd_save_status_report->set_as_integer(20, _cool_down_count);
-			sqlcmd_save_status_report->set_as_integer(21, _include_best_individual_in_breeding_pool);
-			sqlcmd_save_status_report->set_as_integer(22, (int)_best_individual_training_effort);
-			sqlcmd_save_status_report->set_as_float(23, _diversity);
-			sqlcmd_save_status_report->set_as_integer(24, _count_of_diverse_clusters);
-			sqlcmd_save_status_report->set_as_integer(25, _run_number);
+			sqlcmd_save_status_report->set_as_integer(1, _run_number);
+			sqlcmd_save_status_report->set_as_integer(2, _generation_number);
+			sqlcmd_save_status_report->set_as_integer(3, _generations_completed_this_session);
+			sqlcmd_save_status_report->set_as_integer(4, _best_strategy);
+			sqlcmd_save_status_report->set_as_float(5, _best_strategy_score);
+			sqlcmd_save_status_report->set_as_integer(6, (int)_best_strategy_effort);
+			sqlcmd_save_status_report->set_as_float(7, _best_sortino_ratio);
+			sqlcmd_save_status_report->set_as_float(8, _prev_best_strategy_score);
+			sqlcmd_save_status_report->set_as_float(9, _average_strategy_score);
+			sqlcmd_save_status_report->set_as_float(10, _standard_deviation);
+			sqlcmd_save_status_report->set_as_float(11, _test_case_score);
+			sqlcmd_save_status_report->set_as_integer(12, number_of_training_cases);
+			sqlcmd_save_status_report->set_as_integer(12, number_of_test_cases);
+			sqlcmd_save_status_report->set_as_float(13, _temperature);
+			sqlcmd_save_status_report->set_as_integer(14, _stalled_count);
+			sqlcmd_save_status_report->set_as_integer(15, _cool_down_count);
+			sqlcmd_save_status_report->set_as_integer(16, _include_best_individual_in_breeding_pool);
+			sqlcmd_save_status_report->set_as_string(17, _best_gnome);
+			sqlcmd_save_status_report->set_as_integer(18, argmap::population_size);
+			sqlcmd_save_status_report->set_as_float(19, argmap::alternation_rate);
+			sqlcmd_save_status_report->set_as_float(20, argmap::uniform_mutation_rate);
+			sqlcmd_save_status_report->set_as_integer(21, argmap::example_case_max_length);
+			sqlcmd_save_status_report->set_as_integer(22, argmap::example_case_upper_range);
 
 			sqlcmd_save_status_report->execute();
 
@@ -533,32 +522,32 @@ namespace domain
 				// Load data from most recent database record
 				unsigned int run_number = datastore::test_data.get_last_saved_run_number();
 				unsigned int generation_number = datastore::test_data.get_last_saved_generation_number() + 1;
-				double best_individual_score = datastore::test_data.get_last_best_individual_score(std::numeric_limits<double>::min());
+				double best_strategy_score = datastore::test_data.get_last_best_individual_score(std::numeric_limits<double>::min());
 				double best_sortino_ratio = datastore::test_data.get_last_best_individual_error(std::numeric_limits<double>::min());
 				double best_individual_baseline = datastore::test_data.get_last_best_individual_score(std::numeric_limits<double>::min());
 				double best_individual_benchmark = datastore::test_data.get_last_best_individual_score(std::numeric_limits<double>::min());
-				double prev_best_individual_error = datastore::test_data.get_last_prev_best_individual_error(std::numeric_limits<double>::max());
+				double prev_best_strategy_score = datastore::test_data.get_last_prev_best_individual_error(std::numeric_limits<double>::min());
 				int stalled_count = datastore::test_data.get_last_stalled_count(argmap::stalled_count_trigger);
 				int cool_down_count = datastore::test_data.get_last_cool_down_count(argmap::cool_down_period);
 				bool include_best_individual_in_breeding_pool = datastore::test_data.get_include_best_individual_in_breeding_pool(true);
-				size_t best_individual_effort = 0;
+				size_t best_strategy_effort = 0;
 
 				sa.set_cold();
 				sa.set_temperature(datastore::test_data.get_last_saved_temperature(sa.get_temperature()));
 
 				// Force new generation for debugging purposes
-				best_individual_score = -1;
+				best_strategy_score = -1;
 
 				// If last run found a solution or exhausted the number of generations, 
 				// then clear the individuals table to force the creation of new individuals
 				// and reset to start a new run
-				if ((best_individual_score > 0.0) || (generation_number > argmap::max_generations_in_one_session))
+				if ((best_strategy_score > 0.0) || (generation_number > argmap::max_generations_in_one_session))
 				{
 					run_number++;
 					generation_number = 1;
-					best_individual_score = 0.0;			// std::numeric_limits<double>::min();
+					best_strategy_score = 0.0;			// std::numeric_limits<double>::min();
 					best_sortino_ratio = 0.0;
-					prev_best_individual_error = std::numeric_limits<double>::max();
+					prev_best_strategy_score = std::numeric_limits<double>::min();
 					sa.set_temperature(0);
 					cool_down_count = argmap::cool_down_period;
 					stalled_count = argmap::stalled_count_trigger;
@@ -602,9 +591,9 @@ namespace domain
 				{
 					//					run_number = 1;
 					generation_number = 1;
-					best_individual_score = std::numeric_limits<double>::min();
+					best_strategy_score = std::numeric_limits<double>::min();
 					best_sortino_ratio = std::numeric_limits<double>::min();
-					prev_best_individual_error = std::numeric_limits<double>::max();
+					prev_best_strategy_score = std::numeric_limits<double>::min();
 					sa.set_temperature(0);
 					cool_down_count = argmap::cool_down_period;
 					stalled_count = argmap::stalled_count_trigger;
@@ -625,7 +614,7 @@ namespace domain
 
 						if (stalled_count <= 0)
 						{
-							sa.set_temperature(std::min(best_individual_score, 1.0));
+							sa.set_temperature(std::min(best_strategy_score, 1.0));
 
 							cool_down_count = argmap::cool_down_period;
 							include_best_individual_in_breeding_pool = false;
@@ -804,7 +793,7 @@ namespace domain
 						{
 							std::ostringstream ss;
 							ss << ",method=develop_strategy.run"
-								<< ",best_individual_score=" << best_individual_score
+								<< ",best_individual_score=" << best_strategy_score
 								<< ",best_individual=" << best_strategy
 								<< ",message=Evaluate_strategies_results";
 							Utilities::logline_threadsafe << ss.str();
@@ -877,21 +866,18 @@ namespace domain
 					standard_deviation /= (double)(domain::argmap::population_size * number_of_training_cases);
 					standard_deviation = std::sqrt(standard_deviation);
 
-					bool reran_best_individual_with_all_training_cases = false;
 					double test_case_score = 0;
-					double diversity = 0;
-					long count_of_diverse_clusters = 0;
 
-					generate_status_report(reran_best_individual_with_all_training_cases,
+					generate_status_report(
 						number_of_training_cases,
 						run_number,
 						generation_number,
 						generations_completed_this_session,
 						best_strategy,
-						best_individual_score,
-						best_individual_effort,
+						best_strategy_score,
+						best_strategy_effort,
 						best_sortino_ratio,
-						prev_best_individual_error,
+						prev_best_strategy_score,
 						average_traiing_score,
 						standard_deviation,
 						test_case_score,
@@ -899,9 +885,7 @@ namespace domain
 						stalled_count,
 						cool_down_count,
 						include_best_individual_in_breeding_pool,
-						pushGP::globals::population_agents[best_strategy],
-						diversity,
-						count_of_diverse_clusters
+						pushGP::globals::population_agents[best_strategy]
 					);
 
 					order_matrix.clearOrderMatrix();
@@ -914,6 +898,7 @@ namespace domain
 					//install_next_generation();
 					//generation_number++;
 					//generations_completed_this_session++;
+					prev_best_strategy_score = best_strategy_score;
 
 					{
 						std::ostringstream ss;
