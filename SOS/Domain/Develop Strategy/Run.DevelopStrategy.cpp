@@ -894,10 +894,16 @@ namespace domain
 					//// *** Install New Generation ***
 					//// ******************************
 					//Utilities::quick_log << "Install New Generation"; Utilities::logline_threadsafe << ss.str();
+					{
+						std::ostringstream ss;
+						ss << ",method=DevelopStrategy.run"
+							<< ",message=Install New Generation";
+						Utilities::logline_threadsafe << ss.str();
+					}
 
-					//install_next_generation();
-					//generation_number++;
-					//generations_completed_this_session++;
+					install_next_generation();
+					generation_number++;
+					generations_completed_this_session++;
 					prev_best_strategy_score = best_strategy_score;
 
 					{
