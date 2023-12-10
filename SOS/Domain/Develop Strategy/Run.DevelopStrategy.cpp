@@ -15,6 +15,7 @@
 #include <vector>
 #include <map>
 #include <variant>
+#include <cstddef>
 #include "Run.DevelopStrategy.h"
 #include "..\..\Database\SQLCommand.h"
 #include "..\..\Plush\Environment.h"
@@ -394,6 +395,20 @@ namespace domain
 			//order_matrix.clearOrderMatrix();
 
 			size_t data_size = datastore::financial_data.get_count();
+			std::ptrdiff_t expected_latches = domain::argmap::population_size * data_size;
+
+			if (expected_latches > std::latch::max())
+			{
+				std::ostringstream ss;
+				ss << ",method=RunProgram.compute_training_errors_thread_safe"
+					<< ",expected_latches=" << expected_latches
+					<< ",std::latch::max()=" << std::latch::max()
+					<< ",message=Expected_latches_greater_than_max";
+				Utilities::logline_threadsafe << ss.str();
+
+				throw std::exception("Expected_latches_greater_than_max");
+			}
+
 			std::latch work_done(domain::argmap::population_size * data_size);	// Check that we are allocating sufficient work tokens.
 			order_matrix.initialize(domain::argmap::population_size, data_size);
 			domain::RunProgram processor(pool);
