@@ -598,6 +598,13 @@ namespace domain
 				}
 
 				agents_created = datastore::agent_data.make_pop_agents(global_env, datastore::agent_data.load());
+				{
+					std::ostringstream ss;
+					ss << ",method=DevelopStrategy.run"
+						<< ",agents_created=" << agents_created
+						<< ",message=Created_Population_Agents";
+					Utilities::logline_threadsafe << ss.str();
+				}
 
 				if (agents_created > 0)
 					datastore::agent_data.save();
@@ -808,8 +815,8 @@ namespace domain
 						{
 							std::ostringstream ss;
 							ss << ",method=develop_strategy.run"
-								<< ",best_individual_score=" << best_strategy_score
-								<< ",best_individual=" << best_strategy
+								<< ",best_strategy_score=" << best_strategy_score
+								<< ",best_strategy=" << best_strategy
 								<< ",message=Evaluate_strategies_results";
 							Utilities::logline_threadsafe << ss.str();
 						}

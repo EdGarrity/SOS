@@ -189,18 +189,18 @@ namespace Plush
 	{
 		try
 		{
-			// Debug Log
-			std::stringstream debud_message;
-			debud_message << "Debug: Enter";
+			//// Debug Log
+			//std::stringstream debud_message;
+			//debud_message << "Debug: Enter";
 
-			std::cerr << debud_message.str();
-			{
-				std::ostringstream ss;
-				ss << ",number_of_blocks=" << _env.length<ExecAtom>()
-					<< ",method=equals<ExecAtom>"
-					<< "," << debud_message.str();
-				Utilities::logline_threadsafe << ss.str();
-			}
+			//std::cerr << debud_message.str();
+			//{
+			//	std::ostringstream ss;
+			//	ss << ",number_of_blocks=" << _env.length<ExecAtom>()
+			//		<< ",method=equals<ExecAtom>"
+			//		<< "," << debud_message.str();
+			//	Utilities::logline_threadsafe << ss.str();
+			//}
 
 			Genome<ExecAtom>& genome = _env.get_stack<ExecAtom>();
 

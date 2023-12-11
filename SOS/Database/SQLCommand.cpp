@@ -5,6 +5,7 @@
 #include "SQLCommand.h"
 #include "..\Utilities\Conversion.h"
 //#include "..\Utilities\EventLogManager.h"
+#include "..\..\Utilities\Debug.h"
 
 namespace database
 {
@@ -282,10 +283,26 @@ namespace database
 
 	void SQLCommand::set_as_string(unsigned int parm_no, std::string parameter)
 	{
+		{
+			std::ostringstream ss;
+			ss << ",method=SQLCommand::set_as_string"
+				<< ",parm_no=" << parm_no
+				<< ",parameter_size=" << parameter.size()
+				<< ",message=Enter";
+			Utilities::logline_threadsafe << ss.str();
+		}
 		unsigned int n = parm_no - 1;
 
-		//if (dwOffset_ > MAX_ROW_LENGTH)
-		//	throw MyException("dwOffset_ > MAX_ROW_LENGTH");
+		if (dwOffset_ > MAX_ROW_LENGTH)
+			throw MyException("dwOffset_ > MAX_ROW_LENGTH");
+
+		{
+			std::ostringstream ss;
+			ss << ",method=SQLCommand::set_as_string"
+				<< ",dwOffset_=" << dwOffset_
+				<< ",message=check dwOffset_";
+			Utilities::logline_threadsafe << ss.str();
+		}
 
 		// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms725393(v=vs.85)"
 		ParamBindInfo_[n].pwszDataSourceType = wszDBTYPE_STR;
@@ -318,8 +335,15 @@ namespace database
 		// for every row is correctly aligned
 		dwOffset_ = ROUNDUP(dwOffset_);
 
-		//if (dwOffset_ > MAX_ROW_LENGTH)
-		//	throw MyException("dwOffset_ > MAX_ROW_LENGTH");
+		if (dwOffset_ > MAX_ROW_LENGTH)
+			throw MyException("dwOffset_ > MAX_ROW_LENGTH");
+		{
+			std::ostringstream ss;
+			ss << ",method=SQLCommand::set_as_string"
+				<< ",dwOffset_=" << dwOffset_
+				<< ",message=Done";
+			Utilities::logline_threadsafe << ss.str();
+		}
 	}
 
 	//void SQLCommand::set_as_text(unsigned int parm_no, std::string parameter)
@@ -611,6 +635,14 @@ namespace database
 
 	void SQLCommand::execute()
 	{
+		{
+			std::ostringstream ss;
+			ss << ",method=SQLCommand::execute"
+				<< ",dwOffset_=" << dwOffset_
+				<< ",message=Enter";
+			Utilities::logline_threadsafe << ss.str();
+		}
+
 		IRowset*	pIRowset;
 		DBPARAMS	Params;
 		DBORDINAL	nCols;
@@ -709,6 +741,14 @@ namespace database
 
 		iRow_ = 0;
 		cRowsObtained_ = 0;
+		dwOffset_ = 0;
+		{
+			std::ostringstream ss;
+			ss << ",method=SQLCommand::execute"
+				<< ",dwOffset_=" << dwOffset_
+				<< ",message=Done";
+			Utilities::logline_threadsafe << ss.str();
+		}
 	}
 
 	void SQLCommand::execute(const std::string _command)

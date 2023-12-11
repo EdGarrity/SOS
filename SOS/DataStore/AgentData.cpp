@@ -108,6 +108,13 @@ namespace datastore
 
 	void AgentData::save()
 	{
+		{
+			std::ostringstream ss;
+			ss << ",method=AgentData::save"
+				<< ",message=Enter";
+			Utilities::logline_threadsafe << ss.str();
+		}
+
 		UUID NilUuid;
 
 		// creates a nil-valued UUID
@@ -123,21 +130,69 @@ namespace datastore
 		sqlcmd = new database::SQLCommand(database_connection.get_connection());
 
 		// Begin a transaction
+		{
+			std::ostringstream ss;
+			ss << ",method=AgentData::save"
+				<< ",message=Begin a transaction";
+			Utilities::logline_threadsafe << ss.str();
+		}
 		sqlcmd->begin_transaction();  //transaction->begin();
 
 		// Delete previously saved generation
+		{
+			std::ostringstream ss;
+			ss << ",method=AgentData::save"
+				<< ",message=Delete previously saved generation";
+			Utilities::logline_threadsafe << ss.str();
+		}
 		sqlcmd->execute(sqlstmt_clear_individual_table);
 
 		// Save new generation
+		{
+			std::ostringstream ss;
+			ss << ",method=AgentData::save"
+				<< ",message=Save new generation";
+			Utilities::logline_threadsafe << ss.str();
+		}
 		sqlcmd->set_command(sqlstmt_insert_new_individual);
+
+		{
+			std::ostringstream ss;
+			ss << ",method=AgentData::save"
+				<< ",message=Begin Loop";
+			Utilities::logline_threadsafe << ss.str();
+		}
 
 		for (int n = 0; n < domain::argmap::population_size; n++)
 		{
+			{
+				std::ostringstream ss;
+				ss << ",method=AgentData::save"
+					<< ",message=Loop iteration " << n;
+				Utilities::logline_threadsafe << ss.str();
+			}
+
 			long nn = n + 1;
 			sqlcmd->set_as_integer(DBPARAMIO_INPUT, 1, nn);
+
+			{
+				std::ostringstream ss;
+				ss << ",method=AgentData::save"
+					<< ",genome=" << pushGP::globals::population_agents[n]
+					<< ",message=set_as_string";
+				Utilities::logline_threadsafe << ss.str();
+			}
 			sqlcmd->set_as_string(2, pushGP::globals::population_agents[n]);
 
 			std::unordered_set<UUID> parents = pushGP::globals::population_agents[n].get_parents();
+			{
+				std::ostringstream ss;
+				ss << ",method=AgentData::save"
+					<< ",parents=" << parents.size()
+					<< ",message=get_parents";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
 			auto it = parents.begin();
 
 			if (it != parents.end())
@@ -220,9 +275,21 @@ namespace datastore
 		}
 
 		// Commit transaction
+		{
+			std::ostringstream ss;
+			ss << ",method=AgentData::save"
+				<< ",message=Commit transaction";
+			Utilities::logline_threadsafe << ss.str();
+		}
 		sqlcmd->commit_transaction();  //transaction->commit();
 
 		delete sqlcmd;
+		{
+			std::ostringstream ss;
+			ss << ",method=AgentData::save"
+				<< ",message=Done";
+			Utilities::logline_threadsafe << ss.str();
+		}
 	}
 
 
