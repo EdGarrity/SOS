@@ -639,6 +639,7 @@ namespace database
 			std::ostringstream ss;
 			ss << ",method=SQLCommand::execute"
 				<< ",dwOffset_=" << dwOffset_
+				<< ",number_of_parameters_in_command_" << number_of_parameters_in_command_
 				<< ",message=Enter";
 			Utilities::logline_threadsafe << ss.str();
 		}
@@ -657,6 +658,15 @@ namespace database
 		do
 		{
 			attempts++;
+			{
+				std::ostringstream ss;
+				ss << ",method=SQLCommand::execute"
+					<< ",attempts=" << attempts
+					<< ",dwOffset_=" << dwOffset_
+					<< ",number_of_parameters_in_command_" << number_of_parameters_in_command_
+					<< ",message=do";
+				Utilities::logline_threadsafe << ss.str();
+			}
 
 			// Create input parameters
 			if (number_of_parameters_in_command_ > 0)
@@ -711,10 +721,25 @@ namespace database
 		while (FAILED(hr_));
 
 		if (pIRowset_ == NULL)
+		{
 			nCols = 0;
+			std::ostringstream ss;
+			ss << ",method=SQLCommand::execute"
+				<< ",pIRowset_=NULL"
+				<< ",nCols=" << nCols
+				<< ",message=if";
+			Utilities::logline_threadsafe << ss.str();
+		}
 		
 		else
 		{
+			{
+				std::ostringstream ss;
+				ss << ",method=SQLCommand::execute"
+					<< ",pIRowset_!=NULL"
+					<< ",message=if";
+				Utilities::logline_threadsafe << ss.str();
+			}
 			// Commented out these lines because rgBindings_ was null.
 			//long test = 0;
 			//memcpy(&test, sprocparams, rgBindings_[0].cbMaxLen);

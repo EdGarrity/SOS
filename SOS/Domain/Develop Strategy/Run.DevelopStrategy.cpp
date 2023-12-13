@@ -85,11 +85,12 @@ namespace domain
 				pushGP::globals::population_agents[n].copy(pushGP::globals::child_agents[n]);
 		}
 
-		void generate_status_report(size_t number_of_training_cases,
+		void generate_status_report(
+			size_t number_of_training_cases,
 			unsigned int _run_number,
 			unsigned int _generation_number,
 			unsigned int _generations_completed_this_session,
-			unsigned int _best_strategy,
+			size_t _best_strategy,
 			double _best_strategy_score,
 			size_t _best_strategy_effort,
 			double _best_sortino_ratio,
@@ -98,8 +99,8 @@ namespace domain
 			double _standard_deviation,
 			double _test_case_score,
 			double _temperature,
-			unsigned long _stalled_count,
-			unsigned int _cool_down_count,
+			int _stalled_count,
+			int _cool_down_count,
 			bool _include_best_individual_in_breeding_pool,
 			std::string _best_gnome
 		)
@@ -128,17 +129,17 @@ namespace domain
 			sqlcmd_save_status_report->set_as_float(10, _standard_deviation);
 			sqlcmd_save_status_report->set_as_float(11, _test_case_score);
 			sqlcmd_save_status_report->set_as_integer(12, number_of_training_cases);
-			sqlcmd_save_status_report->set_as_integer(12, number_of_test_cases);
-			sqlcmd_save_status_report->set_as_float(13, _temperature);
-			sqlcmd_save_status_report->set_as_integer(14, _stalled_count);
-			sqlcmd_save_status_report->set_as_integer(15, _cool_down_count);
-			sqlcmd_save_status_report->set_as_integer(16, _include_best_individual_in_breeding_pool);
-			sqlcmd_save_status_report->set_as_string(17, _best_gnome);
-			sqlcmd_save_status_report->set_as_integer(18, argmap::population_size);
-			sqlcmd_save_status_report->set_as_float(19, argmap::alternation_rate);
-			sqlcmd_save_status_report->set_as_float(20, argmap::uniform_mutation_rate);
-			sqlcmd_save_status_report->set_as_integer(21, argmap::example_case_max_length);
-			sqlcmd_save_status_report->set_as_integer(22, argmap::example_case_upper_range);
+			sqlcmd_save_status_report->set_as_integer(13, number_of_test_cases);
+			sqlcmd_save_status_report->set_as_float(14, _temperature);
+			sqlcmd_save_status_report->set_as_integer(15, _stalled_count);
+			sqlcmd_save_status_report->set_as_integer(16, _cool_down_count);
+			sqlcmd_save_status_report->set_as_integer(17, _include_best_individual_in_breeding_pool);
+			sqlcmd_save_status_report->set_as_string(18, _best_gnome);
+			sqlcmd_save_status_report->set_as_integer(19, argmap::population_size);
+			sqlcmd_save_status_report->set_as_float(20, argmap::alternation_rate);
+			sqlcmd_save_status_report->set_as_float(21, argmap::uniform_mutation_rate);
+			sqlcmd_save_status_report->set_as_integer(22, argmap::example_case_max_length);
+			sqlcmd_save_status_report->set_as_integer(23, argmap::example_case_upper_range);
 
 			sqlcmd_save_status_report->execute();
 
@@ -174,7 +175,7 @@ namespace domain
 		void produce_new_offspring(unsigned long _number_of_example_cases,
 			size_t _number_of_training_cases,
 			concurrent_unordered_set<size_t>& _downsampled_training_cases,
-			unsigned long _best_individual,
+			size_t _best_strategy,
 			pushGP::SimulatedAnnealing& sa,
 			bool _include_best_individual_in_breeding_pool)
 		{
@@ -185,7 +186,7 @@ namespace domain
 					ss << ",method=develop_strategy.produce_new_offspring"
 						<< ",_number_of_example_cases=" << _number_of_example_cases
 						<< ",_number_of_training_cases=" << _number_of_training_cases
-						<< ",_best_individual=" << _best_individual
+						<< ",_best_strategy=" << _best_strategy
 						<< ",_include_best_individual_in_breeding_pool=" << _include_best_individual_in_breeding_pool
 						<< ",message=Enter";
 					Utilities::logline_threadsafe << ss.str();
@@ -223,13 +224,13 @@ namespace domain
 				state_count[pushGP::SimulatedAnnealing_States::mutate] = 0;
 				state_count[pushGP::SimulatedAnnealing_States::regenerate] = 0;
 
-				for (unsigned long individual_index = 0; individual_index < argmap::population_size; individual_index++)
+				for (size_t strategy_index = 0; strategy_index < argmap::population_size; strategy_index++)
 				{
-					Plush::Genome<Plush::CodeAtom>& child_genome = pushGP::globals::child_agents[individual_index].get_genome();
+					Plush::Genome<Plush::CodeAtom>& child_genome = pushGP::globals::child_agents[strategy_index].get_genome();
 
 					// Keep the best individual
-					if ((!_include_best_individual_in_breeding_pool) && (individual_index == _best_individual))
-						pushGP::globals::child_agents[individual_index].copy(pushGP::globals::population_agents[individual_index]);
+					if ((!_include_best_individual_in_breeding_pool) && (strategy_index == _best_strategy))
+						pushGP::globals::child_agents[strategy_index].copy(pushGP::globals::population_agents[strategy_index]);
 
 					else
 					{
@@ -238,18 +239,18 @@ namespace domain
 						//	std::ostringstream ss; ss << "B"; Utilities::logline_threadsafe << ss.str();
 						//}
 
-						pushGP::SimulatedAnnealing_States state = pushGP::breed(individual_index,
+						pushGP::SimulatedAnnealing_States state = pushGP::breed(strategy_index,
 							_number_of_example_cases,
 							_downsampled_training_cases,
 							training_case_min_error,
 							sa,
 							_include_best_individual_in_breeding_pool,
-							_best_individual);
+							_best_strategy);
 
 						state_count[state]++;
 
 						// If a child with the same genome already exists, create a new random child.
-						if (set_of_gnomes.insert(pushGP::globals::child_agents[individual_index].get_genome_as_string()).second == false)
+						if (set_of_gnomes.insert(pushGP::globals::child_agents[strategy_index].get_genome_as_string()).second == false)
 						{
 							pushGP::make_random_plush_genome(child_genome);
 						}
@@ -289,21 +290,58 @@ namespace domain
 				}
 
 				// Keep the best individuals for each test case
-				std::ostringstream ss; ss  << ".";
+				//std::ostringstream ss; ss  << ".";
 				if (!_include_best_individual_in_breeding_pool)
 				{
 					for (unsigned long training_case = 0; training_case < _number_of_training_cases; training_case++)
 					{
+						{
+							std::ostringstream ss;
+							ss << ",method=develop_strategy.produce_new_offspring"
+								<< ",training_case=" << training_case
+								<< ",message=for_loop";
+							Utilities::logline_threadsafe << ss.str();
+						}
+
 						unsigned long best_individual_for_training_case = training_case_min_error.local().individual_with_best_score_for_training_case[training_case];
+						{
+							std::ostringstream ss;
+							ss << ",method=develop_strategy.produce_new_offspring"
+								<< ",training_case=" << training_case
+								<< ",best_individual_for_training_case=" << best_individual_for_training_case
+								<< ",message=for_loop";
+							Utilities::logline_threadsafe << ss.str();
+						}
 
 						if (best_individual_for_training_case < (std::numeric_limits<unsigned int>::max)())
 						{
+							{
+								std::ostringstream ss;
+								ss << ",method=develop_strategy.produce_new_offspring"
+									<< ",best_individual_for_training_case=" << best_individual_for_training_case
+									<< ",std::numeric_limits<unsigned int>::max=" << std::numeric_limits<unsigned int>::max
+									<< ",message=Produce_new_offspring?";
+								Utilities::logline_threadsafe << ss.str();
+							}
 							pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);
+							{
+								std::ostringstream ss;
+								ss << ",method=develop_strategy.produce_new_offspring"
+									<< ",best_individual_for_training_case=" << best_individual_for_training_case
+									<< ",message=New_offspring_produced";
+								Utilities::logline_threadsafe << ss.str();
+							}
 						}
 					}
 				}
 
 				//{std::ostringstream ss; ss; Utilities::logline_threadsafe << ss.str(); }
+				{
+					std::ostringstream ss;
+					ss << ",method=develop_strategy.produce_new_offspring"
+						<< ",message=Done";
+					Utilities::logline_threadsafe << ss.str();
+				}
 			}
 			catch (const std::exception& e)
 			{
@@ -312,6 +350,14 @@ namespace domain
 				error << "Standard exception: " << e.what();
 
 				std::cerr << error.str();
+
+				{
+					std::ostringstream ss;
+					ss << ",method=develop_strategy.produce_new_offspring"
+						<< ",exception=" << e.what()
+						<< ",message=Standard_exception";
+					Utilities::logline_threadsafe << ss.str();
+				}
 
 				throw;
 			}
@@ -322,6 +368,13 @@ namespace domain
 				error << "Exception occurred";
 
 				std::cerr << error.str();
+
+				{
+					std::ostringstream ss;
+					ss << ",method=develop_strategy.produce_new_offspring"
+						<< ",message=Unknown_exception";
+					Utilities::logline_threadsafe << ss.str();
+				}
 
 				throw;
 			}
@@ -523,6 +576,7 @@ namespace domain
 				double sum_of_score = 0.0;
 				double average_benchmark_score = 0.0;
 				double score = 0.0;
+				double sortino_ratio = 0.0;
 
 				static Plush::Environment global_env;	// Needs to be statc because it consumes too much memory to be allocated on the stack.
 				pushGP::SimulatedAnnealing sa;
@@ -710,9 +764,8 @@ namespace domain
 					if (number_of_training_cases > domain::argmap::number_of_training_cases)
 						throw std::overflow_error("Not enough training cases");
 
-					int best_strategy = -1;
+					size_t best_strategy = 0;
 					size_t maximum_number_of_passing_training_cases = 0;
-					size_t best_training_case_window_start = -1;
 					best_sortino_ratio = 0.0;
 
 					for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
@@ -786,7 +839,21 @@ namespace domain
 						}
 
 						downside_deviation = std::sqrt(downside_deviation / (double)number_of_training_cases);
-						double sortino_ratio = (average_score - average_benchmark_score) / downside_deviation;
+						sortino_ratio = (downside_deviation == 0.0) ? 0.0 : (average_score - average_benchmark_score) / downside_deviation;
+						{
+							std::ostringstream ss;
+							ss << ",method=develop_strategy.run"
+								<< ",strategy=" << strategy_index
+								<< ",number_of_passing_training_cases=" << number_of_passing_training_cases
+								<< ",number_of_training_cases=" << number_of_training_cases
+								<< ",average_score=" << sum_of_score
+								<< ",sum_of_score=" << average_score
+								<< ",average_benchmark_score=" << average_benchmark_score
+								<< ",downside_deviation=" << downside_deviation
+								<< ",sortino_ratio=" << sortino_ratio
+								<< ",message=Sortino_ratio_calculation";
+							Utilities::logline_threadsafe << ss.str();
+						}
 
 						if (number_of_passing_training_cases >= maximum_number_of_passing_training_cases)
 						{
@@ -798,7 +865,6 @@ namespace domain
 							if (sortino_ratio > best_sortino_ratio)
 							{
 								best_sortino_ratio = sortino_ratio;
-								best_training_case_window_start = 0;
 								best_strategy = strategy_index;
 							}
 						}
@@ -818,41 +884,38 @@ namespace domain
 					}
 
 					{
-						{
-							std::ostringstream ss;
-							ss << ",method=develop_strategy.run"
-								<< ",best_strategy_score=" << best_strategy_score
-								<< ",best_strategy=" << best_strategy
-								<< ",message=Evaluate_strategies_results";
-							Utilities::logline_threadsafe << ss.str();
-						}
+						std::ostringstream ss;
+						ss << ",method=develop_strategy.run"
+							<< ",best_strategy_score=" << best_strategy_score
+							<< ",best_strategy=" << best_strategy
+							<< ",message=Evaluate_strategies_results";
+						Utilities::logline_threadsafe << ss.str();
+					}
 
-						size_t strategy_index = best_strategy;
-						size_t training_case_window_start = best_training_case_window_start;
-						size_t stock_data_index = training_case_window_start;
+					size_t strategy_index = best_strategy;
+					size_t stock_data_index = 0;
 
-						BrokerAccount account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Primary, BrokerAccount::seed_money);
+					BrokerAccount account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Primary, BrokerAccount::seed_money);
 
-						for (size_t training_case_window_offset = 0; training_case_window_offset < domain::argmap::training_case_length; training_case_window_offset++)
-						{
-							long order = order_matrix.load(strategy_index, stock_data_index);
+					for (size_t n = 0; n < datastore::financial_data.get_count(); n++)
+					{
+						long order = order_matrix.load(strategy_index, stock_data_index);
 
-							account.trace_execute(stock_data_index, order);
+						account.trace_execute(stock_data_index, order);
 
-							stock_data_index++;
-						}
+						stock_data_index++;
+					}
 
-						double score = account.unrealized_gain(--stock_data_index);
+					double test_case_score = account.unrealized_gain(--stock_data_index);
 
-						{
-							std::ostringstream ss;
-							ss << ",method=develop_strategy.run"
-								<< ",training_case_window_start=" << training_case_window_start
-								<< ",strategy=" << strategy_index
-								<< ",score=" << score
-								<< ",message=check";
-							Utilities::logline_threadsafe << ss.str();
-						}
+					{
+						std::ostringstream ss;
+						ss << ",method=develop_strategy.run"
+							<< ",strategy=" << strategy_index
+							<< ",datastore::financial_data.get_count()=" << datastore::financial_data.get_count()
+							<< ",test_case_score=" << test_case_score
+							<< ",message=check";
+						Utilities::logline_threadsafe << ss.str();
 					}
 
 					// *********************************************
@@ -893,8 +956,6 @@ namespace domain
 					}
 					standard_deviation /= (double)(domain::argmap::population_size * number_of_training_cases);
 					standard_deviation = std::sqrt(standard_deviation);
-
-					double test_case_score = 0;
 
 					generate_status_report(
 						number_of_training_cases,

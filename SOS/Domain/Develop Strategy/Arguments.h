@@ -73,7 +73,7 @@ namespace domain
 		//		;; The instructions that pushgp will use in random code.
 
 		// Number of individuals in the population.
-		const unsigned long population_size = 10; // 1000; // 20000; // 200'000;
+		const size_t population_size = 10; // 1000; // 20000; // 200'000;
 
 		// The maximum number of generations to run GP.
 		const unsigned long max_generations_in_one_session = 300;
