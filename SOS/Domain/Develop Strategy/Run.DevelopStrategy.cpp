@@ -519,6 +519,10 @@ namespace domain
 				// ******************
 				// *** Initialize ***
 				// ******************
+				double average_score = 0.0;
+				double sum_of_score = 0.0;
+				double average_benchmark_score = 0.0;
+				double score = 0.0;
 
 				static Plush::Environment global_env;	// Needs to be statc because it consumes too much memory to be allocated on the stack.
 				pushGP::SimulatedAnnealing sa;
@@ -714,8 +718,8 @@ namespace domain
 					for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
 					{
 						size_t number_of_passing_training_cases = 0;
-						double average_score = 0.0;
-						double average_benhmark_score = 0.0;
+						sum_of_score = 0.0;
+						average_benchmark_score = 0.0;
 
 						for (size_t training_case_window_start = 0;	training_case_window_start < number_of_training_cases; training_case_window_start++)
 						{
@@ -732,8 +736,8 @@ namespace domain
 								stock_data_index++;
 							}
 
-							double score = account.unrealized_gain(--stock_data_index);
-							average_score += score;
+							score = account.unrealized_gain(--stock_data_index);
+							sum_of_score += score;
 							pushGP::globals::score_matrix.store(-1, training_case_window_start, strategy_index, score);
 							pushGP::globals::effort_matrix.store(-1, training_case_window_start, strategy_index, 1000);
 
@@ -741,33 +745,34 @@ namespace domain
 							stock_data_index = training_case_window_start;
 							account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Primary, BrokerAccount::seed_money);
 							account.execute(stock_data_index, 0x01);
-							score = account.unrealized_gain(stock_data_index + number_of_training_cases - 1);
-							pushGP::globals::baseline_matrix.store(-1, training_case_window_start, strategy_index, score);
+							double buy_and_hold_score = account.unrealized_gain(stock_data_index + number_of_training_cases - 1);
+							pushGP::globals::baseline_matrix.store(-1, training_case_window_start, strategy_index, buy_and_hold_score);
 
 							// Add return from S&P500 using a buy-and-hold stratergy.  This is used to calculate the Sharpe ratio.
 							stock_data_index = training_case_window_start;
 							account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Benchmark, BrokerAccount::seed_money);
 							account.execute(stock_data_index, 0x01);
 							double benchmark_score = account.unrealized_gain(stock_data_index + number_of_training_cases - 1);
-							average_benhmark_score += benchmark_score;
+							average_benchmark_score += benchmark_score;
 							pushGP::globals::benchmark_matrix.store(-1, training_case_window_start, strategy_index, benchmark_score);
 
 							if (score > 0.0)
 								number_of_passing_training_cases++;
 
-							std::ostringstream ss;
-							ss << ",method=develop_strategy.run"
-								<< ",training_case_window_start=" << training_case_window_start
-								<< ",strategy=" << strategy_index
-								<< ",score=" << score
-								<< ",message=score_matrix";
-							Utilities::logline_threadsafe << ss.str();
-
+							{
+								std::ostringstream ss;
+								ss << ",method=develop_strategy.run"
+									<< ",training_case_window_start=" << training_case_window_start
+									<< ",strategy=" << strategy_index
+									<< ",score=" << score
+									<< ",message=score_matrix";
+								Utilities::logline_threadsafe << ss.str();
+							}
 						}
 
 						// calculate the Sortino ratio
-						average_score = average_score / (double)number_of_training_cases;
-						average_benhmark_score = average_benhmark_score / (double)number_of_training_cases;
+						average_score = sum_of_score / (double)number_of_training_cases;
+						average_benchmark_score = average_benchmark_score / (double)number_of_training_cases;
 
 						double downside_deviation = 0.0;
 
@@ -781,7 +786,7 @@ namespace domain
 						}
 
 						downside_deviation = std::sqrt(downside_deviation / (double)number_of_training_cases);
-						double sortino_ratio = (average_score - average_benhmark_score) / downside_deviation;
+						double sortino_ratio = (average_score - average_benchmark_score) / downside_deviation;
 
 						if (number_of_passing_training_cases >= maximum_number_of_passing_training_cases)
 						{
@@ -803,8 +808,9 @@ namespace domain
 							ss << ",method=develop_strategy.run"
 								<< ",strategy=" << strategy_index
 								<< ",number_of_passing_training_cases=" << number_of_passing_training_cases
-								<< ",average_score=" << average_score
-								<< ",average_benhmark_score=" << average_benhmark_score
+								<< ",average_score=" << sum_of_score
+								<< ",sum_of_score=" << average_score
+								<< ",average_benchmark_score=" << average_benchmark_score
 								<< ",sortino_ratio=" << sortino_ratio
 								<< ",message=Sortino_ratio";
 							Utilities::logline_threadsafe << ss.str();
