@@ -429,11 +429,11 @@ namespace Plush
 			{
 				effort++;
 
-				std::stringstream error;
+				//std::stringstream error;
 
-				error << "underflow_error std exception caught.";
+				//error << "underflow_error std exception caught.";
 
-				std::cerr << error.str();
+				//std::cerr << error.str();
 
 				{
 					unsigned long stack_size = env.get_stack<ExecAtom>().size();
@@ -451,13 +451,13 @@ namespace Plush
 			}
 			catch (std::overflow_error& ex)
 			{
-				std::stringstream error;
+				//std::stringstream error;
 
 				effort++;
 
-				error << "overflow_error std exception caught";
+				//error << "overflow_error std exception caught";
 
-				std::cerr << error.str();
+				//std::cerr << error.str();
 
 				{
 					unsigned long stack_size = env.get_stack<ExecAtom>().size();
@@ -477,11 +477,11 @@ namespace Plush
 			{
 				effort++;
 
-				std::stringstream error;
+				//std::stringstream error;
 
-				error << "Unknown std exception caught.effort = " << effort << ex.what(); 
+				//error << "Unknown std exception caught.effort = " << effort << ex.what(); 
 
-				std::cerr << error.str();
+				//std::cerr << error.str();
 
 #if DLEVEL > 0
 				std::string debug_message;
@@ -506,11 +506,11 @@ namespace Plush
 			{
 				effort++;
 
-				std::stringstream error;
+				//std::stringstream error;
 
-				error << "Unknown exception caught.  effort = " << effort;
+				//error << "Unknown exception caught.  effort = " << effort;
 
-				std::cerr << error.str();
+				//std::cerr << error.str();
 #if DLEVEL > 0
 				std::string debug_message;
 

@@ -106,7 +106,8 @@ namespace domain
 
 			std::string program = pushGP::globals::population_agents[strategy_index].get_genome_string();
 
-			bool trace = (strategy_index == 2 && case_index == 0);
+			//bool trace = (strategy_index == 2 && case_index == 0);
+			bool trace = false;
 
 			auto results = run_program(env, program, case_index, trace);
 
