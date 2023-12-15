@@ -181,6 +181,7 @@ namespace domain
 		{
 			try
 			{
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 				{
 					std::ostringstream ss;
 					ss << ",method=develop_strategy.produce_new_offspring"
@@ -197,6 +198,7 @@ namespace domain
 
 				// Reset children.
 				//{std::ostringstream ss; ss << "  Reset children"; Utilities::logline_threadsafe << ss.str(); }
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 				{
 					std::ostringstream ss;
 					ss << ",method=develop_strategy.produce_new_offspring"
@@ -210,6 +212,7 @@ namespace domain
 
 				// Breed new generation
 				//{std::ostringstream ss; ss << "  Breed new generation"; Utilities::logline_threadsafe << ss.str(); }
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 				{
 					std::ostringstream ss;
 					ss << ",method=develop_strategy.produce_new_offspring"
@@ -277,6 +280,8 @@ namespace domain
 				//	Utilities::logline_threadsafe << ss.str();
 				//	Utilities::logline_threadsafe << ss.str();
 				//}
+
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 				{
 					std::ostringstream ss;
 					ss << ",method=develop_strategy.produce_new_offspring"
@@ -295,6 +300,7 @@ namespace domain
 				{
 					for (unsigned long training_case = 0; training_case < _number_of_training_cases; training_case++)
 					{
+						if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 						{
 							std::ostringstream ss;
 							ss << ",method=develop_strategy.produce_new_offspring"
@@ -305,16 +311,20 @@ namespace domain
 
 						unsigned long best_individual_for_training_case = training_case_min_error.local().individual_with_best_score_for_training_case[training_case];
 						{
-							std::ostringstream ss;
-							ss << ",method=develop_strategy.produce_new_offspring"
-								<< ",training_case=" << training_case
-								<< ",best_individual_for_training_case=" << best_individual_for_training_case
-								<< ",message=for_loop";
-							Utilities::logline_threadsafe << ss.str();
+							if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+							{
+								std::ostringstream ss;
+								ss << ",method=develop_strategy.produce_new_offspring"
+									<< ",training_case=" << training_case
+									<< ",best_individual_for_training_case=" << best_individual_for_training_case
+									<< ",message=for_loop";
+								Utilities::logline_threadsafe << ss.str();
+							}
 						}
 
 						if (best_individual_for_training_case < (std::numeric_limits<unsigned int>::max)())
 						{
+							if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 							{
 								std::ostringstream ss;
 								ss << ",method=develop_strategy.produce_new_offspring"
@@ -323,7 +333,10 @@ namespace domain
 									<< ",message=Produce_new_offspring?";
 								Utilities::logline_threadsafe << ss.str();
 							}
+
 							pushGP::globals::child_agents[best_individual_for_training_case].copy(pushGP::globals::population_agents[best_individual_for_training_case]);
+
+							if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 							{
 								std::ostringstream ss;
 								ss << ",method=develop_strategy.produce_new_offspring"
@@ -336,6 +349,7 @@ namespace domain
 				}
 
 				//{std::ostringstream ss; ss; Utilities::logline_threadsafe << ss.str(); }
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 				{
 					std::ostringstream ss;
 					ss << ",method=develop_strategy.produce_new_offspring"
@@ -391,6 +405,7 @@ namespace domain
 				unsigned int strategy_index,
 				unsigned long case_index)> _run_strategy_threadsafe)
 		{
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
 				ss << ",method=RunProgram.compute_training_errors"
@@ -419,6 +434,7 @@ namespace domain
 						order_matrix.store(stratergy_index, training_case_index, order);
 					}
 
+					if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 					{
 						std::ostringstream ss;
 						ss << ",stratergy=" << stratergy_index
@@ -438,6 +454,7 @@ namespace domain
 				unsigned int stratergy_index,
 				unsigned long case_index)> _run_strategy_threadsafe)
 		{
+			if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
 			{
 				std::ostringstream ss;
 				ss << ",method=RunProgram.compute_training_errors_thread_safe"
@@ -473,6 +490,7 @@ namespace domain
 				{
 					if (!order_matrix.is_generated(strategy_index, training_case_index))
 					{
+						if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
 						{
 							std::ostringstream ss;
 							ss << ",stratergy=" << strategy_index
@@ -488,6 +506,7 @@ namespace domain
 					}
 					else
 					{
+						if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
 						{
 							std::ostringstream ss;
 							ss << ",stratergy=" << strategy_index
@@ -504,6 +523,7 @@ namespace domain
 				}
 			}
 
+			if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
 			{
 				std::ostringstream ss;
 				ss << ",method=RunProgram.compute_training_errors_thread_safe"
@@ -513,6 +533,7 @@ namespace domain
 
 			pool.wait_for_all_threads_to_complete(work_done);
 
+			if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
 			{
 				std::ostringstream ss;
 				ss << ",method=RunProgram.compute_training_errors_thread_safe"
@@ -525,6 +546,7 @@ namespace domain
 				order_matrix.clearOrderMatrix();
 				order_matrix.save(datastore::financial_data.get_count(), domain::argmap::population_size);
 
+				if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
 				{
 					std::ostringstream ss;
 					ss << ",method=RunProgram.compute_training_errors_thread_safe"
@@ -534,7 +556,7 @@ namespace domain
 					Utilities::logline_threadsafe << ss.str();
 				}
 			}
-			else
+			else if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
 			{
 				std::ostringstream ss;
 				ss << ",method=RunProgram.compute_training_errors_thread_safe"
@@ -565,6 +587,14 @@ namespace domain
 		//
 		int run()
 		{
+			if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
+			{
+				std::ostringstream ss;
+				ss << ",method=DevelopStrategy.run"
+					<< ",message=Create_Population_Agents";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
 			std::string debug_message;
 
 			try
@@ -648,6 +678,7 @@ namespace domain
 				);
 
 				// Load population.  Create more if not enough loaded.
+				if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 				{
 					std::ostringstream ss;
 					ss << ",method=DevelopStrategy.run"
@@ -656,6 +687,8 @@ namespace domain
 				}
 
 				agents_created = datastore::agent_data.make_pop_agents(global_env, datastore::agent_data.load());
+
+				if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 				{
 					std::ostringstream ss;
 					ss << ",method=DevelopStrategy.run"
@@ -699,6 +732,7 @@ namespace domain
 							cool_down_count = argmap::cool_down_period;
 							include_best_individual_in_breeding_pool = false;
 
+							if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 							{
 								std::ostringstream ss;
 								ss << ",method=DevelopStrategy.run"
@@ -717,6 +751,7 @@ namespace domain
 						cool_down_count = (cool_down_count < 0) ? 0 : cool_down_count - 1;
 						include_best_individual_in_breeding_pool = true;
 
+						if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 						{
 							std::ostringstream ss;
 							ss << ",method=DevelopStrategy.run"
@@ -729,6 +764,7 @@ namespace domain
 					// *****************************************************
 					// *** Calculate trading orders for each trading day ***
 					// *****************************************************
+					if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 					{
 						std::ostringstream ss;
 						ss << ",method=DevelopStrategy.run"
@@ -746,6 +782,7 @@ namespace domain
 							global_env,
 							run_strategy_threadsafe);
 
+					if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 					{
 						std::ostringstream ss;
 						ss << ",method=DevelopStrategy.run"
@@ -812,6 +849,7 @@ namespace domain
 							if (score > 0.0)
 								number_of_passing_training_cases++;
 
+							if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 							{
 								std::ostringstream ss;
 								ss << ",method=develop_strategy.run"
@@ -840,6 +878,8 @@ namespace domain
 
 						downside_deviation = std::sqrt(downside_deviation / (double)number_of_training_cases);
 						sortino_ratio = (downside_deviation == 0.0) ? 0.0 : (average_score - average_benchmark_score) / downside_deviation;
+
+						if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 						{
 							std::ostringstream ss;
 							ss << ",method=develop_strategy.run"
@@ -869,6 +909,7 @@ namespace domain
 							}
 						}
 
+						if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 						{
 							std::ostringstream ss;
 							ss << ",method=develop_strategy.run"
@@ -883,6 +924,7 @@ namespace domain
 						}
 					}
 
+					if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 					{
 						std::ostringstream ss;
 						ss << ",method=develop_strategy.run"
@@ -908,6 +950,7 @@ namespace domain
 
 					double test_case_score = account.unrealized_gain(--stock_data_index);
 
+					if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 					{
 						std::ostringstream ss;
 						ss << ",method=develop_strategy.run"
@@ -983,6 +1026,8 @@ namespace domain
 					//// *** Install New Generation ***
 					//// ******************************
 					//Utilities::quick_log << "Install New Generation"; Utilities::logline_threadsafe << ss.str();
+
+					if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 					{
 						std::ostringstream ss;
 						ss << ",method=DevelopStrategy.run"
@@ -995,6 +1040,7 @@ namespace domain
 					generations_completed_this_session++;
 					prev_best_strategy_score = best_strategy_score;
 
+					if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 					{
 						std::ostringstream ss;
 						ss << ",method=DevelopStrategy.run"
@@ -1017,6 +1063,7 @@ namespace domain
 
 				std::stringstream warning_message;
 				warning_message << "Run_exception";
+
 				{
 					std::ostringstream ss;
 					ss << ",method=DevelopStrategy.run"
@@ -1033,6 +1080,7 @@ namespace domain
 
 				std::stringstream warning_message;
 				warning_message << "Run_exception";
+
 				{
 					std::ostringstream ss;
 					ss << ",method=DevelopStrategy.run"

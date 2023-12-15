@@ -61,17 +61,20 @@ namespace domain
                 if (shares > 0)
                     unrealized_gain += price * shares - seed_money;
 
-                std::ostringstream ss;
-                ss << ",method=BrokerAccount.execute"
-                    << ",index=" << index
-                    << ",order_bitmask=" << order_bitmask
-                    << ",order=buy"
-                    << ",price=" << price
-                    << ",shares=" << shares
-                    << ",balance=" << balance
-                    << ",unrealized_gain=" << unrealized_gain
-                    << ",message=check";
-                Utilities::logline_threadsafe << ss.str();
+                if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+                {
+                    std::ostringstream ss;
+                    ss << ",method=BrokerAccount.execute"
+                        << ",index=" << index
+                        << ",order_bitmask=" << order_bitmask
+                        << ",order=buy"
+                        << ",price=" << price
+                        << ",shares=" << shares
+                        << ",balance=" << balance
+                        << ",unrealized_gain=" << unrealized_gain
+                        << ",message=check";
+                    Utilities::logline_threadsafe << ss.str();
+                }
             }
         }
 
@@ -92,17 +95,20 @@ namespace domain
                 if (shares > 0)
                     unrealized_gain += price * shares - seed_money;
 
-                std::ostringstream ss;
-                ss << ",method=BrokerAccount.execute"
-                    << ",index=" << index
-                    << ",order_bitmask=" << order_bitmask
-                    << ",order=sell"
-                    << ",price=" << price
-                    << ",shares=" << shares
-                    << ",balance=" << balance
-                    << ",unrealized_gain=" << unrealized_gain
-                    << ",message=check";
-                Utilities::logline_threadsafe << ss.str();
+                if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+                {
+                    std::ostringstream ss;
+                    ss << ",method=BrokerAccount.execute"
+                        << ",index=" << index
+                        << ",order_bitmask=" << order_bitmask
+                        << ",order=sell"
+                        << ",price=" << price
+                        << ",shares=" << shares
+                        << ",balance=" << balance
+                        << ",unrealized_gain=" << unrealized_gain
+                        << ",message=check";
+                    Utilities::logline_threadsafe << ss.str();
+                } 
             }
         }
     }

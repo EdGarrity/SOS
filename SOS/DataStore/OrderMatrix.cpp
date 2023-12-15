@@ -18,6 +18,7 @@ namespace datastore
 #if DLEVEL > 0
 		Utilities::debug_log(-1, "initialize", "OrderMatrix");
 #endif
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",population_size=" << population_size
@@ -133,6 +134,7 @@ namespace datastore
 
 	void datastore::OrderMatrix::save(size_t training_case_indexes, size_t strategy_indexes)
 	{
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",method=OrderMatrix.save"
@@ -163,6 +165,7 @@ namespace datastore
 			}
 		}
 
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",method=OrderMatrix.save"
@@ -175,6 +178,7 @@ namespace datastore
 
 	void datastore::OrderMatrix::save_training_case(size_t training_case_index, size_t strategy_indexes)
 	{
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",method=OrderMatrix.save"
@@ -206,6 +210,7 @@ namespace datastore
 
 		ThreadSafeArray_V2_array_access_lock.unlock();
 
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",method=OrderMatrix.save"

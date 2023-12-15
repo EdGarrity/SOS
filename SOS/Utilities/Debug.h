@@ -16,6 +16,7 @@
 #include "SystemInfo.h"
 //#include "..\Plush\Atom.h"
 //#include "..\Plush\Environment.h"
+#include "..\Domain\Arguments.h"
 
 #define DLEVEL 0
 #define TRACE_LEVEL 0

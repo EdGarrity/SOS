@@ -53,10 +53,10 @@ namespace datastore
 			{
 				while ((sqlcmd_get_individuals->fetch_next()) && (n < domain::argmap::population_size))
 				{
-					if ((n % 1'000) == 0)
-					{
-						std::ostringstream ss; ss << "n = " << n; Utilities::logline_threadsafe << ss.str();
-					}
+					//if ((n % 1'000) == 0)
+					//{
+					//	std::ostringstream ss; ss << "n = " << n; Utilities::logline_threadsafe << ss.str();
+					//}
 
 					std::string genome = Utilities::trim_copy(sqlcmd_get_individuals->get_field_as_string(2));
 
@@ -83,10 +83,10 @@ namespace datastore
 						n++;
 					}
 
-					else
-					{
-						std::ostringstream ss; ss << "n = " << n << "  Ignoring empty genome string"; Utilities::logline_threadsafe << ss.str();
-					}
+					//else
+					//{
+					//	std::ostringstream ss; ss << "n = " << n << "  Ignoring empty genome string"; Utilities::logline_threadsafe << ss.str();
+					//}
 				}
 			}
 		}
@@ -108,6 +108,7 @@ namespace datastore
 
 	void AgentData::save()
 	{
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",method=AgentData::save"
@@ -123,6 +124,7 @@ namespace datastore
 		if (ret != RPC_S_OK)
 		{
 			std::ostringstream ss; ss << "UuidCreateNil() did not return RPC_S_OK"; Utilities::logline_threadsafe << ss.str();
+			std::cerr << ss.str();
 		}
 
 		database::SQLCommand* sqlcmd;
@@ -130,6 +132,7 @@ namespace datastore
 		sqlcmd = new database::SQLCommand(database_connection.get_connection());
 
 		// Begin a transaction
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",method=AgentData::save"
@@ -139,6 +142,7 @@ namespace datastore
 		sqlcmd->begin_transaction();  //transaction->begin();
 
 		// Delete previously saved generation
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",method=AgentData::save"
@@ -148,6 +152,7 @@ namespace datastore
 		sqlcmd->execute(sqlstmt_clear_individual_table);
 
 		// Save new generation
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",method=AgentData::save"
@@ -156,6 +161,7 @@ namespace datastore
 		}
 		sqlcmd->set_command(sqlstmt_insert_new_individual);
 
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",method=AgentData::save"
@@ -165,6 +171,7 @@ namespace datastore
 
 		for (int n = 0; n < domain::argmap::population_size; n++)
 		{
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
 				ss << ",method=AgentData::save"
@@ -175,6 +182,7 @@ namespace datastore
 			long nn = n + 1;
 			sqlcmd->set_as_integer(DBPARAMIO_INPUT, 1, nn);
 
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
 				ss << ",method=AgentData::save"
@@ -185,6 +193,8 @@ namespace datastore
 			sqlcmd->set_as_string(2, pushGP::globals::population_agents[n]);
 
 			std::unordered_set<UUID> parents = pushGP::globals::population_agents[n].get_parents();
+
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
 				ss << ",method=AgentData::save"
@@ -275,6 +285,7 @@ namespace datastore
 		}
 
 		// Commit transaction
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",method=AgentData::save"
@@ -284,6 +295,8 @@ namespace datastore
 		sqlcmd->commit_transaction();  //transaction->commit();
 
 		delete sqlcmd;
+
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",method=AgentData::save"

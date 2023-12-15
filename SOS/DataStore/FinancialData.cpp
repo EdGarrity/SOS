@@ -254,6 +254,7 @@ namespace datastore
 
 	void FinancialData::load(const std::string& start_date, const std::string& end_date)
 	{
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",method=FinancialData.load"
@@ -326,6 +327,7 @@ namespace datastore
 
 			delete sqlcmd_get_case_data;
 
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
 				ss << ",method=FinancialData.load"

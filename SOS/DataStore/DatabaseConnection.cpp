@@ -18,6 +18,7 @@ namespace datastore
 		{
 			std::string db_init_datasource = domain::argmap::db_init_datasource;
 
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
 				ss << ",method=DatabaseConnection.get_connection"

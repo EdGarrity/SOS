@@ -283,6 +283,7 @@ namespace database
 
 	void SQLCommand::set_as_string(unsigned int parm_no, std::string parameter)
 	{
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",method=SQLCommand::set_as_string"
@@ -296,6 +297,7 @@ namespace database
 		if (dwOffset_ > MAX_ROW_LENGTH)
 			throw MyException("dwOffset_ > MAX_ROW_LENGTH");
 
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",method=SQLCommand::set_as_string"
@@ -336,7 +338,17 @@ namespace database
 		dwOffset_ = ROUNDUP(dwOffset_);
 
 		if (dwOffset_ > MAX_ROW_LENGTH)
+		{
+			std::ostringstream ss;
+			ss << ",method=SQLCommand::set_as_string"
+				<< ",dwOffset_=" << dwOffset_
+				<< ",message=Exception";
+			Utilities::logline_threadsafe << ss.str();
+
 			throw MyException("dwOffset_ > MAX_ROW_LENGTH");
+		}
+
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",method=SQLCommand::set_as_string"
@@ -635,6 +647,7 @@ namespace database
 
 	void SQLCommand::execute()
 	{
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",method=SQLCommand::execute"
@@ -658,6 +671,8 @@ namespace database
 		do
 		{
 			attempts++;
+
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
 				ss << ",method=SQLCommand::execute"
@@ -723,16 +738,21 @@ namespace database
 		if (pIRowset_ == NULL)
 		{
 			nCols = 0;
-			std::ostringstream ss;
-			ss << ",method=SQLCommand::execute"
-				<< ",pIRowset_=NULL"
-				<< ",nCols=" << nCols
-				<< ",message=if";
-			Utilities::logline_threadsafe << ss.str();
+
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			{
+				std::ostringstream ss;
+				ss << ",method=SQLCommand::execute"
+					<< ",pIRowset_=NULL"
+					<< ",nCols=" << nCols
+					<< ",message=if";
+				Utilities::logline_threadsafe << ss.str();
+			}
 		}
 		
 		else
 		{
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
 				ss << ",method=SQLCommand::execute"
@@ -766,7 +786,9 @@ namespace database
 
 		iRow_ = 0;
 		cRowsObtained_ = 0;
-		dwOffset_ = 0;
+//		dwOffset_ = 0;		// This line was added to fix bug with dwOffset_ growing greater than MAX_ROW_LENGTH.
+		
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",method=SQLCommand::execute"
