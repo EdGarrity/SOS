@@ -81,7 +81,7 @@ namespace Plush
 	// Run provided program with index to input vector
 	unsigned int run(Environment& env, std::string program, size_t case_index, bool trace)
 	{
-		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_1)
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",case=" << case_index
@@ -95,7 +95,7 @@ namespace Plush
 		int i = 0;
 
 		// Initialize environment
-		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_1)
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",case=" << case_index
@@ -107,7 +107,7 @@ namespace Plush
 		env.clear_stacks();
 
 		// Load program into temp
-		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_1)
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",case=" << case_index
@@ -124,7 +124,7 @@ namespace Plush
 			env.temp_genes[i++] = gene;
 		}
 
-		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_1)
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",case=" << case_index
@@ -135,7 +135,7 @@ namespace Plush
 		env.initialize(case_index);
 
 		// Load inputs
-		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_1)
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",case=" << case_index
@@ -157,7 +157,7 @@ namespace Plush
 				{
 					unsigned long stack_size = env.get_stack<ExecAtom>().size();
 					std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
-					if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_1)
+					if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 					{
 						std::ostringstream ss;
 						ss << ",case=" << case_index
@@ -177,7 +177,7 @@ namespace Plush
 		{
 			unsigned long stack_size = env.get_stack<ExecAtom>().size();
 			std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
-			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_1)
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
 				ss << ",case=" << case_index
@@ -192,7 +192,7 @@ namespace Plush
 		{
 			unsigned long stack_size = env.get_stack<ExecAtom>().size();
 			std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
-			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_1)
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
 				ss << ",case=" << case_index
@@ -209,7 +209,7 @@ namespace Plush
 	// Run program on the EXEC stack
 	unsigned int run(Environment& env, unsigned _max_effort, bool trace)
 	{
-		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_1)
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			unsigned long stack_size = env.get_stack<ExecAtom>().size();
 			std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
@@ -561,6 +561,7 @@ namespace Plush
 
 		//pushGP::globals::thread_exec_size[env.current_thread] = 0;
 
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			unsigned long stack_size = env.get_stack<ExecAtom>().size();
 			std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
@@ -569,7 +570,7 @@ namespace Plush
 				<< ",top=" << top
 				<< ",max_effort=" << _max_effort
 				<< env.print_state()
-				<< ",message=Started";
+				<< ",message=Done";
 			Utilities::logline_threadsafe << ss.str();
 		}
 

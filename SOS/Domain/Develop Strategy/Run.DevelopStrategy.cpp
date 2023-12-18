@@ -447,7 +447,8 @@ namespace domain
 			}
 		}
 
-		Utilities::Threadpool pool(8);
+		//Utilities::Threadpool pool(8);
+		Utilities::Threadpool pool(argmap::max_threads);
 
 		void compute_training_errors_thread_safe(Plush::Environment& _env,
 			std::function<std::tuple<double, unsigned long>(Plush::Environment& env,
