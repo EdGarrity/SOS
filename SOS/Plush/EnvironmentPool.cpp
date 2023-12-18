@@ -1,3 +1,4 @@
+#include "..\Domain\Arguments.h"
 #include "EnvironmentPool.h"
 
 namespace Plush
@@ -5,7 +6,7 @@ namespace Plush
 	EnvironmentPool::EnvironmentPool()
 	{
 		m_env_count = 0;
-		m_max_env_count = 8;
+		m_max_env_count = domain::argmap::max_threads;
 	}
 
 	void Plush::EnvironmentPool::register_thread()
