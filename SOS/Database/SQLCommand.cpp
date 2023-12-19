@@ -657,7 +657,7 @@ namespace database
 			ss << ",method=SQLCommand::execute"
 				<< ",diagnostic_level=9"
 				<< ",dwOffset_=" << dwOffset_
-				<< ",number_of_parameters_in_command_" << number_of_parameters_in_command_
+				<< ",number_of_parameters_in_command_=" << number_of_parameters_in_command_
 				<< ",message=Enter";
 			Utilities::logline_threadsafe << ss.str();
 		}
@@ -684,7 +684,7 @@ namespace database
 					<< ",diagnostic_level=9"
 					<< ",attempts=" << attempts
 					<< ",dwOffset_=" << dwOffset_
-					<< ",number_of_parameters_in_command_" << number_of_parameters_in_command_
+					<< ",number_of_parameters_in_command_=" << number_of_parameters_in_command_
 					<< ",message=do";
 				Utilities::logline_threadsafe << ss.str();
 			}
@@ -776,13 +776,23 @@ namespace database
 			if (FAILED(myGetColumnsInfo(pIRowset_, &nCols, &pColumnsInfo_, &pColumnStrings_)))
 				throw std::runtime_error("Failed to get the description of the rowset for use in binding structure creation.");
 
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			{
+				std::ostringstream ss;
+				ss << ",method=SQLCommand::execute"
+					<< ",diagnostic_level=9"
+					<< ",nCols=" << nCols
+					<< ",message=Get_rowset_description";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
 			// Create the binding structures.
 			myCreateDBBindings(nCols, pColumnsInfo_, &pDBBindings_, &pRowValues_);
-			pDBBindStatus_ = new DBBINDSTATUS[nCols];
+			pDBBindStatus_ = new DBBINDSTATUS[nCols];	// Potential memory leak
 
 			// Create the accessor.
 			pIRowset_->QueryInterface(IID_IAccessor, (void**)&pIAccessor_);
-			pIAccessor_->CreateAccessor(
+			hr_ = pIAccessor_->CreateAccessor(
 				DBACCESSOR_ROWDATA,		// Accessor will be used to retrieve row data.
 				nCols,					// Number of columns being bound
 				pDBBindings_,			// Structure containing bind info
@@ -790,6 +800,17 @@ namespace database
 				&hAccessor_,				// Returned accessor handle
 				pDBBindStatus_			// Information about binding validity
 			);
+
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			{
+				std::ostringstream ss;
+				ss << ",method=SQLCommand::execute"
+					<< ",diagnostic_level=9"
+					<< ",nCols=" << nCols
+					<< ",hr_=0x" << std::hex << hr_
+					<< ",message=CreateAccessor";
+				Utilities::logline_threadsafe << ss.str();
+			}
 		}
 
 		iRow_ = 0;

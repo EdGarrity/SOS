@@ -1009,6 +1009,26 @@ namespace domain
 						sa,
 						include_best_individual_in_breeding_pool);
 
+					if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
+					{
+						std::ostringstream ss;
+						ss << ",method=develop_strategy.run"
+							<< ",diagnostic_level=1"
+							<< ",message=save_new_generation";
+						Utilities::logline_threadsafe << ss.str();
+					}
+
+					datastore::agent_data.save();
+
+					if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
+					{
+						std::ostringstream ss;
+						ss << ",method=develop_strategy.run"
+							<< ",diagnostic_level=1"
+							<< ",message=new_generation_saved";
+						Utilities::logline_threadsafe << ss.str();
+					}
+
 					//// ******************************
 					//// *** Generate Status Report ***
 					//// ******************************
