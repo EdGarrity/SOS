@@ -68,7 +68,7 @@ namespace database
 			pIRowset_->ReleaseRows(cRowsObtained_, rghRows_, NULL, NULL, NULL);
 
 		delete[] pDBBindings_;
-		delete[] pDBBindStatus_;
+		//delete[] pDBBindStatus_;
 
 		g_pIMalloc->Free(pColumnsInfo_);
 		g_pIMalloc->Free(pColumnStrings_);
@@ -665,7 +665,10 @@ namespace database
 		IRowset*	pIRowset;
 		DBPARAMS	Params;
 		DBORDINAL	nCols;
-				
+
+		// The status of a binding.  That is, whether or not it was successfully validated.
+		DBBINDSTATUS* pDBBindStatus_ = NULL;
+
 		// The command requires the actual text as well as an indicator
 		// of its language and dialect.
 //		pICommandText_->SetCommandText(DBGUID_DEFAULT, strtowstr(command_).c_str());
@@ -797,9 +800,11 @@ namespace database
 				nCols,					// Number of columns being bound
 				pDBBindings_,			// Structure containing bind info
 				0,						// Not used for row accessors 
-				&hAccessor_,				// Returned accessor handle
+				&hAccessor_,			// Returned accessor handle
 				pDBBindStatus_			// Information about binding validity
 			);
+
+			delete[] pDBBindStatus_;
 
 			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{

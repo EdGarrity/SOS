@@ -42,8 +42,8 @@ namespace database
 		// information about the buffer.
 		DBBINDING*      pDBBindings_ = NULL;
 
-		// The status of a binding.  That is, whether or not it was successfully validated.
-		DBBINDSTATUS*   pDBBindStatus_ = NULL;
+		//// The status of a binding.  That is, whether or not it was successfully validated.
+		//DBBINDSTATUS*   pDBBindStatus_ = NULL;
 
 		// Column metadata.  See https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms722704(v%3Dvs.85)#dbcolumninfo-structures
 		DBCOLUMNINFO*   pColumnsInfo_ = NULL;
