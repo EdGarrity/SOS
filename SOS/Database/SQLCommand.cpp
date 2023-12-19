@@ -794,7 +794,7 @@ namespace database
 
 		iRow_ = 0;
 		cRowsObtained_ = 0;
-//		dwOffset_ = 0;		// This line was added to fix bug with dwOffset_ growing greater than MAX_ROW_LENGTH.
+		dwOffset_ = 0;		// This line was added to fix bug with dwOffset_ growing greater than MAX_ROW_LENGTH.
 		
 		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
