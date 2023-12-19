@@ -185,6 +185,7 @@ namespace domain
 				{
 					std::ostringstream ss;
 					ss << ",method=develop_strategy.produce_new_offspring"
+						<< ",diagnostic_level=9"
 						<< ",_number_of_example_cases=" << _number_of_example_cases
 						<< ",_number_of_training_cases=" << _number_of_training_cases
 						<< ",_best_strategy=" << _best_strategy
@@ -202,6 +203,7 @@ namespace domain
 				{
 					std::ostringstream ss;
 					ss << ",method=develop_strategy.produce_new_offspring"
+						<< ",diagnostic_level=9"
 						<< ",message=Reset_children";
 					Utilities::logline_threadsafe << ss.str();
 				}
@@ -216,6 +218,7 @@ namespace domain
 				{
 					std::ostringstream ss;
 					ss << ",method=develop_strategy.produce_new_offspring"
+						<< ",diagnostic_level=9"
 						<< ",message=Breed_new_generation";
 					Utilities::logline_threadsafe << ss.str();
 				}
@@ -285,6 +288,7 @@ namespace domain
 				{
 					std::ostringstream ss;
 					ss << ",method=develop_strategy.produce_new_offspring"
+						<< ",diagnostic_level=9"
 						<< ",Alternate=" << (double)state_count[pushGP::SimulatedAnnealing_States::alternate] / (double)argmap::population_size * 100.0
 						<< ",Alternate_elite=" << (double)state_count[pushGP::SimulatedAnnealing_States::alternate_elite] / (double)argmap::population_size * 100.0
 						<< ",Cloan=" << (double)state_count[pushGP::SimulatedAnnealing_States::cloan] / (double)argmap::population_size * 100.0
@@ -304,6 +308,7 @@ namespace domain
 						{
 							std::ostringstream ss;
 							ss << ",method=develop_strategy.produce_new_offspring"
+								<< ",diagnostic_level=9"
 								<< ",training_case=" << training_case
 								<< ",message=for_loop";
 							Utilities::logline_threadsafe << ss.str();
@@ -315,6 +320,7 @@ namespace domain
 							{
 								std::ostringstream ss;
 								ss << ",method=develop_strategy.produce_new_offspring"
+									<< ",diagnostic_level=9"
 									<< ",training_case=" << training_case
 									<< ",best_individual_for_training_case=" << best_individual_for_training_case
 									<< ",message=for_loop";
@@ -328,6 +334,7 @@ namespace domain
 							{
 								std::ostringstream ss;
 								ss << ",method=develop_strategy.produce_new_offspring"
+									<< ",diagnostic_level=9"
 									<< ",best_individual_for_training_case=" << best_individual_for_training_case
 									<< ",std::numeric_limits<unsigned int>::max=" << std::numeric_limits<unsigned int>::max
 									<< ",message=Produce_new_offspring?";
@@ -340,6 +347,7 @@ namespace domain
 							{
 								std::ostringstream ss;
 								ss << ",method=develop_strategy.produce_new_offspring"
+									<< ",diagnostic_level=9"
 									<< ",best_individual_for_training_case=" << best_individual_for_training_case
 									<< ",message=New_offspring_produced";
 								Utilities::logline_threadsafe << ss.str();
@@ -353,6 +361,7 @@ namespace domain
 				{
 					std::ostringstream ss;
 					ss << ",method=develop_strategy.produce_new_offspring"
+						<< ",diagnostic_level=9"
 						<< ",message=Done";
 					Utilities::logline_threadsafe << ss.str();
 				}
@@ -368,6 +377,7 @@ namespace domain
 				{
 					std::ostringstream ss;
 					ss << ",method=develop_strategy.produce_new_offspring"
+						<< ",diagnostic_level=0"
 						<< ",exception=" << e.what()
 						<< ",message=Standard_exception";
 					Utilities::logline_threadsafe << ss.str();
@@ -386,6 +396,7 @@ namespace domain
 				{
 					std::ostringstream ss;
 					ss << ",method=develop_strategy.produce_new_offspring"
+						<< ",diagnostic_level=0"
 						<< ",message=Unknown_exception";
 					Utilities::logline_threadsafe << ss.str();
 				}
@@ -409,6 +420,7 @@ namespace domain
 			{
 				std::ostringstream ss;
 				ss << ",method=RunProgram.compute_training_errors"
+					<< ",diagnostic_level=9"
 					<< ",message=Enter";
 				Utilities::logline_threadsafe << ss.str();
 			}
@@ -439,6 +451,7 @@ namespace domain
 						std::ostringstream ss;
 						ss << ",stratergy=" << stratergy_index
 							<< ",case=" << training_case_index
+							<< ",diagnostic_level=9"
 							<< ",method=RunProgram.compute_training_errors"
 							<< ",message=Schedule_to_run_strategy";
 						Utilities::logline_threadsafe << ss.str();
@@ -459,6 +472,7 @@ namespace domain
 			{
 				std::ostringstream ss;
 				ss << ",method=RunProgram.compute_training_errors_thread_safe"
+					<< ",diagnostic_level=2"
 					<< ",message=Enter";
 				Utilities::logline_threadsafe << ss.str();
 			}
@@ -472,6 +486,7 @@ namespace domain
 			{
 				std::ostringstream ss;
 				ss << ",method=RunProgram.compute_training_errors_thread_safe"
+					<< ",diagnostic_level=0"
 					<< ",expected_latches=" << expected_latches
 					<< ",std::latch::max()=" << std::latch::max()
 					<< ",message=Expected_latches_greater_than_max";
@@ -496,6 +511,7 @@ namespace domain
 							std::ostringstream ss;
 							ss << ",stratergy=" << strategy_index
 								<< ",case=" << training_case_index
+								<< ",diagnostic_level=2"
 								<< ",method=RunProgram.compute_training_errors_thread_safe"
 								<< ",message=Schedule_to_run_strategy";
 							Utilities::logline_threadsafe << ss.str();
@@ -512,6 +528,7 @@ namespace domain
 							std::ostringstream ss;
 							ss << ",stratergy=" << strategy_index
 								<< ",case=" << training_case_index
+								<< ",diagnostic_level=2"
 								<< ",method=RunProgram.compute_training_errors_thread_safe"
 								<< ",data_size=" << data_size
 								<< ",training_case_index=" << training_case_index
@@ -528,6 +545,7 @@ namespace domain
 			{
 				std::ostringstream ss;
 				ss << ",method=RunProgram.compute_training_errors_thread_safe"
+					<< ",diagnostic_level=2"
 					<< ",message=Waiting_for_all_threads_to_complete";
 				Utilities::logline_threadsafe << ss.str();
 			}
@@ -538,6 +556,7 @@ namespace domain
 			{
 				std::ostringstream ss;
 				ss << ",method=RunProgram.compute_training_errors_thread_safe"
+					<< ",diagnostic_level=2"
 					<< ",message=All_threads_complete";
 				Utilities::logline_threadsafe << ss.str();
 			}
@@ -551,6 +570,7 @@ namespace domain
 				{
 					std::ostringstream ss;
 					ss << ",method=RunProgram.compute_training_errors_thread_safe"
+						<< ",diagnostic_level=2"
 						<< ",training_case_indexes=" << datastore::financial_data.get_count()
 						<< ",stratergy_indexes=" << domain::argmap::population_size
 						<< ",message=Orders_Saved_to_DB";
@@ -561,6 +581,7 @@ namespace domain
 			{
 				std::ostringstream ss;
 				ss << ",method=RunProgram.compute_training_errors_thread_safe"
+					<< ",diagnostic_level=2"
 					<< ",training_case_indexes=" << datastore::financial_data.get_count()
 					<< ",stratergy_indexes=" << domain::argmap::population_size
 					<< ",message=No_Orders_Saved_to_DB";
@@ -592,6 +613,7 @@ namespace domain
 			{
 				std::ostringstream ss;
 				ss << ",method=DevelopStrategy.run"
+					<< ",diagnostic_level=1"
 					<< ",message=Create_Population_Agents";
 				Utilities::logline_threadsafe << ss.str();
 			}
@@ -683,6 +705,7 @@ namespace domain
 				{
 					std::ostringstream ss;
 					ss << ",method=DevelopStrategy.run"
+						<< ",diagnostic_level=1"
 						<< ",message=Create_Population_Agents";
 					Utilities::logline_threadsafe << ss.str();
 				}
@@ -693,6 +716,7 @@ namespace domain
 				{
 					std::ostringstream ss;
 					ss << ",method=DevelopStrategy.run"
+						<< ",diagnostic_level=1"
 						<< ",agents_created=" << agents_created
 						<< ",message=Created_Population_Agents";
 					Utilities::logline_threadsafe << ss.str();
@@ -737,6 +761,7 @@ namespace domain
 							{
 								std::ostringstream ss;
 								ss << ",method=DevelopStrategy.run"
+									<< ",diagnostic_level=1"
 									<< "temperature=" << sa.get_temperature()
 									<< ",message=Heat_up";
 								Utilities::logline_threadsafe << ss.str();
@@ -756,6 +781,7 @@ namespace domain
 						{
 							std::ostringstream ss;
 							ss << ",method=DevelopStrategy.run"
+								<< ",diagnostic_level=1"
 								<< "temperature=" << sa.get_temperature()
 								<< ",message=Cool_down";
 							Utilities::logline_threadsafe << ss.str();
@@ -769,6 +795,7 @@ namespace domain
 					{
 						std::ostringstream ss;
 						ss << ",method=DevelopStrategy.run"
+							<< ",diagnostic_level=1"
 							<< ",message=Calculate_trading_orders_for_each_trading_day";
 						Utilities::logline_threadsafe << ss.str();
 					}
@@ -787,6 +814,7 @@ namespace domain
 					{
 						std::ostringstream ss;
 						ss << ",method=DevelopStrategy.run"
+							<< ",diagnostic_level=1"
 							<< ",message=Returned_from_compute_training_errors_thread_safe";
 						Utilities::logline_threadsafe << ss.str();
 					}
@@ -854,6 +882,7 @@ namespace domain
 							{
 								std::ostringstream ss;
 								ss << ",method=develop_strategy.run"
+									<< ",diagnostic_level=1"
 									<< ",training_case_window_start=" << training_case_window_start
 									<< ",strategy=" << strategy_index
 									<< ",score=" << score
@@ -884,6 +913,7 @@ namespace domain
 						{
 							std::ostringstream ss;
 							ss << ",method=develop_strategy.run"
+								<< ",diagnostic_level=1"
 								<< ",strategy=" << strategy_index
 								<< ",number_of_passing_training_cases=" << number_of_passing_training_cases
 								<< ",number_of_training_cases=" << number_of_training_cases
@@ -914,6 +944,7 @@ namespace domain
 						{
 							std::ostringstream ss;
 							ss << ",method=develop_strategy.run"
+								<< ",diagnostic_level=1"
 								<< ",strategy=" << strategy_index
 								<< ",number_of_passing_training_cases=" << number_of_passing_training_cases
 								<< ",average_score=" << sum_of_score
@@ -929,6 +960,7 @@ namespace domain
 					{
 						std::ostringstream ss;
 						ss << ",method=develop_strategy.run"
+							<< ",diagnostic_level=1"
 							<< ",best_strategy_score=" << best_strategy_score
 							<< ",best_strategy=" << best_strategy
 							<< ",message=Evaluate_strategies_results";
@@ -955,6 +987,7 @@ namespace domain
 					{
 						std::ostringstream ss;
 						ss << ",method=develop_strategy.run"
+							<< ",diagnostic_level=1"
 							<< ",strategy=" << strategy_index
 							<< ",datastore::financial_data.get_count()=" << datastore::financial_data.get_count()
 							<< ",test_case_score=" << test_case_score
@@ -1032,6 +1065,7 @@ namespace domain
 					{
 						std::ostringstream ss;
 						ss << ",method=DevelopStrategy.run"
+							<< ",diagnostic_level=1"
 							<< ",message=Install New Generation";
 						Utilities::logline_threadsafe << ss.str();
 					}
@@ -1045,6 +1079,7 @@ namespace domain
 					{
 						std::ostringstream ss;
 						ss << ",method=DevelopStrategy.run"
+							<< ",diagnostic_level=1"
 							<< ",message=Done";
 						Utilities::logline_threadsafe << ss.str();
 					}
@@ -1068,6 +1103,7 @@ namespace domain
 				{
 					std::ostringstream ss;
 					ss << ",method=DevelopStrategy.run"
+						<< ",diagnostic_level=0"
 						<< ",exception=" << e.what()
 						<< "," << warning_message.str();
 					Utilities::logline_threadsafe << ss.str();
@@ -1085,6 +1121,7 @@ namespace domain
 				{
 					std::ostringstream ss;
 					ss << ",method=DevelopStrategy.run"
+						<< ",diagnostic_level=0"
 						<< ",exception=Unknown"
 						<< "," << warning_message.str();
 					Utilities::logline_threadsafe << ss.str();

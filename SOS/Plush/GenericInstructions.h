@@ -155,6 +155,7 @@ namespace Plush
 			{
 				std::ostringstream ss;
 				ss << ",exception=" << e.what()
+					<< ",diagnostic_level=0"
 					<< ",number_of_blocks=" << _env.length<CodeAtom>()
 					<< ",method=equals<CodeAtom>"
 					<< "," << warning_message.str();
@@ -174,6 +175,7 @@ namespace Plush
 			{
 				std::ostringstream ss;
 				ss << ",number_of_blocks=" << _env.length<CodeAtom>()
+					<< ",diagnostic_level=0"
 					<< ",method=equals<CodeAtom>"
 					<< "," << warning_message.str();
 				Utilities::logline_threadsafe << ss.str();
@@ -227,6 +229,7 @@ namespace Plush
 			{
 				std::ostringstream ss;
 				ss << ",exception=" << e.what()
+					<< ",diagnostic_level=0"
 					<< ",number_of_blocks=" << _env.length<ExecAtom>()
 					<< ",method=equals<ExecAtom>"
 					<< "," << warning_message.str();
@@ -246,6 +249,7 @@ namespace Plush
 			{
 				std::ostringstream ss;
 				ss << ",number_of_blocks=" << _env.length<ExecAtom>()
+					<< ",diagnostic_level=0"
 					<< ",method=equals<ExecAtom>"
 					<< "," << warning_message.str();
 				Utilities::logline_threadsafe << ss.str();

@@ -23,6 +23,7 @@ namespace datastore
 			std::ostringstream ss;
 			ss << ",population_size=" << population_size
 				<< ",test_data_size=" << test_data_size
+				<< ",diagnostic_level=9"
 				<< ",method=datastore.OrderMatrix.initialize"
 				<< ",message=Enter";
 			Utilities::logline_threadsafe << ss.str();
@@ -138,6 +139,7 @@ namespace datastore
 		{
 			std::ostringstream ss;
 			ss << ",method=OrderMatrix.save"
+				<< ",diagnostic_level=9"
 				<< ",training_case_indexes=" << training_case_indexes
 				<< ",stratergy_indexes=" << strategy_indexes
 				<< ",message=Enter";
@@ -169,6 +171,7 @@ namespace datastore
 		{
 			std::ostringstream ss;
 			ss << ",method=OrderMatrix.save"
+				<< ",diagnostic_level=9"
 				<< ",training_case_indexes=" << training_case_indexes
 				<< ",stratergy_indexes=" << strategy_indexes
 				<< ",message=Done";
@@ -182,6 +185,7 @@ namespace datastore
 		{
 			std::ostringstream ss;
 			ss << ",method=OrderMatrix.save"
+				<< ",diagnostic_level=9"
 				<< ",training_case_indexes=" << training_case_index
 				<< ",stratergy_indexes=" << strategy_indexes
 				<< ",message=Enter";
@@ -214,6 +218,7 @@ namespace datastore
 		{
 			std::ostringstream ss;
 			ss << ",method=OrderMatrix.save"
+				<< ",diagnostic_level=9"
 				<< ",training_case_indexes=" << training_case_index
 				<< ",stratergy_indexes=" << strategy_indexes
 				<< ",message=Done";

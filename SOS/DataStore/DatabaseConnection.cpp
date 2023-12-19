@@ -22,6 +22,7 @@ namespace datastore
 			{
 				std::ostringstream ss;
 				ss << ",method=DatabaseConnection.get_connection"
+					<< ",diagnostic_level=9"
 					<< ",db_init_datasource=" << db_init_datasource
 					<< ",message=connecting";
 				Utilities::logline_threadsafe << ss.str();

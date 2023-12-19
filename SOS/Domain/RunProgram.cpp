@@ -20,6 +20,7 @@ namespace domain
 		{
 			std::ostringstream ss;
 			ss << ",env_index = " << env_index
+				<< ",diagnostic_level=3"
 				<< ",stratergy=" << workorder_form.get_stratergy_index()
 				<< ",case=" << workorder_form.get_training_case_index()
 				<< ",method=RunProgram.run"
@@ -35,6 +36,7 @@ namespace domain
 		{
 			std::ostringstream ss;
 			ss << ",env_index = " << env_index
+				<< ",diagnostic_level=3"
 				<< ",stratergy=" << workorder_form.get_stratergy_index()
 				<< ",case=" << workorder_form.get_training_case_index()
 				<< ",method=RunProgram.run"
@@ -59,6 +61,7 @@ namespace domain
 			{
 				std::ostringstream ss;
 				ss << ",env_index = " << env_index
+					<< ",diagnostic_level=3"
 					<< ",stratergy=" << workorder_form.get_stratergy_index()
 					<< ",case=" << workorder_form.get_training_case_index()
 					<< ",method=RunProgram.run"
@@ -77,6 +80,7 @@ namespace domain
 			{
 				std::ostringstream ss; 
 				ss << ",env_index = " << env_index
+					<< ",diagnostic_level=0"
 					<< ",stratergy=" << workorder_form.get_stratergy_index()
 					<< ",case=" << workorder_form.get_training_case_index()
 					<< ",exception=" << e.what()
@@ -97,6 +101,7 @@ namespace domain
 			{
 				std::ostringstream ss;
 				ss << ",env_index = " << env_index
+					<< ",diagnostic_level=0"
 					<< ",stratergy=" << workorder_form.get_stratergy_index()
 					<< ",case=" << workorder_form.get_training_case_index()
 					<< ",exception=Unknown"

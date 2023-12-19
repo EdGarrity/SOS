@@ -38,9 +38,11 @@ namespace pushGP
 
 		void set_temperature(double _temperature)
 		{
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
 				ss << ",method=SimulatedAnnealing.set_temperature"
+					<< ",diagnostic_level=9"
 					<< ",_temperature= " << _temperature
 					<< ",message=configuration";
 				Utilities::logline_threadsafe << ss.str();
@@ -52,9 +54,11 @@ namespace pushGP
 		void set_hot()
 		{
 			temperature_ = 1.0;
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
 				ss << ",method=SimulatedAnnealing.set_hot"
+					<< ",diagnostic_level=9"
 					<< ",_temperature= " << temperature_
 					<< ",message=configuration";
 				Utilities::logline_threadsafe << ss.str();
@@ -66,9 +70,11 @@ namespace pushGP
 		{
 			temperature_ = 0.0;
 			temperature_ = 1.0;
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
 				ss << ",method=SimulatedAnnealing.set_cold"
+					<< ",diagnostic_level=9"
 					<< ",_temperature= " << temperature_
 					<< ",message=configuration";
 				Utilities::logline_threadsafe << ss.str();
@@ -82,9 +88,11 @@ namespace pushGP
 			temperature_ = (temperature_ > 1.0) ? 1.0 : temperature_;
 
 			temperature_ = 1.0;
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
 				ss << ",method=SimulatedAnnealing.heat_up"
+					<< ",diagnostic_level=9"
 					<< ",_temperature= " << temperature_
 					<< ",message=configuration";
 				Utilities::logline_threadsafe << ss.str();
@@ -98,9 +106,11 @@ namespace pushGP
 			temperature_ = (temperature_ < 0.0) ? 0.0 : temperature_;
 
 			temperature_ = 1.0;
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
 				ss << ",method=SimulatedAnnealing.cool_down"
+					<< ",diagnostic_level=9"
 					<< ",_temperature= " << temperature_
 					<< ",message=configuration";
 				Utilities::logline_threadsafe << ss.str();

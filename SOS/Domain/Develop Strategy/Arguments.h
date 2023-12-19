@@ -6,8 +6,7 @@ namespace domain
 {
 	namespace argmap
 	{
-		// Diagnostic Level
-		const int diagnostic_level = 1;
+		// Diagnostic Level definitions
 		const int diagnostic_level_1 = 1;
 		const int diagnostic_level_2 = 2;
 		const int diagnostic_level_3 = 3;
@@ -17,6 +16,9 @@ namespace domain
 		const int diagnostic_level_7 = 7;
 		const int diagnostic_level_8 = 8;
 		const int diagnostic_level_9 = 9;
+
+		// Diagnostic Level
+		const int diagnostic_level = diagnostic_level_9;
 
 
 		// Specify which financial instruments to target

@@ -391,6 +391,7 @@ namespace database
 		{
 			std::ostringstream ss;
 			ss << ",method=SQLConnection.disconnect"
+				<< ",diagnostic_level=0"
 				<< ",exception=Unknown"
 				<< ",message=Error freeeing resources";
 			Utilities::logline_threadsafe << ss.str();

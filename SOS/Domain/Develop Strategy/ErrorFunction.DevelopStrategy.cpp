@@ -46,6 +46,7 @@ namespace domain
 			{
 				std::ostringstream ss;
 				ss << ",case=" << case_index
+					<< ",diagnostic_level=9"
 					<< ",method=develop_strategy.run_program"
 					<< ",message=Started";
 				Utilities::logline_threadsafe << ss.str();
@@ -65,6 +66,7 @@ namespace domain
 			{
 				std::ostringstream ss;
 				ss << ",case=" << case_index
+					<< ",diagnostic_level=9"
 					<< ",method=develop_strategy.run_program"
 					<< ",message=Done";
 				Utilities::logline_threadsafe << ss.str();
@@ -102,6 +104,7 @@ namespace domain
 				std::ostringstream ss;
 				ss << ",stratergy=" << strategy_index
 					<< ",case=" << case_index
+					<< ",diagnostic_level=9"
 					<< ",method=develop_strategy.run_strategy_threadsafe"
 					<< ",message=Started";
 				Utilities::logline_threadsafe << ss.str();
@@ -119,6 +122,7 @@ namespace domain
 				std::ostringstream ss;
 				ss << ",stratergy=" << strategy_index
 					<< ",case=" << case_index
+					<< ",diagnostic_level=9"
 					<< ",method=develop_strategy.run_strategy_threadsafe"
 					<< ",message=Done";
 				Utilities::logline_threadsafe << ss.str();

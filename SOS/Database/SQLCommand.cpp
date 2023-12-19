@@ -287,6 +287,7 @@ namespace database
 		{
 			std::ostringstream ss;
 			ss << ",method=SQLCommand::set_as_string"
+				<< ",diagnostic_level=9"
 				<< ",parm_no=" << parm_no
 				<< ",parameter_size=" << parameter.size()
 				<< ",message=Enter";
@@ -301,6 +302,7 @@ namespace database
 		{
 			std::ostringstream ss;
 			ss << ",method=SQLCommand::set_as_string"
+				<< ",diagnostic_level=9"
 				<< ",dwOffset_=" << dwOffset_
 				<< ",message=check dwOffset_";
 			Utilities::logline_threadsafe << ss.str();
@@ -341,6 +343,7 @@ namespace database
 		{
 			std::ostringstream ss;
 			ss << ",method=SQLCommand::set_as_string"
+				<< ",diagnostic_level=0"
 				<< ",dwOffset_=" << dwOffset_
 				<< ",message=Exception";
 			Utilities::logline_threadsafe << ss.str();
@@ -352,6 +355,7 @@ namespace database
 		{
 			std::ostringstream ss;
 			ss << ",method=SQLCommand::set_as_string"
+				<< ",diagnostic_level=9"
 				<< ",dwOffset_=" << dwOffset_
 				<< ",message=Done";
 			Utilities::logline_threadsafe << ss.str();
@@ -651,6 +655,7 @@ namespace database
 		{
 			std::ostringstream ss;
 			ss << ",method=SQLCommand::execute"
+				<< ",diagnostic_level=9"
 				<< ",dwOffset_=" << dwOffset_
 				<< ",number_of_parameters_in_command_" << number_of_parameters_in_command_
 				<< ",message=Enter";
@@ -676,6 +681,7 @@ namespace database
 			{
 				std::ostringstream ss;
 				ss << ",method=SQLCommand::execute"
+					<< ",diagnostic_level=9"
 					<< ",attempts=" << attempts
 					<< ",dwOffset_=" << dwOffset_
 					<< ",number_of_parameters_in_command_" << number_of_parameters_in_command_
@@ -743,6 +749,7 @@ namespace database
 			{
 				std::ostringstream ss;
 				ss << ",method=SQLCommand::execute"
+					<< ",diagnostic_level=9"
 					<< ",pIRowset_=NULL"
 					<< ",nCols=" << nCols
 					<< ",message=if";
@@ -756,6 +763,7 @@ namespace database
 			{
 				std::ostringstream ss;
 				ss << ",method=SQLCommand::execute"
+					<< ",diagnostic_level=9"
 					<< ",pIRowset_!=NULL"
 					<< ",message=if";
 				Utilities::logline_threadsafe << ss.str();
@@ -792,6 +800,7 @@ namespace database
 		{
 			std::ostringstream ss;
 			ss << ",method=SQLCommand::execute"
+				<< ",diagnostic_level=9"
 				<< ",dwOffset_=" << dwOffset_
 				<< ",message=Done";
 			Utilities::logline_threadsafe << ss.str();

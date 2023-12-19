@@ -54,6 +54,7 @@ namespace Plush
 			{
 				std::ostringstream ss;
 				ss << ",method=Plush_Environment"
+					<< ",diagnostic_level=1"
 					<< ",message=Constructing";
 				Utilities::logline_threadsafe << ss.str();
 			}
@@ -106,14 +107,6 @@ namespace Plush
 
 			g_individual_index = new_individual_index;
 			g_example_case = new_example_case;
-
-
-
-			if ((new_example_case > 100) && (new_individual_index == 124))
-			{
-				std::ostringstream ss; ss << "set_current_individual_index(new_individual_index=" << new_individual_index << ", new_example_case=" << new_example_case << ")"; Utilities::logline_threadsafe << ss.str();
-			}
-
 		}
 
 		virtual void clear_stacks()

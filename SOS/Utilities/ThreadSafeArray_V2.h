@@ -80,11 +80,13 @@ namespace Utilities
 	template<class T>
 	inline void ThreadSafeArray_2D_V2<T>::resize(size_t N1, size_t N2)
 	{
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",N1=" << N1
 				<< ",N2=" << N2
 				<< ",method=ThreadSafeArray_2D_V2.resize"
+				<< ",diagnostic_level=9"
 				<< ",message=Enter";
 			Utilities::logline_threadsafe << ss.str();
 		}
@@ -111,11 +113,13 @@ namespace Utilities
 				std::string debug_message = error_message.str();
 				Utilities::debug_log(-1, "ThreadSafeArray_2D_V2", debug_message);
 #endif
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 				{
 					std::ostringstream ss;
 					ss << ",N1=" << N1
 						<< ",N2=" << N2
 						<< ",method=ThreadSafeArray_2D_V2.resize"
+						<< ",diagnostic_level=9"
 						<< ",message=Out_of_memory";
 					Utilities::logline_threadsafe << ss.str();
 				}
@@ -133,9 +137,11 @@ namespace Utilities
 			std::stringstream error_message;
 			error_message << "ThreadSafeArray_2D_V2::load(" << y << "," << x << ") - Array bounds not defined";
 
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
 				ss << ",method=ThreadSafeArray_2D_V2.load"
+					<< ",diagnostic_level=9"
 					<< ",y=" << y
 					<< ",x=" << x
 					<< ",n1=" << n1
@@ -156,9 +162,11 @@ namespace Utilities
 			std::string debug_message = error_message.str();
 			Utilities::debug_log(-1, "ThreadSafeArray_2D_V2", debug_message);
 #endif
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
 				ss << ",method=ThreadSafeArray_2D_V2.load"
+					<< ",diagnostic_level=9"
 					<< ",y=" << y
 					<< ",x=" << x
 					<< ",n1=" << n1

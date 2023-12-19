@@ -112,6 +112,7 @@ namespace datastore
 		{
 			std::ostringstream ss;
 			ss << ",method=AgentData::save"
+				<< ",diagnostic_level=9"
 				<< ",message=Enter";
 			Utilities::logline_threadsafe << ss.str();
 		}
@@ -136,6 +137,7 @@ namespace datastore
 		{
 			std::ostringstream ss;
 			ss << ",method=AgentData::save"
+				<< ",diagnostic_level=9"
 				<< ",message=Begin a transaction";
 			Utilities::logline_threadsafe << ss.str();
 		}
@@ -146,6 +148,7 @@ namespace datastore
 		{
 			std::ostringstream ss;
 			ss << ",method=AgentData::save"
+				<< ",diagnostic_level=9"
 				<< ",message=Delete previously saved generation";
 			Utilities::logline_threadsafe << ss.str();
 		}
@@ -156,6 +159,7 @@ namespace datastore
 		{
 			std::ostringstream ss;
 			ss << ",method=AgentData::save"
+				<< ",diagnostic_level=9"
 				<< ",message=Save new generation";
 			Utilities::logline_threadsafe << ss.str();
 		}
@@ -165,6 +169,7 @@ namespace datastore
 		{
 			std::ostringstream ss;
 			ss << ",method=AgentData::save"
+				<< ",diagnostic_level=9"
 				<< ",message=Begin Loop";
 			Utilities::logline_threadsafe << ss.str();
 		}
@@ -175,6 +180,7 @@ namespace datastore
 			{
 				std::ostringstream ss;
 				ss << ",method=AgentData::save"
+					<< ",diagnostic_level=9"
 					<< ",message=Loop iteration " << n;
 				Utilities::logline_threadsafe << ss.str();
 			}
@@ -186,6 +192,7 @@ namespace datastore
 			{
 				std::ostringstream ss;
 				ss << ",method=AgentData::save"
+					<< ",diagnostic_level=9"
 					<< ",genome=" << pushGP::globals::population_agents[n]
 					<< ",message=set_as_string";
 				Utilities::logline_threadsafe << ss.str();
@@ -198,6 +205,7 @@ namespace datastore
 			{
 				std::ostringstream ss;
 				ss << ",method=AgentData::save"
+					<< ",diagnostic_level=9"
 					<< ",parents=" << parents.size()
 					<< ",message=get_parents";
 				Utilities::logline_threadsafe << ss.str();
@@ -289,6 +297,7 @@ namespace datastore
 		{
 			std::ostringstream ss;
 			ss << ",method=AgentData::save"
+				<< ",diagnostic_level=9"
 				<< ",message=Commit transaction";
 			Utilities::logline_threadsafe << ss.str();
 		}
@@ -300,6 +309,7 @@ namespace datastore
 		{
 			std::ostringstream ss;
 			ss << ",method=AgentData::save"
+				<< ",diagnostic_level=9"
 				<< ",message=Done";
 			Utilities::logline_threadsafe << ss.str();
 		}

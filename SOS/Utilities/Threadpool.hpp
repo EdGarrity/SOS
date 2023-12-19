@@ -23,9 +23,11 @@ namespace Utilities
     public:
         explicit Threadpool(const std::size_t threadCount)
         {
+            if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
             {
                 std::ostringstream ss;
                 ss << ",method=Threadpool.Threadpool"
+                    << ",diagnostic_level=9"
                     << ",threadCount=" << threadCount
                     << ",message=Constructor";
                 Utilities::logline_threadsafe << ss.str();
@@ -33,9 +35,11 @@ namespace Utilities
 
             for (std::size_t i = 0; i < threadCount; ++i)
             {
+                if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
                 {
                     std::ostringstream ss;
                     ss << ",method=Threadpool.Threadpool"
+                        << ",diagnostic_level=9"
                         << ",i=" << i
                         << ",message=Creating_Thread";
                     Utilities::logline_threadsafe << ss.str();
@@ -72,9 +76,11 @@ namespace Utilities
         {
             while (m_coros.size() != 0)
             {
+                if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
                 {
                     std::ostringstream ss;
                     ss << ",method=Threadpool.wait_for_all_threads_to_complete"
+                        << ",diagnostic_level=9"
                         << ",work_queue_size=" << m_coros.size()
                         << ",message=Waiting_for_work_queue_to_be_empty";
                     Utilities::logline_threadsafe << ss.str();
@@ -83,9 +89,11 @@ namespace Utilities
                 std::this_thread::sleep_for(std::chrono::seconds(10));
             }
 
+            if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
             {
                 std::ostringstream ss;
                 ss << ",method=Threadpool.wait_for_all_threads_to_complete"
+                    << ",diagnostic_level=9"
                     << ",work_queue_size=" << m_coros.size()
                     << ",message=Work_queue_empty";
                 Utilities::logline_threadsafe << ss.str();
@@ -93,9 +101,11 @@ namespace Utilities
 
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
+            if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
             {
                 std::ostringstream ss;
                 ss << ",method=Threadpool.wait_for_all_threads_to_complete"
+                    << ",diagnostic_level=9"
                     << ",thread_count=" << m_threads.size()
                     << ",message=Waiting_for_all_threads_to_complete";
                 Utilities::logline_threadsafe << ss.str();
@@ -104,9 +114,11 @@ namespace Utilities
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
             work_done.wait();
 
+            if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
             {
                 std::ostringstream ss;
                 ss << ",method=Threadpool.wait_for_all_threads_to_complete"
+                    << ",diagnostic_level=9"
                     << ",message=All_work_done";
                 Utilities::logline_threadsafe << ss.str();
             }
@@ -137,18 +149,22 @@ namespace Utilities
 
         void thread_loop()
         {
+            if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
             {
                 std::ostringstream ss;
                 ss << ",method=Threadpool.thread_loop"
+                    << ",diagnostic_level=9"
                     << ",message=Started";
                 Utilities::logline_threadsafe << ss.str();
             }
 
             while (!m_stop_thread)
             {
+                if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
                 {
                     std::ostringstream ss;
                     ss << ",method=Threadpool.thread_loop"
+                        << ",diagnostic_level=9"
                         << ",m_coros.size=" << m_coros.size()
                         << ",message=Entered_lock";
                     Utilities::logline_threadsafe << ss.str();
@@ -156,9 +172,11 @@ namespace Utilities
 
                 std::unique_lock<std::mutex> lock(m_mutex);
 
+                if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
                 {
                     std::ostringstream ss;
                     ss << ",method=Threadpool.thread_loop"
+                        << ",diagnostic_level=9"
                         << ",m_coros.size=" << m_coros.size()
                         << ",message=Entered_loop";
                     Utilities::logline_threadsafe << ss.str();
@@ -174,9 +192,11 @@ namespace Utilities
                     break;
                 }
 
+                if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
                 {
                     std::ostringstream ss;
                     ss << ",method=Threadpool.thread_loop"
+                        << ",diagnostic_level=9"
                         << ",m_coros.size=" << m_coros.size()
                         << ",message=Found_work";
                     Utilities::logline_threadsafe << ss.str();
@@ -186,9 +206,11 @@ namespace Utilities
                 m_coros.pop();
                 lock.unlock();
 
+                if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
                 {
                     std::ostringstream ss;
                     ss << ",method=Threadpool.thread_loop"
+                        << ",diagnostic_level=9"
                         << ",m_coros.size=" << m_coros.size()
                         << ",message=coro.resuming";
                     Utilities::logline_threadsafe << ss.str();
@@ -196,18 +218,22 @@ namespace Utilities
 
                 coro.resume();
 
+                if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
                 {
                     std::ostringstream ss;
                     ss << ",method=Threadpool.thread_loop"
+                        << ",diagnostic_level=9"
                         << ",m_coros.size=" << m_coros.size()
                         << ",message=coro.resumed";
                     Utilities::logline_threadsafe << ss.str();
                 }
             }
 
+            if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
             {
                 std::ostringstream ss;
                 ss << ",method=Threadpool.thread_loop"
+                    << ",diagnostic_level=9"
                     << ",message=Done";
                 Utilities::logline_threadsafe << ss.str();
             }

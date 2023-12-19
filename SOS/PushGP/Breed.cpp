@@ -37,9 +37,11 @@ namespace pushGP
 		bool _include_best_individual_in_breeding_pool,
 		int _best_individual)
 	{
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",method=pushGP.SimulatedAnnealing_States"
+				<< ",diagnostic_level=9"
 				<< ",_individual_index=" << _individual_index
 				<< ",_number_of_example_cases=" << _number_of_example_cases
 				<< ",_include_best_individual_in_breeding_pool=" << _include_best_individual_in_breeding_pool
@@ -59,9 +61,11 @@ namespace pushGP
 
 		if (state == pushGP::SimulatedAnnealing_States::alternate)
 		{
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
 				ss << ",method=pushGP.SimulatedAnnealing_States"
+					<< ",diagnostic_level=9"
 					<< ",state=" << "alternate"
 					<< ",message=get_state";
 				Utilities::logline_threadsafe << ss.str();
@@ -75,9 +79,11 @@ namespace pushGP
 
 			while ((!done) && (--attempts_left >= 0))
 			{
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 				{
 					std::ostringstream ss;
 					ss << ",method=pushGP.SimulatedAnnealing_States"
+						<< ",diagnostic_level=9"
 						<< ",done=" << done
 						<< ",attempts_left=" << attempts_left
 						<< ",first=" << first
@@ -207,9 +213,11 @@ namespace pushGP
 
 		else if (state == pushGP::SimulatedAnnealing_States::alternate_elite)
 		{
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
 				ss << ",method=pushGP.SimulatedAnnealing_States"
+					<< ",diagnostic_level=9"
 					<< ",state=" << "alternate_elite"
 					<< ",message=get_state";
 				Utilities::logline_threadsafe << ss.str();
@@ -339,9 +347,11 @@ namespace pushGP
 
 		else if (state == pushGP::SimulatedAnnealing_States::mutate)
 		{
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
 				ss << ",method=pushGP.SimulatedAnnealing_States"
+					<< ",diagnostic_level=9"
 					<< ",state=" << "mutate"
 					<< ",message=get_state";
 				Utilities::logline_threadsafe << ss.str();
@@ -364,9 +374,11 @@ namespace pushGP
 
 		else if (state == pushGP::SimulatedAnnealing_States::cloan)
 		{
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
 				ss << ",method=pushGP.SimulatedAnnealing_States"
+					<< ",diagnostic_level=9"
 					<< ",state=" << "cloan"
 					<< ",message=get_state";
 				Utilities::logline_threadsafe << ss.str();
@@ -380,9 +392,11 @@ namespace pushGP
 
 		else
 		{
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
 				ss << ",method=pushGP.SimulatedAnnealing_States"
+					<< ",diagnostic_level=9"
 					<< ",state=" << "unknnown"
 					<< ",message=get_state";
 				Utilities::logline_threadsafe << ss.str();

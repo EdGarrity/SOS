@@ -258,6 +258,7 @@ namespace datastore
 		{
 			std::ostringstream ss;
 			ss << ",method=FinancialData.load"
+				<< ",diagnostic_level=9"
 				<< ",start_date=" << start_date
 				<< ",end_date=" << end_date
 				<< ",message=loading_all_case_data";
@@ -331,6 +332,7 @@ namespace datastore
 			{
 				std::ostringstream ss;
 				ss << ",method=FinancialData.load"
+					<< ",diagnostic_level=9"
 					<< ",start_date=" << start_date
 					<< ",end_date=" << end_date
 					<< ",record_count=" << data_window_records.size()
@@ -344,6 +346,7 @@ namespace datastore
 			{
 				std::ostringstream ss;
 				ss << ",method=FinancialData.load"
+					<< ",diagnostic_level=0"
 					<< ",exception=" << e.what()
 					<< ",message=Error_loading_data";
 				Utilities::logline_threadsafe << ss.str();
@@ -360,6 +363,7 @@ namespace datastore
 			{
 				std::ostringstream ss;
 				ss << ",method=FinancialData.load"
+					<< ",diagnostic_level=0"
 					<< ",exception=Unknown"
 					<< ",message=An_unknown_error_has_occured";
 				Utilities::logline_threadsafe << ss.str();
@@ -420,6 +424,7 @@ namespace datastore
 			{
 				std::ostringstream ss;
 				ss << ",method=FinancialData.get_data"
+					<< ",diagnostic_level=0"
 					<< ",exception=" << e.what()
 					<< ",data_index=" << data_index
 					<< ",training_case_index=" << training_case_index
@@ -438,6 +443,7 @@ namespace datastore
 			{
 				std::ostringstream ss;
 				ss << ",method=FinancialData.get_data"
+					<< ",diagnostic_level=0"
 					<< ",exception=Unknown"
 					<< ",data_index=" << data_index
 					<< ",training_case_index=" << training_case_index

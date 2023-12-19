@@ -39,9 +39,11 @@ namespace pushGP
 		probability_level_of_cloaning_ = probability_level_of_mutation_ + cloaning_factor / total_factor;
 		probability_level_of_regeneration_ = probability_level_of_cloaning_ + regeneration_factor / total_factor;
 
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",method=SimulatedAnnealing.calculate_state_probability_levels"
+				<< ",diagnostic_level=9"
 				<< ",probability_level_of_alternation_= " << probability_level_of_alternation_
 				<< ",probability_level_of_elite_alternation_= " << probability_level_of_elite_alternation_
 				<< ",probability_level_of_mutation_= " << probability_level_of_mutation_

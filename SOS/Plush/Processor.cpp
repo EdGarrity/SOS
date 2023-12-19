@@ -85,6 +85,7 @@ namespace Plush
 		{
 			std::ostringstream ss;
 			ss << ",case=" << case_index
+				<< ",diagnostic_level=9"
 				<< ",method=Plush.run"
 				<< ",trace=" << (trace ? "True" : "False")
 				<< ",message=Started";
@@ -99,6 +100,7 @@ namespace Plush
 		{
 			std::ostringstream ss;
 			ss << ",case=" << case_index
+				<< ",diagnostic_level=9"
 				<< ",method=Plush.run"
 				<< ",trace=" << (trace ? "True" : "False")
 				<< ",message=Initialize_environment";
@@ -111,6 +113,7 @@ namespace Plush
 		{
 			std::ostringstream ss;
 			ss << ",case=" << case_index
+				<< ",diagnostic_level=9"
 				<< ",method=Plush.run"
 				<< ",message=Load_program_into_temp";
 			Utilities::logline_threadsafe << ss.str();
@@ -128,6 +131,7 @@ namespace Plush
 		{
 			std::ostringstream ss;
 			ss << ",case=" << case_index
+				<< ",diagnostic_level=9"
 				<< ",method=Plush.run"
 				<< ",message=Initialize_Environment";
 			Utilities::logline_threadsafe << ss.str();
@@ -140,6 +144,7 @@ namespace Plush
 			std::ostringstream ss;
 			ss << ",case=" << case_index
 				<< ",i=" << i
+				<< ",diagnostic_level=9"
 				<< ",method=Plush.run"
 				<< ",message=Load_inputs";
 			Utilities::logline_threadsafe << ss.str();
@@ -165,6 +170,7 @@ namespace Plush
 							<< ",j=" << j
 							<< ",atom=" << atom.instruction_name
 							<< ",top=" << top
+							<< ",diagnostic_level=9"
 							<< ",method=Plush.run"
 							<< ",message=Load_inputs";
 						Utilities::logline_threadsafe << ss.str();
@@ -183,6 +189,7 @@ namespace Plush
 				ss << ",case=" << case_index
 					<< ",method=Plush.run"
 					<< ",top=" << top
+					<< ",diagnostic_level=9"
 					<< ",message=Execute";
 				Utilities::logline_threadsafe << ss.str();
 			}
@@ -196,6 +203,7 @@ namespace Plush
 			{
 				std::ostringstream ss;
 				ss << ",case=" << case_index
+					<< ",diagnostic_level=9"
 					<< ",method=Plush.run"
 					<< ",top=" << top
 					<< ",message=Done";
@@ -215,6 +223,7 @@ namespace Plush
 			std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
 			std::ostringstream ss;
 			ss << ",method=Plush.run2"
+				<< ",diagnostic_level=9"
 				<< ",max_effort=" << _max_effort
 				<< ",top=" << top
 				<< env.print_state()
@@ -455,6 +464,7 @@ namespace Plush
 					std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
 					std::ostringstream ss;
 					ss << ",method=Plush.run2"
+						<< ",diagnostic_level=0"
 						<< ",top=" << top
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
@@ -479,6 +489,7 @@ namespace Plush
 					std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
 					std::ostringstream ss;
 					ss << ",method=Plush.run2"
+						<< ",diagnostic_level=0"
 						<< ",top=" << top
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
@@ -508,6 +519,7 @@ namespace Plush
 					std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
 					std::ostringstream ss;
 					ss << ",method=Plush.run2"
+						<< ",diagnostic_level=0"
 						<< ",top=" << top
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
@@ -537,6 +549,7 @@ namespace Plush
 					std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
 					std::ostringstream ss;
 					ss << ",method=Plush.run2"
+						<< ",diagnostic_level=0"
 						<< ",top=" << top
 						<< ",current_instruction=" << env.current_instruction
 						<< ",effort=" << effort
@@ -567,6 +580,7 @@ namespace Plush
 			std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
 			std::ostringstream ss;
 			ss << ",method=Plush.run2"
+				<< ",diagnostic_level=9"
 				<< ",top=" << top
 				<< ",max_effort=" << _max_effort
 				<< env.print_state()
