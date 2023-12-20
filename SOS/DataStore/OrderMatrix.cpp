@@ -159,20 +159,15 @@ namespace datastore
 						<< ",diagnostic_level=9"
 						<< ",training_case_index=" << training_case_index
 						<< ",stratergy_index=" << stratergy_index
-						<< ",message=Loop";
+						<< ",training_case_indexes=" << training_case_indexes
+						<< ",stratergy_indexes=" << strategy_indexes
+						<< ",message=get_connection";
 					Utilities::logline_threadsafe << ss.str();
 				}
 
 				database::SQLCommand* sqlcmd;
 
 				sqlcmd = new database::SQLCommand(database_connection.get_connection());
-				sqlcmd->set_command(sqlstmt_insert_new_order);
-
-				sqlcmd->set_as_bigint(DBPARAMIO_INPUT, 1, training_case_index);
-				sqlcmd->set_as_bigint(DBPARAMIO_INPUT, 2, stratergy_index);
-				sqlcmd->set_as_integer(3, order);
-
-				sqlcmd->execute();
 
 				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 				{
@@ -181,11 +176,78 @@ namespace datastore
 						<< ",diagnostic_level=9"
 						<< ",training_case_index=" << training_case_index
 						<< ",stratergy_index=" << stratergy_index
-						<< ",message=Saved";
+						<< ",training_case_indexes=" << training_case_indexes
+						<< ",stratergy_indexes=" << strategy_indexes
+						<< ",message=sqlstmt_insert_new_order";
+					Utilities::logline_threadsafe << ss.str();
+				}
+				sqlcmd->set_command(sqlstmt_insert_new_order);
+
+				sqlcmd->set_as_bigint(DBPARAMIO_INPUT, 1, training_case_index);
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				{
+					std::ostringstream ss;
+					ss << ",method=OrderMatrix.save"
+						<< ",diagnostic_level=9"
+						<< ",training_case_index=" << training_case_index
+						<< ",stratergy_index=" << stratergy_index
+						<< ",training_case_indexes=" << training_case_indexes
+						<< ",stratergy_indexes=" << strategy_indexes
+						<< ",message=training_case_index";
+					Utilities::logline_threadsafe << ss.str();
+				}
+
+				sqlcmd->set_as_bigint(DBPARAMIO_INPUT, 2, stratergy_index);
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				{
+					std::ostringstream ss;
+					ss << ",method=OrderMatrix.save"
+						<< ",diagnostic_level=9"
+						<< ",training_case_index=" << training_case_index
+						<< ",stratergy_index=" << stratergy_index
+						<< ",training_case_indexes=" << training_case_indexes
+						<< ",stratergy_indexes=" << strategy_indexes
+						<< ",message=stratergy_index";
+					Utilities::logline_threadsafe << ss.str();
+				}
+
+				sqlcmd->set_as_integer(3, order);
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				{
+					std::ostringstream ss;
+					ss << ",method=OrderMatrix.save"
+						<< ",diagnostic_level=9"
+						<< ",training_case_index=" << training_case_index
+						<< ",stratergy_index=" << stratergy_index
+						<< ",training_case_indexes=" << training_case_indexes
+						<< ",stratergy_indexes=" << strategy_indexes
+						<< ",message=order";
+					Utilities::logline_threadsafe << ss.str();
+				}
+
+				sqlcmd->execute();
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				{
+					std::ostringstream ss;
+					ss << ",method=OrderMatrix.save"
+						<< ",diagnostic_level=9"
+						<< ",training_case_index=" << training_case_index
+						<< ",stratergy_index=" << stratergy_index
+						<< ",message=execute";
 					Utilities::logline_threadsafe << ss.str();
 				}
 
 				delete sqlcmd;
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				{
+					std::ostringstream ss;
+					ss << ",method=OrderMatrix.save"
+						<< ",diagnostic_level=9"
+						<< ",training_case_index=" << training_case_index
+						<< ",stratergy_index=" << stratergy_index
+						<< ",message=delete";
+					Utilities::logline_threadsafe << ss.str();
+				}
 			}
 		}
 
