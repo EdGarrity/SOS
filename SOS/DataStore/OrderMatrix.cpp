@@ -152,6 +152,17 @@ namespace datastore
 			{
 				unsigned long order = orders.load(stratergy_index, training_case_index);
 
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				{
+					std::ostringstream ss;
+					ss << ",method=OrderMatrix.save"
+						<< ",diagnostic_level=9"
+						<< ",training_case_index=" << training_case_index
+						<< ",stratergy_index=" << stratergy_index
+						<< ",message=Loop";
+					Utilities::logline_threadsafe << ss.str();
+				}
+
 				database::SQLCommand* sqlcmd;
 
 				sqlcmd = new database::SQLCommand(database_connection.get_connection());
@@ -162,6 +173,17 @@ namespace datastore
 				sqlcmd->set_as_integer(3, order);
 
 				sqlcmd->execute();
+
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				{
+					std::ostringstream ss;
+					ss << ",method=OrderMatrix.save"
+						<< ",diagnostic_level=9"
+						<< ",training_case_index=" << training_case_index
+						<< ",stratergy_index=" << stratergy_index
+						<< ",message=Saved";
+					Utilities::logline_threadsafe << ss.str();
+				}
 
 				delete sqlcmd;
 			}
