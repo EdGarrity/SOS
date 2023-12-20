@@ -433,7 +433,7 @@ namespace domain
 			{
 				for (size_t stratergy_index = 0; stratergy_index < domain::argmap::population_size; stratergy_index++)
 				{
-					{std::ostringstream ss; ss << "Run strategy " << stratergy_index << " on case " << training_case_index << " is_generated " << order_matrix.is_generated(stratergy_index, training_case_index); }
+					//{std::ostringstream ss; ss << "Run strategy " << stratergy_index << " on case " << training_case_index << " is_generated " << order_matrix.is_generated(stratergy_index, training_case_index); }
 
 					unsigned long order = 0;
 					unsigned long score = 0;
@@ -444,16 +444,29 @@ namespace domain
 						order = std::get<0>(results);
 						score = std::get<1>(results);
 						order_matrix.store(stratergy_index, training_case_index, order);
+
+						if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+						{
+							std::ostringstream ss;
+							ss << ",stratergy=" << stratergy_index
+								<< ",case=" << training_case_index
+								<< ",diagnostic_level=9"
+								<< "order=" << order
+								<< ",score=" << score
+								<< ",method=RunProgram.compute_training_errors"
+								<< ",message=Order_processed";
+							Utilities::logline_threadsafe << ss.str();
+						}
 					}
 
-					if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+					else if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 					{
 						std::ostringstream ss;
 						ss << ",stratergy=" << stratergy_index
 							<< ",case=" << training_case_index
 							<< ",diagnostic_level=9"
 							<< ",method=RunProgram.compute_training_errors"
-							<< ",message=Schedule_to_run_strategy";
+							<< ",message=Order_already_processed";
 						Utilities::logline_threadsafe << ss.str();
 					}
 				}
@@ -477,7 +490,7 @@ namespace domain
 				Utilities::logline_threadsafe << ss.str();
 			}
 
-			//order_matrix.clearOrderMatrix();
+			order_matrix.clearOrderMatrix();
 
 			size_t data_size = datastore::financial_data.get_count();
 			std::ptrdiff_t expected_latches = domain::argmap::population_size * data_size;
@@ -532,7 +545,7 @@ namespace domain
 								<< ",method=RunProgram.compute_training_errors_thread_safe"
 								<< ",data_size=" << data_size
 								<< ",training_case_index=" << training_case_index
-								<< ",message=Order already processed";
+								<< ",message=Order_already_processed";
 							Utilities::logline_threadsafe << ss.str();
 						}
 
@@ -563,8 +576,8 @@ namespace domain
 
 			if (dirty)
 			{
-				order_matrix.clearOrderMatrix();
-				order_matrix.save(datastore::financial_data.get_count(), domain::argmap::population_size);
+				//order_matrix.clearOrderMatrix();
+				//order_matrix.save(datastore::financial_data.get_count(), domain::argmap::population_size);
 
 				if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
 				{
