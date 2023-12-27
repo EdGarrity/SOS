@@ -111,7 +111,8 @@ namespace domain
 		const unsigned long max_genome_size_in_initial_program = max_points / 4;
 
 		// Number of Available Training Cases
-		const unsigned long number_of_training_cases = 300;
+		//const unsigned long number_of_training_cases = 5316696; // '2020-01-01' to '2021-12-31'
+		const unsigned long number_of_training_cases = 1000; // 504; // '2020-01-01' to '2021-12-31'
 
 		// Number of Available Test Cases
 		const unsigned long number_of_test_cases = 10;

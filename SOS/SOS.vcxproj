@@ -202,7 +202,6 @@
     <ClInclude Include="Plush\TypeDef.h" />
     <ClInclude Include="PushGP\AsyncBreed.h" />
     <ClInclude Include="PushGP\Breed.h" />
-    <ClInclude Include="PushGP\CalculateDiversity.h" />
     <ClInclude Include="PushGP\GeneticOperators.h" />
     <ClInclude Include="PushGP\Globals.h" />
     <ClInclude Include="PushGP\Individual.h" />
@@ -267,7 +266,6 @@
     <ClCompile Include="Plush\Type.cpp" />
     <ClCompile Include="PushGP\AsyncBreed.cpp" />
     <ClCompile Include="PushGP\Breed.cpp" />
-    <ClCompile Include="PushGP\CalculateDiversity.cpp" />
     <ClCompile Include="PushGP\GeneticOperators.cpp" />
     <ClCompile Include="PushGP\Globals.cpp" />
     <ClCompile Include="PushGP\Individual.cpp" />

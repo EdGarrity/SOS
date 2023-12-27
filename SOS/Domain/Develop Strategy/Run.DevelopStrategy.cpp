@@ -840,8 +840,8 @@ namespace domain
 					pushGP::globals::effort_matrix.resize(number_of_training_cases, domain::argmap::population_size);
 					pushGP::globals::baseline_matrix.resize(number_of_training_cases, domain::argmap::population_size);
 					pushGP::globals::benchmark_matrix.resize(number_of_training_cases, domain::argmap::population_size);
-					if (number_of_training_cases > domain::argmap::number_of_training_cases)
-						throw std::overflow_error("Not enough training cases");
+					//if (number_of_training_cases > domain::argmap::number_of_training_cases)
+					//	throw std::overflow_error("Insufficient memory for training cases");
 
 					size_t best_strategy = 0;
 					size_t maximum_number_of_passing_training_cases = 0;
