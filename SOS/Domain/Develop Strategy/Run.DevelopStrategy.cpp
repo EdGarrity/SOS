@@ -855,6 +855,18 @@ namespace domain
 
 						for (size_t training_case_window_start = 0;	training_case_window_start < number_of_training_cases; training_case_window_start++)
 						{
+							if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
+							{
+								std::ostringstream ss;
+								ss << ",method=develop_strategy.run"
+									<< ",diagnostic_level=1"
+									<< ",training_case_window_start=" << training_case_window_start
+									<< ",strategy=" << strategy_index
+									<< ",score=" << score
+									<< ",message=enter_loop";
+								Utilities::logline_threadsafe << ss.str();
+							}
+
 							size_t stock_data_index = training_case_window_start;
 
 							BrokerAccount account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Primary,BrokerAccount::seed_money);
