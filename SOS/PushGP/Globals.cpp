@@ -55,6 +55,9 @@ namespace pushGP
 
 		Training_case_best_score::Training_case_best_score()
 		{
+			if (number_of_training_cases > domain::argmap::number_of_training_cases)
+				throw std::overflow_error("Insufficient memory for training cases");
+
 			for (unsigned int example_case = 0; example_case < number_of_training_cases; example_case++)
 			{
 				best_score_array_by_example_case[example_case] = std::numeric_limits<double>::min();
