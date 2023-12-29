@@ -52,7 +52,7 @@ namespace domain
 		const bool use_multithreading = true;
 		const bool use_PPL = false;
 		const unsigned long number_of_cores_to_reserve = 4;
-		const unsigned long max_threads = 8;
+		const unsigned long max_threads = 1;
 		const unsigned long thread_chunk_size = 1; // 100;  // Number of threads per chunk.
 
 		// CPU temperature monitoring
