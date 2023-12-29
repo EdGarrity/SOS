@@ -1835,10 +1835,23 @@ namespace Plush
 					std::stringstream error_message;
 					error_message << "yankdup_item() - Stack overflow.  s = " << s << " free = " << Utilities::FixedSizeStack<T>::free();
 
-					throw std::overflow_error(error_message.str());
+					//throw std::overflow_error(error_message.str());
+					if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+					{
+						std::ostringstream ss;
+						ss << ",method=Plush.yankdup_item"
+							<< ",diagnostic_level=9"
+							<< ",effort=" << effort
+							<< ",message=underflow_error";
+						Utilities::logline_threadsafe << ss.str();
+					}
+
+					effort = 1;
+					return effort;
 				}
 
-				effort = Utilities::FixedSizeStack<T>::yankdup_item(s, l);
+				else
+					effort = Utilities::FixedSizeStack<T>::yankdup_item(s, l);
 			}
 			else
 			{
@@ -1847,12 +1860,26 @@ namespace Plush
 					std::stringstream error_message;
 					error_message << "yankdup_item() - Stack overflow.";
 
-					throw std::overflow_error(error_message.str());
+					//throw std::overflow_error(error_message.str());
+					if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+					{
+						std::ostringstream ss;
+						ss << ",method=Plush.yankdup_item"
+							<< ",diagnostic_level=9"
+							<< ",message=underflow_error";
+						Utilities::logline_threadsafe << ss.str();
+					}
+
+					effort = 1;
+					return effort;
 				}
 
-				push(T("{:instruction EXEC.NOOP :close 1}"));
+				else
+				{
+					push(T("{:instruction EXEC.NOOP :close 1}"));
 
-				effort = 1;
+					effort = 1;
+				}
 			}
 
 			if ((Utilities::FixedSizeStack<T>::size() > 0) && (extra_blocks > 0))
