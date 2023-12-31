@@ -144,9 +144,6 @@
     <ClInclude Include="Domain\Arguments.h">
       <Filter>Header Files\Domain</Filter>
     </ClInclude>
-    <ClInclude Include="Domain\Learn From Examples\Arguments.h">
-      <Filter>Header Files\Domain\Learn From Examples</Filter>
-    </ClInclude>
     <ClInclude Include="Database\SQLCommand.h">
       <Filter>Header Files\Database</Filter>
     </ClInclude>
@@ -156,17 +153,11 @@
     <ClInclude Include="PushGP\Globals.h">
       <Filter>Header Files\PushGP</Filter>
     </ClInclude>
-    <ClInclude Include="Domain\Learn From Examples\Run.LearnFromExamples.h">
-      <Filter>Header Files\Domain\Learn From Examples</Filter>
-    </ClInclude>
     <ClInclude Include="PushGP\SimulatedAnnealing.h">
       <Filter>Header Files\PushGP</Filter>
     </ClInclude>
     <ClInclude Include="PushGP\Individual.h">
       <Filter>Header Files\PushGP</Filter>
-    </ClInclude>
-    <ClInclude Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.h">
-      <Filter>Header Files\Domain\Learn From Examples</Filter>
     </ClInclude>
     <ClInclude Include="PushGP\Breed.h">
       <Filter>Header Files\PushGP</Filter>
@@ -197,9 +188,6 @@
     </ClInclude>
     <ClInclude Include="Plush\GenericInstructions.h">
       <Filter>Header Files\Plush</Filter>
-    </ClInclude>
-    <ClInclude Include="Utilities\WorkOrderManager.h">
-      <Filter>Header Files\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="Utilities\Debug.h">
       <Filter>Header Files\Utilities</Filter>
@@ -245,6 +233,21 @@
     </ClInclude>
     <ClInclude Include="DataStore\OrderMatrix.h">
       <Filter>Header Files\DataStore</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Develop Strategy\RunProgram_WorkOrder_Form.h">
+      <Filter>Header Files\Domain\Develop Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\RunProgram.h">
+      <Filter>Header Files\Domain</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Task.hpp">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Threadpool.hpp">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Plush\EnvironmentPool.h">
+      <Filter>Header Files\Plush</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -311,9 +314,6 @@
     <ClCompile Include="Database\SQLConnection.cpp">
       <Filter>Source Files\Database</Filter>
     </ClCompile>
-    <ClCompile Include="Domain\Learn From Examples\Run.LearnFromExamples.cpp">
-      <Filter>Source Files\Domain\Learn From Examples</Filter>
-    </ClCompile>
     <ClCompile Include="PushGP\SimulatedAnnealing.cpp">
       <Filter>Source Files\PushGP</Filter>
     </ClCompile>
@@ -322,9 +322,6 @@
     </ClCompile>
     <ClCompile Include="PushGP\Individual.cpp">
       <Filter>Source Files\PushGP</Filter>
-    </ClCompile>
-    <ClCompile Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.cpp">
-      <Filter>Source Files\Domain\Learn From Examples</Filter>
     </ClCompile>
     <ClCompile Include="PushGP\Breed.cpp">
       <Filter>Source Files\PushGP</Filter>
@@ -346,9 +343,6 @@
     </ClCompile>
     <ClCompile Include="Plush\Type.cpp">
       <Filter>Source Files\Plush</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities\WorkOrderManager.cpp">
-      <Filter>Source Files\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="Utilities\Debug.cpp">
       <Filter>Source Files\Utilities</Filter>
@@ -388,6 +382,15 @@
     </ClCompile>
     <ClCompile Include="DataStore\OrderMatrix.cpp">
       <Filter>Source Files\DataStore</Filter>
+    </ClCompile>
+    <ClCompile Include="Domain\Develop Strategy\RunProgram_WorkOrder_Form.cpp">
+      <Filter>Source Files\Domain\Develop Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="Domain\RunProgram.cpp">
+      <Filter>Source Files\Domain\Develop Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="Plush\EnvironmentPool.cpp">
+      <Filter>Source Files\Plush</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

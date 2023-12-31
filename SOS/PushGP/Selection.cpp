@@ -140,6 +140,15 @@ namespace pushGP
 	//
 	std::tuple<double, unsigned int> mad(std::vector<double> _x)
 	{
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+		{
+			std::ostringstream ss;
+			ss << ",method=pushGP.mad"
+				<< ",diagnostic_level=9"
+				<< ",message=Enter";
+			Utilities::logline_threadsafe << ss.str();
+		}
+
 		unsigned int n = 0;
 		double median_x = median(_x);
 
@@ -184,11 +193,20 @@ namespace pushGP
 	std::tuple<double, unsigned int> epsilon_lexicase_selection(int _number_of_example_cases, 
 		concurrent_unordered_set<size_t>& _downsampled_training_cases,
 		std::unordered_set<int> _black_list,
-		combinable<pushGP::globals::Training_case_min_error_type>& _training_case_min_error)
+		combinable<pushGP::globals::Training_case_best_score_type>& _training_case_best_score)
 	{
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+		{
+			std::ostringstream ss;
+			ss << ",method=pushGP.epsilon_lexicase_selection"
+				<< ",diagnostic_level=9"
+				<< ",_number_of_example_cases=" << _number_of_example_cases
+				<< ",message=Enter";
+			Utilities::logline_threadsafe << ss.str();
+		}
 		unsigned int chosen = 0;
 		unsigned individual_index = 0;
-		__int64 number_of_survivors = domain::argmap::population_size;
+		__int64 number_of_survivors = domain::argmap::population_size - 1;
 
 		// Get a randomized deck of test cases
 		std::vector<size_t> example_cases;
@@ -212,7 +230,7 @@ namespace pushGP
 			example_cases = lshuffle(_number_of_example_cases);
 
 		// Used to calculate static epsilon for each individual
-		std::vector<double> test_case_errors;
+		std::vector<double> test_case_scores;
 
 		// Set survivors to be a copy of the population
 		std::forward_list<unsigned int> survivors_index;
@@ -226,8 +244,8 @@ namespace pushGP
 			{
 				survivors_index.push_front(n);
 
-				double error = pushGP::globals::error_matrix.load(example_case, n);
-				test_case_errors.push_back(error);
+				double score = pushGP::globals::score_matrix.load(example_case, n);
+				test_case_scores.push_back(score);
 			}
 		}
 
@@ -235,11 +253,22 @@ namespace pushGP
 		double median_absolute_deviation = 0.0;
 		unsigned int non_zero_count = 0;
 
-		std::tie(median_absolute_deviation, non_zero_count) = mad(test_case_errors);
+		std::tie(median_absolute_deviation, non_zero_count) = mad(test_case_scores);
+
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+		{
+			std::ostringstream ss;
+			ss << ",method=pushGP.epsilon_lexicase_selection"
+				<< ",diagnostic_level=9"
+				<< ",median_absolute_deviation=" << median_absolute_deviation
+				<< ",non_zero_count=" << non_zero_count
+				<< ",message=mad";
+			Utilities::logline_threadsafe << ss.str();
+		}
 
 		while ((!example_cases.empty()) && (number_of_survivors > 1))
 		{
-			double min_error_for_this_example_case = std::numeric_limits<double>::max();
+			double best_score_for_this_example_case = std::numeric_limits<double>::min();
 
 			// Select a random training case
 			example_case = example_cases.back();
@@ -247,21 +276,35 @@ namespace pushGP
 			// Reduce remaining cases
 			example_cases.pop_back();
 
-			std::map<unsigned int, double> survivor_to_error_map;
+			std::map<unsigned int, double> survivor_to_score_map;
 
 			for (unsigned int survivor_index : survivors_index)
 			{
-				double error = pushGP::globals::error_matrix.load(example_case, survivor_index);
+				double score = pushGP::globals::score_matrix.load(example_case, survivor_index);
 
-				survivor_to_error_map[survivor_index] = error;
+				survivor_to_score_map[survivor_index] = score;
 
-				// Record minimum error for this test case and the individual who achived the minimum error
-				min_error_for_this_example_case = error < min_error_for_this_example_case ? error : min_error_for_this_example_case;
+				// Record best score for this test case and the individual who achived the best score
+				best_score_for_this_example_case = score > best_score_for_this_example_case ? score : best_score_for_this_example_case;
 
-				if (_training_case_min_error.local().minimum_error_array_by_example_case[example_case] > min_error_for_this_example_case)
+				if (_training_case_best_score.local().best_score_array_by_example_case[example_case] < best_score_for_this_example_case)
 				{
-					_training_case_min_error.local().minimum_error_array_by_example_case[example_case] = min_error_for_this_example_case;
-					_training_case_min_error.local().individual_with_minimum_error_for_training_case[example_case] = survivor_index;
+					_training_case_best_score.local().best_score_array_by_example_case[example_case] = best_score_for_this_example_case;
+					_training_case_best_score.local().individual_with_best_score_for_training_case[example_case] = survivor_index;
+				}
+
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				{
+					std::ostringstream ss;
+					ss << ",method=pushGP.epsilon_lexicase_selection"
+						<< ",diagnostic_level=9"
+						<< ",number_of_survivors=" << number_of_survivors
+						<< ",example_case=" << example_case
+						<< ",survivor_index=" << survivor_index
+						<< ",error=" << score
+						<< ",min_error_for_this_example_case=" << best_score_for_this_example_case
+						<< ",message=Record_best_score_for_this_test_case_and_the_individual_who_achived_the_best_score";
+					Utilities::logline_threadsafe << ss.str();
 				}
 			}
 
@@ -270,9 +313,9 @@ namespace pushGP
 			auto it = survivors_index.begin();
 			while (it != survivors_index.end())
 			{
-				double error = survivor_to_error_map[*it];
+				double score = survivor_to_score_map[*it];
 
-				if (error > (min_error_for_this_example_case + median_absolute_deviation))
+				if (score < (best_score_for_this_example_case - median_absolute_deviation))
 				{
 					if (it == survivors_index.begin())
 					{
@@ -284,12 +327,40 @@ namespace pushGP
 						it = survivors_index.erase_after(before_it);
 
 					number_of_survivors--;
+
+					if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+					{
+						std::ostringstream ss;
+						ss << ",method=pushGP.epsilon_lexicase_selection"
+							<< ",diagnostic_level=9"
+							<< ",number_of_survivors=" << number_of_survivors
+							<< ",example_case=" << example_case
+							<< ",score=" << score
+							<< ",best_score_for_this_example_case=" << best_score_for_this_example_case
+							<< ",median_absolute_deviation=" << median_absolute_deviation
+							<< ",message=score_less_than_threshold";
+						Utilities::logline_threadsafe << ss.str();
+					}
 				}
 
 				else
 				{
 					before_it = it;
 					it++;
+
+					if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+					{
+						std::ostringstream ss;
+						ss << ",method=pushGP.epsilon_lexicase_selection"
+							<< ",diagnostic_level=9"
+							<< ",number_of_survivors=" << number_of_survivors
+							<< ",example_case=" << example_case
+							<< ",score=" << score
+							<< ",best_score_for_this_example_case=" << best_score_for_this_example_case
+							<< ",median_absolute_deviation=" << median_absolute_deviation
+							<< ",message=score_not_less_than_threshold";
+						Utilities::logline_threadsafe << ss.str();
+					}
 				}
 			}
 		} // while ((!test_cases.empty()) && (number_of_survivors > 1))
@@ -301,11 +372,37 @@ namespace pushGP
 			for (auto it : survivors_index)
 				number_of_survivors++;
 
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+		{
+			std::ostringstream ss;
+			ss << ",method=pushGP.epsilon_lexicase_selection"
+				<< ",diagnostic_level=9"
+				<< ",number_of_survivors=" << number_of_survivors
+				<< ",example_case=" << example_case
+				<< ",message=determine_number_of_survivors";
+			Utilities::logline_threadsafe << ss.str();
+		}
+
 		auto it = survivors_index.begin();
 		auto before_it = survivors_index.begin();
 
 		if ((number_of_survivors == 1) && (_black_list.find(*before_it) != _black_list.end()))
+			//			number_of_survivors = 0;
+
+		{
 			number_of_survivors = 0;
+
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			{
+				std::ostringstream ss;
+				ss << ",method=pushGP.epsilon_lexicase_selection"
+					<< ",diagnostic_level=9"
+					<< ",number_of_survivors=" << number_of_survivors
+					<< ",example_case=" << example_case
+					<< ",message=setting_number_of_survivors_to_0";
+				Utilities::logline_threadsafe << ss.str();
+			}
+		}
 
 		else if (number_of_survivors > 1)
 		{
@@ -321,6 +418,30 @@ namespace pushGP
 					before_it++;
 					n--;
 				}
+			{
+				number_of_survivors = 0;
+
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				{
+					std::ostringstream ss;
+					ss << ",method=pushGP.epsilon_lexicase_selection"
+						<< ",diagnostic_level=9"
+						<< ",number_of_survivors=" << number_of_survivors
+						<< ",example_case=" << example_case
+						<< ",message=Advance_to_a_random_survivor";
+					Utilities::logline_threadsafe << ss.str();
+				}}
+		}
+
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+		{
+			std::ostringstream ss;
+			ss << ",method=pushGP.epsilon_lexicase_selection"
+				<< ",diagnostic_level=9"
+				<< ",number_of_survivors=" << number_of_survivors
+				<< ",example_case=" << example_case
+				<< ",message=preparing_to_exit";
+			Utilities::logline_threadsafe << ss.str();
 		}
 
 		if (number_of_survivors > 0)
@@ -330,6 +451,18 @@ namespace pushGP
 		{
 			int n = Utilities::random_integer(0, domain::argmap::population_size - 1);
 			chosen = n;
+		}
+
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+		{
+			std::ostringstream ss;
+			ss << ",method=pushGP.epsilon_lexicase_selection"
+				<< ",diagnostic_level=9"
+				<< ",number_of_survivors=" << number_of_survivors
+				<< ",chosen=" << chosen
+				<< ",median_absolute_deviation=" << median_absolute_deviation
+				<< ",message=leaving";
+			Utilities::logline_threadsafe << ss.str();
 		}
 
 		return std::make_tuple(median_absolute_deviation, chosen);

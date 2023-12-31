@@ -4,7 +4,7 @@
 #include <thread>
 #include <time.h>
 #include <atomic>
-#include "WorkOrderManager.h"
+#include "LFE_WorkOrderManager.h"
 #include "..\Domain\Arguments.h"
 #include "..\Domain\Learn From Examples\ErrorFunction.LearnFromExample.h"
 #include "..\PushGP\Globals.h"
@@ -14,6 +14,7 @@
 #include "..\Domain\Develop Strategy\ErrorFunction.DevelopStrategy.h"
 #include <iostream>
 #include <iomanip>
+#include <sstream>
 
 #if DLEVEL > 0
 std::atomic_bool debug_push = ATOMIC_FLAG_INIT;
@@ -21,11 +22,11 @@ std::atomic_bool debug_push = ATOMIC_FLAG_INIT;
 
 namespace Utilities
 {
-	WorkOrderManager work_order_manager(domain::argmap::max_threads);
+	LFE_WorkOrderManager work_order_manager(domain::argmap::max_threads);
 	std::thread myThreads[domain::argmap::max_threads];
 	std::atomic<Plush::Environment::RunningState> running_state[domain::argmap::max_threads];
 
-	WorkOrderManager::WorkOrderManager() : 
+	LFE_WorkOrderManager::LFE_WorkOrderManager() : 
 		work_order_queue_(), 
 		work_order_mutex_(), 
 		work_in_process_mutex_(), 
@@ -35,7 +36,7 @@ namespace Utilities
 		queue_state.store(QueueState::Stopped, std::memory_order_release);
 	}
 
-	WorkOrderManager::WorkOrderManager(unsigned long num_threads) :
+	LFE_WorkOrderManager::LFE_WorkOrderManager(unsigned long num_threads) :
 		work_order_queue_(), 
 		work_order_mutex_(), 
 		work_in_process_mutex_(), 
@@ -46,7 +47,7 @@ namespace Utilities
 		initialize(num_threads);
 	}
 
-	WorkOrderManager::~WorkOrderManager()
+	LFE_WorkOrderManager::~LFE_WorkOrderManager()
 	{
 #if DLEVEL > 0
 		debug_log(-1, "WorkOrderManager::~WorkOrderManager", "destructor");
@@ -54,7 +55,7 @@ namespace Utilities
 		wait_for_all_threads_to_complete();
 	}
 
-	void WorkOrderManager::initialize(unsigned long num_threads)
+	void LFE_WorkOrderManager::initialize(unsigned long num_threads)
 	{
 		if (num_threads_ > 0)
 		{
@@ -68,12 +69,12 @@ namespace Utilities
 			if (num_threads > 0)
 			{
 				for (int i = 0; i < (int)num_threads; i++)
-					myThreads[i] = std::thread(&WorkOrderManager::process_work_orders, this, i);
+					myThreads[i] = std::thread(&LFE_WorkOrderManager::process_work_orders, this, i);
 			}
 		}
 	}
 
-	void WorkOrderManager::start()
+	void LFE_WorkOrderManager::start()
 	{
 #if DLEVEL > 0
 		debug_log(-1, "WorkOrderManager::start", "start");
@@ -81,7 +82,7 @@ namespace Utilities
 		queue_state.store(QueueState::Running, std::memory_order_release);
 	}
 
-	void WorkOrderManager::stop()
+	void LFE_WorkOrderManager::stop()
 	{
 #if DLEVEL > 0
 		debug_log(-1, "WorkOrderManager::stop", "stop");
@@ -89,7 +90,7 @@ namespace Utilities
 		queue_state.store(QueueState::Stopped, std::memory_order_release);
 	}
 
-	void WorkOrderManager::push(unsigned long individual_index, size_t example_case)
+	void LFE_WorkOrderManager::push(unsigned long individual_index, size_t example_case)
 	{
 		WorkOrder work_order;
 
@@ -98,7 +99,7 @@ namespace Utilities
 		
 		std::unique_lock<std::mutex> work_in_process_lock(work_in_process_mutex_);
 		std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
-		work_order_queue_.push_front(work_order);
+		work_order_queue_.push_front(work_order);  // TODO: Use push emplace instead
 
 		// when we send the notification immediately, the consumer will try to get the lock, so unlock asap
 		work_order_lock.unlock();
@@ -107,7 +108,7 @@ namespace Utilities
 		data_condition_.notify_one();
 	}
 
-	void WorkOrderManager::push(unsigned long individual_index, size_t example_case, std::vector<double>& input_list, std::vector<double>& output_list)
+	void LFE_WorkOrderManager::push(unsigned long individual_index, size_t example_case, std::vector<double>& input_list, std::vector<double>& output_list)
 	{
 		WorkOrder work_order;
 
@@ -128,7 +129,7 @@ namespace Utilities
 		data_condition_.notify_one();
 	}
 
-	void WorkOrderManager::process_work_orders(const unsigned long env_index)
+	void LFE_WorkOrderManager::process_work_orders(const unsigned long env_index)
 	{
 		// Process stratergy work orders
 		using namespace std::chrono_literals;
@@ -183,7 +184,7 @@ namespace Utilities
 
 					auto results = domain::develop_strategy::run_strategy_threadsafe(env, work_order.individual_index, work_order.example_case);
 					domain::develop_strategy::order_matrix.store(env_index, work_order.individual_index, work_order.example_case, std::get<0>(results));
-					std::cout << " Finished Order " << std::get<0>(results) << " Score " << std::get<1>(results) << std::endl;
+					std::ostringstream ss; ss  << " Finished Order " << std::get<0>(results) << " Score " << std::get<1>(results); Utilities::logline_threadsafe << ss.str();
 
 					running_state[env_index].store(Plush::Environment::RunningState::Waiting, std::memory_order_release);
 
@@ -194,7 +195,7 @@ namespace Utilities
 					std::stringstream warning_message;
 					warning_message << "WorkOrderManager::process_work_orders() - unable to insert work into queue.  env_index=" << env_index;
 
-					std::cerr << warning_message.str() << std::endl;
+					std::cerr << warning_message.str(); 
 
 					throw std::runtime_error(warning_message.str());
 				}
@@ -204,7 +205,7 @@ namespace Utilities
 					std::stringstream warning_message;
 					warning_message << "WorkOrderManager::process_work_orders() - An unknown error has occured.  env_index=" << env_index;
 
-					std::cerr << warning_message.str() << std::endl;
+					std::cerr << warning_message.str(); 
 
 					throw std::runtime_error(warning_message.str());
 				}
@@ -216,7 +217,7 @@ namespace Utilities
 			std::stringstream warning_message;
 			warning_message << "WorkOrderManager::process_work_orders() - Outer while loop.  env_index=" << env_index;
 
-			std::cerr << warning_message.str() << std::endl;
+			std::cerr << warning_message.str(); 
 
 			throw std::runtime_error(warning_message.str());
 		}
@@ -226,150 +227,13 @@ namespace Utilities
 			std::stringstream warning_message;
 			warning_message << "WorkOrderManager::process_work_orders() - Outer while loop - An unknown error has occured.  env_index=" << env_index;
 
-			std::cerr << warning_message.str() << std::endl;
+			std::cerr << warning_message.str(); 
 
 			throw std::runtime_error(warning_message.str());
 		}
-
-
-
-
-
-
-		// Process error function work orders
-//		using namespace std::chrono_literals;
-//
-//		struct WorkOrder work_order;
-//
-//		static thread_local Plush::Environment env;
-//
-//		try
-//		{
-//			while (true)
-//			{
-//				// Get a work order from the queue
-//				{
-//					if (queue_state.load(std::memory_order_acquire) == QueueState::Stopped)
-//					{
-//#if DLEVEL > 0
-//						debug_log(env_index, "WorkOrderManager::process_work_orders", "Not_Running");
-//#endif
-//						std::this_thread::sleep_for(1s);
-//						continue;
-//					}
-//
-//					running_state[env_index].store(Plush::Environment::RunningState::Waiting, std::memory_order_release);
-//#if DLEVEL > 0
-//					debug_log(env_index, "WorkOrderManager::process_work_orders", "waiting");
-//#endif
-//
-//					std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
-//
-//					data_condition_.wait_for(work_order_lock, 1min, [this]()
-//					{
-//						return !work_order_queue_.empty();
-//					});
-//
-//					if (work_order_queue_.empty())
-//					{
-//						work_order_lock.unlock();
-//#if DLEVEL > 0
-//						debug_log(env_index, "WorkOrderManager::process_work_orders", "WorkOrderQueue_Empty");
-//#endif
-//						continue;
-//					}
-//
-//					work_order = work_order_queue_.back();
-//					work_order_queue_.pop_back();
-//				}
-//
-//				// Process the individual example case specified in the work order
-//				try
-//				{
-//					running_state[env_index].store(Plush::Environment::RunningState::Running, std::memory_order_release);
-//
-//#if DLEVEL > 0
-//					debug_log(env_index, "WorkOrderManager::process_work_orders", "run_start", work_order.individual_index, work_order.example_case);
-//#endif
-//					env.set_current_thread(env_index);
-//
-//					// Debug
-//					env.set_current_individual_index(work_order.individual_index, work_order.example_case);
-//
-//					pushGP::globals::thread_individual_index[env_index] = work_order.individual_index;
-//					pushGP::globals::thread_example_case[env_index] = work_order.example_case;
-//
-//					auto [ error, effort ] = domain::learn_from_examples::run_individual_threadsafe(env,
-//						work_order.individual_index,
-//						work_order.example_problem,
-//						work_order.example_solution);
-//
-//					//pushGP::globals::error_matrix[work_order.example_case][work_order.individual_index].store(error, std::memory_order_release);
-//					//pushGP::globals::error_matrix[work_order.example_case][work_order.individual_index] = error;
-//					//pushGP::globals::error_matrix.store(work_order.example_case, work_order.individual_index, error);
-//					//pushGP::globals::error_matrix[work_order.example_case][work_order.individual_index].store(error, std::memory_order_release);
-//					pushGP::globals::error_matrix.store(env_index, work_order.example_case, work_order.individual_index, error);
-//					pushGP::globals::effort_matrix.store(env_index, work_order.example_case, work_order.individual_index, effort);
-//
-//					running_state[env_index].store(Plush::Environment::RunningState::Waiting, std::memory_order_release);
-//
-//#if DLEVEL > 0
-//					debug_log(env_index, "WorkOrderManager::process_work_orders", "run_finished", work_order.individual_index, work_order.example_case);
-//#endif
-//				}
-//				catch (const std::exception& /*e*/)
-//				{
-//					// Log exception
-//					std::stringstream warning_message;
-//					warning_message << "WorkOrderManager::process_work_orders() - unable to insert work into queue.  env_index=" << env_index;
-//
-//					std::cerr << warning_message.str() << std::endl;
-//
-//					throw std::runtime_error(warning_message.str());
-//				}
-//				catch (...)
-//				{
-//					// Log exception
-//					std::stringstream warning_message;
-//					warning_message << "WorkOrderManager::process_work_orders() - An unknown error has occured.  env_index=" << env_index;
-//
-//					std::cerr << warning_message.str() << std::endl;
-//
-//					throw std::runtime_error(warning_message.str());
-//				}
-//			}
-//		}
-//		catch (const std::exception& /*e*/)
-//		{
-//			// Log exception
-//			std::stringstream warning_message;
-//			warning_message << "WorkOrderManager::process_work_orders() - Outer while loop.  env_index=" << env_index;
-//
-//#if DLEVEL > 0
-//			std::string debug_message = "Outer while loop.  env_index= " + std::to_string(env_index) + ",Exception=" + e.what();
-//			debug_log(env_index, "WorkOrderManager::process_work_orders", debug_message);
-//#endif
-//			std::cerr << warning_message.str() << std::endl;
-//
-//			throw std::runtime_error(warning_message.str());
-//		}
-//		catch (...)
-//		{
-//			// Log exception
-//			std::stringstream warning_message;
-//			warning_message << "WorkOrderManager::process_work_orders() - Outer while loop - An unknown error has occured.  env_index=" << env_index;
-//
-//#if DLEVEL > 0
-//			std::string debug_message = "An unknown error has occured.  env_index= " + std::to_string(env_index);
-//			debug_log(env_index, "WorkOrderManager::process_work_orders", debug_message);
-//#endif
-//			std::cerr << warning_message.str() << std::endl;
-//
-//			throw std::runtime_error(warning_message.str());
-//		}
 	}
 
-	void WorkOrderManager::wait_for_all_threads_to_complete()
+	void LFE_WorkOrderManager::wait_for_all_threads_to_complete()
 	{
 		using namespace std::chrono_literals;
 
@@ -395,7 +259,6 @@ namespace Utilities
 #endif
 			do
 			{
-				//std::this_thread::sleep_for(10min);
 				std::this_thread::sleep_for(60s);
 
 				std::unique_lock<std::mutex> work_order_lock(work_order_mutex_);
@@ -406,8 +269,12 @@ namespace Utilities
 				debug_message = "wait_for_queue_to_empty,queue_size=" + std::to_string(queue_size);
 				debug_log(-1, "WorkOrderManager::wait_for_all_threads_to_complete", debug_message);
 #endif
-				debug_message = "wait_for_queue_to_empty,queue_size=" + std::to_string(queue_size);
-				std::cout << debug_message << std::endl;
+				{
+					std::ostringstream ss;
+					ss << ",method=LFE_WorkOrderManager.wait_for_all_threads_to_complete"
+						<< ",message=Waiting_for_queue_to_empty";
+					Utilities::logline_threadsafe << ss.str();
+				}
 
 			} while (queue_size > 0);
 
@@ -426,14 +293,19 @@ namespace Utilities
 			// wait for all threads to stop
 			bool all_done = true;
 
-			std::cout << "Queue empty" << std::endl << std::endl;
+			{
+				std::ostringstream ss;
+				ss << ",method=LFE_WorkOrderManager.wait_for_all_threads_to_complete"
+					<< ",message=Queue_empty";
+				Utilities::logline_threadsafe << ss.str();
+			}
 
 			do
 			{
-				std::cout << std::endl;
-				std::cout << std::endl;
-				std::cout << "N" << std::setw(30) << "effort" << std::setw(30) << "exec_size" << std::setw(30) << "instruction" << std::setw(30) << "individual" << std::setw(30) << "case"  << std::endl;
-				std::cout << "-" << std::setw(30) << "------" << std::setw(30) << "---------" << std::setw(30) << "-----------" << std::setw(30) << "----------" << std::setw(30) << "----" << std::endl;
+				//{std::ostringstream ss; ss; Utilities::logline_threadsafe << ss.str(); }
+				//{std::ostringstream ss; ss; Utilities::logline_threadsafe << ss.str(); }
+				//{std::ostringstream ss; ss << "N" << std::setw(30) << "effort" << std::setw(30) << "exec_size" << std::setw(30) << "instruction" << std::setw(30) << "individual" << std::setw(30) << "case"; Utilities::logline_threadsafe << ss.str(); }
+				//{std::ostringstream ss; ss << "-" << std::setw(30) << "------" << std::setw(30) << "---------" << std::setw(30) << "-----------" << std::setw(30) << "----------" << std::setw(30) << "----"; Utilities::logline_threadsafe << ss.str(); }
 
 				// Don't do the first time.
 				if (all_done == false)
@@ -441,18 +313,6 @@ namespace Utilities
 
 				long count = 0;
 				long hanging_thread = 0;
-
-				//for (int i = 0; i < num_threads_; i++)
-				//{
-				//	if (running_state[i].load(std::memory_order_acquire) == Plush::Environment::RunningState::Running)
-				//	{
-				//		count++;
-				//		all_done = false;
-				//		break;
-				//	}
-
-				//	all_done = true;
-				//}
 
 				for (long i = 0; i < (long)num_threads_; i++)
 				{
@@ -475,13 +335,13 @@ namespace Utilities
 						else
 							instruction_name = Plush::static_initializer.get_function_name(instruction_index) + " (" + std::to_string(instruction_index) + ")";
 
-						std::cout << i 
-							<< std::setw(30) << effort 
-							<< std::setw(30) << exec_size 
-							<< std::setw(30) << instruction_name 
-							<< std::setw(30) << individual_index
-							<< std::setw(30) << example_case
-							<< std::endl;
+						//{std::ostringstream ss; ss << i
+						//	<< std::setw(30) << effort
+						//	<< std::setw(30) << exec_size
+						//	<< std::setw(30) << instruction_name
+						//	<< std::setw(30) << individual_index
+						//	<< std::setw(30) << example_case
+						//	/*<< Utilities::endl */; }
 					}
 				}
 
@@ -500,25 +360,7 @@ namespace Utilities
 					debug_push.store(false, std::memory_order_release);
 #endif
 
-				//char current_instruction[81];
-
-				//int n = 0;
-				//char ch = 0;
-				//do
-				//{
-				//	ch = pushGP::globals::thread_current_instruction.load(n, hanging_thread);
-
-				//	if (ch != 0)
-				//		current_instruction += ch;
-
-				//} while (ch != 0);
-
-				//strcpy_s(current_instruction, 80, pushGP::globals::thread_current_instruction[hanging_thread]);
-				//current_instruction[80] = '\0';
-
 				std::this_thread::sleep_for(50s);
-				//debug_message = "wait_for_queue_to_empty,count=" + std::to_string(count) + ",current_instruction=" + current_instruction;
-				//std::cout << debug_message << std::endl;
 			} while (all_done == false);
 
 #if DLEVEL > 0

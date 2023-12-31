@@ -13,7 +13,7 @@
 
 namespace Utilities
 {
-	class WorkOrderManager
+	class LFE_WorkOrderManager
 	{
 	private:
 		struct WorkOrder
@@ -43,9 +43,9 @@ namespace Utilities
 //		std::mutex work_order_print_;
 
 	public:
-		WorkOrderManager();
-		WorkOrderManager(unsigned long _num_threads);
-		~WorkOrderManager();
+		LFE_WorkOrderManager();
+		LFE_WorkOrderManager(unsigned long _num_threads);
+		~LFE_WorkOrderManager();
 
 		//void debug_log(const int env_index, std::string function, std::string status);
 		//void debug_log(const int env_index, std::string function, std::string status, unsigned int individual_index, unsigned int example_case);
@@ -60,5 +60,5 @@ namespace Utilities
 		void wait_for_all_threads_to_complete();
 	};
 
-	extern Utilities::WorkOrderManager work_order_manager;
+	extern Utilities::LFE_WorkOrderManager work_order_manager;
 }

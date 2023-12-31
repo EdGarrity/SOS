@@ -129,38 +129,135 @@ namespace Plush
 	template<>
 	inline unsigned long equals<CodeAtom>(Environment & _env)
 	{
-		Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
-		Genome_section<CodeAtom> block_a = genome[0];
-		Genome_section<CodeAtom> block_b = genome[1];
+		try
+		{
+			Genome<CodeAtom>& genome = _env.get_stack<CodeAtom>();
+			Genome_section<CodeAtom> block_a = genome[0];
+			Genome_section<CodeAtom> block_b = genome[1];
 
-		if (genome.comp(block_a, block_b))
-			_env.push<bool>(true);
-		else
-			_env.push<bool>(false);
+			if (genome.comp(block_a, block_b))
+				_env.push<bool>(true);
+			else
+				_env.push<bool>(false);
 
-		_env.pop_genome<CodeAtom>();
-		_env.pop_genome<CodeAtom>();
+			_env.pop_genome<CodeAtom>();
+			_env.pop_genome<CodeAtom>();
 
-		return 1;
+			return 1;
+		}
+		catch (const std::exception& e)
+		{
+			// Log exception
+			std::stringstream warning_message;
+			warning_message << "Warning: Cannot compare genomes";
+
+			std::cerr << warning_message.str();
+			{
+				std::ostringstream ss;
+				ss << ",exception=" << e.what()
+					<< ",diagnostic_level=0"
+					<< ",number_of_blocks=" << _env.length<CodeAtom>()
+					<< ",method=equals<CodeAtom>"
+					<< "," << warning_message.str();
+				Utilities::logline_threadsafe << ss.str();
+			}
+
+			// Ignore error and move on.
+			return 1;
+		}
+		catch (...)
+		{
+			// Log exception
+			std::stringstream warning_message;
+			warning_message << "Warning: Cannot compare genomes";
+
+			std::cerr << warning_message.str();
+			{
+				std::ostringstream ss;
+				ss << ",number_of_blocks=" << _env.length<CodeAtom>()
+					<< ",diagnostic_level=0"
+					<< ",method=equals<CodeAtom>"
+					<< "," << warning_message.str();
+				Utilities::logline_threadsafe << ss.str();
+			}
+
+			// Ignore error and move on.
+			return 1;
+		}
 	}
 
 	template<>
 	inline unsigned long equals<ExecAtom>(Environment & _env)
 	{
-		Genome<ExecAtom>& genome = _env.get_stack<ExecAtom>();
+		try
+		{
+			//// Debug Log
+			//std::stringstream debud_message;
+			//debud_message << "Debug: Enter";
 
-		Genome_section<ExecAtom> block_a = genome[0];
-		Genome_section<ExecAtom> block_b = genome[1];
+			//std::cerr << debud_message.str();
+			//{
+			//	std::ostringstream ss;
+			//	ss << ",number_of_blocks=" << _env.length<ExecAtom>()
+			//		<< ",method=equals<ExecAtom>"
+			//		<< "," << debud_message.str();
+			//	Utilities::logline_threadsafe << ss.str();
+			//}
 
-		if (genome.comp(block_a, block_b))
-			_env.push<bool>(true);
-		else
-			_env.push<bool>(false);
+			Genome<ExecAtom>& genome = _env.get_stack<ExecAtom>();
 
-		_env.pop_genome<ExecAtom>();
-		_env.pop_genome<ExecAtom>();
+			Genome_section<ExecAtom> block_a = genome[0];
+			Genome_section<ExecAtom> block_b = genome[1];
 
-		return 1;
+			if (genome.comp(block_a, block_b))
+				_env.push<bool>(true);
+			else
+				_env.push<bool>(false);
+
+			_env.pop_genome<ExecAtom>();
+			_env.pop_genome<ExecAtom>();
+
+			return 1;
+		}
+		catch (const std::exception& e)
+		{
+			// Log exception
+			std::stringstream warning_message;
+			warning_message << "Warning: Cannot compare genomes";
+
+			std::cerr << warning_message.str();
+			{
+				std::ostringstream ss;
+				ss << ",exception=" << e.what()
+					<< ",diagnostic_level=0"
+					<< ",number_of_blocks=" << _env.length<ExecAtom>()
+					<< ",method=equals<ExecAtom>"
+					<< "," << warning_message.str();
+				Utilities::logline_threadsafe << ss.str();
+			}
+
+			// Ignore error and move on.
+			return 1;
+		}
+		catch (...)
+		{
+			// Log exception
+			std::stringstream warning_message;
+			warning_message << "Warning: Cannot compare genomes";
+
+			std::cerr << warning_message.str();
+			{
+				std::ostringstream ss;
+				ss << ",number_of_blocks=" << _env.length<ExecAtom>()
+					<< ",diagnostic_level=0"
+					<< ",method=equals<ExecAtom>"
+					<< "," << warning_message.str();
+				Utilities::logline_threadsafe << ss.str();
+			}
+
+			// Ignore error and move on.
+			return 1;
+		}
 	}
 
 

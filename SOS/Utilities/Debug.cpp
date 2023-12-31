@@ -1,4 +1,5 @@
 #include "Debug.h"
+#include "..\Plush\EnvironmentPool.h"
 
 namespace Utilities
 {
@@ -10,4 +11,8 @@ namespace Utilities
 	int generation = 0;
 #endif
 
+	//Quick_Log quick_log;
+	//Endl endl;
+
+	thread_local LogLine_ThreadSafe logline_threadsafe;
 }

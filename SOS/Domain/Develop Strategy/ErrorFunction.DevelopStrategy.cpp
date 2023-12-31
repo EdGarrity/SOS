@@ -36,20 +36,42 @@ namespace domain
 		//
 		std::tuple<double, unsigned long> run_program(Plush::Environment& env,
 			std::string program,
-			unsigned long case_index)
+			unsigned long case_index,
+			bool trace)
 		{
 			unsigned long effort = 0;
 			double trading_instruction = 0;
 
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			{
+				std::ostringstream ss;
+				ss << ",case=" << case_index
+					<< ",diagnostic_level=9"
+					<< ",method=develop_strategy.run_program"
+					<< ",message=Started";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
 			if (Utilities::trim_copy(program).length() > 0)
 			{
 				// Evaluate
-				effort = Plush::run(env, program, case_index);
+				effort = Plush::run(env, program, case_index, trace);
 
 				// Get trading instruction
 				if (env.output.size() > 0)
 					trading_instruction = env.output[0];
 			}
+
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			{
+				std::ostringstream ss;
+				ss << ",case=" << case_index
+					<< ",diagnostic_level=9"
+					<< ",method=develop_strategy.run_program"
+					<< ",message=Done";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
 			return std::make_tuple(trading_instruction, effort);
 		}
 
@@ -77,9 +99,34 @@ namespace domain
 			unsigned int strategy_index,
 			unsigned long case_index)
 		{
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			{
+				std::ostringstream ss;
+				ss << ",stratergy=" << strategy_index
+					<< ",case=" << case_index
+					<< ",diagnostic_level=9"
+					<< ",method=develop_strategy.run_strategy_threadsafe"
+					<< ",message=Started";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
 			std::string program = pushGP::globals::population_agents[strategy_index].get_genome_string();
 
-			auto results = run_program(env, program, case_index);
+			//bool trace = (strategy_index == 2 && case_index == 0);
+			bool trace = false;
+
+			auto results = run_program(env, program, case_index, trace);
+
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			{
+				std::ostringstream ss;
+				ss << ",stratergy=" << strategy_index
+					<< ",case=" << case_index
+					<< ",diagnostic_level=9"
+					<< ",method=develop_strategy.run_strategy_threadsafe"
+					<< ",message=Done";
+				Utilities::logline_threadsafe << ss.str();
+			}
 
 			return results;
 		}

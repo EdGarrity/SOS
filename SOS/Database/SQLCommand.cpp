@@ -5,6 +5,7 @@
 #include "SQLCommand.h"
 #include "..\Utilities\Conversion.h"
 //#include "..\Utilities\EventLogManager.h"
+#include "..\..\Utilities\Debug.h"
 
 namespace database
 {
@@ -67,7 +68,7 @@ namespace database
 			pIRowset_->ReleaseRows(cRowsObtained_, rghRows_, NULL, NULL, NULL);
 
 		delete[] pDBBindings_;
-		delete[] pDBBindStatus_;
+		//delete[] pDBBindStatus_;
 
 		g_pIMalloc->Free(pColumnsInfo_);
 		g_pIMalloc->Free(pColumnStrings_);
@@ -194,7 +195,7 @@ namespace database
 
 		// The command requires the actual text as well as an indicator of its language and dialect.
 		//pICommandText_->SetCommandText(DBGUID_DBSQL /*DBGUID_DEFAULT*/, Utilities::strtowstr(command_).c_str());
-		pICommandText_->SetCommandText(DBGUID_DBSQL /*DBGUID_DEFAULT*/, strtowstr(command_).c_str());
+		pICommandText_->SetCommandText(DBGUID_DBSQL /*DBGUID_DEFAULT*/, Utilities::strtowstr(command_).c_str());
 	}
 
 	// See "https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/ole-db-data-type-mappings"
@@ -282,10 +283,30 @@ namespace database
 
 	void SQLCommand::set_as_string(unsigned int parm_no, std::string parameter)
 	{
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+		{
+			std::ostringstream ss;
+			ss << ",method=SQLCommand::set_as_string"
+				<< ",diagnostic_level=9"
+				<< ",parm_no=" << parm_no
+				<< ",parameter_size=" << parameter.size()
+				<< ",message=Enter";
+			Utilities::logline_threadsafe << ss.str();
+		}
 		unsigned int n = parm_no - 1;
 
-		//if (dwOffset_ > MAX_ROW_LENGTH)
-		//	throw MyException("dwOffset_ > MAX_ROW_LENGTH");
+		if (dwOffset_ > MAX_ROW_LENGTH)
+			throw MyException("dwOffset_ > MAX_ROW_LENGTH");
+
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+		{
+			std::ostringstream ss;
+			ss << ",method=SQLCommand::set_as_string"
+				<< ",diagnostic_level=9"
+				<< ",dwOffset_=" << dwOffset_
+				<< ",message=check dwOffset_";
+			Utilities::logline_threadsafe << ss.str();
+		}
 
 		// See "https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms725393(v=vs.85)"
 		ParamBindInfo_[n].pwszDataSourceType = wszDBTYPE_STR;
@@ -318,8 +339,27 @@ namespace database
 		// for every row is correctly aligned
 		dwOffset_ = ROUNDUP(dwOffset_);
 
-		//if (dwOffset_ > MAX_ROW_LENGTH)
-		//	throw MyException("dwOffset_ > MAX_ROW_LENGTH");
+		if (dwOffset_ > MAX_ROW_LENGTH)
+		{
+			std::ostringstream ss;
+			ss << ",method=SQLCommand::set_as_string"
+				<< ",diagnostic_level=0"
+				<< ",dwOffset_=" << dwOffset_
+				<< ",message=Exception";
+			Utilities::logline_threadsafe << ss.str();
+
+			throw MyException("dwOffset_ > MAX_ROW_LENGTH");
+		}
+
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+		{
+			std::ostringstream ss;
+			ss << ",method=SQLCommand::set_as_string"
+				<< ",diagnostic_level=9"
+				<< ",dwOffset_=" << dwOffset_
+				<< ",message=Done";
+			Utilities::logline_threadsafe << ss.str();
+		}
 	}
 
 	//void SQLCommand::set_as_text(unsigned int parm_no, std::string parameter)
@@ -368,7 +408,7 @@ namespace database
 
 	void SQLCommand::set_as_GUID(unsigned int parm_no, const UUID _parameter)
 	{
-		set_as_string(parm_no, GuidToString(_parameter));
+		set_as_string(parm_no, Utilities::GuidToString(_parameter));
 	}
 
 	void SQLCommand::set_as_integer(unsigned int parm_no, long parameter)
@@ -611,10 +651,24 @@ namespace database
 
 	void SQLCommand::execute()
 	{
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+		{
+			std::ostringstream ss;
+			ss << ",method=SQLCommand::execute"
+				<< ",diagnostic_level=9"
+				<< ",dwOffset_=" << dwOffset_
+				<< ",number_of_parameters_in_command_=" << number_of_parameters_in_command_
+				<< ",message=Enter";
+			Utilities::logline_threadsafe << ss.str();
+		}
+
 		IRowset*	pIRowset;
 		DBPARAMS	Params;
 		DBORDINAL	nCols;
-				
+
+		// The status of a binding.  That is, whether or not it was successfully validated.
+		DBBINDSTATUS* pDBBindStatus_ = NULL;
+
 		// The command requires the actual text as well as an indicator
 		// of its language and dialect.
 //		pICommandText_->SetCommandText(DBGUID_DEFAULT, strtowstr(command_).c_str());
@@ -625,6 +679,18 @@ namespace database
 		do
 		{
 			attempts++;
+
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			{
+				std::ostringstream ss;
+				ss << ",method=SQLCommand::execute"
+					<< ",diagnostic_level=9"
+					<< ",attempts=" << attempts
+					<< ",dwOffset_=" << dwOffset_
+					<< ",number_of_parameters_in_command_=" << number_of_parameters_in_command_
+					<< ",message=do";
+				Utilities::logline_threadsafe << ss.str();
+			}
 
 			// Create input parameters
 			if (number_of_parameters_in_command_ > 0)
@@ -679,10 +745,32 @@ namespace database
 		while (FAILED(hr_));
 
 		if (pIRowset_ == NULL)
+		{
 			nCols = 0;
+
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			{
+				std::ostringstream ss;
+				ss << ",method=SQLCommand::execute"
+					<< ",diagnostic_level=9"
+					<< ",pIRowset_=NULL"
+					<< ",nCols=" << nCols
+					<< ",message=if";
+				Utilities::logline_threadsafe << ss.str();
+			}
+		}
 		
 		else
 		{
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			{
+				std::ostringstream ss;
+				ss << ",method=SQLCommand::execute"
+					<< ",diagnostic_level=9"
+					<< ",pIRowset_!=NULL"
+					<< ",message=if";
+				Utilities::logline_threadsafe << ss.str();
+			}
 			// Commented out these lines because rgBindings_ was null.
 			//long test = 0;
 			//memcpy(&test, sprocparams, rgBindings_[0].cbMaxLen);
@@ -691,24 +779,58 @@ namespace database
 			if (FAILED(myGetColumnsInfo(pIRowset_, &nCols, &pColumnsInfo_, &pColumnStrings_)))
 				throw std::runtime_error("Failed to get the description of the rowset for use in binding structure creation.");
 
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			{
+				std::ostringstream ss;
+				ss << ",method=SQLCommand::execute"
+					<< ",diagnostic_level=9"
+					<< ",nCols=" << nCols
+					<< ",message=Get_rowset_description";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
 			// Create the binding structures.
 			myCreateDBBindings(nCols, pColumnsInfo_, &pDBBindings_, &pRowValues_);
-			pDBBindStatus_ = new DBBINDSTATUS[nCols];
+			pDBBindStatus_ = new DBBINDSTATUS[nCols];	// Potential memory leak
 
 			// Create the accessor.
 			pIRowset_->QueryInterface(IID_IAccessor, (void**)&pIAccessor_);
-			pIAccessor_->CreateAccessor(
+			hr_ = pIAccessor_->CreateAccessor(
 				DBACCESSOR_ROWDATA,		// Accessor will be used to retrieve row data.
 				nCols,					// Number of columns being bound
 				pDBBindings_,			// Structure containing bind info
 				0,						// Not used for row accessors 
-				&hAccessor_,				// Returned accessor handle
+				&hAccessor_,			// Returned accessor handle
 				pDBBindStatus_			// Information about binding validity
 			);
+
+			delete[] pDBBindStatus_;
+
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			{
+				std::ostringstream ss;
+				ss << ",method=SQLCommand::execute"
+					<< ",diagnostic_level=9"
+					<< ",nCols=" << nCols
+					<< ",hr_=0x" << std::hex << hr_
+					<< ",message=CreateAccessor";
+				Utilities::logline_threadsafe << ss.str();
+			}
 		}
 
 		iRow_ = 0;
 		cRowsObtained_ = 0;
+		dwOffset_ = 0;		// This line was added to fix bug with dwOffset_ growing greater than MAX_ROW_LENGTH.
+		
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+		{
+			std::ostringstream ss;
+			ss << ",method=SQLCommand::execute"
+				<< ",diagnostic_level=9"
+				<< ",dwOffset_=" << dwOffset_
+				<< ",message=Done";
+			Utilities::logline_threadsafe << ss.str();
+		}
 	}
 
 	void SQLCommand::execute(const std::string _command)

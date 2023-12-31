@@ -72,21 +72,21 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>D:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files %28x86%29\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib\x64;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files %28x86%29\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib\x64;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib\x64;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>D:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files %28x86%29\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib\x64;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files %28x86%29\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib\x64;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib\x64;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -98,7 +98,6 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\183\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -119,7 +118,6 @@
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\183\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ShowIncludes>false</ShowIncludes>
-      <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -139,7 +137,6 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\183\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -160,7 +157,6 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\184\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -183,13 +179,13 @@
     <ClInclude Include="Domain\Arguments.h" />
     <ClInclude Include="Domain\Develop Strategy\Arguments.h" />
     <ClInclude Include="Domain\Develop Strategy\ErrorFunction.DevelopStrategy.h" />
+    <ClInclude Include="Domain\Develop Strategy\RunProgram_WorkOrder_Form.h" />
     <ClInclude Include="Domain\Develop Strategy\Run.DevelopStrategy.h" />
-    <ClInclude Include="Domain\Learn From Examples\Arguments.h" />
-    <ClInclude Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.h" />
-    <ClInclude Include="Domain\Learn From Examples\Run.LearnFromExamples.h" />
+    <ClInclude Include="Domain\RunProgram.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Plush\Atom.h" />
     <ClInclude Include="Plush\Environment.h" />
+    <ClInclude Include="Plush\EnvironmentPool.h" />
     <ClInclude Include="Plush\GenericInstructions.h" />
     <ClInclude Include="Plush\Genome.h" />
     <ClInclude Include="Plush\Plush.BooleanInstructions.h" />
@@ -225,6 +221,8 @@
     <ClInclude Include="Utilities\MyException.h" />
     <ClInclude Include="Utilities\Random.Utilities.h" />
     <ClInclude Include="Utilities\Singleton.h" />
+    <ClInclude Include="Utilities\Task.hpp" />
+    <ClInclude Include="Utilities\Threadpool.hpp" />
     <ClInclude Include="Utilities\ThreadSafeArray.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
@@ -233,7 +231,6 @@
     </ClInclude>
     <ClInclude Include="Utilities\ThreadSafeArray_V2.h" />
     <ClInclude Include="Utilities\ThreeDimensionalArray.h" />
-    <ClInclude Include="Utilities\WorkOrderManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Broker\Account.cpp" />
@@ -246,9 +243,9 @@
     <ClCompile Include="DataStore\DatabaseConnection.cpp" />
     <ClCompile Include="DataStore\FinancialData.cpp" />
     <ClCompile Include="Domain\Develop Strategy\ErrorFunction.DevelopStrategy.cpp" />
+    <ClCompile Include="Domain\Develop Strategy\RunProgram_WorkOrder_Form.cpp" />
     <ClCompile Include="Domain\Develop Strategy\Run.DevelopStrategy.cpp" />
-    <ClCompile Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.cpp" />
-    <ClCompile Include="Domain\Learn From Examples\Run.LearnFromExamples.cpp" />
+    <ClCompile Include="Domain\RunProgram.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -258,6 +255,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Plush\Atom.cpp" />
     <ClCompile Include="Plush\Environment.cpp" />
+    <ClCompile Include="Plush\EnvironmentPool.cpp" />
     <ClCompile Include="Plush\Genome.cpp" />
     <ClCompile Include="Plush\Plush.BooleanInstructions.cpp" />
     <ClCompile Include="Plush\Plush.ExecInstruction.cpp" />
@@ -287,7 +285,6 @@
     <ClCompile Include="Utilities\Random.Utilities.cpp" />
     <ClCompile Include="Utilities\ThreadSafeArray.cpp" />
     <ClCompile Include="Utilities\ThreadSafeArray_V2.cpp" />
-    <ClCompile Include="Utilities\WorkOrderManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

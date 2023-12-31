@@ -1,6 +1,8 @@
 #include "SimulatedAnnealing.h"
 #include <iostream>
 
+#include "..\Utilities\Debug.h"
+
 namespace pushGP
 {
 	void SimulatedAnnealing::calculate_state_probability_levels()
@@ -37,12 +39,19 @@ namespace pushGP
 		probability_level_of_cloaning_ = probability_level_of_mutation_ + cloaning_factor / total_factor;
 		probability_level_of_regeneration_ = probability_level_of_cloaning_ + regeneration_factor / total_factor;
 
-
-		std::cout << " probability_level_of_alternation_ = " << probability_level_of_alternation_ << std::endl;
-		std::cout << " probability_level_of_elite_alternation_ = " << probability_level_of_elite_alternation_ << std::endl;
-		std::cout << " probability_level_of_mutation_ = " << probability_level_of_mutation_ << std::endl;
-		std::cout << " probability_level_of_cloaning_ = " << probability_level_of_cloaning_ << std::endl;
-		std::cout << " probability_level_of_regeneration_ = " << probability_level_of_regeneration_ << std::endl;
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+		{
+			std::ostringstream ss;
+			ss << ",method=SimulatedAnnealing.calculate_state_probability_levels"
+				<< ",diagnostic_level=9"
+				<< ",probability_level_of_alternation_= " << probability_level_of_alternation_
+				<< ",probability_level_of_elite_alternation_= " << probability_level_of_elite_alternation_
+				<< ",probability_level_of_mutation_= " << probability_level_of_mutation_
+				<< ",probability_level_of_cloaning_= " << probability_level_of_cloaning_
+				<< ",probability_level_of_regeneration_= " << probability_level_of_regeneration_
+				<< ",message=configuration";
+			Utilities::logline_threadsafe << ss.str();
+		}
 	}
 
 	SimulatedAnnealing_States SimulatedAnnealing::get_state(double _random_variable)

@@ -10,10 +10,13 @@
 #include <queue>
 #include <sstream>
 #include <fstream>
+#include <ostream>
+#include <syncstream>
 
 #include "SystemInfo.h"
 //#include "..\Plush\Atom.h"
 //#include "..\Plush\Environment.h"
+#include "..\Domain\Arguments.h"
 
 #define DLEVEL 0
 #define TRACE_LEVEL 0
@@ -59,13 +62,13 @@ namespace Utilities
 
 			unsigned long percent_memory_use = GetMemoryLoad();
 
-			std::cout << getCurrentTimestamp()
+			Utilities::quick_log << getCurrentTimestamp()
 				<< ",LineNumber=" << std::to_string(line_number++)
 				<< ",Percent_Free_Memory=" << std::to_string(percent_memory_use)
 				<< ",Thread=" << env_index
 				<< ",Function=" << function
 				<< ",Status=" << status
-				<< std::endl;
+				/*<< Utilities::endl */;
 
 			work_order_print_lock.unlock();
 		//}
@@ -81,13 +84,13 @@ namespace Utilities
 
 			unsigned long percent_memory_use = GetMemoryLoad();
 
-			std::cout << getCurrentTimestamp()
+			Utilities::quick_log << getCurrentTimestamp()
 				<< ",LineNumber=" << std::to_string(line_number++)
 				<< ",Percent_Free_Memory=" << std::to_string(percent_memory_use)
 				<< ",Thread=" << env_index
 				<< ",Function=" << function
 				<< ",Status=" << status
-				<< std::endl;
+				/*<< Utilities::endl */;
 		//}
 	}
 
@@ -107,7 +110,7 @@ namespace Utilities
 
 			unsigned long percent_memory_use = GetMemoryLoad();
 
-			std::cout << getCurrentTimestamp()
+			Utilities::quick_log << getCurrentTimestamp()
 				<< ",LineNumber=" << std::to_string(line_number++)
 				<< ",Percent_Free_Memory=" << std::to_string(percent_memory_use)
 				<< ",Thread=" << env_index
@@ -115,7 +118,7 @@ namespace Utilities
 				<< ",Status=" << status
 				<< ",work_order.individual_index = " << individual_index
 				<< ",work_order.example_case=" << example_case
-				<< std::endl;
+				/*<< Utilities::endl */;
 
 			work_order_print_lock.unlock();
 		//}
@@ -137,7 +140,7 @@ namespace Utilities
 			<< "," << line_number
 			<< "," << generation
 			<< trace_msg
-			<< std::endl;
+			/*<< Utilities::endl */;
 
 		std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
 
@@ -149,7 +152,7 @@ namespace Utilities
 			first = false;
 
 			myfile << "time,line_number,generation,thread,individual_index,example_case,ip,instruction,enabled,Exec_size,Exec,Code_size,Code,long_size,long,double_size,double,bool_size,bool,instructions";
-			myfile << std::endl;
+			myfile; Utilities::logline_threadsafe << ss.str();
 		}
 
 		myfile << ss.str();
@@ -164,4 +167,129 @@ namespace Utilities
 		generation++;
 	}
 #endif
+
+	//class Quick_Log
+	//{
+	//public:
+	//	//void operator<<(const std::string& msg) {
+	//	//	std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
+
+	//	//	Utilities::quick_log << getCurrentTimestamp()
+	//	//		<< ",LineNumber=" << std::to_string(line_number++)
+	//	//		<< ",Message=" << msg
+	//	//		/*<< Utilities::endl */;
+
+	//	//	work_order_print_lock.unlock();
+	//	//}
+
+	//	//void operator<<(const unsigned int msg) {
+	//	//	std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
+
+	//	//	Utilities::quick_log << getCurrentTimestamp()
+	//	//		<< ",LineNumber=" << std::to_string(line_number++)
+	//	//		<< ",Message=" << msg
+	//	//		/*<< Utilities::endl */;
+
+	//	//	work_order_print_lock.unlock();
+	//	//}
+
+	//	//void operator<<(const std::ostream& stream)
+	//	//{
+	//	//	std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
+
+	//	//	Utilities::quick_log << stream
+	//	//		/*<< Utilities::endl */;
+
+	//	//	work_order_print_lock.unlock();
+	//	//}
+
+	//	// Overload the << operator to print to std::out
+	//	template <typename T>
+	//	Quick_Log& operator<<(const T& value) 
+	//	{
+	//		std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
+	//		Utilities::quick_log << value;
+	//		work_order_print_lock.unlock();
+	//		return *this; // Return a reference to the Log object for chaining
+	//	}
+
+
+	//};
+
+	//// Define a custom class that represents Utilities::endl
+	//class Endl 
+	//{
+	//public:
+	//	// Overload the << operator for std::ostream
+	//	friend std::ostream& operator<<(std::ostream& os, const Endl& e) 
+	//	{
+	//		std::unique_lock<std::mutex> work_order_print_lock(work_order_print_);
+	//		os.put(os.widen('\n')); // Insert a newline character
+	//		os.flush();            // Flush the output buffer
+	//		work_order_print_lock.unlock();
+	//		return os;
+	//	}
+	//};
+
+	//extern Quick_Log quick_log;
+	//extern Endl endl;
+
+
+
+	//class Quick_Log
+	//{
+	//public:
+	//	// Overload the << operator to print to std::out
+	//	template <typename T>
+	//	Quick_Log& operator<<(const T& value) 
+	//	{
+	//		{
+	//			std::osyncstream synced_out(std::cout); // synchronized wrapper for Utilities::quick_log
+	//			synced_out << value;
+	//		} // characters are transferred and Utilities::quick_log is flushed
+	//		return *this; // Return a reference to the Log object for chaining
+	//	}
+	//};
+
+	// Define a custom class that represents Utilities::endl
+	//class Endl 
+	//{
+	//public:
+	//	// Overload the << operator for std::ostream
+	//	friend std::ostream& operator<<(std::ostream& os, const Endl& e) 
+	//	{
+	//		{
+	//			std::osyncstream synced_out(std::cout); // synchronized wrapper for Utilities::quick_log
+	//			synced_out << std::endl;
+	//		} // characters are transferred and Utilities::quick_log is flushed
+	//		return os;
+	//	}
+	//};
+
+	//extern Quick_Log quick_log;
+	//extern Endl endl;
+
+
+
+	class LogLine_ThreadSafe
+	{
+	public:
+		// Overload the << operator to print to std::out
+		template <typename T>
+		LogLine_ThreadSafe& operator<<(const T& message)
+		{
+			{
+				std::osyncstream synced_out(std::cout); // synchronized wrapper for Utilities::LogLine_ThreadSafe
+
+				synced_out << getCurrentTimestamp();
+				synced_out << ",line_number=" << std::to_string(line_number++);
+				synced_out << ",thread=" << std::this_thread::get_id();
+				synced_out << message;
+				synced_out << std::endl;
+			} // characters are transferred and Utilities::LogLine_ThreadSafe is flushed
+			return *this; // Return a reference to the Log object for chaining
+		}
+	};
+
+	extern thread_local LogLine_ThreadSafe logline_threadsafe;
 }

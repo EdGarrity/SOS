@@ -6,6 +6,28 @@ namespace domain
 {
 	namespace argmap
 	{
+		// Diagnostic Level definitions
+		const int diagnostic_level_1 = 1;
+		const int diagnostic_level_2 = 2;
+		const int diagnostic_level_3 = 3;
+		const int diagnostic_level_4 = 4;
+		const int diagnostic_level_5 = 5;
+		const int diagnostic_level_6 = 6;
+		const int diagnostic_level_7 = 7;
+		const int diagnostic_level_8 = 8;
+		const int diagnostic_level_9 = 9;
+
+		// Diagnostic Level
+		const int diagnostic_level = diagnostic_level_9;
+
+
+		// Specify which financial instruments to target
+		const std::string financial_instrument = "AAPL";
+		const std::string financial_index = "FXAIX";
+		const std::string financial_data_start_date = "2020-01-01";
+		const std::string financial_data_end_date = "2021-12-31";
+
+
 		//	Select which algorithm to use
 		enum class AlgorithmSelection { learn_from_examples, strategy_development };
 		const AlgorithmSelection algorithm_selection = AlgorithmSelection::strategy_development;
@@ -27,10 +49,10 @@ namespace domain
 
 		//	:use - single - thread false
 		//	;; When true, will only use a single thread.
-		const bool use_multithreading = false;
+		const bool use_multithreading = true;
 		const bool use_PPL = false;
 		const unsigned long number_of_cores_to_reserve = 4;
-		const unsigned long max_threads = 24;
+		const unsigned long max_threads = 8;
 		const unsigned long thread_chunk_size = 1; // 100;  // Number of threads per chunk.
 
 		// CPU temperature monitoring
@@ -66,7 +88,7 @@ namespace domain
 		//		;; The instructions that pushgp will use in random code.
 
 		// Number of individuals in the population.
-		const unsigned long population_size = 10; // 1000; // 20000; // 200'000;
+		const size_t population_size = 100; // 1000; // 20000; // 200'000;
 
 		// The maximum number of generations to run GP.
 		const unsigned long max_generations_in_one_session = 300;
@@ -685,8 +707,9 @@ namespace domain
 		// connect to a specific instance of SQL Server the value init_datasource is specified as \\ServerName\InstanceName. The escape sequence \\ is used for 
 		// backslash itself
 //		const std::string db_init_datasource = "HOMEOFFICE";
-		const std::string db_init_datasource = "(local)";
+		//const std::string db_init_datasource = "(local)";
 		//const std::string db_init_datasource = "EGARRITY-LT";
+		const std::string db_init_datasource = "192.168.1.42";
 
 		// Name of an existing SQL Server database to which to connect.
 		const std::string db_init_catalog = "SOS";
