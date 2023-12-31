@@ -707,6 +707,10 @@ namespace domain
 				//	domain::argmap::financial_data_start_date,
 				//	domain::argmap::financial_data_end_date
 				//);
+
+				// ToDo:
+				// To load all data records would required more memroy than is available on the machine.  
+				// Need to redesign the alrorithm to load only the data as needed
 				datastore::financial_data.load
 				(
 					domain::argmap::financial_data_start_date,
