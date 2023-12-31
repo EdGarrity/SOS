@@ -1832,17 +1832,19 @@ namespace Plush
 			{
 				if (l >= Utilities::FixedSizeStack<T>::free())
 				{
-					std::stringstream error_message;
-					error_message << "yankdup_item() - Stack overflow.  s = " << s << " free = " << Utilities::FixedSizeStack<T>::free();
-
 					//throw std::overflow_error(error_message.str());
 					if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 					{
+						std::stringstream error_message;
+						error_message << "yankdup_item() - Stack overflow.  s = " << s << " free = " << Utilities::FixedSizeStack<T>::free();
+
 						std::ostringstream ss;
 						ss << ",method=Plush.yankdup_item"
 							<< ",diagnostic_level=9"
 							<< ",effort=" << effort
-							<< ",message=underflow_error";
+							<< "l=" << l
+							<< ",error_message=" << error_message.str()
+							<< ",message=overflow_error";
 						Utilities::logline_threadsafe << ss.str();
 					}
 
@@ -1857,16 +1859,18 @@ namespace Plush
 			{
 				if (Utilities::FixedSizeStack<T>::free() == 0)
 				{
-					std::stringstream error_message;
-					error_message << "yankdup_item() - Stack overflow.";
-
 					//throw std::overflow_error(error_message.str());
 					if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 					{
+						std::stringstream error_message;
+						error_message << "yankdup_item() - Stack overflow.";
+
 						std::ostringstream ss;
 						ss << ",method=Plush.yankdup_item"
 							<< ",diagnostic_level=9"
-							<< ",message=underflow_error";
+							<< "l=" << l
+							<< ",error_message=" << error_message.str()
+							<< ",message=overflow_error";
 						Utilities::logline_threadsafe << ss.str();
 					}
 
@@ -2187,6 +2191,8 @@ namespace Plush
 					std::ostringstream ss;
 					ss << ",method=Plush.shove"
 						<< ",diagnostic_level=9"
+						<< "Utilities::FixedSizeStack<T>::top_=" << Utilities::FixedSizeStack<T>::top_
+						<< ",source_section.size=" << source_section.size
 						<< ",error_message= << error_message.str()"
 						<< ",message=yankdup_stack_element";
 					Utilities::logline_threadsafe << ss.str();
