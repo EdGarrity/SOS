@@ -1832,27 +1832,58 @@ namespace Plush
 			{
 				if (l >= Utilities::FixedSizeStack<T>::free())
 				{
-					std::stringstream error_message;
-					error_message << "yankdup_item() - Stack overflow.  s = " << s << " free = " << Utilities::FixedSizeStack<T>::free();
+					//throw std::overflow_error(error_message.str());
+					if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+					{
+						std::stringstream error_message;
+						error_message << "yankdup_item() - Stack overflow.  s = " << s << " free = " << Utilities::FixedSizeStack<T>::free();
 
-					throw std::overflow_error(error_message.str());
+						std::ostringstream ss;
+						ss << ",method=Plush.yankdup_item"
+							<< ",diagnostic_level=9"
+							<< ",effort=" << effort
+							<< "l=" << l
+							<< ",error_message=" << error_message.str()
+							<< ",message=overflow_error";
+						Utilities::logline_threadsafe << ss.str();
+					}
+
+					effort = 1;
+					return effort;
 				}
 
-				effort = Utilities::FixedSizeStack<T>::yankdup_item(s, l);
+				else
+					effort = Utilities::FixedSizeStack<T>::yankdup_item(s, l);
 			}
 			else
 			{
 				if (Utilities::FixedSizeStack<T>::free() == 0)
 				{
-					std::stringstream error_message;
-					error_message << "yankdup_item() - Stack overflow.";
+					//throw std::overflow_error(error_message.str());
+					if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+					{
+						std::stringstream error_message;
+						error_message << "yankdup_item() - Stack overflow.";
 
-					throw std::overflow_error(error_message.str());
+						std::ostringstream ss;
+						ss << ",method=Plush.yankdup_item"
+							<< ",diagnostic_level=9"
+							<< "l=" << l
+							<< ",error_message=" << error_message.str()
+							<< ",message=overflow_error";
+						Utilities::logline_threadsafe << ss.str();
+					}
+
+					effort = 1;
+					return effort;
 				}
 
-				push(T("{:instruction EXEC.NOOP :close 1}"));
+				else
+				{
+					push(T("{:instruction EXEC.NOOP :close 1}"));
 
-				effort = 1;
+					effort = 1;
+				}
 			}
 
 			if ((Utilities::FixedSizeStack<T>::size() > 0) && (extra_blocks > 0))
@@ -1940,10 +1971,21 @@ namespace Plush
 		{
 			if (section.size > Utilities::FixedSizeStack<T>::free())
 			{
-				std::stringstream error_message;
-				error_message << "yankdup_stack_element() - Stack overflow.  section.size = " << section.size << " free = " << Utilities::FixedSizeStack<T>::free();
+				section.size = 0;
 
-				throw std::overflow_error(error_message.str());
+				//throw std::overflow_error(error_message.str());
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				{
+					std::stringstream error_message;
+					error_message << "yankdup_stack_element() - Stack overflow.  section.size = " << section.size << " free = " << Utilities::FixedSizeStack<T>::free();
+
+					std::ostringstream ss;
+					ss << ",method=Plush.yankdup_item"
+						<< ",diagnostic_level=9"
+						<< ",error_message= << error_message.str()"
+						<< ",message=yankdup_stack_element";
+					Utilities::logline_threadsafe << ss.str();
+				}
 			}
 
 			if (section.size > 0)
@@ -1981,10 +2023,22 @@ namespace Plush
 
 			if (section.size > Utilities::FixedSizeStack<T>::free())
 			{
-				std::stringstream error_message;
-				error_message << "push() - Stack overflow.  section.size = " << section.size << " free = " << Utilities::FixedSizeStack<T>::free();
+				section.size = 0;
 
-				throw std::overflow_error(error_message.str());
+				//throw std::overflow_error(error_message.str());
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				{
+					std::stringstream error_message;
+					error_message << "push() - Stack overflow.  section.size = " << section.size << " free = " << Utilities::FixedSizeStack<T>::free();
+
+					std::ostringstream ss;
+					ss << ",method=Plush.push"
+						<< ",diagnostic_level=9"
+						<< ",effort=" << effort
+						<< ",error_message= << error_message.str()"
+						<< ",message=yankdup_stack_element";
+					Utilities::logline_threadsafe << ss.str();
+				}
 			}
 
 			if (section.size > 0)
@@ -2128,10 +2182,23 @@ namespace Plush
 
 			if ((Utilities::FixedSizeStack<T>::top_ + source_section.size) > N)
 			{
-				std::stringstream error_message;
-				error_message << "Utilities::FixedSizeStack::shove() - Stack overflow.";
+				//throw std::overflow_error(error_message.str());
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				{
+					std::stringstream error_message;
+					error_message << "Utilities::FixedSizeStack::shove() - Stack overflow.";
 
-				throw std::overflow_error(error_message.str());
+					std::ostringstream ss;
+					ss << ",method=Plush.shove"
+						<< ",diagnostic_level=9"
+						<< "Utilities::FixedSizeStack<T>::top_=" << Utilities::FixedSizeStack<T>::top_
+						<< ",source_section.size=" << source_section.size
+						<< ",error_message= << error_message.str()"
+						<< ",message=yankdup_stack_element";
+					Utilities::logline_threadsafe << ss.str();
+				}
+
+				return 0;
 			}
 
 			destination_position = (destination_position >= Utilities::FixedSizeStack<T>::top_) 
@@ -2262,11 +2329,23 @@ namespace Plush
 			{
 				if (Utilities::FixedSizeStack<T>::free() <= second_section.size)
 				{
-					std::stringstream error_message;
-					error_message << "Genome::subst() - Stack overflow.  second_section.size = " << second_section.size
-						<< " Utilities::FixedSizeStack<T>::free() = " << Utilities::FixedSizeStack<T>::free();
+					//throw std::overflow_error(error_message.str());
+					if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+					{
+						std::stringstream error_message;
+						error_message << "Genome::subst() - Stack overflow.  second_section.size = " << second_section.size
+							<< " Utilities::FixedSizeStack<T>::free() = " << Utilities::FixedSizeStack<T>::free();
 
-					throw std::overflow_error(error_message.str());
+						std::ostringstream ss;
+						ss << ",method=Plush.shove"
+							<< ",diagnostic_level=9"
+							<< ",effort=" << effort
+							<< ",error_message= << error_message.str()"
+							<< ",message=yankdup_stack_element";
+						Utilities::logline_threadsafe << ss.str();
+					}
+
+					return 0;
 				}
 
 				unsigned long new_top = Utilities::FixedSizeStack<T>::size();

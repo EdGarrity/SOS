@@ -195,9 +195,6 @@
     <ClInclude Include="Utilities\ThreadSafeArray.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="PushGP\CalculateDiversity.h">
-      <Filter>Header Files\PushGP</Filter>
-    </ClInclude>
     <ClInclude Include="Domain\Develop Strategy\Arguments.h">
       <Filter>Header Files\Domain\Develop Strategy</Filter>
     </ClInclude>
@@ -349,9 +346,6 @@
     </ClCompile>
     <ClCompile Include="Utilities\ThreadSafeArray.cpp">
       <Filter>Source Files\Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="PushGP\CalculateDiversity.cpp">
-      <Filter>Source Files\PushGP</Filter>
     </ClCompile>
     <ClCompile Include="DataStore\FinancialData.cpp">
       <Filter>Source Files\DataStore</Filter>

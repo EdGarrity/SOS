@@ -24,7 +24,7 @@ namespace domain
 		// Specify which financial instruments to target
 		const std::string financial_instrument = "AAPL";
 		const std::string financial_index = "FXAIX";
-		const std::string financial_data_start_date = "2020-01-01";
+		const std::string financial_data_start_date = "1981-01-02";
 		const std::string financial_data_end_date = "2021-12-31";
 
 
@@ -52,7 +52,7 @@ namespace domain
 		const bool use_multithreading = true;
 		const bool use_PPL = false;
 		const unsigned long number_of_cores_to_reserve = 4;
-		const unsigned long max_threads = 8;
+		const unsigned long max_threads = 1;
 		const unsigned long thread_chunk_size = 1; // 100;  // Number of threads per chunk.
 
 		// CPU temperature monitoring
@@ -111,7 +111,8 @@ namespace domain
 		const unsigned long max_genome_size_in_initial_program = max_points / 4;
 
 		// Number of Available Training Cases
-		const unsigned long number_of_training_cases = 300;
+		//const unsigned long number_of_training_cases = 5316696; // '2020-01-01' to '2021-12-31'
+		const unsigned long number_of_training_cases = 1000; // 504; // '2020-01-01' to '2021-12-31'
 
 		// Number of Available Test Cases
 		const unsigned long number_of_test_cases = 10;

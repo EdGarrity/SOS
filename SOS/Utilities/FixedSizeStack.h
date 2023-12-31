@@ -345,14 +345,26 @@ namespace Utilities
 		{
 			if (top_ >= N)
 			{
-				std::stringstream error_message;
-				error_message << "Utilities::FixedSizeStack::push() - Stack overflow.  top = " << top_;
+				//throw std::overflow_error(error_message.str());
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				{
+					std::stringstream error_message;
+					error_message << "Utilities::FixedSizeStack::push(value) - Stack overflow.  top = " << top_;
 
-				throw std::overflow_error(error_message.str());
+					std::ostringstream ss;
+					ss << ",method=FixedSizeStack.push"
+						<< ",diagnostic_level=9"
+						<< ",error_message=" << error_message.str()
+						<< ",message=overflow_error";
+					Utilities::logline_threadsafe << ss.str();
+				}
 			}
 
-			stack_[top_] = value;
-			top_++;
+			else
+			{
+				stack_[top_] = value;
+				top_++;
+			}
 
 			return 1;
 		}
@@ -362,15 +374,27 @@ namespace Utilities
 		{
 			if (top_ >= N)
 			{
-				std::stringstream error_message;
-				error_message << "Utilities::FixedSizeStack::push() - Stack overflow.  top = " << top_;
+				//throw std::overflow_error(error_message.str());
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				{
+					std::stringstream error_message;
+					error_message << "Utilities::FixedSizeStack::push(program) - Stack overflow.  top = " << top_;
 
-				throw std::overflow_error(error_message.str());
+					std::ostringstream ss;
+					ss << ",method=FixedSizeStack.push"
+						<< ",diagnostic_level=9"
+						<< ",error_message=" << error_message.str()
+						<< ",message=overflow_error";
+					Utilities::logline_threadsafe << ss.str();
+				}
 			}
 
-			value_type value(program);
-			stack_[top_] = value;
-			top_++;
+			else
+			{
+				value_type value(program);
+				stack_[top_] = value;
+				top_++;
+			}
 
 			return 1;
 		}
