@@ -72,19 +72,21 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files %28x86%29\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib\x64;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files %28x86%29\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib\x64;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Lib;%ProgramFiles%\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -95,7 +97,7 @@
       <PreprocessorDefinitions>_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\183\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\183\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -115,9 +117,10 @@
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <OmitFramePointers>false</OmitFramePointers>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
-      <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\183\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\183\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ShowIncludes>false</ShowIncludes>
       <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -135,7 +138,7 @@
       <PreprocessorDefinitions>_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\183\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\183\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -156,8 +159,9 @@
       <PreprocessorDefinitions>_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\184\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\193\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\186\SDK\Include;C:\Program Files\Microsoft SQL Server\Client SDK\OLEDB\184\SDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -167,9 +171,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Broker\Account.h" />
+    <ClInclude Include="Broker\BrokerAccount.h" />
     <ClInclude Include="Database\SQLCommand.h" />
     <ClInclude Include="Database\SQLConnection.h" />
+    <ClInclude Include="DataStore\AgentData.h" />
+    <ClInclude Include="DataStore\OrderMatrix.h" />
+    <ClInclude Include="DataStore\TestData.h" />
+    <ClInclude Include="DataStore\DatabaseConnection.h" />
+    <ClInclude Include="DataStore\FinancialData.h" />
     <ClInclude Include="Domain\Arguments.h" />
+    <ClInclude Include="Domain\Develop Strategy\Arguments.h" />
+    <ClInclude Include="Domain\Develop Strategy\ErrorFunction.DevelopStrategy.h" />
+    <ClInclude Include="Domain\Develop Strategy\Run.DevelopStrategy.h" />
     <ClInclude Include="Domain\Learn From Examples\Arguments.h" />
     <ClInclude Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.h" />
     <ClInclude Include="Domain\Learn From Examples\Run.LearnFromExamples.h" />
@@ -211,12 +225,28 @@
     <ClInclude Include="Utilities\MyException.h" />
     <ClInclude Include="Utilities\Random.Utilities.h" />
     <ClInclude Include="Utilities\Singleton.h" />
-    <ClInclude Include="Utilities\ThreadSafeArray.h" />
+    <ClInclude Include="Utilities\ThreadSafeArray.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Utilities\ThreadSafeArray_V2.h" />
+    <ClInclude Include="Utilities\ThreeDimensionalArray.h" />
     <ClInclude Include="Utilities\WorkOrderManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Broker\Account.cpp" />
+    <ClCompile Include="Broker\BrokerAccount.cpp" />
     <ClCompile Include="Database\SQLCommand.cpp" />
     <ClCompile Include="Database\SQLConnection.cpp" />
+    <ClCompile Include="DataStore\AgentData.cpp" />
+    <ClCompile Include="DataStore\OrderMatrix.cpp" />
+    <ClCompile Include="DataStore\TestData.cpp" />
+    <ClCompile Include="DataStore\DatabaseConnection.cpp" />
+    <ClCompile Include="DataStore\FinancialData.cpp" />
+    <ClCompile Include="Domain\Develop Strategy\ErrorFunction.DevelopStrategy.cpp" />
+    <ClCompile Include="Domain\Develop Strategy\Run.DevelopStrategy.cpp" />
     <ClCompile Include="Domain\Learn From Examples\ErrorFunction.LearnFromExample.cpp" />
     <ClCompile Include="Domain\Learn From Examples\Run.LearnFromExamples.cpp" />
     <ClCompile Include="pch.cpp">
@@ -256,6 +286,7 @@
     <ClCompile Include="Utilities\MyException.cpp" />
     <ClCompile Include="Utilities\Random.Utilities.cpp" />
     <ClCompile Include="Utilities\ThreadSafeArray.cpp" />
+    <ClCompile Include="Utilities\ThreadSafeArray_V2.cpp" />
     <ClCompile Include="Utilities\WorkOrderManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

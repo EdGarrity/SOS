@@ -1,11 +1,14 @@
 #include <set>
 #include <stack>
+#include "..\Domain\Arguments.h"
 #include "Genome.h"
 #include "Plush.ExecInstruction.h"
 #include "Processor.h"
 #include "Plush.StaticInit.h"
 #include "..\Utilities\String.h"
 #include "..\Domain\Arguments.h"
+#include "..\DataStore\FinancialData.h"
+#include "..\DataStore\TestData.h"
 
 namespace Plush
 {
@@ -917,10 +920,17 @@ namespace Plush
 	//
 	inline unsigned long in2code(Environment & _env)
 	{
-		long index = _env.pop<long>();
+		long index = std::abs((long)(_env.pop<long>()));
+		double value = 0;
 
-		index = std::abs((long)(index % _env.input.size()));
-		double value = _env.input[index];
+		if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
+			value = datastore::financial_data.get_data(index, _env.input_case);
+		else
+		{
+			index = std::abs((long)(index % _env.input.size()));
+			value = _env.input[index];
+		}
+
 		_env.push<CodeAtom>(CodeAtom(value));
 
 		return 1;
@@ -946,12 +956,25 @@ namespace Plush
 	//
 	inline unsigned long inall2code(Environment & _env)
 	{
-		if (_env.input.size() > 0)
+		if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
 		{
-			for (unsigned int index = 0; index < _env.input.size(); index++)
+			size_t size_of_window = datastore::financial_data.get_size();
+
+			for (unsigned int index = 0; index < size_of_window; index++)
 			{
-				double value = _env.input[index];
+				double value = datastore::financial_data.get_data(index, _env.input_case);
 				_env.push<CodeAtom>(CodeAtom(value));
+			}
+		}
+		else
+		{
+			if (_env.input.size() > 0)
+			{
+				for (unsigned int index = 0; index < _env.input.size(); index++)
+				{
+					double value = _env.input[index];
+					_env.push<CodeAtom>(CodeAtom(value));
+				}
 			}
 		}
 
@@ -978,16 +1001,32 @@ namespace Plush
 	//
 	inline unsigned long inallrev2code(Environment & _env)
 	{
-		if (_env.input.size() > 0)
+		if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
 		{
-			size_t size = _env.input.size();
-			size_t index = size;
+			size_t size_of_window = datastore::financial_data.get_size();
+			size_t index = size_of_window;
 
-			//for (unsigned long index = _env.input.size() - 1; index >= 0; index--)
-			for (size_t n = 0; n < size; n++)
+			for (unsigned int n = 0; n < size_of_window; n++)
 			{
-				double value = _env.input[--index];
+				index--;
+
+				double value = datastore::financial_data.get_data(index, _env.input_case);
 				_env.push<CodeAtom>(CodeAtom(value));
+			}
+		}
+		else
+		{
+			if (_env.input.size() > 0)
+			{
+				size_t size = _env.input.size();
+				size_t index = size;
+
+				//for (unsigned long index = _env.input.size() - 1; index >= 0; index--)
+				for (size_t n = 0; n < size; n++)
+				{
+					double value = _env.input[--index];
+					_env.push<CodeAtom>(CodeAtom(value));
+				}
 			}
 		}
 
@@ -1013,7 +1052,7 @@ namespace Plush
 		push_make_instruction((Operator)exec_do_range, "EXEC", "DO*RANGE", integerType + integerType + execType, nullType);
 		push_make_instruction((Operator)exec_do_count, "EXEC", "DO*COUNT", integerType + execType, integerType + execType);
 		push_make_instruction((Operator)exec_do_times, "EXEC", "DO*TIMES", integerType + execType, integerType + execType + execType);
-		push_make_instruction((Operator)exec_while, "EXEC", "WHILE", integerType + execType, execType + execType);
+		push_make_instruction((Operator)exec_while, "EXEC", "WHILE", integerType + execType + boolType, execType + execType);
 		push_make_instruction((Operator)do_while, "EXEC", "DO*WHILE", execType, execType + execType);
 		push_make_instruction((Operator)exec_when, "EXEC", "DO*WHEN", boolType + execType, nullType);
 

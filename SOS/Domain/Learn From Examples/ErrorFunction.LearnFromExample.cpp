@@ -1,4 +1,5 @@
 #define NOMINMAX
+
 #include <algorithm>
 #include "ErrorFunction.LearnFromExample.h"
 #include "..\..\PushGP\Globals.h"

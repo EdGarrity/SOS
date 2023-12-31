@@ -1,14 +1,15 @@
 #include <chrono>
 #include <iostream>
 #include <thread>
+#include <comutil.h>
 #include "SQLConnection.h"
 #include "..\Utilities\Conversion.h"
-//#include "..\Utilities\EventLogManager.h"
 
 namespace database
 {
-	HRESULT SQLConnection::initialize_and_establish_connection(const OLECHAR * server, const OLECHAR * db_string, const OLECHAR * user_id, const OLECHAR * password)
+	HRESULT SQLConnection::initialize_and_establish_connection(const OLECHAR * server, const OLECHAR * dbString, const OLECHAR * userID, const OLECHAR * password)
 	{
+		IDBProperties   *pIDBProperties = nullptr;
 		DBPROP          InitProperties[4] = { 0 };
 		DBPROPSET       rgInitPropSet[1] = { 0 };
 		HRESULT         hr = S_OK;
@@ -22,7 +23,7 @@ namespace database
 				attempts++;
 
 				// Obtain access to the OLE DB Driver for SQL Server.  
-				hr = CoCreateInstance(CLSID_SQLNCLI11,
+				hr = CoCreateInstance(CLSID_MSOLEDBSQL19,
 					NULL,
 					CLSCTX_INPROC_SERVER,
 					IID_IDBInitialize,
@@ -30,15 +31,15 @@ namespace database
 				
 				if (FAILED(hr))
 				{
-					char error_message[80];
-					sprintf_s(error_message, 80, "Attempt %d.  Failed to obtain access to the OLE DB Driver.  hr = %lX", attempts, hr);
+					char error[80];
+					sprintf_s(error, 80, "Attempt %d.  Failed to obtain access to the OLE DB Driver.  hr = %lX", attempts, hr);
 
-					std::cout << error_message << std::endl;
+					std::cout << error << std::endl;
 
 					std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
 					if (attempts == 3)
-						throw std::runtime_error(error_message);
+						throw MyException(error);
 				}
 			}
 			while (FAILED(hr));
@@ -51,30 +52,37 @@ namespace database
 			// See DBPROP structure for more information on InitProperties  
 			InitProperties[0].dwPropertyID = DBPROP_INIT_DATASOURCE;
 			InitProperties[0].vValue.vt = VT_BSTR;
-			InitProperties[0].vValue.bstrVal = SysAllocString(server);
+			InitProperties[0].vValue.bstrVal = SysAllocString(server);  // Potential Memory Leak
 			InitProperties[0].dwOptions = DBPROPOPTIONS_REQUIRED;
 			InitProperties[0].colid = DB_NULLID;
 
-			OLECHAR c;
+//			OLECHAR c;
 
 			// Database.  
 			InitProperties[1].dwPropertyID = DBPROP_INIT_CATALOG;
 			InitProperties[1].vValue.vt = VT_BSTR;
-			InitProperties[1].vValue.bstrVal = SysAllocString(db_string);
+			InitProperties[1].vValue.bstrVal = SysAllocString(dbString);  // Potential Memory Leak
 			InitProperties[1].dwOptions = DBPROPOPTIONS_REQUIRED;
 			InitProperties[1].colid = DB_NULLID;
 
 			// Username (login).  
+			//InitProperties[2].dwPropertyID = DBPROP_AUTH_INTEGRATED;
+			//InitProperties[2].vValue.vt = VT_BSTR;
+			//InitProperties[2].vValue.bstrVal = SysAllocString(L"SSPI");
+			//InitProperties[2].dwOptions = DBPROPOPTIONS_REQUIRED;
+			//InitProperties[2].colid = DB_NULLID;
+
+			// Username (login).  
 			InitProperties[2].dwPropertyID = DBPROP_AUTH_USERID;
 			InitProperties[2].vValue.vt = VT_BSTR;
-			InitProperties[2].vValue.bstrVal = SysAllocString(user_id);
+			InitProperties[2].vValue.bstrVal = SysAllocString(userID);  // Potential Memory Leak
 			InitProperties[2].dwOptions = DBPROPOPTIONS_REQUIRED;
 			InitProperties[2].colid = DB_NULLID;
 
 			// Password (login)
 			InitProperties[3].dwPropertyID = DBPROP_AUTH_PASSWORD;
 			InitProperties[3].vValue.vt = VT_BSTR;
-			InitProperties[3].vValue.bstrVal = SysAllocString(password);
+			InitProperties[3].vValue.bstrVal = SysAllocString(password);  // Potential Memory Leak
 			InitProperties[3].dwOptions = DBPROPOPTIONS_REQUIRED;
 			InitProperties[3].colid = DB_NULLID;
 
@@ -86,38 +94,30 @@ namespace database
 			rgInitPropSet[0].rgProperties = InitProperties;
 
 			// Set initialization properties.  
-			hr = pIDBInitialize_->QueryInterface(IID_IDBProperties, (void **)&pIDBProperties_);
+			hr = pIDBInitialize_->QueryInterface(IID_IDBProperties, (void **)&pIDBProperties);
 			if (FAILED(hr))
-				throw std::runtime_error("Failed to obtain an IDBProperties interface.");
+				throw MyException("Failed to obtain an IDBProperties interface.");
 
-			hr = pIDBProperties_->SetProperties(1, rgInitPropSet);
+			hr = pIDBProperties->SetProperties(1, rgInitPropSet);
 			if (FAILED(hr))
-				throw std::runtime_error("Failed to set initialization properties.");
-
-			SysFreeString(InitProperties[0].vValue.bstrVal);
-			SysFreeString(InitProperties[1].vValue.bstrVal);
-			SysFreeString(InitProperties[2].vValue.bstrVal);
-			SysFreeString(InitProperties[3].vValue.bstrVal);
-
-			pIDBProperties_->Release();
-			pIDBProperties_ = nullptr;
+				throw MyException("Failed to set initialization properties.");
 
 			// Now establish the connection to the data source.  
 			hr = pIDBInitialize_->Initialize();
 			if (FAILED(hr))
-				throw std::runtime_error("Failed to establish connection with the server.");
+				throw MyException("Failed to establish connection with the server.");
 		}
-		catch (...)
+		catch (MyException e)
 		{
-			if (pIDBProperties_)
+			if (pIDBProperties)
 			{
 				SysFreeString(InitProperties[0].vValue.bstrVal);
 				SysFreeString(InitProperties[1].vValue.bstrVal);
 				SysFreeString(InitProperties[2].vValue.bstrVal);
 				SysFreeString(InitProperties[3].vValue.bstrVal);
 
-				pIDBProperties_->Release();
-				pIDBProperties_ = nullptr;
+				pIDBProperties->Release();
+				pIDBProperties = nullptr;
 			}
 
 			if (FAILED(hr))
@@ -129,15 +129,23 @@ namespace database
 				}
 			}
 
-			std::throw_with_nested(std::runtime_error("SQLConnection::initialize_and_establish_connection()"));
+
+			std::stringstream error;
+			error << "SQLConnection::initialize_and_establish_connection() MyException: " << e.what();
+			std::cerr << error.str() << std::endl;
+
+			throw (e);
 		}
 
-		if (pIDBProperties_)
+		if (pIDBProperties)
 		{
 			SysFreeString(InitProperties[0].vValue.bstrVal);
 			SysFreeString(InitProperties[1].vValue.bstrVal);
 			SysFreeString(InitProperties[2].vValue.bstrVal);
 			SysFreeString(InitProperties[3].vValue.bstrVal);
+
+			pIDBProperties->Release();
+			pIDBProperties = nullptr;
 		}
 
 		return hr;
@@ -167,20 +175,12 @@ namespace database
 
 		try
 		{
-			//hr = initialize_and_establish_connection(Utilities::strtowstr(server).c_str(), 
-			//	Utilities::strtowstr(dbString).c_str(), 
-			//	Utilities::strtowstr(userID).c_str(), 
-			//	Utilities::strtowstr(password).c_str());
-
-			hr = initialize_and_establish_connection(strtowstr(server).c_str(),
-				strtowstr(dbString).c_str(),
-				strtowstr(userID).c_str(),
-				strtowstr(password).c_str());
+			hr = initialize_and_establish_connection(strtowstr(server).c_str(), strtowstr(dbString).c_str(), strtowstr(userID).c_str(), strtowstr(password).c_str());
 
 			if (FAILED(hr))
-				throw std::runtime_error("Failed to establish connection.");
+				throw MyException("Failed to establish connection.");
 		}
-		catch (...)
+		catch (MyException e)
 		{
 			if (pIDBInitialize_)
 			{
@@ -189,37 +189,22 @@ namespace database
 				pIDBInitialize_ = nullptr;
 			}
 
-			std::throw_with_nested(std::runtime_error("SQLConnection::initialize_and_establish_connection()"));
-		}
-	}
+			std::stringstream error;
+			error << "SQLConnection::connect() MyException: " << e.what();
+			std::cerr << error.str() << std::endl;
 
-	bool SQLConnection::connected()
-	{
-		return pIDBInitialize_ != NULL;
+			throw (e);
+		}
 	}
 
 	void SQLConnection::disconnect()
 	{
 		// Free Up All Allocated Memory
-		try
+		if (pIDBInitialize_)
 		{
-			if (pIDBInitialize_)
-			{
-				pIDBInitialize_->Uninitialize();
-				pIDBInitialize_->Release();
-				pIDBInitialize_ = nullptr;
-			}
-
-			if (pIDBProperties_)
-			{
-				pIDBProperties_->Release();
-				pIDBProperties_ = nullptr;
-			}
-		}
-		catch (...)
-		{
-			//Utilities::log_warning("SQLConnection::disconnect() - Error freeeing resources");
-			std::cout << "SQLConnection::disconnect() - Error freeeing resources" << std::endl;
+			pIDBInitialize_->Uninitialize();
+			pIDBInitialize_->Release();
+			pIDBInitialize_ = nullptr;
 		}
 
 		// Release The Component Object Module Library

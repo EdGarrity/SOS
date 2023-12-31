@@ -52,6 +52,24 @@
     <Filter Include="Source Files\Database">
       <UniqueIdentifier>{84afd13c-2678-4fa3-aa84-67a87b3a6ee7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Domain\Develop Strategy">
+      <UniqueIdentifier>{d0223cd4-3dde-4d08-90da-671239a1da98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Domain\Develop Strategy">
+      <UniqueIdentifier>{4a861c0d-cf88-4e13-bacf-9c5c3859bb88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DataStore">
+      <UniqueIdentifier>{b074b9b6-b4bb-41ce-8310-8a23a120bd73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DataStore">
+      <UniqueIdentifier>{269e5355-d148-4501-9232-145b351e84ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Broker">
+      <UniqueIdentifier>{01929479-beef-4e2d-b2c0-7d5e330f9763}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Broker">
+      <UniqueIdentifier>{5cf6f32a-a2e6-4844-9ea3-000f987ea5d2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -192,6 +210,42 @@
     <ClInclude Include="PushGP\CalculateDiversity.h">
       <Filter>Header Files\PushGP</Filter>
     </ClInclude>
+    <ClInclude Include="Domain\Develop Strategy\Arguments.h">
+      <Filter>Header Files\Domain\Develop Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\ThreeDimensionalArray.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStore\FinancialData.h">
+      <Filter>Header Files\DataStore</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStore\DatabaseConnection.h">
+      <Filter>Header Files\DataStore</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStore\TestData.h">
+      <Filter>Header Files\DataStore</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Develop Strategy\Run.DevelopStrategy.h">
+      <Filter>Header Files\Domain\Develop Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Develop Strategy\ErrorFunction.DevelopStrategy.h">
+      <Filter>Header Files\Domain\Develop Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="Broker\Account.h">
+      <Filter>Header Files\Broker</Filter>
+    </ClInclude>
+    <ClInclude Include="Broker\BrokerAccount.h">
+      <Filter>Header Files\Broker</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\ThreadSafeArray_V2.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStore\AgentData.h">
+      <Filter>Header Files\DataStore</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStore\OrderMatrix.h">
+      <Filter>Header Files\DataStore</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -304,6 +358,36 @@
     </ClCompile>
     <ClCompile Include="PushGP\CalculateDiversity.cpp">
       <Filter>Source Files\PushGP</Filter>
+    </ClCompile>
+    <ClCompile Include="DataStore\FinancialData.cpp">
+      <Filter>Source Files\DataStore</Filter>
+    </ClCompile>
+    <ClCompile Include="DataStore\DatabaseConnection.cpp">
+      <Filter>Source Files\DataStore</Filter>
+    </ClCompile>
+    <ClCompile Include="DataStore\TestData.cpp">
+      <Filter>Source Files\DataStore</Filter>
+    </ClCompile>
+    <ClCompile Include="Domain\Develop Strategy\Run.DevelopStrategy.cpp">
+      <Filter>Source Files\Domain\Develop Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="Domain\Develop Strategy\ErrorFunction.DevelopStrategy.cpp">
+      <Filter>Source Files\Domain\Develop Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="Broker\Account.cpp">
+      <Filter>Source Files\Broker</Filter>
+    </ClCompile>
+    <ClCompile Include="Broker\BrokerAccount.cpp">
+      <Filter>Source Files\Broker</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\ThreadSafeArray_V2.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="DataStore\AgentData.cpp">
+      <Filter>Source Files\DataStore</Filter>
+    </ClCompile>
+    <ClCompile Include="DataStore\OrderMatrix.cpp">
+      <Filter>Source Files\DataStore</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

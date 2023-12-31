@@ -1,4 +1,4 @@
-#pragma once
+	#pragma once
 #include <vector>
 #include <string>
 
@@ -8,7 +8,11 @@ namespace domain
 	{
 		//	Select which algorithm to use
 		enum class AlgorithmSelection { learn_from_examples, strategy_development };
-		const AlgorithmSelection algorithm_selection = AlgorithmSelection::learn_from_examples;
+		const AlgorithmSelection algorithm_selection = AlgorithmSelection::strategy_development;
+
+		// Define length of the training and test cases
+		const unsigned long training_case_length = 252; // 252 trading days in a year
+		const unsigned long test_case_length = 252; // 252 trading days in a year
 
 		// Default maximum size of the stack buffer.  Must be greater than max_points
 		const unsigned long maximum_stack_size = 2000;
@@ -23,7 +27,7 @@ namespace domain
 
 		//	:use - single - thread false
 		//	;; When true, will only use a single thread.
-		const bool use_multithreading = true;
+		const bool use_multithreading = false;
 		const bool use_PPL = false;
 		const unsigned long number_of_cores_to_reserve = 4;
 		const unsigned long max_threads = 24;
@@ -62,7 +66,7 @@ namespace domain
 		//		;; The instructions that pushgp will use in random code.
 
 		// Number of individuals in the population.
-		const unsigned long population_size = 1000; // 20000; // 200'000;
+		const unsigned long population_size = 10; // 1000; // 20000; // 200'000;
 
 		// The maximum number of generations to run GP.
 		const unsigned long max_generations_in_one_session = 300;
@@ -71,13 +75,13 @@ namespace domain
 		//		;; execute during the run.
 		const unsigned long max_point_evaluations = 1000; //10000;  //10,000,000; //INT_MAX; // 100000; // 10e100
 
-			//		:genome - representation : plush
-			//		;; The representation for the genomes used for initialiation and inheritance.
-			//		;; Options include : plush and : plushy
+		//		:genome - representation : plush
+		//		;; The representation for the genomes used for initialiation and inheritance.
+		//		;; Options include : plush and : plushy
 
-		// Maximum size of push programs and push code, as counted by points
-		// in the program. 1 / 4 this limit is used as the limit for sizes of
-		// Plush genomes.
+	// Maximum size of push programs and push code, as counted by points
+	// in the program. 1 / 4 this limit is used as the limit for sizes of
+	// Plush genomes.
 		const unsigned long max_points = maximum_stack_size - 1;
 
 		// Maximum size of initial Plush genomes in generation 0. Keep in mind
@@ -85,7 +89,7 @@ namespace domain
 		const unsigned long max_genome_size_in_initial_program = max_points / 4;
 
 		// Number of Available Training Cases
-		const unsigned long number_of_training_cases = 100;
+		const unsigned long number_of_training_cases = 300;
 
 		// Number of Available Test Cases
 		const unsigned long number_of_test_cases = 10;
@@ -95,7 +99,7 @@ namespace domain
 
 		// Maximum length of an example case
 		const unsigned long example_case_max_length = 4;
-		
+
 		// Upper range of values in the example case
 		const unsigned long example_case_upper_range = 1000;
 
@@ -413,7 +417,7 @@ namespace domain
 		//	:parent - selection : lexicase
 		//	;; The parent selection method.Options include : epsilon_lexicase, downsampled_lexicase
 		enum class PerentSelection { epsilon_lexicase, downsampled_lexicase };
-		const PerentSelection parent_selection = PerentSelection::downsampled_lexicase;
+		const PerentSelection parent_selection = PerentSelection::epsilon_lexicase;
 
 		//:downsample - factor 1
 		//	;; Determines the proportion of cases to use when using downsampled lexicase.
@@ -682,6 +686,7 @@ namespace domain
 		// backslash itself
 //		const std::string db_init_datasource = "HOMEOFFICE";
 		const std::string db_init_datasource = "(local)";
+		//const std::string db_init_datasource = "EGARRITY-LT";
 
 		// Name of an existing SQL Server database to which to connect.
 		const std::string db_init_catalog = "SOS";
@@ -691,9 +696,5 @@ namespace domain
 
 		// Password assigned to a SQL Server login. This property is used when SQL Server Authentication is selected for authorizing access to a SQL Server database.
 		const std::string db_user_password = "MySOS";
-
-		//};
-
-		//extern ArgType argmap;
 	}
 }
