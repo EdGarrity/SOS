@@ -416,13 +416,22 @@ namespace datastore
 		try
 		{
 			// Construct SQL statement with filters
-			int sz = std::snprintf(nullptr, 0, fmt_str_get_record_size, domain::argmap::financial_data_start_date);
+			int sz = std::snprintf(nullptr, 0, fmt_str_get_record_size, domain::argmap::financial_data_start_date.c_str());
 			std::vector<char> buf(sz + 1); // note +1 for null terminator
-			std::snprintf(&buf[0], buf.size(), fmt_str_get_record_size, domain::argmap::financial_data_start_date);
+			std::snprintf(&buf[0], buf.size(), fmt_str_get_record_size, domain::argmap::financial_data_start_date.c_str());
 			std::string sqlstmt_get_record_size(buf.begin(), buf.end() - 1); // omit the null terminator
 
 			// Extablish the connection and execute the SQL statement
 			sqlcmd_get_record_size = new database::SQLCommand(database_connection.get_connection(), sqlstmt_get_record_size);
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			{
+				std::ostringstream ss;
+				ss << ",method=FinancialData.get_record_size"
+					<< ",diagnostic_level=9"
+					<< ",query=" << sqlstmt_get_record_size
+					<< ",message=executing";
+				Utilities::logline_threadsafe << ss.str();
+			}
 			sqlcmd_get_record_size->execute();
 
 			bool dirty = false;
@@ -450,7 +459,7 @@ namespace datastore
 		{
 			{
 				std::ostringstream ss;
-				ss << ",method=FinancialData.load_key_value"
+				ss << ",method=FinancialData.get_record_size"
 					<< ",diagnostic_level=0"
 					<< ",exception=" << e.what()
 					<< ",message=Error_loading_data";
@@ -465,7 +474,7 @@ namespace datastore
 			std::ostringstream ss; ss << "Unknown exception"; Utilities::logline_threadsafe << ss.str();
 			{
 				std::ostringstream ss;
-				ss << ",method=FinancialData.load_key_value"
+				ss << ",method=FinancialData.get_record_size"
 					<< ",diagnostic_level=0"
 					<< ",exception=Unknown"
 					<< ",message=An_unknown_error_has_occured";
@@ -506,7 +515,7 @@ namespace datastore
 		{
 			std::unique_lock<std::mutex> lock(primary_adj_open_values_mutex);
 			adj_opening_prices_record_t record = primary_adj_open_values[training_case_index];
-			std::unique_lock<std::mutex> unlock(primary_adj_open_values_mutex);
+			//std::unique_lock<std::mutex> unlock(primary_adj_open_values_mutex);
 
 			start_date = record.date;
 			key_offset = std::abs((long)(data_index % financial_data_record_size));
@@ -583,7 +592,7 @@ namespace datastore
 		try
 		{
 			// Construct SQL statement with date range filters
-			int sz = std::snprintf(nullptr, 0, fmt_str_count_of_primary_closing_prices, start_date.c_str(), end_date.c_str(), domain::argmap::financial_instrument);
+			int sz = std::snprintf(nullptr, 0, fmt_str_count_of_primary_closing_prices, start_date.c_str(), end_date.c_str(), domain::argmap::financial_instrument.c_str());
 			std::vector<char> buf(sz + 1); // note +1 for null terminator
 			std::snprintf(&buf[0], buf.size(), fmt_str_count_of_primary_closing_prices, start_date.c_str(), end_date.c_str());
 			std::string sqlstmt_count_of_primary_closing_prices(buf.begin(), buf.end() - 1); // omit the null terminator
@@ -786,7 +795,7 @@ namespace datastore
 			index_adj_open_values.resize(count);
 
 			// Construct SQL statement with filters
-			int sz = std::snprintf(nullptr, 0, fmt_str_load_adj_opening_prices, start_date.c_str(), end_date.c_str(), domain::argmap::financial_index);
+			int sz = std::snprintf(nullptr, 0, fmt_str_load_adj_opening_prices, start_date.c_str(), end_date.c_str(), domain::argmap::financial_index.c_str());
 			std::vector<char> buf(sz + 1); // note +1 for null terminator
 			std::snprintf(&buf[0], buf.size(), fmt_str_load_adj_opening_prices, start_date.c_str(), end_date.c_str());
 			std::string sqlstmt_load_index_adj_open_prices(buf.begin(), buf.end() - 1); // omit the null terminator
