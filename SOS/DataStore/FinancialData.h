@@ -13,18 +13,32 @@ namespace datastore
 		FinancialInstrumentType financial_instrument_type = FinancialInstrumentType::Primary;
 
 	private:
-		static constexpr const char* fmt_str_load_test_data = "SELECT [Symbol],CONVERT(varchar(25),[Date],120) AS [Date],[Key],[Value]"
-			" FROM [SOS].[dbo].[TestData]"
-			" WHERE [Symbol]='%s'"
-			" AND [Date] >= CAST('%s' AS DATETIME)"
-			" AND [Date] <= CAST('%s' AS DATETIME)"
-			" ORDER BY [Date],[Key]";
+		//static constexpr const char* fmt_str_load_test_data = "SELECT [Symbol],CONVERT(varchar(25),[Date],120) AS [Date],[Key],[Value]"
+		//	" FROM [SOS].[dbo].[TestData]"
+		//	" WHERE [Symbol]='%s'"
+		//	" AND [Date] >= CAST('%s' AS DATETIME)"
+		//	" AND [Date] <= CAST('%s' AS DATETIME)"
+		//	" ORDER BY [Date],[Key]";
 
 		static constexpr const char* fmt_str_load_all_test_data = "SELECT [Symbol],CONVERT(varchar(25),[Date],120) AS [Date],[Key],[Value]"
 			" FROM [SOS].[dbo].[TestData]"
 			" WHERE [Date] >= CAST('%s' AS DATETIME)"
 			" AND [Date] <= CAST('%s' AS DATETIME)"
 			" ORDER BY [Date],[Key]";
+
+		static constexpr const char* fmt_str_load_key_value_for_date = "SElECT TOP 1 [Value]"
+			"FROM"
+			"("
+				"SELECT TOP(%d) [Key], [Value]"
+				"FROM"
+				"("
+					"SELECT TOP(%d) [Key], [Value]"
+					"FROM[SOS].[dbo].[TestData]"
+					"WHERE[Date] = CAST('%s' AS DATETIME)"
+					"ORDER BY[Key] ASC"
+				") Y"
+				"ORDER BY[Key] DESC"
+			") X";
 
 		struct data_record_t
 		{
@@ -52,6 +66,7 @@ namespace datastore
 
 		//void load(const FinancialInstrumentType financial_instrument_type, const std::string& start_date, const std::string& end_date);
 		void load(const std::string& start_date, const std::string& end_date);
+		double load_key_value(const std::string& start_date, const size_t key_offset);
 
 		double get_data(const size_t index, const size_t input_case);
 		size_t get_count() const { return data_window_records.size(); }
