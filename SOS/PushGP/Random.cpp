@@ -134,9 +134,9 @@ namespace pushGP
 		atom.type = Plush::Atom::AtomType::integer;
 		genome.push(atom);
 
-		atom.instruction_name = "INTEGER.IN";
-		atom.type = Plush::Atom::AtomType::ins;
-		genome.push(atom);
+		//atom.instruction_name = "INTEGER.IN";
+		//atom.type = Plush::Atom::AtomType::ins;
+		//genome.push(atom);
 
 		atom.instruction_name = "FLOAT.IN";
 		atom.type = Plush::Atom::AtomType::ins;
@@ -169,9 +169,9 @@ namespace pushGP
 			atom.type = Plush::Atom::AtomType::ins;
 			genome.push(atom);
 
-			atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.IN"));
-			atom.type = Plush::Atom::AtomType::integer;
-			genome.push(atom);
+			//atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.IN"));
+			//atom.type = Plush::Atom::AtomType::integer;
+			//genome.push(atom);
 
 			atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("FLOAT.IN"));
 			atom.type = Plush::Atom::AtomType::integer;
@@ -210,8 +210,33 @@ namespace pushGP
 
 				switch (s)
 				{
+				//case 0:
+				//	atom.instruction_name = "INTEGER.IN";
+				//	atom.type = Plush::Atom::AtomType::ins;
+				//	genome.push(atom);
+
+				//	atom.instruction_name = Utilities::toString(r);
+				//	atom.type = Plush::Atom::AtomType::integer;
+				//	genome.push(atom);
+
+				//	break;
+
+				//case 1:
+				//	atom.instruction_name = "INTEGER.INALL";
+				//	atom.type = Plush::Atom::AtomType::ins;
+				//	genome.push(atom);
+
+				//	break;
+
+				//case 2:
+				//	atom.instruction_name = "INTEGER.INALLREV";
+				//	atom.type = Plush::Atom::AtomType::ins;
+				//	genome.push(atom);
+
+				//	break;
+
 				case 0:
-					atom.instruction_name = "INTEGER.IN";
+					atom.instruction_name = "FLOAT.IN";
 					atom.type = Plush::Atom::AtomType::ins;
 					genome.push(atom);
 
@@ -222,14 +247,14 @@ namespace pushGP
 					break;
 
 				case 1:
-					atom.instruction_name = "INTEGER.INALL";
+					atom.instruction_name = "FLOAT.IN";
 					atom.type = Plush::Atom::AtomType::ins;
 					genome.push(atom);
 
 					break;
 
 				case 2:
-					atom.instruction_name = "INTEGER.INALLREV";
+					atom.instruction_name = "FLOAT.IN";
 					atom.type = Plush::Atom::AtomType::ins;
 					genome.push(atom);
 
@@ -274,9 +299,9 @@ namespace pushGP
 		atom.type = Plush::Atom::AtomType::integer;
 		genome.push(atom);
 
-		atom.instruction_name = "INTEGER.IN";
-		atom.type = Plush::Atom::AtomType::ins;
-		genome.push(atom);
+		//atom.instruction_name = "INTEGER.IN";
+		//atom.type = Plush::Atom::AtomType::ins;
+		//genome.push(atom);
 
 		atom.instruction_name = "FLOAT.IN";
 		atom.type = Plush::Atom::AtomType::ins;
