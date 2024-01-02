@@ -691,10 +691,10 @@ namespace datastore
 		{
 			// Resize the vector to hold the number of records
 			size_t count = get_count_of_primary_adj_open_prices(start_date, end_date);
-			primary_adj_open_values.resize(count);
+			//primary_adj_open_values.resize(count);
 
 			// Construct SQL statement with filters
-			int sz = std::snprintf(nullptr, 0, fmt_str_load_adj_opening_prices, start_date.c_str(), end_date.c_str(), domain::argmap::financial_instrument);
+			int sz = std::snprintf(nullptr, 0, fmt_str_load_adj_opening_prices, start_date.c_str(), end_date.c_str(), domain::argmap::financial_instrument.c_str());
 			std::vector<char> buf(sz + 1); // note +1 for null terminator
 			std::snprintf(&buf[0], buf.size(), fmt_str_load_adj_opening_prices, start_date.c_str(), end_date.c_str());
 			std::string sqlstmt_load_primary_adj_open_prices(buf.begin(), buf.end() - 1); // omit the null terminator
@@ -910,6 +910,10 @@ namespace datastore
 
 			sqlcmd_load_key_value->fetch_next();
 			value = sqlcmd_load_key_value->get_field_as_double(1);
+
+			// Convert NULL to zero
+			if (value < 0)
+				value = 0;
 
 			delete sqlcmd_load_key_value;
 

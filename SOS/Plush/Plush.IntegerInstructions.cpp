@@ -54,9 +54,9 @@ namespace Plush
 		push_make_instruction((Operator)greater<long>, "INTEGER", ">", integerType + integerType, boolType);
 		push_make_instruction((Operator)_max<long>, "INTEGER", "MAX", integerType + integerType, nullType);
 		push_make_instruction((Operator)_min<long>, "INTEGER", "MIN", integerType + integerType, nullType);
-		push_make_instruction((Operator)in<long>, "INTEGER", "IN", integerType, in_out<long>());
-		push_make_instruction((Operator)inall<long>, "INTEGER", "INALL", nullType, nullType);
-		push_make_instruction((Operator)inallrev<long>, "INTEGER", "INALLREV", nullType, nullType);
+		//push_make_instruction((Operator)in<long>, "INTEGER", "IN", integerType, in_out<long>());
+		//push_make_instruction((Operator)inall<long>, "INTEGER", "INALL", nullType, nullType);
+		//push_make_instruction((Operator)inallrev<long>, "INTEGER", "INALLREV", nullType, nullType);
 		push_make_instruction((Operator)out<long>, "INTEGER", "OUT", out_in<long>(), nullType);
 	}
 }

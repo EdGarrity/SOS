@@ -138,6 +138,10 @@ namespace pushGP
 		atom.type = Plush::Atom::AtomType::ins;
 		genome.push(atom);
 
+		atom.instruction_name = "FLOAT.IN";
+		atom.type = Plush::Atom::AtomType::ins;
+		genome.push(atom);
+
 		if (!domain::argmap::static_instruction_set)
 		{
 			// Include knowledge of some instrcutions in the genome.
@@ -149,23 +153,27 @@ namespace pushGP
 			atom.type = Plush::Atom::AtomType::ins;
 			genome.push(atom);
 
-			atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.INALLREV"));
-			atom.type = Plush::Atom::AtomType::integer;
-			genome.push(atom);
+			//atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.INALLREV"));
+			//atom.type = Plush::Atom::AtomType::integer;
+			//genome.push(atom);
 
-			atom.instruction_name = "EXEC.ENABLE*INSTRUCTION";
-			atom.type = Plush::Atom::AtomType::ins;
-			genome.push(atom);
+			//atom.instruction_name = "EXEC.ENABLE*INSTRUCTION";
+			//atom.type = Plush::Atom::AtomType::ins;
+			//genome.push(atom);
 
-			atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.INALL"));
-			atom.type = Plush::Atom::AtomType::integer;
-			genome.push(atom);
+			//atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.INALL"));
+			//atom.type = Plush::Atom::AtomType::integer;
+			//genome.push(atom);
 
 			atom.instruction_name = "EXEC.ENABLE*INSTRUCTION";
 			atom.type = Plush::Atom::AtomType::ins;
 			genome.push(atom);
 
 			atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.IN"));
+			atom.type = Plush::Atom::AtomType::integer;
+			genome.push(atom);
+
+			atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("FLOAT.IN"));
 			atom.type = Plush::Atom::AtomType::integer;
 			genome.push(atom);
 
@@ -198,7 +206,7 @@ namespace pushGP
 			if (Utilities::random_double(0.0, 1.0) < domain::argmap::probability_of_generating_a_io_atom)
 			{
 				int r = Utilities::random_integer(0, std::numeric_limits<int>::max());
-				unsigned int s = Utilities::random_integer(4);
+				unsigned int s = Utilities::random_integer(5);
 
 				switch (s)
 				{
@@ -238,6 +246,17 @@ namespace pushGP
 
 					break;
 
+				case 4:
+					atom.instruction_name = "FLOAT.IN";
+					atom.type = Plush::Atom::AtomType::ins;
+					genome.push(atom);
+
+					atom.instruction_name = Utilities::toString(r);
+					atom.type = Plush::Atom::AtomType::integer;
+					genome.push(atom);
+
+					break;
+
 				default:
 					throw MyException("random_plush_genome_with_size() - Invalid random number generated.");
 				}
@@ -256,6 +275,10 @@ namespace pushGP
 		genome.push(atom);
 
 		atom.instruction_name = "INTEGER.IN";
+		atom.type = Plush::Atom::AtomType::ins;
+		genome.push(atom);
+
+		atom.instruction_name = "FLOAT.IN";
 		atom.type = Plush::Atom::AtomType::ins;
 		genome.push(atom);
 
