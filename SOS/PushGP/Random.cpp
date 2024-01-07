@@ -134,7 +134,11 @@ namespace pushGP
 		atom.type = Plush::Atom::AtomType::integer;
 		genome.push(atom);
 
-		atom.instruction_name = "INTEGER.IN";
+		//atom.instruction_name = "INTEGER.IN";
+		//atom.type = Plush::Atom::AtomType::ins;
+		//genome.push(atom);
+
+		atom.instruction_name = "FLOAT.IN";
 		atom.type = Plush::Atom::AtomType::ins;
 		genome.push(atom);
 
@@ -149,23 +153,27 @@ namespace pushGP
 			atom.type = Plush::Atom::AtomType::ins;
 			genome.push(atom);
 
-			atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.INALLREV"));
-			atom.type = Plush::Atom::AtomType::integer;
-			genome.push(atom);
+			//atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.INALLREV"));
+			//atom.type = Plush::Atom::AtomType::integer;
+			//genome.push(atom);
+
+			//atom.instruction_name = "EXEC.ENABLE*INSTRUCTION";
+			//atom.type = Plush::Atom::AtomType::ins;
+			//genome.push(atom);
+
+			//atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.INALL"));
+			//atom.type = Plush::Atom::AtomType::integer;
+			//genome.push(atom);
 
 			atom.instruction_name = "EXEC.ENABLE*INSTRUCTION";
 			atom.type = Plush::Atom::AtomType::ins;
 			genome.push(atom);
 
-			atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.INALL"));
-			atom.type = Plush::Atom::AtomType::integer;
-			genome.push(atom);
+			//atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.IN"));
+			//atom.type = Plush::Atom::AtomType::integer;
+			//genome.push(atom);
 
-			atom.instruction_name = "EXEC.ENABLE*INSTRUCTION";
-			atom.type = Plush::Atom::AtomType::ins;
-			genome.push(atom);
-
-			atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("INTEGER.IN"));
+			atom.instruction_name = std::to_string(Plush::static_initializer.get_function_index("FLOAT.IN"));
 			atom.type = Plush::Atom::AtomType::integer;
 			genome.push(atom);
 
@@ -198,12 +206,37 @@ namespace pushGP
 			if (Utilities::random_double(0.0, 1.0) < domain::argmap::probability_of_generating_a_io_atom)
 			{
 				int r = Utilities::random_integer(0, std::numeric_limits<int>::max());
-				unsigned int s = Utilities::random_integer(4);
+				unsigned int s = Utilities::random_integer(5);
 
 				switch (s)
 				{
+				//case 0:
+				//	atom.instruction_name = "INTEGER.IN";
+				//	atom.type = Plush::Atom::AtomType::ins;
+				//	genome.push(atom);
+
+				//	atom.instruction_name = Utilities::toString(r);
+				//	atom.type = Plush::Atom::AtomType::integer;
+				//	genome.push(atom);
+
+				//	break;
+
+				//case 1:
+				//	atom.instruction_name = "INTEGER.INALL";
+				//	atom.type = Plush::Atom::AtomType::ins;
+				//	genome.push(atom);
+
+				//	break;
+
+				//case 2:
+				//	atom.instruction_name = "INTEGER.INALLREV";
+				//	atom.type = Plush::Atom::AtomType::ins;
+				//	genome.push(atom);
+
+				//	break;
+
 				case 0:
-					atom.instruction_name = "INTEGER.IN";
+					atom.instruction_name = "FLOAT.IN";
 					atom.type = Plush::Atom::AtomType::ins;
 					genome.push(atom);
 
@@ -214,14 +247,14 @@ namespace pushGP
 					break;
 
 				case 1:
-					atom.instruction_name = "INTEGER.INALL";
+					atom.instruction_name = "FLOAT.IN";
 					atom.type = Plush::Atom::AtomType::ins;
 					genome.push(atom);
 
 					break;
 
 				case 2:
-					atom.instruction_name = "INTEGER.INALLREV";
+					atom.instruction_name = "FLOAT.IN";
 					atom.type = Plush::Atom::AtomType::ins;
 					genome.push(atom);
 
@@ -229,6 +262,17 @@ namespace pushGP
 
 				case 3:
 					atom.instruction_name = "INTEGER.OUT";
+					atom.type = Plush::Atom::AtomType::ins;
+					genome.push(atom);
+
+					atom.instruction_name = Utilities::toString(r);
+					atom.type = Plush::Atom::AtomType::integer;
+					genome.push(atom);
+
+					break;
+
+				case 4:
+					atom.instruction_name = "FLOAT.IN";
 					atom.type = Plush::Atom::AtomType::ins;
 					genome.push(atom);
 
@@ -255,7 +299,11 @@ namespace pushGP
 		atom.type = Plush::Atom::AtomType::integer;
 		genome.push(atom);
 
-		atom.instruction_name = "INTEGER.IN";
+		//atom.instruction_name = "INTEGER.IN";
+		//atom.type = Plush::Atom::AtomType::ins;
+		//genome.push(atom);
+
+		atom.instruction_name = "FLOAT.IN";
 		atom.type = Plush::Atom::AtomType::ins;
 		genome.push(atom);
 
