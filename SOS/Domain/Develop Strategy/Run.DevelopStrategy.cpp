@@ -524,8 +524,22 @@ namespace domain
 			}
 
 			downsampled_training_cases.clear();
+			size_t number_of_samples = downsampled_training_cases.size();
 			while (downsampled_training_cases.size() < data_size)
+			{
 				downsampled_training_cases.insert(Utilities::random_integer(0, datastore::financial_data.get_count() - 1));
+				number_of_samples = downsampled_training_cases.size();
+			}
+
+			if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
+			{
+				std::ostringstream ss;
+				ss << ",method=RunProgram.compute_training_errors_thread_safe"
+					<< ",diagnostic_level=2"
+					<< "downsampled_training_cases_size=" << downsampled_training_cases.size()
+					<< ",message=downsampled_training_cases_created";
+				Utilities::logline_threadsafe << ss.str();
+			}
 
 			// Run strategies for those orders that have not already been processed
 			for (size_t training_case_index : downsampled_training_cases)
