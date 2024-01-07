@@ -20,13 +20,11 @@ namespace domain
 		// Diagnostic Level
 		const int diagnostic_level = diagnostic_level_9;
 
-
 		// Specify which financial instruments to target
 		const std::string financial_instrument = "AAPL";
 		const std::string financial_index = "FXAIX";
 		const std::string financial_data_start_date = "1981-01-02";
 		const std::string financial_data_end_date = "2021-12-31";
-
 
 		//	Select which algorithm to use
 		enum class AlgorithmSelection { learn_from_examples, strategy_development };
@@ -35,6 +33,7 @@ namespace domain
 		// Define length of the training and test cases
 		const unsigned long training_case_length = 252; // 252 trading days in a year
 		const unsigned long test_case_length = 252; // 252 trading days in a year
+		const double training_case_sample_ratio = 0.01; // 1% of the training cases will be used for training
 
 		// Default maximum size of the stack buffer.  Must be greater than max_points
 		const unsigned long maximum_stack_size = 2000;

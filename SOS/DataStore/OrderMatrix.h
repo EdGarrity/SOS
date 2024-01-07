@@ -104,10 +104,6 @@ namespace datastore
 		//
 		void store(size_t env_index, size_t strategyIndex, size_t trainingCaseIndex, unsigned long order);
 
-		//void save(size_t training_case_indexes, size_t strategy_indexes);
-
-		//void save_training_case(size_t training_case_index, size_t strategy_indexes);
-
 		// Purpose: 
 		//   Loads order from in-memory Order Matrix
 		//

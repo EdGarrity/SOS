@@ -13,7 +13,10 @@ namespace domain
 		//extern Utilities::ThreadSafeArray_2D_V2<unsigned long> orders;
 		extern datastore::OrderMatrix order_matrix;
 
-		void compute_training_errors_thread_safe(Plush::Environment& _env, std::function<std::tuple<double, unsigned long>(Plush::Environment& env, unsigned int strategy_index, unsigned long case_index)> _run_strategy_threadsafe);
+		void compute_training_errors_thread_safe
+		(
+			Plush::Environment& _env 
+		);
 
 		int run();
 	}

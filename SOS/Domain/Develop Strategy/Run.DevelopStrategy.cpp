@@ -38,6 +38,7 @@
 #include "..\Develop Strategy\RunProgram_WorkOrder_Form.h"
 #include "..\RunProgram.h"
 #include "..\..\Utilities\Debug.h"
+#include "..\..\Utilities\Random.Utilities.h"
 
 using namespace concurrency;
 
@@ -476,10 +477,7 @@ namespace domain
 		//Utilities::Threadpool pool(8);
 		Utilities::Threadpool pool(argmap::max_threads);
 
-		void compute_training_errors_thread_safe(Plush::Environment& _env,
-			std::function<std::tuple<double, unsigned long>(Plush::Environment& env,
-				unsigned int stratergy_index,
-				unsigned long case_index)> _run_strategy_threadsafe)
+		void compute_training_errors_thread_safe(Plush::Environment& _env)
 		{
 			if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
 			{
@@ -490,9 +488,9 @@ namespace domain
 				Utilities::logline_threadsafe << ss.str();
 			}
 
-			order_matrix.clearOrderMatrix();
+			//order_matrix.clearOrderMatrix();
 
-			size_t data_size = datastore::financial_data.get_count();
+			size_t data_size = datastore::financial_data.get_count() * domain::argmap::training_case_sample_ratio;
 			std::ptrdiff_t expected_latches = domain::argmap::population_size * data_size;
 
 			if (expected_latches > std::latch::max())
@@ -509,11 +507,28 @@ namespace domain
 			}
 
 			std::latch work_done(domain::argmap::population_size * data_size);	// Check that we are allocating sufficient work tokens.
-			order_matrix.initialize(domain::argmap::population_size, data_size);
+			//order_matrix.initialize(domain::argmap::population_size, data_size);
 			domain::RunProgram processor(pool);
+			std::unordered_set< size_t> downsampled_training_cases;
+
 			bool dirty = false;
 
-			for (size_t training_case_index = 0; training_case_index < data_size; training_case_index++)
+			// Downsample the training cases
+			if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
+			{
+				std::ostringstream ss;
+				ss << ",method=RunProgram.compute_training_errors_thread_safe"
+					<< ",diagnostic_level=2"
+					<< ",message=Downsampling_training_case";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
+			downsampled_training_cases.clear();
+			while (downsampled_training_cases.size() < data_size)
+				downsampled_training_cases.insert(Utilities::random_integer(0, datastore::financial_data.get_count() - 1));
+
+			// Run strategies for those orders that have not already been processed
+			for (size_t training_case_index : downsampled_training_cases)
 			{
 				for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
 				{
@@ -584,7 +599,8 @@ namespace domain
 					std::ostringstream ss;
 					ss << ",method=RunProgram.compute_training_errors_thread_safe"
 						<< ",diagnostic_level=2"
-						<< ",training_case_indexes=" << datastore::financial_data.get_count()
+						<< ",data_size=" << data_size
+						<< ",training_case_indexes=" << downsampled_training_cases.size()
 						<< ",stratergy_indexes=" << domain::argmap::population_size
 						<< ",message=Orders_Saved_to_DB";
 					Utilities::logline_threadsafe << ss.str();
@@ -819,8 +835,7 @@ namespace domain
 
 					if (argmap::use_multithreading)
 						compute_training_errors_thread_safe(
-							global_env,
-							run_strategy_threadsafe);
+							global_env);
 
 					else
 						compute_training_errors(
