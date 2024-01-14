@@ -39,6 +39,7 @@
 #include "..\RunProgram.h"
 #include "..\..\Utilities\Debug.h"
 #include "..\..\Utilities\Random.Utilities.h"
+#include "..\..\DataStore\FinancialData.h"
 
 using namespace concurrency;
 
@@ -536,7 +537,7 @@ namespace domain
 				std::ostringstream ss;
 				ss << ",method=RunProgram.compute_training_errors_thread_safe"
 					<< ",diagnostic_level=2"
-					<< "downsampled_training_cases_size=" << downsampled_training_cases.size()
+					<< ",downsampled_training_cases_size=" << downsampled_training_cases.size()
 					<< ",message=downsampled_training_cases_created";
 				Utilities::logline_threadsafe << ss.str();
 			}
@@ -703,6 +704,9 @@ namespace domain
 
 				sa.set_cold();
 				sa.set_temperature(datastore::test_data.get_last_saved_temperature(sa.get_temperature()));
+
+				// Load Orders from previous run if it was interrupted
+				order_matrix.initialize(domain::argmap::population_size, datastore::financial_data.get_count());
 
 				// Force new generation for debugging purposes
 				best_strategy_score = -1;

@@ -10,7 +10,9 @@ namespace datastore
 
 	datastore::OrderMatrix::OrderMatrix()
 	{
-		initialize(domain::argmap::population_size, financial_data.get_count() * domain::argmap::training_case_sample_ratio);
+		//initialize(domain::argmap::population_size, financial_data.get_count());
+		population_size = 0;
+		test_data_size = 0;
 	}
 
 	void datastore::OrderMatrix::initialize(const size_t population_size, const size_t test_data_size)
