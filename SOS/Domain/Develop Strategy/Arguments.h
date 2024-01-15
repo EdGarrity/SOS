@@ -20,25 +20,27 @@ namespace domain
 		// Diagnostic Level
 		const int diagnostic_level = diagnostic_level_9;
 
-
 		// Specify which financial instruments to target
 		const std::string financial_instrument = "AAPL";
 		const std::string financial_index = "FXAIX";
 		const std::string financial_data_start_date = "1981-01-02";
 		const std::string financial_data_end_date = "2021-12-31";
 
-
 		//	Select which algorithm to use
 		enum class AlgorithmSelection { learn_from_examples, strategy_development };
 		const AlgorithmSelection algorithm_selection = AlgorithmSelection::strategy_development;
 
-		// Define length of the training and test cases
-		const unsigned long training_case_length = 252; // 252 trading days in a year
-		const unsigned long test_case_length = 252; // 252 trading days in a year
+		// Meta data on training and test cases
+		static constexpr size_t training_case_length = 252; // 252 trading days in a year
+		static constexpr size_t test_case_length = 252; // 252 trading days in a year
+		static constexpr size_t number_of_training_cases = 10338;
+		static constexpr size_t number_of_records = 62611867;
+		static constexpr size_t records_per_case = 6056;
+		static constexpr double training_case_sample_percent = 1.0;
+		static constexpr size_t size_of_training_samples = (number_of_training_cases * records_per_case * training_case_sample_percent / 100);
 
 		// Default maximum size of the stack buffer.  Must be greater than max_points
 		const unsigned long maximum_stack_size = 2000;
-
 		const unsigned long maximum_stack_dept = 100;
 
 		const double PI = 3.141592653589793238463;
@@ -50,7 +52,6 @@ namespace domain
 		//	:use - single - thread false
 		//	;; When true, will only use a single thread.
 		const bool use_multithreading = true;
-		const bool use_PPL = false;
 		const unsigned long number_of_cores_to_reserve = 4;
 		const unsigned long max_threads = 1;
 		const unsigned long thread_chunk_size = 1; // 100;  // Number of threads per chunk.
@@ -64,28 +65,9 @@ namespace domain
 
 		const unsigned long percent_memory_cap = 90;
 
-		//	:random - seed(random / generate - mersennetwister - seed)
-		//	;; The seed for the random number generator.
-
-		//	:run - uuid nil
-		//	;; This will be set to a new type 4 pseudorandom UUID on every run.
-
 		//	;; ----------------------------------------
 		//	;; Standard GP arguments
 		//	;; ----------------------------------------
-
-		//	:error - function(fn[p] '(0))
-		//		;; Function that takes a program and returns a list of errors.
-
-		//		:error - threshold 0
-		//		;; Pushgp will stop and return the best program if its total error
-		//		;; is <= error - threshold.
-
-		//		:atom - generators(into @registered-instructions
-		//		(list
-		//		(fn[](lrand - int 100))
-		//			(fn[](lrand))))
-		//		;; The instructions that pushgp will use in random code.
 
 		// Number of individuals in the population.
 		const size_t population_size = 100; // 1000; // 20000; // 200'000;
@@ -110,16 +92,6 @@ namespace domain
 		// that genome lengths will otherwise be limited by 1 / 4 of :max - points.
 		const unsigned long max_genome_size_in_initial_program = max_points / 4;
 
-		// Number of Available Training Cases
-		//const unsigned long number_of_training_cases = 5316696; // '2020-01-01' to '2021-12-31'
-		const unsigned long number_of_training_cases = 1000; // 504; // '2020-01-01' to '2021-12-31'
-
-		// Number of Available Test Cases
-		const unsigned long number_of_test_cases = 10;
-
-		// Minimum length of an example case
-		const unsigned long example_case_min_length = 2;
-
 		// Maximum length of an example case
 		const unsigned long example_case_max_length = 4;
 
@@ -132,68 +104,9 @@ namespace domain
 		// Dynamic instruction set - Can Push programs add and delete instructions from the Piush Instruction set?
 		const bool static_instruction_set = true;
 
-		//// Date range for training
-		//const long int training_start_index = 0;
-		//const long int training_end_index = 9;
-
-		//// Date range for testing
-		//const long int test_start_index = 2508;	// 2010-01-04
-		//const long int test_end_index = 3765;	// 2014-12-31
-
-		//const long int last_data_index = test_end_index;
-
-		//		: evalpush - limit 150
-			//		;; The number of Push instructions that can be evaluated before stopping
-			//		;; evaluation.
-
-			//		:evalpush - time - limit 0
-			//		;; The time in nanoseconds that a program can evaluate before stopping,
-			//		;; 0 means no time limit.
-
-			//		:reuse - errors true
-			//		;; When true, children produced through direct reproduction will not be
-			//		;; re - evaluated but will have the error vector of their parent.
-
 			//		;; ----------------------------------------
 			//		;; Genetic operator probabilities
 			//		;; ----------------------------------------
-
-			//		:genetic - operator-probabilities{ :reproduction 0.0
-			//										 : alternation 0.7
-			//										 : uniform - mutation 0.1
-			//										 : uniform - instruction - mutation 0.0
-			//										 : uniform - integer - mutation 0.0
-			//										 : uniform - float - mutation 0.0
-			//										 : uniform - tag - mutation 0.0
-			//										 : uniform - string - mutation 0.0
-			//										 : uniform - boolean - mutation 0.0
-			//										 ; Similar to the old ULTRA operator:
-			//										 [:alternation:uniform - mutation] 0.2
-			//										 : uniform - close - mutation 0.0
-			//										 : uniform - silence - mutation 0.0
-			//										 : uniform - crossover 0.0
-			//										 : two - point - crossover 0.0
-			//										 ; A hill - climbing version of uniform - silence - mutation:
-			//										 [:make - next - operator-revertable : uniform - silence - mutation] 0.0
-			//										 : autoconstruction 0.0
-			//										 : uniform - deletion 0.0
-			//										 : uniform - addition 0.0
-			//										 : uniform - addition - and-deletion 0.0
-			//										 : uniform - combination - and-deletion 0.0
-			//										 : genesis 0.0
-			//										 : gene - selection 0.0
-			//		}
-			//;; The map supplied to : genetic - operator-probabilities should contain genetic operators
-			//	;; that sum to 1.0.All available genetic operators are defined in clojush.pushgp.breed.
-			//	;; Along with single operators, pipelines(vectors) containing multiple operators are
-			//	;; also allowed, where each operator is applied to the child of the previous operator,
-			//	;; along with newly selecting individuals where necessary.If an operator is preceeded by
-			//	;; :make - next - operator-revertable, it will only keep the child if it is at least as good
-			//	;; as its(first) parent on every test case.
-
-			//	;; ----------------------------------------
-			//	;; Arguments related to genetic operators
-			//	;; ----------------------------------------
 
 		// Genetic Operator Probabilities (must add up to 100%) - Not used if SA enabled
 		const double probability_of_alternation = 0.80;
