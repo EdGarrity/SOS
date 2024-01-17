@@ -6,5 +6,5 @@ namespace Utilities
 	unsigned long random_integer(const size_t m);
 	double random_double(const double min, const double max);
 	//double random_double(const double & max);
-	//double random_double();
+	double random_double();
 }

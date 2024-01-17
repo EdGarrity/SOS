@@ -189,9 +189,8 @@ namespace Utilities
 	//   This distribution (also know as rectangular distribution) produces random numbers in a range 
 	//   [a,b) where all intervals of the same length within it are equally probable.
 	//
-	//double random_double()
-	//{
-	//	std::uniform_real_distribution<double> distribution(0.0, 1.0);
-	//	return distribution(generator);
-	//}
+	double random_double()
+	{
+		return random_double(0.0, 1.0);
+	}
 }

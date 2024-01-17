@@ -36,8 +36,9 @@ namespace domain
 		static constexpr size_t number_of_training_cases = 10338;
 		static constexpr size_t number_of_records = 62611867;
 		static constexpr size_t records_per_case = 6056;
+		static constexpr double training_sample_ratio = 0.01;
 		static constexpr double training_case_sample_percent = 1.0;
-		static constexpr size_t size_of_training_samples = (number_of_training_cases * records_per_case * training_case_sample_percent / 100);
+		static constexpr size_t size_of_training_samples = ((double)number_of_records * training_sample_ratio);
 
 		// Default maximum size of the stack buffer.  Must be greater than max_points
 		const unsigned long maximum_stack_size = 2000;

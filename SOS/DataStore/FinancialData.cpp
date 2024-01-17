@@ -4,6 +4,7 @@
 #include "TestData.h"
 #include "..\Utilities\Debug.h"
 #include "..\Domain\Arguments.h"
+#include "..\Utilities\Random.Utilities.h"
 
 namespace datastore
 {
@@ -307,50 +308,27 @@ namespace datastore
 
 			while (sqlcmd_get_case_data->fetch_next())
 			{
-				//data_records.emplace_back(data_record_t{ sqlcmd_get_case_data->get_field_as_string(1),
-				//	sqlcmd_get_case_data->get_field_as_string(2),
-				//	sqlcmd_get_case_data->get_field_as_string(3),
-				//	sqlcmd_get_case_data->get_field_as_double(4) });
-
-
-				if (data_records_cursor < domain::argmap::size_of_training_samples)
+				if (Utilities::random_double() < domain::argmap::training_sample_ratio)
 				{
-					data_records[data_records_cursor] = sqlcmd_get_case_data->get_field_as_double(4);
-
-					if (last_written_date != sqlcmd_get_case_data->get_field_as_string(2))
+					if (data_records_cursor < domain::argmap::size_of_training_samples)
 					{
-						if (last_written_date != "")
-							data_window_records.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
+						data_records[data_records_cursor] = sqlcmd_get_case_data->get_field_as_double(4);
 
-						last_written_date = sqlcmd_get_case_data->get_field_as_string(2);
-						first_record_index = last_record_index;
-						dirty = true;
+						if (last_written_date != sqlcmd_get_case_data->get_field_as_string(2))
+						{
+							if (last_written_date != "")
+								data_window_records.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
+
+							last_written_date = sqlcmd_get_case_data->get_field_as_string(2);
+							first_record_index = last_record_index;
+							dirty = true;
+						}
+
+						last_record_index++;
 					}
 
-					last_record_index++;
+					data_records_cursor++;
 				}
-
-				data_records_cursor++;
-
-				//if (sqlcmd_get_case_data->get_field_as_string(3) == "Adj_Open")
-				//{
-				//	//{
-				//	//	std::ostringstream ss;
-				//	//	ss << "record"
-				//	//		<< ",symbol=" << sqlcmd_get_case_data->get_field_as_string(1)
-				//	//		<< ",date=" << sqlcmd_get_case_data->get_field_as_string(2)
-				//	//		<< ",key=" << sqlcmd_get_case_data->get_field_as_string(3)
-				//	//		<< ",value=" << sqlcmd_get_case_data->get_field_as_double(4);
-				//	//	Utilities::logline_threadsafe << ss.str();
-				//	//}
-
-				//	if (sqlcmd_get_case_data->get_field_as_string(1) == domain::argmap::financial_instrument)
-				//		primary_adj_open_values.push_back(sqlcmd_get_case_data->get_field_as_double(4));
-				//	else 
-				//		index_adj_open_values.push_back(sqlcmd_get_case_data->get_field_as_double(4));
-				//}
-
-				//last_record_index++;
 			}
 
 			if (dirty)
