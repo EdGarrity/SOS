@@ -282,6 +282,19 @@ namespace datastore
 
 			sqlcmd_get_case_data = new database::SQLCommand(database_connection.get_connection(), sqlstmt_load_case_data);
 
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			{
+				std::ostringstream ss;
+				ss << ",method=FinancialData.load"
+					<< ",diagnostic_level=9"
+					<< ",start_date=" << start_date
+					<< ",end_date=" << end_date
+					<< ",record_count=" << data_window_records.size()
+					<< ",sqlstmt_load_case_data=" << sqlstmt_load_case_data
+					<< ",message=executing_sql_command";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
 			sqlcmd_get_case_data->execute();
 
 			size_t first_record_index = 0;
@@ -307,7 +320,7 @@ namespace datastore
 					if (last_written_date != sqlcmd_get_case_data->get_field_as_string(2))
 					{
 						if (last_written_date != "")
-							data_window_records.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index });
+							data_window_records.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
 
 						last_written_date = sqlcmd_get_case_data->get_field_as_string(2);
 						first_record_index = last_record_index;
