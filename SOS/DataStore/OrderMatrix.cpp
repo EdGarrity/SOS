@@ -140,15 +140,17 @@ namespace datastore
 		Utilities::debug_log(-1, "insertNewOrder", "OrderMatrix");
 #endif
 
+		// Save order to CSV file
+		if (!is_generated(strategyIndex, trainingCaseIndex))
+		{
+			std::ofstream myfile;
+			myfile.open("order_matrix.csv", std::ios::app);
+			myfile << strategyIndex << "," << trainingCaseIndex << "," << order << "\n";
+			myfile.close();
+		}
+
 		orders.store(env_index, strategyIndex, trainingCaseIndex, order);
 		processed.store(env_index, strategyIndex, trainingCaseIndex, 1);
-
-		// Save order to CSV file
-		std::ofstream myfile;
-		myfile.open("order_matrix.csv", std::ios::app);
-		myfile << strategyIndex << "," << trainingCaseIndex << "," << order << "\n";
-		myfile.close();
-
 	}
 
 	//void datastore::OrderMatrix::save(size_t training_case_indexes, size_t strategy_indexes)

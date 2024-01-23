@@ -490,7 +490,7 @@ namespace domain
 				Utilities::logline_threadsafe << ss.str();
 			}
 
-			order_matrix.clearOrderMatrix();
+			//order_matrix.clearOrderMatrix();
 
 			size_t data_size = datastore::financial_data.get_count();
 			std::ptrdiff_t expected_latches = domain::argmap::population_size * data_size;
