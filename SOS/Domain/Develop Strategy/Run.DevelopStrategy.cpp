@@ -524,6 +524,7 @@ namespace domain
 							std::ostringstream ss;
 							ss << ",stratergy=" << strategy_index
 								<< ",case=" << training_case_index
+								<< ",data_size" << data_size
 								<< ",diagnostic_level=2"
 								<< ",method=RunProgram.compute_training_errors_thread_safe"
 								<< ",message=Schedule_to_run_strategy";
@@ -541,6 +542,7 @@ namespace domain
 							std::ostringstream ss;
 							ss << ",stratergy=" << strategy_index
 								<< ",case=" << training_case_index
+								<< ",data_size" << data_size
 								<< ",diagnostic_level=2"
 								<< ",method=RunProgram.compute_training_errors_thread_safe"
 								<< ",data_size=" << data_size
