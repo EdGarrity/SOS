@@ -51,80 +51,23 @@ namespace datastore
 			std::string line;
 			while (std::getline(infile, line))
 			{
-				std::istringstream iss(line);
-				int a, b, c;
-				if (!(iss >> a >> b >> c)) { break; } // error
-				orders.store(0, a, b, c);
-				processed.store(0, a, b, 1);
+				// The order_matrix.csv file contains trhee columns, strategy_index, training_case_index, and order_code
+				// line contains one line from the order_matrix.csv file.
+				// The line is parsed into the three variables below
+				size_t strategy_index = 0, training_case_index = 0, order_code = 0;
+				sscanf_s(line.c_str(), "%zu,%zu,%zu", &strategy_index, &training_case_index, &order_code);
+
+				// Store the order_code in the OrderMatrix
+				orders.store(0, strategy_index, training_case_index, order_code);
+
+				// Mark the order as processed
+				processed.store(0, strategy_index, training_case_index, 1);
 			}
 		}
-
-
-
-
-
-
-		//database::SQLCommand* sqlcmd;
-
-		//sqlcmd = new database::SQLCommand(database_connection.get_connection(), sqlstmt_get_all_orders);
-
-		//try
-		//{
-		//	sqlcmd->execute();
-
-		//	if (sqlcmd->is_result_set())
-		//	{
-		//		while (sqlcmd->fetch_next())
-		//		{
-		//			size_t training_case_index = sqlcmd->get_field_as_long(1);
-		//			size_t strategy_index = sqlcmd->get_field_as_long(2);
-		//			unsigned long order = sqlcmd->get_field_as_long(3);
-
-		//			orders.store(0, strategy_index, training_case_index, order);
-		//			processed.store(0, strategy_index, training_case_index, 1);
-		//		}
-		//	}
-
-		//	delete sqlcmd;
-		//}
-		//catch (...)
-		//{
-		//	std::stringstream error;
-		//	error << "OrderMatrix::initialize()";
-		//	std::cerr << error.str();
-
-		//	delete sqlcmd;
-		//	throw;
-		//}
 	}
 
 	void datastore::OrderMatrix::clearOrderMatrix()
 	{
-//		database::SQLCommand* sqlcmd_clear_order_matrix;
-//
-//		sqlcmd_clear_order_matrix = new database::SQLCommand(database_connection.get_connection(), sqlstmt_clear_order_matrix);
-//
-//		try
-//		{
-//#if DLEVEL > 0
-//			Utilities::debug_log(-1, "clearOrderMatrix", "OrderMatrix");
-//#endif
-//			sqlcmd_clear_order_matrix->execute();
-//
-//			delete sqlcmd_clear_order_matrix;
-//		}
-//		catch (...)
-//		{
-//			std::stringstream error;
-//			error << "OrderMatrix::clearOrderMatrix()";
-//			std::cerr << error.str();
-//
-//			delete sqlcmd_clear_order_matrix;
-//			throw;
-//		}
-
-
-
 		// Delete the order_matrix.csv file
 		std::remove("order_matrix.csv");
 	}
