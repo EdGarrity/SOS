@@ -51,7 +51,7 @@ namespace pushGP
 		std::vector<double> epsilons;
 		std::vector<unsigned int> non_zero_epsilons;
 
-		size_t number_of_training_cases = datastore::financial_data.get_count() - domain::argmap::training_case_length + 1;
+		size_t number_of_training_cases = datastore::financial_data.get_number_of_cases();		// datastore::financial_data.get_count() - domain::argmap::training_case_length + 1;
 
 		Training_case_best_score::Training_case_best_score()
 		{

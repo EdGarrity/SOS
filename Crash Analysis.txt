@@ -1,0 +1,36 @@
+Crashed at "double FinancialData::get_data(const size_t data_index, const size_t training_case_index)" data_index=1, training_case_index=10334
+data_window_records size=10334
+
+inline unsigned in(Environment& _env)
+	value = datastore::financial_data.get_data(index, _env.input_case); index=1, input_case=10334
+	
+		data_records.size()=626,117
+
+
+std::tuple<double, unsigned long> run_strategy_threadsafe(Plush::Environment& env,
+	unsigned int strategy_index,
+	unsigned long case_index)
+			
+void compute_training_errors_thread_safe(Plush::Environment& _env,
+	std::function<std::tuple<double, unsigned long>(Plush::Environment& env,
+		unsigned int stratergy_index,
+		unsigned long case_index)> _run_strategy_threadsafe)
+	for (size_t training_case_index = 0; training_case_index < data_size; training_case_index++)
+	
+
+//// ***************************
+//// *** Evaluate strategies ***
+//// ***************************
+number_of_training_cases = datastore::financial_data.get_count() - domain::argmap::training_case_length + 1;
+	for (size_t training_case_window_offset = 0; training_case_window_offset < domain::argmap::training_case_length; training_case_window_offset++)
+	
+	
+
+
+
+void compute_training_errors_thread_safe(Plush::Environment& _env,
+	std::function<std::tuple<double, unsigned long>(Plush::Environment& env,
+		unsigned int stratergy_index,
+		unsigned long case_index)> _run_strategy_threadsafe)
+
+Need to modify "for (size_t training_case_index = 0; training_case_index < data_size; training_case_index++)" to use the data_window_records size instead of the primary_adj_open_values size.

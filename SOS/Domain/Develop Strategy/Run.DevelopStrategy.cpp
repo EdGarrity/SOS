@@ -429,7 +429,7 @@ namespace domain
 
 			order_matrix.initialize(domain::argmap::population_size, datastore::financial_data.get_count());
 
-			for (size_t training_case_index = 0; training_case_index < datastore::financial_data.get_count(); training_case_index++)
+			for (size_t training_case_index = 0; training_case_index < datastore::financial_data.get_number_of_cases(); training_case_index++)
 			{
 				for (size_t stratergy_index = 0; stratergy_index < domain::argmap::population_size; stratergy_index++)
 				{
@@ -450,6 +450,7 @@ namespace domain
 							std::ostringstream ss;
 							ss << ",stratergy=" << stratergy_index
 								<< ",case=" << training_case_index
+								<< ",number_of_cases" << datastore::financial_data.get_number_of_cases()
 								<< ",diagnostic_level=9"
 								<< "order=" << order
 								<< ",score=" << score
@@ -464,6 +465,7 @@ namespace domain
 						std::ostringstream ss;
 						ss << ",stratergy=" << stratergy_index
 							<< ",case=" << training_case_index
+							<< ",number_of_cases" << datastore::financial_data.get_number_of_cases()
 							<< ",diagnostic_level=9"
 							<< ",method=RunProgram.compute_training_errors"
 							<< ",message=Order_already_processed";
@@ -493,6 +495,8 @@ namespace domain
 			//order_matrix.clearOrderMatrix();
 
 			size_t data_size = datastore::financial_data.get_count();
+			size_t number_of_cases = datastore::financial_data.get_number_of_cases();
+
 			std::ptrdiff_t expected_latches = domain::argmap::population_size * data_size;
 
 			if (expected_latches > std::latch::max())
@@ -513,7 +517,7 @@ namespace domain
 			domain::RunProgram processor(pool);
 			bool dirty = false;
 
-			for (size_t training_case_index = 0; training_case_index < data_size; training_case_index++)
+			for (size_t training_case_index = 0; training_case_index < number_of_cases; training_case_index++)
 			{
 				for (size_t strategy_index = 0; strategy_index < domain::argmap::population_size; strategy_index++)
 				{
@@ -525,6 +529,7 @@ namespace domain
 							ss << ",stratergy=" << strategy_index
 								<< ",case=" << training_case_index
 								<< ",data_size" << data_size
+								<< ",number_of_cases" << number_of_cases
 								<< ",diagnostic_level=2"
 								<< ",method=RunProgram.compute_training_errors_thread_safe"
 								<< ",message=Schedule_to_run_strategy";
@@ -543,9 +548,9 @@ namespace domain
 							ss << ",stratergy=" << strategy_index
 								<< ",case=" << training_case_index
 								<< ",data_size" << data_size
+								<< ",number_of_cases" << number_of_cases
 								<< ",diagnostic_level=2"
 								<< ",method=RunProgram.compute_training_errors_thread_safe"
-								<< ",data_size=" << data_size
 								<< ",training_case_index=" << training_case_index
 								<< ",message=Order_already_processed";
 							Utilities::logline_threadsafe << ss.str();
@@ -841,7 +846,7 @@ namespace domain
 					//// ***************************
 					//// *** Evaluate strategies ***
 					//// ***************************
-					number_of_training_cases = datastore::financial_data.get_count() - domain::argmap::training_case_length + 1;
+					number_of_training_cases = datastore::financial_data.get_number_of_cases();		//datastore::financial_data.get_count() - domain::argmap::training_case_length + 1;
 					pushGP::globals::score_matrix.resize(number_of_training_cases, domain::argmap::population_size);
 					pushGP::globals::effort_matrix.resize(number_of_training_cases, domain::argmap::population_size);
 					pushGP::globals::baseline_matrix.resize(number_of_training_cases, domain::argmap::population_size);
