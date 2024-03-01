@@ -34,3 +34,20 @@ void compute_training_errors_thread_safe(Plush::Environment& _env,
 		unsigned long case_index)> _run_strategy_threadsafe)
 
 Need to modify "for (size_t training_case_index = 0; training_case_index < data_size; training_case_index++)" to use the data_window_records size instead of the primary_adj_open_values size.
+
+
+
+
+
+
+
+
+
+
+for (size_t training_case_index = 0; training_case_index < number_of_cases; training_case_index++) number_of_cases=10,330
+
+
+
+2024-03-01 15:10:01.93238011,line_number=1033172,thread=25832,method=Threadpool.wait_for_all_threads_to_complete,diagnostic_level=9,work_queue_size=0,message=Work_queue_empty
+
+

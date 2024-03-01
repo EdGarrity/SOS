@@ -56,6 +56,14 @@ namespace domain
 				workorder_form.get_training_case_index(),
 				std::get<0>(results));
 			work_done.count_down();
+			if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
+			{
+				std::ostringstream ss;
+				ss << ",diagnostic_level=2"
+					<< ",method=Utilities::Task RunProgram::run"
+					<< ",message=Decremented_Latch";
+				Utilities::logline_threadsafe << ss.str();
+			}
 
 			if (argmap::diagnostic_level >= argmap::diagnostic_level_3)
 			{

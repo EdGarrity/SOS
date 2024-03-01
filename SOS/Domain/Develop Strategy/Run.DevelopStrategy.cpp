@@ -512,7 +512,19 @@ namespace domain
 				throw std::exception("Expected_latches_greater_than_max");
 			}
 
-			std::latch work_done(domain::argmap::population_size * data_size);	// Check that we are allocating sufficient work tokens.
+			std::latch work_done(domain::argmap::population_size * number_of_cases);	// Check that we are allocating sufficient work tokens.
+			if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
+			{
+				std::ostringstream ss;
+				ss << ",domain::argmap::population_size=" << domain::argmap::population_size
+					<< ",number_of_cases=" << number_of_cases
+					<< ",latch_count=" << domain::argmap::population_size * number_of_cases
+					<< ",diagnostic_level=2"
+					<< ",method=RunProgram.compute_training_errors_thread_safe"
+					<< ",message=Allocated_Latches";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
 			order_matrix.initialize(domain::argmap::population_size, data_size);
 			domain::RunProgram processor(pool);
 			bool dirty = false;
@@ -557,6 +569,17 @@ namespace domain
 						}
 
 						work_done.count_down();
+						if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
+						{
+							std::ostringstream ss;
+							ss << ",domain::argmap::population_size=" << domain::argmap::population_size
+								<< ",number_of_cases=" << number_of_cases
+								<< ",latch_count=" << domain::argmap::population_size * number_of_cases
+								<< ",diagnostic_level=2"
+								<< ",method=RunProgram.compute_training_errors_thread_safe"
+								<< ",message=Decremented_Latch";
+							Utilities::logline_threadsafe << ss.str();
+						}
 					}
 				}
 			}
