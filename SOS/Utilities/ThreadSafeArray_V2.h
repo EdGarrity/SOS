@@ -14,42 +14,30 @@ namespace Utilities
 	{
 	private:
 		T* data_array = nullptr;
-		size_t n1 = 0;
-		size_t n2 = 0;
+		size_t upper_bound_dimension_1 = 0;
+		size_t upper_bound_dimension_2 = 0;
 
 	public:
-		ThreadSafeArray_2D_V2<T>(size_t N1, size_t N2);
-		ThreadSafeArray_2D_V2<T>() : data_array(nullptr), n1(0), n2(0) {};
+		ThreadSafeArray_2D_V2<T>(size_t upper_bound_dimension_1, size_t upper_bound_dimension_2);
+		ThreadSafeArray_2D_V2<T>() : data_array(nullptr), upper_bound_dimension_1(0), upper_bound_dimension_2(0) {};
 		~ThreadSafeArray_2D_V2<T>(void);
 
-		void resize(size_t N1, size_t N2);
-		T load(size_t n1, size_t n2);
-		void store(const unsigned int env_index, size_t y, size_t x, T d);
+		void resize(size_t upper_bound_dimension_1, size_t N2);
+		T load(size_t index_1, size_t index_2);
+		void store(const unsigned int env_index, size_t index_1, size_t index_2, T d);
 	};
 
-	//template<class T>
-	//inline ThreadSafeArray_2D_V2<T>::ThreadSafeArray_2D_V2()
-	//{
-	//	{
-	//		std::ostringstream ss;
-	//		ss << ",method=ThreadSafeArray_2D_V2.load"
-	//			<< ",message=Array_bounds_not_defined";
-	//		Utilities::logline_threadsafe << ss.str();
-	//	}
-
-	//	throw std::runtime_error("ThreadSafeArray_2D_V2 - Array bounds not defined");
-	//}
-
 	template<class T>
-	inline ThreadSafeArray_2D_V2<T>::ThreadSafeArray_2D_V2(size_t N1, size_t N2)
+	inline ThreadSafeArray_2D_V2<T>::ThreadSafeArray_2D_V2(size_t parameter_upper_bound_dimension_1, size_t parameter_upper_bound_dimension_2)
 	{
 #if DLEVEL > 0
 		std::string debug_message = "Allocating,N1=" + std::to_string(N1) + ",N2=" + std::to_string(N2);
 		Utilities::debug_log_nolock(-1, "ThreadSafeArray_2D_V2", debug_message);
 #endif
-		data_array = (T*)std::calloc(N1 * N2, sizeof(T));
-		n1 = N1;
-		n2 = N2;
+		// Allocate one more than requested as a safety margin
+		upper_bound_dimension_1 = parameter_upper_bound_dimension_1 + 1;
+		upper_bound_dimension_2 = parameter_upper_bound_dimension_2 + 1;
+		data_array = (T*)std::calloc(upper_bound_dimension_1 * upper_bound_dimension_2, sizeof(T));
 
 		if (data_array == nullptr)
 		{
@@ -78,13 +66,13 @@ namespace Utilities
 	}
 
 	template<class T>
-	inline void ThreadSafeArray_2D_V2<T>::resize(size_t N1, size_t N2)
+	inline void ThreadSafeArray_2D_V2<T>::resize(size_t parameter_upper_bound_dimension_1, size_t parameter_upper_bound_dimension_2)
 	{
 		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
-			ss << ",N1=" << N1
-				<< ",N2=" << N2
+			ss << ",upper_bound_dimension_1=" << parameter_upper_bound_dimension_1
+				<< ",upper_bound_dimension_2=" << parameter_upper_bound_dimension_2
 				<< ",method=ThreadSafeArray_2D_V2.resize"
 				<< ",diagnostic_level=9"
 				<< ",message=Enter";
@@ -99,9 +87,10 @@ namespace Utilities
 		if (data_array != nullptr)
 			std::free(data_array);
 
-		n1 = N1 + 1;
-		n2 = N2 + 1;
-		data_array = (T*)std::calloc(n1 * n2, sizeof(T));
+		// Allocate one more than requested as a safety margin
+		upper_bound_dimension_1 = parameter_upper_bound_dimension_1 + 1;
+		upper_bound_dimension_2 = parameter_upper_bound_dimension_2 + 1;
+		data_array = (T*)std::calloc(upper_bound_dimension_1 * upper_bound_dimension_2, sizeof(T));
 
 		if (data_array == nullptr)
 		{
@@ -116,8 +105,8 @@ namespace Utilities
 				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 				{
 					std::ostringstream ss;
-					ss << ",N1=" << N1
-						<< ",N2=" << N2
+					ss << ",upper_bound_dimension_1=" << upper_bound_dimension_1
+						<< ",upper_bound_dimension_2=" << upper_bound_dimension_2
 						<< ",method=ThreadSafeArray_2D_V2.resize"
 						<< ",diagnostic_level=9"
 						<< ",message=Out_of_memory";
@@ -130,22 +119,22 @@ namespace Utilities
 	}
 
 	template<class T>
-	inline T ThreadSafeArray_2D_V2<T>::load(size_t y, size_t x)
+	inline T ThreadSafeArray_2D_V2<T>::load(size_t index_1, size_t index_2)
 	{
-		if ((n1 == 0) || (n2 == 0))
+		if ((upper_bound_dimension_1 == 0) || (upper_bound_dimension_2 == 0))
 		{
 			std::stringstream error_message;
-			error_message << "ThreadSafeArray_2D_V2::load(" << y << "," << x << ") - Array bounds not defined";
+			error_message << "ThreadSafeArray_2D_V2::load(" << index_1 << "," << index_2 << ") - Array bounds not defined";
 
 			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
 				ss << ",method=ThreadSafeArray_2D_V2.load"
 					<< ",diagnostic_level=9"
-					<< ",y=" << y
-					<< ",x=" << x
-					<< ",n1=" << n1
-					<< ",n2=" << n2
+					<< ",index_1=" << index_1
+					<< ",index_2=" << index_2
+					<< ",upper_bound_dimension_1=" << upper_bound_dimension_1
+					<< ",upper_bound_dimension_2=" << upper_bound_dimension_2
 					<< ",message=Array_bounds_not_defined";
 				Utilities::logline_threadsafe << ss.str();
 			}
@@ -153,10 +142,11 @@ namespace Utilities
 			throw std::out_of_range(error_message.str());
 		}
 
-		if ((y >= n1) || (x >= n2))
+		// Check for out of bounds
+		if ((index_1 >= upper_bound_dimension_1) || (index_2 >= upper_bound_dimension_2))
 		{
 			std::stringstream error_message;
-			error_message << "ThreadSafeArray_2D_V2::load(" << y << "," << x << ") - Index out of bounds";
+			error_message << "ThreadSafeArray_2D_V2::load(" << index_1 << "," << index_2 << ") - Index out of bounds";
 
 #if DLEVEL > 0
 			std::string debug_message = error_message.str();
@@ -167,10 +157,10 @@ namespace Utilities
 				std::ostringstream ss;
 				ss << ",method=ThreadSafeArray_2D_V2.load"
 					<< ",diagnostic_level=9"
-					<< ",y=" << y
-					<< ",x=" << x
-					<< ",n1=" << n1
-					<< ",n2=" << n2
+					<< ",index_1=" << index_1
+					<< ",index_2=" << index_2
+					<< ",upper_bound_dimension_1=" << upper_bound_dimension_1
+					<< ",upper_bound_dimension_2=" << upper_bound_dimension_2
 					<< ",message=Index_out_of_bounds";
 				Utilities::logline_threadsafe << ss.str();
 			}
@@ -179,30 +169,44 @@ namespace Utilities
 		}
 
 		std::unique_lock<std::mutex> ThreadSafeArray_V2_array_access_lock(ThreadSafeArray_V2_array_access_);
-		T data = data_array[y * n2 + x];
+		T data = data_array[index_1 * upper_bound_dimension_2 + index_2];
 		ThreadSafeArray_V2_array_access_lock.unlock();
 
 		return data;
 	}
 
 	template<class T>
-	inline void ThreadSafeArray_2D_V2<T>::store(const unsigned int env_index, size_t y, size_t x, T d)
+	inline void ThreadSafeArray_2D_V2<T>::store(const unsigned int env_index, size_t index_1, size_t index_2, T new_data)
 	{
-		if ((y >= n1) || (x >= n2))
+		if ((index_1 >= upper_bound_dimension_1) || (index_2 >= upper_bound_dimension_2))
 		{
 			std::stringstream error_message;
-			error_message << "ThreadSafeArray_2D_V2::store(" << y << "," << x << ") - Index out of bounds";
+			error_message << "ThreadSafeArray_2D_V2::store(" << index_1 << "," << index_2 << ") - Index out of bounds";
 
 #if DLEVEL > 0
 			std::string debug_message = error_message.str();
 			Utilities::debug_log(env_index, "ThreadSafeArray_2D_V2", debug_message);
 #endif
+
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			{
+				std::ostringstream ss;
+				ss << ",method=ThreadSafeArray_2D_V2.store"
+					<< ",diagnostic_level=9"
+					<< ",index_1=" << index_1
+					<< ",index_2=" << index_2
+					<< ",upper_bound_dimension_1=" << upper_bound_dimension_1
+					<< ",upper_bound_dimension_2=" << upper_bound_dimension_2
+					<< ",message=Index_out_of_bounds";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
 			throw std::out_of_range(error_message.str());
 		}
 
 		std::unique_lock<std::mutex> ThreadSafeArray_V2_array_access_lock(ThreadSafeArray_V2_array_access_);
-		int index = y * n2 + x;
-		data_array[index] = d;
+		size_t index = index_1 * upper_bound_dimension_2 + index_2;
+		data_array[index] = new_data;
 		ThreadSafeArray_V2_array_access_lock.unlock();
 	}
 }
