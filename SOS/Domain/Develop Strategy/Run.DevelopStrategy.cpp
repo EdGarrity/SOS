@@ -896,6 +896,9 @@ namespace domain
 									<< ",diagnostic_level=1"
 									<< ",training_case_window_start=" << training_case_window_start
 									<< ",strategy=" << strategy_index
+									<< ",domain::argmap::population_size" << domain::argmap::population_size
+									<< ",number_of_training_cases=" << number_of_training_cases
+									<< ",number_of_passing_training_cases=" << number_of_passing_training_cases
 									<< ",score=" << score
 									<< ",message=enter_loop";
 								Utilities::logline_threadsafe << ss.str();
@@ -914,7 +917,25 @@ namespace domain
 								stock_data_index++;
 							}
 
-							score = account.unrealized_gain(--stock_data_index);
+							if ((stock_data_index == 0) || (stock_data_index >= domain::argmap::training_case_length))
+							{
+								std::ostringstream ss;
+								ss << ",method=develop_strategy.run"
+									<< ",diagnostic_level=1"
+									<< ",training_case_window_start=" << training_case_window_start
+									<< ",strategy=" << strategy_index
+									<< ",domain::argmap::population_size" << domain::argmap::population_size
+									<< ",number_of_training_cases=" << number_of_training_cases
+									<< ",number_of_passing_training_cases=" << number_of_passing_training_cases
+									<< ",score=" << score
+									<< ",stock_data_index=" << stock_data_index
+									<< ",message=stock_data_index_out_of_range";
+								Utilities::logline_threadsafe << ss.str();
+
+								throw std::overflow_error("stock_data_index out of range");
+							}
+
+							score = account.unrealized_gain(--stock_data_index); // Potential underflow error.
 							sum_of_score += score;
 							pushGP::globals::score_matrix.store(-1, training_case_window_start, strategy_index, score);
 							pushGP::globals::effort_matrix.store(-1, training_case_window_start, strategy_index, 1000);

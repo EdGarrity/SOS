@@ -585,8 +585,6 @@ namespace datastore
 		try
 		{
 			std::unique_lock<std::mutex> lock(data_records_mutex);
-
-			//value = data_records.at(index_record.first_record + data_record_index).value;
 			value = data_records[index_record.first_record + data_record_index];
 		}
 		catch (std::out_of_range const& e)
@@ -630,6 +628,46 @@ namespace datastore
 			std::cerr << error.str();
 		}
 		return value;
+	}
+
+	double FinancialData::get_primary_stock_price(size_t index)
+	{
+		size_t data_record_range = primary_adj_open_values.size();
+
+		if (index >= data_record_range)
+		{
+			std::ostringstream ss;
+			ss << ",method=FinancialData.get_primary_stock_price"
+				<< ",diagnostic_level=0"
+				<< ",index=" << index
+				<< ",primary_adj_open_values.size=" << data_record_range
+				<< ",message=Error_loading_data";
+			Utilities::logline_threadsafe << ss.str();
+
+			throw std::out_of_range("FinancialData::get_primary_stock_price - Index out of bounds");
+		}
+
+		return primary_adj_open_values[index].value;
+	}
+
+	double FinancialData::get_index_stock_price(size_t index)
+	{
+		size_t data_record_range = index_adj_open_values.size();
+
+		if (index >= data_record_range)
+		{
+			std::ostringstream ss;
+			ss << ",method=FinancialData.get_index_stock_price"
+				<< ",diagnostic_level=0"
+				<< ",index=" << index
+				<< ",index_adj_open_values.size=" << data_record_range
+				<< ",message=Error_loading_data";
+			Utilities::logline_threadsafe << ss.str();
+
+			throw std::out_of_range("FinancialData::get_index_stock_price - Index out of bounds");
+		}
+
+		return index_adj_open_values[index].value;
 	}
 
 	// Purpose: 
@@ -931,197 +969,4 @@ namespace datastore
 				delete sqlcmd_load_index_adj_open_prices;
 		}
 	}
-
-	// Purpose: 
-	//   Retrieve the financial data key value for the given date and offest to the key record
-	//
-	// Parameters:
-	//   date - date of the key record
-	//   key_offset = offest to the key record
-	// 
-	// Return value:
-	//   Value
-	//
-	// Side Effects:
-	//   None
-	//
-	// Thread Safe:
-	//   Yes
-	//
-	// Remarks:
-	//
-	//std::mutex sql_access_mutex;
-	//double FinancialData::load_key_value(const std::string& start_date, const size_t key_offset)
-	//{
-	//	if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
-	//	{
-	//		std::ostringstream ss;
-	//		ss << ",method=FinancialData.load_key_value"
-	//			<< ",diagnostic_level=9"
-	//			<< ",start_date=" << start_date
-	//			<< ",key_offset=" << key_offset
-	//			<< ",message=loading_all_case_data";
-	//		Utilities::logline_threadsafe << ss.str();
-	//	}
-
-	//	double value = 0;
-	//	database::SQLCommand* sqlcmd_load_key_value = nullptr;
-
-	//	try
-	//	{
-	//		std::unique_lock<std::mutex> lock(sql_access_mutex);
-
-	//		// Construct SQL statement with filters
-	//		int sz = std::snprintf(nullptr, 0, fmt_str_load_key_value_for_date, key_offset, key_offset, start_date.c_str());
-	//		std::vector<char> buf(sz + 1); // note +1 for null terminator
-	//		std::snprintf(&buf[0], buf.size(), fmt_str_load_key_value_for_date, key_offset, key_offset, start_date.c_str());
-	//		std::string sqlstmt_load_key_value(buf.begin(), buf.end() - 1); // omit the null terminator
-
-	//		// Extablish the connection and execute the SQL statement
-	//		sqlcmd_load_key_value = new database::SQLCommand(database_connection.get_connection(), sqlstmt_load_key_value);
-	//		sqlcmd_load_key_value->execute();
-
-	//		// Retrieve the data
-	//		bool dirty = false;
-
-	//		sqlcmd_load_key_value->fetch_next();
-	//		value = sqlcmd_load_key_value->get_field_as_double(1);
-
-	//		// Convert NULL to zero
-	//		if (value < 0)
-	//			value = 0;
-
-	//		delete sqlcmd_load_key_value;
-
-	//		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
-	//		{
-	//			std::ostringstream ss;
-	//			ss << ",method=FinancialData.load_key_value"
-	//				<< ",diagnostic_level=9"
-	//				<< ",start_date=" << start_date
-	//				<< ",key_offset=" << key_offset
-	//				<< ",value=" << value
-	//				<< ",message=case_data_loaded";
-	//			Utilities::logline_threadsafe << ss.str();
-	//		}
-
-	//		return value;
-	//	}
-	//	catch (const std::exception& e)
-	//	{
-	//		{
-	//			std::ostringstream ss;
-	//			ss << ",method=FinancialData.load_key_value"
-	//				<< ",diagnostic_level=0"
-	//				<< ",exception=" << e.what()
-	//				<< ",message=Error_loading_data";
-	//			Utilities::logline_threadsafe << ss.str();
-	//		}
-
-	//		if (sqlcmd_load_key_value != nullptr)
-	//			delete sqlcmd_load_key_value;
-	//	}
-	//	catch (...)
-	//	{
-	//		std::ostringstream ss; ss << "Unknown exception"; Utilities::logline_threadsafe << ss.str();
-	//		{
-	//			std::ostringstream ss;
-	//			ss << ",method=FinancialData.load_key_value"
-	//				<< ",diagnostic_level=0"
-	//				<< ",exception=Unknown"
-	//				<< ",message=An_unknown_error_has_occured";
-	//			Utilities::logline_threadsafe << ss.str();
-	//		}
-
-	//		if (sqlcmd_load_key_value != nullptr)
-	//			delete sqlcmd_load_key_value;
-	//	}
-	//}
-
-	// Purpose: 
-	//   Retrieve the financial data for the given case.
-	//
-	// Parameters:
-	//   case_index
-	//   index
-	// 
-	// Return value:
-	//   Value
-	//
-	// Side Effects:
-	//   None
-	//
-	// Thread Safe:
-	//   No
-	//
-	// Remarks:
-	//
-	//std::mutex data_records_mutex;
-	//double FinancialData::get_data(const size_t data_index, const size_t training_case_index)
-	//{
-	//	//if ((case_cached == false) || (input_case != current_case_index))
-	//	//	load(input_case);
-
-	//	//index = std::abs((long)(index % get_size()));
-
-	//	//return values[index];
-
-	//	data_window_record_t index_record = data_window_records[training_case_index];
-
-	//	size_t data_record_range = index_record.last_record - index_record.first_record + 1;
-	//	size_t data_record_index = std::abs((long)(data_index % data_record_range));
-
-	//	double value = 0;
-
-	//	try
-	//	{
-	//		std::unique_lock<std::mutex> lock(data_records_mutex);
-
-	//		value = data_records.at(index_record.first_record + data_record_index).value;
-	//	}
-	//	catch (std::out_of_range const& e)
-	//	{
-	//		{
-	//			std::ostringstream ss;
-	//			ss << ",method=FinancialData.get_data"
-	//				<< ",diagnostic_level=0"
-	//				<< ",exception=" << e.what()
-	//				<< ",data_index=" << data_index
-	//				<< ",training_case_index=" << training_case_index
-	//				<< ",index_record.first_record=" << index_record.first_record
-	//				<< ",index_record.last_record=" << index_record.last_record
-	//				<< ",data_record_range=" << data_record_range
-	//				<< ",data_record_index=" << data_record_index
-	//				<< ",message=Error_loading_data";
-	//			Utilities::logline_threadsafe << ss.str();
-	//		}
-
-	//		std::cerr << e.what() << '\n';
-	//	}
-	//	catch (...)
-	//	{
-	//		{
-	//			std::ostringstream ss;
-	//			ss << ",method=FinancialData.get_data"
-	//				<< ",diagnostic_level=0"
-	//				<< ",exception=Unknown"
-	//				<< ",data_index=" << data_index
-	//				<< ",training_case_index=" << training_case_index
-	//				<< ",index_record.first_record=" << index_record.first_record
-	//				<< ",index_record.last_record=" << index_record.last_record
-	//				<< ",data_record_range=" << data_record_range
-	//				<< ",data_record_index=" << data_record_index
-	//				<< ",message=An_unknown_error_has_occured";
-	//			Utilities::logline_threadsafe << ss.str();
-	//		}
-
-	//		std::stringstream error;
-	//		error << "FinancialData::get_data()";
-	//		std::cerr << error.str();
-	//	}
-	//	return value;
-	//}
-
-
-
 }

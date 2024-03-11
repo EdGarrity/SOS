@@ -109,8 +109,10 @@ namespace datastore
 		double get_data(const size_t index, const size_t input_case);
 		size_t get_count() const { return primary_adj_open_values.size(); }
 		size_t get_number_of_cases() const { return data_window_records.size(); }
-		double get_primary_stock_price(size_t index) const { return primary_adj_open_values[index].value; }
-		double get_index_stock_price(size_t index) const { return index_adj_open_values[index].value; }
+		//double get_primary_stock_price(size_t index) const { return primary_adj_open_values[index].value; }
+		double get_primary_stock_price(size_t index);
+		//double get_index_stock_price(size_t index) const { return index_adj_open_values[index].value; }
+		double get_index_stock_price(size_t index);
 	};
 
 	//extern FinancialData financial_instrument_data;

@@ -14,6 +14,19 @@ namespace domain
         
         double balance = account.get_balance();
 
+        if (price == 0.0)
+        {
+            std::ostringstream ss;
+            ss << ",method=BrokerAccount::buy"
+                << ",diagnostic_level=0"
+                << ",index=" << index
+                << ",price=" << price
+                << ",message=Error_loading_data";
+            Utilities::logline_threadsafe << ss.str();
+
+            throw std::out_of_range("BrokerAccount::buy - Devide by zero");
+        }
+
         if (price <= balance)
         {
             size_t saheres_to_purchase = balance / price;

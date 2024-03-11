@@ -14,6 +14,7 @@ namespace Utilities
 	{
 	private:
 		T* data_array = nullptr;
+		size_t data_array_size = 0;
 		size_t upper_bound_dimension_1 = 0;
 		size_t upper_bound_dimension_2 = 0;
 
@@ -37,7 +38,8 @@ namespace Utilities
 		// Allocate one more than requested as a safety margin
 		upper_bound_dimension_1 = parameter_upper_bound_dimension_1 + 1;
 		upper_bound_dimension_2 = parameter_upper_bound_dimension_2 + 1;
-		data_array = (T*)std::calloc(upper_bound_dimension_1 * upper_bound_dimension_2, sizeof(T));
+		data_array_size = upper_bound_dimension_1 * upper_bound_dimension_2;
+		data_array = (T*)std::calloc(data_array_size, sizeof(T));
 
 		if (data_array == nullptr)
 		{
@@ -90,7 +92,8 @@ namespace Utilities
 		// Allocate one more than requested as a safety margin
 		upper_bound_dimension_1 = parameter_upper_bound_dimension_1 + 1;
 		upper_bound_dimension_2 = parameter_upper_bound_dimension_2 + 1;
-		data_array = (T*)std::calloc(upper_bound_dimension_1 * upper_bound_dimension_2, sizeof(T));
+		data_array_size = upper_bound_dimension_1 * upper_bound_dimension_2;
+		data_array = (T*)std::calloc(data_array_size, sizeof(T));
 
 		if (data_array == nullptr)
 		{
@@ -169,7 +172,26 @@ namespace Utilities
 		}
 
 		std::unique_lock<std::mutex> ThreadSafeArray_V2_array_access_lock(ThreadSafeArray_V2_array_access_);
-		T data = data_array[index_1 * upper_bound_dimension_2 + index_2];
+
+		size_t index = index_1 * upper_bound_dimension_2 + index_2;
+		if (index >= data_array_size)
+		{
+			std::ostringstream ss;
+			ss << ",method=ThreadSafeArray_2D_V2.load"
+				<< ",diagnostic_level=9"
+				<< ",index_1=" << index_1
+				<< ",index_2=" << index_2
+				<< ",upper_bound_dimension_1=" << upper_bound_dimension_1
+				<< ",upper_bound_dimension_2=" << upper_bound_dimension_2
+				<< ",index=" << index
+				<< ",data_array_size=" << data_array_size
+				<< ",message=Index_out_of_bounds";
+			Utilities::logline_threadsafe << ss.str();
+
+			throw std::out_of_range("ThreadSafeArray_2D_V2::load - Index out of bounds");
+		}
+
+		T data = data_array[index];
 		ThreadSafeArray_V2_array_access_lock.unlock();
 
 		return data;
@@ -206,6 +228,24 @@ namespace Utilities
 
 		std::unique_lock<std::mutex> ThreadSafeArray_V2_array_access_lock(ThreadSafeArray_V2_array_access_);
 		size_t index = index_1 * upper_bound_dimension_2 + index_2;
+
+		if (index >= data_array_size)
+		{
+			std::ostringstream ss;
+			ss << ",method=ThreadSafeArray_2D_V2.store"
+				<< ",diagnostic_level=9"
+				<< ",index_1=" << index_1
+				<< ",index_2=" << index_2
+				<< ",upper_bound_dimension_1=" << upper_bound_dimension_1
+				<< ",upper_bound_dimension_2=" << upper_bound_dimension_2
+				<< ",index=" << index
+				<< ",data_array_size=" << data_array_size
+				<< ",message=Index_out_of_bounds";
+			Utilities::logline_threadsafe << ss.str();
+
+			throw std::out_of_range("ThreadSafeArray_2D_V2::store - Index out of bounds");
+		}
+
 		data_array[index] = new_data;
 		ThreadSafeArray_V2_array_access_lock.unlock();
 	}
