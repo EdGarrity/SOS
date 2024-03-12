@@ -896,7 +896,7 @@ namespace domain
 									<< ",diagnostic_level=1"
 									<< ",training_case_window_start=" << training_case_window_start
 									<< ",strategy=" << strategy_index
-									<< ",domain::argmap::population_size" << domain::argmap::population_size
+									<< ",domain::argmap::population_size=" << domain::argmap::population_size
 									<< ",number_of_training_cases=" << number_of_training_cases
 									<< ",number_of_passing_training_cases=" << number_of_passing_training_cases
 									<< ",score=" << score
@@ -917,7 +917,7 @@ namespace domain
 								stock_data_index++;
 							}
 
-							if ((stock_data_index == 0) || (stock_data_index >= domain::argmap::training_case_length))
+							if ((stock_data_index == 0) || (stock_data_index > domain::argmap::training_case_length))
 							{
 								std::ostringstream ss;
 								ss << ",method=develop_strategy.run"
@@ -966,6 +966,7 @@ namespace domain
 									<< ",training_case_window_start=" << training_case_window_start
 									<< ",strategy=" << strategy_index
 									<< ",score=" << score
+									<< ",number_of_passing_training_cases=" << number_of_passing_training_cases
 									<< ",message=score_matrix";
 								Utilities::logline_threadsafe << ss.str();
 							}
