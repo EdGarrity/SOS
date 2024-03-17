@@ -20,6 +20,7 @@ namespace domain
             ss << ",method=BrokerAccount::buy"
                 << ",diagnostic_level=0"
                 << ",index=" << index
+                << ",financial_instrument_type=" << financial_instrument_type
                 << ",price=" << price
                 << ",message=Error_loading_data";
             Utilities::logline_threadsafe << ss.str();

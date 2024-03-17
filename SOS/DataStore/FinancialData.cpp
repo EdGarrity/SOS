@@ -818,12 +818,14 @@ namespace datastore
 			sqlcmd_load_primary_adj_open_prices->execute();
 
 			// Retrieve the data
+			int elements_loaded = 0;	// For debugging
 			while (sqlcmd_load_primary_adj_open_prices->fetch_next())
 			{
 				std::string date_field = sqlcmd_load_primary_adj_open_prices->get_field_as_string(1);
 				double value = sqlcmd_load_primary_adj_open_prices->get_field_as_double(2);
 
 				primary_adj_open_values.emplace_back(adj_opening_prices_record_t{ date_field, value });
+				elements_loaded++;
 			}
 			delete sqlcmd_load_primary_adj_open_prices;
 
@@ -834,6 +836,8 @@ namespace datastore
 					<< ",diagnostic_level=9"
 					<< ",start_date=" << start_date
 					<< ",end_date=" << end_date
+					<< ",elements_loaded=" << elements_loaded
+					<< ",primary_adj_open_values.size=" << primary_adj_open_values.size()
 					<< ",message=case_data_loaded";
 				Utilities::logline_threadsafe << ss.str();
 			}
@@ -935,6 +939,7 @@ namespace datastore
 					<< ",diagnostic_level=9"
 					<< ",start_date=" << start_date
 					<< ",end_date=" << end_date
+					<< ",count=" << count
 					<< ",message=case_data_loaded";
 				Utilities::logline_threadsafe << ss.str();
 			}
