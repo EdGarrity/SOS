@@ -666,6 +666,18 @@ namespace datastore
 
 			throw std::out_of_range("FinancialData::get_index_stock_price - Index out of bounds");
 		}
+		else
+		{
+			std::ostringstream ss;
+			ss << ",method=FinancialData.get_index_stock_price"
+				<< ",diagnostic_level=0"
+				<< ",index=" << index
+				<< ",index_adj_open_values.size=" << data_record_range
+				<< ",index_adj_open_values[index].date=" << index_adj_open_values[index].date
+				<< ",index_adj_open_values[index].value=" << index_adj_open_values[index].value
+				<< ",message=Return";
+			Utilities::logline_threadsafe << ss.str();
+		}
 
 		return index_adj_open_values[index].value;
 	}
@@ -731,6 +743,8 @@ namespace datastore
 					<< ",diagnostic_level=9"
 					<< ",start_date=" << start_date
 					<< ",end_date=" << end_date
+					<< ",domain::argmap::financial_instrument.c_str()=" << domain::argmap::financial_instrument.c_str()
+					<< ",count=" << count
 					<< ",message=case_data_loaded";
 				Utilities::logline_threadsafe << ss.str();
 			}
@@ -928,7 +942,8 @@ namespace datastore
 				std::string date_field = sqlcmd_load_index_adj_open_prices->get_field_as_string(1);
 				double value = sqlcmd_load_index_adj_open_prices->get_field_as_double(2);
 
-				index_adj_open_values.emplace_back(adj_opening_prices_record_t{ date_field, value });
+				//index_adj_open_values.emplace_back(adj_opening_prices_record_t{ date_field, value });
+				index_adj_open_values.push_back(adj_opening_prices_record_t{ date_field, value });
 			}
 			delete sqlcmd_load_index_adj_open_prices;
 
@@ -939,6 +954,8 @@ namespace datastore
 					<< ",diagnostic_level=9"
 					<< ",start_date=" << start_date
 					<< ",end_date=" << end_date
+					<< ",domain::argmap::financial_index.c_str()" << domain::argmap::financial_index.c_str()
+					<< ",index_adj_open_values.size=" << index_adj_open_values.size()
 					<< ",count=" << count
 					<< ",message=case_data_loaded";
 				Utilities::logline_threadsafe << ss.str();
