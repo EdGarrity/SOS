@@ -673,8 +673,8 @@ namespace datastore
 				<< ",diagnostic_level=0"
 				<< ",index=" << index
 				<< ",index_adj_open_values.size=" << data_record_range
-				<< ",index_adj_open_values[index].date=" << index_adj_open_values[index].date
-				<< ",index_adj_open_values[index].value=" << index_adj_open_values[index].value
+				<< ",index_adj_open_values[" << index << "].date = " << index_adj_open_values[index].date
+				<< ",index_adj_open_values[" << index << "].value=" << index_adj_open_values[index].value
 				<< ",message=Return";
 			Utilities::logline_threadsafe << ss.str();
 		}
@@ -957,6 +957,8 @@ namespace datastore
 					<< ",domain::argmap::financial_index.c_str()" << domain::argmap::financial_index.c_str()
 					<< ",index_adj_open_values.size=" << index_adj_open_values.size()
 					<< ",count=" << count
+					<< ",index_adj_open_values[0].date=" << index_adj_open_values[0].date
+					<< ",index_adj_open_values[0].value=" << index_adj_open_values[0].value
 					<< ",message=case_data_loaded";
 				Utilities::logline_threadsafe << ss.str();
 			}
