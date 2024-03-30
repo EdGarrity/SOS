@@ -924,7 +924,8 @@ namespace datastore
 		{
 			// Resize the vector to hold the number of records
 			size_t count = get_count_of_primary_adj_open_prices(start_date, end_date);
-			index_adj_open_values.resize(count);
+			index_adj_open_values.clear();
+			index_adj_open_values.reserve(count);
 
 			// Construct SQL statement with filters
 			int sz = std::snprintf(nullptr, 0, fmt_str_load_adj_opening_prices, start_date.c_str(), end_date.c_str(), domain::argmap::financial_index.c_str());
