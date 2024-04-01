@@ -905,7 +905,8 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	void FinancialData::load_index_adj_open_prices(const std::string& start_date, const std::string& end_date)
+	void FinancialData::load_index_adj_open_prices
+	(const std::string& start_date, const std::string& end_date)
 	{
 		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{

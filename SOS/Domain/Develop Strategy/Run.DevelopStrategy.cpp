@@ -941,6 +941,21 @@ namespace domain
 							pushGP::globals::effort_matrix.store(-1, training_case_window_start, strategy_index, 1000);
 
 							// Add return from a buy-and-hold stratergy.
+							{
+								std::ostringstream ss;
+								ss << ",method=develop_strategy.run"
+									<< ",diagnostic_level=1"
+									<< ",training_case_window_start=" << training_case_window_start
+									<< ",strategy=" << strategy_index
+									<< ",domain::argmap::population_size" << domain::argmap::population_size
+									<< ",number_of_training_cases=" << number_of_training_cases
+									<< ",number_of_passing_training_cases=" << number_of_passing_training_cases
+									<< ",score=" << score
+									<< ",stock_data_index=" << stock_data_index
+									<< ",message=Add_return_from_a_buy-and-hold_stratergy";
+								Utilities::logline_threadsafe << ss.str();
+							}
+
 							stock_data_index = training_case_window_start;
 							account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Primary, BrokerAccount::seed_money);
 							account.execute(stock_data_index, 0x01);
@@ -948,6 +963,21 @@ namespace domain
 							pushGP::globals::baseline_matrix.store(-1, training_case_window_start, strategy_index, buy_and_hold_score);
 
 							// Add return from S&P500 using a buy-and-hold stratergy.  This is used to calculate the Sharpe ratio.
+							{
+								std::ostringstream ss;
+								ss << ",method=develop_strategy.run"
+									<< ",diagnostic_level=1"
+									<< ",training_case_window_start=" << training_case_window_start
+									<< ",strategy=" << strategy_index
+									<< ",domain::argmap::population_size" << domain::argmap::population_size
+									<< ",number_of_training_cases=" << number_of_training_cases
+									<< ",number_of_passing_training_cases=" << number_of_passing_training_cases
+									<< ",score=" << score
+									<< ",stock_data_index=" << stock_data_index
+									<< ",message=Add_return_from_S&P500_using_a_buy-and-hold_stratergy";
+								Utilities::logline_threadsafe << ss.str();
+							}
+
 							stock_data_index = training_case_window_start;
 							account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Benchmark, BrokerAccount::seed_money);
 							account.execute(stock_data_index, 0x01);
