@@ -981,7 +981,7 @@ namespace domain
 							stock_data_index = training_case_window_start;
 							account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Benchmark, BrokerAccount::seed_money);
 							account.execute(stock_data_index, 0x01);
-							double benchmark_score = account.unrealized_gain(stock_data_index + number_of_training_cases - 1);
+							double benchmark_score = account.unrealized_gain(stock_data_index + datastore::financial_data.get_index_stock_count() - 1);
 							average_benchmark_score += benchmark_score;
 							pushGP::globals::benchmark_matrix.store(-1, training_case_window_start, strategy_index, benchmark_score);
 
@@ -1002,7 +1002,7 @@ namespace domain
 							}
 						}
 
-						// calculate the Sortino ratio
+						// calculate the Sortino ratio (check if we should be using the number_of_training_cases here).
 						average_score = sum_of_score / (double)number_of_training_cases;
 						average_benchmark_score = average_benchmark_score / (double)number_of_training_cases;
 
