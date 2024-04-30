@@ -263,27 +263,6 @@ namespace domain
 					}
 				}
 
-				//{
-				//	std::ostringstream ss;
-				//	ss << " ";
-				//	Utilities::logline_threadsafe << ss.str();
-				//	Utilities::logline_threadsafe << ss.str(); 
-				//}
-
-				//{std::ostringstream ss; ss << "Selection distribution"; Utilities::logline_threadsafe << ss.str(); }
-				//{std::ostringstream ss; ss << "  Alternate = " << (double)state_count[pushGP::SimulatedAnnealing_States::alternate] / (double)argmap::population_size * 100.0; Utilities::logline_threadsafe << ss.str(); }
-				//{std::ostringstream ss; ss << "  Alternate_elite = " << (double)state_count[pushGP::SimulatedAnnealing_States::alternate_elite] / (double)argmap::population_size * 100.0; Utilities::logline_threadsafe << ss.str(); }
-				//{std::ostringstream ss; ss << "  Cloan = " << (double)state_count[pushGP::SimulatedAnnealing_States::cloan] / (double)argmap::population_size * 100.0; Utilities::logline_threadsafe << ss.str(); }
-				//{std::ostringstream ss; ss << "  Mutate = " << (double)state_count[pushGP::SimulatedAnnealing_States::mutate] / (double)argmap::population_size * 100.0; Utilities::logline_threadsafe << ss.str(); }
-				//{std::ostringstream ss; ss << "  Regenerate = " << (double)state_count[pushGP::SimulatedAnnealing_States::regenerate] / (double)argmap::population_size * 100.0; Utilities::logline_threadsafe << ss.str(); }
-
-				//{
-				//	std::ostringstream ss;
-				//	ss << " ";
-				//	Utilities::logline_threadsafe << ss.str();
-				//	Utilities::logline_threadsafe << ss.str();
-				//}
-
 				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 				{
 					std::ostringstream ss;
@@ -299,7 +278,6 @@ namespace domain
 				}
 
 				// Keep the best individuals for each test case
-				//std::ostringstream ss; ss  << ".";
 				if (!_include_best_individual_in_breeding_pool)
 				{
 					for (unsigned long training_case = 0; training_case < _number_of_training_cases; training_case++)
@@ -356,7 +334,6 @@ namespace domain
 					}
 				}
 
-				//{std::ostringstream ss; ss; Utilities::logline_threadsafe << ss.str(); }
 				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 				{
 					std::ostringstream ss;
@@ -425,16 +402,12 @@ namespace domain
 				Utilities::logline_threadsafe << ss.str();
 			}
 
-			//order_matrix.clearOrderMatrix();
-
 			order_matrix.initialize(domain::argmap::population_size, datastore::financial_data.get_count());
 
 			for (size_t training_case_index = 0; training_case_index < datastore::financial_data.get_number_of_cases(); training_case_index++)
 			{
 				for (size_t stratergy_index = 0; stratergy_index < domain::argmap::population_size; stratergy_index++)
 				{
-					//{std::ostringstream ss; ss << "Run strategy " << stratergy_index << " on case " << training_case_index << " is_generated " << order_matrix.is_generated(stratergy_index, training_case_index); }
-
 					unsigned long order = 0;
 					unsigned long score = 0;
 
@@ -475,7 +448,6 @@ namespace domain
 			}
 		}
 
-		//Utilities::Threadpool pool(8);
 		Utilities::Threadpool pool(argmap::max_threads);
 
 		void compute_training_errors_thread_safe(Plush::Environment& _env,
@@ -491,8 +463,6 @@ namespace domain
 					<< ",message=Enter";
 				Utilities::logline_threadsafe << ss.str();
 			}
-
-			//order_matrix.clearOrderMatrix();
 
 			size_t data_size = datastore::financial_data.get_count();
 			size_t number_of_cases = datastore::financial_data.get_number_of_cases();
@@ -606,9 +576,6 @@ namespace domain
 
 			if (dirty)
 			{
-				//order_matrix.clearOrderMatrix();
-				//order_matrix.save(datastore::financial_data.get_count(), domain::argmap::population_size);
-
 				if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
 				{
 					std::ostringstream ss;
@@ -674,7 +641,7 @@ namespace domain
 				double score = 0.0;
 				double sortino_ratio = 0.0;
 
-				static Plush::Environment global_env;	// Needs to be statc because it consumes too much memory to be allocated on the stack.
+				static Plush::Environment global_env;	// Needs to be static because it consumes too much memory to be allocated on the stack.
 				pushGP::SimulatedAnnealing sa;
 				unsigned int agents_created = 0;
 				size_t number_of_training_cases = 0;
@@ -721,31 +688,7 @@ namespace domain
 					cool_down_count = argmap::cool_down_period;
 					stalled_count = argmap::stalled_count_trigger;
 					include_best_individual_in_breeding_pool = true;
-					//clear_individuals_table();
 				}
-
-				// Load data
-				//datastore::financial_data[datastore::FinancialData::FinancialInstrumentType::Primary].load
-				//(
-				//	datastore::FinancialData::FinancialInstrumentType::Primary, 
-				//	domain::argmap::financial_data_start_date,
-				//	domain::argmap::financial_data_end_date
-				//);
-				//datastore::financial_data[datastore::FinancialData::FinancialInstrumentType::Benchmark].load
-				//(
-				//	datastore::FinancialData::FinancialInstrumentType::Benchmark, 
-				//	domain::argmap::financial_data_start_date,
-				//	domain::argmap::financial_data_end_date
-				//);
-
-				// ToDo:
-				// To load all data records would required more memroy than is available on the machine.  
-				// Need to redesign the alrorithm to load only the data as needed
-				//datastore::financial_data.load_primary_closing_prices
-				//(
-				//	domain::argmap::financial_data_start_date,
-				//	domain::argmap::financial_data_end_date
-				//);
 
 				// Load population.  Create more if not enough loaded.
 				if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
@@ -914,10 +857,10 @@ namespace domain
 
 								account.execute(stock_data_index, order);
 
-								stock_data_index++;
+								stock_data_index++;	// Quicker than stock_data_index = training_case_window_start + training_case_window_offset;
 							}
 
-							if ((stock_data_index == 0) || (stock_data_index > domain::argmap::training_case_length))
+							if ((stock_data_index == training_case_window_start) || (stock_data_index > training_case_window_start + domain::argmap::training_case_length))
 							{
 								std::ostringstream ss;
 								ss << ",method=develop_strategy.run"
@@ -956,10 +899,9 @@ namespace domain
 								Utilities::logline_threadsafe << ss.str();
 							}
 
-							stock_data_index = training_case_window_start;
 							account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Primary, BrokerAccount::seed_money);
-							account.execute(stock_data_index, 0x01);
-							double buy_and_hold_score = account.unrealized_gain(stock_data_index + number_of_training_cases - 1);
+							account.execute(training_case_window_start, 0x01);
+							double buy_and_hold_score = account.unrealized_gain(training_case_window_start + domain::argmap::training_case_length - 1);
 							pushGP::globals::baseline_matrix.store(-1, training_case_window_start, strategy_index, buy_and_hold_score);
 
 							// Add return from S&P500 using a buy-and-hold stratergy.  This is used to calculate the Sharpe ratio.
@@ -969,19 +911,19 @@ namespace domain
 									<< ",diagnostic_level=1"
 									<< ",training_case_window_start=" << training_case_window_start
 									<< ",strategy=" << strategy_index
-									<< ",domain::argmap::population_size" << domain::argmap::population_size
+									<< ",domain::argmap::population_size=" << domain::argmap::population_size
+									<< ",domain::argmap::training_case_length=" << domain::argmap::training_case_length
 									<< ",number_of_training_cases=" << number_of_training_cases
 									<< ",number_of_passing_training_cases=" << number_of_passing_training_cases
 									<< ",score=" << score
-									<< ",stock_data_index=" << stock_data_index
 									<< ",message=Add_return_from_S&P500_using_a_buy-and-hold_stratergy";
 								Utilities::logline_threadsafe << ss.str();
 							}
 
 							stock_data_index = training_case_window_start;
 							account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Benchmark, BrokerAccount::seed_money);
-							account.execute(stock_data_index, 0x01);
-							double benchmark_score = account.unrealized_gain(stock_data_index + datastore::financial_data.get_index_stock_count() - 1);
+							account.execute(training_case_window_start, 0x01);
+							double benchmark_score = account.unrealized_gain(training_case_window_start + domain::argmap::training_case_length - 1);
 							average_benchmark_score += benchmark_score;
 							pushGP::globals::benchmark_matrix.store(-1, training_case_window_start, strategy_index, benchmark_score);
 
