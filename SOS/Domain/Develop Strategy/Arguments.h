@@ -23,7 +23,7 @@ namespace domain
 		// Specify which financial instruments to target
 		const std::string financial_instrument = "AAPL";
 		const std::string financial_index = "FXAIX";
-		const std::string financial_data_start_date = "1981-01-02";
+		const std::string financial_data_start_date = "2012-01-02";
 		const std::string financial_data_end_date = "2021-12-31";
 
 		//	Select which algorithm to use

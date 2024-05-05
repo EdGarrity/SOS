@@ -890,7 +890,7 @@ namespace domain
 									<< ",diagnostic_level=1"
 									<< ",training_case_window_start=" << training_case_window_start
 									<< ",strategy=" << strategy_index
-									<< ",domain::argmap::population_size" << domain::argmap::population_size
+									<< ",domain::argmap::population_size=" << domain::argmap::population_size
 									<< ",number_of_training_cases=" << number_of_training_cases
 									<< ",number_of_passing_training_cases=" << number_of_passing_training_cases
 									<< ",score=" << score
