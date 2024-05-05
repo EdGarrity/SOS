@@ -42,7 +42,7 @@ namespace domain
 			unsigned long effort = 0;
 			double trading_instruction = 0;
 
-			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_1)
 			{
 				std::ostringstream ss;
 				ss << ",case=" << case_index
@@ -62,7 +62,7 @@ namespace domain
 					trading_instruction = env.output[0];
 			}
 
-			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_1)
 			{
 				std::ostringstream ss;
 				ss << ",case=" << case_index
@@ -99,7 +99,7 @@ namespace domain
 			unsigned int strategy_index,
 			unsigned long case_index)
 		{
-			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_1)
 			{
 				std::ostringstream ss;
 				ss << ",stratergy=" << strategy_index
@@ -117,7 +117,7 @@ namespace domain
 
 			auto results = run_program(env, program, case_index, trace);
 
-			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_1)
 			{
 				std::ostringstream ss;
 				ss << ",stratergy=" << strategy_index

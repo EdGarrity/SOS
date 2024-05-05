@@ -455,7 +455,7 @@ namespace domain
 				unsigned int stratergy_index,
 				unsigned long case_index)> _run_strategy_threadsafe)
 		{
-			if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
+			if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 			{
 				std::ostringstream ss;
 				ss << ",method=RunProgram.compute_training_errors_thread_safe"
@@ -483,7 +483,7 @@ namespace domain
 			}
 
 			std::latch work_done(domain::argmap::population_size * number_of_cases);	// Check that we are allocating sufficient work tokens.
-			if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
+			if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 			{
 				std::ostringstream ss;
 				ss << ",domain::argmap::population_size=" << domain::argmap::population_size
@@ -505,7 +505,7 @@ namespace domain
 				{
 					if (!order_matrix.is_generated(strategy_index, training_case_index))
 					{
-						if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
+						if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 						{
 							std::ostringstream ss;
 							ss << ",stratergy=" << strategy_index
@@ -524,7 +524,7 @@ namespace domain
 					}
 					else
 					{
-						if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
+						if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 						{
 							std::ostringstream ss;
 							ss << ",stratergy=" << strategy_index
@@ -539,7 +539,7 @@ namespace domain
 						}
 
 						work_done.count_down();
-						if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
+						if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 						{
 							std::ostringstream ss;
 							ss << ",domain::argmap::population_size=" << domain::argmap::population_size
@@ -554,7 +554,7 @@ namespace domain
 				}
 			}
 
-			if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
+			if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 			{
 				std::ostringstream ss;
 				ss << ",method=RunProgram.compute_training_errors_thread_safe"
@@ -565,7 +565,7 @@ namespace domain
 
 			pool.wait_for_all_threads_to_complete(work_done);
 
-			if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
+			if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 			{
 				std::ostringstream ss;
 				ss << ",method=RunProgram.compute_training_errors_thread_safe"
@@ -576,7 +576,7 @@ namespace domain
 
 			if (dirty)
 			{
-				if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
+				if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 				{
 					std::ostringstream ss;
 					ss << ",method=RunProgram.compute_training_errors_thread_safe"
@@ -587,7 +587,7 @@ namespace domain
 					Utilities::logline_threadsafe << ss.str();
 				}
 			}
-			else if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
+			else if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 			{
 				std::ostringstream ss;
 				ss << ",method=RunProgram.compute_training_errors_thread_safe"

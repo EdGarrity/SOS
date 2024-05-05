@@ -16,7 +16,7 @@ namespace domain
 	{
 		int env_index = 99;
 
-		if (argmap::diagnostic_level >= argmap::diagnostic_level_3)
+		if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 		{
 			std::ostringstream ss;
 			ss << ",env_index = " << env_index
@@ -32,7 +32,7 @@ namespace domain
 		co_await m_pool.schedule();
 
 		// Run the stratergy and case specified in the work order, in a seperate thread.
-		if (argmap::diagnostic_level >= argmap::diagnostic_level_3)
+		if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 		{
 			std::ostringstream ss;
 			ss << ",env_index = " << env_index
@@ -56,7 +56,7 @@ namespace domain
 				workorder_form.get_training_case_index(),
 				std::get<0>(results));
 			work_done.count_down();
-			if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
+			if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 			{
 				std::ostringstream ss;
 				ss << ",diagnostic_level=2"
