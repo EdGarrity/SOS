@@ -7,6 +7,15 @@ namespace domain
     {
         double price = 0;
 
+        if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+        {
+            std::ostringstream ss;
+            ss << ",method=BrokerAccount.buy"
+                << ",index=" << index
+                << ",message=get_buy_stock_price";
+            Utilities::logline_threadsafe << ss.str();
+        }
+
         if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary)
             price = datastore::financial_data.get_primary_stock_price(index);
         else
@@ -41,6 +50,15 @@ namespace domain
     {
         double price = 0;
 
+        if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+        {
+            std::ostringstream ss;
+            ss << ",method=BrokerAccount.sell"
+                << ",index=" << index
+                << ",message=get_sell_stock_price";
+            Utilities::logline_threadsafe << ss.str();
+        }
+
         if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary)
             price = datastore::financial_data.get_primary_stock_price(index);
         else
@@ -63,6 +81,16 @@ namespace domain
             buy(index);
             {
                 double price = 0;
+
+                if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+                {
+                    std::ostringstream ss;
+                    ss << ",method=BrokerAccount.trace_execute"
+                        << ",index=" << index
+						<< ",order_bitmask=" << order_bitmask
+                        << ",message=get_buy_stock_price";
+                    Utilities::logline_threadsafe << ss.str();
+                }
 
                 if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary)
                     price = datastore::financial_data.get_primary_stock_price(index);
@@ -98,6 +126,16 @@ namespace domain
             {
                 double price = 0;
 
+                if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+                {
+                    std::ostringstream ss;
+                    ss << ",method=BrokerAccount.trace_execute"
+                        << ",index=" << index
+                        << ",order_bitmask=" << order_bitmask
+                        << ",message=get_sell_stock_price";
+                    Utilities::logline_threadsafe << ss.str();
+                }
+                
                 if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary)
                     price = datastore::financial_data.get_primary_stock_price(index);
                 else
@@ -153,6 +191,15 @@ namespace domain
     double BrokerAccount::unrealized_gain(size_t index) const
     {
         double price = 0;
+
+        if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+        {
+            std::ostringstream ss;
+            ss << ",method=BrokerAccount.unrealized_gain"
+                << ",index=" << index
+                << ",message=get_unrealized_gain_stock_price";
+            Utilities::logline_threadsafe << ss.str();
+        }
 
         if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary)
             price = datastore::financial_data.get_primary_stock_price(index);

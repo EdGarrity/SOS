@@ -1,6 +1,8 @@
 #pragma once
 
 #include <vector>
+#include <algorithm>
+#include <string>
 #include "..\Utilities\ThreeDimensionalArray.h"
 #include "DatabaseConnection.h"
 #include "..\Domain\Arguments.h"
@@ -78,7 +80,16 @@ namespace datastore
 		double get_data(const size_t index, const size_t input_case);
 		size_t get_count() const { return primary_adj_open_values.size(); }
 		size_t get_index_stock_count() const { return index_adj_open_values.size(); }
-		size_t get_number_of_cases() const { return data_window_records.size(); }
+
+		size_t get_number_of_cases() const 
+		{ 
+			return 
+				primary_adj_open_values.size() < data_window_records.size() 
+				? (primary_adj_open_values.size() - domain::argmap::training_case_length - 1)
+				: (data_window_records.size() - domain::argmap::training_case_length - 1);
+		};
+		size_t get_data_window_records_size() const { return data_window_records.size(); }
+
 		double get_primary_stock_price(size_t index);
 		double get_index_stock_price(size_t index);
 	};

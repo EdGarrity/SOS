@@ -851,7 +851,9 @@ namespace domain
 
 							BrokerAccount account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Primary,BrokerAccount::seed_money);
 
-							for (size_t training_case_window_offset = 0; training_case_window_offset < domain::argmap::training_case_length; training_case_window_offset++)
+							for (size_t training_case_window_offset = 0; 
+								(training_case_window_offset < domain::argmap::training_case_length) && (stock_data_index < datastore::financial_data.get_count()); 
+								training_case_window_offset++)
 							{
 								long order = order_matrix.load(strategy_index, stock_data_index);
 
@@ -895,6 +897,11 @@ namespace domain
 									<< ",number_of_passing_training_cases=" << number_of_passing_training_cases
 									<< ",score=" << score
 									<< ",stock_data_index=" << stock_data_index
+									<< ",datastore::financial_data.get_number_of_cases()=" << datastore::financial_data.get_number_of_cases()
+									<< ",primary_adj_open_values.size()=" << datastore::financial_data.get_count()
+									<< ",domain::argmap::training_case_length=" << domain::argmap::training_case_length
+									<< ",data_window_records.size=" << datastore::financial_data.get_data_window_records_size()
+									<< ",index=" << training_case_window_start + domain::argmap::training_case_length - 1
 									<< ",message=Add_return_from_a_buy-and-hold_stratergy";
 								Utilities::logline_threadsafe << ss.str();
 							}
