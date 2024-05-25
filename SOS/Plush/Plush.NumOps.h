@@ -252,7 +252,7 @@ namespace Plush
 
 		if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
 		{
-			value = datastore::financial_data.get_data(index, _env.input_case);
+			value = datastore::financial_data.get_training_data(index, _env.input_case);
 
 			if (value > 0)
 			{

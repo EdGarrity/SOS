@@ -402,9 +402,9 @@ namespace domain
 				Utilities::logline_threadsafe << ss.str();
 			}
 
-			order_matrix.initialize(domain::argmap::population_size, datastore::financial_data.get_count());
+			order_matrix.initialize(domain::argmap::population_size, datastore::financial_data.get_training_data_count());
 
-			for (size_t training_case_index = 0; training_case_index < datastore::financial_data.get_number_of_cases(); training_case_index++)
+			for (size_t training_case_index = 0; training_case_index < datastore::financial_data.get_number_of_training_cases(); training_case_index++)
 			{
 				for (size_t stratergy_index = 0; stratergy_index < domain::argmap::population_size; stratergy_index++)
 				{
@@ -423,7 +423,7 @@ namespace domain
 							std::ostringstream ss;
 							ss << ",stratergy=" << stratergy_index
 								<< ",case=" << training_case_index
-								<< ",number_of_cases" << datastore::financial_data.get_number_of_cases()
+								<< ",number_of_cases" << datastore::financial_data.get_number_of_training_cases()
 								<< ",diagnostic_level=9"
 								<< "order=" << order
 								<< ",score=" << score
@@ -438,7 +438,7 @@ namespace domain
 						std::ostringstream ss;
 						ss << ",stratergy=" << stratergy_index
 							<< ",case=" << training_case_index
-							<< ",number_of_cases" << datastore::financial_data.get_number_of_cases()
+							<< ",number_of_cases" << datastore::financial_data.get_number_of_training_cases()
 							<< ",diagnostic_level=9"
 							<< ",method=RunProgram.compute_training_errors"
 							<< ",message=Order_already_processed";
@@ -464,8 +464,8 @@ namespace domain
 				Utilities::logline_threadsafe << ss.str();
 			}
 
-			size_t data_size = datastore::financial_data.get_count();
-			size_t number_of_cases = datastore::financial_data.get_number_of_cases();
+			size_t data_size = datastore::financial_data.get_training_data_count();
+			size_t number_of_cases = datastore::financial_data.get_number_of_training_cases();
 
 			std::ptrdiff_t expected_latches = domain::argmap::population_size * data_size;
 
@@ -581,7 +581,7 @@ namespace domain
 					std::ostringstream ss;
 					ss << ",method=RunProgram.compute_training_errors_thread_safe"
 						<< ",diagnostic_level=2"
-						<< ",training_case_indexes=" << datastore::financial_data.get_count()
+						<< ",training_case_indexes=" << datastore::financial_data.get_training_data_count()
 						<< ",stratergy_indexes=" << domain::argmap::population_size
 						<< ",message=Orders_Saved_to_DB";
 					Utilities::logline_threadsafe << ss.str();
@@ -592,7 +592,7 @@ namespace domain
 				std::ostringstream ss;
 				ss << ",method=RunProgram.compute_training_errors_thread_safe"
 					<< ",diagnostic_level=2"
-					<< ",training_case_indexes=" << datastore::financial_data.get_count()
+					<< ",training_case_indexes=" << datastore::financial_data.get_training_data_count()
 					<< ",stratergy_indexes=" << domain::argmap::population_size
 					<< ",message=No_Orders_Saved_to_DB";
 				Utilities::logline_threadsafe << ss.str();
@@ -812,7 +812,7 @@ namespace domain
 					//// ***************************
 					//// *** Evaluate strategies ***
 					//// ***************************
-					number_of_training_cases = datastore::financial_data.get_number_of_cases();		//datastore::financial_data.get_count() - domain::argmap::training_case_length + 1;
+					number_of_training_cases = datastore::financial_data.get_number_of_training_cases();		//datastore::financial_data.get_count() - domain::argmap::training_case_length + 1;
 					pushGP::globals::score_matrix.resize(number_of_training_cases, domain::argmap::population_size);
 					pushGP::globals::effort_matrix.resize(number_of_training_cases, domain::argmap::population_size);
 					pushGP::globals::baseline_matrix.resize(number_of_training_cases, domain::argmap::population_size);
@@ -849,10 +849,10 @@ namespace domain
 
 							size_t stock_data_index = training_case_window_start;
 
-							BrokerAccount account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Primary,BrokerAccount::seed_money);
+							BrokerAccount account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Primary_Training,BrokerAccount::seed_money);
 
 							for (size_t training_case_window_offset = 0; 
-								(training_case_window_offset < domain::argmap::training_case_length) && (stock_data_index < datastore::financial_data.get_count()); 
+								(training_case_window_offset < domain::argmap::training_case_length) && (stock_data_index < datastore::financial_data.get_training_data_count()); 
 								training_case_window_offset++)
 							{
 								long order = order_matrix.load(strategy_index, stock_data_index);
@@ -897,8 +897,8 @@ namespace domain
 									<< ",number_of_passing_training_cases=" << number_of_passing_training_cases
 									<< ",score=" << score
 									<< ",stock_data_index=" << stock_data_index
-									<< ",datastore::financial_data.get_number_of_cases()=" << datastore::financial_data.get_number_of_cases()
-									<< ",primary_adj_open_values.size()=" << datastore::financial_data.get_count()
+									<< ",datastore::financial_data.get_number_of_cases()=" << datastore::financial_data.get_number_of_training_cases()
+									<< ",primary_adj_open_values.size()=" << datastore::financial_data.get_training_data_count()
 									<< ",domain::argmap::training_case_length=" << domain::argmap::training_case_length
 									<< ",data_window_records.size=" << datastore::financial_data.get_data_window_records_size()
 									<< ",index=" << training_case_window_start + domain::argmap::training_case_length - 1
@@ -906,7 +906,7 @@ namespace domain
 								Utilities::logline_threadsafe << ss.str();
 							}
 
-							account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Primary, BrokerAccount::seed_money);
+							account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Primary_Training, BrokerAccount::seed_money);
 							account.execute(training_case_window_start, 0x01);
 							double buy_and_hold_score = account.unrealized_gain(training_case_window_start + domain::argmap::training_case_length - 1);
 							pushGP::globals::baseline_matrix.store(-1, training_case_window_start, strategy_index, buy_and_hold_score);
@@ -1030,9 +1030,9 @@ namespace domain
 					size_t strategy_index = best_strategy;
 					size_t stock_data_index = 0;
 
-					BrokerAccount account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Primary, BrokerAccount::seed_money);
+					BrokerAccount account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Primary_Training, BrokerAccount::seed_money);
 
-					for (size_t n = 0; n < datastore::financial_data.get_count(); n++)
+					for (size_t n = 0; n < datastore::financial_data.get_training_data_count(); n++)
 					{
 						long order = order_matrix.load(strategy_index, stock_data_index);
 
@@ -1049,7 +1049,7 @@ namespace domain
 						ss << ",method=develop_strategy.run"
 							<< ",diagnostic_level=1"
 							<< ",strategy=" << strategy_index
-							<< ",datastore::financial_data.get_count()=" << datastore::financial_data.get_count()
+							<< ",datastore::financial_data.get_count()=" << datastore::financial_data.get_training_data_count()
 							<< ",test_case_score=" << test_case_score
 							<< ",message=check";
 						Utilities::logline_threadsafe << ss.str();

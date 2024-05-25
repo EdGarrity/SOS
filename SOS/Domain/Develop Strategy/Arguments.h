@@ -18,13 +18,15 @@ namespace domain
 		const int diagnostic_level_9 = 9;
 
 		// Diagnostic Level
-		const int diagnostic_level = diagnostic_level_9;
+		const int diagnostic_level = diagnostic_level_1;
 
 		// Specify which financial instruments to target
 		const std::string financial_instrument = "AAPL";
 		const std::string financial_index = "FXAIX";
-		const std::string financial_data_start_date = "2012-01-02";
-		const std::string financial_data_end_date = "2021-12-31";
+		const std::string financial_training_data_start_date = "2012-01-02";
+		const std::string financial_training_data_end_date = "2020-12-31";
+		const std::string financial_test_data_start_date = "2021-01-02";
+		const std::string financial_test_data_end_date = "2021-12-31";
 
 		//	Select which algorithm to use
 		enum class AlgorithmSelection { learn_from_examples, strategy_development };
@@ -39,6 +41,7 @@ namespace domain
 		static constexpr double training_sample_ratio = 0.01;
 		static constexpr double training_case_sample_percent = 1.0;
 		static constexpr size_t size_of_training_samples = ((double)number_of_records * training_sample_ratio);
+		static constexpr size_t size_of_test_samples = (double)512;
 
 		// Default maximum size of the stack buffer.  Must be greater than max_points
 		const unsigned long maximum_stack_size = 2000;

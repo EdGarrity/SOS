@@ -18,9 +18,9 @@ namespace datastore
 	{
 		financial_data_record_size = get_record_size();
 
-		load(domain::argmap::financial_data_start_date, domain::argmap::financial_data_end_date);
-		load_primary_adj_open_prices(domain::argmap::financial_data_start_date, domain::argmap::financial_data_end_date);
-		load_index_adj_open_prices(domain::argmap::financial_data_start_date, domain::argmap::financial_data_end_date);
+		load(domain::argmap::financial_training_data_start_date, domain::argmap::financial_training_data_end_date, FinancialInstrumentType::Primary_Training);
+		load_primary_training_adj_open_prices(domain::argmap::financial_training_data_start_date, domain::argmap::financial_training_data_end_date);
+		load_index_adj_open_prices(domain::argmap::financial_training_data_start_date, domain::argmap::financial_training_data_end_date);
 	}
 
 	// Purpose: 
@@ -258,7 +258,7 @@ namespace datastore
 	//	}
 	//}
 
-	void FinancialData::load(const std::string& start_date, const std::string& end_date)
+	void FinancialData::load(const std::string& start_date, const std::string& end_date, FinancialInstrumentType financial_instrument_type)
 	{
 		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
@@ -267,6 +267,7 @@ namespace datastore
 				<< ",diagnostic_level=9"
 				<< ",start_date=" << start_date
 				<< ",end_date=" << end_date
+				<< ",financial_instrument_type" << financial_instrument_type
 				<< ",message=loading_all_case_data";
 			Utilities::logline_threadsafe << ss.str();
 		}
@@ -275,91 +276,185 @@ namespace datastore
 
 		try
 		{
-			// Construct SQL statement with date range filters
-			int sz = std::snprintf(nullptr, 0, fmt_str_load_all_test_data, start_date.c_str(), end_date.c_str());
-			std::vector<char> buf(sz + 1); // note +1 for null terminator
-			std::snprintf(&buf[0], buf.size(), fmt_str_load_all_test_data, start_date.c_str(), end_date.c_str());
-			std::string sqlstmt_load_case_data(buf.begin(), buf.end() - 1); // omit the null terminator
-
-			sqlcmd_get_case_data = new database::SQLCommand(database_connection.get_connection(), sqlstmt_load_case_data);
-
-			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			if (financial_instrument_type == FinancialInstrumentType::Primary_Test)
 			{
-				std::ostringstream ss;
-				ss << ",method=FinancialData.load"
-					<< ",diagnostic_level=9"
-					<< ",start_date=" << start_date
-					<< ",end_date=" << end_date
-					<< ",record_count=" << data_window_records.size()
-					<< ",sqlstmt_load_case_data=" << sqlstmt_load_case_data
-					<< ",message=executing_sql_command";
-				Utilities::logline_threadsafe << ss.str();
-			}
+				// Construct SQL statement with date range filters
+				int sz = std::snprintf(nullptr, 0, fmt_str_load_all_test_data, start_date.c_str(), end_date.c_str());
+				std::vector<char> buf(sz + 1); // note +1 for null terminator
+				std::snprintf(&buf[0], buf.size(), fmt_str_load_all_test_data, start_date.c_str(), end_date.c_str());
+				std::string sqlstmt_load_case_data(buf.begin(), buf.end() - 1); // omit the null terminator
 
-			sqlcmd_get_case_data->execute();
+				sqlcmd_get_case_data = new database::SQLCommand(database_connection.get_connection(), sqlstmt_load_case_data);
 
-			size_t first_record_index = 0;
-			size_t last_record_index = 0;
-			std::string last_written_date = "";
-
-			bool dirty = false;
-
-			size_t data_records_cursor = 0;
-
-			while (sqlcmd_get_case_data->fetch_next())
-			{
-				if (Utilities::random_double() < domain::argmap::training_sample_ratio)
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 				{
-					if (data_records_cursor < domain::argmap::size_of_training_samples)
-					{
-						data_records[data_records_cursor] = sqlcmd_get_case_data->get_field_as_double(4);
+					std::ostringstream ss;
+					ss << ",method=FinancialData.load"
+						<< ",diagnostic_level=9"
+						<< ",start_date=" << start_date
+						<< ",end_date=" << end_date
+						<< ",test_data_window_records.size=" << test_data_window_records.size()
+						<< ",sqlstmt_load_case_data=" << sqlstmt_load_case_data
+						<< ",message=executing_sql_command";
+					Utilities::logline_threadsafe << ss.str();
+				}
 
-						if (last_written_date != sqlcmd_get_case_data->get_field_as_string(2))
+				sqlcmd_get_case_data->execute();
+
+				size_t first_record_index = 0;
+				size_t last_record_index = 0;
+				std::string last_written_date = "";
+
+				bool dirty = false;
+
+				size_t data_records_cursor = 0;
+
+				while (sqlcmd_get_case_data->fetch_next())
+				{
+					//if (Utilities::random_double() < domain::argmap::training_sample_ratio)
+					//{
+						if (data_records_cursor < domain::argmap::size_of_test_samples)
 						{
-							if (last_written_date != "")
-								data_window_records.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
+							test_data_records[data_records_cursor] = sqlcmd_get_case_data->get_field_as_double(4);
 
-							last_written_date = sqlcmd_get_case_data->get_field_as_string(2);
-							first_record_index = last_record_index;
-							dirty = true;
+							if (last_written_date != sqlcmd_get_case_data->get_field_as_string(2))
+							{
+								if (last_written_date != "")
+									test_data_window_records.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
+
+								last_written_date = sqlcmd_get_case_data->get_field_as_string(2);
+								first_record_index = last_record_index;
+								dirty = true;
+							}
+
+							last_record_index++;
 						}
 
-						last_record_index++;
-					}
-
-					data_records_cursor++;
+						data_records_cursor++;
+					//}
 				}
+
+				if (dirty)
+					test_data_window_records.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
+
+				delete sqlcmd_get_case_data;
+
+				if (data_records_cursor >= domain::argmap::size_of_test_samples)
+				{
+					std::ostringstream ss;
+					ss << ",method=FinancialData.load"
+						<< ",diagnostic_level=9"
+						<< ",start_date=" << start_date
+						<< ",end_date=" << end_date
+						<< ",test_data_window_records.size=" << test_data_window_records.size()
+						<< ",table_size=" << data_records_cursor
+						<< ",message=Error: data_records overflow";
+					Utilities::logline_threadsafe << ss.str();
+				}
+
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				{
+					std::ostringstream ss;
+					ss << ",method=FinancialData.load"
+						<< ",diagnostic_level=9"
+						<< ",start_date=" << start_date
+						<< ",end_date=" << end_date
+						<< ",test_data_window_records.size=" << test_data_window_records.size()
+						<< ",table_size=" << data_records_cursor
+						<< ",message=case_data_loaded";
+					Utilities::logline_threadsafe << ss.str();
+				}
+
 			}
 
-			if (dirty)
-				data_window_records.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
-
-			delete sqlcmd_get_case_data;
-
-			if (data_records_cursor >= domain::argmap::size_of_training_samples)
+			else
 			{
-				std::ostringstream ss;
-				ss << ",method=FinancialData.load"
-					<< ",diagnostic_level=9"
-					<< ",start_date=" << start_date
-					<< ",end_date=" << end_date
-					<< ",record_count=" << data_window_records.size()
-					<< ",table_size=" << data_records_cursor
-					<< ",message=Error: data_records overflow";
-				Utilities::logline_threadsafe << ss.str();
-			}
+				// Construct SQL statement with date range filters
+				int sz = std::snprintf(nullptr, 0, fmt_str_load_all_test_data, start_date.c_str(), end_date.c_str());
+				std::vector<char> buf(sz + 1); // note +1 for null terminator
+				std::snprintf(&buf[0], buf.size(), fmt_str_load_all_test_data, start_date.c_str(), end_date.c_str());
+				std::string sqlstmt_load_case_data(buf.begin(), buf.end() - 1); // omit the null terminator
 
-			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
-			{
-				std::ostringstream ss;
-				ss << ",method=FinancialData.load"
-					<< ",diagnostic_level=9"
-					<< ",start_date=" << start_date
-					<< ",end_date=" << end_date
-					<< ",record_count=" << data_window_records.size()
-					<< ",table_size=" << data_records_cursor
-					<< ",message=case_data_loaded";
-				Utilities::logline_threadsafe << ss.str();
+				sqlcmd_get_case_data = new database::SQLCommand(database_connection.get_connection(), sqlstmt_load_case_data);
+
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				{
+					std::ostringstream ss;
+					ss << ",method=FinancialData.load"
+						<< ",diagnostic_level=9"
+						<< ",start_date=" << start_date
+						<< ",end_date=" << end_date
+						<< ",training_data_window_records.size=" << training_data_window_records.size()
+						<< ",sqlstmt_load_case_data=" << sqlstmt_load_case_data
+						<< ",message=executing_sql_command";
+					Utilities::logline_threadsafe << ss.str();
+				}
+
+				sqlcmd_get_case_data->execute();
+
+				size_t first_record_index = 0;
+				size_t last_record_index = 0;
+				std::string last_written_date = "";
+
+				bool dirty = false;
+
+				size_t data_records_cursor = 0;
+
+				while (sqlcmd_get_case_data->fetch_next())
+				{
+					if (Utilities::random_double() < domain::argmap::training_sample_ratio)
+					{
+						if (data_records_cursor < domain::argmap::size_of_training_samples)
+						{
+							training_data_records[data_records_cursor] = sqlcmd_get_case_data->get_field_as_double(4);
+
+							if (last_written_date != sqlcmd_get_case_data->get_field_as_string(2))
+							{
+								if (last_written_date != "")
+									training_data_window_records.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
+
+								last_written_date = sqlcmd_get_case_data->get_field_as_string(2);
+								first_record_index = last_record_index;
+								dirty = true;
+							}
+
+							last_record_index++;
+						}
+
+						data_records_cursor++;
+					}
+				}
+
+				if (dirty)
+					training_data_window_records.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
+
+				delete sqlcmd_get_case_data;
+
+				if (data_records_cursor >= domain::argmap::size_of_training_samples)
+				{
+					std::ostringstream ss;
+					ss << ",method=FinancialData.load"
+						<< ",diagnostic_level=9"
+						<< ",start_date=" << start_date
+						<< ",end_date=" << end_date
+						<< ",training_data_window_records.size=" << training_data_window_records.size()
+						<< ",table_size=" << data_records_cursor
+						<< ",message=Error: data_records overflow";
+					Utilities::logline_threadsafe << ss.str();
+				}
+
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				{
+					std::ostringstream ss;
+					ss << ",method=FinancialData.load"
+						<< ",diagnostic_level=9"
+						<< ",start_date=" << start_date
+						<< ",end_date=" << end_date
+						<< ",training_data_window_records.size=" << training_data_window_records.size()
+						<< ",table_size=" << data_records_cursor
+						<< ",message=case_data_loaded";
+					Utilities::logline_threadsafe << ss.str();
+				}
 			}
 		}
 		catch (const std::exception& e)
@@ -433,9 +528,9 @@ namespace datastore
 		try
 		{
 			// Construct SQL statement with filters
-			int sz = std::snprintf(nullptr, 0, fmt_str_get_record_size, domain::argmap::financial_data_start_date.c_str());
+			int sz = std::snprintf(nullptr, 0, fmt_str_get_record_size, domain::argmap::financial_training_data_start_date.c_str());
 			std::vector<char> buf(sz + 1); // note +1 for null terminator
-			std::snprintf(&buf[0], buf.size(), fmt_str_get_record_size, domain::argmap::financial_data_start_date.c_str());
+			std::snprintf(&buf[0], buf.size(), fmt_str_get_record_size, domain::argmap::financial_training_data_start_date.c_str());
 			std::string sqlstmt_get_record_size(buf.begin(), buf.end() - 1); // omit the null terminator
 
 			// Extablish the connection and execute the SQL statement
@@ -573,9 +668,9 @@ namespace datastore
 	//	return value;
 	//}
 	std::mutex data_records_mutex;
-	double FinancialData::get_data(const size_t data_index, const size_t training_case_index)
+	double FinancialData::get_training_data(const size_t data_index, const size_t training_case_index)
 	{
-		data_window_record_t index_record = data_window_records[training_case_index];
+		data_window_record_t index_record = training_data_window_records[training_case_index];
 
 		size_t data_record_range = index_record.last_record - index_record.first_record + 1;
 		size_t data_record_index = std::abs((long)(data_index % data_record_range));
@@ -585,7 +680,7 @@ namespace datastore
 		try
 		{
 			std::unique_lock<std::mutex> lock(data_records_mutex);
-			value = data_records[index_record.first_record + data_record_index];
+			value = training_data_records[index_record.first_record + data_record_index];
 		}
 		catch (std::out_of_range const& e)
 		{
@@ -630,9 +725,9 @@ namespace datastore
 		return value;
 	}
 
-	double FinancialData::get_primary_stock_price(size_t index)
+	double FinancialData::get_primary_training_stock_price(size_t index)
 	{
-		size_t data_record_range = primary_adj_open_values.size();
+		size_t data_record_range = primary_training_adj_open_values.size();
 
 		if (index >= data_record_range)
 		{
@@ -647,7 +742,27 @@ namespace datastore
 			throw std::out_of_range("FinancialData::get_primary_stock_price - Index out of bounds");
 		}
 
-		return primary_adj_open_values[index].value;
+		return primary_training_adj_open_values[index].value;
+	}
+
+	std::string FinancialData::get_primary_training_stock_date(size_t index)
+	{
+		size_t data_record_range = primary_training_adj_open_values.size();
+
+		if (index >= data_record_range)
+		{
+			std::ostringstream ss;
+			ss << ",method=FinancialData.get_primary_stock_date"
+				<< ",diagnostic_level=0"
+				<< ",index=" << index
+				<< ",primary_adj_open_values.size=" << data_record_range
+				<< ",message=Error_loading_data";
+			Utilities::logline_threadsafe << ss.str();
+
+			throw std::out_of_range("FinancialData::get_primary_stock_date - Index out of bounds");
+		}
+
+		return primary_training_adj_open_values[index].date;
 	}
 
 	double FinancialData::get_index_stock_price(size_t index)
@@ -682,6 +797,38 @@ namespace datastore
 		return index_adj_open_values[index].value;
 	}
 
+	std::string FinancialData::get_index_stock_date(size_t index)
+	{
+		size_t data_record_range = index_adj_open_values.size();
+
+		if (index >= data_record_range)
+		{
+			std::ostringstream ss;
+			ss << ",method=FinancialData.get_index_stock_date"
+				<< ",diagnostic_level=0"
+				<< ",index=" << index
+				<< ",index_adj_open_values.size=" << data_record_range
+				<< ",message=Error_loading_data";
+			Utilities::logline_threadsafe << ss.str();
+
+			throw std::out_of_range("FinancialData::get_index_stock_date - Index out of bounds");
+		}
+		else
+		{
+			std::ostringstream ss;
+			ss << ",method=FinancialData.get_index_stock_date"
+				<< ",diagnostic_level=0"
+				<< ",index=" << index
+				<< ",index_adj_open_values.size=" << data_record_range
+				<< ",index_adj_open_values[" << index << "].date = " << index_adj_open_values[index].date
+				<< ",index_adj_open_values[" << index << "].value=" << index_adj_open_values[index].value
+				<< ",message=Return";
+			Utilities::logline_threadsafe << ss.str();
+		}
+
+		return index_adj_open_values[index].date;
+	}
+
 	// Purpose: 
 	//   Get the count of primary closing procies.
 	//
@@ -700,7 +847,7 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	size_t FinancialData::get_count_of_primary_adj_open_prices(const std::string& start_date, const std::string& end_date)
+	size_t FinancialData::get_count_of_primary_training_adj_open_prices(const std::string& start_date, const std::string& end_date)
 	{
 		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
@@ -800,7 +947,7 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	void FinancialData::load_primary_adj_open_prices(const std::string& start_date, const std::string& end_date)
+	void FinancialData::load_primary_training_adj_open_prices(const std::string& start_date, const std::string& end_date)
 	{
 		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
@@ -818,7 +965,7 @@ namespace datastore
 		try
 		{
 			// Resize the vector to hold the number of records
-			size_t count = get_count_of_primary_adj_open_prices(start_date, end_date);
+			size_t count = get_count_of_primary_training_adj_open_prices(start_date, end_date);
 			//primary_adj_open_values.resize(count);
 
 			// Construct SQL statement with filters
@@ -838,7 +985,7 @@ namespace datastore
 				std::string date_field = sqlcmd_load_primary_adj_open_prices->get_field_as_string(1);
 				double value = sqlcmd_load_primary_adj_open_prices->get_field_as_double(2);
 
-				primary_adj_open_values.emplace_back(adj_opening_prices_record_t{ date_field, value });
+				primary_training_adj_open_values.emplace_back(adj_opening_prices_record_t{ date_field, value });
 				elements_loaded++;
 			}
 			delete sqlcmd_load_primary_adj_open_prices;
@@ -851,7 +998,7 @@ namespace datastore
 					<< ",start_date=" << start_date
 					<< ",end_date=" << end_date
 					<< ",elements_loaded=" << elements_loaded
-					<< ",primary_adj_open_values.size=" << primary_adj_open_values.size()
+					<< ",primary_adj_open_values.size=" << primary_training_adj_open_values.size()
 					<< ",message=case_data_loaded";
 				Utilities::logline_threadsafe << ss.str();
 			}
@@ -924,7 +1071,7 @@ namespace datastore
 		try
 		{
 			// Resize the vector to hold the number of records
-			size_t count = get_count_of_primary_adj_open_prices(start_date, end_date);
+			size_t count = get_count_of_primary_training_adj_open_prices(start_date, end_date);
 			index_adj_open_values.clear();
 			index_adj_open_values.reserve(count);
 

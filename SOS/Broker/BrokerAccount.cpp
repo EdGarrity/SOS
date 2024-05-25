@@ -16,8 +16,8 @@ namespace domain
             Utilities::logline_threadsafe << ss.str();
         }
 
-        if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary)
-            price = datastore::financial_data.get_primary_stock_price(index);
+        if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary_Training)
+            price = datastore::financial_data.get_primary_training_stock_price(index);
         else
             price = datastore::financial_data.get_index_stock_price(index);
         
@@ -59,8 +59,8 @@ namespace domain
             Utilities::logline_threadsafe << ss.str();
         }
 
-        if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary)
-            price = datastore::financial_data.get_primary_stock_price(index);
+        if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary_Training)
+            price = datastore::financial_data.get_primary_training_stock_price(index);
         else
             price = datastore::financial_data.get_index_stock_price(index);
 
@@ -81,6 +81,7 @@ namespace domain
             buy(index);
             {
                 double price = 0;
+				std::string date;
 
                 if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
                 {
@@ -92,10 +93,16 @@ namespace domain
                     Utilities::logline_threadsafe << ss.str();
                 }
 
-                if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary)
-                    price = datastore::financial_data.get_primary_stock_price(index);
+                if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary_Training)
+                {
+                    price = datastore::financial_data.get_primary_training_stock_price(index);
+					date = datastore::financial_data.get_primary_training_stock_date(index);
+                }
                 else
-                    price = datastore::financial_data.get_index_stock_price(index);
+				{
+				    price = datastore::financial_data.get_index_stock_price(index);
+					date = datastore::financial_data.get_index_stock_date(index);
+				}
 
                 double balance = account.get_balance();
                 double unrealized_gain = 0;
@@ -106,10 +113,11 @@ namespace domain
                 if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
                 {
                     std::ostringstream ss;
-                    ss << ",method=BrokerAccount.execute"
+                    ss << ",method=BrokerAccount.trace_execute"
                         << ",index=" << index
                         << ",order_bitmask=" << order_bitmask
                         << ",order=buy"
+                        << ",date=" << date
                         << ",price=" << price
                         << ",shares=" << shares
                         << ",balance=" << balance
@@ -136,8 +144,8 @@ namespace domain
                     Utilities::logline_threadsafe << ss.str();
                 }
                 
-                if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary)
-                    price = datastore::financial_data.get_primary_stock_price(index);
+                if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary_Training)
+                    price = datastore::financial_data.get_primary_training_stock_price(index);
                 else
                     price = datastore::financial_data.get_index_stock_price(index);
 
@@ -201,8 +209,8 @@ namespace domain
             Utilities::logline_threadsafe << ss.str();
         }
 
-        if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary)
-            price = datastore::financial_data.get_primary_stock_price(index);
+        if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary_Training)
+            price = datastore::financial_data.get_primary_training_stock_price(index);
         else
             price = datastore::financial_data.get_index_stock_price(index);
 

@@ -12,8 +12,8 @@ namespace datastore
 	class FinancialData
 	{
 	public:
-		enum FinancialInstrumentType { Primary = 0, Benchmark };
-		FinancialInstrumentType financial_instrument_type = FinancialInstrumentType::Primary;
+		enum FinancialInstrumentType { Primary_Training = 0, Benchmark, Primary_Test};
+		//FinancialInstrumentType financial_instrument_type = FinancialInstrumentType::Primary_Training;
 
 	private:
 		static constexpr const char* fmt_str_load_all_test_data = "SELECT [Symbol],CONVERT(varchar(25),[Date],120) AS [Date],[Key],[Value]"
@@ -49,9 +49,11 @@ namespace datastore
 			size_t last_record;
 		};
 
-		std::vector<data_window_record_t> data_window_records;
+		std::vector<data_window_record_t> training_data_window_records;
+		std::vector<data_window_record_t> test_data_window_records;
 
-		double data_records[domain::argmap::size_of_training_samples];
+		double training_data_records[domain::argmap::size_of_training_samples];
+		double test_data_records[domain::argmap::size_of_training_samples];
 
 		struct adj_opening_prices_record_t
 		{
@@ -59,7 +61,8 @@ namespace datastore
 			double value;
 		};
 
-		std::vector<adj_opening_prices_record_t> primary_adj_open_values;
+		std::vector<adj_opening_prices_record_t> primary_training_adj_open_values;
+		std::vector<adj_opening_prices_record_t> primary_test_adj_open_values;
 		std::vector<adj_opening_prices_record_t> index_adj_open_values;
 
 		size_t financial_data_record_size= 0;
@@ -68,30 +71,32 @@ namespace datastore
 		FinancialData();
 		~FinancialData() {};
 
-		//void load(const FinancialInstrumentType financial_instrument_type, const std::string& start_date, const std::string& end_date);
-		void load(const std::string& start_date, const std::string& end_date);
-		void load_primary_adj_open_prices(const std::string& start_date, const std::string& end_date);
+		void load(const std::string& start_date, const std::string& end_date, FinancialInstrumentType financial_instrument_type);
+		void load_primary_training_adj_open_prices(const std::string& start_date, const std::string& end_date);
 		void load_index_adj_open_prices(const std::string& start_date, const std::string& end_date);
-		//double load_key_value(const std::string& start_date, const size_t key_offset);
 
-		size_t get_count_of_primary_adj_open_prices(const std::string& start_date, const std::string& end_date);
+		size_t get_count_of_primary_training_adj_open_prices(const std::string& start_date, const std::string& end_date);
 		size_t get_record_size() const;
 
-		double get_data(const size_t index, const size_t input_case);
-		size_t get_count() const { return primary_adj_open_values.size(); }
+		double get_training_data(const size_t index, const size_t input_case);
+		double get_test_data(const size_t index, const size_t input_case);
+		size_t get_training_data_count() const { return primary_test_adj_open_values.size(); }
+		size_t get_test_data_count() const { return primary_test_adj_open_values.size(); }
 		size_t get_index_stock_count() const { return index_adj_open_values.size(); }
 
-		size_t get_number_of_cases() const 
+		size_t get_number_of_training_cases() const 
 		{ 
 			return 
-				primary_adj_open_values.size() < data_window_records.size() 
-				? (primary_adj_open_values.size() - domain::argmap::training_case_length - 1)
-				: (data_window_records.size() - domain::argmap::training_case_length - 1);
+				primary_training_adj_open_values.size() < training_data_window_records.size() 
+				? (primary_training_adj_open_values.size() - domain::argmap::training_case_length - 1)
+				: (training_data_window_records.size() - domain::argmap::training_case_length - 1);
 		};
-		size_t get_data_window_records_size() const { return data_window_records.size(); }
+		size_t get_data_window_records_size() const { return training_data_window_records.size(); }
 
-		double get_primary_stock_price(size_t index);
+		double get_primary_training_stock_price(size_t index);
 		double get_index_stock_price(size_t index);
+		std::string get_primary_training_stock_date(size_t index);
+		std::string get_index_stock_date(size_t index);
 	};
 
 	extern FinancialData financial_data;
