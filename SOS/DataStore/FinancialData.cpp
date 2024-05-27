@@ -294,7 +294,7 @@ namespace datastore
 						<< ",diagnostic_level=9"
 						<< ",start_date=" << start_date
 						<< ",end_date=" << end_date
-						<< ",test_data_window_records.size=" << test_data_window_records.size()
+						<< ",test_case.size=" << test_case.size()
 						<< ",sqlstmt_load_case_data=" << sqlstmt_load_case_data
 						<< ",message=executing_sql_command";
 					Utilities::logline_threadsafe << ss.str();
@@ -321,7 +321,7 @@ namespace datastore
 							if (last_written_date != sqlcmd_get_case_data->get_field_as_string(2))
 							{
 								if (last_written_date != "")
-									test_data_window_records.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
+									test_case.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
 
 								last_written_date = sqlcmd_get_case_data->get_field_as_string(2);
 								first_record_index = last_record_index;
@@ -336,7 +336,7 @@ namespace datastore
 				}
 
 				if (dirty)
-					test_data_window_records.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
+					test_case.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
 
 				delete sqlcmd_get_case_data;
 
@@ -347,7 +347,7 @@ namespace datastore
 						<< ",diagnostic_level=9"
 						<< ",start_date=" << start_date
 						<< ",end_date=" << end_date
-						<< ",test_data_window_records.size=" << test_data_window_records.size()
+						<< ",test_case.size=" << test_case.size()
 						<< ",table_size=" << data_records_cursor
 						<< ",message=Error: data_records overflow";
 					Utilities::logline_threadsafe << ss.str();
@@ -360,7 +360,7 @@ namespace datastore
 						<< ",diagnostic_level=9"
 						<< ",start_date=" << start_date
 						<< ",end_date=" << end_date
-						<< ",test_data_window_records.size=" << test_data_window_records.size()
+						<< ",test_case.size=" << test_case.size()
 						<< ",table_size=" << data_records_cursor
 						<< ",message=case_data_loaded";
 					Utilities::logline_threadsafe << ss.str();
@@ -385,7 +385,7 @@ namespace datastore
 						<< ",diagnostic_level=9"
 						<< ",start_date=" << start_date
 						<< ",end_date=" << end_date
-						<< ",training_data_window_records.size=" << training_data_window_records.size()
+						<< ",training_cases.size=" << training_cases.size()
 						<< ",sqlstmt_load_case_data=" << sqlstmt_load_case_data
 						<< ",message=executing_sql_command";
 					Utilities::logline_threadsafe << ss.str();
@@ -412,7 +412,7 @@ namespace datastore
 							if (last_written_date != sqlcmd_get_case_data->get_field_as_string(2))
 							{
 								if (last_written_date != "")
-									training_data_window_records.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
+									training_cases.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
 
 								last_written_date = sqlcmd_get_case_data->get_field_as_string(2);
 								first_record_index = last_record_index;
@@ -427,7 +427,7 @@ namespace datastore
 				}
 
 				if (dirty)
-					training_data_window_records.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
+					training_cases.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
 
 				delete sqlcmd_get_case_data;
 
@@ -438,7 +438,7 @@ namespace datastore
 						<< ",diagnostic_level=9"
 						<< ",start_date=" << start_date
 						<< ",end_date=" << end_date
-						<< ",training_data_window_records.size=" << training_data_window_records.size()
+						<< ",training_cases.size=" << training_cases.size()
 						<< ",table_size=" << data_records_cursor
 						<< ",message=Error: data_records overflow";
 					Utilities::logline_threadsafe << ss.str();
@@ -451,7 +451,7 @@ namespace datastore
 						<< ",diagnostic_level=9"
 						<< ",start_date=" << start_date
 						<< ",end_date=" << end_date
-						<< ",training_data_window_records.size=" << training_data_window_records.size()
+						<< ",training_cases.size=" << training_cases.size()
 						<< ",table_size=" << data_records_cursor
 						<< ",message=case_data_loaded";
 					Utilities::logline_threadsafe << ss.str();
@@ -671,7 +671,7 @@ namespace datastore
 	std::mutex data_records_mutex;
 	double FinancialData::get_training_data(const size_t data_index, const size_t training_case_index)
 	{
-		data_window_record_t index_record = training_data_window_records[training_case_index];
+		data_window_record_t index_record = training_cases[training_case_index];
 
 		size_t data_record_range = index_record.last_record - index_record.first_record + 1;
 		size_t data_record_index = std::abs((long)(data_index % data_record_range));

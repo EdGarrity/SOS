@@ -49,8 +49,8 @@ namespace datastore
 			size_t last_record;
 		};
 
-		std::vector<data_window_record_t> training_data_window_records;
-		std::vector<data_window_record_t> test_data_window_records;
+		std::vector<data_window_record_t> training_cases;
+		std::vector<data_window_record_t> test_case;
 
 		double training_data_records[domain::argmap::size_of_training_samples];
 		double test_data_records[domain::argmap::size_of_training_samples];
@@ -87,11 +87,11 @@ namespace datastore
 		size_t get_number_of_training_cases() const 
 		{ 
 			return 
-				primary_training_adj_open_values.size() < training_data_window_records.size() 
+				primary_training_adj_open_values.size() < training_cases.size() 
 				? (primary_training_adj_open_values.size() - domain::argmap::training_case_length - 1)
-				: (training_data_window_records.size() - domain::argmap::training_case_length - 1);
+				: (training_cases.size() - domain::argmap::training_case_length - 1);
 		};
-		size_t get_data_window_records_size() const { return training_data_window_records.size(); }
+		size_t get_training_case_record_size() const { return training_cases.size(); }
 
 		double get_primary_training_stock_price(size_t index);
 		double get_index_stock_price(size_t index);

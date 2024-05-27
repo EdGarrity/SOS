@@ -51,7 +51,7 @@ namespace datastore
 
 			if (sqlcmd_get_individuals->is_result_set())
 			{
-				while ((sqlcmd_get_individuals->fetch_next()) && (n < domain::argmap::population_size))
+				while ((sqlcmd_get_individuals->fetch_next()) && (n < domain::argmap::number_of_strategies))
 				{
 					//if ((n % 1'000) == 0)
 					//{
@@ -174,7 +174,7 @@ namespace datastore
 			Utilities::logline_threadsafe << ss.str();
 		}
 
-		for (int n = 0; n < domain::argmap::population_size; n++)
+		for (int n = 0; n < domain::argmap::number_of_strategies; n++)
 		{
 			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
@@ -320,7 +320,7 @@ namespace datastore
 	{
 		size_t agents_created = 0;
 
-		for (int n = _start; n < domain::argmap::population_size; n++)
+		for (int n = _start; n < domain::argmap::number_of_strategies; n++)
 		{
 			pushGP::make_random_plush_genome(pushGP::globals::population_agents[n].get_genome());
 			agents_created++;

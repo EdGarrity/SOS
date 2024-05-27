@@ -206,7 +206,7 @@ namespace pushGP
 		}
 		unsigned int chosen = 0;
 		unsigned individual_index = 0;
-		__int64 number_of_survivors = domain::argmap::population_size - 1;
+		__int64 number_of_survivors = domain::argmap::number_of_strategies - 1;
 
 		// Get a randomized deck of test cases
 		std::vector<size_t> example_cases;
@@ -238,7 +238,7 @@ namespace pushGP
 		// Select the first training case
 		size_t example_case = example_cases.back();
 
-		for (int n = 0; n < domain::argmap::population_size; n++)
+		for (int n = 0; n < domain::argmap::number_of_strategies; n++)
 		{
 			if (_black_list.find(n) == _black_list.end())
 			{
@@ -449,7 +449,7 @@ namespace pushGP
 
 		else
 		{
-			int n = Utilities::random_integer(0, domain::argmap::population_size - 1);
+			int n = Utilities::random_integer(0, domain::argmap::number_of_strategies - 1);
 			chosen = n;
 		}
 
