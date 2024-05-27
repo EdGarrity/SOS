@@ -16,9 +16,10 @@ namespace datastore
 
 	FinancialData::FinancialData()
 	{
-		financial_data_record_size = get_record_size();
+		financial_data_record_size = get_training_record_size();
 
 		load(domain::argmap::financial_training_data_start_date, domain::argmap::financial_training_data_end_date, FinancialInstrumentType::Primary_Training);
+		load(domain::argmap::financial_test_data_start_date, domain::argmap::financial_test_data_end_date, FinancialInstrumentType::Primary_Test);
 		load_primary_training_adj_open_prices(domain::argmap::financial_training_data_start_date, domain::argmap::financial_training_data_end_date);
 		load_index_adj_open_prices(domain::argmap::financial_training_data_start_date, domain::argmap::financial_training_data_end_date);
 	}
@@ -511,12 +512,12 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	size_t FinancialData::get_record_size() const
+	size_t FinancialData::get_training_record_size() const
 	{
 		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
-			ss << ",method=FinancialData.get_record_size"
+			ss << ",method=FinancialData.get_training_record_size"
 				<< ",diagnostic_level=9"
 				<< ",message=Enter";
 			Utilities::logline_threadsafe << ss.str();
@@ -538,7 +539,7 @@ namespace datastore
 			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
-				ss << ",method=FinancialData.get_record_size"
+				ss << ",method=FinancialData.get_training_record_size"
 					<< ",diagnostic_level=9"
 					<< ",query=" << sqlstmt_get_record_size
 					<< ",message=executing";
@@ -558,7 +559,7 @@ namespace datastore
 			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
-				ss << ",method=FinancialData.get_record_size"
+				ss << ",method=FinancialData.get_training_record_size"
 					<< ",diagnostic_level=9"
 					<< ",record_size=" << record_size
 					<< ",message=Done";
@@ -571,7 +572,7 @@ namespace datastore
 		{
 			{
 				std::ostringstream ss;
-				ss << ",method=FinancialData.get_record_size"
+				ss << ",method=FinancialData.get_training_record_size"
 					<< ",diagnostic_level=0"
 					<< ",exception=" << e.what()
 					<< ",message=Error_loading_data";
@@ -586,7 +587,7 @@ namespace datastore
 			std::ostringstream ss; ss << "Unknown exception"; Utilities::logline_threadsafe << ss.str();
 			{
 				std::ostringstream ss;
-				ss << ",method=FinancialData.get_record_size"
+				ss << ",method=FinancialData.get_training_record_size"
 					<< ",diagnostic_level=0"
 					<< ",exception=Unknown"
 					<< ",message=An_unknown_error_has_occured";

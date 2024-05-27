@@ -5,7 +5,7 @@
 #include "SQLCommand.h"
 #include "..\Utilities\Conversion.h"
 //#include "..\Utilities\EventLogManager.h"
-#include "..\..\Utilities\Debug.h"
+#include "..\Utilities\Debug.h"
 
 namespace database
 {

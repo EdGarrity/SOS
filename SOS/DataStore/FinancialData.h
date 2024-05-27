@@ -76,7 +76,7 @@ namespace datastore
 		void load_index_adj_open_prices(const std::string& start_date, const std::string& end_date);
 
 		size_t get_count_of_primary_training_adj_open_prices(const std::string& start_date, const std::string& end_date);
-		size_t get_record_size() const;
+		size_t get_training_record_size() const;
 
 		double get_training_data(const size_t index, const size_t input_case);
 		double get_test_data(const size_t index, const size_t input_case);
