@@ -460,11 +460,11 @@ namespace domain
 				unsigned int strategy_index,
 				unsigned long case_index)> _run_strategy_threadsafe)
 		{
-			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_2)
 			{
 				std::ostringstream ss;
 				ss << ",method=RunProgram.compute_testing_orders"
-					<< ",diagnostic_level=9"
+					<< ",diagnostic_level=2"
 					<< ",message=Enter";
 				Utilities::logline_threadsafe << ss.str();
 			}
@@ -485,13 +485,13 @@ namespace domain
 						score = std::get<1>(results);
 						test_order_matrix.store(stratergy_index, test_case_index, order);
 
-						if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+						if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_2)
 						{
 							std::ostringstream ss;
 							ss << ",stratergy=" << stratergy_index
 								<< ",case=" << test_case_index
 								<< ",number_of_cases" << datastore::financial_data.get_number_of_training_cases()
-								<< ",diagnostic_level=9"
+								<< ",diagnostic_level=2"
 								<< "order=" << order
 								<< ",score=" << score
 								<< ",method=RunProgram.compute_testing_orders"
@@ -500,13 +500,13 @@ namespace domain
 						}
 					}
 
-					else if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+					else if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_2)
 					{
 						std::ostringstream ss;
 						ss << ",stratergy=" << stratergy_index
 							<< ",case=" << test_case_index
 							<< ",number_of_cases" << datastore::financial_data.get_number_of_training_cases()
-							<< ",diagnostic_level=9"
+							<< ",diagnostic_level=2"
 							<< ",method=RunProgram.compute_testing_orders"
 							<< ",message=Order_already_processed";
 						Utilities::logline_threadsafe << ss.str();
