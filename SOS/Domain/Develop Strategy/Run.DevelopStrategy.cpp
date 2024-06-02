@@ -1102,12 +1102,43 @@ namespace domain
 					size_t strategy_index = best_strategy;
 					size_t stock_data_index = 0;
 
+					if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
+					{
+						std::ostringstream ss;
+						ss << ",method=develop_strategy.run"
+							<< ",diagnostic_level=1"
+							<< ",best_strategy_score=" << best_strategy_score
+							<< ",best_strategy=" << best_strategy
+							<< ",message=Create_BrokerAccount";
+						Utilities::logline_threadsafe << ss.str();
+					}
 					BrokerAccount account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Primary_Test, BrokerAccount::seed_money);
 
+					if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
+					{
+						std::ostringstream ss;
+						ss << ",method=develop_strategy.run"
+							<< ",diagnostic_level=1"
+							<< ",best_strategy_score=" << best_strategy_score
+							<< ",best_strategy=" << best_strategy
+							<< ",message=compute_testing_orders";
+						Utilities::logline_threadsafe << ss.str();
+					}
 					compute_testing_orders(
 						global_env,
 						run_strategy_threadsafe);
 
+					if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
+					{
+						std::ostringstream ss;
+						ss << ",method=develop_strategy.run"
+							<< ",diagnostic_level=1"
+							<< ",best_strategy_score=" << best_strategy_score
+							<< ",best_strategy=" << best_strategy
+							<< ",get_test_data_count=" << datastore::financial_data.get_test_data_count()
+							<< ",message=compute_test_score";
+						Utilities::logline_threadsafe << ss.str();
+					}
 					for (size_t n = 0; n < datastore::financial_data.get_test_data_count(); n++)
 					{
 						long order = test_order_matrix.load(strategy_index, stock_data_index);
@@ -1116,6 +1147,17 @@ namespace domain
 						stock_data_index++;
 					}
 
+					if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
+					{
+						std::ostringstream ss;
+						ss << ",method=develop_strategy.run"
+							<< ",diagnostic_level=1"
+							<< ",best_strategy_score=" << best_strategy_score
+							<< ",best_strategy=" << best_strategy
+							<< ",stock_data_index=" << stock_data_index
+							<< ",message=get_test_score";
+						Utilities::logline_threadsafe << ss.str();
+					}
 					double test_case_score = account.unrealized_gain(--stock_data_index);
 
 					if (argmap::diagnostic_level >= argmap::diagnostic_level_1)

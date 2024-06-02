@@ -931,6 +931,106 @@ namespace datastore
 	}
 
 	// Purpose: 
+	//   Get the count of primary closing procies.
+	//
+	// Parameters:
+	//   start_date - inclusive
+	//   end_date - inclusive
+	// 
+	// Return value:
+	//   Number of records in result set
+	//
+	// Side Effects:
+	//   None
+	//
+	// Thread Safe:
+	//   No
+	//
+	// Remarks:
+	//
+	size_t FinancialData::get_count_of_primary_testing_adj_open_prices(const std::string& start_date, const std::string& end_date)
+	{
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+		{
+			std::ostringstream ss;
+			ss << ",method=FinancialData.get_count_of_primary_testing_adj_open_prices"
+				<< ",diagnostic_level=9"
+				<< ",start_date=" << start_date
+				<< ",end_date=" << end_date
+				<< ",message=loading_all_case_data";
+			Utilities::logline_threadsafe << ss.str();
+		}
+
+		database::SQLCommand* sqlcmd_count_of_primary_closing_prices = nullptr;
+
+		try
+		{
+			// Construct SQL statement with date range filters
+			int sz = std::snprintf(nullptr, 0, fmt_str_count_of_primary_closing_prices, start_date.c_str(), end_date.c_str(), domain::argmap::financial_instrument.c_str());
+			std::vector<char> buf(sz + 1); // note +1 for null terminator
+			std::snprintf(&buf[0], buf.size(), fmt_str_count_of_primary_closing_prices, start_date.c_str(), end_date.c_str());
+			std::string sqlstmt_count_of_primary_closing_prices(buf.begin(), buf.end() - 1); // omit the null terminator
+
+			sqlcmd_count_of_primary_closing_prices = new database::SQLCommand(database_connection.get_connection(), sqlstmt_count_of_primary_closing_prices);
+
+			sqlcmd_count_of_primary_closing_prices->execute();
+
+			bool dirty = false;
+
+			// Retrieve the record count
+			sqlcmd_count_of_primary_closing_prices->fetch_next();
+
+			size_t count = sqlcmd_count_of_primary_closing_prices->get_field_as_long(1);
+
+			delete sqlcmd_count_of_primary_closing_prices;
+
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			{
+				std::ostringstream ss;
+				ss << ",method=FinancialData.get_count_of_primary_testing_adj_open_prices"
+					<< ",diagnostic_level=9"
+					<< ",start_date=" << start_date
+					<< ",end_date=" << end_date
+					<< ",domain::argmap::financial_instrument.c_str()=" << domain::argmap::financial_instrument.c_str()
+					<< ",count=" << count
+					<< ",message=case_data_loaded";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
+			return count;
+		}
+		catch (const std::exception& e)
+		{
+			{
+				std::ostringstream ss;
+				ss << ",method=FinancialData.get_count_of_primary_testing_adj_open_prices"
+					<< ",diagnostic_level=0"
+					<< ",exception=" << e.what()
+					<< ",message=Error_loading_data";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
+			if (sqlcmd_count_of_primary_closing_prices != nullptr)
+				delete sqlcmd_count_of_primary_closing_prices;
+		}
+		catch (...)
+		{
+			std::ostringstream ss; ss << "Unknown exception"; Utilities::logline_threadsafe << ss.str();
+			{
+				std::ostringstream ss;
+				ss << ",method=FinancialData.get_count_of_primary_testing_adj_open_prices"
+					<< ",diagnostic_level=0"
+					<< ",exception=Unknown"
+					<< ",message=An_unknown_error_has_occured";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
+			if (sqlcmd_count_of_primary_closing_prices != nullptr)
+				delete sqlcmd_count_of_primary_closing_prices;
+		}
+	}
+
+	// Purpose: 
 	//   Load the primary adjusted opening prices which the agents will use to make trading decisions.
 	//
 	// Parameters:
@@ -953,7 +1053,7 @@ namespace datastore
 		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
-			ss << ",method=FinancialData.load_primary_closing_prices"
+			ss << ",method=FinancialData.load_primary_training_adj_open_prices"
 				<< ",diagnostic_level=9"
 				<< ",start_date=" << start_date
 				<< ",end_date=" << end_date
@@ -994,7 +1094,7 @@ namespace datastore
 			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
 				std::ostringstream ss;
-				ss << ",method=FinancialData.load_primary_closing_prices"
+				ss << ",method=FinancialData.load_primary_training_adj_open_prices"
 					<< ",diagnostic_level=9"
 					<< ",start_date=" << start_date
 					<< ",end_date=" << end_date
@@ -1008,7 +1108,7 @@ namespace datastore
 		{
 			{
 				std::ostringstream ss;
-				ss << ",method=FinancialData.load_primary_closing_prices"
+				ss << ",method=FinancialData.load_primary_training_adj_open_prices"
 					<< ",diagnostic_level=0"
 					<< ",exception=" << e.what()
 					<< ",message=Error_loading_data";
@@ -1023,7 +1123,112 @@ namespace datastore
 			std::ostringstream ss; ss << "Unknown exception"; Utilities::logline_threadsafe << ss.str();
 			{
 				std::ostringstream ss;
-				ss << ",method=FinancialData.load_primary_closing_prices"
+				ss << ",method=FinancialData.load_primary_training_adj_open_prices"
+					<< ",diagnostic_level=0"
+					<< ",exception=Unknown"
+					<< ",message=An_unknown_error_has_occured";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
+			if (sqlcmd_load_primary_adj_open_prices != nullptr)
+				delete sqlcmd_load_primary_adj_open_prices;
+		}
+	}
+
+	// Purpose: 
+	//   Load the primary adjusted opening prices which the agents will use to make trading decisions.
+	//
+	// Parameters:
+	//   start_date - inclusive
+	//   end_date - inclusive
+	// 
+	// Return value:
+	//   None   
+	//
+	// Side Effects:
+	//   None
+	//
+	// Thread Safe:
+	//   No
+	//
+	// Remarks:
+	//
+	void FinancialData::load_primary_testing_adj_open_prices(const std::string& start_date, const std::string& end_date)
+	{
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+		{
+			std::ostringstream ss;
+			ss << ",method=FinancialData.load_primary_testing_adj_open_prices"
+				<< ",diagnostic_level=9"
+				<< ",start_date=" << start_date
+				<< ",end_date=" << end_date
+				<< ",message=loading_all_case_data";
+			Utilities::logline_threadsafe << ss.str();
+		}
+
+		database::SQLCommand* sqlcmd_load_primary_adj_open_prices = nullptr;
+
+		try
+		{
+			// Resize the vector to hold the number of records
+			size_t count = get_count_of_primary_testing_adj_open_prices(start_date, end_date);
+			//primary_adj_open_values.resize(count);
+
+			// Construct SQL statement with filters
+			int sz = std::snprintf(nullptr, 0, fmt_str_load_adj_opening_prices, start_date.c_str(), end_date.c_str(), domain::argmap::financial_instrument.c_str());
+			std::vector<char> buf(sz + 1); // note +1 for null terminator
+			std::snprintf(&buf[0], buf.size(), fmt_str_load_adj_opening_prices, start_date.c_str(), end_date.c_str());
+			std::string sqlstmt_load_primary_adj_open_prices(buf.begin(), buf.end() - 1); // omit the null terminator
+
+			// Extablish the connection and execute the SQL statement
+			sqlcmd_load_primary_adj_open_prices = new database::SQLCommand(database_connection.get_connection(), sqlstmt_load_primary_adj_open_prices);
+			sqlcmd_load_primary_adj_open_prices->execute();
+
+			// Retrieve the data
+			int elements_loaded = 0;	// For debugging
+			while (sqlcmd_load_primary_adj_open_prices->fetch_next())
+			{
+				std::string date_field = sqlcmd_load_primary_adj_open_prices->get_field_as_string(1);
+				double value = sqlcmd_load_primary_adj_open_prices->get_field_as_double(2);
+
+				primary_test_adj_open_values.emplace_back(adj_opening_prices_record_t{ date_field, value });
+				elements_loaded++;
+			}
+			delete sqlcmd_load_primary_adj_open_prices;
+
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			{
+				std::ostringstream ss;
+				ss << ",method=FinancialData.load_primary_testing_adj_open_prices"
+					<< ",diagnostic_level=9"
+					<< ",start_date=" << start_date
+					<< ",end_date=" << end_date
+					<< ",elements_loaded=" << elements_loaded
+					<< ",primary_test_adj_open_values.size=" << primary_test_adj_open_values.size()
+					<< ",message=case_data_loaded";
+				Utilities::logline_threadsafe << ss.str();
+			}
+		}
+		catch (const std::exception& e)
+		{
+			{
+				std::ostringstream ss;
+				ss << ",method=FinancialData.load_primary_testing_adj_open_prices"
+					<< ",diagnostic_level=0"
+					<< ",exception=" << e.what()
+					<< ",message=Error_loading_data";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
+			if (sqlcmd_load_primary_adj_open_prices != nullptr)
+				delete sqlcmd_load_primary_adj_open_prices;
+		}
+		catch (...)
+		{
+			std::ostringstream ss; ss << "Unknown exception"; Utilities::logline_threadsafe << ss.str();
+			{
+				std::ostringstream ss;
+				ss << ",method=FinancialData.load_primary_testing_adj_open_prices"
 					<< ",diagnostic_level=0"
 					<< ",exception=Unknown"
 					<< ",message=An_unknown_error_has_occured";

@@ -62,7 +62,7 @@ namespace datastore
 		};
 
 		std::vector<adj_opening_prices_record_t> primary_training_adj_open_values;
-		std::vector<adj_opening_prices_record_t> primary_test_adj_open_values;
+		std::vector<adj_opening_prices_record_t> primary_test_adj_open_values; // To Do: Need to initialize this vector
 		std::vector<adj_opening_prices_record_t> index_adj_open_values;
 
 		size_t financial_data_record_size= 0;
@@ -73,9 +73,11 @@ namespace datastore
 
 		void load(const std::string& start_date, const std::string& end_date, FinancialInstrumentType financial_instrument_type);
 		void load_primary_training_adj_open_prices(const std::string& start_date, const std::string& end_date);
+		void load_primary_testing_adj_open_prices(const std::string& start_date, const std::string& end_date);
 		void load_index_adj_open_prices(const std::string& start_date, const std::string& end_date);
 
 		size_t get_count_of_primary_training_adj_open_prices(const std::string& start_date, const std::string& end_date);
+		size_t get_count_of_primary_testing_adj_open_prices(const std::string& start_date, const std::string& end_date);
 		size_t get_training_record_size() const;
 
 		double get_training_data(const size_t index, const size_t input_case);
