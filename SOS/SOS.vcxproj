@@ -177,6 +177,7 @@
     <ClInclude Include="DataStore\DatabaseConnection.h" />
     <ClInclude Include="DataStore\FinancialData.h" />
     <ClInclude Include="Domain\Arguments.h" />
+    <ClInclude Include="Domain\Develop Strategy V2\Run.DevelopStrategy_V2.h" />
     <ClInclude Include="Domain\Develop Strategy\Arguments.h" />
     <ClInclude Include="Domain\Develop Strategy\ErrorFunction.DevelopStrategy.h" />
     <ClInclude Include="Domain\Develop Strategy\RunProgram_WorkOrder_Form.h" />
@@ -241,6 +242,7 @@
     <ClCompile Include="DataStore\TestData.cpp" />
     <ClCompile Include="DataStore\DatabaseConnection.cpp" />
     <ClCompile Include="DataStore\FinancialData.cpp" />
+    <ClCompile Include="Domain\Develop Strategy V2\Run.DevelopStrategy_V2.cpp" />
     <ClCompile Include="Domain\Develop Strategy\ErrorFunction.DevelopStrategy.cpp" />
     <ClCompile Include="Domain\Develop Strategy\RunProgram_WorkOrder_Form.cpp" />
     <ClCompile Include="Domain\Develop Strategy\Run.DevelopStrategy.cpp" />
