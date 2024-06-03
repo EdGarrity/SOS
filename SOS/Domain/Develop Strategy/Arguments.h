@@ -629,6 +629,8 @@ namespace domain
 		//const std::string db_init_datasource = "EGARRITY-LT";
 		const std::string db_init_datasource = "192.168.1.42";
 
+		const std::string db_data_source_name = "SOS";
+
 		// Name of an existing SQL Server database to which to connect.
 		const std::string db_init_catalog = "SOS";
 

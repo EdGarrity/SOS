@@ -10,10 +10,13 @@
 
 namespace datastore
 {
-	AgentData agent_data;
-
-	AgentData::AgentData()
+	AgentData::AgentData(Database::SQLConnection* sql_connection, size_t number_of_strategies)
 	{
+		this->sql_command = std::make_unique<Database::SQLCommand>(sql_connection);
+
+		if (make_pop_agents(load()) > 0)
+			save();
+
 	}
 
 	// Purpose: 
@@ -316,7 +319,7 @@ namespace datastore
 	}
 
 
-	size_t AgentData::make_pop_agents(Plush::Environment& _env, size_t _start)
+	size_t AgentData::make_pop_agents(/* Plush::Environment& _env, */ size_t _start)
 	{
 		size_t agents_created = 0;
 
@@ -326,8 +329,8 @@ namespace datastore
 			agents_created++;
 		}
 
-		// Cleanup thread factories
-		_env.clear_stacks();
+		//// Cleanup thread factories
+		//_env.clear_stacks();
 
 		return agents_created;
 	}

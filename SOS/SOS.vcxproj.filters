@@ -70,12 +70,6 @@
     <Filter Include="Source Files\Broker">
       <UniqueIdentifier>{5cf6f32a-a2e6-4844-9ea3-000f987ea5d2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Domain\Develop Strategy V2">
-      <UniqueIdentifier>{3721609d-031e-49cf-9041-a70a6224ab53}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Domain\Develop Strategy V2">
-      <UniqueIdentifier>{3093298e-7f39-4b58-aae6-c6c7433f8f20}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -252,9 +246,6 @@
     <ClInclude Include="Plush\EnvironmentPool.h">
       <Filter>Header Files\Plush</Filter>
     </ClInclude>
-    <ClInclude Include="Domain\Develop Strategy V2\Run.DevelopStrategy_V2.h">
-      <Filter>Header Files\Domain\Develop Strategy V2</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -394,9 +385,6 @@
     </ClCompile>
     <ClCompile Include="Plush\EnvironmentPool.cpp">
       <Filter>Source Files\Plush</Filter>
-    </ClCompile>
-    <ClCompile Include="Domain\Develop Strategy V2\Run.DevelopStrategy_V2.cpp">
-      <Filter>Source Files\Domain\Develop Strategy V2</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -3,8 +3,9 @@
 #include <vector>
 #include <string>
 #include "..\Utilities\ThreeDimensionalArray.h"
-#include "DatabaseConnection.h"
 #include "../Plush/Environment.h"
+#include "..\Database\SQLCommand.h"
+#include "..\Database\SQLConnection.h"
 
 namespace datastore
 {
@@ -32,14 +33,20 @@ namespace datastore
 		const std::string sqlstmt_insert_new_individual = "INSERT INTO [dbo].[Individuals] ([Individual_ID], [Genome], [Parent_1], [Parent_2], [Parent_1_1], [Parent_1_2], [Parent_2_1], [Parent_2_2], [Parent_1_1_1], [Parent_1_1_2], [Parent_1_2_1], [Parent_1_2_2], [Parent_2_1_1], [Parent_2_1_2], [Parent_2_2_1], [Parent_2_2_2]) VALUES	(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 		//                                                                     1  2  3  4  5  6  7  8  9  0  1  2  3  4  5  6
 
+		std::unique_ptr<Database::SQLCommand> sql_command = nullptr;
 
 	public:
-		AgentData();
-		~AgentData() {};
+		AgentData(Database::SQLConnection* sql_connection);
+
+
+		// Delete unwanted constructors and assignment operators
+		AgentData() = delete;
+		~AgentData() = default;
+
 		size_t load();
 		void save();
-		size_t make_pop_agents(Plush::Environment& _env, size_t _start);
+		size_t make_pop_agents(/* Plush::Environment& _env, */ size_t _start);
 	};
 
-	extern AgentData agent_data;
+	//extern AgentData agent_data;
 }

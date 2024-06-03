@@ -55,6 +55,15 @@ namespace domain
 				// ******************************
 			}
 
+			if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
+			{
+				std::ostringstream ss;
+				ss << ",method=DevelopStrategy.run"
+					<< ",diagnostic_level=1"
+					<< ",message=Exit";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
 			return 0;
 		}
 	}
