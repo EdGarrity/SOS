@@ -3,14 +3,9 @@
 #include "SQLCommand.h"
 #include "SQLConnection.h"
 #include "..\Utilities\Time.h"
+#include "..\Utilities\EventLogManager.h"
 
 #pragma once
-
-//Database::SQLCommand::SQLCommand()
-//{
-//	Utilities::log_error("Illegal call to default constructor SQLCommand::SQLCommand()");
-//	throw std::runtime_error("Illegal call to default constructor SQLCommand::SQLCommand()");
-//}
 
 Database::SQLCommand::SQLCommand(Database::SQLConnection* sql_connection)
 {
@@ -24,11 +19,8 @@ Database::SQLCommand::SQLCommand(Database::SQLConnection* sql_connection)
 
 std::unique_ptr<Database::ParameterBuffer> Database::SQLCommand::bind_sql_short_int_output_parameter(int COLUMN_NUMBER, short int* FIELD)
 {
-	//SQLLEN str_len = SQL_NTS;
-
 	std::unique_ptr<ParameterBuffer> cb = std::make_unique<ParameterBuffer>(SQL_NTS);
 
-	//RETCODE retcode = SQLBindParameter(sql_connection->get_statement_handle(), COLUMN_NUMBER, SQL_PARAM_OUTPUT, SQL_C_SSHORT, SQL_INTEGER, 0, 0, FIELD, 0, &str_len_SQL_NTS);
 	RETCODE retcode = SQLBindParameter(sql_connection->get_statement_handle(), COLUMN_NUMBER, SQL_PARAM_OUTPUT, SQL_C_SSHORT, SQL_INTEGER, 0, 0, FIELD, 0, &(cb.get()->value));
 	if ((retcode != SQL_SUCCESS) && (retcode != SQL_SUCCESS_WITH_INFO))
 	{

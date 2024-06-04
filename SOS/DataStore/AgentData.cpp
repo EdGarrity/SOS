@@ -4,9 +4,9 @@
 #include "AgentData.h"
 #include "..\Utilities\String.h"
 #include "..\Domain\Arguments.h"
-#include "../PushGP/Globals.h"
-#include "../Utilities/Conversion.h"
-#include "../PushGP/Random.h"
+#include "..\PushGP\Globals.h"
+#include "..\Utilities\Conversion.h"
+#include "..\PushGP\Random.h"
 
 namespace datastore
 {

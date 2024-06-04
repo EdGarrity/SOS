@@ -5,7 +5,6 @@
 #include <string>
 #include <string_view>
 #include "SQLConnection.h"
-#include "..\Utilities\EventLogManager.h"
 
 namespace Database
 {
