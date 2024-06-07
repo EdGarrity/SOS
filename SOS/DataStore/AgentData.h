@@ -33,7 +33,7 @@ namespace datastore
 		const std::string sqlstmt_insert_new_individual = "INSERT INTO [dbo].[Individuals] ([Individual_ID], [Genome], [Parent_1], [Parent_2], [Parent_1_1], [Parent_1_2], [Parent_2_1], [Parent_2_2], [Parent_1_1_1], [Parent_1_1_2], [Parent_1_2_1], [Parent_1_2_2], [Parent_2_1_1], [Parent_2_1_2], [Parent_2_2_1], [Parent_2_2_2]) VALUES	(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 		//                                                                     1  2  3  4  5  6  7  8  9  0  1  2  3  4  5  6
 
-		std::unique_ptr<Database::SQLCommand> sql_command = nullptr;
+		std::shared_ptr<Database::SQLCommand> sql_command = nullptr;
 
 	public:
 		AgentData(Database::SQLConnection* sql_connection);
