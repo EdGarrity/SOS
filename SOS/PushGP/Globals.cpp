@@ -15,9 +15,11 @@ namespace pushGP
 		// General GP storage variables
 
 		//Individual population_agents[domain::argmap::population_size];
-		Individual *population_agents;
+		//Individual *population_agents;
+		std::unique_ptr< std::array<Individual, domain::argmap::number_of_strategies>> population_agents;
 		//Individual child_agents[domain::argmap::population_size];
-		Individual *child_agents;
+		//Individual *child_agents;
+		std::unique_ptr<std::array<Individual, domain::argmap::number_of_strategies>> child_agents;
 
 		//*******************************************************
 		// Globals for Elite Lexicase Selection

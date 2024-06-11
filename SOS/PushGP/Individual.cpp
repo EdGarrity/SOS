@@ -158,13 +158,13 @@ namespace pushGP
 		grandparents_.clear();
 		greatgrandparents_.clear();
 
-		parents_.insert(globals::population_agents[parent].get_id());
+		parents_.insert((*globals::population_agents)[parent].get_id());
 
-		grandparents_.insert(globals::population_agents[parent].get_parents().begin(),
-			globals::population_agents[parent].get_parents().end());
+		grandparents_.insert((*globals::population_agents)[parent].get_parents().begin(),
+			(*globals::population_agents)[parent].get_parents().end());
 
-		greatgrandparents_.insert(globals::population_agents[parent].get_grandparents().begin(),
-			globals::population_agents[parent].get_grandparents().end());
+		greatgrandparents_.insert((*globals::population_agents)[parent].get_grandparents().begin(),
+			(*globals::population_agents)[parent].get_grandparents().end());
 	}
 
 	// Purpose: 
@@ -226,13 +226,13 @@ namespace pushGP
 		grandparents_.clear();
 		greatgrandparents_.clear();
 
-		parents_.insert(globals::population_agents[parent1].get_id());
-		grandparents_.insert(globals::population_agents[parent1].get_parents().begin(), globals::population_agents[parent1].get_parents().end());
-		greatgrandparents_.insert(globals::population_agents[parent1].get_grandparents().begin(), globals::population_agents[parent1].get_grandparents().end());
+		parents_.insert((*globals::population_agents)[parent1].get_id());
+		grandparents_.insert((*globals::population_agents)[parent1].get_parents().begin(), (*globals::population_agents)[parent1].get_parents().end());
+		greatgrandparents_.insert((*globals::population_agents)[parent1].get_grandparents().begin(), (*globals::population_agents)[parent1].get_grandparents().end());
 
-		parents_.insert(globals::population_agents[parent2].get_id());
-		grandparents_.insert(globals::population_agents[parent2].get_parents().begin(), globals::population_agents[parent2].get_parents().end());
-		greatgrandparents_.insert(globals::population_agents[parent2].get_grandparents().begin(), globals::population_agents[parent2].get_grandparents().end());
+		parents_.insert((*globals::population_agents)[parent2].get_id());
+		grandparents_.insert((*globals::population_agents)[parent2].get_parents().begin(), (*globals::population_agents)[parent2].get_parents().end());
+		greatgrandparents_.insert((*globals::population_agents)[parent2].get_grandparents().begin(), (*globals::population_agents)[parent2].get_grandparents().end());
 	}
 
 	// Purpose: 

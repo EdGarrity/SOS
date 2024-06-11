@@ -2,6 +2,7 @@
 //#include <vector>
 #include <array>
 #include <limits>
+#include <memory>
 #include <atomic>
 #include "../Domain/Arguments.h"
 #include "../Utilities/ThreadSafeArray.h"
@@ -14,9 +15,11 @@ namespace pushGP
 		//*******************************************************
 		// General GP storage variables
 		//extern Individual population_agents[domain::argmap::population_size];
-		extern Individual *population_agents;
+		//extern Individual *population_agents;
 		//extern Individual child_agents[domain::argmap::population_size];
-		extern Individual *child_agents;
+		//extern Individual *child_agents;
+		extern std::unique_ptr<std::array<Individual, domain::argmap::number_of_strategies>> population_agents;
+		extern std::unique_ptr<std::array<Individual, domain::argmap::number_of_strategies>> child_agents;
 
 		//*******************************************************
 		// Globals for Elite Lexicase Selection

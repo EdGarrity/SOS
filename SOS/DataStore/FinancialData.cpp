@@ -17,9 +17,14 @@ namespace datastore
 	FinancialData::FinancialData()
 	{
 		financial_data_record_size = get_training_record_size();
+		financial_data_record_count = get_count_of_primary_training_adj_open_prices(domain::argmap::financial_data_start_date, domain::argmap::financial_data_end_date);
 
-		load(domain::argmap::financial_training_data_start_date, domain::argmap::financial_training_data_end_date, FinancialInstrumentType::Primary_Training);
-		load(domain::argmap::financial_test_data_start_date, domain::argmap::financial_test_data_end_date, FinancialInstrumentType::Primary_Test);
+		data_records.reserve(financial_data_record_size * financial_data_record_count);
+
+		//load(domain::argmap::financial_training_data_start_date, domain::argmap::financial_training_data_end_date, FinancialInstrumentType::Primary_Training);
+		//load(domain::argmap::financial_test_data_start_date, domain::argmap::financial_test_data_end_date, FinancialInstrumentType::Primary_Test);
+		load(domain::argmap::financial_data_start_date, domain::argmap::financial_data_end_date);
+
 		load_primary_training_adj_open_prices(domain::argmap::financial_training_data_start_date, domain::argmap::financial_training_data_end_date);
 		load_index_adj_open_prices(domain::argmap::financial_training_data_start_date, domain::argmap::financial_training_data_end_date);
 	}
@@ -259,7 +264,245 @@ namespace datastore
 	//	}
 	//}
 
-	void FinancialData::load(const std::string& start_date, const std::string& end_date, FinancialInstrumentType financial_instrument_type)
+	//void FinancialData::load(const std::string& start_date, const std::string& end_date, FinancialInstrumentType financial_instrument_type)
+	//{
+	//	if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+	//	{
+	//		std::ostringstream ss;
+	//		ss << ",method=FinancialData.load"
+	//			<< ",diagnostic_level=9"
+	//			<< ",start_date=" << start_date
+	//			<< ",end_date=" << end_date
+	//			<< ",financial_instrument_type" << financial_instrument_type
+	//			<< ",message=loading_all_case_data";
+	//		Utilities::logline_threadsafe << ss.str();
+	//	}
+
+	//	database::SQLCommand* sqlcmd_get_case_data = nullptr;
+
+	//	try
+	//	{
+	//		if (financial_instrument_type == FinancialInstrumentType::Primary_Test)
+	//		{
+	//			// Construct SQL statement with date range filters
+	//			int sz = std::snprintf(nullptr, 0, fmt_str_load_all_test_data, start_date.c_str(), end_date.c_str());
+	//			std::vector<char> buf(sz + 1); // note +1 for null terminator
+	//			std::snprintf(&buf[0], buf.size(), fmt_str_load_all_test_data, start_date.c_str(), end_date.c_str());
+	//			std::string sqlstmt_load_case_data(buf.begin(), buf.end() - 1); // omit the null terminator
+
+	//			sqlcmd_get_case_data = new database::SQLCommand(database_connection.get_connection(), sqlstmt_load_case_data);
+
+	//			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+	//			{
+	//				std::ostringstream ss;
+	//				ss << ",method=FinancialData.load"
+	//					<< ",diagnostic_level=9"
+	//					<< ",start_date=" << start_date
+	//					<< ",end_date=" << end_date
+	//					<< ",test_case.size=" << test_case.size()
+	//					<< ",sqlstmt_load_case_data=" << sqlstmt_load_case_data
+	//					<< ",message=executing_sql_command";
+	//				Utilities::logline_threadsafe << ss.str();
+	//			}
+
+	//			sqlcmd_get_case_data->execute();
+
+	//			size_t first_record_index = 0;
+	//			size_t last_record_index = 0;
+	//			std::string last_written_date = "";
+
+	//			bool dirty = false;
+
+	//			size_t data_records_cursor = 0;
+
+	//			while (sqlcmd_get_case_data->fetch_next())
+	//			{
+	//				//if (Utilities::random_double() < domain::argmap::training_sample_ratio)
+	//				//{
+	//					if (data_records_cursor < domain::argmap::size_of_test_samples)
+	//					{
+	//						test_data_records[data_records_cursor] = sqlcmd_get_case_data->get_field_as_double(4);
+
+	//						if (last_written_date != sqlcmd_get_case_data->get_field_as_string(2))
+	//						{
+	//							if (last_written_date != "")
+	//								test_case.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
+
+	//							last_written_date = sqlcmd_get_case_data->get_field_as_string(2);
+	//							first_record_index = last_record_index;
+	//							dirty = true;
+	//						}
+
+	//						last_record_index++;
+	//					}
+
+	//					data_records_cursor++;
+	//				//}
+	//			}
+
+	//			if (dirty)
+	//				test_case.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
+
+	//			delete sqlcmd_get_case_data;
+
+	//			if (data_records_cursor >= domain::argmap::size_of_test_samples)
+	//			{
+	//				std::ostringstream ss;
+	//				ss << ",method=FinancialData.load"
+	//					<< ",diagnostic_level=9"
+	//					<< ",start_date=" << start_date
+	//					<< ",end_date=" << end_date
+	//					<< ",test_case.size=" << test_case.size()
+	//					<< ",table_size=" << data_records_cursor
+	//					<< ",message=Error: data_records overflow";
+	//				Utilities::logline_threadsafe << ss.str();
+	//			}
+
+	//			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+	//			{
+	//				std::ostringstream ss;
+	//				ss << ",method=FinancialData.load"
+	//					<< ",diagnostic_level=9"
+	//					<< ",start_date=" << start_date
+	//					<< ",end_date=" << end_date
+	//					<< ",test_case.size=" << test_case.size()
+	//					<< ",table_size=" << data_records_cursor
+	//					<< ",message=case_data_loaded";
+	//				Utilities::logline_threadsafe << ss.str();
+	//			}
+
+	//		}
+
+	//		else
+	//		{
+	//			// Construct SQL statement with date range filters
+	//			int sz = std::snprintf(nullptr, 0, fmt_str_load_all_test_data, start_date.c_str(), end_date.c_str());
+	//			std::vector<char> buf(sz + 1); // note +1 for null terminator
+	//			std::snprintf(&buf[0], buf.size(), fmt_str_load_all_test_data, start_date.c_str(), end_date.c_str());
+	//			std::string sqlstmt_load_case_data(buf.begin(), buf.end() - 1); // omit the null terminator
+
+	//			sqlcmd_get_case_data = new database::SQLCommand(database_connection.get_connection(), sqlstmt_load_case_data);
+
+	//			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+	//			{
+	//				std::ostringstream ss;
+	//				ss << ",method=FinancialData.load"
+	//					<< ",diagnostic_level=9"
+	//					<< ",start_date=" << start_date
+	//					<< ",end_date=" << end_date
+	//					<< ",training_cases.size=" << training_cases.size()
+	//					<< ",sqlstmt_load_case_data=" << sqlstmt_load_case_data
+	//					<< ",message=executing_sql_command";
+	//				Utilities::logline_threadsafe << ss.str();
+	//			}
+
+	//			sqlcmd_get_case_data->execute();
+
+	//			size_t first_record_index = 0;
+	//			size_t last_record_index = 0;
+	//			std::string last_written_date = "";
+
+	//			bool dirty = false;
+
+	//			size_t data_records_cursor = 0;
+
+	//			while (sqlcmd_get_case_data->fetch_next())
+	//			{
+	//				//if (Utilities::random_double() < domain::argmap::training_sample_ratio)
+	//				//{
+	//					if (data_records_cursor < domain::argmap::size_of_training_samples)
+	//					{
+	//						training_data_records[data_records_cursor] = sqlcmd_get_case_data->get_field_as_double(4);
+
+	//						if (last_written_date != sqlcmd_get_case_data->get_field_as_string(2))
+	//						{
+	//							if (last_written_date != "")
+	//								training_cases.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
+
+	//							last_written_date = sqlcmd_get_case_data->get_field_as_string(2);
+	//							first_record_index = last_record_index;
+	//							dirty = true;
+	//						}
+
+	//						last_record_index++;
+	//					}
+
+	//					data_records_cursor++;
+	//				//}
+	//			}
+
+	//			if (dirty)
+	//				training_cases.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
+
+	//			delete sqlcmd_get_case_data;
+
+	//			if (data_records_cursor >= domain::argmap::size_of_training_samples)
+	//			{
+	//				std::ostringstream ss;
+	//				ss << ",method=FinancialData.load"
+	//					<< ",diagnostic_level=9"
+	//					<< ",start_date=" << start_date
+	//					<< ",end_date=" << end_date
+	//					<< ",training_cases.size=" << training_cases.size()
+	//					<< ",table_size=" << data_records_cursor
+	//					<< ",message=Error: data_records overflow";
+	//				Utilities::logline_threadsafe << ss.str();
+	//			}
+
+	//			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+	//			{
+	//				std::ostringstream ss;
+	//				ss << ",method=FinancialData.load"
+	//					<< ",diagnostic_level=9"
+	//					<< ",start_date=" << start_date
+	//					<< ",end_date=" << end_date
+	//					<< ",training_cases.size=" << training_cases.size()
+	//					<< ",table_size=" << data_records_cursor
+	//					<< ",message=case_data_loaded";
+	//				Utilities::logline_threadsafe << ss.str();
+	//			}
+	//		}
+	//	}
+	//	catch (const std::exception& e)
+	//	{
+	//		{
+	//			std::ostringstream ss;
+	//			ss << ",method=FinancialData.load"
+	//				<< ",diagnostic_level=0"
+	//				<< ",exception=" << e.what()
+	//				<< ",message=Error_loading_data";
+	//			Utilities::logline_threadsafe << ss.str();
+	//		}
+
+	//		if (sqlcmd_get_case_data != nullptr)
+	//			delete sqlcmd_get_case_data;
+
+	//		std::cerr << e.what() << '\n';
+	//	}
+	//	catch (...)
+	//	{
+	//		std::ostringstream ss; ss << "Unknown exception"; Utilities::logline_threadsafe << ss.str();
+	//		{
+	//			std::ostringstream ss;
+	//			ss << ",method=FinancialData.load"
+	//				<< ",diagnostic_level=0"
+	//				<< ",exception=Unknown"
+	//				<< ",message=An_unknown_error_has_occured";
+	//			Utilities::logline_threadsafe << ss.str();
+	//		}
+
+	//		if (sqlcmd_get_case_data != nullptr)
+	//			delete sqlcmd_get_case_data;
+
+	//		std::stringstream error;
+	//		error << "CaseData::load()";
+	//		std::cerr << error.str();
+	//	}
+	//}
+
+
+
+	void FinancialData::load(const std::string& start_date, const std::string& end_date)
 	{
 		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
@@ -268,8 +511,7 @@ namespace datastore
 				<< ",diagnostic_level=9"
 				<< ",start_date=" << start_date
 				<< ",end_date=" << end_date
-				<< ",financial_instrument_type" << financial_instrument_type
-				<< ",message=loading_all_case_data";
+				<< ",message=Enter";
 			Utilities::logline_threadsafe << ss.str();
 		}
 
@@ -277,185 +519,88 @@ namespace datastore
 
 		try
 		{
-			if (financial_instrument_type == FinancialInstrumentType::Primary_Test)
+			// Construct SQL statement with date range filters
+			int sz = std::snprintf(nullptr, 0, fmt_str_load_all_test_data, start_date.c_str(), end_date.c_str());
+			std::vector<char> buf(sz + 1); // note +1 for null terminator
+			std::snprintf(&buf[0], buf.size(), fmt_str_load_all_test_data, start_date.c_str(), end_date.c_str());
+			std::string sqlstmt_load_case_data(buf.begin(), buf.end() - 1); // omit the null terminator
+
+			sqlcmd_get_case_data = new database::SQLCommand(database_connection.get_connection(), sqlstmt_load_case_data);
+
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
-				// Construct SQL statement with date range filters
-				int sz = std::snprintf(nullptr, 0, fmt_str_load_all_test_data, start_date.c_str(), end_date.c_str());
-				std::vector<char> buf(sz + 1); // note +1 for null terminator
-				std::snprintf(&buf[0], buf.size(), fmt_str_load_all_test_data, start_date.c_str(), end_date.c_str());
-				std::string sqlstmt_load_case_data(buf.begin(), buf.end() - 1); // omit the null terminator
-
-				sqlcmd_get_case_data = new database::SQLCommand(database_connection.get_connection(), sqlstmt_load_case_data);
-
-				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
-				{
-					std::ostringstream ss;
-					ss << ",method=FinancialData.load"
-						<< ",diagnostic_level=9"
-						<< ",start_date=" << start_date
-						<< ",end_date=" << end_date
-						<< ",test_case.size=" << test_case.size()
-						<< ",sqlstmt_load_case_data=" << sqlstmt_load_case_data
-						<< ",message=executing_sql_command";
-					Utilities::logline_threadsafe << ss.str();
-				}
-
-				sqlcmd_get_case_data->execute();
-
-				size_t first_record_index = 0;
-				size_t last_record_index = 0;
-				std::string last_written_date = "";
-
-				bool dirty = false;
-
-				size_t data_records_cursor = 0;
-
-				while (sqlcmd_get_case_data->fetch_next())
-				{
-					//if (Utilities::random_double() < domain::argmap::training_sample_ratio)
-					//{
-						if (data_records_cursor < domain::argmap::size_of_test_samples)
-						{
-							test_data_records[data_records_cursor] = sqlcmd_get_case_data->get_field_as_double(4);
-
-							if (last_written_date != sqlcmd_get_case_data->get_field_as_string(2))
-							{
-								if (last_written_date != "")
-									test_case.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
-
-								last_written_date = sqlcmd_get_case_data->get_field_as_string(2);
-								first_record_index = last_record_index;
-								dirty = true;
-							}
-
-							last_record_index++;
-						}
-
-						data_records_cursor++;
-					//}
-				}
-
-				if (dirty)
-					test_case.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
-
-				delete sqlcmd_get_case_data;
-
-				if (data_records_cursor >= domain::argmap::size_of_test_samples)
-				{
-					std::ostringstream ss;
-					ss << ",method=FinancialData.load"
-						<< ",diagnostic_level=9"
-						<< ",start_date=" << start_date
-						<< ",end_date=" << end_date
-						<< ",test_case.size=" << test_case.size()
-						<< ",table_size=" << data_records_cursor
-						<< ",message=Error: data_records overflow";
-					Utilities::logline_threadsafe << ss.str();
-				}
-
-				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
-				{
-					std::ostringstream ss;
-					ss << ",method=FinancialData.load"
-						<< ",diagnostic_level=9"
-						<< ",start_date=" << start_date
-						<< ",end_date=" << end_date
-						<< ",test_case.size=" << test_case.size()
-						<< ",table_size=" << data_records_cursor
-						<< ",message=case_data_loaded";
-					Utilities::logline_threadsafe << ss.str();
-				}
-
+				std::ostringstream ss;
+				ss << ",method=FinancialData.load"
+					<< ",diagnostic_level=9"
+					<< ",start_date=" << start_date
+					<< ",end_date=" << end_date
+					<< ",training_cases.size=" << training_cases.size()
+					<< ",sqlstmt_load_case_data=" << sqlstmt_load_case_data
+					<< ",message=executing_sql_command";
+				Utilities::logline_threadsafe << ss.str();
 			}
 
-			else
+			sqlcmd_get_case_data->execute();
+
+			size_t first_record_index = 0;
+			size_t last_record_index = 0;
+			std::string last_written_date = "";
+
+			bool dirty = false;
+
+			size_t data_records_cursor = 0;
+
+			while (sqlcmd_get_case_data->fetch_next())
 			{
-				// Construct SQL statement with date range filters
-				int sz = std::snprintf(nullptr, 0, fmt_str_load_all_test_data, start_date.c_str(), end_date.c_str());
-				std::vector<char> buf(sz + 1); // note +1 for null terminator
-				std::snprintf(&buf[0], buf.size(), fmt_str_load_all_test_data, start_date.c_str(), end_date.c_str());
-				std::string sqlstmt_load_case_data(buf.begin(), buf.end() - 1); // omit the null terminator
-
-				sqlcmd_get_case_data = new database::SQLCommand(database_connection.get_connection(), sqlstmt_load_case_data);
-
-				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				if (data_records_cursor < domain::argmap::size_of_training_samples)
 				{
-					std::ostringstream ss;
-					ss << ",method=FinancialData.load"
-						<< ",diagnostic_level=9"
-						<< ",start_date=" << start_date
-						<< ",end_date=" << end_date
-						<< ",training_cases.size=" << training_cases.size()
-						<< ",sqlstmt_load_case_data=" << sqlstmt_load_case_data
-						<< ",message=executing_sql_command";
-					Utilities::logline_threadsafe << ss.str();
-				}
+					data_records[data_records_cursor] = sqlcmd_get_case_data->get_field_as_double(4);
 
-				sqlcmd_get_case_data->execute();
-
-				size_t first_record_index = 0;
-				size_t last_record_index = 0;
-				std::string last_written_date = "";
-
-				bool dirty = false;
-
-				size_t data_records_cursor = 0;
-
-				while (sqlcmd_get_case_data->fetch_next())
-				{
-					if (Utilities::random_double() < domain::argmap::training_sample_ratio)
+					if (last_written_date != sqlcmd_get_case_data->get_field_as_string(2))
 					{
-						if (data_records_cursor < domain::argmap::size_of_training_samples)
-						{
-							training_data_records[data_records_cursor] = sqlcmd_get_case_data->get_field_as_double(4);
+						if (last_written_date != "")
+							training_cases.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
 
-							if (last_written_date != sqlcmd_get_case_data->get_field_as_string(2))
-							{
-								if (last_written_date != "")
-									training_cases.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
-
-								last_written_date = sqlcmd_get_case_data->get_field_as_string(2);
-								first_record_index = last_record_index;
-								dirty = true;
-							}
-
-							last_record_index++;
-						}
-
-						data_records_cursor++;
+						last_written_date = sqlcmd_get_case_data->get_field_as_string(2);
+						first_record_index = last_record_index;
+						dirty = true;
 					}
+
+					last_record_index++;
 				}
 
-				if (dirty)
-					training_cases.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
+				data_records_cursor++;
+			}
 
-				delete sqlcmd_get_case_data;
+			if (dirty)
+				training_cases.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
 
-				if (data_records_cursor >= domain::argmap::size_of_training_samples)
-				{
-					std::ostringstream ss;
-					ss << ",method=FinancialData.load"
-						<< ",diagnostic_level=9"
-						<< ",start_date=" << start_date
-						<< ",end_date=" << end_date
-						<< ",training_cases.size=" << training_cases.size()
-						<< ",table_size=" << data_records_cursor
-						<< ",message=Error: data_records overflow";
-					Utilities::logline_threadsafe << ss.str();
-				}
+			delete sqlcmd_get_case_data;
 
-				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
-				{
-					std::ostringstream ss;
-					ss << ",method=FinancialData.load"
-						<< ",diagnostic_level=9"
-						<< ",start_date=" << start_date
-						<< ",end_date=" << end_date
-						<< ",training_cases.size=" << training_cases.size()
-						<< ",table_size=" << data_records_cursor
-						<< ",message=case_data_loaded";
-					Utilities::logline_threadsafe << ss.str();
-				}
+			if (data_records_cursor >= domain::argmap::size_of_training_samples)
+			{
+				std::ostringstream ss;
+				ss << ",method=FinancialData.load"
+					<< ",diagnostic_level=9"
+					<< ",start_date=" << start_date
+					<< ",end_date=" << end_date
+					<< ",training_cases.size=" << training_cases.size()
+					<< ",table_size=" << data_records_cursor
+					<< ",message=Error: data_records overflow";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			{
+				std::ostringstream ss;
+				ss << ",method=FinancialData.load"
+					<< ",diagnostic_level=9"
+					<< ",start_date=" << start_date
+					<< ",end_date=" << end_date
+					<< ",training_cases.size=" << training_cases.size()
+					<< ",table_size=" << data_records_cursor
+					<< ",message=case_data_loaded";
+				Utilities::logline_threadsafe << ss.str();
 			}
 		}
 		catch (const std::exception& e)
@@ -494,6 +639,9 @@ namespace datastore
 			std::cerr << error.str();
 		}
 	}
+
+
+
 
 	// Purpose: 
 	//   get size of a financial data record
@@ -1066,7 +1214,7 @@ namespace datastore
 		try
 		{
 			// Resize the vector to hold the number of records
-			size_t count = get_count_of_primary_training_adj_open_prices(start_date, end_date);
+			//size_t count = get_count_of_primary_training_adj_open_prices(start_date, end_date);
 			//primary_adj_open_values.resize(count);
 
 			// Construct SQL statement with filters

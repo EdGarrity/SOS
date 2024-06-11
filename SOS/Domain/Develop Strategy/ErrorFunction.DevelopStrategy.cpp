@@ -110,7 +110,7 @@ namespace domain
 				Utilities::logline_threadsafe << ss.str();
 			}
 
-			std::string program = pushGP::globals::population_agents[strategy_index].get_genome_string();
+			std::string program = (*pushGP::globals::population_agents)[strategy_index].get_genome_string();
 
 			//bool trace = (strategy_index == 2 && case_index == 0);
 			bool trace = false;

@@ -55,7 +55,7 @@ namespace pushGP
 		double random_variable = Utilities::random_double(0.0, 1.0);
 		double median_absolute_deviation = 0.0;
 
-		Plush::Genome<Plush::CodeAtom>& child_genome = globals::child_agents[_individual_index].get_genome();
+		Plush::Genome<Plush::CodeAtom>& child_genome = (*globals::child_agents)[_individual_index].get_genome();
 
 		pushGP::SimulatedAnnealing_States state = _sa.get_state(random_variable);
 
@@ -131,17 +131,17 @@ namespace pushGP
 				}
 
 				// Check that both parents are not the same individual
-				if (globals::population_agents[first_parent_index].get_id() == globals::population_agents[other_parent_index].get_id())
+				if ((*globals::population_agents)[first_parent_index].get_id() == (*globals::population_agents)[other_parent_index].get_id())
 					done = false;
 
 				// Check that the parents are not siblings
 				else if (incest_prob > domain::argmap::probability_of_sibling_incest)
 				{
-					if ((globals::population_agents[first_parent_index].get_parents().empty() == false) && (globals::population_agents[other_parent_index].get_parents().empty() == false))
+					if (((*globals::population_agents)[first_parent_index].get_parents().empty() == false) && ((*globals::population_agents)[other_parent_index].get_parents().empty() == false))
 					{
-						for (UUID first_siblings_id : globals::population_agents[first_parent_index].get_parents())
+						for (UUID first_siblings_id : (*globals::population_agents)[first_parent_index].get_parents())
 						{
-							for (UUID other_siblings_id : globals::population_agents[other_parent_index].get_parents())
+							for (UUID other_siblings_id : (*globals::population_agents)[other_parent_index].get_parents())
 							{
 								if (first_siblings_id == other_siblings_id)
 								{
@@ -159,11 +159,11 @@ namespace pushGP
 				// Check that the parents are not cousins
 				if ((done) && (incest_prob > domain::argmap::probability_of_first_cousin_incest))
 				{
-					if ((globals::population_agents[first_parent_index].get_grandparents().empty() == false) && (globals::population_agents[other_parent_index].get_grandparents().empty() == false))
+					if (((*globals::population_agents)[first_parent_index].get_grandparents().empty() == false) && ((*globals::population_agents)[other_parent_index].get_grandparents().empty() == false))
 					{
-						for (UUID first_grandparent_id : globals::population_agents[first_parent_index].get_grandparents())
+						for (UUID first_grandparent_id : (*globals::population_agents)[first_parent_index].get_grandparents())
 						{
-							for (UUID other_grandparent_id : globals::population_agents[other_parent_index].get_grandparents())
+							for (UUID other_grandparent_id : (*globals::population_agents)[other_parent_index].get_grandparents())
 							{
 								if (first_grandparent_id == other_grandparent_id)
 								{
@@ -181,11 +181,11 @@ namespace pushGP
 				// Check that the parents are not second cousins
 				if ((done) && (incest_prob > domain::argmap::probability_of_second_cousin_incest))
 				{
-					if ((globals::population_agents[first_parent_index].get_greatgrandparents().empty() == false) && (globals::population_agents[other_parent_index].get_greatgrandparents().empty() == false))
+					if (((*globals::population_agents)[first_parent_index].get_greatgrandparents().empty() == false) && ((*globals::population_agents)[other_parent_index].get_greatgrandparents().empty() == false))
 					{
-						for (UUID first_greatgrandparent_id : globals::population_agents[first_parent_index].get_greatgrandparents())
+						for (UUID first_greatgrandparent_id : (*globals::population_agents)[first_parent_index].get_greatgrandparents())
 						{
-							for (UUID other_greatgrandparent_id : globals::population_agents[other_parent_index].get_greatgrandparents())
+							for (UUID other_greatgrandparent_id : (*globals::population_agents)[other_parent_index].get_greatgrandparents())
 							{
 								if (first_greatgrandparent_id == other_greatgrandparent_id)
 								{
@@ -265,17 +265,17 @@ namespace pushGP
 				}
 
 				// Check that both parents are not the same individual
-				if (globals::population_agents[first_parent_index].get_id() == globals::population_agents[other_parent_index].get_id())
+				if ((*globals::population_agents)[first_parent_index].get_id() == (*globals::population_agents)[other_parent_index].get_id())
 					done = false;
 
 				// Check that the parents are not siblings
 				else if (incest_prob > domain::argmap::probability_of_sibling_incest)
 				{
-					if ((globals::population_agents[first_parent_index].get_parents().empty() == false) && (globals::population_agents[other_parent_index].get_parents().empty() == false))
+					if (((*globals::population_agents)[first_parent_index].get_parents().empty() == false) && ((*globals::population_agents)[other_parent_index].get_parents().empty() == false))
 					{
-						for (UUID first_siblings_id : globals::population_agents[first_parent_index].get_parents())
+						for (UUID first_siblings_id : (*globals::population_agents)[first_parent_index].get_parents())
 						{
-							for (UUID other_siblings_id : globals::population_agents[other_parent_index].get_parents())
+							for (UUID other_siblings_id : (*globals::population_agents)[other_parent_index].get_parents())
 							{
 								if (first_siblings_id == other_siblings_id)
 								{
@@ -293,11 +293,11 @@ namespace pushGP
 				// Check that the parents are not cousins
 				if ((done) && (incest_prob > domain::argmap::probability_of_first_cousin_incest))
 				{
-					if ((globals::population_agents[first_parent_index].get_grandparents().empty() == false) && (globals::population_agents[other_parent_index].get_grandparents().empty() == false))
+					if (((*globals::population_agents)[first_parent_index].get_grandparents().empty() == false) && ((*globals::population_agents)[other_parent_index].get_grandparents().empty() == false))
 					{
-						for (UUID first_grandparent_id : globals::population_agents[first_parent_index].get_grandparents())
+						for (UUID first_grandparent_id : (*globals::population_agents)[first_parent_index].get_grandparents())
 						{
-							for (UUID other_grandparent_id : globals::population_agents[other_parent_index].get_grandparents())
+							for (UUID other_grandparent_id : (*globals::population_agents)[other_parent_index].get_grandparents())
 							{
 								if (first_grandparent_id == other_grandparent_id)
 								{
@@ -315,11 +315,11 @@ namespace pushGP
 				// Check that the parents are not second cousins
 				if ((done) && (incest_prob > domain::argmap::probability_of_second_cousin_incest))
 				{
-					if ((globals::population_agents[first_parent_index].get_greatgrandparents().empty() == false) && (globals::population_agents[other_parent_index].get_greatgrandparents().empty() == false))
+					if (((*globals::population_agents)[first_parent_index].get_greatgrandparents().empty() == false) && ((*globals::population_agents)[other_parent_index].get_greatgrandparents().empty() == false))
 					{
-						for (UUID first_greatgrandparent_id : globals::population_agents[first_parent_index].get_greatgrandparents())
+						for (UUID first_greatgrandparent_id : (*globals::population_agents)[first_parent_index].get_greatgrandparents())
 						{
-							for (UUID other_greatgrandparent_id : globals::population_agents[other_parent_index].get_greatgrandparents())
+							for (UUID other_greatgrandparent_id : (*globals::population_agents)[other_parent_index].get_greatgrandparents())
 							{
 								if (first_greatgrandparent_id == other_greatgrandparent_id)
 								{
@@ -387,7 +387,7 @@ namespace pushGP
 				make_random_plush_genome(child_genome);
 
 			else
-				globals::child_agents[_individual_index].copy(globals::population_agents[_individual_index]);
+				(*globals::child_agents)[_individual_index].copy((*globals::population_agents)[_individual_index]);
 		}
 
 		else
@@ -405,7 +405,7 @@ namespace pushGP
 			state = pushGP::SimulatedAnnealing_States::regenerate;
 		}
 
-		if ((globals::child_agents[_individual_index].get_genome_point_estimate()) > domain::argmap::max_points)
+		if (((*globals::child_agents)[_individual_index].get_genome_point_estimate()) > domain::argmap::max_points)
 		{
 			make_random_plush_genome(child_genome);
 			state = pushGP::SimulatedAnnealing_States::regenerate;

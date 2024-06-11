@@ -3,6 +3,7 @@
 #include <vector>
 #include <algorithm>
 #include <string>
+#include <vector>
 #include "..\Utilities\ThreeDimensionalArray.h"
 #include "DatabaseConnection.h"
 #include "..\Domain\Arguments.h"
@@ -52,8 +53,10 @@ namespace datastore
 		std::vector<data_window_record_t> training_cases;
 		std::vector<data_window_record_t> test_case;
 
-		double training_data_records[domain::argmap::size_of_training_samples];
-		double test_data_records[domain::argmap::size_of_training_samples];
+		//double training_data_records[domain::argmap::size_of_training_samples];
+		//double test_data_records[domain::argmap::size_of_training_samples];
+		std::vector<double> data_records;
+
 
 		struct adj_opening_prices_record_t
 		{
@@ -66,12 +69,14 @@ namespace datastore
 		std::vector<adj_opening_prices_record_t> index_adj_open_values;
 
 		size_t financial_data_record_size= 0;
+		size_t financial_data_record_count = 0;
 
 	public:
 		FinancialData();
 		~FinancialData() {};
 
-		void load(const std::string& start_date, const std::string& end_date, FinancialInstrumentType financial_instrument_type);
+		//void load(const std::string& start_date, const std::string& end_date, FinancialInstrumentType financial_instrument_type);
+		void load(const std::string& start_date, const std::string& end_date);
 		void load_primary_training_adj_open_prices(const std::string& start_date, const std::string& end_date);
 		void load_primary_testing_adj_open_prices(const std::string& start_date, const std::string& end_date);
 		void load_index_adj_open_prices(const std::string& start_date, const std::string& end_date);

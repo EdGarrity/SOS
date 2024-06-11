@@ -23,6 +23,8 @@ namespace domain
 		// Specify which financial instruments to target
 		const std::string financial_instrument = "AAPL";
 		const std::string financial_index = "FXAIX";
+		const std::string financial_data_start_date = "2012-01-02";
+		const std::string financial_data_end_date = "2020-12-31";
 		const std::string financial_training_data_start_date = "2012-01-02";
 		const std::string financial_training_data_end_date = "2020-12-31";
 		const std::string financial_test_data_start_date = "2021-01-02";
@@ -34,14 +36,14 @@ namespace domain
 
 		// Meta data on training and test cases
 		static constexpr size_t training_case_length = 252; // 252 trading days in a year
-		static constexpr size_t test_case_length = 252; // 252 trading days in a year
-		static constexpr size_t number_of_training_cases = 10338;
-		static constexpr size_t number_of_records = 62611867;
-		static constexpr size_t records_per_case = 6056;
-		static constexpr double training_sample_ratio = 0.01;
-		static constexpr double training_case_sample_percent = 1.0;
-		static constexpr size_t size_of_training_samples = ((double)number_of_records * training_sample_ratio);
-		static constexpr size_t size_of_test_samples = (double)512;
+		//static constexpr size_t test_case_length = 252; // 252 trading days in a year
+		//static constexpr size_t number_of_training_cases = 10338;
+		//static constexpr size_t number_of_records = 62611867;
+		//static constexpr size_t records_per_case = 6056;
+		//static constexpr double training_sample_ratio = 0.01;
+		//static constexpr double training_case_sample_percent = 1.0;
+		//static constexpr size_t size_of_training_samples = ((double)number_of_records * training_sample_ratio);
+		//static constexpr size_t size_of_test_samples = (double)512;
 
 		// Default maximum size of the stack buffer.  Must be greater than max_points
 		const unsigned long maximum_stack_size = 2000;
@@ -628,8 +630,6 @@ namespace domain
 		//const std::string db_init_datasource = "(local)";
 		//const std::string db_init_datasource = "EGARRITY-LT";
 		const std::string db_init_datasource = "192.168.1.42";
-
-		const std::string db_data_source_name = "SOS";
 
 		// Name of an existing SQL Server database to which to connect.
 		const std::string db_init_catalog = "SOS";

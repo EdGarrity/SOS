@@ -87,8 +87,8 @@ namespace pushGP
 	{
 		Plush::CodeAtom temp_gene;
 
-		Plush::Genome<Plush::CodeAtom>& old_genome = globals::population_agents[_parent].get_genome();
-		Plush::Genome<Plush::CodeAtom>& new_genome = globals::child_agents[_child].get_genome();
+		Plush::Genome<Plush::CodeAtom>& old_genome = (*globals::population_agents)[_parent].get_genome();
+		Plush::Genome<Plush::CodeAtom>& new_genome = (*globals::child_agents)[_child].get_genome();
 
 		new_genome.clear();
 
@@ -140,10 +140,10 @@ namespace pushGP
 		} // for (auto atom : old_genome)
 
 		// Create new child
-		globals::child_agents[_child].set_genome(new_genome);
+		(*globals::child_agents)[_child].set_genome(new_genome);
 
 		// Track individual's parents and grandparents
-		globals::child_agents[_child].record_family_tree(_parent);
+		(*globals::child_agents)[_child].record_family_tree(_parent);
 	}
 
 	// Purpose: 
@@ -170,13 +170,13 @@ namespace pushGP
 	//
 	void alternation(unsigned int _parent1, unsigned int _parent2, unsigned int _child)
 	{
-		Plush::Genome<Plush::CodeAtom>& s1 = globals::population_agents[_parent1].get_genome();
-		Plush::Genome<Plush::CodeAtom>& s2 = globals::population_agents[_parent2].get_genome();
+		Plush::Genome<Plush::CodeAtom>& s1 = (*globals::population_agents)[_parent1].get_genome();
+		Plush::Genome<Plush::CodeAtom>& s2 = (*globals::population_agents)[_parent2].get_genome();
 
 		unsigned int i = 0;
 		bool use_s1 = (Utilities::random_double(0.0, 1.0) > 0.5) ? true : false;
 
-		Plush::Genome<Plush::CodeAtom>& result_genome = globals::child_agents[_child].get_genome();
+		Plush::Genome<Plush::CodeAtom>& result_genome = (*globals::child_agents)[_child].get_genome();
 		result_genome.clear();
 
 		int iteration_budget = s1.size() + s2.size();
@@ -203,6 +203,6 @@ namespace pushGP
 		}
 
 		// Track individual's parents and grandparents
-		globals::child_agents[_child].record_family_tree(_parent1, _parent2);
+		(*globals::child_agents)[_child].record_family_tree(_parent1, _parent2);
 	}
 }
