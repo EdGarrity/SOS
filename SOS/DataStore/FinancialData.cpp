@@ -542,66 +542,67 @@ namespace datastore
 
 			sqlcmd_get_case_data->execute();
 
-			size_t first_record_index = 0;
-			size_t last_record_index = 0;
-			std::string last_written_date = "";
+			// To Do: Rewrite to load all records into the vector data_records
+			//size_t first_record_index = 0;
+			//size_t last_record_index = 0;
+			//std::string last_written_date = "";
 
-			bool dirty = false;
+			//bool dirty = false;
 
-			size_t data_records_cursor = 0;
+			//size_t data_records_cursor = 0;
 
-			while (sqlcmd_get_case_data->fetch_next())
-			{
-				if (data_records_cursor < domain::argmap::size_of_training_samples)
-				{
-					data_records[data_records_cursor] = sqlcmd_get_case_data->get_field_as_double(4);
+			//while (sqlcmd_get_case_data->fetch_next())
+			//{
+			//	if (data_records_cursor < domain::argmap::size_of_training_samples)
+			//	{
+			//		data_records[data_records_cursor] = sqlcmd_get_case_data->get_field_as_double(4);
 
-					if (last_written_date != sqlcmd_get_case_data->get_field_as_string(2))
-					{
-						if (last_written_date != "")
-							training_cases.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
+			//		if (last_written_date != sqlcmd_get_case_data->get_field_as_string(2))
+			//		{
+			//			if (last_written_date != "")
+			//				training_cases.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
 
-						last_written_date = sqlcmd_get_case_data->get_field_as_string(2);
-						first_record_index = last_record_index;
-						dirty = true;
-					}
+			//			last_written_date = sqlcmd_get_case_data->get_field_as_string(2);
+			//			first_record_index = last_record_index;
+			//			dirty = true;
+			//		}
 
-					last_record_index++;
-				}
+			//		last_record_index++;
+			//	}
 
-				data_records_cursor++;
-			}
+			//	data_records_cursor++;
+			//}
 
-			if (dirty)
-				training_cases.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
+			//if (dirty)
+			//	training_cases.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
 
 			delete sqlcmd_get_case_data;
 
-			if (data_records_cursor >= domain::argmap::size_of_training_samples)
-			{
-				std::ostringstream ss;
-				ss << ",method=FinancialData.load"
-					<< ",diagnostic_level=9"
-					<< ",start_date=" << start_date
-					<< ",end_date=" << end_date
-					<< ",training_cases.size=" << training_cases.size()
-					<< ",table_size=" << data_records_cursor
-					<< ",message=Error: data_records overflow";
-				Utilities::logline_threadsafe << ss.str();
-			}
+			//if (data_records_cursor >= domain::argmap::size_of_training_samples)
+			//{
+			//	std::ostringstream ss;
+			//	ss << ",method=FinancialData.load"
+			//		<< ",diagnostic_level=9"
+			//		<< ",start_date=" << start_date
+			//		<< ",end_date=" << end_date
+			//		<< ",training_cases.size=" << training_cases.size()
+			//		<< ",table_size=" << data_records_cursor
+			//		<< ",message=Error: data_records overflow";
+			//	Utilities::logline_threadsafe << ss.str();
+			//}
 
-			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
-			{
-				std::ostringstream ss;
-				ss << ",method=FinancialData.load"
-					<< ",diagnostic_level=9"
-					<< ",start_date=" << start_date
-					<< ",end_date=" << end_date
-					<< ",training_cases.size=" << training_cases.size()
-					<< ",table_size=" << data_records_cursor
-					<< ",message=case_data_loaded";
-				Utilities::logline_threadsafe << ss.str();
-			}
+			//if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			//{
+			//	std::ostringstream ss;
+			//	ss << ",method=FinancialData.load"
+			//		<< ",diagnostic_level=9"
+			//		<< ",start_date=" << start_date
+			//		<< ",end_date=" << end_date
+			//		<< ",training_cases.size=" << training_cases.size()
+			//		<< ",table_size=" << data_records_cursor
+			//		<< ",message=case_data_loaded";
+			//	Utilities::logline_threadsafe << ss.str();
+			//}
 		}
 		catch (const std::exception& e)
 		{
@@ -816,63 +817,63 @@ namespace datastore
 	//	}
 	//	return value;
 	//}
-	std::mutex data_records_mutex;
-	double FinancialData::get_training_data(const size_t data_index, const size_t training_case_index)
-	{
-		data_window_record_t index_record = training_cases[training_case_index];
+	//std::mutex data_records_mutex;
+	//double FinancialData::get_training_data(const size_t data_index, const size_t training_case_index)
+	//{
+	//	data_window_record_t index_record = training_cases[training_case_index];
 
-		size_t data_record_range = index_record.last_record - index_record.first_record + 1;
-		size_t data_record_index = std::abs((long)(data_index % data_record_range));
+	//	size_t data_record_range = index_record.last_record - index_record.first_record + 1;
+	//	size_t data_record_index = std::abs((long)(data_index % data_record_range));
 
-		double value = 0;
+	//	double value = 0;
 
-		try
-		{
-			std::unique_lock<std::mutex> lock(data_records_mutex);
-			value = training_data_records[index_record.first_record + data_record_index];
-		}
-		catch (std::out_of_range const& e)
-		{
-			{
-				std::ostringstream ss;
-				ss << ",method=FinancialData.get_data"
-					<< ",diagnostic_level=0"
-					<< ",exception=" << e.what()
-					<< ",data_index=" << data_index
-					<< ",training_case_index=" << training_case_index
-					<< ",index_record.first_record=" << index_record.first_record
-					<< ",index_record.last_record=" << index_record.last_record
-					<< ",data_record_range=" << data_record_range
-					<< ",data_record_index=" << data_record_index
-					<< ",message=Error_loading_data";
-				Utilities::logline_threadsafe << ss.str();
-			}
+	//	try
+	//	{
+	//		std::unique_lock<std::mutex> lock(data_records_mutex);
+	//		value = training_data_records[index_record.first_record + data_record_index];
+	//	}
+	//	catch (std::out_of_range const& e)
+	//	{
+	//		{
+	//			std::ostringstream ss;
+	//			ss << ",method=FinancialData.get_data"
+	//				<< ",diagnostic_level=0"
+	//				<< ",exception=" << e.what()
+	//				<< ",data_index=" << data_index
+	//				<< ",training_case_index=" << training_case_index
+	//				<< ",index_record.first_record=" << index_record.first_record
+	//				<< ",index_record.last_record=" << index_record.last_record
+	//				<< ",data_record_range=" << data_record_range
+	//				<< ",data_record_index=" << data_record_index
+	//				<< ",message=Error_loading_data";
+	//			Utilities::logline_threadsafe << ss.str();
+	//		}
 
-			std::cerr << e.what() << '\n';
-		}
-		catch (...)
-		{
-			{
-				std::ostringstream ss;
-				ss << ",method=FinancialData.get_data"
-					<< ",diagnostic_level=0"
-					<< ",exception=Unknown"
-					<< ",data_index=" << data_index
-					<< ",training_case_index=" << training_case_index
-					<< ",index_record.first_record=" << index_record.first_record
-					<< ",index_record.last_record=" << index_record.last_record
-					<< ",data_record_range=" << data_record_range
-					<< ",data_record_index=" << data_record_index
-					<< ",message=An_unknown_error_has_occured";
-				Utilities::logline_threadsafe << ss.str();
-			}
+	//		std::cerr << e.what() << '\n';
+	//	}
+	//	catch (...)
+	//	{
+	//		{
+	//			std::ostringstream ss;
+	//			ss << ",method=FinancialData.get_data"
+	//				<< ",diagnostic_level=0"
+	//				<< ",exception=Unknown"
+	//				<< ",data_index=" << data_index
+	//				<< ",training_case_index=" << training_case_index
+	//				<< ",index_record.first_record=" << index_record.first_record
+	//				<< ",index_record.last_record=" << index_record.last_record
+	//				<< ",data_record_range=" << data_record_range
+	//				<< ",data_record_index=" << data_record_index
+	//				<< ",message=An_unknown_error_has_occured";
+	//			Utilities::logline_threadsafe << ss.str();
+	//		}
 
-			std::stringstream error;
-			error << "FinancialData::get_data()";
-			std::cerr << error.str();
-		}
-		return value;
-	}
+	//		std::stringstream error;
+	//		error << "FinancialData::get_data()";
+	//		std::cerr << error.str();
+	//	}
+	//	return value;
+	//}
 
 	double FinancialData::get_primary_training_stock_price(size_t index)
 	{

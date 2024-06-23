@@ -85,10 +85,12 @@ namespace datastore
 		size_t get_count_of_primary_testing_adj_open_prices(const std::string& start_date, const std::string& end_date);
 		size_t get_training_record_size() const;
 
-		double get_training_data(const size_t index, const size_t input_case);
-		double get_test_data(const size_t index, const size_t input_case);
-		size_t get_training_data_count() const { return primary_training_adj_open_values.size(); }
-		size_t get_test_data_count() const { return primary_test_adj_open_values.size(); }
+		double get_training_data(const size_t index, const size_t input_case) {
+			return 0.0;
+		};
+		//double get_test_data(const size_t index, const size_t input_case);
+		size_t get_training_data_count() const { return 0; /* primary_training_adj_open_values.size();*/ }
+		//size_t get_test_data_count() const { return primary_test_adj_open_values.size(); }
 		size_t get_index_stock_count() const { return index_adj_open_values.size(); }
 
 		size_t get_number_of_training_cases() const 
