@@ -173,6 +173,7 @@
     <ClInclude Include="Database\SQLConnection.h" />
     <ClInclude Include="DataStore\AgentData.h" />
     <ClInclude Include="DataStore\OrderMatrix.h" />
+    <ClInclude Include="DataStore\StratergyData.h" />
     <ClInclude Include="DataStore\TestData.h" />
     <ClInclude Include="DataStore\DatabaseConnection.h" />
     <ClInclude Include="DataStore\FinancialData.h" />
@@ -238,6 +239,7 @@
     <ClCompile Include="Database\SQLConnection.cpp" />
     <ClCompile Include="DataStore\AgentData.cpp" />
     <ClCompile Include="DataStore\OrderMatrix.cpp" />
+    <ClCompile Include="DataStore\StratergyData.cpp" />
     <ClCompile Include="DataStore\TestData.cpp" />
     <ClCompile Include="DataStore\DatabaseConnection.cpp" />
     <ClCompile Include="DataStore\FinancialData.cpp" />

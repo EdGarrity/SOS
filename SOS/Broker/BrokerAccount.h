@@ -9,7 +9,7 @@ namespace domain
 	class BrokerAccount
 	{
 	private:
-		datastore::FinancialData::FinancialInstrumentType financial_instrument_type = datastore::FinancialData::FinancialInstrumentType::Primary_Training;
+		datastore::FinancialData::FinancialInstrumentType financial_instrument_type = datastore::FinancialData::FinancialInstrumentType::Target_Training;
 		Account account = Account();
 		size_t shares = 0;
 

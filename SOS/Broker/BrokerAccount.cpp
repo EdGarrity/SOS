@@ -16,7 +16,7 @@ namespace domain
             Utilities::logline_threadsafe << ss.str();
         }
 
-        if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary_Training)
+        if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Target_Training)
             price = datastore::financial_data.get_primary_training_stock_price(index);
         else
             price = datastore::financial_data.get_index_stock_price(index);
@@ -59,7 +59,7 @@ namespace domain
             Utilities::logline_threadsafe << ss.str();
         }
 
-        if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary_Training)
+        if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Target_Training)
             price = datastore::financial_data.get_primary_training_stock_price(index);
         else
             price = datastore::financial_data.get_index_stock_price(index);
@@ -93,7 +93,7 @@ namespace domain
                     Utilities::logline_threadsafe << ss.str();
                 }
 
-                if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary_Training)
+                if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Target_Training)
                 {
                     price = datastore::financial_data.get_primary_training_stock_price(index);
 					date = datastore::financial_data.get_primary_training_stock_date(index);
@@ -144,7 +144,7 @@ namespace domain
                     Utilities::logline_threadsafe << ss.str();
                 }
                 
-                if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary_Training)
+                if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Target_Training)
                     price = datastore::financial_data.get_primary_training_stock_price(index);
                 else
                     price = datastore::financial_data.get_index_stock_price(index);
@@ -209,7 +209,7 @@ namespace domain
             Utilities::logline_threadsafe << ss.str();
         }
 
-        if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary_Training)
+        if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Target_Training)
             price = datastore::financial_data.get_primary_training_stock_price(index);
         else
             price = datastore::financial_data.get_index_stock_price(index);

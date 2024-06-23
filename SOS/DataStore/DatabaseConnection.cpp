@@ -9,11 +9,29 @@
 
 namespace datastore
 {
+	// Define the DatabaseConnection object a global singleton.
 	DatabaseConnection database_connection;
 
+	// Summary: Returns the database connection.
+	//
+	// Description: 
+	//		This function retrieves the database connection. If the connection 
+	//		is not already established, it initializes the connection using the 
+	//		provided database initialization parameters.
+	//
+	// Parameters: 
+	//		None.
+	//
+	// Returns: 
+	//		A pointer to the SQLConnection object representing the database connection.
+	//
+	// Side Effects: 
+	//		If the connection is not already established, it will establish a new 
+	//		connection to the database.
+	//
 	database::SQLConnection* DatabaseConnection::get_connection()
 	{
-		// Initialize database connection
+		// Initialize database connection if it is not already established.
 		if (!con.connected())
 		{
 			std::string db_init_datasource = domain::argmap::db_init_datasource;

@@ -18,7 +18,7 @@ namespace domain
 		const int diagnostic_level_9 = 9;
 
 		// Diagnostic Level
-		const int diagnostic_level = diagnostic_level_1;
+		const int diagnostic_level = diagnostic_level_2;
 
 		// Specify which financial instruments to target
 		const std::string financial_instrument = "AAPL";
@@ -35,7 +35,7 @@ namespace domain
 		const AlgorithmSelection algorithm_selection = AlgorithmSelection::strategy_development;
 
 		// Meta data on training and test cases
-		static constexpr size_t training_case_length = 252; // 252 trading days in a year
+		static constexpr size_t stratergy_case_length = 252; // 252 trading days in a year
 		//static constexpr size_t test_case_length = 252; // 252 trading days in a year
 		//static constexpr size_t number_of_training_cases = 10338;
 		//static constexpr size_t number_of_records = 62611867;

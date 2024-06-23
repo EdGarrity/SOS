@@ -19,7 +19,7 @@ namespace datastore
 		financial_data_record_size = get_training_record_size();
 		financial_data_record_count = get_count_of_primary_training_adj_open_prices(domain::argmap::financial_data_start_date, domain::argmap::financial_data_end_date);
 
-		data_records.reserve(financial_data_record_size * financial_data_record_count);
+		daily_stock_metrics.reserve(financial_data_record_size * financial_data_record_count);
 
 		//load(domain::argmap::financial_training_data_start_date, domain::argmap::financial_training_data_end_date, FinancialInstrumentType::Primary_Training);
 		//load(domain::argmap::financial_test_data_start_date, domain::argmap::financial_test_data_end_date, FinancialInstrumentType::Primary_Test);
@@ -534,7 +534,7 @@ namespace datastore
 					<< ",diagnostic_level=9"
 					<< ",start_date=" << start_date
 					<< ",end_date=" << end_date
-					<< ",training_cases.size=" << training_cases.size()
+					<< ",stock_data_record_ranges.size=" << stock_data_records.size()
 					<< ",sqlstmt_load_case_data=" << sqlstmt_load_case_data
 					<< ",message=executing_sql_command";
 				Utilities::logline_threadsafe << ss.str();
@@ -555,12 +555,12 @@ namespace datastore
 			//{
 			//	if (data_records_cursor < domain::argmap::size_of_training_samples)
 			//	{
-			//		data_records[data_records_cursor] = sqlcmd_get_case_data->get_field_as_double(4);
+			//		daily_stock_metrics[data_records_cursor] = sqlcmd_get_case_data->get_field_as_double(4);
 
 			//		if (last_written_date != sqlcmd_get_case_data->get_field_as_string(2))
 			//		{
 			//			if (last_written_date != "")
-			//				training_cases.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
+			//				stock_data_indexes.emplace_back(stock_data_index_t{ last_written_date, first_record_index, last_record_index - 1 });
 
 			//			last_written_date = sqlcmd_get_case_data->get_field_as_string(2);
 			//			first_record_index = last_record_index;
@@ -574,7 +574,35 @@ namespace datastore
 			//}
 
 			//if (dirty)
-			//	training_cases.emplace_back(data_window_record_t{ last_written_date, first_record_index, last_record_index - 1 });
+			//	stock_data_indexes.emplace_back(stock_data_index_t{ last_written_date, first_record_index, last_record_index - 1 });
+
+
+			size_t first_record_index = 0;
+			size_t last_record_index = 0;
+			std::string last_written_date = "";
+
+			bool dirty = false;
+
+			while (sqlcmd_get_case_data->fetch_next())
+			{
+				// Load the daily stock metrics
+				daily_stock_metrics.push_back(sqlcmd_get_case_data->get_field_as_double(4));
+
+				if (last_written_date != sqlcmd_get_case_data->get_field_as_string(2))
+				{
+					if (last_written_date != "")
+						stock_data_records.emplace_back(stock_data_record_span_t{ last_written_date, first_record_index, last_record_index - 1 });
+
+					last_written_date = sqlcmd_get_case_data->get_field_as_string(2);
+					first_record_index = last_record_index;
+					dirty = true;
+				}
+
+				last_record_index++;
+			}
+
+			if (dirty)
+				stock_data_records.emplace_back(stock_data_record_span_t{ last_written_date, first_record_index, last_record_index - 1 });
 
 			delete sqlcmd_get_case_data;
 
@@ -591,18 +619,17 @@ namespace datastore
 			//	Utilities::logline_threadsafe << ss.str();
 			//}
 
-			//if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
-			//{
-			//	std::ostringstream ss;
-			//	ss << ",method=FinancialData.load"
-			//		<< ",diagnostic_level=9"
-			//		<< ",start_date=" << start_date
-			//		<< ",end_date=" << end_date
-			//		<< ",training_cases.size=" << training_cases.size()
-			//		<< ",table_size=" << data_records_cursor
-			//		<< ",message=case_data_loaded";
-			//	Utilities::logline_threadsafe << ss.str();
-			//}
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			{
+				std::ostringstream ss;
+				ss << ",method=FinancialData.load"
+					<< ",diagnostic_level=9"
+					<< ",start_date=" << start_date
+					<< ",end_date=" << end_date
+					<< ",daily_stock_metrics.size=" << daily_stock_metrics.size()
+					<< ",message=case_data_loaded";
+				Utilities::logline_threadsafe << ss.str();
+			}
 		}
 		catch (const std::exception& e)
 		{
@@ -877,7 +904,7 @@ namespace datastore
 
 	double FinancialData::get_primary_training_stock_price(size_t index)
 	{
-		size_t data_record_range = primary_training_adj_open_values.size();
+		size_t data_record_range = target_stock_adj_open_values.size();
 
 		if (index >= data_record_range)
 		{
@@ -892,12 +919,12 @@ namespace datastore
 			throw std::out_of_range("FinancialData::get_primary_stock_price - Index out of bounds");
 		}
 
-		return primary_training_adj_open_values[index].value;
+		return target_stock_adj_open_values[index].value;
 	}
 
 	std::string FinancialData::get_primary_training_stock_date(size_t index)
 	{
-		size_t data_record_range = primary_training_adj_open_values.size();
+		size_t data_record_range = target_stock_adj_open_values.size();
 
 		if (index >= data_record_range)
 		{
@@ -912,12 +939,12 @@ namespace datastore
 			throw std::out_of_range("FinancialData::get_primary_stock_date - Index out of bounds");
 		}
 
-		return primary_training_adj_open_values[index].date;
+		return target_stock_adj_open_values[index].date;
 	}
 
 	double FinancialData::get_index_stock_price(size_t index)
 	{
-		size_t data_record_range = index_adj_open_values.size();
+		size_t data_record_range = stock_market_benchmark_adj_open_values.size();
 
 		if (index >= data_record_range)
 		{
@@ -938,18 +965,18 @@ namespace datastore
 				<< ",diagnostic_level=0"
 				<< ",index=" << index
 				<< ",index_adj_open_values.size=" << data_record_range
-				<< ",index_adj_open_values[" << index << "].date = " << index_adj_open_values[index].date
-				<< ",index_adj_open_values[" << index << "].value=" << index_adj_open_values[index].value
+				<< ",index_adj_open_values[" << index << "].date = " << stock_market_benchmark_adj_open_values[index].date
+				<< ",index_adj_open_values[" << index << "].value=" << stock_market_benchmark_adj_open_values[index].value
 				<< ",message=Return";
 			Utilities::logline_threadsafe << ss.str();
 		}
 
-		return index_adj_open_values[index].value;
+		return stock_market_benchmark_adj_open_values[index].value;
 	}
 
 	std::string FinancialData::get_index_stock_date(size_t index)
 	{
-		size_t data_record_range = index_adj_open_values.size();
+		size_t data_record_range = stock_market_benchmark_adj_open_values.size();
 
 		if (index >= data_record_range)
 		{
@@ -970,13 +997,13 @@ namespace datastore
 				<< ",diagnostic_level=0"
 				<< ",index=" << index
 				<< ",index_adj_open_values.size=" << data_record_range
-				<< ",index_adj_open_values[" << index << "].date = " << index_adj_open_values[index].date
-				<< ",index_adj_open_values[" << index << "].value=" << index_adj_open_values[index].value
+				<< ",index_adj_open_values[" << index << "].date = " << stock_market_benchmark_adj_open_values[index].date
+				<< ",index_adj_open_values[" << index << "].value=" << stock_market_benchmark_adj_open_values[index].value
 				<< ",message=Return";
 			Utilities::logline_threadsafe << ss.str();
 		}
 
-		return index_adj_open_values[index].date;
+		return stock_market_benchmark_adj_open_values[index].date;
 	}
 
 	// Purpose: 
@@ -1097,87 +1124,87 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	size_t FinancialData::get_count_of_primary_testing_adj_open_prices(const std::string& start_date, const std::string& end_date)
-	{
-		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
-		{
-			std::ostringstream ss;
-			ss << ",method=FinancialData.get_count_of_primary_testing_adj_open_prices"
-				<< ",diagnostic_level=9"
-				<< ",start_date=" << start_date
-				<< ",end_date=" << end_date
-				<< ",message=loading_all_case_data";
-			Utilities::logline_threadsafe << ss.str();
-		}
+	//size_t FinancialData::get_count_of_primary_testing_adj_open_prices(const std::string& start_date, const std::string& end_date)
+	//{
+	//	if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+	//	{
+	//		std::ostringstream ss;
+	//		ss << ",method=FinancialData.get_count_of_primary_testing_adj_open_prices"
+	//			<< ",diagnostic_level=9"
+	//			<< ",start_date=" << start_date
+	//			<< ",end_date=" << end_date
+	//			<< ",message=loading_all_case_data";
+	//		Utilities::logline_threadsafe << ss.str();
+	//	}
 
-		database::SQLCommand* sqlcmd_count_of_primary_closing_prices = nullptr;
+	//	database::SQLCommand* sqlcmd_count_of_primary_closing_prices = nullptr;
 
-		try
-		{
-			// Construct SQL statement with date range filters
-			int sz = std::snprintf(nullptr, 0, fmt_str_count_of_primary_closing_prices, start_date.c_str(), end_date.c_str(), domain::argmap::financial_instrument.c_str());
-			std::vector<char> buf(sz + 1); // note +1 for null terminator
-			std::snprintf(&buf[0], buf.size(), fmt_str_count_of_primary_closing_prices, start_date.c_str(), end_date.c_str());
-			std::string sqlstmt_count_of_primary_closing_prices(buf.begin(), buf.end() - 1); // omit the null terminator
+	//	try
+	//	{
+	//		// Construct SQL statement with date range filters
+	//		int sz = std::snprintf(nullptr, 0, fmt_str_count_of_primary_closing_prices, start_date.c_str(), end_date.c_str(), domain::argmap::financial_instrument.c_str());
+	//		std::vector<char> buf(sz + 1); // note +1 for null terminator
+	//		std::snprintf(&buf[0], buf.size(), fmt_str_count_of_primary_closing_prices, start_date.c_str(), end_date.c_str());
+	//		std::string sqlstmt_count_of_primary_closing_prices(buf.begin(), buf.end() - 1); // omit the null terminator
 
-			sqlcmd_count_of_primary_closing_prices = new database::SQLCommand(database_connection.get_connection(), sqlstmt_count_of_primary_closing_prices);
+	//		sqlcmd_count_of_primary_closing_prices = new database::SQLCommand(database_connection.get_connection(), sqlstmt_count_of_primary_closing_prices);
 
-			sqlcmd_count_of_primary_closing_prices->execute();
+	//		sqlcmd_count_of_primary_closing_prices->execute();
 
-			bool dirty = false;
+	//		bool dirty = false;
 
-			// Retrieve the record count
-			sqlcmd_count_of_primary_closing_prices->fetch_next();
+	//		// Retrieve the record count
+	//		sqlcmd_count_of_primary_closing_prices->fetch_next();
 
-			size_t count = sqlcmd_count_of_primary_closing_prices->get_field_as_long(1);
+	//		size_t count = sqlcmd_count_of_primary_closing_prices->get_field_as_long(1);
 
-			delete sqlcmd_count_of_primary_closing_prices;
+	//		delete sqlcmd_count_of_primary_closing_prices;
 
-			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
-			{
-				std::ostringstream ss;
-				ss << ",method=FinancialData.get_count_of_primary_testing_adj_open_prices"
-					<< ",diagnostic_level=9"
-					<< ",start_date=" << start_date
-					<< ",end_date=" << end_date
-					<< ",domain::argmap::financial_instrument.c_str()=" << domain::argmap::financial_instrument.c_str()
-					<< ",count=" << count
-					<< ",message=case_data_loaded";
-				Utilities::logline_threadsafe << ss.str();
-			}
+	//		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+	//		{
+	//			std::ostringstream ss;
+	//			ss << ",method=FinancialData.get_count_of_primary_testing_adj_open_prices"
+	//				<< ",diagnostic_level=9"
+	//				<< ",start_date=" << start_date
+	//				<< ",end_date=" << end_date
+	//				<< ",domain::argmap::financial_instrument.c_str()=" << domain::argmap::financial_instrument.c_str()
+	//				<< ",count=" << count
+	//				<< ",message=case_data_loaded";
+	//			Utilities::logline_threadsafe << ss.str();
+	//		}
 
-			return count;
-		}
-		catch (const std::exception& e)
-		{
-			{
-				std::ostringstream ss;
-				ss << ",method=FinancialData.get_count_of_primary_testing_adj_open_prices"
-					<< ",diagnostic_level=0"
-					<< ",exception=" << e.what()
-					<< ",message=Error_loading_data";
-				Utilities::logline_threadsafe << ss.str();
-			}
+	//		return count;
+	//	}
+	//	catch (const std::exception& e)
+	//	{
+	//		{
+	//			std::ostringstream ss;
+	//			ss << ",method=FinancialData.get_count_of_primary_testing_adj_open_prices"
+	//				<< ",diagnostic_level=0"
+	//				<< ",exception=" << e.what()
+	//				<< ",message=Error_loading_data";
+	//			Utilities::logline_threadsafe << ss.str();
+	//		}
 
-			if (sqlcmd_count_of_primary_closing_prices != nullptr)
-				delete sqlcmd_count_of_primary_closing_prices;
-		}
-		catch (...)
-		{
-			std::ostringstream ss; ss << "Unknown exception"; Utilities::logline_threadsafe << ss.str();
-			{
-				std::ostringstream ss;
-				ss << ",method=FinancialData.get_count_of_primary_testing_adj_open_prices"
-					<< ",diagnostic_level=0"
-					<< ",exception=Unknown"
-					<< ",message=An_unknown_error_has_occured";
-				Utilities::logline_threadsafe << ss.str();
-			}
+	//		if (sqlcmd_count_of_primary_closing_prices != nullptr)
+	//			delete sqlcmd_count_of_primary_closing_prices;
+	//	}
+	//	catch (...)
+	//	{
+	//		std::ostringstream ss; ss << "Unknown exception"; Utilities::logline_threadsafe << ss.str();
+	//		{
+	//			std::ostringstream ss;
+	//			ss << ",method=FinancialData.get_count_of_primary_testing_adj_open_prices"
+	//				<< ",diagnostic_level=0"
+	//				<< ",exception=Unknown"
+	//				<< ",message=An_unknown_error_has_occured";
+	//			Utilities::logline_threadsafe << ss.str();
+	//		}
 
-			if (sqlcmd_count_of_primary_closing_prices != nullptr)
-				delete sqlcmd_count_of_primary_closing_prices;
-		}
-	}
+	//		if (sqlcmd_count_of_primary_closing_prices != nullptr)
+	//			delete sqlcmd_count_of_primary_closing_prices;
+	//	}
+	//}
 
 	// Purpose: 
 	//   Load the primary adjusted opening prices which the agents will use to make trading decisions.
@@ -1199,11 +1226,11 @@ namespace datastore
 	//
 	void FinancialData::load_primary_training_adj_open_prices(const std::string& start_date, const std::string& end_date)
 	{
-		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_2)
 		{
 			std::ostringstream ss;
 			ss << ",method=FinancialData.load_primary_training_adj_open_prices"
-				<< ",diagnostic_level=9"
+				<< ",diagnostic_level=" << domain::argmap::diagnostic_level
 				<< ",start_date=" << start_date
 				<< ",end_date=" << end_date
 				<< ",message=loading_all_case_data";
@@ -1235,20 +1262,20 @@ namespace datastore
 				std::string date_field = sqlcmd_load_primary_adj_open_prices->get_field_as_string(1);
 				double value = sqlcmd_load_primary_adj_open_prices->get_field_as_double(2);
 
-				primary_training_adj_open_values.emplace_back(adj_opening_prices_record_t{ date_field, value });
+				target_stock_adj_open_values.emplace_back(adj_opening_prices_record_t{ date_field, value });
 				elements_loaded++;
 			}
 			delete sqlcmd_load_primary_adj_open_prices;
 
-			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_2)
 			{
 				std::ostringstream ss;
 				ss << ",method=FinancialData.load_primary_training_adj_open_prices"
-					<< ",diagnostic_level=9"
+					<< ",diagnostic_level=" << domain::argmap::diagnostic_level
 					<< ",start_date=" << start_date
 					<< ",end_date=" << end_date
 					<< ",elements_loaded=" << elements_loaded
-					<< ",primary_adj_open_values.size=" << primary_training_adj_open_values.size()
+					<< ",primary_adj_open_values.size=" << target_stock_adj_open_values.size()
 					<< ",message=case_data_loaded";
 				Utilities::logline_threadsafe << ss.str();
 			}
@@ -1302,92 +1329,92 @@ namespace datastore
 	//
 	// Remarks:
 	//
-	void FinancialData::load_primary_testing_adj_open_prices(const std::string& start_date, const std::string& end_date)
-	{
-		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
-		{
-			std::ostringstream ss;
-			ss << ",method=FinancialData.load_primary_testing_adj_open_prices"
-				<< ",diagnostic_level=9"
-				<< ",start_date=" << start_date
-				<< ",end_date=" << end_date
-				<< ",message=loading_all_case_data";
-			Utilities::logline_threadsafe << ss.str();
-		}
+	//void FinancialData::load_primary_testing_adj_open_prices(const std::string& start_date, const std::string& end_date)
+	//{
+	//	if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+	//	{
+	//		std::ostringstream ss;
+	//		ss << ",method=FinancialData.load_primary_testing_adj_open_prices"
+	//			<< ",diagnostic_level=9"
+	//			<< ",start_date=" << start_date
+	//			<< ",end_date=" << end_date
+	//			<< ",message=loading_all_case_data";
+	//		Utilities::logline_threadsafe << ss.str();
+	//	}
 
-		database::SQLCommand* sqlcmd_load_primary_adj_open_prices = nullptr;
+	//	database::SQLCommand* sqlcmd_load_primary_adj_open_prices = nullptr;
 
-		try
-		{
-			// Resize the vector to hold the number of records
-			size_t count = get_count_of_primary_testing_adj_open_prices(start_date, end_date);
-			//primary_adj_open_values.resize(count);
+	//	try
+	//	{
+	//		// Resize the vector to hold the number of records
+	//		size_t count = get_count_of_primary_testing_adj_open_prices(start_date, end_date);
+	//		//primary_adj_open_values.resize(count);
 
-			// Construct SQL statement with filters
-			int sz = std::snprintf(nullptr, 0, fmt_str_load_adj_opening_prices, start_date.c_str(), end_date.c_str(), domain::argmap::financial_instrument.c_str());
-			std::vector<char> buf(sz + 1); // note +1 for null terminator
-			std::snprintf(&buf[0], buf.size(), fmt_str_load_adj_opening_prices, start_date.c_str(), end_date.c_str());
-			std::string sqlstmt_load_primary_adj_open_prices(buf.begin(), buf.end() - 1); // omit the null terminator
+	//		// Construct SQL statement with filters
+	//		int sz = std::snprintf(nullptr, 0, fmt_str_load_adj_opening_prices, start_date.c_str(), end_date.c_str(), domain::argmap::financial_instrument.c_str());
+	//		std::vector<char> buf(sz + 1); // note +1 for null terminator
+	//		std::snprintf(&buf[0], buf.size(), fmt_str_load_adj_opening_prices, start_date.c_str(), end_date.c_str());
+	//		std::string sqlstmt_load_primary_adj_open_prices(buf.begin(), buf.end() - 1); // omit the null terminator
 
-			// Extablish the connection and execute the SQL statement
-			sqlcmd_load_primary_adj_open_prices = new database::SQLCommand(database_connection.get_connection(), sqlstmt_load_primary_adj_open_prices);
-			sqlcmd_load_primary_adj_open_prices->execute();
+	//		// Extablish the connection and execute the SQL statement
+	//		sqlcmd_load_primary_adj_open_prices = new database::SQLCommand(database_connection.get_connection(), sqlstmt_load_primary_adj_open_prices);
+	//		sqlcmd_load_primary_adj_open_prices->execute();
 
-			// Retrieve the data
-			int elements_loaded = 0;	// For debugging
-			while (sqlcmd_load_primary_adj_open_prices->fetch_next())
-			{
-				std::string date_field = sqlcmd_load_primary_adj_open_prices->get_field_as_string(1);
-				double value = sqlcmd_load_primary_adj_open_prices->get_field_as_double(2);
+	//		// Retrieve the data
+	//		int elements_loaded = 0;	// For debugging
+	//		while (sqlcmd_load_primary_adj_open_prices->fetch_next())
+	//		{
+	//			std::string date_field = sqlcmd_load_primary_adj_open_prices->get_field_as_string(1);
+	//			double value = sqlcmd_load_primary_adj_open_prices->get_field_as_double(2);
 
-				primary_test_adj_open_values.emplace_back(adj_opening_prices_record_t{ date_field, value });
-				elements_loaded++;
-			}
-			delete sqlcmd_load_primary_adj_open_prices;
+	//			primary_test_adj_open_values.emplace_back(adj_opening_prices_record_t{ date_field, value });
+	//			elements_loaded++;
+	//		}
+	//		delete sqlcmd_load_primary_adj_open_prices;
 
-			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
-			{
-				std::ostringstream ss;
-				ss << ",method=FinancialData.load_primary_testing_adj_open_prices"
-					<< ",diagnostic_level=9"
-					<< ",start_date=" << start_date
-					<< ",end_date=" << end_date
-					<< ",elements_loaded=" << elements_loaded
-					<< ",primary_test_adj_open_values.size=" << primary_test_adj_open_values.size()
-					<< ",message=case_data_loaded";
-				Utilities::logline_threadsafe << ss.str();
-			}
-		}
-		catch (const std::exception& e)
-		{
-			{
-				std::ostringstream ss;
-				ss << ",method=FinancialData.load_primary_testing_adj_open_prices"
-					<< ",diagnostic_level=0"
-					<< ",exception=" << e.what()
-					<< ",message=Error_loading_data";
-				Utilities::logline_threadsafe << ss.str();
-			}
+	//		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+	//		{
+	//			std::ostringstream ss;
+	//			ss << ",method=FinancialData.load_primary_testing_adj_open_prices"
+	//				<< ",diagnostic_level=9"
+	//				<< ",start_date=" << start_date
+	//				<< ",end_date=" << end_date
+	//				<< ",elements_loaded=" << elements_loaded
+	//				<< ",primary_test_adj_open_values.size=" << primary_test_adj_open_values.size()
+	//				<< ",message=case_data_loaded";
+	//			Utilities::logline_threadsafe << ss.str();
+	//		}
+	//	}
+	//	catch (const std::exception& e)
+	//	{
+	//		{
+	//			std::ostringstream ss;
+	//			ss << ",method=FinancialData.load_primary_testing_adj_open_prices"
+	//				<< ",diagnostic_level=0"
+	//				<< ",exception=" << e.what()
+	//				<< ",message=Error_loading_data";
+	//			Utilities::logline_threadsafe << ss.str();
+	//		}
 
-			if (sqlcmd_load_primary_adj_open_prices != nullptr)
-				delete sqlcmd_load_primary_adj_open_prices;
-		}
-		catch (...)
-		{
-			std::ostringstream ss; ss << "Unknown exception"; Utilities::logline_threadsafe << ss.str();
-			{
-				std::ostringstream ss;
-				ss << ",method=FinancialData.load_primary_testing_adj_open_prices"
-					<< ",diagnostic_level=0"
-					<< ",exception=Unknown"
-					<< ",message=An_unknown_error_has_occured";
-				Utilities::logline_threadsafe << ss.str();
-			}
+	//		if (sqlcmd_load_primary_adj_open_prices != nullptr)
+	//			delete sqlcmd_load_primary_adj_open_prices;
+	//	}
+	//	catch (...)
+	//	{
+	//		std::ostringstream ss; ss << "Unknown exception"; Utilities::logline_threadsafe << ss.str();
+	//		{
+	//			std::ostringstream ss;
+	//			ss << ",method=FinancialData.load_primary_testing_adj_open_prices"
+	//				<< ",diagnostic_level=0"
+	//				<< ",exception=Unknown"
+	//				<< ",message=An_unknown_error_has_occured";
+	//			Utilities::logline_threadsafe << ss.str();
+	//		}
 
-			if (sqlcmd_load_primary_adj_open_prices != nullptr)
-				delete sqlcmd_load_primary_adj_open_prices;
-		}
-	}
+	//		if (sqlcmd_load_primary_adj_open_prices != nullptr)
+	//			delete sqlcmd_load_primary_adj_open_prices;
+	//	}
+	//}
 
 	// Purpose: 
 	//   Load the index adjusted opening prices which the agents will use to make trading decisions.
@@ -1427,8 +1454,8 @@ namespace datastore
 		{
 			// Resize the vector to hold the number of records
 			size_t count = get_count_of_primary_training_adj_open_prices(start_date, end_date);
-			index_adj_open_values.clear();
-			index_adj_open_values.reserve(count);
+			stock_market_benchmark_adj_open_values.clear();
+			stock_market_benchmark_adj_open_values.reserve(count);
 
 			// Construct SQL statement with filters
 			int sz = std::snprintf(nullptr, 0, fmt_str_load_adj_opening_prices, start_date.c_str(), end_date.c_str(), domain::argmap::financial_index.c_str());
@@ -1447,7 +1474,7 @@ namespace datastore
 				double value = sqlcmd_load_index_adj_open_prices->get_field_as_double(2);
 
 				//index_adj_open_values.emplace_back(adj_opening_prices_record_t{ date_field, value });
-				index_adj_open_values.push_back(adj_opening_prices_record_t{ date_field, value });
+				stock_market_benchmark_adj_open_values.push_back(adj_opening_prices_record_t{ date_field, value });
 			}
 			delete sqlcmd_load_index_adj_open_prices;
 
@@ -1459,10 +1486,10 @@ namespace datastore
 					<< ",start_date=" << start_date
 					<< ",end_date=" << end_date
 					<< ",domain::argmap::financial_index.c_str()" << domain::argmap::financial_index.c_str()
-					<< ",index_adj_open_values.size=" << index_adj_open_values.size()
+					<< ",index_adj_open_values.size=" << stock_market_benchmark_adj_open_values.size()
 					<< ",count=" << count
-					<< ",index_adj_open_values[0].date=" << index_adj_open_values[0].date
-					<< ",index_adj_open_values[0].value=" << index_adj_open_values[0].value
+					<< ",index_adj_open_values[0].date=" << stock_market_benchmark_adj_open_values[0].date
+					<< ",index_adj_open_values[0].value=" << stock_market_benchmark_adj_open_values[0].value
 					<< ",message=case_data_loaded";
 				Utilities::logline_threadsafe << ss.str();
 			}

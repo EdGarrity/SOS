@@ -96,7 +96,7 @@ namespace database
 		//		userID		A string containing a user name to use when establishing the connection
 		//		password	A string containing a password to use when establishing the connection
 		//
-		SQLConnection(const std::string server, const std::string dbString, const std::string userID, const std::string password);
+		//SQLConnection(const std::string server, const std::string dbString, const std::string userID, const std::string password);
 
 		// Closes the connection to the data source and destroys the object
 		//

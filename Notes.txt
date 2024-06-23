@@ -1,0 +1,37 @@
+SELECT [Symbol],CONVERT(varchar(25),[Date],120) AS [Date],[Key],[Value]
+FROM [SOS].[dbo].[TestData]
+ORDER BY [Date],[Key]
+
+
+SELECT CONVERT(varchar(25),[Date],120) AS [Date],[Value]
+			 FROM [SOS].[dbo].[TestData]
+			 WHERE [Date] >= CAST('%s' AS DATETIME)
+			 AND [Date] <= CAST('%s' AS DATETIME)
+			 AND [Symbol]='%s'
+			 AND [Key]='Adj_Open'
+			 ORDER BY [Date];
+
+
+primary_training_adj_open_prices = 2265 records
+
+SELECT CONVERT(varchar(25),[Date],120) AS [Date],[Value] 
+FROM [SOS].[dbo].[TestData] 
+WHERE [Date] >= CAST('2012-01-02' AS DATETIME) 
+  AND [Date] <= CAST('2020-12-31' AS DATETIME) 
+  AND [Symbol]='AAPL' 
+  AND [Key]='Adj_Open' 
+ORDER BY [Date]
+
+
+index_adj_open_prices = 2265 records
+
+SELECT CONVERT(varchar(25),[Date],120) AS [Date],[Value] 
+FROM [SOS].[dbo].[TestData] 
+WHERE [Date] >= CAST('2012-01-02' AS DATETIME) 
+  AND [Date] <= CAST('2020-12-31' AS DATETIME) 
+  AND [Symbol]='FXAIX' 
+  AND [Key]='Adj_Open' 
+ORDER BY [Date]
+
+
+Number_of_training_cases = 2265 - 252 - 1 = 2012

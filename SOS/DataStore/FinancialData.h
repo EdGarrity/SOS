@@ -1,19 +1,18 @@
 #pragma once
 
-#include <vector>
 #include <algorithm>
 #include <string>
 #include <vector>
+#include "..\Domain\Arguments.h"
 #include "..\Utilities\ThreeDimensionalArray.h"
 #include "DatabaseConnection.h"
-#include "..\Domain\Arguments.h"
 
 namespace datastore
 {
 	class FinancialData
 	{
 	public:
-		enum FinancialInstrumentType { Primary_Training = 0, Benchmark, Primary_Test};
+		enum FinancialInstrumentType { Target_Training = 0, Benchmark, Primary_Test};
 		//FinancialInstrumentType financial_instrument_type = FinancialInstrumentType::Primary_Training;
 
 	private:
@@ -42,20 +41,20 @@ namespace datastore
 			" AND [Symbol]='%s'"
 			" AND [Key]='Adj_Open'";
 
-
-		struct data_window_record_t
+		// Contains the indexes of the first and last+1 record of each training record
+		struct stock_data_record_span_t
 		{
 			std::string date;
-			size_t first_record;
-			size_t last_record;
+			size_t begin;
+			size_t end;
 		};
 
-		std::vector<data_window_record_t> training_cases;
-		std::vector<data_window_record_t> test_case;
+		std::vector<stock_data_record_span_t> stock_data_records;
+		//std::vector<stock_data_record_t> test_case;
 
 		//double training_data_records[domain::argmap::size_of_training_samples];
 		//double test_data_records[domain::argmap::size_of_training_samples];
-		std::vector<double> data_records;
+		std::vector<double> daily_stock_metrics;
 
 
 		struct adj_opening_prices_record_t
@@ -64,9 +63,9 @@ namespace datastore
 			double value;
 		};
 
-		std::vector<adj_opening_prices_record_t> primary_training_adj_open_values;
-		std::vector<adj_opening_prices_record_t> primary_test_adj_open_values; // To Do: Need to initialize this vector
-		std::vector<adj_opening_prices_record_t> index_adj_open_values;
+		std::vector<adj_opening_prices_record_t> target_stock_adj_open_values;
+		//std::vector<adj_opening_prices_record_t> primary_test_adj_open_values; // To Do: Need to initialize this vector
+		std::vector<adj_opening_prices_record_t> stock_market_benchmark_adj_open_values;
 
 		size_t financial_data_record_size= 0;
 		size_t financial_data_record_count = 0;
@@ -78,29 +77,29 @@ namespace datastore
 		//void load(const std::string& start_date, const std::string& end_date, FinancialInstrumentType financial_instrument_type);
 		void load(const std::string& start_date, const std::string& end_date);
 		void load_primary_training_adj_open_prices(const std::string& start_date, const std::string& end_date);
-		void load_primary_testing_adj_open_prices(const std::string& start_date, const std::string& end_date);
+		//void load_primary_testing_adj_open_prices(const std::string& start_date, const std::string& end_date);
 		void load_index_adj_open_prices(const std::string& start_date, const std::string& end_date);
 
 		size_t get_count_of_primary_training_adj_open_prices(const std::string& start_date, const std::string& end_date);
-		size_t get_count_of_primary_testing_adj_open_prices(const std::string& start_date, const std::string& end_date);
+		//size_t get_count_of_primary_testing_adj_open_prices(const std::string& start_date, const std::string& end_date);
 		size_t get_training_record_size() const;
 
 		double get_training_data(const size_t index, const size_t input_case) {
 			return 0.0;
 		};
 		//double get_test_data(const size_t index, const size_t input_case);
-		size_t get_training_data_count() const { return 0; /* primary_training_adj_open_values.size();*/ }
+		size_t get_target_stock_record_count() const { return target_stock_adj_open_values.size(); }
 		//size_t get_test_data_count() const { return primary_test_adj_open_values.size(); }
-		size_t get_index_stock_count() const { return index_adj_open_values.size(); }
+		size_t get_stock_market_benchmark_record_count() const { return stock_market_benchmark_adj_open_values.size(); }
 
-		size_t get_number_of_training_cases() const 
+		size_t get_number_of_records() const 
 		{ 
 			return 
-				primary_training_adj_open_values.size() < training_cases.size() 
-				? (primary_training_adj_open_values.size() - domain::argmap::training_case_length - 1)
-				: (training_cases.size() - domain::argmap::training_case_length - 1);
+				target_stock_adj_open_values.size() < stock_data_records.size() 
+				? (target_stock_adj_open_values.size() - domain::argmap::stratergy_case_length - 1)
+				: (stock_market_benchmark_adj_open_values.size() - domain::argmap::stratergy_case_length - 1);
 		};
-		size_t get_training_case_record_size() const { return training_cases.size(); }
+		size_t get_training_case_record_size() const { return stock_data_records.size(); }
 
 		double get_primary_training_stock_price(size_t index);
 		double get_index_stock_price(size_t index);
