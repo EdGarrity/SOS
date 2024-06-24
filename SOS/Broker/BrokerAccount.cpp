@@ -17,9 +17,9 @@ namespace domain
         }
 
         if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Target_Training)
-            price = datastore::financial_data.get_primary_training_stock_price(index);
+            price = datastore::financial_data.get_target_stock_price(index);
         else
-            price = datastore::financial_data.get_index_stock_price(index);
+            price = datastore::financial_data.get_benchmark_stock_price(index);
         
         double balance = account.get_balance();
 
@@ -60,9 +60,9 @@ namespace domain
         }
 
         if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Target_Training)
-            price = datastore::financial_data.get_primary_training_stock_price(index);
+            price = datastore::financial_data.get_target_stock_price(index);
         else
-            price = datastore::financial_data.get_index_stock_price(index);
+            price = datastore::financial_data.get_benchmark_stock_price(index);
 
         if (shares > 0)
         {
@@ -95,13 +95,13 @@ namespace domain
 
                 if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Target_Training)
                 {
-                    price = datastore::financial_data.get_primary_training_stock_price(index);
-					date = datastore::financial_data.get_primary_training_stock_date(index);
+                    price = datastore::financial_data.get_target_stock_price(index);
+					date = datastore::financial_data.get_target_stock_date(index);
                 }
                 else
 				{
-				    price = datastore::financial_data.get_index_stock_price(index);
-					date = datastore::financial_data.get_index_stock_date(index);
+				    price = datastore::financial_data.get_benchmark_stock_price(index);
+					date = datastore::financial_data.get_benchmark_stock_date(index);
 				}
 
                 double balance = account.get_balance();
@@ -145,9 +145,9 @@ namespace domain
                 }
                 
                 if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Target_Training)
-                    price = datastore::financial_data.get_primary_training_stock_price(index);
+                    price = datastore::financial_data.get_target_stock_price(index);
                 else
-                    price = datastore::financial_data.get_index_stock_price(index);
+                    price = datastore::financial_data.get_benchmark_stock_price(index);
 
                 double balance = account.get_balance();
                 double unrealized_gain = 0;
@@ -210,9 +210,9 @@ namespace domain
         }
 
         if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Target_Training)
-            price = datastore::financial_data.get_primary_training_stock_price(index);
+            price = datastore::financial_data.get_target_stock_price(index);
         else
-            price = datastore::financial_data.get_index_stock_price(index);
+            price = datastore::financial_data.get_benchmark_stock_price(index);
 
         double balance = account.get_balance();
 

@@ -10,10 +10,10 @@ namespace datastore
 	datastore::OrderMatrix::OrderMatrix()
 	{
 		population_size = 0;
-		test_data_size = 0;
+		number_of_records = 0;
 	}
 
-	void datastore::OrderMatrix::initialize(const size_t population_size, const size_t test_data_size)
+	void datastore::OrderMatrix::initialize(const size_t population_size, const size_t number_of_records)
 	{
 #if DLEVEL > 0
 		Utilities::debug_log(-1, "initialize", "OrderMatrix");
@@ -22,7 +22,7 @@ namespace datastore
 		{
 			std::ostringstream ss;
 			ss << ",population_size=" << population_size
-				<< ",test_data_size=" << test_data_size
+				<< ",number_of_records=" << number_of_records
 				<< ",diagnostic_level=9"
 				<< ",method=datastore.OrderMatrix.initialize"
 				<< ",message=Enter";
@@ -30,16 +30,16 @@ namespace datastore
 		}
 
 		this->population_size = population_size;
-		this->test_data_size = test_data_size;
-		orders.resize(population_size, test_data_size);
-		processed.resize(population_size, test_data_size);
+		this->number_of_records = number_of_records;
+		orders.resize(population_size, number_of_records);
+		processed.resize(population_size, number_of_records);
 
-		for (size_t training_case_index = 0; training_case_index < test_data_size; training_case_index++)
+		for (size_t record_number = 0; record_number < number_of_records; record_number++)
 		{
 			for (size_t strategy_index = 0; strategy_index < population_size; strategy_index++)
 			{
-				orders.store(0, strategy_index, training_case_index, 0);
-				processed.store(0, strategy_index, training_case_index, 0);
+				orders.store(0, strategy_index, record_number, 0);
+				processed.store(0, strategy_index, record_number, 0);
 			}
 		}
 
@@ -72,28 +72,28 @@ namespace datastore
 		std::remove("order_matrix.csv");
 	}
 
-	void datastore::OrderMatrix::store(size_t strategyIndex, size_t trainingCaseIndex, unsigned long order)
+	void datastore::OrderMatrix::store(size_t strategyIndex, size_t record_number, unsigned long order)
 	{
-		store(0, strategyIndex, trainingCaseIndex, order);
+		store(0, strategyIndex, record_number, order);
 	}
 
-	void datastore::OrderMatrix::store(size_t env_index, size_t strategyIndex, size_t trainingCaseIndex, unsigned long order)
+	void datastore::OrderMatrix::store(size_t env_index, size_t strategyIndex, size_t record_number, unsigned long order)
 	{
 #if DLEVEL > 0
 		Utilities::debug_log(-1, "insertNewOrder", "OrderMatrix");
 #endif
 
 		// Save order to CSV file
-		if (!is_generated(strategyIndex, trainingCaseIndex))
+		if (!is_generated(strategyIndex, record_number))
 		{
 			std::ofstream myfile;
 			myfile.open("order_matrix.csv", std::ios::app);
-			myfile << strategyIndex << "," << trainingCaseIndex << "," << order << "\n";
+			myfile << strategyIndex << "," << record_number << "," << order << "\n";
 			myfile.close();
 		}
 
-		orders.store(env_index, strategyIndex, trainingCaseIndex, order);
-		processed.store(env_index, strategyIndex, trainingCaseIndex, 1);
+		orders.store(env_index, strategyIndex, record_number, order);
+		processed.store(env_index, strategyIndex, record_number, 1);
 	}
 
 	//void datastore::OrderMatrix::save(size_t training_case_indexes, size_t strategy_indexes)

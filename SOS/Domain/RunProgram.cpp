@@ -22,7 +22,7 @@ namespace domain
 			ss << ",env_index = " << env_index
 				<< ",diagnostic_level=3"
 				<< ",stratergy=" << workorder_form.get_stratergy_index()
-				<< ",case=" << workorder_form.get_training_case_index()
+				<< ",case=" << workorder_form.get_record_number()
 				<< ",method=RunProgram.run"
 				<< ",message=co_await";
 			Utilities::logline_threadsafe << ss.str();
@@ -38,7 +38,7 @@ namespace domain
 			ss << ",env_index = " << env_index
 				<< ",diagnostic_level=3"
 				<< ",stratergy=" << workorder_form.get_stratergy_index()
-				<< ",case=" << workorder_form.get_training_case_index()
+				<< ",case=" << workorder_form.get_record_number()
 				<< ",method=RunProgram.run"
 				<< ",message=Running";
 			Utilities::logline_threadsafe << ss.str();
@@ -49,11 +49,11 @@ namespace domain
 			// Get refernece to the thread's environment from the environment pool
 			Plush::Environment& env = Plush::environment_pool.get_env();
 
-			auto results = domain::develop_strategy::run_strategy_threadsafe(env, workorder_form.get_stratergy_index(), workorder_form.get_training_case_index());
+			auto results = domain::develop_strategy::run_strategy_threadsafe(env, workorder_form.get_stratergy_index(), workorder_form.get_record_number());
 			domain::develop_strategy::order_matrix.store(
 				99,
 				workorder_form.get_stratergy_index(),
-				workorder_form.get_training_case_index(),
+				workorder_form.get_record_number(),
 				std::get<0>(results));
 			work_done.count_down();
 			if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
@@ -71,7 +71,7 @@ namespace domain
 				ss << ",env_index = " << env_index
 					<< ",diagnostic_level=3"
 					<< ",stratergy=" << workorder_form.get_stratergy_index()
-					<< ",case=" << workorder_form.get_training_case_index()
+					<< ",case=" << workorder_form.get_record_number()
 					<< ",method=RunProgram.run"
 					<< ",score=" << std::get<1>(results)
 					<< ",message=Done";
@@ -90,7 +90,7 @@ namespace domain
 				ss << ",env_index = " << env_index
 					<< ",diagnostic_level=0"
 					<< ",stratergy=" << workorder_form.get_stratergy_index()
-					<< ",case=" << workorder_form.get_training_case_index()
+					<< ",case=" << workorder_form.get_record_number()
 					<< ",exception=" << e.what()
 					<< ",method=RunProgram.run"
 					<< "," << warning_message.str() << " ";
@@ -111,7 +111,7 @@ namespace domain
 				ss << ",env_index = " << env_index
 					<< ",diagnostic_level=0"
 					<< ",stratergy=" << workorder_form.get_stratergy_index()
-					<< ",case=" << workorder_form.get_training_case_index()
+					<< ",case=" << workorder_form.get_record_number()
 					<< ",exception=Unknown"
 					<< ",method=RunProgram.run"
 					<< "," << warning_message.str();

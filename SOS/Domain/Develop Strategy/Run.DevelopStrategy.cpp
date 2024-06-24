@@ -1,21 +1,22 @@
 #define NOMINMAX
 
-#include <functional>
 #include <concurrent_unordered_set.h>
 #include <concurrent_vector.h>
+#include <cstddef>
 #include <deque>
-#include <ppl.h>
+#include <functional>
 #include <iostream>
 #include <limits>
+#include <map>
+#include <memory>
+#include <ppl.h>
 #include <set>
 #include <sstream>
 #include <string>
 #include <thread>
 #include <unordered_set>
-#include <vector>
-#include <map>
 #include <variant>
-#include <cstddef>
+#include <vector>
 #include "Run.DevelopStrategy.h"
 #include "..\..\Database\SQLCommand.h"
 #include "..\..\Plush\Environment.h"
@@ -38,7 +39,6 @@
 #include "..\Develop Strategy\RunProgram_WorkOrder_Form.h"
 #include "..\RunProgram.h"
 #include "..\..\Utilities\Debug.h"
-#include "..\..\DataStore\StratergyData.h"
 
 using namespace concurrency;
 
@@ -524,7 +524,7 @@ namespace domain
 
 		Utilities::Threadpool pool(argmap::max_threads);
 
-		void compute_training_orders_thread_safe()
+		void compute_training_orders_thread_safe(datastore::StratergyData* StratergyData)
 		{
 			if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 			{
@@ -535,10 +535,10 @@ namespace domain
 				Utilities::logline_threadsafe << ss.str();
 			}
 
-			size_t data_size = datastore::financial_data.get_target_stock_record_count();
+			size_t number_of_records = datastore::financial_data.get_target_record_count();
 			//size_t number_of_cases = datastore::financial_data.get_number_of_records();
 
-			std::ptrdiff_t expected_latches = domain::argmap::number_of_strategies * data_size;
+			std::ptrdiff_t expected_latches = domain::argmap::number_of_strategies * number_of_records;
 
 			if (expected_latches > std::latch::max())
 			{
@@ -566,7 +566,7 @@ namespace domain
 				Utilities::logline_threadsafe << ss.str();
 			}
 
-			order_matrix.initialize(domain::argmap::number_of_strategies, data_size);
+			order_matrix.initialize(domain::argmap::number_of_strategies, number_of_records);
 			domain::RunProgram processor(pool);
 			bool dirty = false;
 
@@ -627,7 +627,7 @@ namespace domain
 
 			for (size_t strategy_index = 0; strategy_index < domain::argmap::number_of_strategies; strategy_index++)
 			{
-				for (size_t stock_data_record_index = 0; stock_data_record_index < data_size; stock_data_record_index++)
+				for (size_t stock_data_record_index = 0; stock_data_record_index < number_of_records; stock_data_record_index++)
 				{
 					if (!order_matrix.is_generated(strategy_index, stock_data_record_index))
 					{
@@ -636,7 +636,7 @@ namespace domain
 							std::ostringstream ss;
 							ss << ",stratergy=" << strategy_index
 								<< ",case=" << stock_data_record_index
-								<< ",data_size" << data_size
+								<< ",data_size" << number_of_records
 								//<< ",number_of_cases" << number_of_cases
 								<< ",diagnostic_level=" << argmap::diagnostic_level
 								<< ",method=RunProgram.compute_training_orders_thread_safe"
@@ -655,7 +655,7 @@ namespace domain
 							std::ostringstream ss;
 							ss << ",stratergy=" << strategy_index
 								<< ",case=" << stock_data_record_index
-								<< ",data_size" << data_size
+								<< ",data_size" << number_of_records
 								//<< ",number_of_cases" << number_of_cases
 								<< ",diagnostic_level=" << argmap::diagnostic_level
 								<< ",method=RunProgram.compute_training_orders_thread_safe"
@@ -708,7 +708,7 @@ namespace domain
 					ss << ",method=RunProgram.compute_training_orders_thread_safe"
 						<< ",diagnostic_level=" << argmap::diagnostic_level
 						<< ",number_of_strategies=" << domain::argmap::number_of_strategies
-						<< ",data_size=" << data_size
+						<< ",data_size=" << number_of_records
 						<< ",message=Orders_Saved_to_DB";
 					Utilities::logline_threadsafe << ss.str();
 				}
@@ -719,7 +719,7 @@ namespace domain
 				ss << ",method=RunProgram.compute_training_orders_thread_safe"
 					<< ",diagnostic_level=" << argmap::diagnostic_level
 					<< ",number_of_strategies=" << domain::argmap::number_of_strategies
-					<< ",data_size=" << data_size
+					<< ",data_size=" << number_of_records
 					<< ",message=No_Orders_Saved_to_DB";
 				Utilities::logline_threadsafe << ss.str();
 			}
@@ -855,7 +855,7 @@ namespace domain
 				//	include_best_individual_in_breeding_pool = true;
 				//}
 
-				auto stratergies = std::make_unique<datastore::StratergyData>(datastore::financial_data.get_target_stock_record_count() - domain::argmap::stratergy_case_length - 1);
+				std::unique_ptr<datastore::StratergyData> stratergy_cases = std::make_unique<datastore::StratergyData>(datastore::financial_data.get_number_of_records() - domain::argmap::stratergy_case_length - 1);
 
 				while ((!done)
 					//&& (generation_number <= argmap::max_generations_in_one_session)
@@ -920,7 +920,7 @@ namespace domain
 					}
 
 					if (argmap::use_multithreading)
-						compute_training_orders_thread_safe();
+						compute_training_orders_thread_safe(stratergy_cases.get());
 
 					else
 						compute_training_orders(global_env, run_strategy_threadsafe);

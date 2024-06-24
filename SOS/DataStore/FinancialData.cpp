@@ -534,7 +534,7 @@ namespace datastore
 					<< ",diagnostic_level=9"
 					<< ",start_date=" << start_date
 					<< ",end_date=" << end_date
-					<< ",stock_data_record_ranges.size=" << stock_data_records.size()
+					<< ",stock_data_record_ranges.size=" << stock_data_records_span.size()
 					<< ",sqlstmt_load_case_data=" << sqlstmt_load_case_data
 					<< ",message=executing_sql_command";
 				Utilities::logline_threadsafe << ss.str();
@@ -591,7 +591,7 @@ namespace datastore
 				if (last_written_date != sqlcmd_get_case_data->get_field_as_string(2))
 				{
 					if (last_written_date != "")
-						stock_data_records.emplace_back(stock_data_record_span_t{ last_written_date, first_record_index, last_record_index - 1 });
+						stock_data_records_span.emplace_back(stock_data_record_span_t{ last_written_date, first_record_index, last_record_index - 1 });
 
 					last_written_date = sqlcmd_get_case_data->get_field_as_string(2);
 					first_record_index = last_record_index;
@@ -602,7 +602,7 @@ namespace datastore
 			}
 
 			if (dirty)
-				stock_data_records.emplace_back(stock_data_record_span_t{ last_written_date, first_record_index, last_record_index - 1 });
+				stock_data_records_span.emplace_back(stock_data_record_span_t{ last_written_date, first_record_index, last_record_index - 1 });
 
 			delete sqlcmd_get_case_data;
 
@@ -902,7 +902,63 @@ namespace datastore
 	//	return value;
 	//}
 
-	double FinancialData::get_primary_training_stock_price(size_t index)
+	double FinancialData::get_data_item(const size_t data_index, const size_t record_index)
+	{
+		stock_data_record_span_t data_record = stock_data_records_span[record_index];
+
+		size_t data_record_range = data_record.end - data_record.begin;
+		size_t data_record_index = std::abs((long)(data_index % data_record_range));
+
+		double value = 0;
+
+		try
+		{
+			value = daily_stock_metrics[data_record.begin + data_record_index];
+		}
+		catch (std::out_of_range const& e)
+		{
+			{
+				std::ostringstream ss;
+				ss << ",method=FinancialData.get_data"
+					<< ",diagnostic_level=0"
+					<< ",exception=" << e.what()
+					<< ",data_index=" << data_index
+					<< ",training_case_index=" << record_index
+					<< ",data_record.begin=" << data_record.begin
+					<< ",data_record.end=" << data_record.end
+					<< ",data_record_range=" << data_record_range
+					<< ",data_record_index=" << data_record_index
+					<< ",message=Error_loading_data";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
+			std::cerr << e.what() << '\n';
+		}
+		catch (...)
+		{
+			{
+				std::ostringstream ss;
+				ss << ",method=FinancialData.get_data"
+					<< ",diagnostic_level=0"
+					<< ",data_index=" << data_index
+					<< ",training_case_index=" << record_index
+					<< ",data_record.begin=" << data_record.begin
+					<< ",data_record.end=" << data_record.end
+					<< ",data_record_range=" << data_record_range
+					<< ",data_record_index=" << data_record_index
+					<< ",message=An_unknown_error_has_occured";
+				Utilities::logline_threadsafe << ss.str();
+			}
+
+			std::stringstream error;
+			error << "FinancialData::get_data()";
+			std::cerr << error.str();
+		}
+		return value;
+	}
+
+
+	double FinancialData::get_target_stock_price(size_t index) const
 	{
 		size_t data_record_range = target_stock_adj_open_values.size();
 
@@ -922,7 +978,7 @@ namespace datastore
 		return target_stock_adj_open_values[index].value;
 	}
 
-	std::string FinancialData::get_primary_training_stock_date(size_t index)
+	std::string FinancialData::get_target_stock_date(size_t index) const
 	{
 		size_t data_record_range = target_stock_adj_open_values.size();
 
@@ -942,7 +998,7 @@ namespace datastore
 		return target_stock_adj_open_values[index].date;
 	}
 
-	double FinancialData::get_index_stock_price(size_t index)
+	double FinancialData::get_benchmark_stock_price(size_t index) const
 	{
 		size_t data_record_range = stock_market_benchmark_adj_open_values.size();
 
@@ -974,7 +1030,7 @@ namespace datastore
 		return stock_market_benchmark_adj_open_values[index].value;
 	}
 
-	std::string FinancialData::get_index_stock_date(size_t index)
+	std::string FinancialData::get_benchmark_stock_date(size_t index) const
 	{
 		size_t data_record_range = stock_market_benchmark_adj_open_values.size();
 

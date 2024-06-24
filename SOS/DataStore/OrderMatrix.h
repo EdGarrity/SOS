@@ -16,7 +16,7 @@ namespace datastore
 		Utilities::ThreadSafeArray_2D_V2<unsigned char> orders;
 		Utilities::ThreadSafeArray_2D_V2<unsigned char> processed;
 		size_t population_size;
-		size_t test_data_size;
+		size_t number_of_records;
 
 	public:
 		OrderMatrix();
@@ -41,7 +41,7 @@ namespace datastore
 		//
 		// Remarks:
 		//
-		void initialize(const size_t population_size, const size_t test_data_size);
+		void initialize(const size_t population_size, const size_t number_of_records);
 
 		// Purpose: 
 		//   Clears the Order Matrix table in the database
