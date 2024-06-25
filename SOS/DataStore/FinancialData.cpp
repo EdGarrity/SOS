@@ -968,7 +968,7 @@ namespace datastore
 			ss << ",method=FinancialData.get_target_stock_price"
 				<< ",diagnostic_level=0"
 				<< ",index=" << index
-				<< ",primary_adj_open_values.size=" << data_record_range
+				<< ",target_stock_adj_open_values.size=" << data_record_range
 				<< ",message=Error_loading_data";
 			Utilities::logline_threadsafe << ss.str();
 
@@ -988,7 +988,7 @@ namespace datastore
 			ss << ",method=FinancialData.get_target_stock_date"
 				<< ",diagnostic_level=0"
 				<< ",index=" << index
-				<< ",primary_adj_open_values.size=" << data_record_range
+				<< ",target_stock_adj_open_values.size=" << data_record_range
 				<< ",message=Error_loading_data";
 			Utilities::logline_threadsafe << ss.str();
 
@@ -1008,7 +1008,7 @@ namespace datastore
 			ss << ",method=FinancialData.get_benchmark_stock_price"
 				<< ",diagnostic_level=0"
 				<< ",index=" << index
-				<< ",index_adj_open_values.size=" << data_record_range
+				<< ",stock_market_benchmark_adj_open_values.size=" << data_record_range
 				<< ",message=Error_loading_data";
 			Utilities::logline_threadsafe << ss.str();
 
@@ -1020,9 +1020,9 @@ namespace datastore
 			ss << ",method=FinancialData.get_benchmark_stock_price"
 				<< ",diagnostic_level=0"
 				<< ",index=" << index
-				<< ",index_adj_open_values.size=" << data_record_range
-				<< ",index_adj_open_values[" << index << "].date = " << stock_market_benchmark_adj_open_values[index].date
-				<< ",index_adj_open_values[" << index << "].value=" << stock_market_benchmark_adj_open_values[index].value
+				<< ",stock_market_benchmark_adj_open_values.size=" << data_record_range
+				<< ",stock_market_benchmark_adj_open_values[" << index << "].date = " << stock_market_benchmark_adj_open_values[index].date
+				<< ",stock_market_benchmark_adj_open_values[" << index << "].value=" << stock_market_benchmark_adj_open_values[index].value
 				<< ",message=Return";
 			Utilities::logline_threadsafe << ss.str();
 		}
@@ -1040,7 +1040,7 @@ namespace datastore
 			ss << ",method=FinancialData.get_index_stock_date"
 				<< ",diagnostic_level=0"
 				<< ",index=" << index
-				<< ",index_adj_open_values.size=" << data_record_range
+				<< ",stock_market_benchmark_adj_open_values.size=" << data_record_range
 				<< ",message=Error_loading_data";
 			Utilities::logline_threadsafe << ss.str();
 
@@ -1052,9 +1052,9 @@ namespace datastore
 			ss << ",method=FinancialData.get_index_stock_date"
 				<< ",diagnostic_level=0"
 				<< ",index=" << index
-				<< ",index_adj_open_values.size=" << data_record_range
-				<< ",index_adj_open_values[" << index << "].date = " << stock_market_benchmark_adj_open_values[index].date
-				<< ",index_adj_open_values[" << index << "].value=" << stock_market_benchmark_adj_open_values[index].value
+				<< ",stock_market_benchmark_adj_open_values.size=" << data_record_range
+				<< ",stock_market_benchmark_adj_open_values[" << index << "].date = " << stock_market_benchmark_adj_open_values[index].date
+				<< ",stock_market_benchmark_adj_open_values[" << index << "].value=" << stock_market_benchmark_adj_open_values[index].value
 				<< ",message=Return";
 			Utilities::logline_threadsafe << ss.str();
 		}
@@ -1331,7 +1331,7 @@ namespace datastore
 					<< ",start_date=" << start_date
 					<< ",end_date=" << end_date
 					<< ",elements_loaded=" << elements_loaded
-					<< ",primary_adj_open_values.size=" << target_stock_adj_open_values.size()
+					<< ",target_stock_adj_open_values.size=" << target_stock_adj_open_values.size()
 					<< ",message=case_data_loaded";
 				Utilities::logline_threadsafe << ss.str();
 			}
@@ -1542,10 +1542,10 @@ namespace datastore
 					<< ",start_date=" << start_date
 					<< ",end_date=" << end_date
 					<< ",domain::argmap::financial_index.c_str()" << domain::argmap::financial_index.c_str()
-					<< ",index_adj_open_values.size=" << stock_market_benchmark_adj_open_values.size()
+					<< ",stock_market_benchmark_adj_open_values.size=" << stock_market_benchmark_adj_open_values.size()
 					<< ",count=" << count
-					<< ",index_adj_open_values[0].date=" << stock_market_benchmark_adj_open_values[0].date
-					<< ",index_adj_open_values[0].value=" << stock_market_benchmark_adj_open_values[0].value
+					<< ",stock_market_benchmark_adj_open_values[0].date=" << stock_market_benchmark_adj_open_values[0].date
+					<< ",stock_market_benchmark_adj_open_values[0].value=" << stock_market_benchmark_adj_open_values[0].value
 					<< ",message=case_data_loaded";
 				Utilities::logline_threadsafe << ss.str();
 			}

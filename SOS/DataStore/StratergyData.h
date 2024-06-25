@@ -18,16 +18,15 @@ namespace datastore
 			size_t end;
 		};
 
+		size_t number_of_training_cases;
 		std::vector<record_span_t> records;
 
 	public:
-		StratergyData() = delete;
+		StratergyData();
 		StratergyData(const StratergyData&) = delete;
 		StratergyData(StratergyData&&) = delete;
 		StratergyData& operator=(const StratergyData&) = delete;
 		StratergyData& operator=(StratergyData&&) = delete;
 		~StratergyData() = default;
-
-		StratergyData(size_t number_of_cases);
 	};
 }

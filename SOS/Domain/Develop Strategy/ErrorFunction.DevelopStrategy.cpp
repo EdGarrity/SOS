@@ -42,11 +42,11 @@ namespace domain
 			unsigned long effort = 0;
 			double trading_instruction = 0;
 
-			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_1)
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_5)
 			{
 				std::ostringstream ss;
 				ss << ",case=" << record_number
-					<< ",diagnostic_level=1"
+					<< ",diagnostic_level=5"
 					<< ",method=develop_strategy.run_program"
 					<< ",message=Started";
 				Utilities::logline_threadsafe << ss.str();
@@ -62,11 +62,11 @@ namespace domain
 					trading_instruction = env.output[0];
 			}
 
-			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_1)
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_5)
 			{
 				std::ostringstream ss;
 				ss << ",case=" << record_number
-					<< ",diagnostic_level=1"
+					<< ",diagnostic_level=5"
 					<< ",method=develop_strategy.run_program"
 					<< ",message=Done";
 				Utilities::logline_threadsafe << ss.str();
@@ -99,12 +99,12 @@ namespace domain
 			unsigned int strategy_index,
 			unsigned long record_number)
 		{
-			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_1)
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_5)
 			{
 				std::ostringstream ss;
 				ss << ",stratergy=" << strategy_index
 					<< ",record_number=" << record_number
-					<< ",diagnostic_level=1"
+					<< ",diagnostic_level=5"
 					<< ",method=develop_strategy.run_strategy_threadsafe"
 					<< ",message=Started";
 				Utilities::logline_threadsafe << ss.str();
@@ -117,12 +117,12 @@ namespace domain
 
 			auto results = run_program(env, program, record_number, trace);
 
-			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_1)
+			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_5)
 			{
 				std::ostringstream ss;
 				ss << ",stratergy=" << strategy_index
 					<< ",record_number=" << record_number
-					<< ",diagnostic_level=1"
+					<< ",diagnostic_level=5"
 					<< ",method=develop_strategy.run_strategy_threadsafe"
 					<< ",message=Done";
 				Utilities::logline_threadsafe << ss.str();

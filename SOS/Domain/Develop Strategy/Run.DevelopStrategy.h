@@ -14,7 +14,7 @@ namespace domain
 		//extern Utilities::ThreadSafeArray_2D_V2<unsigned long> orders;
 		extern datastore::OrderMatrix order_matrix;
 
-		void compute_training_orders_thread_safe(datastore::StratergyData*);
+		void compute_training_orders_thread_safe(/*datastore::StratergyData**/);
 
 		int run();
 	}

@@ -524,7 +524,7 @@ namespace domain
 
 		Utilities::Threadpool pool(argmap::max_threads);
 
-		void compute_training_orders_thread_safe(datastore::StratergyData* StratergyData)
+		void compute_training_orders_thread_safe(/*datastore::StratergyData* StratergyData*/ )
 		{
 			if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 			{
@@ -866,7 +866,7 @@ namespace domain
 				//	include_best_individual_in_breeding_pool = true;
 				//}
 
-				std::unique_ptr<datastore::StratergyData> stratergy_cases = std::make_unique<datastore::StratergyData>(datastore::financial_data.get_number_of_records() - domain::argmap::stratergy_case_length - 1);
+				//std::unique_ptr<datastore::StratergyData> stratergy_cases = std::make_unique<datastore::StratergyData>(datastore::financial_data.get_number_of_records() - domain::argmap::stratergy_case_length - 1);
 
 				while ((!done)
 					//&& (generation_number <= argmap::max_generations_in_one_session)
@@ -931,7 +931,7 @@ namespace domain
 					}
 
 					if (argmap::use_multithreading)
-						compute_training_orders_thread_safe(stratergy_cases.get());
+						compute_training_orders_thread_safe(/*stratergy_cases.get()*/);
 
 					else
 						compute_training_orders(global_env, run_strategy_threadsafe);
@@ -1170,6 +1170,57 @@ namespace domain
 					pushGP::globals::baseline_matrix.resize(number_of_training_cases, domain::argmap::number_of_strategies);
 					pushGP::globals::benchmark_matrix.resize(number_of_training_cases, domain::argmap::number_of_strategies);
 
+					if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
+					{
+						std::ostringstream ss;
+						ss << ",method=develop_strategy.run"
+							<< ",diagnostic_level=1"
+							<< ",number_of_training_cases=" << number_of_training_cases
+							<< ",datastore::financial_data.get_number_of_records()=" << datastore::financial_data.get_number_of_records()
+							<< ",domain::argmap::stratergy_case_length=" << domain::argmap::stratergy_case_length
+							<< ",message=Calculate_trading_orders_for_each_trading_day";
+						Utilities::logline_threadsafe << ss.str();
+					}
+
+
+                    //// Pick 10 random numbers from 0 to number_of_training_cases.  This is used to select the training cases to evaluate.
+                    //std::vector<size_t> random_training_cases;
+                    //for (int i = 0; i < 10; i++) {
+                    //    size_t random_case = rand() % number_of_training_cases;
+                    //    random_training_cases.push_back(random_case);
+                    //}
+
+                    //// Loop through each strategy and evaluate the strategy for each of the 10 training cases.
+                    //std::vector<double> strategy_scores(argmap::number_of_strategies, 0.0);
+                    //for (size_t strategy_index = 0; strategy_index < argmap::number_of_strategies; strategy_index++) {
+                    //    for (size_t case_index : random_training_cases) {
+                    //        // Evaluate the strategy for the selected training case
+                    //        double score = evaluate_strategy(strategy_index, case_index);
+                    //        strategy_scores[strategy_index] += score;
+                    //    }
+                    //}
+
+                    //// Calculate the average score for each strategy.
+                    //std::vector<double> average_scores(argmap::number_of_strategies, 0.0);
+                    //for (size_t strategy_index = 0; strategy_index < argmap::number_of_strategies; strategy_index++) {
+                    //    average_scores[strategy_index] = strategy_scores[strategy_index] / random_training_cases.size();
+                    //}
+
+                    //// Calculate the average benchmark score for each strategy.
+                    //std::vector<double> average_benchmark_scores(argmap::number_of_strategies, 0.0);
+                    //for (size_t strategy_index = 0; strategy_index < argmap::number_of_strategies; strategy_index++) {
+                    //    average_benchmark_scores[strategy_index] = calculate_average_benchmark_score(strategy_index);
+                    //}
+
+
+
+
+
+
+
+
+
+
 					for (size_t strategy_index = 0; strategy_index < domain::argmap::number_of_strategies; strategy_index++)
 					{
 						for (size_t training_case_index = 0; training_case_index < number_of_training_cases; training_case_index++)
@@ -1177,8 +1228,8 @@ namespace domain
 							BrokerAccount account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Target_Training, BrokerAccount::seed_money);
 
 							double sum_of_score = 0;
-							size_t stock_data_begin = training_case_index * domain::argmap::stratergy_case_length;
-							size_t stock_data_end = stock_data_begin + domain::argmap::stratergy_case_length;
+							size_t stock_data_begin = training_case_index;
+							size_t stock_data_end = training_case_index + domain::argmap::stratergy_case_length;
 							size_t stock_data_index = stock_data_begin;
 
 							while (stock_data_index < stock_data_end)
@@ -1196,6 +1247,8 @@ namespace domain
 								ss << ",method=develop_strategy.run"
 									<< ",diagnostic_level=1"
 									<< ",training_case_index=" << training_case_index
+									<< ",stock_data_begin=" << stock_data_begin
+									<< ",stock_data_end=" << stock_data_end
 									<< ",strategy_index=" << strategy_index
 									<< ",stock_data_index=" << stock_data_index
 									<< ",stock_data_end=" << stock_data_end
@@ -1357,6 +1410,7 @@ namespace domain
 				//// ******************************
 				//// *** Generate Status Report ***
 				//// ******************************
+
 				double average_traiing_score = 0.0;
 
 				for (int ind = 0; ind < argmap::number_of_strategies; ind++)
