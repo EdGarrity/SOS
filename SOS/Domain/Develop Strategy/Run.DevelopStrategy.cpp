@@ -627,22 +627,33 @@ namespace domain
 
 			for (size_t strategy_index = 0; strategy_index < domain::argmap::number_of_strategies; strategy_index++)
 			{
+				if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
+				{
+					std::ostringstream ss;
+					ss << ",stratergy=" << strategy_index
+						<< ",data_size" << number_of_records
+						<< ",diagnostic_level=2"
+						<< ",method=RunProgram.compute_training_orders_thread_safe"
+						<< ",message=Schedule_to_run_strategy";
+					Utilities::logline_threadsafe << ss.str();
+				}
+
 				for (size_t stock_data_record_index = 0; stock_data_record_index < number_of_records; stock_data_record_index++)
 				{
 					if (!order_matrix.is_generated(strategy_index, stock_data_record_index))
 					{
-						if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
-						{
-							std::ostringstream ss;
-							ss << ",stratergy=" << strategy_index
-								<< ",case=" << stock_data_record_index
-								<< ",data_size" << number_of_records
-								//<< ",number_of_cases" << number_of_cases
-								<< ",diagnostic_level=" << argmap::diagnostic_level
-								<< ",method=RunProgram.compute_training_orders_thread_safe"
-								<< ",message=Schedule_to_run_strategy";
-							Utilities::logline_threadsafe << ss.str();
-						}
+						//if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
+						//{
+						//	std::ostringstream ss;
+						//	ss << ",stratergy=" << strategy_index
+						//		<< ",case=" << stock_data_record_index
+						//		<< ",data_size" << number_of_records
+						//		//<< ",number_of_cases" << number_of_cases
+						//		<< ",diagnostic_level=" << argmap::diagnostic_level
+						//		<< ",method=RunProgram.compute_training_orders_thread_safe"
+						//		<< ",message=Schedule_to_run_strategy";
+						//	Utilities::logline_threadsafe << ss.str();
+						//}
 
 						develop_strategy::RunProgram_WorkOrder_Form form(strategy_index, stock_data_record_index);
 						processor.run(form, work_done);
@@ -650,32 +661,32 @@ namespace domain
 					}
 					else
 					{
-						if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
-						{
-							std::ostringstream ss;
-							ss << ",stratergy=" << strategy_index
-								<< ",case=" << stock_data_record_index
-								<< ",data_size" << number_of_records
-								//<< ",number_of_cases" << number_of_cases
-								<< ",diagnostic_level=" << argmap::diagnostic_level
-								<< ",method=RunProgram.compute_training_orders_thread_safe"
-								<< ",training_case_index=" << stock_data_record_index
-								<< ",message=Order_already_processed";
-							Utilities::logline_threadsafe << ss.str();
-						}
+						//if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
+						//{
+						//	std::ostringstream ss;
+						//	ss << ",stratergy=" << strategy_index
+						//		<< ",case=" << stock_data_record_index
+						//		<< ",data_size" << number_of_records
+						//		//<< ",number_of_cases" << number_of_cases
+						//		<< ",diagnostic_level=" << argmap::diagnostic_level
+						//		<< ",method=RunProgram.compute_training_orders_thread_safe"
+						//		<< ",training_case_index=" << stock_data_record_index
+						//		<< ",message=Order_already_processed";
+						//	Utilities::logline_threadsafe << ss.str();
+						//}
 
 						work_done.count_down();
-						if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
-						{
-							std::ostringstream ss;
-							ss << ",domain::argmap::population_size=" << domain::argmap::number_of_strategies
-								//<< ",number_of_cases=" << number_of_cases
-								<< ",expected_latches=" << expected_latches
-								<< ",diagnostic_level=2"
-								<< ",method=RunProgram.compute_training_orders_thread_safe"
-								<< ",message=Decremented_Latch";
-							Utilities::logline_threadsafe << ss.str();
-						}
+						//if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
+						//{
+						//	std::ostringstream ss;
+						//	ss << ",domain::argmap::population_size=" << domain::argmap::number_of_strategies
+						//		//<< ",number_of_cases=" << number_of_cases
+						//		<< ",expected_latches=" << expected_latches
+						//		<< ",diagnostic_level=2"
+						//		<< ",method=RunProgram.compute_training_orders_thread_safe"
+						//		<< ",message=Decremented_Latch";
+						//	Utilities::logline_threadsafe << ss.str();
+						//}
 					}
 				}
 			}
@@ -684,7 +695,7 @@ namespace domain
 			{
 				std::ostringstream ss;
 				ss << ",method=RunProgram.compute_training_orders_thread_safe"
-					<< ",diagnostic_level=" << argmap::diagnostic_level
+					<< ",diagnostic_level=2"
 					<< ",message=Waiting_for_all_threads_to_complete";
 				Utilities::logline_threadsafe << ss.str();
 			}
@@ -695,7 +706,7 @@ namespace domain
 			{
 				std::ostringstream ss;
 				ss << ",method=RunProgram.compute_training_orders_thread_safe"
-					<< ",diagnostic_level=" << argmap::diagnostic_level
+					<< ",diagnostic_level=2"
 					<< ",message=All_threads_complete";
 				Utilities::logline_threadsafe << ss.str();
 			}
@@ -706,7 +717,7 @@ namespace domain
 				{
 					std::ostringstream ss;
 					ss << ",method=RunProgram.compute_training_orders_thread_safe"
-						<< ",diagnostic_level=" << argmap::diagnostic_level
+						<< ",diagnostic_level=2"
 						<< ",number_of_strategies=" << domain::argmap::number_of_strategies
 						<< ",data_size=" << number_of_records
 						<< ",message=Orders_Saved_to_DB";
@@ -717,7 +728,7 @@ namespace domain
 			{
 				std::ostringstream ss;
 				ss << ",method=RunProgram.compute_training_orders_thread_safe"
-					<< ",diagnostic_level=" << argmap::diagnostic_level
+					<< ",diagnostic_level=2"
 					<< ",number_of_strategies=" << domain::argmap::number_of_strategies
 					<< ",data_size=" << number_of_records
 					<< ",message=No_Orders_Saved_to_DB";
@@ -1179,18 +1190,54 @@ namespace domain
 								stock_data_index++;
 							}
 
+							if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
+							{
+								std::ostringstream ss;
+								ss << ",method=develop_strategy.run"
+									<< ",diagnostic_level=1"
+									<< ",training_case_index=" << training_case_index
+									<< ",strategy_index=" << strategy_index
+									<< ",stock_data_index=" << stock_data_index
+									<< ",stock_data_end=" << stock_data_end
+									<< ",message=Calculate_unrealized_gain";
+								Utilities::logline_threadsafe << ss.str();
+							}
 							double score = account.unrealized_gain(--stock_data_index); // Potential underflow error.
 							sum_of_score += score;
 							pushGP::globals::score_matrix.store(-1, training_case_index, strategy_index, score);
 							pushGP::globals::effort_matrix.store(-1, training_case_index, strategy_index, 1000);
 
 							// Add return from a buy-and-hold stratergy.
+							if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
+							{
+								std::ostringstream ss;
+								ss << ",method=develop_strategy.run"
+									<< ",diagnostic_level=1"
+									<< ",training_case_index=" << training_case_index
+									<< ",strategy_index=" << strategy_index
+									<< ",stock_data_begin=" << stock_data_begin
+									<< ",stock_data_end=" << stock_data_end
+									<< ",message=Calculate_buy-and-hold_gain";
+								Utilities::logline_threadsafe << ss.str();
+							}
 							account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Target_Training, BrokerAccount::seed_money);
 							account.execute(stock_data_begin, 0x01);
 							double buy_and_hold_score = account.unrealized_gain(stock_data_end - 1);
 							pushGP::globals::baseline_matrix.store(-1, training_case_index, strategy_index, buy_and_hold_score);
 
 							// Add return from S&P500 using a buy-and-hold stratergy.  This is used to calculate the Sharpe ratio.
+							if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
+							{
+								std::ostringstream ss;
+								ss << ",method=develop_strategy.run"
+									<< ",diagnostic_level=1"
+									<< ",training_case_index=" << training_case_index
+									<< ",strategy_index=" << strategy_index
+									<< ",stock_data_begin=" << stock_data_begin
+									<< ",stock_data_end=" << stock_data_end
+									<< ",message=Calculate_S&P500_buy-and-hold_gain";
+								Utilities::logline_threadsafe << ss.str();
+							}
 							account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Benchmark, BrokerAccount::seed_money);
 							account.execute(stock_data_begin, 0x01);
 							double benchmark_score = account.unrealized_gain(stock_data_end - 1);

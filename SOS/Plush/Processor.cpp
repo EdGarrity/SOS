@@ -81,11 +81,11 @@ namespace Plush
 	// Run provided program with index to input vector
 	unsigned int run(Environment& env, std::string program, size_t record_number, bool trace)
 	{
-		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_1)
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_5)
 		{
 			std::ostringstream ss;
 			ss << ",record_number=" << record_number
-				<< ",diagnostic_level=1"
+				<< ",diagnostic_level=5"
 				<< ",method=Plush.run"
 				<< ",trace=" << (trace ? "True" : "False")
 				<< ",message=Started";
@@ -96,11 +96,11 @@ namespace Plush
 		int i = 0;
 
 		// Initialize environment
-		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_1)
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_5)
 		{
 			std::ostringstream ss;
 			ss << ",record_number=" << record_number
-				<< ",diagnostic_level=1"
+				<< ",diagnostic_level=5"
 				<< ",method=Plush.run"
 				<< ",trace=" << (trace ? "True" : "False")
 				<< ",message=Initialize_environment";
@@ -109,11 +109,11 @@ namespace Plush
 		env.clear_stacks();
 
 		// Load program into temp
-		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_1)
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_5)
 		{
 			std::ostringstream ss;
 			ss << ",record_number=" << record_number
-				<< ",diagnostic_level=1"
+				<< ",diagnostic_level=5"
 				<< ",method=Plush.run"
 				<< ",message=Load_program_into_temp";
 			Utilities::logline_threadsafe << ss.str();
@@ -127,11 +127,11 @@ namespace Plush
 			env.temp_genes[i++] = gene;
 		}
 
-		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_1)
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_5)
 		{
 			std::ostringstream ss;
 			ss << ",record_number=" << record_number
-				<< ",diagnostic_level=1"
+				<< ",diagnostic_level=5"
 				<< ",method=Plush.run"
 				<< ",message=Initialize_Environment";
 			Utilities::logline_threadsafe << ss.str();
@@ -139,11 +139,11 @@ namespace Plush
 		env.initialize(record_number);
 
 		// Load inputs
-		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_5)
 		{
 			std::ostringstream ss;
 			ss << ",record_number=" << record_number
-				<< ",diagnostic_level=1"
+				<< ",diagnostic_level=5"
 				<< ",i=" << i
 				<< ",method=Plush.run"
 				<< ",message=Load_inputs";
@@ -187,7 +187,7 @@ namespace Plush
 			{
 				std::ostringstream ss;
 				ss << ",record_number=" << record_number
-					<< ",diagnostic_level=1"
+					<< ",diagnostic_level=5"
 					<< ",method=Plush.run"
 					<< ",top=" << top
 					<< ",message=Execute";
@@ -203,7 +203,7 @@ namespace Plush
 			{
 				std::ostringstream ss;
 				ss << ",record_number=" << record_number
-					<< ",diagnostic_level=1"
+					<< ",diagnostic_level=5"
 					<< ",method=Plush.run"
 					<< ",top=" << top
 					<< ",message=Done";

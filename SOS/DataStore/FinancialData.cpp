@@ -965,14 +965,14 @@ namespace datastore
 		if (index >= data_record_range)
 		{
 			std::ostringstream ss;
-			ss << ",method=FinancialData.get_primary_stock_price"
+			ss << ",method=FinancialData.get_target_stock_price"
 				<< ",diagnostic_level=0"
 				<< ",index=" << index
 				<< ",primary_adj_open_values.size=" << data_record_range
 				<< ",message=Error_loading_data";
 			Utilities::logline_threadsafe << ss.str();
 
-			throw std::out_of_range("FinancialData::get_primary_stock_price - Index out of bounds");
+			throw std::out_of_range("FinancialData::get_target_stock_price - Index out of bounds");
 		}
 
 		return target_stock_adj_open_values[index].value;
@@ -985,14 +985,14 @@ namespace datastore
 		if (index >= data_record_range)
 		{
 			std::ostringstream ss;
-			ss << ",method=FinancialData.get_primary_stock_date"
+			ss << ",method=FinancialData.get_target_stock_date"
 				<< ",diagnostic_level=0"
 				<< ",index=" << index
 				<< ",primary_adj_open_values.size=" << data_record_range
 				<< ",message=Error_loading_data";
 			Utilities::logline_threadsafe << ss.str();
 
-			throw std::out_of_range("FinancialData::get_primary_stock_date - Index out of bounds");
+			throw std::out_of_range("FinancialData::get_target_stock_date - Index out of bounds");
 		}
 
 		return target_stock_adj_open_values[index].date;
@@ -1005,19 +1005,19 @@ namespace datastore
 		if (index >= data_record_range)
 		{
 			std::ostringstream ss;
-			ss << ",method=FinancialData.get_index_stock_price"
+			ss << ",method=FinancialData.get_benchmark_stock_price"
 				<< ",diagnostic_level=0"
 				<< ",index=" << index
 				<< ",index_adj_open_values.size=" << data_record_range
 				<< ",message=Error_loading_data";
 			Utilities::logline_threadsafe << ss.str();
 
-			throw std::out_of_range("FinancialData::get_index_stock_price - Index out of bounds");
+			throw std::out_of_range("FinancialData::get_benchmark_stock_price - Index out of bounds");
 		}
 		else
 		{
 			std::ostringstream ss;
-			ss << ",method=FinancialData.get_index_stock_price"
+			ss << ",method=FinancialData.get_benchmark_stock_price"
 				<< ",diagnostic_level=0"
 				<< ",index=" << index
 				<< ",index_adj_open_values.size=" << data_record_range
