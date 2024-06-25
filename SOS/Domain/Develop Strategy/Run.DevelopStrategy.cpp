@@ -772,7 +772,7 @@ namespace domain
 				//size_t number_of_training_cases = 0;
 
 				////unsigned int generation_number = 1;
-				//unsigned int generations_completed_this_session = 0;
+				unsigned int generations_completed_this_session = 0;
 				bool done = false;
 
 				// Allocate meneory for strategies (See https://stackoverflow.com/questions/19803162/array-size-error-x64-process)
@@ -782,18 +782,18 @@ namespace domain
 				pushGP::globals::population_agents = std::make_unique< std::array<pushGP::Individual, domain::argmap::number_of_strategies> >();
 				pushGP::globals::child_agents = std::make_unique< std::array<pushGP::Individual, domain::argmap::number_of_strategies> >();
 
-				//// Load data from most recent database record
-				//unsigned int run_number = datastore::test_data.get_last_saved_run_number();
-				//unsigned int generation_number = datastore::test_data.get_last_saved_generation_number() + 1;
-				//double best_strategy_score = datastore::test_data.get_last_best_individual_score(std::numeric_limits<double>::min());
-				//double best_sortino_ratio = datastore::test_data.get_last_best_individual_error(std::numeric_limits<double>::min());
-				//double best_individual_baseline = datastore::test_data.get_last_best_individual_score(std::numeric_limits<double>::min());
-				//double best_individual_benchmark = datastore::test_data.get_last_best_individual_score(std::numeric_limits<double>::min());
-				//double prev_best_strategy_score = datastore::test_data.get_last_prev_best_individual_error(std::numeric_limits<double>::min());
-				//int stalled_count = datastore::test_data.get_last_stalled_count(argmap::stalled_count_trigger);
-				//int cool_down_count = datastore::test_data.get_last_cool_down_count(argmap::cool_down_period);
-				//bool include_best_individual_in_breeding_pool = datastore::test_data.get_include_best_individual_in_breeding_pool(true);
-				//size_t best_strategy_effort = 0;
+				// Load data from most recent database record
+				unsigned int run_number = datastore::test_data.get_last_saved_run_number();
+				unsigned int generation_number = datastore::test_data.get_last_saved_generation_number() + 1;
+				double best_strategy_score = datastore::test_data.get_last_best_individual_score(std::numeric_limits<double>::min());
+				double best_sortino_ratio = datastore::test_data.get_last_best_individual_error(std::numeric_limits<double>::min());
+				double best_individual_baseline = datastore::test_data.get_last_best_individual_score(std::numeric_limits<double>::min());
+				double best_individual_benchmark = datastore::test_data.get_last_best_individual_score(std::numeric_limits<double>::min());
+				double prev_best_strategy_score = datastore::test_data.get_last_prev_best_individual_error(std::numeric_limits<double>::min());
+				int stalled_count = datastore::test_data.get_last_stalled_count(argmap::stalled_count_trigger);
+				int cool_down_count = datastore::test_data.get_last_cool_down_count(argmap::cool_down_period);
+				bool include_best_individual_in_breeding_pool = datastore::test_data.get_include_best_individual_in_breeding_pool(true);
+				size_t best_strategy_effort = 0;
 
 				//sa.set_cold();
 				//sa.set_temperature(datastore::test_data.get_last_saved_temperature(sa.get_temperature()));
@@ -945,7 +945,7 @@ namespace domain
 				//	//if (number_of_training_cases > domain::argmap::number_of_training_cases)
 				//	//	throw std::overflow_error("Insufficient memory for training cases");
 
-				//	size_t best_strategy = 0;
+					size_t best_strategy = 0;
 				//	size_t maximum_number_of_passing_training_cases = 0;
 				//	best_sortino_ratio = 0.0;
 
@@ -1153,6 +1153,53 @@ namespace domain
 				//		Utilities::logline_threadsafe << ss.str();
 				//	}
 
+					size_t number_of_training_cases = datastore::financial_data.get_number_of_records() - domain::argmap::stratergy_case_length - 1;
+					pushGP::globals::score_matrix.resize(number_of_training_cases, domain::argmap::number_of_strategies);
+					pushGP::globals::effort_matrix.resize(number_of_training_cases, domain::argmap::number_of_strategies);
+					pushGP::globals::baseline_matrix.resize(number_of_training_cases, domain::argmap::number_of_strategies);
+					pushGP::globals::benchmark_matrix.resize(number_of_training_cases, domain::argmap::number_of_strategies);
+
+					for (size_t strategy_index = 0; strategy_index < domain::argmap::number_of_strategies; strategy_index++)
+					{
+						for (size_t training_case_index = 0; training_case_index < number_of_training_cases; training_case_index++)
+						{
+							BrokerAccount account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Target_Training, BrokerAccount::seed_money);
+
+							double sum_of_score = 0;
+							size_t stock_data_begin = training_case_index * domain::argmap::stratergy_case_length;
+							size_t stock_data_end = stock_data_begin + domain::argmap::stratergy_case_length;
+							size_t stock_data_index = stock_data_begin;
+
+							while (stock_data_index < stock_data_end)
+							{
+								unsigned long order = order_matrix.load(strategy_index, stock_data_index);
+
+								account.execute(stock_data_index, order);
+
+								stock_data_index++;
+							}
+
+							double score = account.unrealized_gain(--stock_data_index); // Potential underflow error.
+							sum_of_score += score;
+							pushGP::globals::score_matrix.store(-1, training_case_index, strategy_index, score);
+							pushGP::globals::effort_matrix.store(-1, training_case_index, strategy_index, 1000);
+
+							// Add return from a buy-and-hold stratergy.
+							account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Target_Training, BrokerAccount::seed_money);
+							account.execute(stock_data_begin, 0x01);
+							double buy_and_hold_score = account.unrealized_gain(stock_data_end - 1);
+							pushGP::globals::baseline_matrix.store(-1, training_case_index, strategy_index, buy_and_hold_score);
+
+							// Add return from S&P500 using a buy-and-hold stratergy.  This is used to calculate the Sharpe ratio.
+							account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Benchmark, BrokerAccount::seed_money);
+							account.execute(stock_data_begin, 0x01);
+							double benchmark_score = account.unrealized_gain(stock_data_end - 1);
+							pushGP::globals::benchmark_matrix.store(-1, training_case_index, strategy_index, benchmark_score);
+						}
+					}
+
+
+
 				//	// *********************************************
 				//	// *** Evaluate best strategy with test data ***
 				//	// *********************************************
@@ -1260,50 +1307,50 @@ namespace domain
 				//	//	Utilities::logline_threadsafe << ss.str();
 				//	//}
 
-				//	//// ******************************
-				//	//// *** Generate Status Report ***
-				//	//// ******************************
-				//	double average_traiing_score = 0.0;
+				//// ******************************
+				//// *** Generate Status Report ***
+				//// ******************************
+				double average_traiing_score = 0.0;
 
-				//	for (int ind = 0; ind < argmap::number_of_strategies; ind++)
-				//	{
-				//		for (int training_case_index = 0; training_case_index < number_of_training_cases; training_case_index++)
-				//			average_traiing_score += pushGP::globals::score_matrix.load(training_case_index, ind);
-				//	}
-				//	average_traiing_score /= (double)(domain::argmap::number_of_strategies * number_of_training_cases);
+				for (int ind = 0; ind < argmap::number_of_strategies; ind++)
+				{
+					for (int training_case_index = 0; training_case_index < number_of_training_cases; training_case_index++)
+						average_traiing_score += pushGP::globals::score_matrix.load(training_case_index, ind);
+				}
+				average_traiing_score /= (double)(domain::argmap::number_of_strategies * number_of_training_cases);
 
-				//	double standard_deviation = 0.0;
-				//	for (int ind = 0; ind < argmap::number_of_strategies; ind++)
-				//	{
-				//		for (int training_case_index = 0; training_case_index < number_of_training_cases; training_case_index++)
-				//		{
-				//			double error = pushGP::globals::score_matrix.load(training_case_index, ind);
+				double standard_deviation = 0.0;
+				for (int ind = 0; ind < argmap::number_of_strategies; ind++)
+				{
+					for (int training_case_index = 0; training_case_index < number_of_training_cases; training_case_index++)
+					{
+						double error = pushGP::globals::score_matrix.load(training_case_index, ind);
 
-				//			standard_deviation += (error - average_traiing_score) * (error - average_traiing_score);
-				//		}
-				//	}
-				//	standard_deviation /= (double)(domain::argmap::number_of_strategies * number_of_training_cases);
-				//	standard_deviation = std::sqrt(standard_deviation);
+						standard_deviation += (error - average_traiing_score) * (error - average_traiing_score);
+					}
+				}
+				standard_deviation /= (double)(domain::argmap::number_of_strategies * number_of_training_cases);
+				standard_deviation = std::sqrt(standard_deviation);
 
-				//	//generate_status_report(
-				//	//	number_of_training_cases,
-				//	//	run_number,
-				//	//	generation_number,
-				//	//	generations_completed_this_session,
-				//	//	best_strategy,
-				//	//	best_strategy_score,
-				//	//	best_strategy_effort,
-				//	//	best_sortino_ratio,
-				//	//	prev_best_strategy_score,
-				//	//	average_traiing_score,
-				//	//	standard_deviation,
-				//	//	test_case_score,
-				//	//	sa.get_temperature(),
-				//	//	stalled_count,
-				//	//	cool_down_count,
-				//	//	include_best_individual_in_breeding_pool,
-				//	//	(*pushGP::globals::population_agents)[best_strategy]
-				//	//);
+				generate_status_report(
+					number_of_training_cases,
+					run_number,
+					generation_number,
+					generations_completed_this_session,
+					best_strategy,
+					best_strategy_score,
+					best_strategy_effort,
+					best_sortino_ratio,
+					prev_best_strategy_score,
+					average_traiing_score,
+					standard_deviation,
+					/*test_case_score*/ 0,
+					/*sa.get_temperature()*/ 0,
+					stalled_count,
+					cool_down_count,
+					include_best_individual_in_breeding_pool,
+					(*pushGP::globals::population_agents)[best_strategy]
+				);
 
 				//	order_matrix.clearOrderMatrix();
 
@@ -1338,10 +1385,11 @@ namespace domain
 					done = true;
 				}
 
-				////delete[] pushGP::globals::population_agents;
-				////delete[] pushGP::globals::child_agents;
+				// Managed by the Smart Pointer
+				//delete[] pushGP::globals::population_agents;
+				//delete[] pushGP::globals::child_agents;
 
-				//pool.shutdown();
+				pool.shutdown();
 			}
 			catch (const std::exception& e)
 			{

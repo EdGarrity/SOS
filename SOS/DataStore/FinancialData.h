@@ -13,7 +13,6 @@ namespace datastore
 	{
 	public:
 		enum FinancialInstrumentType { Target_Training = 0, Benchmark, Primary_Test};
-		//FinancialInstrumentType financial_instrument_type = FinancialInstrumentType::Primary_Training;
 
 	private:
 		static constexpr const char* fmt_str_load_all_test_data = "SELECT [Symbol],CONVERT(varchar(25),[Date],120) AS [Date],[Key],[Value]"
@@ -64,10 +63,6 @@ namespace datastore
 		size_t financial_data_record_size = 0;
 		size_t financial_data_record_count = 0;
 
-	public:
-		FinancialData();
-		~FinancialData() {};
-
 		void load(const std::string& start_date, const std::string& end_date);
 		void load_primary_training_adj_open_prices(const std::string& start_date, const std::string& end_date);
 		void load_index_adj_open_prices(const std::string& start_date, const std::string& end_date);
@@ -75,9 +70,13 @@ namespace datastore
 		size_t get_count_of_primary_training_adj_open_prices(const std::string& start_date, const std::string& end_date);
 		size_t get_training_record_size() const;
 
+	public:
+		FinancialData();
+		~FinancialData() {};
+
 		[[nodiscard]] double get_data_item(const size_t data_index, const size_t record_index);
 		[[nodiscard]] size_t get_target_record_count() const { return target_stock_adj_open_values.size(); }
-		[[nodiscard]] size_t get_benchmark_record_count() const { return stock_market_benchmark_adj_open_values.size(); }
+		//[[nodiscard]] size_t get_benchmark_record_count() const { return stock_market_benchmark_adj_open_values.size(); }
 
 		[[nodiscard]] size_t get_number_of_records() const
 		{ 
@@ -86,7 +85,7 @@ namespace datastore
 				? (target_stock_adj_open_values.size())
 				: (stock_market_benchmark_adj_open_values.size());
 		};
-		[[nodiscard]] size_t get_data_size() const { return stock_data_records_span.size(); }
+		//[[nodiscard]] size_t get_data_size() const { return stock_data_records_span.size(); }
 
 		[[nodiscard]] double get_target_stock_price(size_t index) const;
 		[[nodiscard]] double get_benchmark_stock_price(size_t index) const;

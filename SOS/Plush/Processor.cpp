@@ -139,7 +139,7 @@ namespace Plush
 		env.initialize(record_number);
 
 		// Load inputs
-		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_1)
+		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",record_number=" << record_number
@@ -162,7 +162,7 @@ namespace Plush
 				{
 					unsigned long stack_size = env.get_stack<ExecAtom>().size();
 					std::string top = (stack_size == 0) ? ("0") : (env.get_stack<ExecAtom>().get_top_atom().instruction_name);
-					if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_1)
+					if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 					{
 						std::ostringstream ss;
 						ss << ",case=" << record_number
