@@ -1014,11 +1014,11 @@ namespace datastore
 
 			throw std::out_of_range("FinancialData::get_benchmark_stock_price - Index out of bounds");
 		}
-		else
+		else if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",method=FinancialData.get_benchmark_stock_price"
-				<< ",diagnostic_level=0"
+				<< ",diagnostic_level=9"
 				<< ",index=" << index
 				<< ",stock_market_benchmark_adj_open_values.size=" << data_record_range
 				<< ",stock_market_benchmark_adj_open_values[" << index << "].date = " << stock_market_benchmark_adj_open_values[index].date
@@ -1046,11 +1046,11 @@ namespace datastore
 
 			throw std::out_of_range("FinancialData::get_index_stock_date - Index out of bounds");
 		}
-		else
+		else if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 		{
 			std::ostringstream ss;
 			ss << ",method=FinancialData.get_index_stock_date"
-				<< ",diagnostic_level=0"
+				<< ",diagnostic_level=9"
 				<< ",index=" << index
 				<< ",stock_market_benchmark_adj_open_values.size=" << data_record_range
 				<< ",stock_market_benchmark_adj_open_values[" << index << "].date = " << stock_market_benchmark_adj_open_values[index].date

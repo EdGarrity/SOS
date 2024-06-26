@@ -642,6 +642,19 @@ namespace domain
 				{
 					if (!order_matrix.is_generated(strategy_index, stock_data_record_index))
 					{
+						std::ostringstream ss;
+						ss << ",stratergy=" << strategy_index
+							<< ",case=" << stock_data_record_index
+							<< ",data_size" << number_of_records
+							<< ",diagnostic_level=1"
+							<< ",method=RunProgram.compute_training_orders_thread_safe"
+							<< ",message=Debug_trap";
+						Utilities::logline_threadsafe << ss.str();
+
+					}
+
+					if (!order_matrix.is_generated(strategy_index, stock_data_record_index))
+					{
 						//if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 						//{
 						//	std::ostringstream ss;
@@ -691,26 +704,6 @@ namespace domain
 				}
 			}
 
-			if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
-			{
-				std::ostringstream ss;
-				ss << ",method=RunProgram.compute_training_orders_thread_safe"
-					<< ",diagnostic_level=2"
-					<< ",message=Waiting_for_all_threads_to_complete";
-				Utilities::logline_threadsafe << ss.str();
-			}
-
-			pool.wait_for_all_threads_to_complete(work_done);
-
-			if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
-			{
-				std::ostringstream ss;
-				ss << ",method=RunProgram.compute_training_orders_thread_safe"
-					<< ",diagnostic_level=2"
-					<< ",message=All_threads_complete";
-				Utilities::logline_threadsafe << ss.str();
-			}
-
 			if (dirty)
 			{
 				if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
@@ -718,12 +711,22 @@ namespace domain
 					std::ostringstream ss;
 					ss << ",method=RunProgram.compute_training_orders_thread_safe"
 						<< ",diagnostic_level=2"
-						<< ",number_of_strategies=" << domain::argmap::number_of_strategies
-						<< ",data_size=" << number_of_records
-						<< ",message=Orders_Saved_to_DB";
+						<< ",message=Waiting_for_all_threads_to_complete";
+					Utilities::logline_threadsafe << ss.str();
+				}
+
+				pool.wait_for_all_threads_to_complete(work_done);
+
+				if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
+				{
+					std::ostringstream ss;
+					ss << ",method=RunProgram.compute_training_orders_thread_safe"
+						<< ",diagnostic_level=2"
+						<< ",message=All_threads_complete";
 					Utilities::logline_threadsafe << ss.str();
 				}
 			}
+
 			else if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
 			{
 				std::ostringstream ss;
@@ -1241,7 +1244,7 @@ namespace domain
 								stock_data_index++;
 							}
 
-							if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
+							if (argmap::diagnostic_level >= argmap::diagnostic_level_9)
 							{
 								std::ostringstream ss;
 								ss << ",method=develop_strategy.run"
@@ -1261,7 +1264,7 @@ namespace domain
 							pushGP::globals::effort_matrix.store(-1, training_case_index, strategy_index, 1000);
 
 							// Add return from a buy-and-hold stratergy.
-							if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
+							if (argmap::diagnostic_level >= argmap::diagnostic_level_9)
 							{
 								std::ostringstream ss;
 								ss << ",method=develop_strategy.run"
@@ -1279,7 +1282,7 @@ namespace domain
 							pushGP::globals::baseline_matrix.store(-1, training_case_index, strategy_index, buy_and_hold_score);
 
 							// Add return from S&P500 using a buy-and-hold stratergy.  This is used to calculate the Sharpe ratio.
-							if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
+							if (argmap::diagnostic_level >= argmap::diagnostic_level_9)
 							{
 								std::ostringstream ss;
 								ss << ",method=develop_strategy.run"

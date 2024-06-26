@@ -46,15 +46,16 @@ namespace datastore
 		// If the order_matrix.csv file exists, load it into the OrderMatrix
 		// This is used to resume a run that was interrupted
 		std::ifstream infile("order_matrix.csv");
+		std::string line;
+		size_t strategy_index = 0, training_case_index = 0, order_code = 0;
+
 		if (infile.good())
 		{
-			std::string line;
 			while (std::getline(infile, line))
 			{
 				// The order_matrix.csv file contains trhee columns, strategy_index, training_case_index, and order_code
 				// line contains one line from the order_matrix.csv file.
 				// The line is parsed into the three variables below
-				size_t strategy_index = 0, training_case_index = 0, order_code = 0;
 				sscanf_s(line.c_str(), "%zu,%zu,%zu", &strategy_index, &training_case_index, &order_code);
 
 				// Store the order_code in the OrderMatrix
