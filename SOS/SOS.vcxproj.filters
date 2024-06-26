@@ -246,6 +246,9 @@
     <ClInclude Include="Plush\EnvironmentPool.h">
       <Filter>Header Files\Plush</Filter>
     </ClInclude>
+    <ClInclude Include="DataStore\StratergyData.h">
+      <Filter>Header Files\DataStore</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -385,6 +388,9 @@
     </ClCompile>
     <ClCompile Include="Plush\EnvironmentPool.cpp">
       <Filter>Source Files\Plush</Filter>
+    </ClCompile>
+    <ClCompile Include="DataStore\StratergyData.cpp">
+      <Filter>Source Files\DataStore</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

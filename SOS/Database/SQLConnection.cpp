@@ -270,10 +270,10 @@ namespace database
 		pIDBInitialize_ = NULL;
 	}
 
-	SQLConnection::SQLConnection(const std::string server, const std::string dbString, const std::string userID, const std::string password)
-	{
-		connect(server, dbString, userID, password);
-	}
+	//SQLConnection::SQLConnection(const std::string server, const std::string dbString, const std::string userID, const std::string password)
+	//{
+	//	connect(server, dbString, userID, password);
+	//}
 
 	SQLConnection::~SQLConnection()
 	{
@@ -289,40 +289,6 @@ namespace database
 
 		try
 		{
-			//hr = initialize_and_establish_connection(Utilities::strtowstr(server).c_str(), 
-			//	Utilities::strtowstr(dbString).c_str(), 
-			//	Utilities::strtowstr(userID).c_str(), 
-			//	Utilities::strtowstr(password).c_str());
-
-			//hr = initialize_and_establish_connection(L"Server=(local);Database=CleverLogsData;UID=TACollection-Ingestor;PWD=CD-Ing@TAColl!;Encrypt=Optional");
-
-
-			//std::string input; // initialized elsewhere
-			//std::wstring output;
-
-			//output = std::wstring(input.begin(), input.end());
-			//output = output + std::wstring(L" program"); // or output += L" program";
-			//const wchar_t* ptr = output.c_str();
-
-			//std::wstring = std::wstring(server.begin(), server.end());
-
-
-			//output = server << ";" << dbString << ";" << userID << ";" << password << ";Encrypt=Optional";
-
-			//hr = initialize_and_establish_connection(output.c_str());
-
-
-			//std::wstring output = Utilities::strtowstr(server)
-			//	+ Utilities::strtowstr(";").c_str()
-			//	+ Utilities::strtowstr(dbString).c_str()
-			//	+ Utilities::strtowstr(";").c_str()
-			//	+ Utilities::strtowstr(userID).c_str()
-			//	+ Utilities::strtowstr(";").c_str()
-			//	+ Utilities::strtowstr(password).c_str()
-			//	+ Utilities::strtowstr(";Encrypt=Optional").c_str();
-
-			//hr = initialize_and_establish_connection(output.c_str());
-
 			// Create the connection string
 			std::string connection_str = "Server=" + server + ";Database=" + dbString + ";UID=" + userID + ";PWD=" + password + ";Encrypt=Optional";
 

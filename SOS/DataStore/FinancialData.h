@@ -1,6 +1,9 @@
 #pragma once
 
+#include <algorithm>
+#include <string>
 #include <vector>
+#include "..\Domain\Arguments.h"
 #include "..\Utilities\ThreeDimensionalArray.h"
 #include "DatabaseConnection.h"
 
@@ -9,17 +12,9 @@ namespace datastore
 	class FinancialData
 	{
 	public:
-		enum FinancialInstrumentType { Primary = 0, Benchmark };
-		FinancialInstrumentType financial_instrument_type = FinancialInstrumentType::Primary;
+		enum FinancialInstrumentType { Target_Training = 0, Benchmark, Primary_Test};
 
 	private:
-		//static constexpr const char* fmt_str_load_test_data = "SELECT [Symbol],CONVERT(varchar(25),[Date],120) AS [Date],[Key],[Value]"
-		//	" FROM [SOS].[dbo].[TestData]"
-		//	" WHERE [Symbol]='%s'"
-		//	" AND [Date] >= CAST('%s' AS DATETIME)"
-		//	" AND [Date] <= CAST('%s' AS DATETIME)"
-		//	" ORDER BY [Date],[Key]";
-
 		static constexpr const char* fmt_str_load_all_test_data = "SELECT [Symbol],CONVERT(varchar(25),[Date],120) AS [Date],[Key],[Value]"
 			" FROM [SOS].[dbo].[TestData]"
 			" WHERE [Date] >= CAST('%s' AS DATETIME)"
@@ -45,39 +40,16 @@ namespace datastore
 			" AND [Symbol]='%s'"
 			" AND [Key]='Adj_Open'";
 
-		static constexpr const char* fmt_str_load_key_value_for_date = "SElECT TOP 1 [Value]"
-			" FROM"
-			" ("
-				" SELECT TOP(%d) [Key], [Value]"
-				" FROM"
-				" ("
-					" SELECT TOP(%d) [Key], [Value]"
-					" FROM[SOS].[dbo].[TestData]"
-					" WHERE[Date] = CAST('%s' AS DATETIME)"
-					" ORDER BY[Key] ASC"
-				" ) Y"
-				" ORDER BY[Key] DESC"
-			" ) X";
+		// Contains the indexes of the first and last+1 record of each training record
+		struct stock_data_record_span_t
+		{
+			std::string date;
+			size_t begin;
+			size_t end;
+		};
 
-		//struct data_record_t
-		//{
-		//	std::string symbol;
-		//	std::string date;
-		//	std::string key;
-		//	double value;
-		//};
-
-		//struct data_window_record_t
-		//{
-		//	std::string date;
-		//	size_t first_record;
-		//	size_t last_record;
-		//};
-
-		//std::vector<data_record_t> data_records;
-		//std::vector<data_window_record_t> data_window_records;
-		//std::vector<double> primary_adj_open_values;
-		//std::vector<double> index_adj_open_values;
+		std::vector<stock_data_record_span_t> stock_data_records_span;
+		std::vector<double> daily_stock_metrics;
 
 		struct adj_opening_prices_record_t
 		{
@@ -85,32 +57,41 @@ namespace datastore
 			double value;
 		};
 
-		std::vector<adj_opening_prices_record_t> primary_adj_open_values;
-		std::vector<adj_opening_prices_record_t> index_adj_open_values;
+		std::vector<adj_opening_prices_record_t> target_stock_adj_open_values;
+		std::vector<adj_opening_prices_record_t> stock_market_benchmark_adj_open_values;
 
-		size_t financial_data_record_size= 0;
+		size_t financial_data_record_size = 0;
+		size_t financial_data_record_count = 0;
+
+		void load(const std::string& start_date, const std::string& end_date);
+		void load_primary_training_adj_open_prices(const std::string& start_date, const std::string& end_date);
+		void load_index_adj_open_prices(const std::string& start_date, const std::string& end_date);
+
+		size_t get_count_of_primary_training_adj_open_prices(const std::string& start_date, const std::string& end_date);
+		size_t get_training_record_size() const;
 
 	public:
 		FinancialData();
 		~FinancialData() {};
 
-		//void load(const FinancialInstrumentType financial_instrument_type, const std::string& start_date, const std::string& end_date);
-		void load_primary_adj_open_prices(const std::string& start_date, const std::string& end_date);
-		void load_index_adj_open_prices(const std::string& start_date, const std::string& end_date);
-		double load_key_value(const std::string& start_date, const size_t key_offset);
+		[[nodiscard]] double get_data_item(const size_t data_index, const size_t record_index);
+		[[nodiscard]] size_t get_target_record_count() const { return target_stock_adj_open_values.size(); }
+		//[[nodiscard]] size_t get_benchmark_record_count() const { return stock_market_benchmark_adj_open_values.size(); }
 
-		size_t get_count_of_primary_adj_open_prices(const std::string& start_date, const std::string& end_date);
-		size_t get_record_size() const;
+		[[nodiscard]] size_t get_number_of_records() const
+		{ 
+			return 
+				target_stock_adj_open_values.size() < stock_market_benchmark_adj_open_values.size()
+				? (target_stock_adj_open_values.size())
+				: (stock_market_benchmark_adj_open_values.size());
+		};
+		//[[nodiscard]] size_t get_data_size() const { return stock_data_records_span.size(); }
 
-		double get_data(const size_t index, const size_t input_case);
-		size_t get_count() const { return primary_adj_open_values.size(); }
-		double get_primary_stock_price(size_t index) const { return primary_adj_open_values[index].value; }
-		double get_index_stock_price(size_t index) const { return index_adj_open_values[index].value; }
+		[[nodiscard]] double get_target_stock_price(size_t index) const;
+		[[nodiscard]] double get_benchmark_stock_price(size_t index) const;
+		[[nodiscard]] std::string get_target_stock_date(size_t index) const;
+		[[nodiscard]] std::string get_benchmark_stock_date(size_t index) const;
 	};
 
-	//extern FinancialData financial_instrument_data;
-	//extern FinancialData financial_index_data;
-
-	//extern FinancialData financial_data[2];
 	extern FinancialData financial_data;
 }

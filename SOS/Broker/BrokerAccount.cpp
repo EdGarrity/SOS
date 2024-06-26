@@ -7,12 +7,35 @@ namespace domain
     {
         double price = 0;
 
-        if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary)
-            price = datastore::financial_data.get_primary_stock_price(index);
+        if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+        {
+            std::ostringstream ss;
+            ss << ",method=BrokerAccount.buy"
+                << ",index=" << index
+                << ",message=get_buy_stock_price";
+            Utilities::logline_threadsafe << ss.str();
+        }
+
+        if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Target_Training)
+            price = datastore::financial_data.get_target_stock_price(index);
         else
-            price = datastore::financial_data.get_index_stock_price(index);
+            price = datastore::financial_data.get_benchmark_stock_price(index);
         
         double balance = account.get_balance();
+
+        if (price == 0.0)
+        {
+            std::ostringstream ss;
+            ss << ",method=BrokerAccount::buy"
+                << ",diagnostic_level=0"
+                << ",index=" << index
+                << ",financial_instrument_type=" << financial_instrument_type
+                << ",price=" << price
+                << ",message=Error_loading_data";
+            Utilities::logline_threadsafe << ss.str();
+
+            throw std::out_of_range("BrokerAccount::buy - Devide by zero");
+        }
 
         if (price <= balance)
         {
@@ -27,10 +50,19 @@ namespace domain
     {
         double price = 0;
 
-        if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary)
-            price = datastore::financial_data.get_primary_stock_price(index);
+        if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+        {
+            std::ostringstream ss;
+            ss << ",method=BrokerAccount.sell"
+                << ",index=" << index
+                << ",message=get_sell_stock_price";
+            Utilities::logline_threadsafe << ss.str();
+        }
+
+        if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Target_Training)
+            price = datastore::financial_data.get_target_stock_price(index);
         else
-            price = datastore::financial_data.get_index_stock_price(index);
+            price = datastore::financial_data.get_benchmark_stock_price(index);
 
         if (shares > 0)
         {
@@ -49,11 +81,28 @@ namespace domain
             buy(index);
             {
                 double price = 0;
+				std::string date;
 
-                if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary)
-                    price = datastore::financial_data.get_primary_stock_price(index);
+                if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+                {
+                    std::ostringstream ss;
+                    ss << ",method=BrokerAccount.trace_execute"
+                        << ",index=" << index
+						<< ",order_bitmask=" << order_bitmask
+                        << ",message=get_buy_stock_price";
+                    Utilities::logline_threadsafe << ss.str();
+                }
+
+                if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Target_Training)
+                {
+                    price = datastore::financial_data.get_target_stock_price(index);
+					date = datastore::financial_data.get_target_stock_date(index);
+                }
                 else
-                    price = datastore::financial_data.get_index_stock_price(index);
+				{
+				    price = datastore::financial_data.get_benchmark_stock_price(index);
+					date = datastore::financial_data.get_benchmark_stock_date(index);
+				}
 
                 double balance = account.get_balance();
                 double unrealized_gain = 0;
@@ -64,10 +113,11 @@ namespace domain
                 if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
                 {
                     std::ostringstream ss;
-                    ss << ",method=BrokerAccount.execute"
+                    ss << ",method=BrokerAccount.trace_execute"
                         << ",index=" << index
                         << ",order_bitmask=" << order_bitmask
                         << ",order=buy"
+                        << ",date=" << date
                         << ",price=" << price
                         << ",shares=" << shares
                         << ",balance=" << balance
@@ -84,10 +134,20 @@ namespace domain
             {
                 double price = 0;
 
-                if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary)
-                    price = datastore::financial_data.get_primary_stock_price(index);
+                if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+                {
+                    std::ostringstream ss;
+                    ss << ",method=BrokerAccount.trace_execute"
+                        << ",index=" << index
+                        << ",order_bitmask=" << order_bitmask
+                        << ",message=get_sell_stock_price";
+                    Utilities::logline_threadsafe << ss.str();
+                }
+                
+                if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Target_Training)
+                    price = datastore::financial_data.get_target_stock_price(index);
                 else
-                    price = datastore::financial_data.get_index_stock_price(index);
+                    price = datastore::financial_data.get_benchmark_stock_price(index);
 
                 double balance = account.get_balance();
                 double unrealized_gain = 0;
@@ -140,10 +200,19 @@ namespace domain
     {
         double price = 0;
 
-        if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Primary)
-            price = datastore::financial_data.get_primary_stock_price(index);
+        if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+        {
+            std::ostringstream ss;
+            ss << ",method=BrokerAccount.unrealized_gain"
+                << ",index=" << index
+                << ",message=get_unrealized_gain_stock_price";
+            Utilities::logline_threadsafe << ss.str();
+        }
+
+        if (financial_instrument_type == datastore::FinancialData::FinancialInstrumentType::Target_Training)
+            price = datastore::financial_data.get_target_stock_price(index);
         else
-            price = datastore::financial_data.get_index_stock_price(index);
+            price = datastore::financial_data.get_benchmark_stock_price(index);
 
         double balance = account.get_balance();
 

@@ -2,6 +2,7 @@
 //#include <vector>
 #include <array>
 #include <limits>
+#include <memory>
 #include <atomic>
 #include "../Domain/Arguments.h"
 #include "../Utilities/ThreadSafeArray.h"
@@ -14,9 +15,11 @@ namespace pushGP
 		//*******************************************************
 		// General GP storage variables
 		//extern Individual population_agents[domain::argmap::population_size];
-		extern Individual *population_agents;
+		//extern Individual *population_agents;
 		//extern Individual child_agents[domain::argmap::population_size];
-		extern Individual *child_agents;
+		//extern Individual *child_agents;
+		extern std::unique_ptr<std::array<Individual, domain::argmap::number_of_strategies>> population_agents;
+		extern std::unique_ptr<std::array<Individual, domain::argmap::number_of_strategies>> child_agents;
 
 		//*******************************************************
 		// Globals for Elite Lexicase Selection
@@ -46,16 +49,16 @@ namespace pushGP
 		extern unsigned long thread_individual_index[domain::argmap::max_threads];
 		extern size_t thread_example_case[domain::argmap::max_threads];
 
-		struct Training_case_best_score
-		{
-			double best_score_array_by_example_case[domain::argmap::number_of_training_cases];
-			unsigned int individual_with_best_score_for_training_case[domain::argmap::number_of_training_cases];
+		//struct Training_case_best_score
+		//{
+		//	double best_score_array_by_example_case[domain::argmap::number_of_training_cases];
+		//	unsigned int individual_with_best_score_for_training_case[domain::argmap::number_of_training_cases];
 
-			Training_case_best_score();
+		//	Training_case_best_score();
 
-		};
+		//};
 
-		typedef struct Training_case_best_score Training_case_best_score_type;
+		//typedef struct Training_case_best_score Training_case_best_score_type;
 
 		// Used in epsilon lexicase. Only calculated once per population
 		extern std::vector<double> epsilons;

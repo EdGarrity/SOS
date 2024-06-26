@@ -51,7 +51,7 @@ namespace datastore
 
 			if (sqlcmd_get_individuals->is_result_set())
 			{
-				while ((sqlcmd_get_individuals->fetch_next()) && (n < domain::argmap::population_size))
+				while ((sqlcmd_get_individuals->fetch_next()) && (n < domain::argmap::number_of_strategies))
 				{
 					//if ((n % 1'000) == 0)
 					//{
@@ -62,9 +62,9 @@ namespace datastore
 
 					if (genome.length() > 0)
 					{
-						pushGP::globals::population_agents[n].set_genome(genome);
+						(*pushGP::globals::population_agents)[n].set_genome(genome);
 
-						pushGP::globals::population_agents[n].record_family_tree(
+						(*pushGP::globals::population_agents)[n].record_family_tree(
 							Utilities::StringToGuid(sqlcmd_get_individuals->get_field_as_string(3)),
 							Utilities::StringToGuid(sqlcmd_get_individuals->get_field_as_string(4)),
 							Utilities::StringToGuid(sqlcmd_get_individuals->get_field_as_string(5)),
@@ -174,7 +174,7 @@ namespace datastore
 			Utilities::logline_threadsafe << ss.str();
 		}
 
-		for (int n = 0; n < domain::argmap::population_size; n++)
+		for (int n = 0; n < domain::argmap::number_of_strategies; n++)
 		{
 			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
@@ -193,13 +193,13 @@ namespace datastore
 				std::ostringstream ss;
 				ss << ",method=AgentData::save"
 					<< ",diagnostic_level=9"
-					<< ",genome=" << pushGP::globals::population_agents[n]
+					<< ",genome=" << (*pushGP::globals::population_agents)[n]
 					<< ",message=set_as_string";
 				Utilities::logline_threadsafe << ss.str();
 			}
-			sqlcmd->set_as_string(2, pushGP::globals::population_agents[n]);
+			sqlcmd->set_as_string(2, (*pushGP::globals::population_agents)[n]);
 
-			std::unordered_set<UUID> parents = pushGP::globals::population_agents[n].get_parents();
+			std::unordered_set<UUID> parents = (*pushGP::globals::population_agents)[n].get_parents();
 
 			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
 			{
@@ -223,7 +223,7 @@ namespace datastore
 			else
 				sqlcmd->set_as_GUID(4, NilUuid);
 
-			parents = pushGP::globals::population_agents[n].get_grandparents();
+			parents = (*pushGP::globals::population_agents)[n].get_grandparents();
 			it = parents.begin();
 
 			if (it != parents.end())
@@ -246,7 +246,7 @@ namespace datastore
 			else
 				sqlcmd->set_as_GUID(8, NilUuid);
 
-			parents = pushGP::globals::population_agents[n].get_greatgrandparents();
+			parents = (*pushGP::globals::population_agents)[n].get_greatgrandparents();
 			it = parents.begin();
 
 			if (it != parents.end())
@@ -320,9 +320,9 @@ namespace datastore
 	{
 		size_t agents_created = 0;
 
-		for (int n = _start; n < domain::argmap::population_size; n++)
+		for (int n = _start; n < domain::argmap::number_of_strategies; n++)
 		{
-			pushGP::make_random_plush_genome(pushGP::globals::population_agents[n].get_genome());
+			pushGP::make_random_plush_genome((*pushGP::globals::population_agents)[n].get_genome());
 			agents_created++;
 		}
 

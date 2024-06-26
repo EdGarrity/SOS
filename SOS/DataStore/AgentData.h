@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <string>
 #include "..\Utilities\ThreeDimensionalArray.h"
 #include "DatabaseConnection.h"
 #include "../Plush/Environment.h"

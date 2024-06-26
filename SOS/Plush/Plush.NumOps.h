@@ -247,12 +247,12 @@ namespace Plush
 	template <class T>
 	inline unsigned in(Environment& _env)
 	{
-		long index = std::abs((long)(_env.pop<long>()));
+		long data_index = std::abs((long)(_env.pop<long>()));
 		T value = 0;
 
 		if (domain::argmap::algorithm_selection == domain::argmap::AlgorithmSelection::strategy_development)
 		{
-			value = datastore::financial_data.get_data(index, _env.input_case);
+			value = datastore::financial_data.get_data_item(data_index, _env.record_index);
 
 			if (value > 0)
 			{

@@ -15,9 +15,11 @@ namespace pushGP
 		// General GP storage variables
 
 		//Individual population_agents[domain::argmap::population_size];
-		Individual *population_agents;
+		//Individual *population_agents;
+		std::unique_ptr< std::array<Individual, domain::argmap::number_of_strategies>> population_agents;
 		//Individual child_agents[domain::argmap::population_size];
-		Individual *child_agents;
+		//Individual *child_agents;
+		std::unique_ptr<std::array<Individual, domain::argmap::number_of_strategies>> child_agents;
 
 		//*******************************************************
 		// Globals for Elite Lexicase Selection
@@ -51,18 +53,18 @@ namespace pushGP
 		std::vector<double> epsilons;
 		std::vector<unsigned int> non_zero_epsilons;
 
-		size_t number_of_training_cases = datastore::financial_data.get_count() - domain::argmap::training_case_length + 1;
+		//size_t number_of_training_cases = datastore::financial_data.get_number_of_training_cases();		// datastore::financial_data.get_count() - domain::argmap::training_case_length + 1;
 
-		Training_case_best_score::Training_case_best_score()
-		{
-			if (number_of_training_cases > domain::argmap::number_of_training_cases)
-				throw std::overflow_error("Insufficient memory for training cases");
+		//Training_case_best_score::Training_case_best_score()
+		//{
+		//	if (number_of_training_cases > domain::argmap::number_of_training_cases)
+		//		throw std::overflow_error("Insufficient memory for training cases");
 
-			for (unsigned int example_case = 0; example_case < number_of_training_cases; example_case++)
-			{
-				best_score_array_by_example_case[example_case] = std::numeric_limits<double>::min();
-				individual_with_best_score_for_training_case[example_case] = std::numeric_limits<unsigned int>::min();
-			}
-		}
+		//	for (unsigned int example_case = 0; example_case < number_of_training_cases; example_case++)
+		//	{
+		//		best_score_array_by_example_case[example_case] = std::numeric_limits<double>::min();
+		//		individual_with_best_score_for_training_case[example_case] = std::numeric_limits<unsigned int>::min();
+		//	}
+		//}
 	}
 }
