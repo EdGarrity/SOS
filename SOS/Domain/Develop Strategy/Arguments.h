@@ -37,7 +37,7 @@ namespace domain
 		// Meta data on training and test cases
 		static constexpr size_t stratergy_case_length = 252; // 252 trading days in a year
 		//static constexpr size_t test_case_length = 252; // 252 trading days in a year
-		//static constexpr size_t number_of_training_cases = 10338;
+		static constexpr size_t number_of_training_cases = 10338;  // size_t number_of_training_cases = datastore::financial_data.get_number_of_records() - domain::argmap::stratergy_case_length - 1;
 		//static constexpr size_t number_of_records = 62611867;
 		//static constexpr size_t records_per_case = 6056;
 		//static constexpr double training_sample_ratio = 0.01;

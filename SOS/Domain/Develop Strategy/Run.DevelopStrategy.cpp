@@ -176,219 +176,218 @@ namespace domain
 		//
 		// Remarks:
 		//  This function is not thread safe
-		//void produce_new_offspring(unsigned long _number_of_example_cases,
-		//	size_t _number_of_training_cases,
-		//	concurrent_unordered_set<size_t>& _downsampled_training_cases,
-		//	size_t _best_strategy,
-		//	pushGP::SimulatedAnnealing& sa,
-		//	bool _include_best_individual_in_breeding_pool)
-		//{
-		//	try
-		//	{
-		//		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
-		//		{
-		//			std::ostringstream ss;
-		//			ss << ",method=develop_strategy.produce_new_offspring"
-		//				<< ",diagnostic_level=9"
-		//				<< ",_number_of_example_cases=" << _number_of_example_cases
-		//				<< ",_number_of_training_cases=" << _number_of_training_cases
-		//				<< ",_best_strategy=" << _best_strategy
-		//				<< ",_include_best_individual_in_breeding_pool=" << _include_best_individual_in_breeding_pool
-		//				<< ",message=Enter";
-		//			Utilities::logline_threadsafe << ss.str();
-		//		}
+		void produce_new_offspring(unsigned long _number_of_example_cases,
+			size_t _number_of_training_cases,
+			concurrent_unordered_set<size_t>& _downsampled_training_cases,
+			size_t _best_strategy,
+			pushGP::SimulatedAnnealing& sa,
+			bool _include_best_individual_in_breeding_pool)
+		{
+			try
+			{
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				{
+					std::ostringstream ss;
+					ss << ",method=develop_strategy.produce_new_offspring"
+						<< ",diagnostic_level=9"
+						<< ",_number_of_example_cases=" << _number_of_example_cases
+						<< ",_number_of_training_cases=" << _number_of_training_cases
+						<< ",_best_strategy=" << _best_strategy
+						<< ",_include_best_individual_in_breeding_pool=" << _include_best_individual_in_breeding_pool
+						<< ",message=Enter";
+					Utilities::logline_threadsafe << ss.str();
+				}
 
-		//		std::set<std::string> set_of_gnomes;
-		//		combinable<pushGP::globals::Training_case_best_score_type> training_case_min_error;
+				std::set<std::string> set_of_gnomes;
+				combinable<pushGP::globals::Training_case_best_score_type> training_case_min_error;
 
-		//		// Reset children.
-		//		//{std::ostringstream ss; ss << "  Reset children"; Utilities::logline_threadsafe << ss.str(); }
-		//		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
-		//		{
-		//			std::ostringstream ss;
-		//			ss << ",method=develop_strategy.produce_new_offspring"
-		//				<< ",diagnostic_level=9"
-		//				<< ",message=Reset_children";
-		//			Utilities::logline_threadsafe << ss.str();
-		//		}
+				// Reset children.
+				//{std::ostringstream ss; ss << "  Reset children"; Utilities::logline_threadsafe << ss.str(); }
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				{
+					std::ostringstream ss;
+					ss << ",method=develop_strategy.produce_new_offspring"
+						<< ",diagnostic_level=9"
+						<< ",message=Reset_children";
+					Utilities::logline_threadsafe << ss.str();
+				}
+
+				//for (unsigned long n = 0; n < argmap::number_of_strategies; n++)
+				//	pushGP::globals::child_agents[n].clear_genome();
+
+				for (pushGP::Individual & child : *pushGP::globals::child_agents)
+					child.clear_genome();
 
 
-		//		//for (unsigned long n = 0; n < argmap::number_of_strategies; n++)
-		//		//	pushGP::globals::child_agents[n].clear_genome();
+				// Breed new generation
+				//{std::ostringstream ss; ss << "  Breed new generation"; Utilities::logline_threadsafe << ss.str(); }
+				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				{
+					std::ostringstream ss;
+					ss << ",method=develop_strategy.produce_new_offspring"
+						<< ",diagnostic_level=9"
+						<< ",message=Breed_new_generation";
+					Utilities::logline_threadsafe << ss.str();
+				}
 
-		//		for (pushGP::Individual & child : *pushGP::globals::child_agents)
-		//			child.clear_genome();
+				//std::map<pushGP::SimulatedAnnealing_States, int> state_count;
 
+				//state_count[pushGP::SimulatedAnnealing_States::alternate] = 0;
+				//state_count[pushGP::SimulatedAnnealing_States::cloan] = 0;
+				//state_count[pushGP::SimulatedAnnealing_States::mutate] = 0;
+				//state_count[pushGP::SimulatedAnnealing_States::regenerate] = 0;
 
-		//		// Breed new generation
-		//		//{std::ostringstream ss; ss << "  Breed new generation"; Utilities::logline_threadsafe << ss.str(); }
-		//		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
-		//		{
-		//			std::ostringstream ss;
-		//			ss << ",method=develop_strategy.produce_new_offspring"
-		//				<< ",diagnostic_level=9"
-		//				<< ",message=Breed_new_generation";
-		//			Utilities::logline_threadsafe << ss.str();
-		//		}
+				for (size_t strategy_index = 0; strategy_index < argmap::number_of_strategies; strategy_index++)
+				{
+					Plush::Genome<Plush::CodeAtom>& child_genome = (*pushGP::globals::child_agents)[strategy_index].get_genome();
 
-		//		std::map<pushGP::SimulatedAnnealing_States, int> state_count;
+					// Keep the best individual
+					if ((_include_best_individual_in_breeding_pool) && (strategy_index == _best_strategy))
+						(*pushGP::globals::child_agents)[strategy_index].copy((*pushGP::globals::population_agents)[strategy_index]);
 
-		//		state_count[pushGP::SimulatedAnnealing_States::alternate] = 0;
-		//		state_count[pushGP::SimulatedAnnealing_States::cloan] = 0;
-		//		state_count[pushGP::SimulatedAnnealing_States::mutate] = 0;
-		//		state_count[pushGP::SimulatedAnnealing_States::regenerate] = 0;
+					else
+					{
+						//if (individual_index % 100 == 0)
+						//{
+						//	std::ostringstream ss; ss << "B"; Utilities::logline_threadsafe << ss.str();
+						//}
 
-		//		for (size_t strategy_index = 0; strategy_index < argmap::number_of_strategies; strategy_index++)
-		//		{
-		//			Plush::Genome<Plush::CodeAtom>& child_genome = (*pushGP::globals::child_agents)[strategy_index].get_genome();
+						pushGP::SimulatedAnnealing_States state = pushGP::breed(strategy_index,
+							_number_of_example_cases,
+							_downsampled_training_cases,
+							training_case_min_error,
+							sa,
+							_include_best_individual_in_breeding_pool,
+							_best_strategy);
 
-		//			// Keep the best individual
-		//			if ((!_include_best_individual_in_breeding_pool) && (strategy_index == _best_strategy))
-		//				(*pushGP::globals::child_agents)[strategy_index].copy((*pushGP::globals::population_agents)[strategy_index]);
+						//state_count[state]++;
 
-		//			else
-		//			{
-		//				//if (individual_index % 100 == 0)
-		//				//{
-		//				//	std::ostringstream ss; ss << "B"; Utilities::logline_threadsafe << ss.str();
-		//				//}
+						// If a child with the same genome already exists, create a new random child.
+						if (set_of_gnomes.insert((*pushGP::globals::child_agents)[strategy_index].get_genome_as_string()).second == false)
+						{
+							pushGP::make_random_plush_genome(child_genome);
+						}
+					}
+				}
 
-		//				pushGP::SimulatedAnnealing_States state = pushGP::breed(strategy_index,
-		//					_number_of_example_cases,
-		//					_downsampled_training_cases,
-		//					training_case_min_error,
-		//					sa,
-		//					_include_best_individual_in_breeding_pool,
-		//					_best_strategy);
+				//if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				//{
+				//	std::ostringstream ss;
+				//	ss << ",method=develop_strategy.produce_new_offspring"
+				//		<< ",diagnostic_level=9"
+				//		<< ",Alternate=" << (double)state_count[pushGP::SimulatedAnnealing_States::alternate] / (double)argmap::number_of_strategies * 100.0
+				//		<< ",Alternate_elite=" << (double)state_count[pushGP::SimulatedAnnealing_States::alternate_elite] / (double)argmap::number_of_strategies * 100.0
+				//		<< ",Cloan=" << (double)state_count[pushGP::SimulatedAnnealing_States::cloan] / (double)argmap::number_of_strategies * 100.0
+				//		<< ",Mutate=" << (double)state_count[pushGP::SimulatedAnnealing_States::mutate] / (double)argmap::number_of_strategies * 100.0
+				//		<< ",Regenerate=" << (double)state_count[pushGP::SimulatedAnnealing_States::regenerate] / (double)argmap::number_of_strategies * 100.0
+				//		<< ",message=Selection_distribution";
+				//	Utilities::logline_threadsafe << ss.str();
+				//}
 
-		//				state_count[state]++;
+				//// Keep the best individuals for each test case
+				//if (!_include_best_individual_in_breeding_pool)
+				//{
+				//	for (unsigned long training_case = 0; training_case < _number_of_training_cases; training_case++)
+				//	{
+				//		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				//		{
+				//			std::ostringstream ss;
+				//			ss << ",method=develop_strategy.produce_new_offspring"
+				//				<< ",diagnostic_level=9"
+				//				<< ",training_case=" << training_case
+				//				<< ",message=for_loop";
+				//			Utilities::logline_threadsafe << ss.str();
+				//		}
 
-		//				// If a child with the same genome already exists, create a new random child.
-		//				if (set_of_gnomes.insert((*pushGP::globals::child_agents)[strategy_index].get_genome_as_string()).second == false)
-		//				{
-		//					pushGP::make_random_plush_genome(child_genome);
-		//				}
-		//			}
-		//		}
+				//		unsigned long best_individual_for_training_case = training_case_min_error.local().individual_with_best_score_for_training_case[training_case];
+				//		{
+				//			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				//			{
+				//				std::ostringstream ss;
+				//				ss << ",method=develop_strategy.produce_new_offspring"
+				//					<< ",diagnostic_level=9"
+				//					<< ",training_case=" << training_case
+				//					<< ",best_individual_for_training_case=" << best_individual_for_training_case
+				//					<< ",message=for_loop";
+				//				Utilities::logline_threadsafe << ss.str();
+				//			}
+				//		}
 
-		//		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
-		//		{
-		//			std::ostringstream ss;
-		//			ss << ",method=develop_strategy.produce_new_offspring"
-		//				<< ",diagnostic_level=9"
-		//				<< ",Alternate=" << (double)state_count[pushGP::SimulatedAnnealing_States::alternate] / (double)argmap::number_of_strategies * 100.0
-		//				<< ",Alternate_elite=" << (double)state_count[pushGP::SimulatedAnnealing_States::alternate_elite] / (double)argmap::number_of_strategies * 100.0
-		//				<< ",Cloan=" << (double)state_count[pushGP::SimulatedAnnealing_States::cloan] / (double)argmap::number_of_strategies * 100.0
-		//				<< ",Mutate=" << (double)state_count[pushGP::SimulatedAnnealing_States::mutate] / (double)argmap::number_of_strategies * 100.0
-		//				<< ",Regenerate=" << (double)state_count[pushGP::SimulatedAnnealing_States::regenerate] / (double)argmap::number_of_strategies * 100.0
-		//				<< ",message=Selection_distribution";
-		//			Utilities::logline_threadsafe << ss.str();
-		//		}
+				//		if (best_individual_for_training_case < (std::numeric_limits<unsigned int>::max)())
+				//		{
+				//			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				//			{
+				//				std::ostringstream ss;
+				//				ss << ",method=develop_strategy.produce_new_offspring"
+				//					<< ",diagnostic_level=9"
+				//					<< ",best_individual_for_training_case=" << best_individual_for_training_case
+				//					<< ",std::numeric_limits<unsigned int>::max=" << std::numeric_limits<unsigned int>::max
+				//					<< ",message=Produce_new_offspring?";
+				//				Utilities::logline_threadsafe << ss.str();
+				//			}
 
-		//		// Keep the best individuals for each test case
-		//		if (!_include_best_individual_in_breeding_pool)
-		//		{
-		//			for (unsigned long training_case = 0; training_case < _number_of_training_cases; training_case++)
-		//			{
-		//				if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
-		//				{
-		//					std::ostringstream ss;
-		//					ss << ",method=develop_strategy.produce_new_offspring"
-		//						<< ",diagnostic_level=9"
-		//						<< ",training_case=" << training_case
-		//						<< ",message=for_loop";
-		//					Utilities::logline_threadsafe << ss.str();
-		//				}
+				//			(*pushGP::globals::child_agents)[best_individual_for_training_case].copy((*pushGP::globals::population_agents)[best_individual_for_training_case]);
 
-		//				unsigned long best_individual_for_training_case = training_case_min_error.local().individual_with_best_score_for_training_case[training_case];
-		//				{
-		//					if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
-		//					{
-		//						std::ostringstream ss;
-		//						ss << ",method=develop_strategy.produce_new_offspring"
-		//							<< ",diagnostic_level=9"
-		//							<< ",training_case=" << training_case
-		//							<< ",best_individual_for_training_case=" << best_individual_for_training_case
-		//							<< ",message=for_loop";
-		//						Utilities::logline_threadsafe << ss.str();
-		//					}
-		//				}
+				//			if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				//			{
+				//				std::ostringstream ss;
+				//				ss << ",method=develop_strategy.produce_new_offspring"
+				//					<< ",diagnostic_level=9"
+				//					<< ",best_individual_for_training_case=" << best_individual_for_training_case
+				//					<< ",message=New_offspring_produced";
+				//				Utilities::logline_threadsafe << ss.str();
+				//			}
+				//		}
+				//	}
+				//}
 
-		//				if (best_individual_for_training_case < (std::numeric_limits<unsigned int>::max)())
-		//				{
-		//					if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
-		//					{
-		//						std::ostringstream ss;
-		//						ss << ",method=develop_strategy.produce_new_offspring"
-		//							<< ",diagnostic_level=9"
-		//							<< ",best_individual_for_training_case=" << best_individual_for_training_case
-		//							<< ",std::numeric_limits<unsigned int>::max=" << std::numeric_limits<unsigned int>::max
-		//							<< ",message=Produce_new_offspring?";
-		//						Utilities::logline_threadsafe << ss.str();
-		//					}
+				//if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
+				//{
+				//	std::ostringstream ss;
+				//	ss << ",method=develop_strategy.produce_new_offspring"
+				//		<< ",diagnostic_level=9"
+				//		<< ",message=Done";
+				//	Utilities::logline_threadsafe << ss.str();
+				//}
+			}
+			catch (const std::exception& e)
+			{
+				std::stringstream error;
 
-		//					(*pushGP::globals::child_agents)[best_individual_for_training_case].copy((*pushGP::globals::population_agents)[best_individual_for_training_case]);
+				error << "Standard exception: " << e.what();
 
-		//					if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
-		//					{
-		//						std::ostringstream ss;
-		//						ss << ",method=develop_strategy.produce_new_offspring"
-		//							<< ",diagnostic_level=9"
-		//							<< ",best_individual_for_training_case=" << best_individual_for_training_case
-		//							<< ",message=New_offspring_produced";
-		//						Utilities::logline_threadsafe << ss.str();
-		//					}
-		//				}
-		//			}
-		//		}
+				std::cerr << error.str();
 
-		//		if (domain::argmap::diagnostic_level >= domain::argmap::diagnostic_level_9)
-		//		{
-		//			std::ostringstream ss;
-		//			ss << ",method=develop_strategy.produce_new_offspring"
-		//				<< ",diagnostic_level=9"
-		//				<< ",message=Done";
-		//			Utilities::logline_threadsafe << ss.str();
-		//		}
-		//	}
-		//	catch (const std::exception& e)
-		//	{
-		//		std::stringstream error;
+				{
+					std::ostringstream ss;
+					ss << ",method=develop_strategy.produce_new_offspring"
+						<< ",diagnostic_level=0"
+						<< ",exception=" << e.what()
+						<< ",message=Standard_exception";
+					Utilities::logline_threadsafe << ss.str();
+				}
 
-		//		error << "Standard exception: " << e.what();
+				throw;
+			}
+			catch (...)
+			{
+				std::stringstream error;
 
-		//		std::cerr << error.str();
+				error << "Exception occurred";
 
-		//		{
-		//			std::ostringstream ss;
-		//			ss << ",method=develop_strategy.produce_new_offspring"
-		//				<< ",diagnostic_level=0"
-		//				<< ",exception=" << e.what()
-		//				<< ",message=Standard_exception";
-		//			Utilities::logline_threadsafe << ss.str();
-		//		}
+				std::cerr << error.str();
 
-		//		throw;
-		//	}
-		//	catch (...)
-		//	{
-		//		std::stringstream error;
+				{
+					std::ostringstream ss;
+					ss << ",method=develop_strategy.produce_new_offspring"
+						<< ",diagnostic_level=0"
+						<< ",message=Unknown_exception";
+					Utilities::logline_threadsafe << ss.str();
+				}
 
-		//		error << "Exception occurred";
-
-		//		std::cerr << error.str();
-
-		//		{
-		//			std::ostringstream ss;
-		//			ss << ",method=develop_strategy.produce_new_offspring"
-		//				<< ",diagnostic_level=0"
-		//				<< ",message=Unknown_exception";
-		//			Utilities::logline_threadsafe << ss.str();
-		//		}
-
-		//		throw;
-		//	}
-		//}
+				throw;
+			}
+		}
 
 		/**
 		 * Computes the training errors for all strategies and cases.
@@ -781,7 +780,7 @@ namespace domain
 				//double sortino_ratio = 0.0;
 
 				static Plush::Environment global_env;	// Needs to be static because it consumes too much memory to be allocated on the stack.
-				//pushGP::SimulatedAnnealing sa;
+				pushGP::SimulatedAnnealing sa;
 				unsigned int agents_created = 0;
 				//size_t number_of_training_cases = 0;
 
@@ -809,8 +808,8 @@ namespace domain
 				bool include_best_individual_in_breeding_pool = datastore::test_data.get_include_best_individual_in_breeding_pool(true);
 				size_t best_strategy_effort = 0;
 
-				//sa.set_cold();
-				//sa.set_temperature(datastore::test_data.get_last_saved_temperature(sa.get_temperature()));
+				sa.set_cold();
+				sa.set_temperature(datastore::test_data.get_last_saved_temperature(sa.get_temperature()));
 
 				//// Force new generation for debugging purposes
 				//best_strategy_score = -1;
@@ -825,7 +824,7 @@ namespace domain
 				//	best_strategy_score = 0.0;			// std::numeric_limits<double>::min();
 				//	best_sortino_ratio = 0.0;
 				//	prev_best_strategy_score = std::numeric_limits<double>::min();
-				//	sa.set_temperature(0);
+					sa.set_temperature(0);
 				//	cool_down_count = argmap::cool_down_period;
 				//	stalled_count = argmap::stalled_count_trigger;
 				//	include_best_individual_in_breeding_pool = true;
@@ -856,18 +855,18 @@ namespace domain
 				if (agents_created > 0)
 					datastore::agent_data.save();
 
-				//if (agents_created > argmap::number_of_strategies / 2)
-				//{
-				//	//					run_number = 1;
-				//	generation_number = 1;
-				//	best_strategy_score = std::numeric_limits<double>::min();
-				//	best_sortino_ratio = std::numeric_limits<double>::min();
-				//	prev_best_strategy_score = std::numeric_limits<double>::min();
-				//	sa.set_temperature(0);
-				//	cool_down_count = argmap::cool_down_period;
-				//	stalled_count = argmap::stalled_count_trigger;
-				//	include_best_individual_in_breeding_pool = true;
-				//}
+				if (agents_created > argmap::number_of_strategies / 2)
+				{
+					//					run_number = 1;
+					generation_number = 1;
+					best_strategy_score = std::numeric_limits<double>::min();
+					best_sortino_ratio = std::numeric_limits<double>::min();
+					prev_best_strategy_score = std::numeric_limits<double>::min();
+					sa.set_temperature(0);
+					cool_down_count = argmap::cool_down_period;
+					stalled_count = argmap::stalled_count_trigger;
+					include_best_individual_in_breeding_pool = true;
+				}
 
 				//std::unique_ptr<datastore::StratergyData> stratergy_cases = std::make_unique<datastore::StratergyData>(datastore::financial_data.get_number_of_records() - domain::argmap::stratergy_case_length - 1);
 
@@ -876,50 +875,50 @@ namespace domain
 					//&& (best_individual_score > 0.0)
 					)
 				{
-				//	// *****************************************************
-				//	// *** Simulated annealing  ***
-				//	// *****************************************************
-				//	if (cool_down_count <= 0)
-				//	{
-				//		stalled_count = (stalled_count < 0) ? 0 : stalled_count - 1;
+					// *****************************************************
+					// *** Simulated annealing  ***
+					// *****************************************************
+					if (cool_down_count <= 0)
+					{
+						stalled_count = (stalled_count < 0) ? 0 : stalled_count - 1;
 
-				//		if (stalled_count <= 0)
-				//		{
-				//			sa.set_temperature(std::min(best_strategy_score, 1.0));
+						if (stalled_count <= 0)
+						{
+							sa.set_temperature(std::min(best_strategy_score, 1.0));
 
-				//			cool_down_count = argmap::cool_down_period;
-				//			include_best_individual_in_breeding_pool = false;
+							cool_down_count = argmap::cool_down_period;
+							include_best_individual_in_breeding_pool = false;
 
-				//			if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
-				//			{
-				//				std::ostringstream ss;
-				//				ss << ",method=DevelopStrategy.run"
-				//					<< ",diagnostic_level=1"
-				//					<< "temperature=" << sa.get_temperature()
-				//					<< ",message=Heat_up";
-				//				Utilities::logline_threadsafe << ss.str();
-				//			}
-				//		}
-				//	}
+							if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
+							{
+								std::ostringstream ss;
+								ss << ",method=DevelopStrategy.run"
+									<< ",diagnostic_level=1"
+									<< "temperature=" << sa.get_temperature()
+									<< ",message=Heat_up";
+								Utilities::logline_threadsafe << ss.str();
+							}
+						}
+					}
 
-				//	else
-				//	{
-				//		sa.cool_down();
-				//		stalled_count = argmap::stalled_count_trigger;
+					else
+					{
+						sa.cool_down();
+						stalled_count = argmap::stalled_count_trigger;
 
-				//		cool_down_count = (cool_down_count < 0) ? 0 : cool_down_count - 1;
-				//		include_best_individual_in_breeding_pool = true;
+						cool_down_count = (cool_down_count < 0) ? 0 : cool_down_count - 1;
+						include_best_individual_in_breeding_pool = true;
 
-				//		if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
-				//		{
-				//			std::ostringstream ss;
-				//			ss << ",method=DevelopStrategy.run"
-				//				<< ",diagnostic_level=1"
-				//				<< "temperature=" << sa.get_temperature()
-				//				<< ",message=Cool_down";
-				//			Utilities::logline_threadsafe << ss.str();
-				//		}
-				//	}
+						if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
+						{
+							std::ostringstream ss;
+							ss << ",method=DevelopStrategy.run"
+								<< ",diagnostic_level=1"
+								<< "temperature=" << sa.get_temperature()
+								<< ",message=Cool_down";
+							Utilities::logline_threadsafe << ss.str();
+						}
+					}
 
 					// *****************************************************
 					// *** Calculate trading orders for each trading day ***
@@ -1380,15 +1379,15 @@ namespace domain
 				//	//	Utilities::logline_threadsafe << ss.str();
 				//	//}
 
-				//	//// *************************
-				//	//// *** Evolve strategies ***
-				//	//// *************************
-				//	//produce_new_offspring(number_of_training_cases,
-				//	//	number_of_training_cases,
-				//	//	downsampled_training_cases,
-				//	//	best_strategy,
-				//	//	sa,
-				//	//	include_best_individual_in_breeding_pool);
+				// *************************
+				// *** Evolve strategies ***
+				// *************************
+				produce_new_offspring(number_of_training_cases,
+					number_of_training_cases,
+					downsampled_training_cases,
+					best_strategy,
+					sa,
+					include_best_individual_in_breeding_pool);
 
 				//	//if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 				//	//{
@@ -1449,7 +1448,7 @@ namespace domain
 					average_traiing_score,
 					standard_deviation,
 					/*test_case_score*/ 0,
-					/*sa.get_temperature()*/ 0,
+					sa.get_temperature(),
 					stalled_count,
 					cool_down_count,
 					include_best_individual_in_breeding_pool,
