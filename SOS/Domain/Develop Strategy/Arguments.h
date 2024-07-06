@@ -18,7 +18,7 @@ namespace domain
 		const int diagnostic_level_9 = 9;
 
 		// Diagnostic Level
-		const int diagnostic_level = diagnostic_level_2;
+		const int diagnostic_level = diagnostic_level_1;
 
 		// Specify which financial instruments to target
 		const std::string financial_instrument = "AAPL";
@@ -76,7 +76,7 @@ namespace domain
 		//	;; ----------------------------------------
 
 		// Number of individuals in the population.
-		const size_t number_of_strategies = 10; // 1000; // 20000; // 200'000;
+		const size_t number_of_strategies = 1000; // 20000; // 200'000;
 
 		// The maximum number of generations to run GP.
 		const unsigned long max_generations_in_one_session = 300;
