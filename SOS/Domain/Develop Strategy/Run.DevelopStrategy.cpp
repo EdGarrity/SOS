@@ -46,10 +46,10 @@ namespace domain
 {
 	namespace develop_strategy
 	{
-		concurrent_unordered_set<size_t> downsampled_training_cases;
+		//concurrent_unordered_set<size_t> downsampled_training_cases;
 		Utilities::ThreadSafeArray_2D_V2<unsigned long> orders;
 		datastore::OrderMatrix order_matrix;
-		datastore::OrderMatrix test_order_matrix;
+		//datastore::OrderMatrix test_order_matrix;
 
 		const std::string sqlstmt_save_status_report("INSERT INTO [dbo].[TestingProgressReport]"
 			"           ("
@@ -178,7 +178,7 @@ namespace domain
 		//  This function is not thread safe
 		void produce_new_offspring(unsigned long _number_of_example_cases,
 			size_t _number_of_training_cases,
-			concurrent_unordered_set<size_t>& _downsampled_training_cases,
+			//concurrent_unordered_set<size_t>& _downsampled_training_cases,
 			size_t _best_strategy,
 			pushGP::SimulatedAnnealing& sa,
 			bool _include_best_individual_in_breeding_pool)
@@ -254,7 +254,7 @@ namespace domain
 
 						pushGP::SimulatedAnnealing_States state = pushGP::breed(strategy_index,
 							_number_of_example_cases,
-							_downsampled_training_cases,
+							//_downsampled_training_cases,
 							training_case_min_error,
 							sa,
 							_include_best_individual_in_breeding_pool,
@@ -1384,7 +1384,7 @@ namespace domain
 				// *************************
 				produce_new_offspring(number_of_training_cases,
 					number_of_training_cases,
-					downsampled_training_cases,
+					//downsampled_training_cases,
 					best_strategy,
 					sa,
 					include_best_individual_in_breeding_pool);

@@ -191,7 +191,7 @@ namespace pushGP
 	// Remarks:
 	//
 	std::tuple<double, unsigned int> epsilon_lexicase_selection(int _number_of_example_cases, 
-		concurrent_unordered_set<size_t>& _downsampled_training_cases,
+//		concurrent_unordered_set<size_t>& _downsampled_training_cases,
 		std::unordered_set<int> _black_list,
 		combinable<pushGP::globals::Training_case_best_score_type>& _training_case_best_score)
 	{
@@ -211,22 +211,22 @@ namespace pushGP
 		// Get a randomized deck of test cases
 		std::vector<size_t> example_cases;
 
-		if (domain::argmap::parent_selection == domain::argmap::PerentSelection::downsampled_lexicase)
-		{
-			for (auto example_case : _downsampled_training_cases)
-			{
-				if (Utilities::random_integer(2) == 0)
-				{
-					auto it = example_cases.begin();
-					example_cases.insert(it, example_case);
-				}
+		//if (domain::argmap::parent_selection == domain::argmap::PerentSelection::downsampled_lexicase)
+		//{
+		//	for (auto example_case : _downsampled_training_cases)
+		//	{
+		//		if (Utilities::random_integer(2) == 0)
+		//		{
+		//			auto it = example_cases.begin();
+		//			example_cases.insert(it, example_case);
+		//		}
 
-				else
-					example_cases.push_back(example_case);
-			}
-		}
+		//		else
+		//			example_cases.push_back(example_case);
+		//	}
+		//}
 
-		else
+		//else
 			example_cases = lshuffle(_number_of_example_cases);
 
 		// Used to calculate static epsilon for each individual
