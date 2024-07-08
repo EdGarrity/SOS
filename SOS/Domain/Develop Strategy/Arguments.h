@@ -18,7 +18,7 @@ namespace domain
 		const int diagnostic_level_9 = 9;
 
 		// Diagnostic Level
-		const int diagnostic_level = diagnostic_level_1;
+		const int diagnostic_level = diagnostic_level_2;
 
 		// Specify which financial instruments to target
 		const std::string financial_instrument = "AAPL";
