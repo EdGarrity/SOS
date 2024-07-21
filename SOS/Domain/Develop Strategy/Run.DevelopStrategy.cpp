@@ -706,11 +706,11 @@ namespace domain
 				// Load data from most recent database record
 				unsigned int run_number = datastore::test_data.get_last_saved_run_number();
 				unsigned int generation_number = datastore::test_data.get_last_saved_generation_number() + 1;
-				double best_strategy_score = datastore::test_data.get_last_best_individual_score(std::numeric_limits<double>::min());
-				double best_sortino_ratio = datastore::test_data.get_last_best_individual_error(std::numeric_limits<double>::min());
-				double best_individual_baseline = datastore::test_data.get_last_best_individual_score(std::numeric_limits<double>::min());
-				double best_individual_benchmark = datastore::test_data.get_last_best_individual_score(std::numeric_limits<double>::min());
-				double prev_best_strategy_score = datastore::test_data.get_last_prev_best_individual_error(std::numeric_limits<double>::min());
+				double best_strategy_score = datastore::test_data.get_last_best_individual_score(std::numeric_limits<double>::lowest());
+				double best_sortino_ratio = datastore::test_data.get_last_best_individual_error(std::numeric_limits<double>::lowest());
+				double best_individual_baseline = datastore::test_data.get_last_best_individual_score(std::numeric_limits<double>::lowest());
+				double best_individual_benchmark = datastore::test_data.get_last_best_individual_score(std::numeric_limits<double>::lowest());
+				double prev_best_strategy_score = datastore::test_data.get_last_prev_best_individual_error(std::numeric_limits<double>::lowest());
 				int stalled_count = datastore::test_data.get_last_stalled_count(argmap::stalled_count_trigger);
 				int cool_down_count = datastore::test_data.get_last_cool_down_count(argmap::cool_down_period);
 				bool include_best_individual_in_breeding_pool = datastore::test_data.get_include_best_individual_in_breeding_pool(true);
@@ -729,9 +729,9 @@ namespace domain
 				//{
 				//	run_number++;
 				//	generation_number = 1;
-				//	best_strategy_score = 0.0;			// std::numeric_limits<double>::min();
+				//	best_strategy_score = 0.0;			// std::numeric_limits<double>::lowest();
 				//	best_sortino_ratio = 0.0;
-				//	prev_best_strategy_score = std::numeric_limits<double>::min();
+				//	prev_best_strategy_score = std::numeric_limits<double>::lowest();
 					sa.set_temperature(0);
 				//	cool_down_count = argmap::cool_down_period;
 				//	stalled_count = argmap::stalled_count_trigger;
@@ -763,18 +763,18 @@ namespace domain
 				if (agents_created > 0)
 					datastore::agent_data.save();
 
-				if (agents_created > argmap::number_of_strategies / 2)
-				{
+				//if (agents_created > argmap::number_of_strategies / 2)
+				//{
 					//					run_number = 1;
 					generation_number = 1;
-					best_strategy_score = std::numeric_limits<double>::min();
-					best_sortino_ratio = std::numeric_limits<double>::min();
-					prev_best_strategy_score = std::numeric_limits<double>::min();
+					best_strategy_score = std::numeric_limits<double>::lowest();
+					best_sortino_ratio = std::numeric_limits<double>::lowest();
+					prev_best_strategy_score = std::numeric_limits<double>::lowest();
 					sa.set_temperature(0);
 					cool_down_count = argmap::cool_down_period;
 					stalled_count = argmap::stalled_count_trigger;
 					include_best_individual_in_breeding_pool = true;
-				}
+				//}
 
 				//std::unique_ptr<datastore::StratergyData> stratergy_cases = std::make_unique<datastore::StratergyData>(datastore::financial_data.get_number_of_records() - domain::argmap::stratergy_case_length - 1);
 
@@ -859,7 +859,7 @@ namespace domain
 					// *** Evaluate strategies ***
 					// ***************************
 					size_t best_strategy = 0;
-					best_strategy_score = std::numeric_limits<double>::min();
+					best_strategy_score = std::numeric_limits<double>::lowest();
 					std::string best_strategy_start_date = "";
 
 					size_t number_of_training_cases = datastore::financial_data.get_number_of_records() - domain::argmap::stratergy_case_length - 1;
@@ -928,13 +928,13 @@ namespace domain
 								? strategy_index 
 								: best_strategy;
 
-							best_strategy_score = (training_case_index < test_case_index && score > best_strategy_score) 
+							best_strategy_start_date = (training_case_index < test_case_index && score > best_strategy_score)
+								? datastore::financial_data.get_target_stock_date(stock_data_begin)
+								: best_strategy_start_date;
+
+							best_strategy_score = (training_case_index < test_case_index && score > best_strategy_score)
 								? score 
 								: best_strategy_score;
-							
-							best_strategy_start_date = (training_case_index < test_case_index && score > best_strategy_score) 
-								? datastore::financial_data.get_target_stock_date(stock_data_begin) 
-								: best_strategy_start_date;
 							
 							sum_of_score += score;
 							pushGP::globals::score_matrix.store(-1, training_case_index, strategy_index, score);

@@ -63,7 +63,7 @@ namespace pushGP
 
 			for (unsigned int example_case = 0; example_case < number_of_training_cases; example_case++)
 			{
-				best_score_array_by_example_case[example_case] = std::numeric_limits<double>::min();
+				best_score_array_by_example_case[example_case] = std::numeric_limits<double>::lowest();
 				individual_with_best_score_for_training_case[example_case] = std::numeric_limits<unsigned int>::min();
 			}
 		}

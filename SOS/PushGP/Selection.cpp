@@ -268,7 +268,7 @@ namespace pushGP
 
 		while ((!example_cases.empty()) && (number_of_survivors > 1))
 		{
-			double best_score_for_this_example_case = std::numeric_limits<double>::min();
+			double best_score_for_this_example_case = std::numeric_limits<double>::lowest();
 
 			// Select a random training case
 			example_case = example_cases.back();
