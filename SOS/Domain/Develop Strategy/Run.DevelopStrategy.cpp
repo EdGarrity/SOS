@@ -569,61 +569,6 @@ namespace domain
 			domain::RunProgram processor(pool);
 			bool dirty = false;
 
-			//for (size_t training_case_index = 0; training_case_index < number_of_cases; training_case_index++)
-			//{
-			//	for (size_t strategy_index = 0; strategy_index < domain::argmap::number_of_strategies; strategy_index++)
-			//	{
-			//		if (!order_matrix.is_generated(strategy_index, training_case_index))
-			//		{
-			//			if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
-			//			{
-			//				std::ostringstream ss;
-			//				ss << ",stratergy=" << strategy_index
-			//					<< ",case=" << training_case_index
-			//					<< ",data_size" << data_size
-			//					<< ",number_of_cases" << number_of_cases
-			//					<< ",diagnostic_level=2"
-			//					<< ",method=RunProgram.compute_training_orders_thread_safe"
-			//					<< ",message=Schedule_to_run_strategy";
-			//				Utilities::logline_threadsafe << ss.str();
-			//			}
-
-			//			develop_strategy::RunProgram_WorkOrder_Form form(strategy_index, training_case_index);
-			//			processor.run(form, work_done);
-			//			dirty = true;
-			//		}
-			//		else
-			//		{
-			//			if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
-			//			{
-			//				std::ostringstream ss;
-			//				ss << ",stratergy=" << strategy_index
-			//					<< ",case=" << training_case_index
-			//					<< ",data_size" << data_size
-			//					<< ",number_of_cases" << number_of_cases
-			//					<< ",diagnostic_level=2"
-			//					<< ",method=RunProgram.compute_training_orders_thread_safe"
-			//					<< ",training_case_index=" << training_case_index
-			//					<< ",message=Order_already_processed";
-			//				Utilities::logline_threadsafe << ss.str();
-			//			}
-
-			//			work_done.count_down();
-			//			if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
-			//			{
-			//				std::ostringstream ss;
-			//				ss << ",domain::argmap::population_size=" << domain::argmap::number_of_strategies
-			//					<< ",number_of_cases=" << number_of_cases
-			//					<< ",latch_count=" << domain::argmap::number_of_strategies * number_of_cases
-			//					<< ",diagnostic_level=2"
-			//					<< ",method=RunProgram.compute_training_orders_thread_safe"
-			//					<< ",message=Decremented_Latch";
-			//				Utilities::logline_threadsafe << ss.str();
-			//			}
-			//		}
-			//	}
-			//}
-
 			for (size_t strategy_index = 0; strategy_index < domain::argmap::number_of_strategies; strategy_index++)
 			{
 				if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
@@ -654,52 +599,12 @@ namespace domain
 
 					if (!order_matrix.is_generated(strategy_index, stock_data_record_index))
 					{
-						//if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
-						//{
-						//	std::ostringstream ss;
-						//	ss << ",stratergy=" << strategy_index
-						//		<< ",case=" << stock_data_record_index
-						//		<< ",data_size" << number_of_records
-						//		//<< ",number_of_cases" << number_of_cases
-						//		<< ",diagnostic_level=" << argmap::diagnostic_level
-						//		<< ",method=RunProgram.compute_training_orders_thread_safe"
-						//		<< ",message=Schedule_to_run_strategy";
-						//	Utilities::logline_threadsafe << ss.str();
-						//}
-
 						develop_strategy::RunProgram_WorkOrder_Form form(strategy_index, stock_data_record_index);
 						processor.run(form, work_done);
 						dirty = true;
 					}
 					else
-					{
-						//if (argmap::diagnostic_level >= argmap::diagnostic_level_2)
-						//{
-						//	std::ostringstream ss;
-						//	ss << ",stratergy=" << strategy_index
-						//		<< ",case=" << stock_data_record_index
-						//		<< ",data_size" << number_of_records
-						//		//<< ",number_of_cases" << number_of_cases
-						//		<< ",diagnostic_level=" << argmap::diagnostic_level
-						//		<< ",method=RunProgram.compute_training_orders_thread_safe"
-						//		<< ",training_case_index=" << stock_data_record_index
-						//		<< ",message=Order_already_processed";
-						//	Utilities::logline_threadsafe << ss.str();
-						//}
-
 						work_done.count_down();
-						//if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
-						//{
-						//	std::ostringstream ss;
-						//	ss << ",domain::argmap::population_size=" << domain::argmap::number_of_strategies
-						//		//<< ",number_of_cases=" << number_of_cases
-						//		<< ",expected_latches=" << expected_latches
-						//		<< ",diagnostic_level=2"
-						//		<< ",method=RunProgram.compute_training_orders_thread_safe"
-						//		<< ",message=Decremented_Latch";
-						//	Utilities::logline_threadsafe << ss.str();
-						//}
-					}
 				}
 			}
 
@@ -947,230 +852,20 @@ namespace domain
 						Utilities::logline_threadsafe << ss.str();
 					}
 
-				//	//// ***************************
-				//	//// *** Evaluate strategies ***
-				//	//// ***************************
-				//	number_of_training_cases = datastore::financial_data.get_number_of_training_cases();		//datastore::financial_data.get_count() - domain::argmap::training_case_length + 1;
-				//	pushGP::globals::score_matrix.resize(number_of_training_cases, domain::argmap::number_of_strategies);
-				//	pushGP::globals::effort_matrix.resize(number_of_training_cases, domain::argmap::number_of_strategies);
-				//	pushGP::globals::baseline_matrix.resize(number_of_training_cases, domain::argmap::number_of_strategies);
-				//	pushGP::globals::benchmark_matrix.resize(number_of_training_cases, domain::argmap::number_of_strategies);
-				//	//if (number_of_training_cases > domain::argmap::number_of_training_cases)
-				//	//	throw std::overflow_error("Insufficient memory for training cases");
-
+					// ***************************
+					// *** Evaluate strategies ***
+					// ***************************
 					size_t best_strategy = 0;
-				//	size_t maximum_number_of_passing_training_cases = 0;
-				//	best_sortino_ratio = 0.0;
-
-				//	for (size_t strategy_index = 0; strategy_index < domain::argmap::number_of_strategies; strategy_index++)
-				//	{
-				//		size_t number_of_passing_training_cases = 0;
-				//		sum_of_score = 0.0;
-				//		average_benchmark_score = 0.0;
-
-				//		for (size_t training_case_window_start = 0;	training_case_window_start < number_of_training_cases; training_case_window_start++)
-				//		{
-				//			if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
-				//			{
-				//				std::ostringstream ss;
-				//				ss << ",method=develop_strategy.run"
-				//					<< ",diagnostic_level=1"
-				//					<< ",training_case_window_start=" << training_case_window_start
-				//					<< ",strategy=" << strategy_index
-				//					<< ",domain::argmap::population_size=" << domain::argmap::number_of_strategies
-				//					<< ",number_of_training_cases=" << number_of_training_cases
-				//					<< ",number_of_passing_training_cases=" << number_of_passing_training_cases
-				//					<< ",score=" << score
-				//					<< ",message=enter_loop";
-				//				Utilities::logline_threadsafe << ss.str();
-				//			}
-
-				//			size_t stock_data_index = training_case_window_start;
-
-				//			BrokerAccount account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Primary_Training,BrokerAccount::seed_money);
-
-				//			for (size_t training_case_window_offset = 0; 
-				//				(training_case_window_offset < domain::argmap::training_case_length) && (stock_data_index < datastore::financial_data.get_training_data_count()); 
-				//				training_case_window_offset++)
-				//			{
-				//				long order = order_matrix.load(strategy_index, stock_data_index);
-
-				//				account.execute(stock_data_index, order);
-
-				//				stock_data_index++;	// Quicker than stock_data_index = training_case_window_start + training_case_window_offset;
-				//			}
-
-				//			if ((stock_data_index == training_case_window_start) || (stock_data_index > training_case_window_start + domain::argmap::training_case_length))
-				//			{
-				//				std::ostringstream ss;
-				//				ss << ",method=develop_strategy.run"
-				//					<< ",diagnostic_level=1"
-				//					<< ",training_case_window_start=" << training_case_window_start
-				//					<< ",strategy=" << strategy_index
-				//					<< ",domain::argmap::population_size" << domain::argmap::number_of_strategies
-				//					<< ",number_of_training_cases=" << number_of_training_cases
-				//					<< ",number_of_passing_training_cases=" << number_of_passing_training_cases
-				//					<< ",score=" << score
-				//					<< ",stock_data_index=" << stock_data_index
-				//					<< ",message=stock_data_index_out_of_range";
-				//				Utilities::logline_threadsafe << ss.str();
-
-				//				throw std::overflow_error("stock_data_index out of range");
-				//			}
-
-				//			score = account.unrealized_gain(--stock_data_index); // Potential underflow error.
-				//			sum_of_score += score;
-				//			pushGP::globals::score_matrix.store(-1, training_case_window_start, strategy_index, score);
-				//			pushGP::globals::effort_matrix.store(-1, training_case_window_start, strategy_index, 1000);
-
-				//			// Add return from a buy-and-hold stratergy.
-				//			{
-				//				std::ostringstream ss;
-				//				ss << ",method=develop_strategy.run"
-				//					<< ",diagnostic_level=1"
-				//					<< ",training_case_window_start=" << training_case_window_start
-				//					<< ",strategy=" << strategy_index
-				//					<< ",domain::argmap::population_size=" << domain::argmap::number_of_strategies
-				//					<< ",number_of_training_cases=" << number_of_training_cases
-				//					<< ",number_of_passing_training_cases=" << number_of_passing_training_cases
-				//					<< ",score=" << score
-				//					<< ",stock_data_index=" << stock_data_index
-				//					<< ",datastore::financial_data.get_number_of_cases()=" << datastore::financial_data.get_number_of_training_cases()
-				//					<< ",primary_adj_open_values.size()=" << datastore::financial_data.get_training_data_count()
-				//					<< ",domain::argmap::training_case_length=" << domain::argmap::training_case_length
-				//					<< ",data_window_records.size=" << datastore::financial_data.get_training_case_record_size()
-				//					<< ",index=" << training_case_window_start + domain::argmap::training_case_length - 1
-				//					<< ",message=Add_return_from_a_buy-and-hold_stratergy";
-				//				Utilities::logline_threadsafe << ss.str();
-				//			}
-
-				//			account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Primary_Training, BrokerAccount::seed_money);
-				//			account.execute(training_case_window_start, 0x01);
-				//			double buy_and_hold_score = account.unrealized_gain(training_case_window_start + domain::argmap::training_case_length - 1);
-				//			pushGP::globals::baseline_matrix.store(-1, training_case_window_start, strategy_index, buy_and_hold_score);
-
-				//			// Add return from S&P500 using a buy-and-hold stratergy.  This is used to calculate the Sharpe ratio.
-				//			{
-				//				std::ostringstream ss;
-				//				ss << ",method=develop_strategy.run"
-				//					<< ",diagnostic_level=1"
-				//					<< ",training_case_window_start=" << training_case_window_start
-				//					<< ",strategy=" << strategy_index
-				//					<< ",domain::argmap::population_size=" << domain::argmap::number_of_strategies
-				//					<< ",domain::argmap::training_case_length=" << domain::argmap::training_case_length
-				//					<< ",number_of_training_cases=" << number_of_training_cases
-				//					<< ",number_of_passing_training_cases=" << number_of_passing_training_cases
-				//					<< ",score=" << score
-				//					<< ",message=Add_return_from_S&P500_using_a_buy-and-hold_stratergy";
-				//				Utilities::logline_threadsafe << ss.str();
-				//			}
-
-				//			stock_data_index = training_case_window_start;
-				//			account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Benchmark, BrokerAccount::seed_money);
-				//			account.execute(training_case_window_start, 0x01);
-				//			double benchmark_score = account.unrealized_gain(training_case_window_start + domain::argmap::training_case_length - 1);
-				//			average_benchmark_score += benchmark_score;
-				//			pushGP::globals::benchmark_matrix.store(-1, training_case_window_start, strategy_index, benchmark_score);
-
-				//			if (score > 0.0)
-				//				number_of_passing_training_cases++;
-
-				//			if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
-				//			{
-				//				std::ostringstream ss;
-				//				ss << ",method=develop_strategy.run"
-				//					<< ",diagnostic_level=1"
-				//					<< ",training_case_window_start=" << training_case_window_start
-				//					<< ",strategy=" << strategy_index
-				//					<< ",score=" << score
-				//					<< ",number_of_passing_training_cases=" << number_of_passing_training_cases
-				//					<< ",message=score_matrix";
-				//				Utilities::logline_threadsafe << ss.str();
-				//			}
-				//		}
-
-				//		// calculate the Sortino ratio (check if we should be using the number_of_training_cases here).
-				//		average_score = sum_of_score / (double)number_of_training_cases;
-				//		average_benchmark_score = average_benchmark_score / (double)number_of_training_cases;
-
-				//		double downside_deviation = 0.0;
-
-				//		for (size_t training_case_window_start = 0; training_case_window_start < number_of_training_cases; training_case_window_start++)
-				//		{
-				//			double score = pushGP::globals::score_matrix.load(training_case_window_start, strategy_index);
-				//			double benchmark_score = pushGP::globals::benchmark_matrix.load(training_case_window_start, strategy_index);
-
-				//			if (score < average_score)
-				//				downside_deviation += (score - average_score) * (score - average_score);
-				//		}
-
-				//		downside_deviation = std::sqrt(downside_deviation / (double)number_of_training_cases);
-				//		sortino_ratio = (downside_deviation == 0.0) ? 0.0 : (average_score - average_benchmark_score) / downside_deviation;
-
-				//		if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
-				//		{
-				//			std::ostringstream ss;
-				//			ss << ",method=develop_strategy.run"
-				//				<< ",diagnostic_level=1"
-				//				<< ",strategy=" << strategy_index
-				//				<< ",number_of_passing_training_cases=" << number_of_passing_training_cases
-				//				<< ",number_of_training_cases=" << number_of_training_cases
-				//				<< ",average_score=" << sum_of_score
-				//				<< ",sum_of_score=" << average_score
-				//				<< ",average_benchmark_score=" << average_benchmark_score
-				//				<< ",downside_deviation=" << downside_deviation
-				//				<< ",sortino_ratio=" << sortino_ratio
-				//				<< ",message=Sortino_ratio_calculation";
-				//			Utilities::logline_threadsafe << ss.str();
-				//		}
-
-				//		if (number_of_passing_training_cases >= maximum_number_of_passing_training_cases)
-				//		{
-				//			if (number_of_passing_training_cases > maximum_number_of_passing_training_cases)
-				//				best_sortino_ratio = 0.0;
-
-				//			maximum_number_of_passing_training_cases = number_of_passing_training_cases;
-
-				//			if (sortino_ratio > best_sortino_ratio)
-				//			{
-				//				best_sortino_ratio = sortino_ratio;
-				//				best_strategy = strategy_index;
-				//				//best_strategy_score = pushGP::globals::score_matrix.load(training_case_window_start, strategy_index);
-				//			}
-				//		}
-
-				//		if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
-				//		{
-				//			std::ostringstream ss;
-				//			ss << ",method=develop_strategy.run"
-				//				<< ",diagnostic_level=1"
-				//				<< ",strategy=" << strategy_index
-				//				<< ",number_of_passing_training_cases=" << number_of_passing_training_cases
-				//				<< ",average_score=" << sum_of_score
-				//				<< ",sum_of_score=" << average_score
-				//				<< ",average_benchmark_score=" << average_benchmark_score
-				//				<< ",sortino_ratio=" << sortino_ratio
-				//				<< ",message=Sortino_ratio";
-				//			Utilities::logline_threadsafe << ss.str();
-				//		}
-				//	}
-
-				//	if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
-				//	{
-				//		std::ostringstream ss;
-				//		ss << ",method=develop_strategy.run"
-				//			<< ",diagnostic_level=1"
-				//			<< ",best_strategy_score=" << best_strategy_score
-				//			<< ",best_strategy=" << best_strategy
-				//			<< ",message=Evaluate_strategies_results";
-				//		Utilities::logline_threadsafe << ss.str();
-				//	}
+					best_strategy_score = std::numeric_limits<double>::min();
 
 					size_t number_of_training_cases = datastore::financial_data.get_number_of_records() - domain::argmap::stratergy_case_length - 1;
 					pushGP::globals::score_matrix.resize(number_of_training_cases, domain::argmap::number_of_strategies);
 					pushGP::globals::effort_matrix.resize(number_of_training_cases, domain::argmap::number_of_strategies);
 					pushGP::globals::baseline_matrix.resize(number_of_training_cases, domain::argmap::number_of_strategies);
 					pushGP::globals::benchmark_matrix.resize(number_of_training_cases, domain::argmap::number_of_strategies);
+
+					size_t last_training_case_index = number_of_training_cases - domain::argmap::stratergy_case_length;	// Index of the last case we can use for training
+					size_t test_case_index = number_of_training_cases - 2;												// Index of case we will use as the test case
 
 					if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
 					{
@@ -1180,53 +875,19 @@ namespace domain
 							<< ",number_of_training_cases=" << number_of_training_cases
 							<< ",datastore::financial_data.get_number_of_records()=" << datastore::financial_data.get_number_of_records()
 							<< ",domain::argmap::stratergy_case_length=" << domain::argmap::stratergy_case_length
-							<< ",message=Calculate_trading_orders_for_each_trading_day";
+							<< ",last_training_case_index=" << last_training_case_index
+							<< ",test_case_index=" << test_case_index
+							<< ",message=Evaluate_strategies";
 						Utilities::logline_threadsafe << ss.str();
 					}
-
-
-                    //// Pick 10 random numbers from 0 to number_of_training_cases.  This is used to select the training cases to evaluate.
-                    //std::vector<size_t> random_training_cases;
-                    //for (int i = 0; i < 10; i++) {
-                    //    size_t random_case = rand() % number_of_training_cases;
-                    //    random_training_cases.push_back(random_case);
-                    //}
-
-                    //// Loop through each strategy and evaluate the strategy for each of the 10 training cases.
-                    //std::vector<double> strategy_scores(argmap::number_of_strategies, 0.0);
-                    //for (size_t strategy_index = 0; strategy_index < argmap::number_of_strategies; strategy_index++) {
-                    //    for (size_t case_index : random_training_cases) {
-                    //        // Evaluate the strategy for the selected training case
-                    //        double score = evaluate_strategy(strategy_index, case_index);
-                    //        strategy_scores[strategy_index] += score;
-                    //    }
-                    //}
-
-                    //// Calculate the average score for each strategy.
-                    //std::vector<double> average_scores(argmap::number_of_strategies, 0.0);
-                    //for (size_t strategy_index = 0; strategy_index < argmap::number_of_strategies; strategy_index++) {
-                    //    average_scores[strategy_index] = strategy_scores[strategy_index] / random_training_cases.size();
-                    //}
-
-                    //// Calculate the average benchmark score for each strategy.
-                    //std::vector<double> average_benchmark_scores(argmap::number_of_strategies, 0.0);
-                    //for (size_t strategy_index = 0; strategy_index < argmap::number_of_strategies; strategy_index++) {
-                    //    average_benchmark_scores[strategy_index] = calculate_average_benchmark_score(strategy_index);
-                    //}
-
-
-
-
-
-
-
-
-
 
 					for (size_t strategy_index = 0; strategy_index < domain::argmap::number_of_strategies; strategy_index++)
 					{
 						for (size_t training_case_index = 0; training_case_index < number_of_training_cases; training_case_index++)
 						{
+							if ((training_case_index > last_training_case_index) && (training_case_index < test_case_index))
+								break;
+
 							BrokerAccount account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Target_Training, BrokerAccount::seed_money);
 
 							double sum_of_score = 0;
@@ -1258,6 +919,8 @@ namespace domain
 								Utilities::logline_threadsafe << ss.str();
 							}
 							double score = account.unrealized_gain(--stock_data_index); // Potential underflow error.
+							best_strategy = (training_case_index < test_case_index && score > best_strategy_score) ? strategy_index : best_strategy;
+							best_strategy_score = (training_case_index < test_case_index && score > best_strategy_score) ? score : best_strategy_score;
 							sum_of_score += score;
 							pushGP::globals::score_matrix.store(-1, training_case_index, strategy_index, score);
 							pushGP::globals::effort_matrix.store(-1, training_case_index, strategy_index, 1000);
@@ -1302,82 +965,6 @@ namespace domain
 
 
 
-				//	// *********************************************
-				//	// *** Evaluate best strategy with test data ***
-				//	// *********************************************
-
-				//	//size_t strategy_index = best_strategy;
-				//	//size_t stock_data_index = 0;
-
-				//	//if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
-				//	//{
-				//	//	std::ostringstream ss;
-				//	//	ss << ",method=develop_strategy.run"
-				//	//		<< ",diagnostic_level=1"
-				//	//		<< ",best_strategy_score=" << best_strategy_score
-				//	//		<< ",best_strategy=" << best_strategy
-				//	//		<< ",message=Create_BrokerAccount";
-				//	//	Utilities::logline_threadsafe << ss.str();
-				//	//}
-				//	//BrokerAccount account = BrokerAccount(datastore::FinancialData::FinancialInstrumentType::Primary_Test, BrokerAccount::seed_money);
-
-				//	//if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
-				//	//{
-				//	//	std::ostringstream ss;
-				//	//	ss << ",method=develop_strategy.run"
-				//	//		<< ",diagnostic_level=1"
-				//	//		<< ",best_strategy_score=" << best_strategy_score
-				//	//		<< ",best_strategy=" << best_strategy
-				//	//		<< ",message=compute_testing_orders";
-				//	//	Utilities::logline_threadsafe << ss.str();
-				//	//}
-				//	//compute_testing_orders(
-				//	//	global_env,
-				//	//	run_strategy_threadsafe);
-
-				//	//if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
-				//	//{
-				//	//	std::ostringstream ss;
-				//	//	ss << ",method=develop_strategy.run"
-				//	//		<< ",diagnostic_level=1"
-				//	//		<< ",best_strategy_score=" << best_strategy_score
-				//	//		<< ",best_strategy=" << best_strategy
-				//	//		<< ",get_test_data_count=" << datastore::financial_data.get_test_data_count()
-				//	//		<< ",message=compute_test_score";
-				//	//	Utilities::logline_threadsafe << ss.str();
-				//	//}
-				//	//for (size_t n = 0; n < datastore::financial_data.get_test_data_count(); n++)
-				//	//{
-				//	//	long order = test_order_matrix.load(strategy_index, stock_data_index);
-				//	//	account.trace_execute(stock_data_index, order);
-
-				//	//	stock_data_index++;
-				//	//}
-
-				//	//if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
-				//	//{
-				//	//	std::ostringstream ss;
-				//	//	ss << ",method=develop_strategy.run"
-				//	//		<< ",diagnostic_level=1"
-				//	//		<< ",best_strategy_score=" << best_strategy_score
-				//	//		<< ",best_strategy=" << best_strategy
-				//	//		<< ",stock_data_index=" << stock_data_index
-				//	//		<< ",message=get_test_score";
-				//	//	Utilities::logline_threadsafe << ss.str();
-				//	//}
-				//	//double test_case_score = account.unrealized_gain(--stock_data_index);
-
-				//	//if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
-				//	//{
-				//	//	std::ostringstream ss;
-				//	//	ss << ",method=develop_strategy.run"
-				//	//		<< ",diagnostic_level=1"
-				//	//		<< ",strategy=" << strategy_index
-				//	//		<< ",datastore::financial_data.get_count()=" << datastore::financial_data.get_test_data_count()
-				//	//		<< ",test_case_score=" << test_case_score
-				//	//		<< ",message=check";
-				//	//	Utilities::logline_threadsafe << ss.str();
-				//	//}
 
 				// *************************
 				// *** Evolve strategies ***
@@ -1388,26 +975,6 @@ namespace domain
 					best_strategy,
 					sa,
 					include_best_individual_in_breeding_pool);
-
-				//	//if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
-				//	//{
-				//	//	std::ostringstream ss;
-				//	//	ss << ",method=develop_strategy.run"
-				//	//		<< ",diagnostic_level=1"
-				//	//		<< ",message=save_new_generation";
-				//	//	Utilities::logline_threadsafe << ss.str();
-				//	//}
-
-				//	//datastore::agent_data.save();
-
-				//	//if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
-				//	//{
-				//	//	std::ostringstream ss;
-				//	//	ss << ",method=develop_strategy.run"
-				//	//		<< ",diagnostic_level=1"
-				//	//		<< ",message=new_generation_saved";
-				//	//	Utilities::logline_threadsafe << ss.str();
-				//	//}
 
 				//// ******************************
 				//// *** Generate Status Report ***
@@ -1435,6 +1002,8 @@ namespace domain
 				standard_deviation /= (double)(domain::argmap::number_of_strategies * number_of_training_cases);
 				standard_deviation = std::sqrt(standard_deviation);
 
+				double test_case_score = pushGP::globals::score_matrix.load(test_case_index, best_strategy);
+
 				generate_status_report(
 					number_of_training_cases,
 					run_number,
@@ -1447,7 +1016,7 @@ namespace domain
 					prev_best_strategy_score,
 					average_traiing_score,
 					standard_deviation,
-					/*test_case_score*/ 0,
+					test_case_score,
 					sa.get_temperature(),
 					stalled_count,
 					cool_down_count,
