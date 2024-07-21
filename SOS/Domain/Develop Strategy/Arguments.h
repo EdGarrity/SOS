@@ -24,11 +24,11 @@ namespace domain
 		const std::string financial_instrument = "AAPL";
 		const std::string financial_index = "FXAIX";
 		const std::string financial_data_start_date = "2012-01-02";
-		const std::string financial_data_end_date = "2020-12-31";
-		const std::string financial_training_data_start_date = "2012-01-02";
-		const std::string financial_training_data_end_date = "2020-12-31";
-		const std::string financial_test_data_start_date = "2021-01-02";
-		const std::string financial_test_data_end_date = "2021-12-31";
+		const std::string financial_data_end_date = "2021-12-31";
+		//const std::string financial_training_data_start_date = "2012-01-02";
+		//const std::string financial_training_data_end_date = "2020-12-31";
+		//const std::string financial_test_data_start_date = "2021-01-02";
+		//const std::string financial_test_data_end_date = "2021-12-31";
 
 		//	Select which algorithm to use
 		enum class AlgorithmSelection { learn_from_examples, strategy_development };
