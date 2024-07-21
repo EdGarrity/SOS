@@ -59,27 +59,28 @@ namespace domain
 			"           ,[Best_Strategy_ID]"						// 4
 			"           ,[Best_Strategy_Score]"						// 5
 			"           ,[Best_Strategy_Effort]"					// 6
-			"           ,[Best_Sortino_Ratio]"						// 7
-			"           ,[Best_Previous_Strategy_Score]"			// 8
-			"           ,[Best_Strategy_Avg_Score]"					// 9
-			"           ,[Best_Standard_Deviation]"					// 10
-			"           ,[Best_Strategy_Test_Score]"				// 11
-			"           ,[Number_Of_Training_Cases]"				// 12
-			"           ,[Number_Of_Test_Cases]"					// 13
-			"           ,[Tempareture]"								// 14
-			"           ,[Stalled_Count]"							// 15
-			"           ,[Cool_Down_Count]"							// 16
-			"           ,[Include_Best_Strategy_In_Breeding_Pool]"	// 17
-			"           ,[Best_Strategy_Genome]"					// 18
-			"           ,[Population_Size]"							// 19
-			"           ,[Alternation_Rate]"						// 20
-			"           ,[Uniform_Mutation_Rate]"					// 21
-			"           ,[Max_Length]"								// 22
-			"           ,[Upper_Range]"								// 23
+			"		    ,[Best_Strategy_Start_Date]"				// 7
+			"           ,[Best_Sortino_Ratio]"						// 8
+			"           ,[Best_Previous_Strategy_Score]"			// 9
+			"           ,[Best_Strategy_Avg_Score]"					// 10
+			"           ,[Best_Standard_Deviation]"					// 11
+			"           ,[Best_Strategy_Test_Score]"				// 12
+			"           ,[Number_Of_Training_Cases]"				// 13
+			"           ,[Number_Of_Test_Cases]"					// 14
+			"           ,[Tempareture]"								// 15
+			"           ,[Stalled_Count]"							// 16
+			"           ,[Cool_Down_Count]"							// 17
+			"           ,[Include_Best_Strategy_In_Breeding_Pool]"	// 18
+			"           ,[Best_Strategy_Genome]"					// 19
+			"           ,[Population_Size]"							// 20
+			"           ,[Alternation_Rate]"						// 21
+			"           ,[Uniform_Mutation_Rate]"					// 22
+			"           ,[Max_Length]"								// 23
+			"           ,[Upper_Range]"								// 24
 			"           )"
 			"     VALUES"
-			"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-			//           1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3
+			"           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			//           1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4
 
 		void install_next_generation()
 		{
@@ -97,6 +98,7 @@ namespace domain
 			size_t _best_strategy,
 			double _best_strategy_score,
 			size_t _best_strategy_effort,
+			std::string _best_strategy_start_date,
 			double _best_sortino_ratio,
 			double _prev_best_strategy_score,
 			double _average_strategy_score,
@@ -127,23 +129,24 @@ namespace domain
 			sqlcmd_save_status_report->set_as_integer(4, _best_strategy);
 			sqlcmd_save_status_report->set_as_float(5, _best_strategy_score);
 			sqlcmd_save_status_report->set_as_integer(6, (int)_best_strategy_effort);
-			sqlcmd_save_status_report->set_as_float(7, _best_sortino_ratio);
-			sqlcmd_save_status_report->set_as_float(8, _prev_best_strategy_score);
-			sqlcmd_save_status_report->set_as_float(9, _average_strategy_score);
-			sqlcmd_save_status_report->set_as_float(10, _standard_deviation);
-			sqlcmd_save_status_report->set_as_float(11, _test_case_score);
-			sqlcmd_save_status_report->set_as_integer(12, number_of_training_cases);
-			sqlcmd_save_status_report->set_as_integer(13, number_of_test_cases);
-			sqlcmd_save_status_report->set_as_float(14, _temperature);
-			sqlcmd_save_status_report->set_as_integer(15, _stalled_count);
-			sqlcmd_save_status_report->set_as_integer(16, _cool_down_count);
-			sqlcmd_save_status_report->set_as_integer(17, _include_best_individual_in_breeding_pool);
-			sqlcmd_save_status_report->set_as_string(18, _best_gnome);
-			sqlcmd_save_status_report->set_as_integer(19, argmap::number_of_strategies);
-			sqlcmd_save_status_report->set_as_float(20, argmap::alternation_rate);
-			sqlcmd_save_status_report->set_as_float(21, argmap::uniform_mutation_rate);
-			sqlcmd_save_status_report->set_as_integer(22, argmap::example_case_max_length);
-			sqlcmd_save_status_report->set_as_integer(23, argmap::example_case_upper_range);
+			sqlcmd_save_status_report->set_as_string(7, _best_strategy_start_date);
+			sqlcmd_save_status_report->set_as_float(8, _best_sortino_ratio);
+			sqlcmd_save_status_report->set_as_float(9, _prev_best_strategy_score);
+			sqlcmd_save_status_report->set_as_float(10, _average_strategy_score);
+			sqlcmd_save_status_report->set_as_float(11, _standard_deviation);
+			sqlcmd_save_status_report->set_as_float(12, _test_case_score);
+			sqlcmd_save_status_report->set_as_integer(13, number_of_training_cases);
+			sqlcmd_save_status_report->set_as_integer(14, number_of_test_cases);
+			sqlcmd_save_status_report->set_as_float(15, _temperature);
+			sqlcmd_save_status_report->set_as_integer(16, _stalled_count);
+			sqlcmd_save_status_report->set_as_integer(17, _cool_down_count);
+			sqlcmd_save_status_report->set_as_integer(18, _include_best_individual_in_breeding_pool);
+			sqlcmd_save_status_report->set_as_string(19, _best_gnome);
+			sqlcmd_save_status_report->set_as_integer(20, argmap::number_of_strategies);
+			sqlcmd_save_status_report->set_as_float(21, argmap::alternation_rate);
+			sqlcmd_save_status_report->set_as_float(22, argmap::uniform_mutation_rate);
+			sqlcmd_save_status_report->set_as_integer(23, argmap::example_case_max_length);
+			sqlcmd_save_status_report->set_as_integer(24, argmap::example_case_upper_range);
 
 			sqlcmd_save_status_report->execute();
 
@@ -857,6 +860,7 @@ namespace domain
 					// ***************************
 					size_t best_strategy = 0;
 					best_strategy_score = std::numeric_limits<double>::min();
+					std::string best_strategy_start_date = "";
 
 					size_t number_of_training_cases = datastore::financial_data.get_number_of_records() - domain::argmap::stratergy_case_length - 1;
 					pushGP::globals::score_matrix.resize(number_of_training_cases, domain::argmap::number_of_strategies);
@@ -919,8 +923,19 @@ namespace domain
 								Utilities::logline_threadsafe << ss.str();
 							}
 							double score = account.unrealized_gain(--stock_data_index); // Potential underflow error.
-							best_strategy = (training_case_index < test_case_index && score > best_strategy_score) ? strategy_index : best_strategy;
-							best_strategy_score = (training_case_index < test_case_index && score > best_strategy_score) ? score : best_strategy_score;
+							
+							best_strategy = (training_case_index < test_case_index && score > best_strategy_score) 
+								? strategy_index 
+								: best_strategy;
+
+							best_strategy_score = (training_case_index < test_case_index && score > best_strategy_score) 
+								? score 
+								: best_strategy_score;
+							
+							best_strategy_start_date = (training_case_index < test_case_index && score > best_strategy_score) 
+								? datastore::financial_data.get_target_stock_date(stock_data_begin) 
+								: best_strategy_start_date;
+							
 							sum_of_score += score;
 							pushGP::globals::score_matrix.store(-1, training_case_index, strategy_index, score);
 							pushGP::globals::effort_matrix.store(-1, training_case_index, strategy_index, 1000);
@@ -1012,6 +1027,7 @@ namespace domain
 					best_strategy,
 					best_strategy_score,
 					best_strategy_effort,
+					best_strategy_start_date,
 					best_sortino_ratio,
 					prev_best_strategy_score,
 					average_traiing_score,
