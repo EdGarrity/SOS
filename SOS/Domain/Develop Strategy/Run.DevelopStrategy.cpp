@@ -1020,6 +1020,21 @@ namespace domain
 				double test_case_score = pushGP::globals::score_matrix.load(test_case_index, best_strategy);
 				std::string test_case_start_date = datastore::financial_data.get_target_stock_date(test_case_index);
 
+				if (argmap::diagnostic_level >= argmap::diagnostic_level_1)
+				{
+					std::ostringstream ss;
+					ss << ",method=develop_strategy.run"
+						<< ",run_number=" << run_number
+						<< ",generation_number=" << generation_number
+						<< ",diagnostic_level=1"
+						<< ",test_case_index=" << test_case_index
+						<< ",best_strategy=" << best_strategy
+						<< ",test_case_score=" << test_case_score
+						<< ",test_case_start_date=" << test_case_start_date
+						<< ",message=generate_status_report";
+					Utilities::logline_threadsafe << ss.str();
+				}
+
 				generate_status_report(
 					number_of_training_cases,
 					run_number,
