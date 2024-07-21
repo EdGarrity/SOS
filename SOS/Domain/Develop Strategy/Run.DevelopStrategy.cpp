@@ -1018,6 +1018,7 @@ namespace domain
 				standard_deviation = std::sqrt(standard_deviation);
 
 				double test_case_score = pushGP::globals::score_matrix.load(test_case_index, best_strategy);
+				std::string test_case_start_date = datastore::financial_data.get_target_stock_date(test_case_index);
 
 				generate_status_report(
 					number_of_training_cases,
