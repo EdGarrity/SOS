@@ -24,11 +24,11 @@ namespace domain
 		const std::string financial_instrument = "AAPL";
 		const std::string financial_index = "FXAIX";
 		const std::string financial_data_start_date = "2012-01-02";
-		const std::string financial_data_end_date = "2020-12-31";
-		const std::string financial_training_data_start_date = "2012-01-02";
-		const std::string financial_training_data_end_date = "2020-12-31";
-		const std::string financial_test_data_start_date = "2021-01-02";
-		const std::string financial_test_data_end_date = "2021-12-31";
+		const std::string financial_data_end_date = "2021-12-31";
+		//const std::string financial_training_data_start_date = "2012-01-02";
+		//const std::string financial_training_data_end_date = "2020-12-31";
+		//const std::string financial_test_data_start_date = "2021-01-02";
+		//const std::string financial_test_data_end_date = "2021-12-31";
 
 		//	Select which algorithm to use
 		enum class AlgorithmSelection { learn_from_examples, strategy_development };
@@ -37,7 +37,7 @@ namespace domain
 		// Meta data on training and test cases
 		static constexpr size_t stratergy_case_length = 252; // 252 trading days in a year
 		//static constexpr size_t test_case_length = 252; // 252 trading days in a year
-		//static constexpr size_t number_of_training_cases = 10338;
+		static constexpr size_t number_of_training_cases = 10338;  // size_t number_of_training_cases = datastore::financial_data.get_number_of_records() - domain::argmap::stratergy_case_length - 1;
 		//static constexpr size_t number_of_records = 62611867;
 		//static constexpr size_t records_per_case = 6056;
 		//static constexpr double training_sample_ratio = 0.01;
@@ -76,7 +76,7 @@ namespace domain
 		//	;; ----------------------------------------
 
 		// Number of individuals in the population.
-		const size_t number_of_strategies = 10; // 1000; // 20000; // 200'000;
+		const size_t number_of_strategies = 1000; // 20000; // 200'000;
 
 		// The maximum number of generations to run GP.
 		const unsigned long max_generations_in_one_session = 300;

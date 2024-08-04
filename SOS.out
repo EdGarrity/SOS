@@ -1,0 +1,2 @@
+2024-07-21 14:45:51.215875512,line_number=0,thread=8116,method=FinancialData.load_primary_training_adj_open_prices,diagnostic_level=2,start_date=2012-01-02,end_date=2020-12-31,message=loading_all_case_data
+2024-07-21 14:45:52.215875522,line_number=1,thread=8116,method=FinancialData.load_primary_training_adj_open_prices,diagnostic_level=2,start_date=2012-01-02,end_date=2020-12-31,elements_loaded=2265,target_stock_adj_open_values.size=2265,message=case_data_loaded

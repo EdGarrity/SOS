@@ -49,16 +49,18 @@ namespace pushGP
 		extern unsigned long thread_individual_index[domain::argmap::max_threads];
 		extern size_t thread_example_case[domain::argmap::max_threads];
 
-		//struct Training_case_best_score
-		//{
-		//	double best_score_array_by_example_case[domain::argmap::number_of_training_cases];
-		//	unsigned int individual_with_best_score_for_training_case[domain::argmap::number_of_training_cases];
+		struct Training_case_best_score
+		{
+			//size_t number_of_training_cases = datastore::financial_data.get_number_of_records() - domain::argmap::stratergy_case_length - 1;
 
-		//	Training_case_best_score();
+			double best_score_array_by_example_case[domain::argmap::number_of_training_cases];
+			unsigned int individual_with_best_score_for_training_case[domain::argmap::number_of_training_cases];
 
-		//};
+			Training_case_best_score();
 
-		//typedef struct Training_case_best_score Training_case_best_score_type;
+		};
+
+		typedef struct Training_case_best_score Training_case_best_score_type;
 
 		// Used in epsilon lexicase. Only calculated once per population
 		extern std::vector<double> epsilons;

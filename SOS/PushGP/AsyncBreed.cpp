@@ -9,7 +9,7 @@ namespace pushGP
 	AsyncBreed::AsyncBreed() : work_order_queue_(), lock_(), data_condition_(), accept_functions_(true)
 	{
 		min_error_ = std::numeric_limits<double>::max();
-		max_error_for_all_individuals_for_all_data_ = std::numeric_limits<double>::min();
+		max_error_for_all_individuals_for_all_data_ = std::numeric_limits<double>::lowest();
 		index_of_individual_with_best_training_score_for_all_data_ = 0;
 	}
 

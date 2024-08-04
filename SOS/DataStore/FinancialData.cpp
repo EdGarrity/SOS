@@ -25,8 +25,10 @@ namespace datastore
 		//load(domain::argmap::financial_test_data_start_date, domain::argmap::financial_test_data_end_date, FinancialInstrumentType::Primary_Test);
 		load(domain::argmap::financial_data_start_date, domain::argmap::financial_data_end_date);
 
-		load_primary_training_adj_open_prices(domain::argmap::financial_training_data_start_date, domain::argmap::financial_training_data_end_date);
-		load_index_adj_open_prices(domain::argmap::financial_training_data_start_date, domain::argmap::financial_training_data_end_date);
+		//load_primary_training_adj_open_prices(domain::argmap::financial_training_data_start_date, domain::argmap::financial_training_data_end_date);
+		//load_index_adj_open_prices(domain::argmap::financial_training_data_start_date, domain::argmap::financial_training_data_end_date);
+		load_primary_training_adj_open_prices(domain::argmap::financial_data_start_date, domain::argmap::financial_data_end_date);
+		load_index_adj_open_prices(domain::argmap::financial_data_start_date, domain::argmap::financial_data_end_date);
 	}
 
 	// Purpose: 
@@ -705,9 +707,9 @@ namespace datastore
 		try
 		{
 			// Construct SQL statement with filters
-			int sz = std::snprintf(nullptr, 0, fmt_str_get_record_size, domain::argmap::financial_training_data_start_date.c_str());
+			int sz = std::snprintf(nullptr, 0, fmt_str_get_record_size, domain::argmap::financial_data_start_date.c_str());
 			std::vector<char> buf(sz + 1); // note +1 for null terminator
-			std::snprintf(&buf[0], buf.size(), fmt_str_get_record_size, domain::argmap::financial_training_data_start_date.c_str());
+			std::snprintf(&buf[0], buf.size(), fmt_str_get_record_size, domain::argmap::financial_data_start_date.c_str());
 			std::string sqlstmt_get_record_size(buf.begin(), buf.end() - 1); // omit the null terminator
 
 			// Extablish the connection and execute the SQL statement
