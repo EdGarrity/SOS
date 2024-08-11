@@ -3,6 +3,7 @@
 #include <map>
 #include <mutex>
 #include <thread>
+#include "..\PushGP\Globals.h"
 #include "Environment.h"
 
 namespace Plush
@@ -10,7 +11,7 @@ namespace Plush
 	class EnvironmentPool
 	{
 	private:
-		Plush::Environment m_env_pool[8];
+		Plush::Environment m_env_pool[domain::argmap::max_threads];
 		std::map<std::thread::id, size_t> m_pool;  //std::this_thread::get_id()
 		size_t m_env_count = 0;
 		size_t m_max_env_count = 8;
