@@ -59,7 +59,7 @@ namespace domain
 		//	;; When true, will only use a single thread.
 		const bool use_multithreading = true;
 		const unsigned long number_of_cores_to_reserve = 4;
-		const unsigned long max_threads = 2;
+		const unsigned long max_threads = 1;
 		const unsigned long thread_chunk_size = 1; // 100;  // Number of threads per chunk.
 
 		// CPU temperature monitoring
